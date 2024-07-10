@@ -21,18 +21,23 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setStatus } from "../../store/DigitalSign";
+import { tandaTanganMentri } from "../../service/api";
 
-export const DetailDokumenLain = ({ route }) => {
+export const DetailPerizinanMenteri = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading } = useSelector((state) => state.digitalsign);
+  const { digitalsign, loading, status } = useSelector(
+    (state) => state.digitalsign
+  );
   const item = digitalsign.detail;
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -61,6 +66,21 @@ export const DetailDokumenLain = ({ route }) => {
   }, [file, item]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    const payload = {
+      passphrase: "",
+      id_documents: [item.id],
+      comment: "Dokumen sudah di tanda tangan",
+    };
+    const data = {
+      token: variant.token,
+      payload: payload,
+    };
+    dispatch(tandaTanganMentri(data));
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -101,7 +121,7 @@ export const DetailDokumenLain = ({ route }) => {
                   fontWeight: FONTWEIGHT.bold,
                 }}
               >
-                Detail Dokumen
+                Detail Perizinan Menteri
               </Text>
             </View>
           </View>
@@ -647,11 +667,9 @@ export const DetailDokumenLain = ({ route }) => {
                     alignItems: "center",
                     marginHorizontal: "5%",
                   }}
-                  onPress={() =>
-                    navigation.navigate("PdfPerisai", {
-                      item: item,
-                    })
-                  }
+                  onPress={() => {
+                    handleSubmit();
+                  }}
                 >
                   <Text
                     style={{
@@ -790,6 +808,11 @@ export const DetailDokumenLain = ({ route }) => {
               </View>
             </BottomSheetView>
           </BottomSheetModal>
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            navigate={"PerizinanMenteri"}
+          />
         </ScrollView>
       </BottomSheetModalProvider>
     </View>

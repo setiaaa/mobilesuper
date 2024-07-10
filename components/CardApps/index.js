@@ -32,6 +32,7 @@ import { setTypeMenu } from "../../store/SuperApps";
 export const CardApps = ({
   handlePressModal,
   setModalBankom,
+  setModalKepegawaian,
   closeBottomSheet,
 }) => {
   const navigation = useNavigation();
@@ -45,6 +46,7 @@ export const CardApps = ({
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
+  const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -61,6 +63,10 @@ export const CardApps = ({
   // );
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
+  );
+
+  const isRoleMenteri = profile.roles_access?.some((item) =>
+    rolePerizinanMenteri.includes(item)
   );
 
   const isTablet = Device.DeviceType.TABLET;
@@ -107,6 +113,32 @@ export const CardApps = ({
         },
       },
       {
+        title: "Digital Sign",
+        navigation: "MainDigitalSign",
+        image: require("../../assets/superApp/digitalsign.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 35,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
+      },
+      {
         title: "Cuti",
         navigation: "MainCuti",
         image: require("../../assets/superApp/cuti.png"),
@@ -126,7 +158,7 @@ export const CardApps = ({
       },
       {
         title: "Pengembangan Kompetensi",
-        navigation: "bankom",
+        navigation: "ListAplikasiKepegawaian",
         image: require("../../assets/superApp/Bankomicon.png"),
         imagestyle: {
           width: {
@@ -161,6 +193,24 @@ export const CardApps = ({
         },
       },
       {
+        title: "Kepegawaian",
+        navigation: "ListAplikasiKepegawaian",
+        image: require("../../assets/superApp/pegawai.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
         title: "Task",
         navigation: "MyTask",
         image: require("../../assets/superApp/taskmanagement.png"),
@@ -186,24 +236,24 @@ export const CardApps = ({
         //   },
         // ],
       },
-      {
-        title: "Pegawai",
-        navigation: "ListPegawai",
-        image: require("../../assets/superApp/pegawai.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 30,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-      },
+      // {
+      //   title: "Pegawai",
+      //   navigation: "ListPegawai",
+      //   image: require("../../assets/superApp/pegawai.png"),
+      //   imagestyle: {
+      //     width: {
+      //       tablet: 50,
+      //       hp: 28,
+      //     },
+      //     height: {
+      //       tablet: 50,
+      //       hp: 30,
+      //     },
+      //   },
+      //   titleStyle: {
+      //     width: null,
+      //   },
+      // },
       {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
@@ -290,61 +340,6 @@ export const CardApps = ({
         },
       });
     }
-    if (isRoleLaporan) {
-      tmpMenu.splice(3, 0, {
-        title: "Digital Sign",
-        navigation: "MainDigitalSign",
-        image: require("../../assets/superApp/digitalsign.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 35,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-        // subMenu: [
-        //   {
-        //     title: "Dokumen Lain",
-        //   },
-        //   {
-        //     title: "Verifikasi",
-        //   },
-        // ],
-      });
-    } else {
-      tmpMenu.splice(3, 0, {
-        title: "Digital Sign",
-        navigation: "DokumenLain",
-        image: require("../../assets/superApp/digitalsign.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 35,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-        // subMenu: [
-        //   {
-        //     title: "Dokumen Lain",
-        //   },
-        //   {
-        //     title: "Verifikasi",
-        //   },
-        // ],
-      });
-    }
     if (isRoleEvent) {
       tmpMenu.push({
         title: "Agenda Rapat",
@@ -362,6 +357,26 @@ export const CardApps = ({
         },
         titleStyle: {
           width: null,
+        },
+      });
+    }
+    if (isRoleMenteri) {
+      tmpMenu.splice(8, 0, {
+        title: "Perizinan Menteri",
+        navigation: "PerizinanMenteri",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
         },
       });
     }
@@ -433,12 +448,14 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                       }}
+                      key={index}
                     >
                       <TouchableOpacity
                         onPress={() => {
-                          if (item.navigation === "bankom") {
-                            setModalBankom(true);
-                            console.log("masuk");
+                          if (item.title === "Pengembangan Kompetensi") {
+                            navigation.navigate(item.navigation, item.title);
+                          } else if (item.title === "Kepegawaian") {
+                            navigation.navigate(item.navigation, item.title);
                           } else {
                             navigation.navigate(item.navigation);
                           }
@@ -512,12 +529,14 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                       }}
+                      key={index}
                     >
                       <TouchableOpacity
                         onPress={() => {
-                          if (item.navigation === "bankom") {
-                            setModalBankom(true);
-                            console.log("masuk");
+                          if (item.title === "Pengembangan Kompetensi") {
+                            navigation.navigate(item.navigation, item.title);
+                          } else if (item.title === "Kepegawaian") {
+                            navigation.navigate(item.navigation, item.title);
                           } else {
                             navigation.navigate(item.navigation);
                           }

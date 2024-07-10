@@ -12,6 +12,8 @@ import {
   COLORS,
   FONTWEIGHT,
   fontSizeResponsive,
+  spacing,
+  shadow,
 } from "../../config/SuperAppps";
 import {
   widthPercentageToDP as wp,
@@ -27,32 +29,51 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
           <TouchableOpacity onPress={() => setCollapse(!collapse)}>
             <View style={styles.card}>
               <View
-                style={{
-                  backgroundColor:
-                    collapse === true ? COLORS.secondaryLighter : COLORS.white,
-                  paddingHorizontal: 20,
-                  paddingVertical: 20,
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
+                style={[
+                  {
+                    backgroundColor:
+                      collapse === true
+                        ? COLORS.secondaryLighter
+                        : COLORS.white,
+                    padding: spacing.default,
+                    borderTopLeftRadius: 8,
+                    borderTopRightRadius: 8,
+                    borderBottomLeftRadius: collapse === true ? 0 : 8,
+                    borderBottomRightRadius: collapse === true ? 0 : 8,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  },
+                  shadow.cardShadow,
+                ]}
               >
-                <Ionicons
-                  name="person-outline"
-                  size={device === "tablet" ? 40 : 24}
-                />
-                <Text
+                <View
                   style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    gap: spacing.medium,
                   }}
                 >
-                  Biodata
-                </Text>
+                  <Ionicons
+                    name="person-outline"
+                    size={device === "tablet" ? 40 : 24}
+                  />
+                  <Text
+                    style={[
+                      {
+                        fontWeight: FONTWEIGHT.bold,
+                      },
+                      fontSizeResponsive("textL", device),
+                    ]}
+                  >
+                    Biodata
+                  </Text>
+                </View>
                 <View
-                  style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+                  style={{
+                    marginRight: spacing.default,
+                  }}
                 >
                   {collapse === true ? (
                     <Ionicons
@@ -67,256 +88,254 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                   )}
                 </View>
               </View>
-              <View style={{ marginLeft: 50 }}>
-                {/* custom divider */}
-                <View
+              {/* <View style={{ marginLeft: 50 }}> */}
+              {/* custom divider */}
+              {/* <View
                   style={{
                     height: 1,
                     width: "88%",
                     backgroundColor: "#DBDADE",
                   }}
-                />
-              </View>
+                /> */}
+              {/* </View> */}
             </View>
           </TouchableOpacity>
         </CollapseHeader>
         {}
         <CollapseBody>
-          <View style={styles.cardCollapse}>
+          <View style={[styles.cardCollapse, shadow.cardShadow]}>
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Nama
               </Text>
-              <Text>:</Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.nama}
               </Text>
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 NIP
               </Text>
-              <Text>:</Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.nip}
               </Text>
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Karpeg/Karis-Karsu/NPWP
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <View
                 style={{
-                  width: "55%",
+                  flex: 5,
                   flexDirection: "row",
                   flexWrap: "wrap",
                   alignItems: "flex-start",
                 }}
               >
                 {profile.karpeg == null ? (
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    -
-                  </Text>
+                  <Text style={fontSizeResponsive("textS", device)}>-</Text>
                 ) : (
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text style={fontSizeResponsive("textS", device)}>
                     {profile.karpeg}
                   </Text>
                 )}
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  /
-                </Text>
+                <Text style={fontSizeResponsive("textS", device)}>/</Text>
                 {profile.karis == null ? (
                   <Text>-</Text>
                 ) : (
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text style={fontSizeResponsive("textS", device)}>
                     {profile.karis}
                   </Text>
                 )}
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  /
-                </Text>
+                <Text style={fontSizeResponsive("textS", device)}>/</Text>
                 {profile.npwp === "" ? (
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    -
-                  </Text>
+                  <Text style={fontSizeResponsive("textS", device)}>-</Text>
                 ) : (
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text style={fontSizeResponsive("textS", device)}>
                     {profile.npwp}
                   </Text>
                 )}
               </View>
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
-                Tempat/Tanggal lahir
+                Tempat/Tanggal Lahir
               </Text>
-              <Text>:</Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.place_birth}/{profile.date_birth}
               </Text>
             </View>
             {data === "detailpegawai" ? null : (
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginHorizontal: 20,
-                  marginTop: 10,
-                  gap: 5,
-                  width: wp(82),
-                }}
-              >
-                <Text
+              <>
+                <View
                   style={{
-                    width: "40%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: spacing.small,
+                    marginBottom: spacing.medium,
                   }}
                 >
-                  Telepon Seluler
-                </Text>
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  :
-                </Text>
-                <Text
+                  <Text
+                    style={[
+                      {
+                        flex: 4,
+                      },
+                      fontSizeResponsive("textS", device),
+                    ]}
+                  >
+                    Telepon Seluler
+                  </Text>
+                  <Text style={fontSizeResponsive("textS", device)}>:</Text>
+                  <Text
+                    style={[
+                      {
+                        flex: 5,
+                      },
+                      fontSizeResponsive("textS", device),
+                    ]}
+                  >
+                    {profile.mobile}
+                  </Text>
+                </View>
+                <View
                   style={{
-                    width: "55%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: spacing.small,
+                    marginBottom: spacing.medium,
                   }}
                 >
-                  {profile.mobile}
-                </Text>
-              </View>
+                  <Text
+                    style={[
+                      {
+                        flex: 4,
+                      },
+                      fontSizeResponsive("textS", device),
+                    ]}
+                  >
+                    No KTP
+                  </Text>
+                  <Text style={fontSizeResponsive("textS", device)}>:</Text>
+                  <Text
+                    style={[
+                      {
+                        flex: 5,
+                      },
+                      fontSizeResponsive("textS", device),
+                    ]}
+                  >
+                    {profile.ktp}
+                  </Text>
+                </View>
+              </>
             )}
-
-            {data === "detailpegawai" ? null : (
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginHorizontal: 20,
-                  marginTop: 10,
-                  gap: 5,
-                  width: wp(82),
-                }}
-              >
-                <Text
-                  style={{
-                    width: "40%",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  No KTP
-                </Text>
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  :
-                </Text>
-                <Text
-                  style={{
-                    width: "55%",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {profile.ktp}
-                </Text>
-              </View>
-            )}
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Email KKP
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.email}
               </Text>
@@ -324,29 +343,30 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
 
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Email Lain
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.email_alt}
               </Text>
@@ -354,59 +374,60 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
 
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Pendidikan Terakhir
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.pendidikan}
               </Text>
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Unit Kerja
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.satuan_kerja_nama}
               </Text>
@@ -414,141 +435,123 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
 
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Satker
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
               <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 {profile.unit_kerja}
               </Text>
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Pangkat
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
+              >
+                {profile.pangkat == null ? "-" : profile.pangkat}
               </Text>
-              {profile.pangkat == null ? (
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  -
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    width: "55%",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {profile.pangkat}
-                </Text>
-              )}
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Golongan
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
+              >
+                {profile.golongan == null ? "-" : profile.golongan}
               </Text>
-              {profile.golongan == null ? (
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  -
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    width: "55%",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {profile.golongan}
-                </Text>
-              )}
             </View>
-
             <View
               style={{
+                display: "flex",
                 flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
-                marginBottom: 10,
+                gap: spacing.small,
+                marginBottom: spacing.medium,
               }}
             >
               <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
+                style={[
+                  {
+                    flex: 4,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
               >
                 Alamat Kantor
               </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
+              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text
+                style={[
+                  {
+                    flex: 5,
+                  },
+                  fontSizeResponsive("textS", device),
+                ]}
+              >
+                {profile.office_address == null ? "-" : profile.office_address}
               </Text>
-              {profile.office_address == null ? (
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  -
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    width: "50%",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {profile.office_address}
-                </Text>
-              )}
             </View>
 
             {/* custom divider */}
@@ -569,16 +572,15 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginHorizontal: 20,
     borderRadius: 8,
-    width: wp(88),
-    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: spacing.default,
   },
   cardCollapse: {
     backgroundColor: "#fff",
-    marginHorizontal: 20,
-    width: wp(88),
-    alignItems: "center",
-    paddingHorizontal: wp(20),
+    marginHorizontal: spacing.default,
+    padding: spacing.default,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
 });

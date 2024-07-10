@@ -1,7 +1,12 @@
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTWEIGHT,
+  spacing,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const CardListAplikasi = ({
@@ -10,17 +15,24 @@ export const CardListAplikasi = ({
   appsIsChecked,
   handleChangeChecked,
   checked,
+  device,
 }) => {
   return (
     <View
       style={{
-        marginHorizontal: "8%",
         flexDirection: "row",
         justifyContent: "space-between",
       }}
     >
       <View>
-        <Text style={{ marginBottom: 10 }}>{item.title}</Text>
+        <Text
+          style={[
+            { marginBottom: spacing.medium },
+            fontSizeResponsive("textM", device),
+          ]}
+        >
+          {item.title}
+        </Text>
         {item.subMenu &&
           item.subMenu?.map((subItem, subIndex) => {
             return (
@@ -29,9 +41,6 @@ export const CardListAplikasi = ({
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  width: "97%",
-                  marginBottom: 10,
-                  marginLeft: 10,
                 }}
               >
                 <Text>{subItem.title}</Text>

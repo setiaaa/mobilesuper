@@ -476,7 +476,7 @@ export const Satker = () => {
             <View>
               <Image
                 source={{
-                  uri: Config.base_url + "bridge/" + profile.avatar,
+                  uri: Config.base_url + "bridge/" + profile.avatar_signed,
                 }}
                 style={{
                   width: device === "tablet" ? 100 : 50,

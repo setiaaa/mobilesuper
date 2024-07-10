@@ -393,34 +393,9 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Penambahan Menu Lite
+                    Penambahan Menu Kepegawaian
                   </Text>
                 </View>
-
-                {/* <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Penambahan FAQ
-                  </Text>
-                </View> */}
 
                 <View
                   style={{
@@ -444,7 +419,59 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Penambahan Notifikasi
+                    Update Korespondensi
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan Menu Perizinan Menteri
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan Menu FAQ
                   </Text>
                 </View>
 

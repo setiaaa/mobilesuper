@@ -108,6 +108,15 @@ import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
 import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
 import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
 import { ROPEGIPASN } from "../Apps/Dashboard/ROPEGIPASN";
+import MyTabPegawiIPASN from "../Apps/Kepegawaian/BottomTabsPegawaiIPASN";
+import { PegawaiIPASN } from "../Apps/Kepegawaian/PegawaiIPASN";
+import { DataPribadi } from "../Apps/Kepegawaian/DataPribadi";
+// Faq
+import { DashboardDanReport } from "../Apps/Faq/DashboardDanReport";
+import { Regulasi } from "../Apps/Faq/Regulasi";
+import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
+import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
+import { SuperApps } from "../Apps/Faq/SuperApps";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -576,6 +585,30 @@ export const BottomTabsCuti = () => {
           <Tab.Screen
             name="DokumenCuti"
             component={DokumenCuti}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsPegawaiIPASN = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabPegawiIPASN {...props} />}
+          initialRouteName="PegawaiIPASN"
+        >
+          <Tab.Screen
+            name="PegawaiIPASN"
+            component={PegawaiIPASN}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DataPribadi"
+            component={DataPribadi}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>
@@ -1123,5 +1156,63 @@ export const TopAddressBook = ({ config, device }) => {
         </Top.Navigator>
       </BottomSheetModalProvider>
     </Host>
+  );
+};
+
+// FAQ
+export const TopsFaq = () => {
+  const { device } = useSelector((state) => state.apps);
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"DashboardDanReport"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H5", device),
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="DashboardDanReport"
+          component={DashboardDanReport}
+          options={{
+            title: "Dashboard Dan Report",
+          }}
+        />
+        <Top.Screen
+          name="Regulasi"
+          component={Regulasi}
+          options={{
+            title: "Regulasi",
+          }}
+        />
+        <Top.Screen
+          name="AplikasiPortalKKP"
+          component={AplikasiPortalKKP}
+          options={{
+            title: "Aplikasi Portal KKP",
+          }}
+        />
+        <Top.Screen
+          name="PengembanganKompetensi"
+          component={PengembanganKompetensi}
+          options={{
+            title: "Pengembangan Kompetensi",
+          }}
+        />
+        <Top.Screen
+          name="SuperApps"
+          component={SuperApps}
+          options={{
+            title: "SuperApps",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
   );
 };

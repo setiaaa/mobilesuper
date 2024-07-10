@@ -1,3 +1,4 @@
+import { FontWeight } from "@shopify/react-native-skia";
 import moment from "moment/min/moment-with-locales";
 
 export const COLORS = {
@@ -41,6 +42,12 @@ export const fontSizeResponsive = (type, device) => {
     H4: device === "phone" ? 11 : 22,
     H5: device === "phone" ? 10 : 21,
     Judul: device === "phone" ? 17 : 28,
+    textS: device === "phone" ? textStyle.textS : 22,
+    textM: device === "phone" ? textStyle.textM : 24,
+    textL: device === "phone" ? textStyle.textL : 26,
+    headingS: device === "phone" ? textStyle.headingS : 22,
+    headingM: device === "phone" ? textStyle.headingM : 23,
+    headingL: device === "phone" ? textStyle.headingL : 25,
   };
   return data[type];
 };
@@ -58,9 +65,11 @@ export const imageApps = (type) => {
     return require("../assets/superApp/sppd.png");
   } else if (type === "Task") {
     return require("../assets/superApp/taskmanagement.png");
-  } else if (type === "Pegawai") {
-    return require("../assets/superApp/pegawai.png");
-  } else if (type === "Survei Layanan") {
+  }
+  // else if (type === "Pegawai") {
+  //   return require("../assets/superApp/pegawai.png");
+  // }
+  else if (type === "Survei Layanan") {
     return require("../assets/superApp/surveylayanan.png");
   } else if (type === "Preparing dan Sharing") {
     return require("../assets/superApp/repositori.png");
@@ -70,6 +79,28 @@ export const imageApps = (type) => {
     return require("../assets/superApp/digitalsign.png");
   } else if (type === "Agenda Rapat") {
     return require("../assets/superApp/event.png");
+  } else if (type === "Kepegawaian") {
+    return require("../assets/superApp/Kepegawaian.png");
+  } else if (type === "Perizinan Menteri") {
+    return require("../assets/superApp/PerizinanMentri.png");
+  } else if (type === "Pengetahuan") {
+    return require("../assets/superApp/pengetahuan.png");
+  } else if (type === "Aksi Perubahan") {
+    return require("../assets/superApp/aksiperubahanicon.png");
+  } else if (type === "Sertifikat") {
+    return require("../assets/superApp/sertifikat.png");
+  } else if (type === "e-Learning") {
+    return require("../assets/superApp/e-learningicon.png");
+  } else if (type === "Info") {
+    return require("../assets/superApp/info.png");
+  } else if (type === "Laporan") {
+    return require("../assets/superApp/Laporanicon.png");
+  } else if (type === "IPASN") {
+    return require("../assets/superApp/IPASN.png");
+  } else if (type === "Pegawai") {
+    return require("../assets/superApp/Pegawai2.png");
+  } else if (type === "Nominatif Pegawai") {
+    return require("../assets/superApp/NominatifPeg.png");
   }
 };
 
@@ -90,6 +121,58 @@ export const DATETIME = {
 
 export const PADDING = {
   Page: 20,
+};
+
+export const spacing = {
+  small: 4,
+  medium: 8,
+  default: 16,
+  large: 24,
+  extraLarge: 48,
+};
+
+export const textStyle = {
+  textS: {
+    fontsize: 12,
+    lineHeight: 16,
+  },
+  textM: {
+    fontsize: 14,
+    lineHeight: 20,
+  },
+  textL: {
+    fontsize: 16,
+    lineHeight: 24,
+  },
+  headingS: {
+    fontsize: 20,
+    lineHeight: 28,
+    fontWeight: 800,
+  },
+  headingM: {
+    fontsize: 28,
+    lineHeight: 36,
+    fontWeight: 800,
+  },
+  headingL: {
+    fontsize: 36,
+    lineHeight: 44,
+    fontWeight: 800,
+  },
+};
+
+export const shadow = {
+  cardShadow: {
+    shadowColor: "#171717",
+    shadowOffset: {
+      width: -2,
+      height: 4,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4.65,
+
+    elevation: 2,
+  },
 };
 
 export const fixedDateString = (tanggal) => {

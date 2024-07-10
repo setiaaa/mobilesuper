@@ -207,7 +207,15 @@ import {
 } from "react-native-responsive-screen";
 import { setNotifIos, setTypeMenu } from "../../store/SuperApps";
 import { ListFaq } from "../Faq/ListFaq";
+import { IPASN } from "../Kepegawaian/IPASN";
+import { MainPegawaiIPASN } from "../Kepegawaian/MainPegawaiIPASN";
+import { DetailPegawaiIPASN } from "../Kepegawaian/DetailPegawaiIPASN";
+import { Nominatif } from "../Kepegawaian/Nominatif";
+import { NominatifList } from "../Kepegawaian/NominatifList";
+import { PerizinanMenteri } from "../DigitalSignature/PerizinanMenteri";
+import { DetailPerizinanMenteri } from "../DigitalSignature/DetailPerizinanMenteri";
 import NeedSignList from "./List/NeedSignList";
+import { ListAplikasiKepegawaian } from "../Kepegawaian/ListAplikasiKepegawaian";
 
 const Stack = createNativeStackNavigator();
 
@@ -848,13 +856,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           /> */}
-          {/* <Stack.Screen
+          <Stack.Screen
             name="DokumenLain"
             component={DokumenLain}
             options={{
               headerShown: false,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="DetailDokumenLain"
             component={DetailDokumenLain}
@@ -1449,6 +1457,62 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="ListFaq"
             component={ListFaq}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="IPASN"
+            component={IPASN}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainPegawaiIPASN"
+            component={MainPegawaiIPASN}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPegawaiIPASN"
+            component={DetailPegawaiIPASN}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Nominatif"
+            component={Nominatif}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="NominatifList"
+            component={NominatifList}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PerizinanMenteri"
+            component={PerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPerizinanMenteri"
+            component={DetailPerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListAplikasiKepegawaian"
+            component={ListAplikasiKepegawaian}
             options={{
               headerShown: false,
             }}

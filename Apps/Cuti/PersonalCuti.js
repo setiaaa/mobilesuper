@@ -202,7 +202,7 @@ export const PersonalCuti = () => {
                 style={{ alignItems: "center", gap: 10, position: "absolute" }}
               >
                 <Image
-                  source={{ uri: BASE_URL + profile.avatar }}
+                  source={{ uri: BASE_URL + profile.avatar_signed }}
                   style={{
                     width: device === "tablet" ? 125 : 75,
                     height: device === "tablet" ? 125 : 75,

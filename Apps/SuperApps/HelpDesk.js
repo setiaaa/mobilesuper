@@ -191,7 +191,7 @@ export const HelpDesk = () => {
                   }}
                 >
                   <Image
-                    source={{ uri: BASE_URL + profile.avatar }}
+                    source={{ uri: BASE_URL + profile.avatar_signed }}
                     style={{
                       width: device === "tablet" ? 100 : 75,
                       height: device === "tablet" ? 100 : 75,

@@ -50,6 +50,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  imageApps,
 } from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,7 +97,6 @@ import {
   setStatus,
 } from "../../store/SuperApps";
 import { openURL } from "expo-linking";
-// import * as Location from "expo-location";
 import moment, { duration } from "moment";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { MotiView } from "@motify/components";
@@ -128,9 +128,10 @@ export const Home = () => {
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
   const [modalBankom, setModalBankom] = useState(false);
-  const [modalInfo, setModalInfo] = useState(false);
+  const [modalKepegawaian, setModalKepegawaian] = useState(false);
   const [dataNotif, setDataNotif] = useState();
   const [menuBankom, setMenuBankom] = useState([]);
+  const [menuKepegawaian, setMenuKepegawaian] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
   const isFocused = useIsFocused();
@@ -309,302 +310,180 @@ export const Home = () => {
       roleLaporan.includes(item)
     );
     let tmpMenu = [];
+    let tmpMenuKepegawaian = [];
     tmpMenu.push(
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setModalBankom(false);
-            navigation.navigate("MainPengetahuan");
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 40 : 23,
-                height: device === "tablet" ? 55 : 34,
-              }}
-              source={require("../../assets/superApp/pengetahuan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            width: device === "tablet" ? 200 : null,
-            textAlign: "center",
-          }}
-        >
-          Pengetahuan
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setModalBankom(false);
-            navigation.navigate("AksiPerubahan");
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/aksiperubahanicon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Aksi Perubahan
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setModalBankom(false);
-            navigation.navigate("MainSertifikat");
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/sertifikat.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Sertifikat
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setModalBankom(false);
-            openURL(
-              "https://elearning.kkp.go.id/auth/oauth2/login.php?id=1&wantsurl=https%3A%2F%2Felearning.kkp.go.id%2F&sesskey=Jhop9vc9S5"
-            );
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/e-learningicon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          E-Learning
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setModalBankom(false);
-            setModalInfo(true);
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/info.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Info
-        </Text>
-      </View>
+      {
+        title: "Pengetahuan",
+        navigation: "MainPengetahuan",
+        image: require("../../assets/superApp/pengetahuan.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "Aksi Perubahan",
+        navigation: "AksiPerubahan",
+        image: require("../../assets/superApp/aksiperubahanicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "Sertifikat",
+        navigation: "MainSertifikat",
+        image: require("../../assets/superApp/sertifikat.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "e-Learning",
+        navigation: "e-Learning",
+        image: require("../../assets/superApp/e-learningicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "Info",
+        navigation: "Info",
+        image: require("../../assets/superApp/info.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      }
     );
     if (isRoleLaporan) {
-      tmpMenu.splice(
-        3,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              setModalBankom(false);
-              navigation.navigate("LaporanDigitalSign");
-            }}
-          >
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 60 : 35,
-                  height: device === "tablet" ? 60 : 32,
-                }}
-                source={require("../../assets/superApp/Laporanicon.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              textAlign: "center",
-              width: 300,
-            }}
-          >
-            Laporan
-          </Text>
-        </View>
-      );
+      tmpMenu.splice(3, 0, {
+        title: "Laporan",
+        navigation: "LaporanDigitalSign",
+        image: require("../../assets/superApp/Laporanicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      });
     } else {
       console.log("masuk role else", isRoleLaporan);
       null;
     }
 
+    tmpMenuKepegawaian.push(
+      {
+        title: "IPASN",
+        navigation: "IPASN",
+        image: require("../../assets/superApp/IPASN.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "Pegawai",
+        navigation: "MainPegawaiIPASN",
+        image: require("../../assets/superApp/Pegawai2.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
+      {
+        title: "Nominatif Pegawai",
+        navigation: "Nominatif",
+        image: require("../../assets/superApp/NominatifPeg.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 24,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      }
+    );
+    setMenuKepegawaian(tmpMenuKepegawaian);
     setMenuBankom(tmpMenu);
   }, [profile]);
 
@@ -615,8 +494,65 @@ export const Home = () => {
       return <View style={[styles.items, styles.itemInvisible]} />;
     }
     return (
-      <View style={[styles.items, { height: device === "tablet" ? 200 : 100 }]}>
-        <Text style={styles.itemText}>{item}</Text>
+      <View
+        style={[styles.items, { height: device === "tablet" ? 200 : 100 }]}
+        key={item.title}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            if (item.navigation === "Info") {
+              setModalInfo(true);
+            } else if (item.navigation === "e-Learning") {
+              openURL(
+                "https://elearning.kkp.go.id/auth/oauth2/login.php?id=1&wantsurl=https%3A%2F%2Felearning.kkp.go.id%2F&sesskey=Jhop9vc9S5"
+              );
+            } else {
+              navigation.navigate(item.navigation);
+            }
+            setModalBankom(false);
+            setModalKepegawaian(false);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width:
+                  device === "tablet"
+                    ? item.imagestyle.width.tablet
+                    : item.imagestyle.width.hp,
+                height:
+                  device === "tablet"
+                    ? item.imagestyle.height.tablet
+                    : item.imagestyle.height.hp,
+              }}
+              source={imageApps(item.title)}
+            />
+            {/* <Text>{typeof item.image}</Text> */}
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            width: item.titleStyle.width,
+          }}
+          numberOfLines={1}
+        >
+          {item.title}
+        </Text>
       </View>
     );
   };
@@ -834,7 +770,7 @@ export const Home = () => {
               <View>
                 <Image
                   source={{
-                    uri: Config.base_url + "bridge/" + profile.avatar,
+                    uri: Config.base_url + "bridge/" + profile.avatar_signed,
                   }}
                   style={{
                     width: device === "tablet" ? 100 : 50,
@@ -852,6 +788,7 @@ export const Home = () => {
                 <CardApps
                   handlePressModal={handlePressModal}
                   setModalBankom={setModalBankom}
+                  setModalKepegawaian={setModalKepegawaian}
                   closeBottomSheet={closeBottomSheet}
                 />
                 <Portal>
@@ -907,6 +844,7 @@ export const Home = () => {
                         <View style={{ marginVertical: 20 }}>
                           <CardAppsB
                             setModalBankom={setModalBankom}
+                            setModalKepegawaian={setModalKepegawaian}
                             closeBottomSheet={closeBottomSheet}
                           />
                         </View>
@@ -917,83 +855,6 @@ export const Home = () => {
               </View>
             )}
           </View>
-
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalInfo}
-            onRequestClose={() => {
-              setModalInfo(false);
-            }}
-          >
-            <TouchableOpacity
-              style={[
-                Platform.OS === "ios"
-                  ? styles.iOSBackdrop
-                  : styles.androidBackdrop,
-                styles.backdrop,
-              ]}
-            />
-            <View
-              style={{
-                alignItems: "center",
-                flex: 1,
-                justifyContent: "center",
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  width: "90%",
-                  borderRadius: 10,
-                }}
-              >
-                <View
-                  style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: 10,
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.grey,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                    }}
-                  >
-                    Informasi
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setModalInfo(false);
-                    }}
-                  >
-                    <Ionicons
-                      name="close-outline"
-                      size={24}
-                      color={COLORS.lighter}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 20,
-                  }}
-                >
-                  <Text style={{ textAlign: "justify" }}>
-                    Menu ini merupakan implementasi dari Aksi Perubahan New
-                    Integrated Learning and Office System (NILAM) pada Portal
-                    Collaboration Office.
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </Modal>
 
           <Modal
             animationType="fade"
@@ -1057,6 +918,80 @@ export const Home = () => {
                 </View>
                 <FlatList
                   data={formatData(menuBankom, numColumns)}
+                  renderItem={renderRow}
+                  keyExtractor={(row, index) => `row_${index}`}
+                  columnWrapperStyle={{
+                    marginHorizontal: "5%",
+                    gap: 5,
+                  }}
+                  numColumns={numColumns}
+                />
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalKepegawaian}
+            onRequestClose={() => {
+              setModalKepegawaian(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kepegawaian
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalKepegawaian(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={formatData(menuKepegawaian, numColumns)}
                   renderItem={renderRow}
                   keyExtractor={(row, index) => `row_${index}`}
                   columnWrapperStyle={{
