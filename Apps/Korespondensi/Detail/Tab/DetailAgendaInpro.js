@@ -1151,6 +1151,14 @@ function DetailAgendaInpro({
                       selected: data?.attachments[0],
                       title: "Lihat Surat",
                       tipe: tipe,
+                      token: data?.w_token,
+                      id: data?.id,
+                      stylus:
+                        tipe == "NeedFollowUpDetail" &&
+                        profile?.is_pass == "true" &&
+                        data?.is_signer
+                          ? true
+                          : false,
                     });
                     dispatch(setFAB(false));
                   }}

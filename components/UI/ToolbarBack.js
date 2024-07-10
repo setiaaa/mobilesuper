@@ -41,6 +41,9 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
               dispatch(setFAB(true));
             }
             navigation.goBack();
+            if (route?.params?.stylus) {
+              navigation.goBack();
+            }
           }}
         >
           <Ionicons
@@ -69,7 +72,7 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
           {title ? title : route?.params?.title}
         </Text>
       </View>
-      {route?.params?.title == "Lihat Surat" && (
+      {route?.params?.title == "Lihat Surat" && !route?.params?.stylus && (
         <TouchableOpacity
           onPress={() => {
             initDownload(route?.params?.selected);
@@ -93,6 +96,9 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
         >
           <Ionicons name="share-social" size={16} />
         </TouchableOpacity>
+      )}
+      {route?.params?.title == "Lihat Surat" && route?.params?.stylus && (
+        <View style={{ width: 50 }}></View>
       )}
     </View>
   );

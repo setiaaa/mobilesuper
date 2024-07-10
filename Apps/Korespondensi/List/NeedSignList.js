@@ -411,7 +411,6 @@ function NeedSignList({ route }) {
       setIsLoading(true);
       let payload = { ids: selectedId };
       let response = await postHTTP(nde_api.letterbulkapprove, payload);
-      console.log(response.data.status, "log azis");
       if (response?.data?.status == "Error") {
         Alert.alert("Gagal!", response?.data?.msg);
       } else {

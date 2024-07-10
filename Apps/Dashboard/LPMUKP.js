@@ -1,0 +1,176 @@
+import React from "react";
+import { Dimensions, Text, View } from "react-native";
+import {
+  COLORS,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import WebView from "react-native-webview";
+
+export const LPMUKP = () => {
+  const navigation = useNavigation();
+
+  const { device } = useSelector((state) => state.apps);
+  const source = `
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://app.daviz.id/MicroStrategyLibrary/javascript/embeddinglib.js"></script>
+    <script type="text/javascript" src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <button onclick="handleRefresh()">Refresh</button>
+    <div id='embedding-dossier-container' style="width: 100%; height: 100vh;"></div>
+</body>
+
+<script>
+    const baseServerUrl = 'https://app.daviz.id';
+    const libraryName = 'MicroStrategyLibrary';
+
+    function handleRefresh() {
+        window.location.reload()
+    }
+
+    async function runCode() {
+        // https://{env-url}/{libraryName}/app/{projectId}/{dossierId}
+        let url =
+            baseServerUrl +
+            '/' +
+            libraryName +
+            '/app/A18F884B4D0342672AFB72AAF345697F/EE35681B436699C45761CBB2BC5D276F/publish';
+
+        let dossier; // Variable to store the dashboard created. Used by Event Handler do not remove!
+        let config; // Variable to store the configuration settings for dashboard.
+        config = {
+            url: url,
+            placeholder: document.getElementById('embedding-dossier-container'),
+            containerHeight: '600px',
+            containerWidth: '800px',
+            customAuthenticationType:
+                microstrategy.dossier.CustomAuthenticationType.AUTH_TOKEN,
+            enableCustomAuthentication: true,
+            enableResponsive: true,
+            getLoginToken: login(),
+            navigationBar: {
+                enabled: false,
+            },
+        };
+        // For more details on configuration properties, see https://www2.microstrategy.com/producthelp/Current/EmbeddingSDK/Content/topics/dossier_properties.htm
+
+        // Embed the dashboard with the configuration settings
+        try {
+            const placeholderDiv = document.getElementById(
+                'embedding-dossier-container',
+            );
+            microstrategy.dossier.create({
+                placeholder: placeholderDiv,
+                url: url,
+                config: config,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function getAuthToken() {
+        const options = {
+            method: 'GET',
+            credentials: 'include', // Including cookie
+            mode: 'cors', // Setting as cors mode for cross origin
+            headers: { 'content-type': 'application/json' },
+        };
+
+        return await fetch(
+            baseServerUrl + '/' + libraryName + '/api/auth/token',
+            options,
+        )
+            .then((response) => {
+                if (response.ok) return response.headers.get('x-mstr-authtoken');
+                else response.json().then((json) => {
+                    if (json.code === 'ERR009') alert("Token expired please refresh!")
+                });
+            })
+            .catch((error) =>
+                console.error('Failed to retrieve authToken with error:', error),
+            );
+    }
+
+    // Create new authToken
+    async function createAuthToken() {
+        // Make a call to REST API to log the user in, if there is not a valid authToken
+        const options = {
+            method: 'POST',
+            credentials: 'include', // Including cookie
+            mode: 'cors', // Setting as cors mode for cross origin
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                loginMode: 1, // 1 means Standard login
+                // loginMode: 16, // 16 means LDAP login
+                username: 'Administrator', // use guest / no password to test
+                password: 'r4h4514!#',
+            }),
+        };
+        return fetch(baseServerUrl + '/' + libraryName + '/api/auth/login', options)
+            .then((response) => {
+                if (response.ok) {
+                    console.log(
+                        'A new standard login session has been created successfully, logging in',
+                    );
+                    return response.headers.get('x-mstr-authtoken');
+                } else response.json().then((json) => console.log(json));
+            })
+            .catch((error) =>
+                console.error('Failed Standard Login with error:', error),
+            );
+    }
+    
+    // Reuse login session. If not found, create a new authToken.
+    async function login() {
+        let authToken = await getAuthToken().catch((error) => console.error(error));
+        // If the authToken is available, return it
+        if (!!authToken) {
+            console.log('An existing login session has been found, logging in');
+            return authToken;
+        }
+        return await createAuthToken();
+    }
+
+    runCode()
+</script>
+</html>
+    `;
+  return (
+    <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ height: "90%", width: "100%", padding: PADDING.Page }}>
+        <WebView
+          originWhitelist={["*"]}
+          source={{
+            uri: "http://192.168.0.219:3000/assets/dashboardExt/DLPMUKP/index.html",
+          }}
+          style={{ flex: 1 }}
+          allowFileAccess={true}
+          androidLayerType={"software"}
+          mixedContentMode={"always"}
+          allowUniversalAccessFromFileURLs={true}
+          scalesPageToFit={false}
+          incognito={true}
+          pullToRefreshEnabled={true}
+        />
+        <Text style={{ color: COLORS.primary }}>
+          *) Gunakan 2 jari untuk menyesuaikan zoom
+        </Text>
+      </View>
+    </View>
+  );
+};

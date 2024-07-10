@@ -7,7 +7,7 @@ import {
   fontSizeResponsive,
   spacing,
 } from "../../config/SuperAppps";
-import { View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
@@ -15,11 +15,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { Divider } from "react-native-paper";
+import WebView from "react-native-webview";
+import RenderHTML from "react-native-render-html";
 
 export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const loading = false;
+
+  const { width } = useWindowDimensions();
 
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   return (
@@ -85,9 +89,10 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
             ) : (
               <>
                 <Divider style={{ marginVertical: spacing.medium }} />
-                <Text style={fontSizeResponsive("textM", device)}>
-                  {item.description}
-                </Text>
+                <RenderHTML
+                  source={{ html: item.description }}
+                  contentWidth={width}
+                />
               </>
             )}
           </TouchableOpacity>

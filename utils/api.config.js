@@ -8,6 +8,7 @@ export const nde_api = {
 
   //GET
   baseurl: Config.base_url,
+  baseurl_kores: Config.base_url_kores,
   auth: Config.base_url + Config.api.auth,
   //DASHBOARD
   dashboard: Config.base_url + Config.api.dashboard,

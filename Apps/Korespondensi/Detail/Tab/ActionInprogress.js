@@ -180,7 +180,7 @@ function ActionInprogress({ id, data, page }) {
         setisLoading(false);
       } else if (
         passphrase.length == 0 &&
-        data?.current + 1 == data?.tracker?.approvers?.length &&
+        data?.is_signer &&
         tipe == "Setujui" &&
         profile.is_pass != "true"
       ) {
@@ -1011,7 +1011,7 @@ function ActionInprogress({ id, data, page }) {
 
                   {tipe == "Setujui" &&
                     profile.is_pass != "true" &&
-                    data?.current + 1 == data?.tracker?.approvers?.length && (
+                    data?.is_signer && (
                       <>
                         <View style={{ flexDirection: "row" }}>
                           <Text>Passphrase</Text>

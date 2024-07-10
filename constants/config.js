@@ -6,6 +6,7 @@ export const Config = {
   app_name: Constants.expoConfig.name,
   app_version: Constants.expoConfig.version,
   base_url: extra.base_url,
+  base_url_kores: extra.base_url_kores,
   base_url_auth: extra.base_url_auth,
   base_url_cuti: extra.base_url_cuti,
   base_url_helpdesk: extra.base_url_helpdesk,
