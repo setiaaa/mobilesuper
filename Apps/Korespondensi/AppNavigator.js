@@ -216,6 +216,7 @@ import { PerizinanMenteri } from "../DigitalSignature/PerizinanMenteri";
 import { DetailPerizinanMenteri } from "../DigitalSignature/DetailPerizinanMenteri";
 import NeedSignList from "./List/NeedSignList";
 import { ListAplikasiKepegawaian } from "../Kepegawaian/ListAplikasiKepegawaian";
+import { LPMUKP } from "../Dashboard/LPMUKP";
 
 const Stack = createNativeStackNavigator();
 

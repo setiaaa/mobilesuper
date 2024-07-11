@@ -66,6 +66,7 @@ function ViewAttachment({ route }) {
                   width: Dimensions.get("window").width,
                   height: Dimensions.get("window").height,
                 }}
+                incognito={true}
               />
             )}
             {!stylus && (

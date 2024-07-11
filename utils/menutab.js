@@ -117,6 +117,7 @@ import { Regulasi } from "../Apps/Faq/Regulasi";
 import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
 import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
 import { SuperApps } from "../Apps/Faq/SuperApps";
+import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -962,6 +963,12 @@ export const TopsProduksiBudidaya = () => {
 
 export const TopsKeuanganKinerja = () => {
   const { device } = useSelector((state) => state.apps);
+  const dataRoleLPMUKP = ["LPMUKP_DASHBOARD"];
+  const { profile } = useSelector((state) => state.superApps);
+
+  const isRoleLPMUKP = profile.roles_access?.some((item) =>
+    dataRoleLPMUKP.includes(item)
+  );
 
   return (
     <BottomSheetModalProvider>
@@ -1001,6 +1008,15 @@ export const TopsKeuanganKinerja = () => {
             title: "IKU",
           }}
         />
+        {isRoleLPMUKP ? (
+          <Top.Screen
+            name="LPMUKP"
+            component={LPMUKP}
+            options={{
+              title: "LPMUKP",
+            }}
+          />
+        ) : null}
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
