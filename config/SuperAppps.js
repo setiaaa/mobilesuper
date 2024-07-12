@@ -42,12 +42,12 @@ export const fontSizeResponsive = (type, device) => {
     H4: device === "phone" ? 11 : 22,
     H5: device === "phone" ? 10 : 21,
     Judul: device === "phone" ? 17 : 28,
-    textS: device === "phone" ? textStyle.textS : 22,
-    textM: device === "phone" ? textStyle.textM : 24,
-    textL: device === "phone" ? textStyle.textL : 26,
-    headingS: device === "phone" ? textStyle.headingS : 22,
-    headingM: device === "phone" ? textStyle.headingM : 23,
-    headingL: device === "phone" ? textStyle.headingL : 25,
+    textS: device === "phone" ? textStyle.textS : { fontsize: 22 },
+    textM: device === "phone" ? textStyle.textM : { fontsize: 24 },
+    textL: device === "phone" ? textStyle.textL : { fontsize: 26 },
+    headingS: device === "phone" ? textStyle.headingS : { fontsize: 22 },
+    headingM: device === "phone" ? textStyle.headingM : { fontsize: 23 },
+    headingL: device === "phone" ? textStyle.headingL : { fontsize: 25 },
   };
   return data[type];
 };

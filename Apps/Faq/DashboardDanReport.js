@@ -4,12 +4,13 @@ import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales";
 import ListEmpty from "../../components/ListEmpty";
-import { COLORS, DATETIME } from "../../config/SuperAppps";
+import { COLORS, DATETIME, spacing } from "../../config/SuperAppps";
 import { Loading } from "../../components/Loading";
 import { getFaqByCategory, getFaqCategory } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { CardListFaq } from "../../components/CardListFaq";
 import { useNavigation } from "@react-navigation/native";
+import { Search } from "../../components/Search";
 
 export const DashboardDanReport = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const DashboardDanReport = () => {
   );
 
   const idDDR = faqCategory?.lists[0]?.id;
+  const [filterData, setFilterData] = useState([]);
   const [search, setSearch] = useState("");
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -58,10 +60,33 @@ export const DashboardDanReport = () => {
     //   setRefreshing(false);
     // }, 2000);
   }, [token]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = faqByCategory.DDR.filter((item) => {
+        return item.title?.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(faqByCategory.DDR);
+    }
+  }, [search, faqByCategory.DDR]);
+
   return (
     <>
+      <View style={{ marginTop: spacing.medium }}>
+        <Search
+          placeholder={"Cari"}
+          iconColor={COLORS.primary}
+          onSearch={filter}
+        />
+      </View>
       <FlatList
-        data={faqByCategory.DDR}
+        data={filterData}
         renderItem={({ item }) => (
           <CardListFaq
             item={item}
