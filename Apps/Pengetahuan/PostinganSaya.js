@@ -169,6 +169,18 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     </View>
                   </View>
                 </View>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    color: "#6B7280",
+                    marginBottom: 5,
+                  }}
+                >
+                  Komentar:{" "}
+                  {item?.comment_is_penilai[0]?.message === undefined
+                    ? "-"
+                    : item?.comment_is_penilai[0]?.message}
+                </Text>
                 <View
                   style={{
                     justifyContent: "space-between",
@@ -418,6 +430,19 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     </View>
                   </View>
                 </View>
+
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    color: "#6B7280",
+                    marginBottom: 5,
+                  }}
+                >
+                  Komentar:{" "}
+                  {item?.comment_is_penilai[0]?.message === undefined
+                    ? "-"
+                    : item?.comment_is_penilai[0]?.message}
+                </Text>
                 <View
                   style={{
                     justifyContent: "space-between",

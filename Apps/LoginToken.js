@@ -30,6 +30,7 @@ import { setLogout } from "../store/LoginAuth";
 import * as Linking from "expo-linking";
 import { Config } from "../constants/config";
 import { getHTTP, handleUpgradeLink } from "../utils/http";
+import { Loading } from "../components/Loading";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
@@ -100,6 +101,7 @@ export const LoginToken = () => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.white, padding: 0 }}
     >
+      {loginAuth.loading ? <Loading /> : null}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "height" : "height"}
       >

@@ -9,6 +9,7 @@ const LoginAuthSlice = createSlice({
     token: "",
     error: null,
     msg: "",
+    loading: false,
   },
   reducers: {
     setLogout: (state, action) => {
@@ -24,12 +25,17 @@ const LoginAuthSlice = createSlice({
         state.token = action.payload;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
+        state.loading = false;
+      })
+      .addCase(Login.pending, (state, action) => {
+        state.loading = true;
       })
       .addCase(Login.rejected, (state, action) => {
         state.error = false;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
         Sentry.captureException(action.payload);
+        state.loading = false;
       });
   },
 });

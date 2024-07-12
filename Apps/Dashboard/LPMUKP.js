@@ -156,7 +156,7 @@ export const LPMUKP = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "http://192.168.0.219:3000/assets/dashboardExt/DLPMUKP/index.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
           }}
           style={{ flex: 1 }}
           allowFileAccess={true}
