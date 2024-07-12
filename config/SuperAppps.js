@@ -24,6 +24,7 @@ export const COLORS = {
   foundation: "#474747",
   bgLightGrey: "#F8F8F8",
   tertiary: "#B3B2B5",
+  iconMenu: "#526D82",
 };
 export const FONTSIZE = {
   H1: 15,
@@ -55,52 +56,14 @@ export const fontSizeResponsive = (type, device) => {
 export const imageApps = (type) => {
   if (type === "Korespondensi") {
     return require("../assets/superApp/korespondensi.png");
-  } else if (type === "Regulasi") {
-    return require("../assets/superApp/kebijakan.png");
   } else if (type === "Cuti") {
     return require("../assets/superApp/cuti.png");
   } else if (type === "Pengembangan Kompetensi") {
     return require("../assets/superApp/Bankomicon.png");
-  } else if (type === "SPPD") {
-    return require("../assets/superApp/sppd.png");
-  } else if (type === "Task") {
-    return require("../assets/superApp/taskmanagement.png");
-  }
-  // else if (type === "Pegawai") {
-  //   return require("../assets/superApp/pegawai.png");
-  // }
-  else if (type === "Survei Layanan") {
-    return require("../assets/superApp/surveylayanan.png");
-  } else if (type === "Preparing dan Sharing") {
-    return require("../assets/superApp/repositori.png");
-  } else if (type === "Kalender") {
-    return require("../assets/superApp/kalender.png");
   } else if (type === "Digital Sign") {
     return require("../assets/superApp/digitalsign.png");
-  } else if (type === "Agenda Rapat") {
-    return require("../assets/superApp/event.png");
-  } else if (type === "Kepegawaian") {
-    return require("../assets/superApp/Kepegawaian.png");
   } else if (type === "Perizinan Menteri") {
     return require("../assets/superApp/PerizinanMentri.png");
-  } else if (type === "Pengetahuan") {
-    return require("../assets/superApp/pengetahuan.png");
-  } else if (type === "Aksi Perubahan") {
-    return require("../assets/superApp/aksiperubahanicon.png");
-  } else if (type === "Sertifikat") {
-    return require("../assets/superApp/sertifikat.png");
-  } else if (type === "e-Learning") {
-    return require("../assets/superApp/e-learningicon.png");
-  } else if (type === "Info") {
-    return require("../assets/superApp/info.png");
-  } else if (type === "Laporan") {
-    return require("../assets/superApp/Laporanicon.png");
-  } else if (type === "IPASN") {
-    return require("../assets/superApp/IPASN.png");
-  } else if (type === "Pegawai") {
-    return require("../assets/superApp/Pegawai2.png");
-  } else if (type === "Nominatif Pegawai") {
-    return require("../assets/superApp/NominatifPeg.png");
   }
 };
 

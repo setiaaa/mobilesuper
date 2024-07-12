@@ -54,7 +54,7 @@ export const PerizinanMenteri = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
-  const [tipe, setTipe] = useState("dokumen_lain");
+  const [tipe, setTipe] = useState("perizinan-mentri");
   const [variant, SetVariant] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [isSelected, setSelection] = useState([]);
@@ -103,7 +103,7 @@ export const PerizinanMenteri = () => {
           dispatch(getListInProgress({ token: token, tipe: tipe }));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -112,7 +112,7 @@ export const PerizinanMenteri = () => {
   }, [token, tipe]);
 
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["25%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -144,17 +144,17 @@ export const PerizinanMenteri = () => {
   const checkAll = () => {
     // Check If isSelected already exists (length !== 0)
     if (isSelected.length === dokumenlain.lists.length) {
-      setSelection([])
+      setSelection([]);
     }
     // If isSelected still empty or all data hasn't checked
     else {
-      let tmp = []
-      dokumenlain.lists.map(item => {
-        tmp.push(item?.id)
-      })
-      setSelection(tmp)
+      let tmp = [];
+      dokumenlain.lists.map((item) => {
+        tmp.push(item?.id);
+      });
+      setSelection(tmp);
     }
-  }
+  };
 
   const filterHandlerInProgress = () => {
     SetVariant("inprogress");
@@ -166,6 +166,7 @@ export const PerizinanMenteri = () => {
     dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
   };
 
+  const { profile } = useSelector((state) => state.superApps);
   console.log(isSelected);
 
   const { device } = useSelector((state) => state.apps);
@@ -248,20 +249,31 @@ export const PerizinanMenteri = () => {
             </View>
           </View>
 
-          <View style={{ flexDirection: "row", justifyContent: 'space-between', backgroundColor: 'white', marginHorizontal: '5%', width: '90%', padding: 16, marginTop: 10 }}>
-            {variant === 'inprogress' &&
-              <View style={{ flexDirection: 'row', gap: 10 }}>
-                {/* Checkbox All */}
-                <Checkbox
-                  value={dokumenlain.lists.length === isSelected.length}
-                  onValueChange={() => checkAll()}
-                  color={isSelected === true ? COLORS.lighter : null}
-                />
-                <Text>Pilih Semua</Text>
-              </View>
-            }
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: "white",
+              marginHorizontal: "5%",
+              width: "90%",
+              padding: 16,
+              marginTop: 10,
+            }}
+          >
+            {variant === "inprogress" &&
+              profile.nip !== "197208122001121002" && (
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  {/* Checkbox All */}
+                  <Checkbox
+                    value={dokumenlain.lists.length === isSelected.length}
+                    onValueChange={() => checkAll()}
+                    color={isSelected === true ? COLORS.lighter : null}
+                  />
+                  <Text>Pilih Semua</Text>
+                </View>
+              )}
 
-            <View style={{ flexDirection: 'row', gap: 10 }}>
+            <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity
                 style={{
                   width: device === "tablet" ? "19%" : null,
@@ -282,7 +294,9 @@ export const PerizinanMenteri = () => {
                 <Text
                   style={{
                     color:
-                      variant === "inprogress" ? COLORS.white : COLORS.foundation,
+                      variant === "inprogress"
+                        ? COLORS.white
+                        : COLORS.foundation,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -299,7 +313,8 @@ export const PerizinanMenteri = () => {
                   backgroundColor:
                     variant === "signed" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
-                  borderColor: variant === "signed" ? null : COLORS.ExtraDivinder,
+                  borderColor:
+                    variant === "signed" ? null : COLORS.ExtraDivinder,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -332,6 +347,7 @@ export const PerizinanMenteri = () => {
                   device={device}
                   isSelected={isSelected}
                   setSelection={setSelection}
+                  nip={profile.nip}
                 />
               </View>
             )}
@@ -339,7 +355,7 @@ export const PerizinanMenteri = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            style={{ height: "80%" }}
+            style={{ height: "65%" }}
           />
 
           <BottomSheetModal

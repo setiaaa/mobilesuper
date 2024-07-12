@@ -16,7 +16,7 @@
   },
   "assetBundlePatterns": ["**/*"],
   "ios": {
-    "buildNumber": "7.3.9",
+    "buildNumber": "7.4.0",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
