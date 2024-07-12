@@ -421,7 +421,6 @@ function NeedSignList({ route }) {
           },
         ]);
       }
-      console.log(response);
       setIsLoading(false);
     } catch (error) {
       handlerError(

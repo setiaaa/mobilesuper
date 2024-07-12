@@ -12,7 +12,7 @@ export async function headerToken() {
   await AsyncStorage.getItem("token").then((data) => {
     token = data;
   });
-  return { Authorization: token };
+  return { Authorization: token, "User-Agent": "mobile" };
 }
 
 export async function postAuth(data) {
