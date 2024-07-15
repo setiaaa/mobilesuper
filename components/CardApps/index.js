@@ -8,7 +8,13 @@ import {
   Platform,
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  FontAwesome,
+  Entypo,
+  MaterialCommunityIcons,
+  FontAwesome6,
+} from "@expo/vector-icons";
 import {
   COLORS,
   FONTSIZE,
@@ -372,7 +378,7 @@ export const CardApps = ({
           },
           height: {
             tablet: 40,
-            hp: 24,
+            hp: 30,
           },
         },
         titleStyle: {
@@ -474,20 +480,69 @@ export const CardApps = ({
                             },
                           ]}
                         >
-                          <Image
-                            style={{
-                              width:
-                                device === "tablet"
-                                  ? item.imagestyle.width.tablet
-                                  : item.imagestyle.width.hp,
-                              height:
-                                device === "tablet"
-                                  ? item.imagestyle.height.tablet
-                                  : item.imagestyle.height.hp,
-                            }}
-                            source={imageApps(item.title)}
-                          />
-                          {/* <Text>{typeof item.image}</Text> */}
+                          {item.title === "Task" ? (
+                            <MaterialIcons
+                              name="task-alt"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Kalender" ? (
+                            <FontAwesome
+                              name="calendar"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Preparing dan Sharing" ? (
+                            <Entypo
+                              name="folder"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Regulasi" ? (
+                            <Entypo
+                              name="shield"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Survei Layanan" ? (
+                            <MaterialCommunityIcons
+                              name="email-newsletter"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Agenda Rapat" ? (
+                            <MaterialCommunityIcons
+                              name="folder-star-multiple"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "SPPD" ? (
+                            <MaterialIcons
+                              name="travel-explore"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Kepegawaian" ? (
+                            <FontAwesome6
+                              name="people-line"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : (
+                            <Image
+                              style={{
+                                width:
+                                  device === "tablet"
+                                    ? item.imagestyle.width.tablet
+                                    : item.imagestyle.width.hp,
+                                height:
+                                  device === "tablet"
+                                    ? item.imagestyle.height.tablet
+                                    : item.imagestyle.height.hp,
+                              }}
+                              source={imageApps(item.title)}
+                            />
+                          )}
                         </View>
                       </TouchableOpacity>
                       <Text
@@ -555,19 +610,69 @@ export const CardApps = ({
                             },
                           ]}
                         >
-                          <Image
-                            style={{
-                              width:
-                                device === "tablet"
-                                  ? item.imagestyle.width.tablet
-                                  : item.imagestyle.width.hp,
-                              height:
-                                device === "tablet"
-                                  ? item.imagestyle.height.tablet
-                                  : item.imagestyle.height.hp,
-                            }}
-                            source={imageApps(item.title)}
-                          />
+                          {item.title === "Task" ? (
+                            <MaterialIcons
+                              name="task-alt"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Kalender" ? (
+                            <FontAwesome
+                              name="calendar"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Preparing dan Sharing" ? (
+                            <Entypo
+                              name="folder"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Regulasi" ? (
+                            <Entypo
+                              name="shield"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Survei Layanan" ? (
+                            <MaterialCommunityIcons
+                              name="email-newsletter"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Agenda Rapat" ? (
+                            <MaterialCommunityIcons
+                              name="folder-star-multiple"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "SPPD" ? (
+                            <MaterialIcons
+                              name="travel-explore"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Kepegawaian" ? (
+                            <FontAwesome6
+                              name="people-line"
+                              size={30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : (
+                            <Image
+                              style={{
+                                width:
+                                  device === "tablet"
+                                    ? item.imagestyle.width.tablet
+                                    : item.imagestyle.width.hp,
+                                height:
+                                  device === "tablet"
+                                    ? item.imagestyle.height.tablet
+                                    : item.imagestyle.height.hp,
+                              }}
+                              source={imageApps(item.title)}
+                            />
+                          )}
                         </View>
                       </TouchableOpacity>
                       <Text
@@ -607,12 +712,10 @@ export const CardApps = ({
                       },
                     ]}
                   >
-                    <Image
-                      style={{
-                        width: device === "tablet" ? 60 : 32,
-                        height: device === "tablet" ? 60 : 32,
-                      }}
-                      source={require("../../assets/superApp/more.png")}
+                    <MaterialIcons
+                      name="dashboard"
+                      size={30}
+                      color={COLORS.iconMenu}
                     />
                   </View>
                 </TouchableOpacity>

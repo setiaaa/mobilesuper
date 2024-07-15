@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
   Modal,
   Platform,
   ScrollView,
   Text,
+  TextInput,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -29,6 +31,7 @@ import { StyleSheet } from "react-native";
 import {
   getDetailLinimasa,
   getViewLinimasa,
+  postKomentarDetailPenilaian,
   putAddApprove,
   putCancelApprove,
   putTakeDown,
@@ -247,16 +250,22 @@ export const DetailPenilaian = () => {
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
+    // console.log(id);
     dispatch(getDetailLinimasa(params));
-    dispatch(getViewLinimasa(params));
+    // dispatch(getViewLinimasa(params));
   };
 
   const { device } = useSelector((state) => state.apps);
   const video = useRef(null);
   const [status, setStatus] = useState({});
+  const [komen, setKomen] = useState("");
 
   return (
-    <View style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior="position"
+      keyboardVerticalOffset={80}
+      style={{ flex: 1 }}
+    >
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
@@ -740,6 +749,38 @@ export const DetailPenilaian = () => {
                 {tanggal}
               </Text>
             </View>
+
+            <View style={{ flexDirection: "row", gap: 5 }}>
+              <Image
+                source={{ uri: data?.logged_in_user_avatar }}
+                style={{ width: 50, height: 50, borderRadius: 50 }}
+              />
+
+              <View
+                style={{
+                  borderWidth: 1,
+                  width: "80%",
+                  marginLeft: 17,
+                  borderRadius: 16,
+                  borderColor: COLORS.ExtraDivinder,
+                  backgroundColor: COLORS.ExtraDivinder,
+                  marginTop: 10,
+                }}
+              >
+                <TextInput
+                  numberOfLines={1}
+                  placeholder="Ketik Komentar Disini"
+                  style={{
+                    padding: 10,
+                    width: "90%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                  onChangeText={setKomen}
+                  defaultValue={komen}
+                  placeholderTextColor={COLORS.grey}
+                />
+              </View>
+            </View>
           </View>
         </View>
 
@@ -765,13 +806,23 @@ export const DetailPenilaian = () => {
                   body: { category_id: Nilai.key },
                 })
               );
+              const dataPayload = {
+                token: token,
+                payload: {
+                  article_id: data.id,
+                  parent_id: "",
+                  message: komen,
+                },
+              };
+              if (komen !== "") {
+                dispatch(postKomentarDetailPenilaian(dataPayload));
+              }
               navigation.navigate("PenilaianPenggetahaun");
             }}
           >
             <Text
               style={{
                 color: COLORS.white,
-                fontSize: fontSizeResponsive("H2", device),
               }}
             >
               Approve
@@ -804,7 +855,6 @@ export const DetailPenilaian = () => {
             <Text
               style={{
                 color: COLORS.white,
-                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Cancel Approve
@@ -980,8 +1030,12 @@ export const DetailPenilaian = () => {
             marginVertical: 10,
           }}
           onPress={() => {
-            getDetail(data?.id);
-            navigation.navigate("DetailLinimasa");
+            // console.log("data", data.id);
+            // getDetail(data?.id);
+            navigation.navigate("DetailLinimasa", {
+              // like_list: item.like_list,
+              id: data.id,
+            });
           }}
         >
           <Text
@@ -994,7 +1048,7 @@ export const DetailPenilaian = () => {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

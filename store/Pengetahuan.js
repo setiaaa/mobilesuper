@@ -31,6 +31,7 @@ import {
   patchLike,
   patchUnlike,
   postComment,
+  postKomentarDetailPenilaian,
   putTakeDown,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
@@ -93,6 +94,7 @@ const PengetahuanSlice = createSlice({
     nilai: [],
     komen: [],
     loading: false,
+    komenPenilaian: {},
   },
   reducers: {
     setLiniMasa: (state, action) => {
@@ -436,6 +438,18 @@ const PengetahuanSlice = createSlice({
       .addCase(getExportFileEmployee.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.payload);
+      })
+      .addCase(postKomentarDetailPenilaian.fulfilled, (state, action) => {
+        state.komenPenilaian = action.payload;
+        state.loading = false;
+        console.log("berhasil");
+      })
+      .addCase(postKomentarDetailPenilaian.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(postKomentarDetailPenilaian.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
       });
   },
 });

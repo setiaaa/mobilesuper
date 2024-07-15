@@ -81,6 +81,8 @@ export const DetailPerizinanMenteri = ({ route }) => {
     dispatch(tandaTanganMentri(data));
   };
 
+  const { profile } = useSelector((state) => state.superApps);
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -656,7 +658,8 @@ export const DetailPerizinanMenteri = ({ route }) => {
                 </Text>
               </TouchableOpacity>
             )}
-            {variant.variant === "inprogress" ? (
+            {variant.variant === "inprogress" &&
+            profile.nip !== "197208122001121002" ? (
               <>
                 <TouchableOpacity
                   style={{

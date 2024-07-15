@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
+  Dimensions,
   KeyboardAvoidingView,
   Linking,
   Platform,
@@ -633,7 +634,8 @@ export const DetailLinimasa = ({ route }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const windowHeight = Dimensions.get("window").height;
+  const initialSnapPoints = useMemo(() => [windowHeight * 0.8], [windowHeight]);
   const initSnapPoints = useMemo(() => ["20%"], []);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
@@ -776,7 +778,15 @@ export const DetailLinimasa = ({ route }) => {
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <ScrollView>
-            <View>
+            <View
+              style={{
+                minHeight: Dimensions.get("screen").height,
+                width: Dimensions.get("screen").width,
+                backgroundColor: "white",
+                display: "flex",
+                position: "relative",
+              }}
+            >
               <TouchableOpacity
                 onPress={() => {
                   resetData();
@@ -804,6 +814,7 @@ export const DetailLinimasa = ({ route }) => {
                   />
                 </View>
               </TouchableOpacity>
+
               <View style={{ position: "relative" }}>
                 {loading ? (
                   <View
@@ -858,72 +869,111 @@ export const DetailLinimasa = ({ route }) => {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{ backgroundColor: COLORS.white }}>
-                {loading ? (
-                  <ShimmerPlaceHolder
+
+              <View style={{ flex: 1 }}>
+                <View>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{
+                        borderRadius: 4,
+                        marginHorizontal: 25,
+                        marginBottom: 20,
+                      }}
+                      width={325}
+                      height={30}
+                    />
+                  ) : (
+                    <Text
+                      style={{
+                        paddingBottom: 20,
+                        paddingHorizontal: "5%",
+                        fontSize: fontSizeResponsive("H1", device),
+                        fontWeight: FONTWEIGHT.bold,
+                      }}
+                    >
+                      {detail.title}
+                    </Text>
+                  )}
+
+                  <View
                     style={{
-                      borderRadius: 4,
-                      marginHorizontal: 25,
-                      marginBottom: 20,
-                    }}
-                    width={325}
-                    height={30}
-                  />
-                ) : (
-                  <Text
-                    style={{
-                      paddingBottom: 20,
+                      flexDirection: "row",
+                      gap: 10,
                       paddingHorizontal: "5%",
-                      fontSize: fontSizeResponsive("H1", device),
-                      fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {detail.title}
-                  </Text>
-                )}
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 10,
-                    paddingHorizontal: "5%",
-                  }}
-                >
-                  <View>
-                    {loading ? (
-                      <ShimmerPlaceHolder
-                        style={{
-                          borderRadius: 50,
-                        }}
-                        width={50}
-                        height={50}
-                      />
-                    ) : (
-                      <Image
-                        source={{ uri: detail.creator_avatar }}
-                        style={{ borderRadius: 50, width: 50, height: 50 }}
-                      />
-                    )}
+                    <View>
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{
+                            borderRadius: 50,
+                          }}
+                          width={50}
+                          height={50}
+                        />
+                      ) : (
+                        <Image
+                          source={{ uri: detail.creator_avatar }}
+                          style={{ borderRadius: 50, width: 50, height: 50 }}
+                        />
+                      )}
+                    </View>
+                    <View style={{ rowGap: 5 }}>
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{
+                            borderRadius: 4,
+                          }}
+                          width={150}
+                          height={20}
+                        />
+                      ) : (
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {detail.creator?.name}
+                        </Text>
+                      )}
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{
+                            borderRadius: 4,
+                          }}
+                          width={100}
+                          height={20}
+                        />
+                      ) : (
+                        <Text
+                          style={{
+                            color: COLORS.grey,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {/* {detail.published_date?.slice(0, -9)} */}
+                          {detail.published_date !== undefined
+                            ? DateFormat({
+                                date: detail?.published_date,
+                                fromDate: DATETIME.LONG_DATETIME,
+                                toDate: DATETIME.LONG_DATE,
+                              })
+                            : null}
+                        </Text>
+                      )}
+                    </View>
                   </View>
-                  <View style={{ rowGap: 5 }}>
-                    {loading ? (
-                      <ShimmerPlaceHolder
-                        style={{
-                          borderRadius: 4,
-                        }}
-                        width={150}
-                        height={20}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {detail.creator?.name}
-                      </Text>
-                    )}
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 15,
+                      alignItems: "center",
+                      paddingHorizontal: "5%",
+                      marginTop: 20,
+                    }}
+                  >
                     {loading ? (
                       <ShimmerPlaceHolder
                         style={{
@@ -933,272 +983,428 @@ export const DetailLinimasa = ({ route }) => {
                         height={20}
                       />
                     ) : (
-                      <Text
+                      <View
                         style={{
-                          color: COLORS.grey,
-                          fontSize: fontSizeResponsive("H4", device),
+                          backgroundColor:
+                            detail.category === "Video / Jurnal"
+                              ? COLORS.successLight
+                              : detail.category === "Infografis"
+                              ? COLORS.warningLight
+                              : COLORS.infoLight,
+                          width: 130,
+                          height: 30,
+                          borderRadius: 30,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          gap: 5,
                         }}
                       >
-                        {/* {detail.published_date?.slice(0, -9)} */}
-                        {detail.published_date !== undefined
-                          ? DateFormat({
-                              date: detail?.published_date,
-                              fromDate: DATETIME.LONG_DATETIME,
-                              toDate: DATETIME.LONG_DATE,
-                            })
-                          : null}
-                      </Text>
+                        {detail.category === "Infografis" ? (
+                          <Ionicons
+                            name="document-outline"
+                            color={"#F6AD1D"}
+                            style={{ marginTop: 2 }}
+                          />
+                        ) : detail.category === "Kegiatan" ? (
+                          <Ionicons
+                            name="analytics-outline"
+                            color={"#1868AB"}
+                            style={{ marginTop: 3 }}
+                          />
+                        ) : (
+                          <Ionicons
+                            name="videocam-outline"
+                            color={"#11C15B"}
+                            style={{ marginTop: 2 }}
+                          />
+                        )}
+                        <Text
+                          style={{
+                            color:
+                              detail.category === "Infografis"
+                                ? COLORS.warning
+                                : detail.category === "Kegiatan"
+                                ? COLORS.info
+                                : COLORS.success,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {detail.category}
+                        </Text>
+                      </View>
                     )}
                   </View>
-                </View>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 15,
-                    alignItems: "center",
-                    paddingHorizontal: "5%",
-                    marginTop: 20,
-                  }}
-                >
                   {loading ? (
                     <ShimmerPlaceHolder
                       style={{
                         borderRadius: 4,
+                        marginTop: 20,
+                        marginHorizontal: 25,
                       }}
-                      width={100}
-                      height={20}
+                      width={325}
+                      height={40}
                     />
-                  ) : (
+                  ) : detail.summary !== null ? (
                     <View
                       style={{
-                        backgroundColor:
-                          detail.category === "Video / Jurnal"
-                            ? COLORS.successLight
-                            : detail.category === "Infografis"
-                            ? COLORS.warningLight
-                            : COLORS.infoLight,
-                        width: 130,
-                        height: 30,
-                        borderRadius: 30,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "row",
-                        gap: 5,
+                        marginTop: 20,
+                        backgroundColor: COLORS.infoLight,
+                        padding: 20,
+                        marginHorizontal: "5%",
+                        borderRadius: 20,
                       }}
                     >
-                      {detail.category === "Infografis" ? (
-                        <Ionicons
-                          name="document-outline"
-                          color={"#F6AD1D"}
-                          style={{ marginTop: 2 }}
-                        />
-                      ) : detail.category === "Kegiatan" ? (
-                        <Ionicons
-                          name="analytics-outline"
-                          color={"#1868AB"}
-                          style={{ marginTop: 3 }}
-                        />
-                      ) : (
-                        <Ionicons
-                          name="videocam-outline"
-                          color={"#11C15B"}
-                          style={{ marginTop: 2 }}
-                        />
-                      )}
                       <Text
-                        style={{
-                          color:
-                            detail.category === "Infografis"
-                              ? COLORS.warning
-                              : detail.category === "Kegiatan"
-                              ? COLORS.info
-                              : COLORS.success,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {detail.category}
+                        {detail.summary}
                       </Text>
                     </View>
+                  ) : null}
+
+                  {loading ? (
+                    <View style={{ marginBottom: 20 }}>
+                      <ShimmerParagraph />
+                      <ShimmerParagraph />
+                      <ShimmerParagraph />
+                    </View>
+                  ) : (
+                    <View
+                      style={{ marginHorizontal: "5%", paddingVertical: -20 }}
+                    >
+                      <RenderHTML
+                        source={source}
+                        contentWidth={width}
+                        enableExperimentalMarginCollapsing={true}
+                        tagsStyles={{
+                          p: { fontSize: fontSizeResponsive("H4", device) },
+                        }}
+                      />
+                    </View>
                   )}
-                </View>
 
-                {loading ? (
-                  <ShimmerPlaceHolder
-                    style={{
-                      borderRadius: 4,
-                      marginTop: 20,
-                      marginHorizontal: 25,
-                    }}
-                    width={325}
-                    height={40}
-                  />
-                ) : detail.summary !== null ? (
                   <View
                     style={{
-                      marginTop: 20,
-                      backgroundColor: COLORS.infoLight,
-                      padding: 20,
+                      display: "flex",
+                      flexDirection: "row",
+                      marginVertical: 10,
                       marginHorizontal: "5%",
-                      borderRadius: 20,
+                      // paddingHorizontal: 16,
+                      // backgroundColor: "grey",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      {detail.summary}
-                    </Text>
-                  </View>
-                ) : null}
+                    <View>
+                      <TouchableOpacity
+                        onPress={() => {
+                          // bottomSheetAttachCommentClose();
+                          // dispatch(
+                          //   getListsLike({ token: token, id: detail.id })
+                          // );
+                          // navigation.navigate("ListSukaLinimasa");
+                          setVisibleModalViewDisukai(true);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.lighter,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {detail.likes_count} Disukai
+                        </Text>
+                      </TouchableOpacity>
 
-                {loading ? (
-                  <View style={{ marginBottom: 20 }}>
-                    <ShimmerParagraph />
-                    <ShimmerParagraph />
-                    <ShimmerParagraph />
-                  </View>
-                ) : (
-                  <View
-                    style={{ marginHorizontal: "5%", paddingVertical: -20 }}
-                  >
-                    <RenderHTML
-                      source={source}
-                      contentWidth={width}
-                      enableExperimentalMarginCollapsing={true}
-                      tagsStyles={{
-                        p: { fontSize: fontSizeResponsive("H4", device) },
-                      }}
-                    />
-                  </View>
-                )}
+                      <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={visibleModalViewDisukai}
+                        onRequestClose={() => {
+                          setVisibleModalViewDisukai(!visibleModalViewDisukai);
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={[
+                            Platform.OS === "ios"
+                              ? styles.iOSBackdrop
+                              : styles.androidBackdrop,
+                            styles.backdrop,
+                          ]}
+                        />
+                        <View style={{ alignItems: "center", flex: 1 }}>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.white,
+                              width: "90%",
+                              borderRadius: 10,
+                              marginTop: "40%",
+                            }}
+                          >
+                            <View
+                              style={{
+                                marginTop: 20,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginHorizontal: 20,
+                              }}
+                            >
+                              <View>
+                                <Text
+                                  style={{
+                                    fontSize: fontSizeResponsive(
+                                      "Judul",
+                                      device
+                                    ),
+                                    fontWeight: FONTWEIGHT.bold,
+                                  }}
+                                >
+                                  Disukai Oleh
+                                </Text>
+                              </View>
 
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginVertical: 10,
-                    marginHorizontal: "5%",
-                    // paddingHorizontal: 16,
-                    // backgroundColor: "grey",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // bottomSheetAttachCommentClose();
-                        // dispatch(
-                        //   getListsLike({ token: token, id: detail.id })
-                        // );
-                        // navigation.navigate("ListSukaLinimasa");
-                        setVisibleModalViewDisukai(true);
-                      }}
-                    >
+                              <TouchableOpacity
+                                style={{}}
+                                onPress={() => {
+                                  setVisibleModalViewDisukai(false);
+                                }}
+                              >
+                                <Ionicons
+                                  name="close-outline"
+                                  size={24}
+                                  color={COLORS.lighter}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                            {/* custom divider */}
+                            <View
+                              style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <View
+                                style={{
+                                  height: 1,
+                                  width: "90%",
+                                  backgroundColor: "#DBDADE",
+                                  marginVertical: 10,
+                                }}
+                              />
+                            </View>
+
+                            <ScrollView style={{ marginBottom: 40 }}>
+                              {listsLike?.map((data) => {
+                                return (
+                                  <View
+                                    style={{
+                                      flexDirection: "row",
+                                      alignItems: "center",
+                                      gap: 10,
+                                      marginHorizontal: 20,
+                                      marginTop: 20,
+                                    }}
+                                  >
+                                    <Image
+                                      source={{ uri: data.avatar_url }}
+                                      style={{
+                                        width: 50,
+                                        height: 50,
+                                        borderRadius: 30,
+                                      }}
+                                    />
+                                    <Text
+                                      style={{
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data.name}
+                                    </Text>
+                                  </View>
+                                );
+                              })}
+                            </ScrollView>
+                          </View>
+                        </View>
+                      </Modal>
+                    </View>
+                    <View style={{ flexDirection: "row", gap: 10 }}>
                       <Text
                         style={{
                           color: COLORS.lighter,
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {detail.likes_count} Disukai
+                        {detail.comment_count} Komentar
+                      </Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 3,
+                        }}
+                        onPress={() => {
+                          setVisibleModalView(true);
+                        }}
+                      >
+                        <Ionicons
+                          name="eye-outline"
+                          size={18}
+                          style={{ color: COLORS.lighter }}
+                        />
+                        <Text
+                          style={{
+                            color: COLORS.lighter,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {detail.views_count} Dilihat
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  {/* divider custom */}
+                  <View
+                    style={{
+                      height: 1,
+                      width: "90%",
+                      backgroundColor: "#DBDADE",
+                      // marginTop: 20,
+                      marginHorizontal: 20,
+                    }}
+                  />
+
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 10,
+                      marginVertical: 20,
+                      marginHorizontal: 20,
+                      paddingHorizontal: 16,
+                      // backgroundColor: "grey",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        gap: 3,
+                        alignItems: "center",
+                      }}
+                      onPress={handleLike}
+                    >
+                      <Ionicons
+                        name="thumbs-up-outline"
+                        size={18}
+                        color={detail.liked == true ? COLORS.primary : null}
+                      />
+                      <Text
+                        style={{
+                          color: detail.liked == true ? COLORS.primary : null,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Suka
                       </Text>
                     </TouchableOpacity>
 
-                    <Modal
-                      animationType="fade"
-                      transparent={true}
-                      visible={visibleModalViewDisukai}
-                      onRequestClose={() => {
-                        setVisibleModalViewDisukai(!visibleModalViewDisukai);
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 3,
                       }}
+                      onPress={bottomSheetAttachComment}
                     >
-                      <TouchableOpacity
-                        style={[
-                          Platform.OS === "ios"
-                            ? styles.iOSBackdrop
-                            : styles.androidBackdrop,
-                          styles.backdrop,
-                        ]}
-                      />
-                      <View style={{ alignItems: "center", flex: 1 }}>
+                      <Ionicons name="chatbox-outline" size={18} />
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        Komentar
+                      </Text>
+                    </TouchableOpacity>
+
+                    <BottomSheetModal
+                      ref={bottomSheetModalRef}
+                      snapPoints={animatedSnapPoints}
+                      handleHeight={animatedHandleHeight}
+                      contentHeight={animatedContentHeight}
+                      index={0}
+                      keyboardBlurBehavior="restore"
+                      keyboardBehavior="extend"
+                      android_keyboardInputMode="adjust"
+                      backdropComponent={({ style }) => (
                         <View
-                          style={{
-                            backgroundColor: COLORS.white,
-                            width: "90%",
-                            borderRadius: 10,
-                            marginTop: "40%",
-                          }}
+                          style={[
+                            style,
+                            { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+                          ]}
+                        />
+                      )}
+                    >
+                      <BottomSheetView onLayout={handleContentLayout}>
+                        <KeyboardAvoidingView
+                          behavior="position"
+                          keyboardVerticalOffset={parentId !== "" ? 120 : 80}
                         >
                           <View
                             style={{
-                              marginTop: 20,
-                              flexDirection: "row",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              marginHorizontal: 20,
-                            }}
-                          >
-                            <View>
-                              <Text
-                                style={{
-                                  fontSize: fontSizeResponsive("Judul", device),
-                                  fontWeight: FONTWEIGHT.bold,
-                                }}
-                              >
-                                Disukai Oleh
-                              </Text>
-                            </View>
-
-                            <TouchableOpacity
-                              style={{}}
-                              onPress={() => {
-                                setVisibleModalViewDisukai(false);
-                              }}
-                            >
-                              <Ionicons
-                                name="close-outline"
-                                size={24}
-                                color={COLORS.lighter}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                          {/* custom divider */}
-                          <View
-                            style={{
-                              justifyContent: "center",
-                              alignItems: "center",
+                              height: initialSnapPoints[0],
+                              display: "flex",
+                              flexDirection: "column",
+                              paddingBottom: 24,
                             }}
                           >
                             <View
-                              style={{
-                                height: 1,
-                                width: "90%",
-                                backgroundColor: "#DBDADE",
-                                marginVertical: 10,
-                              }}
-                            />
-                          </View>
+                              style={{ marginLeft: 20, marginVertical: 20 }}
+                            >
+                              <Text
+                                style={{
+                                  color: COLORS.ExtraDivinder,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Komentar({detail.comment_count})
+                              </Text>
+                            </View>
 
-                          <ScrollView style={{ marginBottom: 40 }}>
-                            {listsLike?.map((data) => {
-                              return (
+                            <View style={{ flex: 1 }}>
+                              <FlatList
+                                data={detail.comments}
+                                renderItem={({ item }) => (
+                                  <CardKomen
+                                    listData={item}
+                                    inputRef={inputRef}
+                                    setParentId={setParentId}
+                                    device={device}
+                                  />
+                                )}
+                              />
+                            </View>
+
+                            <View
+                              style={{
+                                display: "flex",
+                                justifyContent: "start",
+                                paddingVertical: 16,
+                              }}
+                            >
+                              {parentId.id !== "" ? (
                                 <View
                                   style={{
                                     flexDirection: "row",
-                                    alignItems: "center",
-                                    gap: 10,
-                                    marginHorizontal: 20,
-                                    marginTop: 20,
+                                    justifyContent: "space-between",
+                                    paddingHorizontal: 20,
                                   }}
                                 >
-                                  <Image
-                                    source={{ uri: data.avatar_url }}
-                                    style={{
-                                      width: 50,
-                                      height: 50,
-                                      borderRadius: 30,
-                                    }}
-                                  />
                                   <Text
                                     style={{
                                       fontSize: fontSizeResponsive(
@@ -1207,297 +1413,122 @@ export const DetailLinimasa = ({ route }) => {
                                       ),
                                     }}
                                   >
-                                    {data.name}
+                                    Membalas {parentId.creator}
                                   </Text>
+                                  <TouchableOpacity>
+                                    <Ionicons
+                                      name="close"
+                                      size={20}
+                                      color={COLORS.primary}
+                                      onPress={() =>
+                                        setParentId({ id: "", creator: "" })
+                                      }
+                                    />
+                                  </TouchableOpacity>
                                 </View>
-                              );
-                            })}
-                          </ScrollView>
-                        </View>
-                      </View>
-                    </Modal>
-                  </View>
-                  <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Text
-                      style={{
-                        color: COLORS.lighter,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {detail.comment_count} Komentar
-                    </Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 3,
-                      }}
-                      onPress={() => {
-                        setVisibleModalView(true);
-                      }}
-                    >
-                      <Ionicons
-                        name="eye-outline"
-                        size={18}
-                        style={{ color: COLORS.lighter }}
-                      />
-                      <Text
-                        style={{
-                          color: COLORS.lighter,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {detail.views_count} Dilihat
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                {/* divider custom */}
-                <View
-                  style={{
-                    height: 1,
-                    width: "90%",
-                    backgroundColor: "#DBDADE",
-                    // marginTop: 20,
-                    marginHorizontal: 20,
-                  }}
-                />
+                              ) : null}
 
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: 10,
-                    marginVertical: 20,
-                    marginHorizontal: 20,
-                    paddingHorizontal: 16,
-                    // backgroundColor: "grey",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: "row",
-                      gap: 3,
-                      alignItems: "center",
-                    }}
-                    onPress={handleLike}
-                  >
-                    <Ionicons
-                      name="thumbs-up-outline"
-                      size={18}
-                      color={detail.liked == true ? COLORS.primary : null}
-                    />
-                    <Text
-                      style={{
-                        color: detail.liked == true ? COLORS.primary : null,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      Suka
-                    </Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 3,
-                    }}
-                    onPress={bottomSheetAttachComment}
-                  >
-                    <Ionicons name="chatbox-outline" size={18} />
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Komentar
-                    </Text>
-                  </TouchableOpacity>
-
-                  <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    keyboardBehavior="extend"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                      <View
-                        style={[
-                          style,
-                          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-                        ]}
-                      />
-                    )}
-                  >
-                    <BottomSheetView
-                      onLayout={handleContentLayout}
-                      style={{ flex: 1 }}
-                    >
-                      <KeyboardAvoidingView
-                        behavior="position"
-                        keyboardVerticalOffset={parentId !== "" ? 120 : 80}
-                      >
-                        <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                          <Text
-                            style={{
-                              color: COLORS.ExtraDivinder,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            Komentar({detail.comment_count})
-                          </Text>
-                        </View>
-
-                        <FlatList
-                          data={detail.comments}
-                          renderItem={({ item }) => (
-                            <CardKomen
-                              listData={item}
-                              inputRef={inputRef}
-                              setParentId={setParentId}
-                              device={device}
-                            />
-                          )}
-                          style={{ height: 500 }}
-                        />
-                        <View
-                          style={{
-                            justifyContent: "flex-end",
-                            paddingTop: 10,
-                            justifyContent: "center",
-                            flex: 1,
-                            paddingBottom: 20,
-                          }}
-                        >
-                          {parentId.id !== "" ? (
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                paddingHorizontal: 20,
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  fontSize: fontSizeResponsive("H4", device),
-                                }}
-                              >
-                                Membalas {parentId.creator}
-                              </Text>
-                              <TouchableOpacity>
-                                <Ionicons
-                                  name="close"
-                                  size={20}
-                                  color={COLORS.primary}
-                                  onPress={() =>
-                                    setParentId({ id: "", creator: "" })
-                                  }
-                                />
-                              </TouchableOpacity>
-                            </View>
-                          ) : null}
-
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              justifyContent: "flex-end",
-                              paddingHorizontal: 20,
-                              alignItems: "center",
-                            }}
-                          >
-                            {showMessage && (
                               <View
                                 style={{
-                                  backgroundColor: COLORS.success,
-                                  padding: 5,
-                                  borderRadius: 8,
+                                  flexDirection: "row",
+                                  justifyContent: "flex-end",
+                                  paddingHorizontal: 20,
+                                  alignItems: "center",
                                 }}
                               >
-                                <Text
+                                {showMessage && (
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.success,
+                                      padding: 5,
+                                      borderRadius: 8,
+                                    }}
+                                  >
+                                    <Text
+                                      style={{
+                                        color: COLORS.white,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {message}
+                                    </Text>
+                                  </View>
+                                )}
+                              </View>
+
+                              <View
+                                style={{
+                                  height: 1,
+                                  width: "90%",
+                                  backgroundColor: COLORS.lighter,
+                                  opacity: 0.3,
+                                  marginTop: 10,
+                                  marginHorizontal: 20,
+                                }}
+                              />
+
+                              <View
+                                style={{
+                                  borderWidth: 1,
+                                  width: "90%",
+                                  marginLeft: 17,
+                                  borderRadius: 16,
+                                  borderColor: COLORS.ExtraDivinder,
+                                  flexDirection: "row",
+                                  backgroundColor: COLORS.ExtraDivinder,
+                                  marginTop: 10,
+                                }}
+                              >
+                                <TextInput
+                                  numberOfLines={1}
+                                  maxLength={30}
+                                  placeholder="Ketik Komentar Disini"
+                                  ref={inputRef}
                                   style={{
-                                    color: COLORS.white,
+                                    padding: 10,
+                                    width: "90%",
                                     fontSize: fontSizeResponsive("H4", device),
                                   }}
-                                >
-                                  {message}
-                                </Text>
-                              </View>
-                            )}
-                          </View>
-                          <View
-                            style={{
-                              height: 1,
-                              width: "90%",
-                              backgroundColor: COLORS.lighter,
-                              opacity: 0.3,
-                              marginTop: 10,
-                              marginHorizontal: 20,
-                            }}
-                          />
-                          <View
-                            style={{
-                              borderWidth: 1,
-                              width: "90%",
-                              marginLeft: 17,
-                              borderRadius: 16,
-                              borderColor: COLORS.ExtraDivinder,
-                              flexDirection: "row",
-                              backgroundColor: COLORS.ExtraDivinder,
-                              marginTop: 10,
-                            }}
-                          >
-                            <TextInput
-                              numberOfLines={1}
-                              maxLength={30}
-                              placeholder="Ketik Komentar Disini"
-                              ref={inputRef}
-                              style={{
-                                padding: 10,
-                                width: "90%",
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                              onChangeText={setKomen}
-                              defaultValue={komen}
-                              placeholderTextColor={COLORS.grey}
-                            />
-                            <View
-                              style={{
-                                alignItems: "flex-end",
-                                flex: 1,
-                                marginRight: 10,
-                                justifyContent: "center",
-                              }}
-                            >
-                              <TouchableOpacity
-                                onPress={() => {
-                                  setMessage("Pesan Telah Terkirim");
-                                  setShowMessage(true);
-                                  setTimeout(() => {
-                                    setShowMessage(false);
-                                  }, 5000);
-                                  handleComment();
-                                }}
-                              >
-                                <Ionicons
-                                  name="send-sharp"
-                                  size={20}
-                                  color={COLORS.primary}
+                                  onChangeText={setKomen}
+                                  defaultValue={komen}
+                                  placeholderTextColor={COLORS.grey}
                                 />
-                              </TouchableOpacity>
+                                <View
+                                  style={{
+                                    alignItems: "flex-end",
+                                    flex: 1,
+                                    marginRight: 10,
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      setMessage("Pesan Telah Terkirim");
+                                      setShowMessage(true);
+                                      setTimeout(() => {
+                                        setShowMessage(false);
+                                      }, 5000);
+                                      handleComment();
+                                    }}
+                                  >
+                                    <Ionicons
+                                      name="send-sharp"
+                                      size={20}
+                                      color={COLORS.primary}
+                                    />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
                             </View>
                           </View>
-                        </View>
-                      </KeyboardAvoidingView>
-                    </BottomSheetView>
-                  </BottomSheetModal>
+                        </KeyboardAvoidingView>
+                      </BottomSheetView>
+                    </BottomSheetModal>
 
-                  {/* <TouchableOpacity
+                    {/* <TouchableOpacity
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
@@ -1511,88 +1542,168 @@ export const DetailLinimasa = ({ route }) => {
                     <Text>{detail.views_count}</Text>
                   </TouchableOpacity> */}
 
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 3,
-                    }}
-                    onPress={() => setVisibleModalInfo(true)}
-                  >
-                    <Ionicons name="information-circle-outline" size={18} />
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Info
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                {detail?.attachments?.length !== 0 ? (
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      marginBottom: 30,
-                      borderRadius: 16,
-                      backgroundColor: "white",
-                      paddingVertical: 16,
-                      //shadow ios
-                      shadowOffset: { width: -2, height: 4 },
-                      shadowColor: "#171717",
-                      shadowOpacity: 0.2,
-                      //shadow android
-                      elevation: 2,
-                      paddingHorizontal: 16,
-                    }}
-                  >
-                    <Text
+                    <TouchableOpacity
                       style={{
-                        fontSize: fontSizeResponsive("Judul", device),
-                        fontWeight: FONTWEIGHT.bold,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 3,
+                      }}
+                      onPress={() => setVisibleModalInfo(true)}
+                    >
+                      <Ionicons name="information-circle-outline" size={18} />
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        Info
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  {detail?.attachments?.length !== 0 ? (
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        marginBottom: 30,
+                        borderRadius: 16,
+                        backgroundColor: "white",
+                        paddingVertical: 16,
+                        //shadow ios
+                        shadowOffset: { width: -2, height: 4 },
+                        shadowColor: "#171717",
+                        shadowOpacity: 0.2,
+                        //shadow android
+                        elevation: 2,
+                        paddingHorizontal: 16,
                       }}
                     >
-                      Lampiran
-                    </Text>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("Judul", device),
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Lampiran
+                      </Text>
 
-                    <FlatList
-                      key={"#"}
-                      data={detail.attachments}
-                      renderItem={({ item }) => (
-                        <View key={item.id}>
-                          <CardLampiran
-                            lampiran={item.file}
-                            id={item.id}
-                            name={item.name}
-                            size={item.file_size}
-                            type={getFileExtension(item.name)}
-                            onClick={() => {
-                              setVisibleModal(true);
-                              setLampiranById(item);
+                      <FlatList
+                        key={"#"}
+                        data={detail.attachments}
+                        renderItem={({ item }) => (
+                          <View key={item.id}>
+                            <CardLampiran
+                              lampiran={item.file}
+                              id={item.id}
+                              name={item.name}
+                              size={item.file_size}
+                              type={getFileExtension(item.name)}
+                              onClick={() => {
+                                setVisibleModal(true);
+                                setLampiranById(item);
+                              }}
+                              device={device}
+                            />
+                          </View>
+                        )}
+                        scrollEnabled={true}
+                        horizontal={true}
+                        style={{ marginTop: 20 }}
+                        // columnWrapperStyle={{ justifyContent: "space-evenly" }}
+                        // numColumns={2}
+                        keyExtractor={(item) => "#" + item.id}
+                      />
+                    </View>
+                  ) : null}
+
+                  {/* Lampiran */}
+
+                  {lampiranById !== null ? (
+                    <Modal
+                      animationType="fade"
+                      transparent={true}
+                      visible={visibleModal}
+                      onRequestClose={() => {
+                        setVisibleModal(false);
+                        setLampiranById(null);
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={[
+                          Platform.OS === "ios"
+                            ? styles.iOSBackdrop
+                            : styles.androidBackdrop,
+                          styles.backdrop,
+                        ]}
+                      />
+                      <View
+                        style={{
+                          alignItems: "center",
+                          flex: 1,
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => {
+                            setVisibleModal(false);
+                            setLampiranById(null);
+                          }}
+                          style={{
+                            position: "absolute",
+                            top: "15%",
+                            left: 20,
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: COLORS.primary,
+                              width: 51,
+                              height: 51,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: 50,
                             }}
-                            device={device}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              color={COLORS.white}
+                              size={24}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                        {getFileExtension(lampiranById.name) === "png" ||
+                        getFileExtension(lampiranById.name) === "jpg" ||
+                        getFileExtension(lampiranById.name) === "jpeg" ? (
+                          <View>
+                            <Image
+                              source={{ uri: lampiranById.file }}
+                              style={{ width: 390, height: 283 }}
+                            />
+                          </View>
+                        ) : getFileExtension(lampiranById.name) === "mp4" ? (
+                          <Video
+                            ref={video}
+                            style={{ width: 390, height: 283 }}
+                            source={{ uri: lampiranById.file }}
+                            useNativeControls
+                            resizeMode={ResizeMode.CONTAIN}
+                            isLooping
+                            onPlaybackStatusUpdate={(status) =>
+                              setStatus(() => status)
+                            }
                           />
-                        </View>
-                      )}
-                      scrollEnabled={true}
-                      horizontal={true}
-                      style={{ marginTop: 20 }}
-                      // columnWrapperStyle={{ justifyContent: "space-evenly" }}
-                      // numColumns={2}
-                      keyExtractor={(item) => "#" + item.id}
-                    />
-                  </View>
-                ) : null}
+                        ) : (
+                          <></>
+                        )}
+                      </View>
+                    </Modal>
+                  ) : null}
 
-                {/* Lampiran */}
-
-                {lampiranById !== null ? (
                   <Modal
                     animationType="fade"
                     transparent={true}
-                    visible={visibleModal}
+                    visible={visibleModalInfo}
                     onRequestClose={() => {
-                      setVisibleModal(false);
-                      setLampiranById(null);
+                      setVisibleModalInfo(!visibleModalInfo);
                     }}
                   >
                     <TouchableOpacity
@@ -1603,488 +1714,408 @@ export const DetailLinimasa = ({ route }) => {
                         styles.backdrop,
                       ]}
                     />
-                    <View
-                      style={{
-                        alignItems: "center",
-                        flex: 1,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          setVisibleModal(false);
-                          setLampiranById(null);
-                        }}
+                    <View style={{ alignItems: "center", flex: 1 }}>
+                      <View
                         style={{
-                          position: "absolute",
-                          top: "15%",
-                          left: 20,
+                          backgroundColor: COLORS.white,
+                          width: "90%",
+                          borderRadius: 10,
+                          marginTop: "40%",
                         }}
                       >
                         <View
                           style={{
-                            backgroundColor: COLORS.primary,
-                            width: 51,
-                            height: 51,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: 50,
+                            marginHorizontal: 20,
+                            marginTop: 20,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            padding: 10,
+                            borderBottomWidth: 2,
+                            borderBottomColor: COLORS.grey,
                           }}
                         >
-                          <Ionicons
-                            name="close-outline"
-                            color={COLORS.white}
-                            size={24}
-                          />
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Informasi Pengetahuan
+                          </Text>
+                          <TouchableOpacity
+                            style={{}}
+                            onPress={() => {
+                              setVisibleModalInfo(false);
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={24}
+                              color={COLORS.lighter}
+                            />
+                          </TouchableOpacity>
                         </View>
-                      </TouchableOpacity>
-                      {getFileExtension(lampiranById.name) === "png" ||
-                      getFileExtension(lampiranById.name) === "jpg" ||
-                      getFileExtension(lampiranById.name) === "jpeg" ? (
+
                         <View>
-                          <Image
-                            source={{ uri: lampiranById.file }}
-                            style={{ width: 390, height: 283 }}
-                          />
-                        </View>
-                      ) : getFileExtension(lampiranById.name) === "mp4" ? (
-                        <Video
-                          ref={video}
-                          style={{ width: 390, height: 283 }}
-                          source={{ uri: lampiranById.file }}
-                          useNativeControls
-                          resizeMode={ResizeMode.CONTAIN}
-                          isLooping
-                          onPlaybackStatusUpdate={(status) =>
-                            setStatus(() => status)
-                          }
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </View>
-                  </Modal>
-                ) : null}
-
-                <Modal
-                  animationType="fade"
-                  transparent={true}
-                  visible={visibleModalInfo}
-                  onRequestClose={() => {
-                    setVisibleModalInfo(!visibleModalInfo);
-                  }}
-                >
-                  <TouchableOpacity
-                    style={[
-                      Platform.OS === "ios"
-                        ? styles.iOSBackdrop
-                        : styles.androidBackdrop,
-                      styles.backdrop,
-                    ]}
-                  />
-                  <View style={{ alignItems: "center", flex: 1 }}>
-                    <View
-                      style={{
-                        backgroundColor: COLORS.white,
-                        width: "90%",
-                        borderRadius: 10,
-                        marginTop: "40%",
-                      }}
-                    >
-                      <View
-                        style={{
-                          marginHorizontal: 20,
-                          marginTop: 20,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          padding: 10,
-                          borderBottomWidth: 2,
-                          borderBottomColor: COLORS.grey,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Informasi Pengetahuan
-                        </Text>
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => {
-                            setVisibleModalInfo(false);
-                          }}
-                        >
-                          <Ionicons
-                            name="close-outline"
-                            size={24}
-                            color={COLORS.lighter}
-                          />
-                        </TouchableOpacity>
-                      </View>
-
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginTop: 20,
-                            alignItems: "center",
-                            marginHorizontal: 40,
-                          }}
-                        >
                           <View
                             style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 10,
-                              backgroundColor: COLORS.primary,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              marginLeft: 10,
-                              fontSize: fontSizeResponsive("H4", device),
+                              flexDirection: "row",
+                              marginTop: 20,
+                              alignItems: "center",
+                              marginHorizontal: 40,
                             }}
                           >
-                            Judul
-                          </Text>
-                          <Text
-                            style={{
-                              color: COLORS.lighter,
-                              marginLeft: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            [What]
-                          </Text>
-                        </View>
-
-                        <Text
-                          style={{
-                            width: "70%",
-                            marginHorizontal: 60,
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {detail.title}
-                        </Text>
-                      </View>
-
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginTop: 20,
-                            alignItems: "center",
-                            marginHorizontal: 40,
-                          }}
-                        >
-                          <View
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 10,
-                              backgroundColor: COLORS.primary,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              marginLeft: 10,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            Anggota Angenda
-                          </Text>
-                          <Text
-                            style={{
-                              color: COLORS.lighter,
-                              marginLeft: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            [Who]
-                          </Text>
-                        </View>
-
-                        <Text
-                          style={{
-                            width: "70%",
-                            marginHorizontal: 60,
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {detail.members_agenda}
-                        </Text>
-                      </View>
-
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginTop: 20,
-                            alignItems: "center",
-                            marginHorizontal: 40,
-                          }}
-                        >
-                          <View
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 10,
-                              backgroundColor: COLORS.primary,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              marginLeft: 10,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            Rangkuman
-                          </Text>
-                          <Text
-                            style={{
-                              color: COLORS.lighter,
-                              marginLeft: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            [Why]
-                          </Text>
-                        </View>
-
-                        <Text
-                          style={{
-                            width: "70%",
-                            marginHorizontal: 60,
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {detail.summary}
-                        </Text>
-                      </View>
-
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginTop: 20,
-                            alignItems: "center",
-                            marginHorizontal: 40,
-                          }}
-                        >
-                          <View
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 10,
-                              backgroundColor: COLORS.primary,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              marginLeft: 10,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            Tempat Agenda
-                          </Text>
-                          <Text
-                            style={{
-                              color: COLORS.lighter,
-                              marginLeft: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            [Where]
-                          </Text>
-                        </View>
-
-                        <Text
-                          style={{
-                            width: "70%",
-                            marginHorizontal: 60,
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {detail.place_agenda}
-                        </Text>
-                      </View>
-
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            marginTop: 20,
-                            alignItems: "center",
-                            marginHorizontal: 40,
-                          }}
-                        >
-                          <View
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 10,
-                              backgroundColor: COLORS.primary,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              marginLeft: 10,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            Waktu Mulai
-                          </Text>
-                          <Text
-                            style={{
-                              color: COLORS.lighter,
-                              marginLeft: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            [When]
-                          </Text>
-                        </View>
-
-                        <Text
-                          style={{
-                            width: "70%",
-                            marginHorizontal: 60,
-                            marginTop: 10,
-                            marginBottom: 20,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {detail.start_date_agenda?.slice(0, -9)}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </Modal>
-
-                <Modal
-                  animationType="fade"
-                  transparent={true}
-                  visible={visibleModalView}
-                  onRequestClose={() => {
-                    setVisibleModalView(!visibleModalView);
-                  }}
-                >
-                  <TouchableOpacity
-                    style={[
-                      Platform.OS === "ios"
-                        ? styles.iOSBackdrop
-                        : styles.androidBackdrop,
-                      styles.backdrop,
-                    ]}
-                  />
-                  <View style={{ alignItems: "center", flex: 1 }}>
-                    <View
-                      style={{
-                        backgroundColor: COLORS.white,
-                        width: "90%",
-                        borderRadius: 10,
-                        marginTop: "40%",
-                      }}
-                    >
-                      <View
-                        style={{
-                          marginTop: 20,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginHorizontal: 20,
-                        }}
-                      >
-                        <View>
-                          <Text
-                            style={{
-                              fontSize: fontSizeResponsive("Judul", device),
-                              fontWeight: FONTWEIGHT.bold,
-                            }}
-                          >
-                            Dilihat Oleh
-                          </Text>
-                        </View>
-
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => {
-                            setVisibleModalView(false);
-                          }}
-                        >
-                          <Ionicons
-                            name="close-outline"
-                            size={24}
-                            color={COLORS.lighter}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      {/* custom divider */}
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <View
-                          style={{
-                            height: 1,
-                            width: "90%",
-                            backgroundColor: "#DBDADE",
-                            marginVertical: 10,
-                          }}
-                        />
-                      </View>
-
-                      <ScrollView style={{ marginBottom: 40 }}>
-                        {listsView?.map((data) => {
-                          return (
                             <View
                               style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: 10,
-                                marginHorizontal: 20,
-                                marginTop: 20,
+                                width: 10,
+                                height: 10,
+                                borderRadius: 10,
+                                backgroundColor: COLORS.primary,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginLeft: 10,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
-                              <Image
-                                source={{ uri: data.avatar_url }}
+                              Judul
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                marginLeft: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              [What]
+                            </Text>
+                          </View>
+
+                          <Text
+                            style={{
+                              width: "70%",
+                              marginHorizontal: 60,
+                              marginTop: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {detail.title}
+                          </Text>
+                        </View>
+
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginTop: 20,
+                              alignItems: "center",
+                              marginHorizontal: 40,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 10,
+                                backgroundColor: COLORS.primary,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginLeft: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Anggota Angenda
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                marginLeft: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              [Who]
+                            </Text>
+                          </View>
+
+                          <Text
+                            style={{
+                              width: "70%",
+                              marginHorizontal: 60,
+                              marginTop: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {detail.members_agenda}
+                          </Text>
+                        </View>
+
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginTop: 20,
+                              alignItems: "center",
+                              marginHorizontal: 40,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 10,
+                                backgroundColor: COLORS.primary,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginLeft: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Rangkuman
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                marginLeft: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              [Why]
+                            </Text>
+                          </View>
+
+                          <Text
+                            style={{
+                              width: "70%",
+                              marginHorizontal: 60,
+                              marginTop: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {detail.summary}
+                          </Text>
+                        </View>
+
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginTop: 20,
+                              alignItems: "center",
+                              marginHorizontal: 40,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 10,
+                                backgroundColor: COLORS.primary,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginLeft: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Tempat Agenda
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                marginLeft: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              [Where]
+                            </Text>
+                          </View>
+
+                          <Text
+                            style={{
+                              width: "70%",
+                              marginHorizontal: 60,
+                              marginTop: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {detail.place_agenda}
+                          </Text>
+                        </View>
+
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginTop: 20,
+                              alignItems: "center",
+                              marginHorizontal: 40,
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 10,
+                                backgroundColor: COLORS.primary,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginLeft: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Waktu Mulai
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                marginLeft: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              [When]
+                            </Text>
+                          </View>
+
+                          <Text
+                            style={{
+                              width: "70%",
+                              marginHorizontal: 60,
+                              marginTop: 10,
+                              marginBottom: 20,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {detail.start_date_agenda?.slice(0, -9)}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </Modal>
+
+                  <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={visibleModalView}
+                    onRequestClose={() => {
+                      setVisibleModalView(!visibleModalView);
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={[
+                        Platform.OS === "ios"
+                          ? styles.iOSBackdrop
+                          : styles.androidBackdrop,
+                        styles.backdrop,
+                      ]}
+                    />
+                    <View style={{ alignItems: "center", flex: 1 }}>
+                      <View
+                        style={{
+                          backgroundColor: COLORS.white,
+                          width: "90%",
+                          borderRadius: 10,
+                          marginTop: "40%",
+                        }}
+                      >
+                        <View
+                          style={{
+                            marginTop: 20,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginHorizontal: 20,
+                          }}
+                        >
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("Judul", device),
+                                fontWeight: FONTWEIGHT.bold,
+                              }}
+                            >
+                              Dilihat Oleh
+                            </Text>
+                          </View>
+
+                          <TouchableOpacity
+                            style={{}}
+                            onPress={() => {
+                              setVisibleModalView(false);
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={24}
+                              color={COLORS.lighter}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        {/* custom divider */}
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: 1,
+                              width: "90%",
+                              backgroundColor: "#DBDADE",
+                              marginVertical: 10,
+                            }}
+                          />
+                        </View>
+
+                        <ScrollView style={{ marginBottom: 40 }}>
+                          {listsView?.map((data) => {
+                            return (
+                              <View
                                 style={{
-                                  width: 50,
-                                  height: 50,
-                                  borderRadius: 30,
-                                }}
-                              />
-                              <Text
-                                style={{
-                                  fontSize: fontSizeResponsive("H4", device),
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  gap: 10,
+                                  marginHorizontal: 20,
+                                  marginTop: 20,
                                 }}
                               >
-                                {data.name}
-                              </Text>
-                            </View>
-                          );
-                        })}
-                      </ScrollView>
+                                <Image
+                                  source={{ uri: data.avatar_url }}
+                                  style={{
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 30,
+                                  }}
+                                />
+                                <Text
+                                  style={{
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {data.name}
+                                </Text>
+                              </View>
+                            );
+                          })}
+                        </ScrollView>
+                      </View>
                     </View>
-                  </View>
-                </Modal>
+                  </Modal>
 
-                {/* <View style={{
+                  {/* <View style={{
                                     height: 105,
                                     width: '90%',
                                     backgroundColor: COLORS.danger,
@@ -2108,6 +2139,7 @@ export const DetailLinimasa = ({ route }) => {
                                         </View>
                                     </View>
                                 </View> */}
+                </View>
               </View>
             </View>
           </ScrollView>

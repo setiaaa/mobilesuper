@@ -65,31 +65,31 @@ export const CardlistSubMenu = ({
         }}
       >
         {item.title === "Pengetahuan" ? (
-          <FontAwesome5 name="lightbulb" size={40} color={COLORS.primary} />
+          <FontAwesome5 name="lightbulb" size={40} color={COLORS.iconMenu} />
         ) : item.title === "Aksi Perubahan" ? (
           <MaterialIcons
             name="published-with-changes"
             size={40}
-            color={COLORS.primary}
+            color={COLORS.iconMenu}
           />
         ) : item.title === "Sertifikat" ? (
-          <AntDesign name="folderopen" size={40} color={COLORS.primary} />
+          <AntDesign name="folderopen" size={40} color={COLORS.iconMenu} />
         ) : item.title === "e-Learning" ? (
-          <FontAwesome5 name="leanpub" size={40} color={COLORS.primary} />
+          <FontAwesome5 name="leanpub" size={40} color={COLORS.iconMenu} />
         ) : item.title === "Info" ? (
           <MaterialCommunityIcons
             name="information-outline"
             size={40}
-            color={COLORS.primary}
+            color={COLORS.iconMenu}
           />
         ) : item.title === "IPASN" ? (
-          <AntDesign name="barschart" size={40} color={COLORS.primary} />
+          <AntDesign name="barschart" size={40} color={COLORS.iconMenu} />
         ) : item.title === "Pegawai" ? (
-          <Ionicons name="people-sharp" size={40} color={COLORS.primary} />
+          <Ionicons name="people-sharp" size={40} color={COLORS.iconMenu} />
         ) : item.title === "Nominatif Pegawai" ? (
-          <Fontisto name="persons" size={40} color={COLORS.primary} />
+          <Fontisto name="persons" size={40} color={COLORS.iconMenu} />
         ) : item.title === "Laporan" && isRoleLaporan === true ? (
-          <Ionicons name="file-tray-full" size={40} color={COLORS.primary} />
+          <Ionicons name="file-tray-full" size={40} color={COLORS.iconMenu} />
         ) : null}
       </View>
       <Text

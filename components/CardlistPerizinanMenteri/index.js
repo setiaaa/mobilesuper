@@ -39,6 +39,7 @@ export const CardListPerizinanMenteri = ({
   device,
   isSelected,
   setSelection,
+  nip,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -88,7 +89,7 @@ export const CardListPerizinanMenteri = ({
           color={isSelected === true ? COLORS.lighter : null}
         />
       ) : null} */}
-        {variant === "inprogress" ? (
+        {variant === "inprogress" && nip !== "197208122001121002" ? (
           <Checkbox
             value={isSelected.includes(item?.id) ? true : false}
             onValueChange={() => {

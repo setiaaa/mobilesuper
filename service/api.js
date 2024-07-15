@@ -886,6 +886,7 @@ export const patchUnlike = createAsyncThunk(
 export const getDetailLinimasa = createAsyncThunk(
   "mp/getDetailLinimasa",
   async ({ token, id }) => {
+    console.log(id);
     const respon = await axios.get(`${Linimasa}linimasa/${id}`, {
       headers: { Authorization: token },
     });
@@ -1252,6 +1253,21 @@ export const getDetailPenilaian = createAsyncThunk(
     const respon = await axios.get(`${Linimasa}admin/evaluation/${id}`, {
       headers: { Authorization: token },
     });
+    return respon?.data.result;
+  }
+);
+
+export const postKomentarDetailPenilaian = createAsyncThunk(
+  "mp/postKomentarDetailPenilaian",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Linimasa}linimasa/comment/penilaian/`,
+      data.payload,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
     return respon?.data.result;
   }
 );
