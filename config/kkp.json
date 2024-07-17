@@ -1,7 +1,7 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "kkpsuperapps",
+  "slug": "SuperAppsKKP",
   "version": "0.2.3",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-icon.png",
@@ -16,16 +16,17 @@
   },
   "assetBundlePatterns": ["**/*"],
   "ios": {
-    "buildNumber": "7.4.0",
+    "buildNumber": "7.4.1",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library",
-      "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera"
+      "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
+      "NSCrossWebsiteTrackingUsageDescription": "Allow authentication and device trackers"
     }
   },
   "android": {
-    "versionCode": 741,
+    "versionCode": 742,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -88,18 +89,18 @@
       }
     ],
     [
+      "expo-barcode-scanner",
+      {
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+      }
+    ],
+    [
       "@sentry/react-native/expo",
       {
         "url": "https://newsentry.armsolusi.com/",
         "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
         "project": "kkp-mobile-prod",
         "organization": "sentry"
-      }
-    ],
-    [
-      "expo-barcode-scanner",
-      {
-        "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
       }
     ],
     [
@@ -115,7 +116,7 @@
     "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
+      "projectId": "a16ddb1c-a4a4-4cc1-a3c4-e78f53295f67"
     },
     "id": "kkp",
     "base_url": "https://portal.kkp.go.id/api/",

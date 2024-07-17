@@ -450,6 +450,7 @@ const PengetahuanSlice = createSlice({
       .addCase(postKomentarDetailPenilaian.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
+        Sentry.captureException(action.payload);
       });
   },
 });

@@ -1,5 +1,7 @@
-import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Platform, Text, View } from "react-native";
+import { nde_api } from "../../utils/api.config";
+
 import {
   COLORS,
   FONTWEIGHT,
@@ -16,6 +18,41 @@ export const LPMUKP = () => {
   const navigation = useNavigation();
 
   const { device } = useSelector((state) => state.apps);
+  const [first, setfirst] = useState(false);
+  let webviewRef = null;
+
+  async function createAuthToken() {
+    const baseServerUrl = "https://app.daviz.id";
+    const libraryName = "MicroStrategyLibrary";
+
+    // Make a call to REST API to log the user in, if there is not a valid authToken
+    const options = {
+      method: "POST",
+      credentials: "include", // Including cookie
+      mode: "cors", // Setting as cors mode for cross origin
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        loginMode: 1, // 1 means Standard login
+        // loginMode: 16, // 16 means LDAP login
+        username: "Administrator", // use guest / no password to test
+        password: "r4h4514!#",
+      }),
+    };
+    return fetch(baseServerUrl + "/" + libraryName + "/api/auth/login", options)
+      .then((response) => {
+        if (response.ok) {
+          return response.headers.get("Set-cookie");
+        } else response.json().then((json) => console.log(json));
+      })
+      .catch((error) =>
+        console.error("Failed Standard Login with error:", error)
+      );
+  }
+
+  const handleNavState = (params) => {
+    if (!first) createAuthToken();
+  };
+
   const source = `
     <!DOCTYPE html>
 <html lang="en">
@@ -38,12 +75,11 @@ export const LPMUKP = () => {
     const baseServerUrl = 'https://app.daviz.id';
     const libraryName = 'MicroStrategyLibrary';
 
-    function handleRefresh() {
-        window.location.reload()
-    }
-
+  
     async function runCode() {
         // https://{env-url}/{libraryName}/app/{projectId}/{dossierId}
+
+      
         let url =
             baseServerUrl +
             '/' +
@@ -84,6 +120,7 @@ export const LPMUKP = () => {
     }
 
     async function getAuthToken() {
+
         const options = {
             method: 'GET',
             credentials: 'include', // Including cookie
@@ -91,6 +128,7 @@ export const LPMUKP = () => {
             headers: { 'content-type': 'application/json' },
         };
 
+        alert(JSON.stringify(options))
         return await fetch(
             baseServerUrl + '/' + libraryName + '/api/auth/token',
             options,
@@ -98,7 +136,7 @@ export const LPMUKP = () => {
             .then((response) => {
                 if (response.ok) return response.headers.get('x-mstr-authtoken');
                 else response.json().then((json) => {
-                    if (json.code === 'ERR009') alert("Token expired please refresh!")
+                    if (json.code === 'ERR009') console.log('gg')
                 });
             })
             .catch((error) =>
@@ -123,10 +161,8 @@ export const LPMUKP = () => {
         };
         return fetch(baseServerUrl + '/' + libraryName + '/api/auth/login', options)
             .then((response) => {
-                if (response.ok) {
-                    console.log(
-                        'A new standard login session has been created successfully, logging in',
-                    );
+                if (response.ok) {  
+                    runCode()
                     return response.headers.get('x-mstr-authtoken');
                 } else response.json().then((json) => console.log(json));
             })
@@ -152,21 +188,42 @@ export const LPMUKP = () => {
     `;
   return (
     <View style={{ width: "100%", height: "100%" }}>
-      <View style={{ height: "90%", width: "100%", padding: PADDING.Page }}>
-        <WebView
-          originWhitelist={["*"]}
-          source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
-          }}
-          style={{ flex: 1 }}
-          allowFileAccess={true}
-          androidLayerType={"software"}
-          mixedContentMode={"always"}
-          allowUniversalAccessFromFileURLs={true}
-          scalesPageToFit={false}
-          incognito={true}
-          pullToRefreshEnabled={true}
-        />
+      <View style={{ height: "90%", width: "100%", padding: 10 }}>
+        {Platform.OS === "ios" ? (
+          <WebView
+            originWhitelist={["*"]}
+            source={{
+              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
+              headers: {
+                Cookie: first,
+              },
+            }}
+            webviewDebuggingEnabled={true}
+            style={{ flex: 1 }}
+            injectedJavaScriptBeforeContentLoaded={`document.cookie=${createAuthToken()}`}
+            incognito={true}
+            domStorageEnabled={true}
+            onNavigationStateChange={handleNavState}
+            sharedCookiesEnabled={true}
+            thirdPartyCookiesEnabled={true}
+          />
+        ) : (
+          <WebView
+            originWhitelist={["*"]}
+            source={{
+              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
+            }}
+            style={{ flex: 1 }}
+            allowFileAccess={true}
+            androidLayerType={"software"}
+            mixedContentMode={"always"}
+            allowUniversalAccessFromFileURLs={true}
+            scalesPageToFit={false}
+            incognito={true}
+            pullToRefreshEnabled={true}
+          />
+        )}
+
         <Text style={{ color: COLORS.primary }}>
           *) Gunakan 2 jari untuk menyesuaikan zoom
         </Text>

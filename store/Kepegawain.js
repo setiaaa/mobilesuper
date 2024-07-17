@@ -52,6 +52,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getDataDetailIPASN.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDataPribadi.fulfilled, (state, action) => {
         state.DataPribadi.lists = action.payload;
@@ -62,6 +63,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getDataPribadi.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDataPribadiDetail.fulfilled, (state, action) => {
         state.DataPribadi.detail = action.payload;
@@ -72,6 +74,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getDataPribadiDetail.rejected, (state, action) => {
         state.loading = true;
+        Sentry.captureException(action.payload);
       })
       .addCase(getFilterUnitKerja.fulfilled, (state, action) => {
         state.unitKerja = action.payload;
@@ -82,6 +85,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getFilterUnitKerja.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getNominatif.fulfilled, (state, action) => {
         state.nominatif.lists = action.payload;
@@ -92,6 +96,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getNominatif.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getNominatifReport.fulfilled, (state, action) => {
         state.nominatifReport = action.payload;
@@ -102,6 +107,7 @@ const KepegawaianSlice = createSlice({
       })
       .addCase(getNominatifReport.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

@@ -43,6 +43,8 @@ export const Nominatif = () => {
     key: "",
     value: "",
   });
+
+  console.log(firstGolongan);
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -96,26 +98,26 @@ export const Nominatif = () => {
   };
 
   const golongan = [
-    { key: "I/a", value: "I/A" },
-    { key: "II/a", value: "II/A" },
-    { key: "III/a", value: "III/A" },
-    { key: "IV/a", value: "IV/A" },
-    { key: "V/a", value: "V/A" },
-    { key: "I/b", value: "I/B" },
-    { key: "II/b", value: "II/B" },
-    { key: "III/d", value: "III/B" },
-    { key: "IV/d", value: "IV/B" },
-    { key: "V/d", value: "V/B" },
-    { key: "I/c", value: "I/C" },
-    { key: "II/c", value: "II/C" },
-    { key: "III/c", value: "III/C" },
-    { key: "IV/c", value: "IV/C" },
-    { key: "V/c", value: "V/C" },
-    { key: "I/d", value: "I/D" },
-    { key: "II/d", value: "II/D" },
-    { key: "III/d", value: "III/D" },
-    { key: "IV/d", value: "IV/D" },
-    { key: "V/d", value: "V/D" },
+    { key: "I/a", value: "I/A", number: 1 },
+    { key: "II/a", value: "II/A", number: 2 },
+    { key: "III/a", value: "III/A", number: 3 },
+    { key: "IV/a", value: "IV/A", number: 4 },
+    { key: "V/a", value: "V/A", number: 5 },
+    { key: "I/b", value: "I/B", number: 6 },
+    { key: "II/b", value: "II/B", number: 7 },
+    { key: "III/", value: "III/B", number: 8 },
+    { key: "IV/b", value: "IV/B", number: 9 },
+    { key: "V/b", value: "V/B", number: 10 },
+    { key: "I/c", value: "I/C", number: 11 },
+    { key: "II/c", value: "II/C", number: 12 },
+    { key: "III/c", value: "III/C", number: 13 },
+    { key: "IV/c", value: "IV/C", number: 14 },
+    { key: "V/c", value: "V/C", number: 15 },
+    { key: "I/d", value: "I/D", number: 16 },
+    { key: "II/d", value: "II/D", number: 17 },
+    { key: "III/d", value: "III/D", number: 18 },
+    { key: "IV/d", value: "IV/D", number: 19 },
+    { key: "V/d", value: "V/D", number: 20 },
   ];
 
   const eselon = [
@@ -137,6 +139,16 @@ export const Nominatif = () => {
     { key: "Kontrak", value: "Kontrak" },
   ];
 
+  const pickSecondGologan = () => {
+    if (firstGolongan === "") {
+      return [];
+    } else {
+      const listGolEnd = golongan.filter(
+        (gol) => gol.number >= firstGolongan.number
+      );
+      return listGolEnd;
+    }
+  };
   // console.log(page);
 
   return (
@@ -261,7 +273,7 @@ export const Nominatif = () => {
             <Text>s/d</Text>
             <View style={{ width: "45%" }}>
               <Dropdown
-                data={golongan}
+                data={pickSecondGologan()}
                 setSelected={setSecondGolongan}
                 selected={secondGolongan}
                 borderWidth={1}
