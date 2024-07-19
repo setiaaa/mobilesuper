@@ -74,7 +74,7 @@ function MyTabBar({ props, navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Keuangan");
-              setVisibleModal(false);
+              // setVisibleModal(false);
             }}
           >
             <View
@@ -124,7 +124,7 @@ function MyTabBar({ props, navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Kepegawaian");
-              setVisibleModal(false);
+              // setVisibleModal(false);
             }}
           >
             <View
@@ -174,7 +174,7 @@ function MyTabBar({ props, navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("BantuanPemerintah");
-              setVisibleModal(false);
+              // setVisibleModal(false);
             }}
           >
             <View
@@ -223,7 +223,7 @@ function MyTabBar({ props, navigation }) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("ProduksiBudidaya");
-              setVisibleModal(false);
+              // setVisibleModal(false);
             }}
           >
             <View
@@ -279,7 +279,7 @@ function MyTabBar({ props, navigation }) {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Penangkapan");
-                setVisibleModal(false);
+                // setVisibleModal(false);
               }}
             >
               <View
@@ -550,8 +550,8 @@ function MyTabBar({ props, navigation }) {
               key={3}
               onPress={() => {
                 setTabItemIndex(3);
-                setVisibleModal(true);
-                // navigation.navigate('FAQ', { unread: false })
+                // setVisibleModal(true);
+                navigation.navigate("MenuDashboard", { unread: false });
                 // props.navigation.navigate('Home', { unread: false })
               }}
             >

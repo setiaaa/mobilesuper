@@ -7,6 +7,7 @@ export const CardListLMS = ({ item }) => {
   const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
   };
+  // console.log(item);
   return (
     <View
       style={{
@@ -40,7 +41,10 @@ export const CardListLMS = ({ item }) => {
           JUMLAH PESERTA (ENROLLMENT)
         </Text>
         <Text style={{ marginTop: 5 }}>
-          {numberWithCommas(item?.jumlah_peserta?.enrolled)} Peserta
+          {item?.jumlah_peserta?.enrolled !== undefined
+            ? numberWithCommas(item?.jumlah_peserta?.enrolled)
+            : "0"}{" "}
+          Peserta
         </Text>
       </View>
 
@@ -49,7 +53,10 @@ export const CardListLMS = ({ item }) => {
           JUMLAH PESERTA (COMPLETED)
         </Text>
         <Text style={{ marginTop: 5 }}>
-          {numberWithCommas(item?.jumlah_peserta?.completed)} Peserta
+          {item?.jumlah_peserta?.completed !== undefined
+            ? numberWithCommas(item?.jumlah_peserta?.completed)
+            : "0"}{" "}
+          Peserta
         </Text>
       </View>
     </View>

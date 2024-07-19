@@ -118,6 +118,7 @@ import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
 import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
 import { SuperApps } from "../Apps/Faq/SuperApps";
 import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
+import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -149,6 +150,11 @@ export const BottomTabs = () => {
           <Tab.Screen
             name="Profile"
             component={Profile}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="MenuDashboard"
+            component={MenuDashboard}
             options={{ headerShown: false }}
           />
           {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
