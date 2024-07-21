@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
@@ -22,6 +22,19 @@ const PdfViewer = ({ route }) => {
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
   const pdfResource = { uri: data.link, chace: true };
+  const [pdfLink, setPdfLink] = useState(data?.link);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // This function runs when the screen is focused
+      return () => {
+        // This function runs when the screen is unfocused or back is pressed
+        setPdfLink(null);
+      };
+    }, [])
+  );
+
+  console.log(data);
 
   const inject = `
     (async function () {
@@ -122,6 +135,12 @@ const PdfViewer = ({ route }) => {
     
   `;
 
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1); // Update key to force re-render
+  }, [data?.link]);
+
   return (
     <>
       <View
@@ -157,7 +176,7 @@ const PdfViewer = ({ route }) => {
                 </View> */}
       </View>
       <View style={{ flex: 1 }}>
-        {type !== undefined ? (
+        {/* {type !== undefined ? (
           <WebView
             originWhitelist={["*"]}
             source={{
@@ -179,19 +198,18 @@ const PdfViewer = ({ route }) => {
               );
             }}
           />
-        ) : (
-          <Pdf
-            trustAllCerts={false}
-            source={{
-              uri: pdfResource,
-            }}
-            style={{
-              flex: 1,
-              width: Dimensions.get("window").width,
-              height: Dimensions.get("window").height,
-            }}
-          />
-        )}
+        ) : ( */}
+        <Pdf
+          trustAllCerts={false}
+          key={key}
+          source={{ uri: data }}
+          style={{
+            flex: 1,
+            width: Dimensions.get("window").width,
+            height: Dimensions.get("window").height,
+          }}
+        />
+        {/* )} */}
       </View>
     </>
   );

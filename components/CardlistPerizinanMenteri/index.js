@@ -3,6 +3,7 @@ import { FlatList, ScrollView, View } from "react-native";
 import { Text, Image } from "react-native";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -31,6 +32,7 @@ import { setDigitalSignLists } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
+import moment from "moment";
 
 export const CardListPerizinanMenteri = ({
   item,
@@ -182,6 +184,38 @@ export const CardListPerizinanMenteri = ({
                 :{" "}
                 {item?.extra_attributes.noDokumen !== undefined
                   ? item?.extra_attributes.noDokumen
+                  : "-"}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 120,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "40%",
+                }}
+              >
+                Tanggal
+              </Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.extra_attributes.tanggalDokumen !== undefined
+                  ? moment(
+                      item?.extra_attributes.tanggalDokumen,
+                      "YYYY-MM-DD HH:mm:ss"
+                    )
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)
                   : "-"}
               </Text>
             </View>

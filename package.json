@@ -91,6 +91,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-sectioned-multi-select": "^0.10.0",
     "react-native-shimmer-placeholder": "^2.0.9",
+    "react-native-signature-canvas": "^4.7.2",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "14.1.0",
     "react-native-swiper": "^1.6.0",

@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "SuperAppsKKP",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
   },
   "assetBundlePatterns": ["**/*"],
   "ios": {
-    "buildNumber": "7.4.1",
+    "buildNumber": "7.4.2",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
@@ -26,7 +26,7 @@
     }
   },
   "android": {
-    "versionCode": 742,
+    "versionCode": 743,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
