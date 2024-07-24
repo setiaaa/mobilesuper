@@ -8,6 +8,8 @@ import {
   SafeAreaView,
   Platform,
   Alert,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
 import {
@@ -25,6 +27,7 @@ import * as Sharing from "expo-sharing";
 import { nde_api } from "../../../../utils/api.config";
 import { useDispatch } from "react-redux";
 import { setDataNotif } from "../../../../store/pushnotif";
+import WebView from "react-native-webview";
 
 function DetailDispo({ data, noAgenda, preview, title }) {
   const navigation = useNavigation();
@@ -152,6 +155,10 @@ function DetailDispo({ data, noAgenda, preview, title }) {
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
     } catch (error) {}
   };
+
+  let urlNote = nde_api.baseurl + "crsbe" + data?.attachments[0]?.file;
+  let newUrlNote = urlNote.replace("/api/", "/");
+
   return (
     <>
       <ScrollView>
@@ -187,33 +194,52 @@ function DetailDispo({ data, noAgenda, preview, title }) {
             <View>
               <Text>{data?.action_manual ? data?.action_manual : "-"}</Text>
             </View>
-            {/* <View>
+            <View>
               <View>
                 <Text style={styles.title}>Attachments Disposisi</Text>
               </View>
               {data?.attachments?.length == 0 && <Text>-</Text>}
               {data?.attachments?.length != 0 &&
                 data?.attachments?.map((item, index) => (
-                  <TouchableOpacity
+                  <View
                     key={item.id}
                     onPress={() => {
-                      showBottommSheet(item, getExtensionIcon(item));
+                      // showBottommSheet(item, getExtensionIcon(item));
                     }}
                   >
                     <View style={styles.containerRow}>
                       <IconButton
-                        icon={getExtensionIcon(item)}
+                        // icon={getExtensionIcon(item)}
                         size={18}
                         style={styles.icon}
                       />
                       <View style={styles.containerColumn}>
-                        <Text>{item?.truncate_name}</Text>
-                        <Text>{item?.size}</Text>
+                        {/* <Text>{item?.truncate_name}</Text> */}
+                        {/* <Text>{item?.size}</Text>
+                        <Text>{item.file}</Text> */}
+                        <WebView
+                          originWhitelist={["*"]}
+                          source={{
+                            uri: newUrlNote,
+                            headers: header,
+                          }}
+                          style={{
+                            flex: 1,
+                            height: 100,
+                            width: 399,
+                          }}
+                          allowFileAccess={true}
+                          androidLayerType={"software"}
+                          mixedContentMode={"always"}
+                          allowUniversalAccessFromFileURLs={true}
+                          setDisplayZoomControls={true}
+                          scalesPageToFit={false}
+                        />
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </View>
                 ))}
-            </View> */}
+            </View>
           </Card>
           <View style={{ marginBottom: 8 }}>
             <Text>Informasi Surat</Text>

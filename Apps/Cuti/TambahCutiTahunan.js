@@ -1250,7 +1250,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               justifyContent: "center",
                               width: "90%",
                               borderRadius: 10,
-                              height: hp(55),
+                              height: device === 'tablet' ? '90%' : '70%'
                             }}
                           >
                             <View style={{ width: "100%", flex: 1 }}>
@@ -1384,8 +1384,8 @@ export const TambahCutiTahunan = ({ route }) => {
                                       backgroundColor: COLORS.primary,
                                       borderRadius: 20,
                                       marginLeft: 20,
-                                      width: 24,
-                                      height: 24,
+                                      width: device === 'tablet' ? 40:24,
+                                      height: device === 'tablet' ? 40:24,
                                       justifyContent: "center",
                                       alignItems: "center",
                                     }}
@@ -1395,7 +1395,7 @@ export const TambahCutiTahunan = ({ route }) => {
                                     >
                                       <Ionicons
                                         name="close-outline"
-                                        size={24}
+                                        size={device === 'tablet' ? 40:24}
                                         color={COLORS.white}
                                       />
                                     </TouchableOpacity>
