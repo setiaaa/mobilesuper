@@ -62,7 +62,7 @@ export const MenuDashboard = () => {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
+      <View style={[styles.item, { height: device === "tablet" ? 200 : 120 }]}>
         <Text style={styles.itemText}>{item}</Text>
       </View>
     );
@@ -105,7 +105,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                styles.cardApps,
+                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#11C15B",
                   justifyContent: "center",
@@ -155,7 +155,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                styles.cardApps,
+                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#F6AD1D",
                   justifyContent: "center",
@@ -166,7 +166,7 @@ export const MenuDashboard = () => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 24,
+                  width: device === "tablet" ? 45 : 24,
                   height: device === "tablet" ? 50 : 25,
                 }}
                 source={require("../../assets/superApp/ikon-kepagawaian.png")}
@@ -205,7 +205,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                styles.cardApps,
+                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#B745FF",
                   justifyContent: "center",
@@ -254,7 +254,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                styles.cardApps,
+                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#38B2AC",
                   justifyContent: "center",
@@ -310,7 +310,7 @@ export const MenuDashboard = () => {
             >
               <View
                 style={[
-                  styles.cardApps,
+                  device === 'tablet'? styles.cardApps : styles.cardAppsHP,
                   {
                     backgroundColor: "#1868AB",
                     justifyContent: "center",
@@ -321,8 +321,8 @@ export const MenuDashboard = () => {
               >
                 <Image
                   style={{
-                    width: device === "tablet" ? 50 : 24,
-                    height: device === "tablet" ? 50 : 18,
+                    width: device === "tablet" ? 60 : 24,
+                    height: device === "tablet" ? 40 : 18,
                   }}
                   source={require("../../assets/superApp/ikon-penangkapan.png")}
                 />
@@ -402,8 +402,18 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   cardApps: {
-    width: wp(15),
-    height: wp(15),
+    width: 130,
+    height: 130,
+    borderRadius: 50,
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    //shadow android
+    elevation: 5,
+  },
+  cardAppsHP: {
+    width: 70,
+    height: 70,
     borderRadius: 50,
     shadowOffset: { width: -2, height: 4 },
     shadowColor: "#171717",

@@ -27,8 +27,10 @@ export const CardListAplikasi = ({
       <View>
         <Text
           style={[
-            { marginBottom: spacing.medium },
-            fontSizeResponsive("textM", device),
+            { 
+              marginBottom: spacing.medium, 
+              fontSize:fontSizeResponsive("H4", device),
+             },
           ]}
         >
           {item.title}

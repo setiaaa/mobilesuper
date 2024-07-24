@@ -75,7 +75,6 @@ export const CardApps = ({
     rolePerizinanMenteri.includes(item)
   );
 
-  const isTablet = Device.DeviceType.TABLET;
 
   const dispatch = useDispatch();
 
@@ -128,7 +127,7 @@ export const CardApps = ({
             hp: 28,
           },
           height: {
-            tablet: 50,
+            tablet: 60,
             hp: 35,
           },
         },
@@ -150,7 +149,7 @@ export const CardApps = ({
         image: require("../../assets/superApp/cuti.png"),
         imagestyle: {
           width: {
-            tablet: 60,
+            tablet: 70,
             hp: 40,
           },
           height: {
@@ -377,7 +376,7 @@ export const CardApps = ({
             hp: 30,
           },
           height: {
-            tablet: 40,
+            tablet: 50,
             hp: 30,
           },
         },
@@ -483,49 +482,49 @@ export const CardApps = ({
                           {item.title === "Task" ? (
                             <MaterialIcons
                               name="task-alt"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kalender" ? (
                             <FontAwesome
                               name="calendar"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Preparing dan Sharing" ? (
                             <Entypo
                               name="folder"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Regulasi" ? (
                             <Entypo
                               name="shield"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Survei Layanan" ? (
                             <MaterialCommunityIcons
                               name="email-newsletter"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Agenda Rapat" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "SPPD" ? (
                             <MaterialIcons
                               name="travel-explore"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : (
@@ -613,49 +612,49 @@ export const CardApps = ({
                           {item.title === "Task" ? (
                             <MaterialIcons
                               name="task-alt"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kalender" ? (
                             <FontAwesome
                               name="calendar"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Preparing dan Sharing" ? (
                             <Entypo
                               name="folder"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Regulasi" ? (
                             <Entypo
                               name="shield"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Survei Layanan" ? (
                             <MaterialCommunityIcons
                               name="email-newsletter"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Agenda Rapat" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "SPPD" ? (
                             <MaterialIcons
                               name="travel-explore"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : (
@@ -714,7 +713,7 @@ export const CardApps = ({
                   >
                     <MaterialIcons
                       name="dashboard"
-                      size={30}
+                      size={device === 'tablet' ? 60 : 30}
                       color={COLORS.iconMenu}
                     />
                   </View>

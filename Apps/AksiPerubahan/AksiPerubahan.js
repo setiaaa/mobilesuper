@@ -298,12 +298,12 @@ export const AksiPerubahan = () => {
               borderColor: COLORS.ExtraDivinder,
               borderRadius: 8,
               backgroundColor: COLORS.white,
-              width: "85%",
+              width: device === 'tablet'? '95%':"85%",
             }}
           >
             <Ionicons
               name="search"
-              size={fontSizeResponsive("H3", device)}
+              size={24}
               color={COLORS.primary}
             />
             <TextInput
@@ -328,8 +328,8 @@ export const AksiPerubahan = () => {
           >
             <View
               style={{
-                width: 40,
-                height: 40,
+                width: device === 'tablet'? 50:40,
+                height: device === 'tablet'? 50:40,
                 borderRadius: 30,
                 backgroundColor: COLORS.white,
                 justifyContent: "center",
@@ -439,7 +439,7 @@ export const AksiPerubahan = () => {
                     <Text style={{ marginTop: 5 }}>{detail.title}</Text>
 
                     <Text
-                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10, fontSize: fontSizeResponsive('H4', device) }}
                     >
                       Nama
                     </Text>

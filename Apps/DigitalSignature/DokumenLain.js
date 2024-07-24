@@ -159,7 +159,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
               {item?.approvers.slice(1).map((data) => (
                 <Image
                   source={{ uri: data.avatar_url }}
-                  style={{ width: 20, height: 20, borderRadius: 50 }}
+                  style={{ width: device === 'tablet'? 40: 20, height: device === 'tablet'? 40 : 20, borderRadius: 50 }}
                 />
               ))}
             </View>
