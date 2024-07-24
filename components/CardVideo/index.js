@@ -9,10 +9,10 @@ import { useSelector } from "react-redux";
 export const CardVideo = ({ setModalVisibleVideo }) => {
   const { device } = useSelector((state) => state.apps);
   return (
-    <View style={{ alignItems: "center", height: "15%" }}>
+    <View style={{ alignItems: "center", height: device === 'tablet' ? '10%' : '15%', marginHorizontal: 25 }}>
       <Image
         source={require("../../assets/superApp/hq720.webp")}
-        style={{ width: "90%", height: "90%", borderRadius: 16 }}
+        style={{ width: "100%", height: "100%", borderRadius: 16 }}
       />
       <View
         style={{

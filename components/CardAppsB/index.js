@@ -31,7 +31,6 @@ import {
   FontAwesome6,
 } from "@expo/vector-icons";
 
-const numColumns = 3;
 
 export const CardAppsB = ({
   handlePressModal,
@@ -197,7 +196,8 @@ export const CardAppsB = ({
               justifyContent: "center",
               alignItems: "center",
               fontSize: fontSizeResponsive("H4", device),
-              width: item.titleStyle.width,
+              width: device === 'tablet' ? 100 : 60,
+              textAlign: 'center'
             }}
             numberOfLines={1}
           >
@@ -226,6 +226,9 @@ export const CardAppsB = ({
 
     return data;
   };
+
+  const numColumns = device === 'tablet' ? 4 : 3;
+
   return (
     <View>
       <FlatList
@@ -251,13 +254,13 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   cardApps: {
-    width: wp(15),
-    height: hp(7),
+    width: 60,
+    height: 60,
     borderRadius: 8,
   },
   cardAppsTablet: {
-    width: wp(15),
-    height: hp(10),
+    width: 100,
+    height: 100,
     borderRadius: 8,
   },
   item: {

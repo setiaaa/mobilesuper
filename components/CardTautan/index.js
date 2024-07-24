@@ -5,10 +5,11 @@ import {
   Modal,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, fontSizeResponsive, getOrientation } from "../../config/SuperAppps";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +17,8 @@ import { useSelector } from "react-redux";
 
 export const CardTautan = ({ setModalVisible }) => {
   const { device } = useSelector((state) => state.apps);
+  const { width, height } = useWindowDimensions()
+
   return (
     <View style={styles.card}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -130,87 +133,138 @@ export const CardTautan = ({ setModalVisible }) => {
             </Text>
           </TouchableOpacity>
 
-          {/* {device === "tablet" ? (
-            <>
-               <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL("https://e-monev.bappenas.go.id/fe/");
-                }}
-              >
-                <View>
-                  <Image
-                    source={require("../../assets/superApp/monev.png")}
-                    style={{
-                      width: device === "tablet" ? 100 : 48,
-                      height: device === "tablet" ? 100 : 48,
-                    }}
-                  />
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Emonev{"\n"} Bapennas
-                  </Text>
-                </View>
-              </TouchableOpacity> 
-
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flex: 1,
-                }}
-                onPress={() => setModalVisible(true)}
-              >
-                <Image
-                  source={require("../../assets/superApp/white.png")}
-                  style={{
-                    width: 100,
-                    height: 100,
-                  }}
-                />
-                <View style={{ position: "absolute", top: 20, right: 23 }}>
-                  <Ionicons
-                    size={device === "tablet" ? 50 : 20}
-                    name="ellipsis-horizontal"
-                    color={COLORS.grey}
-                  />
-                </View>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+          {
+            device === 'tablet' && (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL("https://e-monev.bappenas.go.id/fe/");
                   }}
                 >
-                  More
-                </Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <TouchableOpacity
-              style={{ justifyContent: "center", alignItems: "center" }}
-              onPress={() => setModalVisible(true)}
-            >
-              <Image
-                source={require("../../assets/superApp/white.png")}
-                style={{ width: 48, height: 48 }}
-              />
-              <View style={{ position: "absolute", top: 11, right: 13 }}>
-                <Ionicons
-                  size={20}
-                  name="ellipsis-horizontal"
-                  color={COLORS.grey}
-                />
-              </View>
-              <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
-                More
-              </Text>
-            </TouchableOpacity>
-          )} */}
+                  <View>
+                    <Image
+                      source={require("../../assets/superApp/monev.png")}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Emonev{"\n"} Bapennas
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL("https://www.kinerjaku.kkp.go.id/");
+                  }}
+                >
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={require("../../assets/superApp/kinerjaku.png")}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Kinerjaku
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                {
+                  getOrientation(width, height) === 'landscape' && (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL("https://elearning.kkp.go.id/");
+                        }}
+                      >
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Image
+                            source={require("../../assets/superApp/milea.png")}
+                            style={{
+                              width: device === "tablet" ? 100 : 48,
+                              height: device === "tablet" ? 100 : 48,
+                            }}
+                          />
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            E-Milea
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL("https://kinerja.bkn.go.id/login");
+                        }}
+                      >
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Image
+                            source={require("../../assets/superApp/kinerjabkn.png")}
+                            style={{
+                              width: device === "tablet" ? 100 : 48,
+                              height: device === "tablet" ? 100 : 48,
+                            }}
+                          />
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            E-Kinerja {"\n"}BKN
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+
+
         </View>
       </ScrollView>
     </View>

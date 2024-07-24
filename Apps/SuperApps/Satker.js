@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList, Platform } from "react-native";
+import { View, Text, Image, FlatList, Platform, useWindowDimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 import { CardSatker } from "../../components/CardSatker";
@@ -22,9 +22,10 @@ import {
   FONTWEIGHT,
   PADDING,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getBennerSatker,
@@ -67,7 +68,6 @@ import { Config } from "../../constants/config";
 //   },
 // ];
 
-const { width: screenWidth } = Dimensions.get("window");
 
 export const Satker = () => {
   const carouselRef = useRef(null);
@@ -108,10 +108,48 @@ export const Satker = () => {
   const { benner, gallery, berita, pesan, ultah, linimasa, loading } =
     useSelector((state) => state.satker);
   const { profile } = useSelector((state) => state.superApps);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
-  const renderItem = ({ item, index }, parallaxProps) => {
+  const getWidthCarousel = () => {
+    let tempWidth = 0
+    let orientation = getOrientation(screenWidth, screenHeight)
+
+    if (device === 'tablet') {
+      if (orientation === 'landscape') {
+        tempWidth = screenWidth - 110
+      } else {
+        tempWidth = screenWidth - 100
+      }
+    } else {
+      tempWidth = screenWidth - 60
+    }
+
+    return tempWidth
+  }
+
+  const getHeightCarousel = () => {
+    let tempHeight = 0
+    let orientation = getOrientation(screenWidth, screenHeight)
+
+    if (device === 'tablet') {
+      if (orientation === 'landscape') {
+        tempHeight = screenWidth - 400
+      } else {
+        tempHeight = screenWidth - 250
+      }
+    } else {
+      tempHeight = screenWidth - 170
+    }
+
+    return tempHeight
+  }
+
+  const BannerGallery = ({ item, index, parallaxProps }) => {
     return (
-      <View style={[styles.item, { marginVertical: 20 }]}>
+      <View style={[{
+        width: getWidthCarousel(),
+        height: getHeightCarousel()
+      }, { marginVertical: 20 }]}>
         <ParallaxImage
           source={{ uri: item.main_images?.image }}
           containerStyle={styles.imageContainer}
@@ -120,57 +158,6 @@ export const Satker = () => {
           {...parallaxProps}
         />
       </View>
-    );
-  };
-
-  const renderItem2 = ({ item, index }, parallaxProps) => {
-    const BASE_URL = Config.base_url + "bridge";
-    return (
-      <>
-        <View style={[styles.items, { marginTop: 20 }]}>
-          {/* <ParallaxImage
-            source={{ uri: item.image }}
-            containerStyle={styles.imageContainer}
-            style={styles.images}
-            parallaxFactor={0.4}
-            {...parallaxProps}
-          /> */}
-        </View>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-            paddingHorizontal: 20,
-          }}
-        >
-          <View style={{ marginTop: 20 }}>
-            {/* <Image
-              source={{ uri: BASE_URL + item.avatar }}
-              style={{ borderRadius: 50, width: 60, height: 60 }}
-            /> */}
-            <View>
-              {/* <Text
-                style={{
-                  marginLeft: 10,
-                  marginVertical: 10,
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: "#1868AB",
-                }}
-              >
-                {item.nama}
-              </Text> */}
-              {/* <Text style={{ marginLeft: 8, color: COLORS.lighter }}>
-                {" "}
-                {item.created_at}{" "}
-              </Text> */}
-            </View>
-          </View>
-          {/* <Text style={{ marginVertical: 20 }}>{item.content}</Text> */}
-          <RenderHTML source={{ html: item?.content }} />
-        </View>
-      </>
     );
   };
 
@@ -243,8 +230,8 @@ export const Satker = () => {
                     item.category === "Video / Jurnal"
                       ? COLORS.successLight
                       : item.category === "Infografis"
-                      ? COLORS.warningLight
-                      : COLORS.infoLight,
+                        ? COLORS.warningLight
+                        : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
                   width: device === "tablet" ? 200 : 110,
@@ -280,8 +267,8 @@ export const Satker = () => {
                       item.category === "Infografis"
                         ? COLORS.warning
                         : item.category === "Kegiatan"
-                        ? COLORS.info
-                        : COLORS.success,
+                          ? COLORS.info
+                          : COLORS.success,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -302,9 +289,12 @@ export const Satker = () => {
     );
   };
 
-  const renderItem3 = ({ item, index }, parallaxProps) => {
+  const BannerBerita = ({ item, index, parallaxProps }) => {
     return (
-      <View style={styles.item}>
+      <View style={{
+        width: getWidthCarousel(),
+        height: getHeightCarousel()
+      }}>
         <ParallaxImage
           source={{ uri: item.image }}
           containerStyle={styles.imageContainer}
@@ -329,9 +319,12 @@ export const Satker = () => {
     );
   };
 
-  const bannerKegiatan = ({ item }, parallaxProps) => {
+  const BannerKegiatan = ({ item, parallaxProps }) => {
     return (
-      <View style={styles.items}>
+      <View style={{
+        width: getWidthCarousel(),
+        height: getHeightCarousel()
+      }}>
         <ParallaxImage
           source={{ uri: item.image }}
           containerStyle={styles.imageContainer}
@@ -417,41 +410,38 @@ export const Satker = () => {
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
       <ScrollView style={{ flexGrow: 1 }} nestedScrollEnabled={true}>
-        <View
-          style={{
-            width: "100%",
-            height: hp(25),
-            position: "absolute",
-            top: 0,
-            borderBottomLeftRadius: 14,
-            borderBottomRightRadius: 14,
-          }}
-        >
-          <Image
-            source={require("../../assets/superApp/headerdark.png")}
+        <View style={{ minHeight: device === 'tablet' ? 350 : 250, position: 'relative' }}>
+          <View
             style={{
               width: "100%",
-              height: "100%",
+              height: device === 'tablet' ? 280 : 180,
+              position: "absolute",
+              top: 0,
               borderBottomLeftRadius: 14,
               borderBottomRightRadius: 14,
             }}
-          />
-        </View>
+          >
+            <Image
+              source={require("../../assets/superApp/headerdark.png")}
+              style={{
+                width: "100%",
+                height: "100%",
+                borderBottomLeftRadius: 14,
+                borderBottomRightRadius: 14,
+              }}
+            />
+          </View>
 
-        <View
-          style={{ flexDirection: "row", gap: 20, paddingTop: 20, height: 120 }}
-        >
           <View
             style={{
               justifyContent: "flex-end",
               flex: 1,
-              marginTop: 5,
               flexDirection: "row",
-              gap: 10,
-              marginRight: "11%",
+              gap: 16,
+              padding: 20
             }}
           >
-            <View style={{}}>
+            <View>
               <Text
                 style={{
                   color: COLORS.white,
@@ -459,6 +449,7 @@ export const Satker = () => {
                   fontWeight: FONTWEIGHT.bolder,
                   marginBottom: 10,
                   fontSize: fontSizeResponsive("H2", device),
+                  height: profile.nip === "100062" ? 15 : null,
                 }}
               >
                 {profile.nama}
@@ -486,15 +477,19 @@ export const Satker = () => {
               />
             </View>
           </View>
-        </View>
 
-        <View
-          style={{
-            alignItems: "center",
-            marginTop: device === "tablet" ? "10%" : "5%",
-          }}
-        >
-          <CardSatker profile={profile} />
+          <View style={{ width: '100%', position: 'absolute', zIndex: 9, top: device === 'tablet' ? '55%' : '50%', paddingHorizontal: 20 }}>
+            <View style={{ alignItems: "center", display: 'flex' }}>
+              <View
+                style={{
+                  width: '100%',
+                  alignItems: "center",
+                }}
+              >
+                <CardSatker profile={profile} />
+              </View>
+            </View>
+          </View>
         </View>
 
         <View style={[styles.containerr, { marginTop: 20 }]}>
@@ -502,9 +497,11 @@ export const Satker = () => {
             ref={carouselRef}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
-            itemWidth={screenWidth - 60}
+            itemWidth={getWidthCarousel()}
             data={benner}
-            renderItem={bannerKegiatan}
+            renderItem={({ item }, parallaxProps) => (
+              <BannerKegiatan parallaxProps={parallaxProps} item={item} />
+            )}
             hasParallaxImages={true}
           />
         </View>
@@ -524,9 +521,11 @@ export const Satker = () => {
             ref={carouselRef}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
-            itemWidth={screenWidth - 60}
+            itemWidth={getWidthCarousel()}
             data={gallery.results}
-            renderItem={renderItem}
+            renderItem={({ item }, parallaxProps) => (
+              <BannerGallery parallaxProps={parallaxProps} item={item} />
+            )}
             hasParallaxImages={true}
             onSnapToItem={setSlide}
           />
@@ -570,15 +569,18 @@ export const Satker = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
         <View>
           <View style={styles.containerr}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
-              itemWidth={screenWidth - 60}
+              itemWidth={getWidthCarousel()}
               data={berita.lists}
-              renderItem={renderItem3}
+              renderItem={({ item }, parallaxProps) => (
+                <BannerBerita parallaxProps={parallaxProps} item={item} />
+              )}
               hasParallaxImages={true}
             />
           </View>
@@ -706,6 +708,7 @@ export const Satker = () => {
         <View
           style={{
             marginBottom: 40,
+            marginHorizontal: 30,
             marginTop: profile?.nip === "100062" ? 10 : 0,
           }}
         >
@@ -744,14 +747,6 @@ const styles = StyleSheet.create({
   images: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "contain",
-  },
-  item: {
-    width: screenWidth - 60,
-    height: screenWidth - 60,
-  },
-  items: {
-    width: screenWidth - 60,
-    height: screenWidth - 170,
   },
   cardListSatker: {
     backgroundColor: "#FFFFFF",

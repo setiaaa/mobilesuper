@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.info,
     flexDirection: "column",
-    width: "86%",
+    width: "100%",
     // marginHorizontal: 20,
     borderRadius: 16,
     alignSelf: "center",
