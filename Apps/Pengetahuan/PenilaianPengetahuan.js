@@ -38,7 +38,7 @@ import {
 } from "../../service/api";
 import moment from "moment/min/moment-with-locales";
 // import "moment/locale/id";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native";
 import { RefreshControl } from "react-native";
@@ -59,7 +59,6 @@ const CardPenilaian = ({ item, token, device }) => {
       <TouchableOpacity
         style={{
           flexDirection: "row",
-          width: "90%",
           gap: 10,
           marginVertical: 5,
           backgroundColor: COLORS.white,
@@ -74,6 +73,7 @@ const CardPenilaian = ({ item, token, device }) => {
           shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
+          width: '100%'
         }}
         onPress={() => {
           dispatch(getDetailPenilaian({ token: token, id: item.id }));
@@ -90,7 +90,7 @@ const CardPenilaian = ({ item, token, device }) => {
             }}
           />
         </View>
-        <View style={{ width: "75%" }}>
+        <View>
           <Text
             style={{
               fontWeight: FONTWEIGHT.bold,
@@ -415,7 +415,7 @@ export const PenilaianPenggetahaun = () => {
         dispatch(getTotalPenilaian(data));
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -490,8 +490,7 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            marginHorizontal: "5%",
-            width: "90%",
+            paddingHorizontal: 20
           }}
         >
           <View
@@ -542,9 +541,8 @@ export const PenilaianPenggetahaun = () => {
           style={{
             flexDirection: "row",
             marginVertical: 20,
-            marginHorizontal: "5%",
-            gap: 5,
-            width: "90%",
+            paddingHorizontal: 20,
+            gap: 20,
           }}
         >
           <View
@@ -709,9 +707,8 @@ export const PenilaianPenggetahaun = () => {
         <View
           style={{
             flexDirection: "row",
-            marginHorizontal: "5%",
-            gap: 5,
-            width: "90%",
+            paddingHorizontal: 20,
+            gap: 20,
           }}
         >
           <TouchableOpacity
@@ -719,6 +716,7 @@ export const PenilaianPenggetahaun = () => {
               backgroundColor:
                 !ditinjau && ditinjau !== "" ? COLORS.primary : COLORS.white,
               width: "49.5%",
+              flex: 1,
               height: 130,
               borderRadius: 16,
               justifyContent: "center",
@@ -770,7 +768,7 @@ export const PenilaianPenggetahaun = () => {
             style={{
               backgroundColor:
                 ditinjau && ditinjau !== "" ? COLORS.primary : COLORS.white,
-              width: "49.5%",
+              flex: 1,
               height: 130,
               borderRadius: 16,
               justifyContent: "center",
@@ -823,12 +821,13 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
-            height: device === "tablet" ? "64%" : "43%",
+            flex: 1,
+            marginHorizontal: 20
             // backgroundColor: "brown",
           }}
         >
           <View
-            style={{ marginHorizontal: "5%", marginBottom: 10, width: "90%" }}
+            style={{ marginBottom: 10 }}
           >
             <Text
               style={{
@@ -847,7 +846,6 @@ export const PenilaianPenggetahaun = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            style={{ height: 400 }}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={penilaian?.lists.length === 0 ? null : loadMore}
