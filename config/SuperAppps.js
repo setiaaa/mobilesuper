@@ -1,5 +1,6 @@
 import { FontWeight } from "@shopify/react-native-skia";
 import moment from "moment/min/moment-with-locales";
+import { Dimensions } from "react-native";
 
 export const COLORS = {
   primary: "#323247",
@@ -52,6 +53,17 @@ export const fontSizeResponsive = (type, device) => {
   };
   return data[type];
 };
+
+export const getOrientation = (width, height) => {
+  let orientation = ''
+  if(width > height){
+    orientation = 'landscape'
+  }else{
+    orientation = 'potrait'
+  }
+
+  return orientation
+}
 
 export const imageApps = (type) => {
   if (type === "Korespondensi") {

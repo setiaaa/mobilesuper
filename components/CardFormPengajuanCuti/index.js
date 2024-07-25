@@ -19,8 +19,8 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
     dispatch(getFormCuti(params));
   };
   return (
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ alignItems: "center", gap: 10 }}>
+    <View style={{ flexDirection: "row", width: device === 'tablet'? 250: 120, paddingVertical: 16, }}>
+      <View style={{ alignItems: "center", gap: 10, justifyContent: 'center', display: 'flex', flexDirection: 'column',  width: '100%' }}>
         <TouchableOpacity
           onPress={() => {
             formCuti(item.id);
@@ -46,7 +46,6 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: wp(30),
             minHeight: device === "tablet" ? 50 : 30,
           }}
         >
@@ -54,7 +53,6 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
             style={{
               textAlign: "center",
               overflow: "hidden",
-              width: wp(33),
               fontSize: fontSizeResponsive("H4", device),
             }}
           >

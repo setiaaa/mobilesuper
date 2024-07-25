@@ -170,7 +170,7 @@ export const DokumenCuti = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "85%" }}>
+            <View style={{ width: device === 'tablet' ? "90%":"85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -180,8 +180,8 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: device === 'tablet'? 50:40,
+                  height: device === 'tablet'? 50:40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",

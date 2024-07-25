@@ -1,16 +1,56 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, useWindowDimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { ParallaxImage } from "react-native-snap-carousel";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive, getOrientation } from "../../config/SuperAppps";
 import { Text } from "react-native";
+import { useSelector } from "react-redux";
 
-const { width: screenWidth } = Dimensions.get("window");
 
 export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
+  const { device } = useSelector((state) => state.apps);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  const getWidthCarousel = () => {
+    let tempWidth = 0
+    let orientation = getOrientation(screenWidth, screenHeight)
+
+    if (device === 'tablet') {
+      if (orientation === 'landscape') {
+        tempWidth = screenWidth - 110
+      } else {
+        tempWidth = screenWidth - 100
+      }
+    } else {
+      tempWidth = screenWidth - 60
+    }
+
+    return tempWidth
+  }
+
+  const getHeightCarousel = () => {
+    let tempHeight = 0
+    let orientation = getOrientation(screenWidth, screenHeight)
+
+    if (device === 'tablet') {
+      if (orientation === 'landscape') {
+        tempHeight = screenWidth - 400
+      } else {
+        tempHeight = screenWidth - 250
+      }
+    } else {
+      tempHeight = screenWidth - 170
+    }
+
+    return tempHeight
+  }
+
   return (
-    <View style={styles.items}>
+    <View style={{
+      width: getWidthCarousel(),
+      height: getHeightCarousel()
+    }}>
       <ParallaxImage
         source={type === "portal" ? item.image : { uri: item.image }}
         containerStyle={styles.imageContainer}
@@ -64,14 +104,6 @@ const styles = StyleSheet.create({
   },
   containerr: {
     flex: 1,
-  },
-  item: {
-    width: screenWidth - 60,
-    height: screenWidth - 60,
-  },
-  items: {
-    width: screenWidth - 60,
-    height: screenWidth - 170,
   },
   imageContainer: {
     flex: 1, // Prevent a random Android rendering issue
