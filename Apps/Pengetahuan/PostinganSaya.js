@@ -53,7 +53,7 @@ const CardPostinganSaya = ({ item, token, device }) => {
   };
 
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
+    <View style={{ width: "100%", alignSelf: "center", marginVertical: 10 }}>
       {item.state === "draft" || item.state === "canceled" ? (
         <TouchableOpacity disabled>
           <View
@@ -154,7 +154,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
-                        width: 30,
+                        paddingVertical: 4,
+                        paddingHorizontal: 8
                       }}
                     >
                       <Text
@@ -249,8 +250,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.successLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -269,8 +270,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: "#f0f0f0",
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -289,8 +290,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.infoDangerLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -415,7 +416,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
-                        width: 30,
+                        paddingVertical: 4,
+                        paddingHorizontal: 16
                       }}
                     >
                       <Text
@@ -511,8 +513,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.successLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -531,8 +533,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: "#f0f0f0",
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -551,8 +553,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.infoDangerLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -659,7 +661,7 @@ export const PostinganSaya = () => {
       if (token !== "") {
         dispatch(getMyPostList({ token: token, page: page }));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -758,7 +760,7 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
+      <View style={{ width: "100%", alignSelf: "center", marginTop: 10, paddingHorizontal: 20 }}>
         <View
           style={{
             marginTop: 15,
@@ -822,33 +824,35 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <CardPostinganSaya item={item} token={token} device={device} />
-          </View>
-        )}
-        ListFooterComponent={() =>
-          loading === true ? (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 24,
-              }}
-            >
-              <ActivityIndicator size="large" color={COLORS.primary} />
+      <View style={{ paddingHorizontal: 20, height: device === 'tablet' ? '80%' : '70%' }}>
+        <FlatList
+          data={filterData}
+          renderItem={({ item }) => (
+            <View key={item.id}>
+              <CardPostinganSaya item={item} token={token} device={device} />
             </View>
-          ) : null
-        }
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-        onEndReached={loadMore}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
+          )}
+          ListFooterComponent={() =>
+            loading === true ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            ) : null
+          }
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={() => <ListEmpty />}
+          onEndReached={loadMore}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      </View>
     </>
   );
 };
