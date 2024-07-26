@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -210,35 +211,25 @@ export const ListGaleri = () => {
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              setVisibleModal(false);
-              setGaleriById(galeri.lists.id);
-            }}
-            style={{
-              position: "absolute",
-              top: "15%",
-              left: 20,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLORS.primary,
-                width: 51,
-                height: 51,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 50,
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                setVisibleModal(false);
+                setGaleriById(galeri.lists.id);
               }}
             >
-              <Ionicons name="close-outline" color={COLORS.white} size={24} />
-            </View>
-          </TouchableOpacity>
-          <View>
-            <Image
-              source={!galeriById ? {} : { uri: galeriById.main_images?.image }}
-              style={{ width: 390, height: 283 }}
-            />
+              <Image
+                source={
+                  !galeriById ? {} : { uri: galeriById.main_images?.image }
+                }
+                style={{
+                  width:
+                    device === "tablet" ? useWindowDimensions().width : 390,
+                  height:
+                    device === "tablet" ? useWindowDimensions().height : 283,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

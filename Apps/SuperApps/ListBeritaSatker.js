@@ -75,8 +75,7 @@ export const ListBeritaSatker = () => {
       if (token !== "") {
         dispatch(getSatkerNews({ token, page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -165,7 +164,9 @@ export const ListBeritaSatker = () => {
             )
           }
           keyExtractor={(item) => item.id}
-          onEndReached={loadMore}
+          onEndReached={
+            search === "" && berita.lists.length !== 0 ? loadMore : null
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

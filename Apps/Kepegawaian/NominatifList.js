@@ -7,12 +7,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
@@ -124,6 +126,10 @@ export const NominatifList = ({ route }) => {
     }
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
   return (
     <View>
@@ -187,7 +193,12 @@ export const NominatifList = ({ route }) => {
             borderColor: COLORS.ExtraDivinder,
             borderRadius: 8,
             backgroundColor: COLORS.white,
-            width: "73%",
+            width:
+              device === "tablet" && orientation === "landscape"
+                ? "90%"
+                : device === "tablet" && orientation === "potrait"
+                ? "87%"
+                : "73%",
             marginHorizontal: 20,
           }}
         >

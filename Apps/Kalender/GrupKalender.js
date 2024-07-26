@@ -9,7 +9,13 @@ import {
   SelectList,
 } from "react-native-dropdown-select-list";
 import { Calendar, modeToNum } from "react-native-big-calendar";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { CardAgenda } from "../../components/CardAgenda";
 import {
   BottomSheetModal,
@@ -189,6 +195,7 @@ export const GrupKalender = () => {
   const _onToday = () => {
     setDate(today);
   };
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -207,8 +214,8 @@ export const GrupKalender = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginLeft: 20,
@@ -220,14 +227,18 @@ export const GrupKalender = () => {
                 >
                   <Ionicons
                     name="chevron-back-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
                 <Text
-                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                    color: COLORS.white,
+                  }}
                 >
                   Kalender
                 </Text>
@@ -256,7 +267,9 @@ export const GrupKalender = () => {
                     bottomSheetGrup();
                   }}
                 >
-                  <Text>Pilih Grup</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Pilih Grup
+                  </Text>
                 </TouchableOpacity>
                 <BottomSheetModal
                   ref={bottomsheetModalGrupRef}
@@ -283,7 +296,7 @@ export const GrupKalender = () => {
                     >
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                           color: COLORS.normal,
                         }}
@@ -297,7 +310,7 @@ export const GrupKalender = () => {
                       >
                         <Ionicons
                           name="close-outline"
-                          size={24}
+                          size={device === "tablet" ? 40 : 24}
                           color={COLORS.normal}
                         />
                       </TouchableOpacity>
@@ -345,10 +358,16 @@ export const GrupKalender = () => {
                             >
                               <Ionicons
                                 name="calendar"
-                                size={24}
+                                size={device === "tablet" ? 40 : 24}
                                 color={COLORS.grey}
                               />
-                              <Text>Acara Kalender</Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Acara Kalender
+                              </Text>
                             </TouchableOpacity>
                             {/* <TouchableOpacity onPress={() => {
                               dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
@@ -378,10 +397,16 @@ export const GrupKalender = () => {
                           >
                             <Ionicons
                               name="calendar-outline"
-                              size={24}
+                              size={device === "tablet" ? 40 : 24}
                               color={COLORS.grey}
                             />
-                            <Text>Acara agenda Rapat</Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Acara agenda Rapat
+                            </Text>
                           </TouchableOpacity>
                         </>
                       ) : (
@@ -553,7 +578,7 @@ export const GrupKalender = () => {
 
             <View
               style={{
-                marginHorizontal: 20,
+                marginHorizontal: device === "tablet" ? 60 : 20,
                 marginBottom: 20,
                 flexDirection: "row",
                 alignItems: "center",
@@ -569,7 +594,7 @@ export const GrupKalender = () => {
               ) : (
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -592,7 +617,12 @@ export const GrupKalender = () => {
                     navigation.navigate("DetailGrup");
                   }}
                 >
-                  <Text style={{ color: COLORS.info }}>
+                  <Text
+                    style={{
+                      color: COLORS.info,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {kategoriField !== "" ? "Lihat Detail" : null}
                   </Text>
                 </TouchableOpacity>
@@ -624,14 +654,14 @@ export const GrupKalender = () => {
                   >
                     <Ionicons
                       name="chevron-back"
-                      size={24}
+                      size={device === "tablet" ? 40 : 24}
                       color={COLORS.primary}
                     />
                   </TouchableOpacity>
 
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -656,7 +686,14 @@ export const GrupKalender = () => {
                         borderRadius: 10,
                       }}
                     >
-                      <Text style={{ color: COLORS.white }}>Hari ini</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Hari ini
+                      </Text>
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -666,7 +703,7 @@ export const GrupKalender = () => {
                   >
                     <Ionicons
                       name="chevron-forward"
-                      size={24}
+                      size={device === "tablet" ? 40 : 24}
                       color={COLORS.primary}
                     />
                   </TouchableOpacity>
@@ -684,17 +721,27 @@ export const GrupKalender = () => {
             </View>
 
             <View
-              style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 20 }}
+              style={{
+                marginTop: 20,
+                marginHorizontal: device === "tablet" ? 60 : 20,
+                marginBottom: 20,
+              }}
             >
               {kegiatan === "acara kalender" ? (
                 <Text
-                  style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
                 >
                   Acara Kalender
                 </Text>
               ) : kegiatan === "acara agenda" ? (
                 <Text
-                  style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
                 >
                   Acara Agenda Rapat
                 </Text>
@@ -726,7 +773,12 @@ export const GrupKalender = () => {
                       style={{ marginVertical: 10 }}
                       onPress={bottomSheetAttach}
                     >
-                      <Text style={{ color: COLORS.info }}>
+                      <Text
+                        style={{
+                          color: COLORS.info,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {acara.lists.length === 0 ? null : "Selengkapnya"}
                       </Text>
                     </TouchableOpacity>
@@ -837,7 +889,7 @@ export const GrupKalender = () => {
                       >
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H1,
+                            fontSize: fontSizeResponsive("H1", device),
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -850,7 +902,12 @@ export const GrupKalender = () => {
                             flex: 1,
                           }}
                         >
-                          <Text style={{ color: COLORS.infoDanger }}>
+                          <Text
+                            style={{
+                              color: COLORS.infoDanger,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             Reset
                           </Text>
                         </View>
@@ -927,7 +984,7 @@ export const GrupKalender = () => {
                         <Text
                           style={{
                             color: COLORS.white,
-                            fontSize: FONTSIZE.H1,
+                            fontSize: fontSizeResponsive("H2", device),
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -958,7 +1015,7 @@ export const GrupKalender = () => {
                     <View style={{ marginVertical: 20, marginLeft: 20 }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H2", device),
                           fontWeight: FONTWEIGHT.bold,
                           color: COLORS.lighter,
                         }}

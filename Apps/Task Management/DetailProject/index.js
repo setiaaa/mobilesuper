@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import { Text } from "react-native";
 import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
@@ -33,6 +34,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 const CardListKategori = ({ item, token, id_list, type, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -48,7 +52,12 @@ const CardListKategori = ({ item, token, id_list, type, device }) => {
           borderRadius: 8,
           gap: 1,
           marginVertical: 5,
-          marginHorizontal: 20,
+          marginHorizontal:
+            device === "tablet" && orientation === "landscape"
+              ? 60
+              : device === "tablet" && orientation === "potrait"
+              ? 40
+              : 20,
           //shadow
           shadowOffset: { width: -2, height: 4 },
           shadowColor: "#171717",
@@ -137,6 +146,10 @@ export const DetailProject = ({
     };
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -148,7 +161,12 @@ export const DetailProject = ({
               <View
                 style={{
                   backgroundColor: COLORS.white,
-                  marginHorizontal: 20,
+                  marginHorizontal:
+                    device === "tablet" && orientation === "landscape"
+                      ? 60
+                      : device === "tablet" && orientation === "potrait"
+                      ? 40
+                      : 20,
                   borderRadius: 8,
                 }}
               >
@@ -407,8 +425,8 @@ export const DetailProject = ({
                                 borderWidth: 2,
                                 borderRadius: 50,
                                 borderColor: COLORS.white,
-                                width: 30,
-                                height: 30,
+                                width: device === "tablet" ? 60 : 30,
+                                height: device === "tablet" ? 60 : 30,
                               }}
                             />
                             <View style={{ flex: 1 }}>
@@ -531,7 +549,12 @@ export const DetailProject = ({
                   >
                     <View
                       style={{
-                        marginHorizontal: 20,
+                        marginHorizontal:
+                          device === "tablet" && orientation === "landscape"
+                            ? 60
+                            : device === "tablet" && orientation === "potrait"
+                            ? 40
+                            : 20,
                         backgroundColor: COLORS.lightBrown,
                         height: 50,
                         justifyContent: "center",
@@ -564,7 +587,12 @@ export const DetailProject = ({
                   >
                     <View
                       style={{
-                        marginHorizontal: 20,
+                        marginHorizontal:
+                          device === "tablet" && orientation === "landscape"
+                            ? 60
+                            : device === "tablet" && orientation === "potrait"
+                            ? 40
+                            : 20,
                         backgroundColor: COLORS.infoDanger,
                         height: 50,
                         justifyContent: "center",
@@ -588,7 +616,12 @@ export const DetailProject = ({
               <View>
                 <Text
                   style={{
-                    marginHorizontal: 20,
+                    marginHorizontal:
+                      device === "tablet" && orientation === "landscape"
+                        ? 60
+                        : device === "tablet" && orientation === "potrait"
+                        ? 40
+                        : 20,
                     marginVertical: 10,
                     fontWeight: FONTWEIGHT.bold,
                     color: COLORS.lighter,

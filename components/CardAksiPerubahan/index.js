@@ -70,17 +70,23 @@ export const CardAksiPerubahan = ({
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           NAMA
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.display_name}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.display_name}
+        </Text>
       </View>
 
       <View style={{ marginTop: 10 }}>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           RATING
@@ -98,72 +104,103 @@ export const CardAksiPerubahan = ({
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           NIP
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.nip}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.nip}
+        </Text>
       </View>
 
       <View>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           JENIS KATEGORI
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.title}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.title}
+        </Text>
       </View>
 
       <View style={{ marginTop: 10 }}>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           ANGKATAN
         </Text>
-        <Text style={{ marginTop: 5 }}>{convertToRoman(item.angkatan)}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {convertToRoman(item.angkatan)}
+        </Text>
       </View>
 
       <View style={{ marginVertical: 10 }}>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H2", device),
           }}
         >
           TAHUN
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.year}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.year}
+        </Text>
       </View>
 
       <View>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           SATUAN KERJA
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.satker}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.satker}
+        </Text>
       </View>
 
       <View style={{ marginVertical: 10 }}>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           UNIT KERJA
         </Text>
-        <Text style={{ marginTop: 5 }}>{item.unker}</Text>
+        <Text
+          style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.unker}
+        </Text>
       </View>
 
       <View style={{ marginBottom: 10 }}>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           TERIMPLEMENTASI
@@ -188,6 +225,7 @@ export const CardAksiPerubahan = ({
                 item.implementation === true
                   ? COLORS.success
                   : COLORS.infoDanger,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             {item.implementation === true ? "Ya" : "Tidak"}
@@ -202,7 +240,7 @@ export const CardAksiPerubahan = ({
           >
             <Text
               style={{
-                fontSize: fontSizeResponsive("Judul", device),
+                fontSize: fontSizeResponsive("H4", device),
                 color: COLORS.info,
               }}
             >

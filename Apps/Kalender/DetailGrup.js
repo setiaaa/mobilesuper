@@ -17,6 +17,7 @@ import {
   COLORS,
   DATETIME,
   FONTSIZE,
+  fontSizeResponsive,
   FONTWEIGHT,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -124,6 +125,8 @@ export const DetailGrup = () => {
     return formatedDate;
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <GestureHandlerRootView>
@@ -141,8 +144,8 @@ export const DetailGrup = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginLeft: 20,
@@ -154,14 +157,18 @@ export const DetailGrup = () => {
                 >
                   <Ionicons
                     name="chevron-back-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
                 <Text
-                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                    color: COLORS.white,
+                  }}
                 >
                   Detail Grup
                 </Text>
@@ -174,7 +181,6 @@ export const DetailGrup = () => {
                   backgroundColor: COLORS.white,
                   width: "90%",
                   borderRadius: 8,
-                  marginLeft: 20,
                 }}
               >
                 {loading ? (
@@ -190,7 +196,7 @@ export const DetailGrup = () => {
                     <Text
                       style={{
                         fontWeight: FONTWEIGHT.bold,
-                        fontSize: FONTSIZE.Judul,
+                        fontSize: fontSizeResponsive("Judul", device),
                       }}
                     >
                       {detailGrup.name}
@@ -204,11 +210,12 @@ export const DetailGrup = () => {
                     marginTop: 10,
                     flexDirection: "row",
                     gap: 10,
+                    alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -221,7 +228,11 @@ export const DetailGrup = () => {
                       height={20}
                     />
                   ) : (
-                    <Text>{detailGrup.creator?.nama}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {detailGrup.creator?.nama}
+                    </Text>
                   )}
                 </View>
 
@@ -235,7 +246,7 @@ export const DetailGrup = () => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -248,7 +259,9 @@ export const DetailGrup = () => {
                       height={20}
                     />
                   ) : (
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {detailGrup?.created_at === undefined
                         ? ""
                         : convertDate(detailGrup?.created_at)}
@@ -267,7 +280,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -281,7 +294,12 @@ export const DetailGrup = () => {
                         height={20}
                       />
                     ) : (
-                      <View style={{ justifyContent: "center", width: 150 }}>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          width: device === "tablet" ? 300 : 150,
+                        }}
+                      >
                         {detailGrup.pic?.map((item, index) => {
                           return (
                             <View
@@ -299,11 +317,17 @@ export const DetailGrup = () => {
                                   borderWidth: 2,
                                   borderRadius: 50,
                                   borderColor: COLORS.white,
-                                  width: 30,
-                                  height: 30,
+                                  width: device === "tablet" ? 50 : 30,
+                                  height: device === "tablet" ? 50 : 30,
                                 }}
                               />
-                              <Text>{item.nama}</Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item.nama}
+                              </Text>
                             </View>
                           );
                         })}
@@ -333,7 +357,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -353,7 +377,10 @@ export const DetailGrup = () => {
                           width: "50%",
                         }}
                       >
-                        <Text numberOfLines={10}>
+                        <Text
+                          numberOfLines={10}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {detailGrup?.extra_attributes?.ketentuan_busana === ""
                             ? "-"
                             : detailGrup?.extra_attributes?.ketentuan_busana}
@@ -384,7 +411,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -404,7 +431,10 @@ export const DetailGrup = () => {
                           width: "50%",
                         }}
                       >
-                        <Text numberOfLines={10}>
+                        <Text
+                          numberOfLines={10}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {detailGrup?.extra_attributes?.perlengkapan === ""
                             ? "-"
                             : detailGrup?.extra_attributes?.perlengkapan}
@@ -435,7 +465,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -455,7 +485,10 @@ export const DetailGrup = () => {
                           width: "50%",
                         }}
                       >
-                        <Text numberOfLines={10}>
+                        <Text
+                          numberOfLines={10}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {detailGrup?.extra_attributes?.atribut === ""
                             ? "-"
                             : detailGrup?.extra_attributes?.atribut}
@@ -486,7 +519,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -511,8 +544,8 @@ export const DetailGrup = () => {
                                   borderWidth: 2,
                                   borderRadius: 50,
                                   borderColor: COLORS.white,
-                                  width: 30,
-                                  height: 30,
+                                  width: device === "tablet" ? 50 : 30,
+                                  height: device === "tablet" ? 50 : 30,
                                 }}
                               />
                             </View>
@@ -544,7 +577,7 @@ export const DetailGrup = () => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -569,8 +602,8 @@ export const DetailGrup = () => {
                                   borderWidth: 2,
                                   borderRadius: 50,
                                   borderColor: COLORS.white,
-                                  width: 30,
-                                  height: 30,
+                                  width: device === "tablet" ? 50 : 30,
+                                  height: device === "tablet" ? 50 : 30,
                                 }}
                               />
                             </View>
@@ -600,8 +633,8 @@ export const DetailGrup = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
                           <Image
@@ -611,8 +644,8 @@ export const DetailGrup = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
                           <Image
@@ -622,8 +655,8 @@ export const DetailGrup = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
                         </View>
@@ -675,7 +708,7 @@ export const DetailGrup = () => {
                       >
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: FONTWEIGHT.bold,
                             color: COLORS.lighter,
                           }}
@@ -699,8 +732,8 @@ export const DetailGrup = () => {
                 </BottomSheetModal>
               </View>
             </View>
-            {isRoleMember === false ? (
-              <>
+            {/* {isRoleMember === false ? (
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <TouchableOpacity
                   onPress={() => {
                     let data = {
@@ -721,7 +754,14 @@ export const DetailGrup = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -742,10 +782,12 @@ export const DetailGrup = () => {
                     borderWidth: 1,
                   }}
                 >
-                  <Text>Edit</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Edit
+                  </Text>
                 </TouchableOpacity>
-              </>
-            ) : null}
+              </View>
+            ) : null} */}
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
@@ -785,5 +827,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
