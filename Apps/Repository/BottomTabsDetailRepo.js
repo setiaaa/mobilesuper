@@ -31,12 +31,12 @@ function MyTabBarDetailRepo({ props, navigation }) {
           >
             {tabItemIndex === 1 ? (
               <View
-                style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
-                }}
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
               >
                 <View
                   style={{
@@ -57,11 +57,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: 'absolute', top: 20 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
+                    position: 'absolute',
+                    bottom: 24
                   }}
                 >
                   Dibagikan
@@ -71,21 +74,23 @@ function MyTabBarDetailRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
-                }}
+              }}
               >
                 <Ionicons
                   name="information-circle-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: 'absolute', top: 20 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
-                    device,
+                    position: 'absolute',
+                    bottom:24
                   }}
                 >
                   Dibagikan
@@ -106,7 +111,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -130,7 +135,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{
@@ -147,7 +152,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -156,7 +161,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{
@@ -184,9 +189,9 @@ function MyTabBarDetailRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                    height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 98 : 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -208,7 +213,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="chatbox-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{
@@ -223,18 +228,18 @@ function MyTabBarDetailRepo({ props, navigation }) {
               </View>
             ) : (
               <View
-                style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 98 : 80,
-                }}
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
               >
                 <Ionicons
                   name="chatbox-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{

@@ -204,8 +204,8 @@ export const BottomTabsRepo = () => {
     <BottomSheetModalProvider>
       <View
         style={{
-          height: Platform.OS === "ios" ? "100%" : height - 10,
-          width,
+          height: Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+          width: '100%'
         }}
       >
         <Tab.Navigator

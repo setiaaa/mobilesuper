@@ -1794,11 +1794,10 @@ export const LiniMasa = () => {
 
         <View
           style={{
-            // backgroundColor: "brown",
             width: "100%",
-            height: "100%",
+            flex: 1,
             alignItems: "center",
-            paddingHorizontal: 20
+            paddingHorizontal: 20,
           }}
         >
           <View
@@ -1806,7 +1805,6 @@ export const LiniMasa = () => {
               paddingTop: 20,
               paddingBottom: 10,
               rowGap: 5,
-              // backgroundColor: "yellow",
             }}
           >
             <View
@@ -2134,7 +2132,8 @@ export const LiniMasa = () => {
 
           <View
             style={{
-              height: device === "tablet" ? "80%" : "67%",
+              flex: 1,
+              width: '100%',
             }}
           >
             <FlatList

@@ -74,14 +74,18 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
         >
           <View>
             <Image
-              style={{ width: 30, height: 30, borderRadius: 50 }}
+              style={{ 
+                width: device === 'tablet' ? 50 : 30, 
+                height: device === 'tablet' ? 50 : 30, 
+                borderRadius: 50 
+              }}
               source={{ uri: items.creator_avatar }}
             />
           </View>
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H2", device),
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
                 wordWrap: "break-word",
