@@ -258,28 +258,39 @@ export const PerizinanMenteri = () => {
               width: "90%",
               padding: 16,
               marginTop: 10,
+              alignItems: "center",
             }}
           >
             {variant === "inprogress" &&
               profile.nip !== "197208122001121002" && (
-                <View style={{ flexDirection: "row", gap: 10 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
                   {/* Checkbox All */}
                   <Checkbox
                     value={dokumenlain.lists.length === isSelected.length}
                     onValueChange={() => checkAll()}
                     color={isSelected === true ? COLORS.lighter : null}
                   />
-                  <Text>Pilih Semua</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Pilih Semua
+                  </Text>
                 </View>
               )}
 
-            <View style={{ flexDirection: "row", gap: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 10,
+              }}
+            >
               <TouchableOpacity
                 style={{
-                  width: device === "tablet" ? "19%" : null,
-
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
+                  padding: 10,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "inprogress" ? COLORS.primary : COLORS.input,
@@ -305,10 +316,7 @@ export const PerizinanMenteri = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  width: device === "tablet" ? "19%" : null,
-
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
+                  padding: 10,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "signed" ? COLORS.primary : COLORS.input,

@@ -294,7 +294,11 @@ export const DetailPerizinanMenteri = ({ route }) => {
                         />
                       ) : (
                         <View>
-                          <Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             {item?.composer?.is_title
                               ? item?.composer?.officer?.nama
                               : item?.composer?.nama}

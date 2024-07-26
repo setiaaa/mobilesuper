@@ -25,7 +25,7 @@ const { StorageAccessFramework } = FileSystem;
 import { headerToken } from "../../../../utils/http";
 import * as Sharing from "expo-sharing";
 import { nde_api } from "../../../../utils/api.config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDataNotif } from "../../../../store/pushnotif";
 import WebView from "react-native-webview";
 
@@ -159,6 +159,8 @@ function DetailDispo({ data, noAgenda, preview, title }) {
   let urlNote = nde_api.baseurl + "crsbe" + data?.attachments[0]?.file;
   let newUrlNote = urlNote.replace("/api/", "/");
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <ScrollView>
@@ -207,35 +209,30 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                       // showBottommSheet(item, getExtensionIcon(item));
                     }}
                   >
-                    <View style={styles.containerRow}>
-                      <IconButton
-                        // icon={getExtensionIcon(item)}
-                        size={18}
-                        style={styles.icon}
-                      />
-                      <View style={styles.containerColumn}>
-                        {/* <Text>{item?.truncate_name}</Text> */}
-                        {/* <Text>{item?.size}</Text>
+                    <View>
+                      {/* <Text>{item?.truncate_name}</Text> */}
+                      {/* <Text>{item?.size}</Text>
                         <Text>{item.file}</Text> */}
-                        <WebView
-                          originWhitelist={["*"]}
-                          source={{
-                            uri: newUrlNote,
-                            headers: header,
-                          }}
-                          style={{
-                            flex: 1,
-                            height: 100,
-                            width: 399,
-                          }}
-                          allowFileAccess={true}
-                          androidLayerType={"software"}
-                          mixedContentMode={"always"}
-                          allowUniversalAccessFromFileURLs={true}
-                          setDisplayZoomControls={true}
-                          scalesPageToFit={false}
-                        />
-                      </View>
+                      <WebView
+                        originWhitelist={["*"]}
+                        source={{
+                          uri: newUrlNote,
+                          headers: header,
+                        }}
+                        style={{
+                          flex: 1,
+                          borderWidth: 1,
+                          borderRadius: 12,
+                          height: device === "tablet" ? 300 : 100,
+                          width: "100%",
+                        }}
+                        allowFileAccess={true}
+                        androidLayerType={"software"}
+                        mixedContentMode={"always"}
+                        allowUniversalAccessFromFileURLs={true}
+                        setDisplayZoomControls={true}
+                        scalesPageToFit={false}
+                      />
                     </View>
                   </View>
                 ))}

@@ -855,6 +855,7 @@ export const DetailPenilaian = () => {
             <Text
               style={{
                 color: COLORS.white,
+                fontSize: fontSizeResponsive("H2", device),
               }}
             >
               Cancel Approve

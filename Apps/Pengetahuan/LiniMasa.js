@@ -1,5 +1,12 @@
 import React, { useMemo, useRef } from "react";
-import { KeyboardAvoidingView, Modal, Platform, Text, TextInput } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Text,
+  TextInput,
+  useWindowDimensions,
+} from "react-native";
 import { View } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -10,6 +17,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
@@ -402,7 +410,7 @@ const CardLiniMasa = ({ item, token, device }) => {
         backgroundColor: COLORS.white,
         borderRadius: 16,
         marginTop: 20,
-        width: wp(90),
+        width: "100%",
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -436,7 +444,10 @@ const CardLiniMasa = ({ item, token, device }) => {
                 style={{ borderRadius: 50, width: 50, height: 50 }}
               />
             </View>
-            <View>
+
+            <View
+              style={{ display: "flex", alignItems: "flex-start", flex: 1 }}
+            >
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.bold,
@@ -472,9 +483,9 @@ const CardLiniMasa = ({ item, token, device }) => {
                         : item.category === "infografis"
                         ? COLORS.warningLight
                         : COLORS.infoLight,
-                    height: 30,
-                    width: 120,
                     borderRadius: 30,
+                    paddingHorizontal: 16,
+                    paddingVertical: 4,
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "row",
@@ -485,18 +496,21 @@ const CardLiniMasa = ({ item, token, device }) => {
                     <Ionicons
                       name="document-outline"
                       color={"#F6AD1D"}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 2 }}
                     />
                   ) : item.category === "kegiatan" ? (
                     <Ionicons
                       name="analytics-outline"
                       color={"#1868AB"}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 3 }}
                     />
                   ) : (
                     <Ionicons
                       name="videocam-outline"
                       color={"#11C15B"}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 2 }}
                     />
                   )}
@@ -517,10 +531,15 @@ const CardLiniMasa = ({ item, token, device }) => {
               </View>
             </View>
           </View>
+
           <View style={{ marginVertical: 20 }}>
             <Image
               source={{ uri: item.cover }}
-              style={{ width: "100%", height: 160, borderRadius: 8 }}
+              style={{
+                width: "100%",
+                height: device === "tablet" ? 300 : 160,
+                borderRadius: 8,
+              }}
             />
           </View>
 
@@ -606,13 +625,14 @@ const CardLiniMasa = ({ item, token, device }) => {
             styles.backdrop,
           ]}
         />
-        <View style={{ alignItems: "center", flex: 1 }}>
+        <View
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
           <View
             style={{
               backgroundColor: COLORS.white,
               width: "90%",
               borderRadius: 10,
-              marginTop: "40%",
             }}
           >
             <View
@@ -924,13 +944,15 @@ const CardLiniMasa = ({ item, token, device }) => {
             styles.backdrop,
           ]}
         />
-        <View style={{ alignItems: "center", flex: 1 }}>
+        <View
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
           <View
             style={{
               backgroundColor: COLORS.white,
               width: "90%",
+              height: 500,
               borderRadius: 10,
-              marginTop: "40%",
             }}
           >
             <View
@@ -1736,6 +1758,10 @@ export const LiniMasa = () => {
     }
   }, [linimasa]);
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -1774,6 +1800,7 @@ export const LiniMasa = () => {
               />
             </TouchableOpacity>
           </View>
+
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
@@ -1793,6 +1820,7 @@ export const LiniMasa = () => {
             width: "100%",
             height: "100%",
             alignItems: "center",
+            paddingHorizontal: 20,
           }}
         >
           <View
@@ -1800,7 +1828,6 @@ export const LiniMasa = () => {
               paddingTop: 20,
               paddingBottom: 10,
               rowGap: 5,
-              width: "90%",
               // backgroundColor: "yellow",
             }}
           >
@@ -1814,7 +1841,12 @@ export const LiniMasa = () => {
             >
               <View
                 style={{
-                  width: "85%",
+                  width:
+                    device === "tablet" && orientation === "landscape"
+                      ? "95%"
+                      : device === "tablet" && orientation === "potrait"
+                      ? "92%"
+                      : "85%",
                   // marginRight: 10,
                   backgroundColor: COLORS.white,
                   borderRadius: 8,
@@ -2115,7 +2147,7 @@ export const LiniMasa = () => {
                   </Text>
                 </TouchableOpacity>
               </ScrollView>
-              <View style={{ width: "15%", alignItems: "flex-end" }}>
+              <View>
                 <TouchableOpacity onPress={clearBadge}>
                   <Ionicons
                     name="close-outline"
@@ -2146,7 +2178,6 @@ export const LiniMasa = () => {
               )}
               style={{
                 width: "100%",
-                paddingHorizontal: "5%",
                 // backgroundColor: "brown",
               }}
               ListFooterComponent={() =>

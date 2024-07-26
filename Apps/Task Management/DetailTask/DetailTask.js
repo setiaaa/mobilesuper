@@ -1094,7 +1094,11 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
           <View>
             <Image
               source={{ uri: listData.creator_avatar }}
-              style={{ width: 30, height: 30, borderRadius: 20 }}
+              style={{
+                width: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 30,
+                borderRadius: device === "tablet" ? 30 : 20,
+              }}
             />
           </View>
           <View style={{ marginLeft: 10 }}>
@@ -1102,7 +1106,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
               style={{
                 fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
-                lineHeight: 20,
+                lineHeight: 25,
                 wordWrap: "break-word",
               }}
             >
@@ -1114,7 +1118,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                   color: COLORS.lighter,
                   fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: 18,
+                  lineHeight: 20,
                   wordWrap: "break-word",
                   marginBottom: 10,
                 }}
@@ -1185,7 +1189,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                           color: COLORS.lighter,
                           fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
-                          lineHeight: 18,
+                          lineHeight: 20,
                           wordWrap: "break-word",
                         }}
                       >
@@ -1221,7 +1225,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                               style={{
                                 fontSize: fontSizeResponsive("H2", device),
                                 fontWeight: FONTWEIGHT.bold,
-                                lineHeight: 20,
+                                lineHeight: 25,
                                 wordWrap: "break-word",
                               }}
                             >
@@ -1233,7 +1237,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                   color: COLORS.lighter,
                                   fontSize: fontSizeResponsive("H5", device),
                                   fontWeight: FONTWEIGHT.normal,
-                                  lineHeight: 18,
+                                  lineHeight: 20,
                                   wordWrap: "break-word",
                                   marginBottom: 10,
                                 }}
@@ -1246,7 +1250,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                 color: "#999999",
                                 fontSize: fontSizeResponsive("H3", device),
                                 fontWeight: FONTWEIGHT.normal,
-                                lineHeight: 18,
+                                lineHeight: 25,
                                 wordWrap: "break-word",
                               }}
                             >
@@ -1280,7 +1284,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                         device
                                       ),
                                       fontWeight: FONTWEIGHT.normal,
-                                      lineHeight: 18,
+                                      lineHeight: 20,
                                       wordWrap: "break-word",
                                     }}
                                   >

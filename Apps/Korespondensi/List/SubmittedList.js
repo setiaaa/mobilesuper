@@ -12,6 +12,7 @@ import {
   TextInput,
   Image,
   Modal,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -37,10 +38,11 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
@@ -183,6 +185,13 @@ function SubmittedList({ route }) {
     }
   };
 
+  const { width: screenWidthFilter, height: screenHeightFilter } =
+    useWindowDimensions();
+
+  let orientation = getOrientation(screenWidthFilter, screenHeightFilter);
+
+  const { device } = useSelector((state) => state.apps);
+
   const renderItem = ({ item }) => (
     <>
       <View style={{ flexDirection: "row", gap: 10 }}>
@@ -219,7 +228,10 @@ function SubmittedList({ route }) {
             onPress={() => {
               navigation.navigate("SubmittedDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nTerkirim",
+                title:
+                  device === "tablet"
+                    ? "Detail Surat Keluar Terkirim"
+                    : "Detail Surat Keluar\nTerkirim",
               });
             }}
           />
@@ -491,7 +503,13 @@ function SubmittedList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -533,7 +551,13 @@ function SubmittedList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

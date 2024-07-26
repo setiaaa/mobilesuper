@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -36,6 +37,7 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
@@ -226,6 +228,13 @@ function NeedFollowUpList({ route }) {
     }
   };
 
+  const { width: screenWidthFilter, height: screenHeightFilter } =
+    useWindowDimensions();
+
+  let orientation = getOrientation(screenWidthFilter, screenHeightFilter);
+
+  const { device } = useSelector((state) => state.apps);
+
   const renderItem = ({ item }) => (
     <>
       <View style={{ flexDirection: "row", gap: 10 }}>
@@ -262,7 +271,10 @@ function NeedFollowUpList({ route }) {
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nPerlu Diproses",
+                title:
+                  device === "tablet"
+                    ? "Detail Surat Keluar Perlu Diproses"
+                    : "Detail Surat Keluar\nPerlu Diproses",
               });
             }}
           />
@@ -574,7 +586,13 @@ function NeedFollowUpList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -616,7 +634,13 @@ function NeedFollowUpList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

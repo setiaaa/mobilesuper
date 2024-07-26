@@ -12,6 +12,7 @@ import {
   TextInput,
   Dimensions,
   Alert,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -37,6 +38,7 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
@@ -281,7 +283,10 @@ function NeedSignList({ route }) {
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nPerlu TTD Elektronik",
+                title:
+                  device === "tablet"
+                    ? "Detail Surat Keluar Perlu TTD Elektronik"
+                    : "Detail Surat Keluar\nPerlu TTD Elektronik",
               });
             }}
           />
@@ -432,6 +437,13 @@ function NeedSignList({ route }) {
       setIsLoading(false);
     }
   }
+
+  const { width: screenWidthFilter, height: screenHeightFilter } =
+    useWindowDimensions();
+
+  let orientation = getOrientation(screenWidthFilter, screenHeightFilter);
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -458,7 +470,11 @@ function NeedSignList({ route }) {
           >
             {divisionList && profile?.is_pass == "true" && (
               <Dropdown
-                style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+                style={[
+                  styles.dropdown,
+                  isFocus && { borderColor: "blue" },
+                  { width: device === "tablet" ? "96.5%" : "95%" },
+                ]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 iconStyle={styles.iconStyle}
@@ -682,7 +698,13 @@ function NeedSignList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -724,7 +746,13 @@ function NeedSignList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 380
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -961,7 +989,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
     borderWidth: 1,
     minHeight: 40,
-    width: "95%",
     padding: 5,
     borderRadius: 6,
     borderColor: "#D0D5DD",
