@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions
 } from "react-native";
 import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -36,6 +37,7 @@ import { getTokenValue } from "../../service/session";
 import { getDownloadLampiran } from "../../service/api";
 import { Portal } from "react-native-portalize";
 import { ResizeMode, Video } from "expo-av";
+import { getOrientation } from "../../config/SuperAppps";
 
 const DataLampiran = ({
   lampiran,
@@ -547,6 +549,10 @@ export const Lampiran = () => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDownloadLampiran(params));
   };
+  
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   const { download } = useSelector((state) => state.repository);
 
@@ -597,9 +603,9 @@ export const Lampiran = () => {
               </Text>
             </View>
           </View>
-          <FlatList
+          {/* <FlatList
             key={"#"}
-            data={detail.attachments}
+            data={dummyAtt}
             renderItem={({ item }) => (
               <View key={item.id}>
                 <DataLampiran
@@ -622,14 +628,33 @@ export const Lampiran = () => {
               marginTop: 10,
               marginHorizontal: "5%",
             }}
-            columnWrapperStyle={{
-              justifyContent: "space-between",
-              marginHorizontal: 15,
-              gap: 5,
-            }}
-            numColumns={2}
+            // columnWrapperStyle={{
+            //   justifyContent: "space-between",
+            //   marginHorizontal: 15,
+            //   gap: 15,
+            // }}
+            // numColumns={numColumns}
             keyExtractor={(item) => "#" + item.id}
-          />
+          /> */}
+          <View style={{ paddingHorizontal: 20, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ paddingHorizontal: device === 'tablet' && orientation === 'potrait' ? 60 : 0, flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 16, justifyContent: device === 'tablet' ? 'flex-start' : 'center' }}>
+            {detail.attachments.map((item, index) =>
+              <DataLampiran
+                  lampiran={item.files}
+                  nama={item.name}
+                  size={item.file_size}
+                  type={getFileExtension(item.name)}
+                  onClick={() => {
+                    setFile(item.files);
+                    setJenis(getFileExtension(item.name));
+                    setFileDetail(item);
+                }}
+                bottomSheetAttach={bottomSheetAttach}
+                device={device}
+            />
+            )}
+            </View>
+          </View>
           {lampiranById !== null ? (
             <Modal
               animationType="fade"
