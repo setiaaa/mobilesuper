@@ -200,7 +200,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     color: COLORS.primary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 24 : 24,
+                    bottom: device === "tablet" ? 50 : 24,
                     position: "absolute",
                   }}
                 >
@@ -227,7 +227,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     color: COLORS.tertiary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 24 : 24,
+                    bottom: device === "tablet" ? 50 : 24,
                     position: "absolute",
                   }}
                 >

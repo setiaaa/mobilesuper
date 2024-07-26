@@ -329,14 +329,16 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
         shadowOpacity: 0.2,
+        paddingHorizontal: 20
       }}
     >
       <View
         style={{
           backgroundColor: COLORS.white,
           borderRadius: 10,
-          width: "90%",
           marginVertical: 5,
+          paddingVertical: 8,
+          width: '100%',
           elevation: 5,
         }}
       >
@@ -357,12 +359,11 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
               }}
             />
           </View>
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10, flex: 1 }}>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
-                // lineHeight: 20,
                 wordWrap: "break-word",
               }}
             >
@@ -374,7 +375,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                   color: COLORS.lighter,
                   fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
-                  // lineHeight: 18,
                   wordWrap: "break-word",
                   marginBottom: 10,
                 }}
@@ -424,8 +424,8 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                (toggleComment.id !== listData.id &&
-                  listData.child.length > 0) ? (
+                  (toggleComment.id !== listData.id &&
+                    listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -460,7 +460,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                 ) : null}
 
                 {listData.id === toggleComment.id && toggleComment.toggle ? (
-                  <View>
+                  <View style={{ marginTop: 16 }}>
                     {listData.child?.map((listKomen, index) => (
                       <>
                         <View
@@ -485,7 +485,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                               style={{
                                 fontSize: fontSizeResponsive("H2", device),
                                 fontWeight: FONTWEIGHT.bold,
-                                lineHeight: 20,
                                 wordWrap: "break-word",
                               }}
                             >
@@ -497,7 +496,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                   color: COLORS.lighter,
                                   fontSize: fontSizeResponsive("H5", device),
                                   fontWeight: FONTWEIGHT.normal,
-                                  lineHeight: 18,
                                   wordWrap: "break-word",
                                   marginBottom: 10,
                                 }}
@@ -510,7 +508,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                 color: "#999999",
                                 fontSize: fontSizeResponsive("H3", device),
                                 fontWeight: FONTWEIGHT.normal,
-                                lineHeight: 18,
                                 wordWrap: "break-word",
                               }}
                             >
@@ -544,7 +541,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                                         device
                                       ),
                                       fontWeight: FONTWEIGHT.normal,
-                                      lineHeight: 18,
                                       wordWrap: "break-word",
                                     }}
                                   >
@@ -820,17 +816,21 @@ export const DetailLinimasa = ({ route }) => {
                   <View
                     style={{
                       width: "100%",
-                      height: 260,
+                      height: device === 'tablet' ? 400 : 260,
                       backgroundColor: COLORS.grey,
                     }}
                   ></View>
                 ) : (
                   <Image
                     source={{ uri: detail.cover }}
-                    style={
+                    style={[
                       Platform.OS === "ios"
                         ? styles.imageIos
-                        : styles.imageAndroid
+                        : styles.imageAndroid,
+                      {
+                        height: device === 'tablet' ? 400 : 260
+                      }
+                    ]
                     }
                   />
                 )}
@@ -955,10 +955,10 @@ export const DetailLinimasa = ({ route }) => {
                           {/* {detail.published_date?.slice(0, -9)} */}
                           {detail.published_date !== undefined
                             ? DateFormat({
-                                date: detail?.published_date,
-                                fromDate: DATETIME.LONG_DATETIME,
-                                toDate: DATETIME.LONG_DATE,
-                              })
+                              date: detail?.published_date,
+                              fromDate: DATETIME.LONG_DATETIME,
+                              toDate: DATETIME.LONG_DATE,
+                            })
                             : null}
                         </Text>
                       )}
@@ -989,11 +989,11 @@ export const DetailLinimasa = ({ route }) => {
                             detail.category === "Video / Jurnal"
                               ? COLORS.successLight
                               : detail.category === "Infografis"
-                              ? COLORS.warningLight
-                              : COLORS.infoLight,
-                          width: 130,
-                          height: 30,
+                                ? COLORS.warningLight
+                                : COLORS.infoLight,
                           borderRadius: 30,
+                          paddingHorizontal: 16,
+                          paddingVertical: 4,
                           justifyContent: "center",
                           alignItems: "center",
                           flexDirection: "row",
@@ -1004,18 +1004,21 @@ export const DetailLinimasa = ({ route }) => {
                           <Ionicons
                             name="document-outline"
                             color={"#F6AD1D"}
+                            size={device === 'tablet' ? 20 : 16}
                             style={{ marginTop: 2 }}
                           />
                         ) : detail.category === "Kegiatan" ? (
                           <Ionicons
                             name="analytics-outline"
                             color={"#1868AB"}
+                            size={device === 'tablet' ? 20 : 16}
                             style={{ marginTop: 3 }}
                           />
                         ) : (
                           <Ionicons
                             name="videocam-outline"
                             color={"#11C15B"}
+                            size={device === 'tablet' ? 20 : 16}
                             style={{ marginTop: 2 }}
                           />
                         )}
@@ -1025,8 +1028,8 @@ export const DetailLinimasa = ({ route }) => {
                               detail.category === "Infografis"
                                 ? COLORS.warning
                                 : detail.category === "Kegiatan"
-                                ? COLORS.info
-                                : COLORS.success,
+                                  ? COLORS.info
+                                  : COLORS.success,
                             fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
@@ -1133,13 +1136,12 @@ export const DetailLinimasa = ({ route }) => {
                             styles.backdrop,
                           ]}
                         />
-                        <View style={{ alignItems: "center", flex: 1 }}>
+                        <View style={{ alignItems: "center", flex: 1, justifyContent: "center" }}>
                           <View
                             style={{
                               backgroundColor: COLORS.white,
                               width: "90%",
                               borderRadius: 10,
-                              marginTop: "40%",
                             }}
                           >
                             <View
@@ -1671,8 +1673,8 @@ export const DetailLinimasa = ({ route }) => {
                           </View>
                         </TouchableOpacity>
                         {getFileExtension(lampiranById.name) === "png" ||
-                        getFileExtension(lampiranById.name) === "jpg" ||
-                        getFileExtension(lampiranById.name) === "jpeg" ? (
+                          getFileExtension(lampiranById.name) === "jpg" ||
+                          getFileExtension(lampiranById.name) === "jpeg" ? (
                           <View>
                             <Image
                               source={{ uri: lampiranById.file }}
@@ -1714,13 +1716,12 @@ export const DetailLinimasa = ({ route }) => {
                         styles.backdrop,
                       ]}
                     />
-                    <View style={{ alignItems: "center", flex: 1 }}>
+                    <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }}>
                       <View
                         style={{
                           backgroundColor: COLORS.white,
                           width: "90%",
                           borderRadius: 10,
-                          marginTop: "40%",
                         }}
                       >
                         <View
@@ -1795,7 +1796,6 @@ export const DetailLinimasa = ({ route }) => {
 
                           <Text
                             style={{
-                              width: "70%",
                               marginHorizontal: 60,
                               marginTop: 10,
                               fontSize: fontSizeResponsive("H4", device),
@@ -1844,7 +1844,6 @@ export const DetailLinimasa = ({ route }) => {
 
                           <Text
                             style={{
-                              width: "70%",
                               marginHorizontal: 60,
                               marginTop: 10,
                               fontSize: fontSizeResponsive("H4", device),
@@ -1893,7 +1892,6 @@ export const DetailLinimasa = ({ route }) => {
 
                           <Text
                             style={{
-                              width: "70%",
                               marginHorizontal: 60,
                               marginTop: 10,
                               fontSize: fontSizeResponsive("H4", device),
@@ -1942,7 +1940,6 @@ export const DetailLinimasa = ({ route }) => {
 
                           <Text
                             style={{
-                              width: "70%",
                               marginHorizontal: 60,
                               marginTop: 10,
                               fontSize: fontSizeResponsive("H4", device),
@@ -1991,7 +1988,6 @@ export const DetailLinimasa = ({ route }) => {
 
                           <Text
                             style={{
-                              width: "70%",
                               marginHorizontal: 60,
                               marginTop: 10,
                               marginBottom: 20,
@@ -2021,13 +2017,13 @@ export const DetailLinimasa = ({ route }) => {
                         styles.backdrop,
                       ]}
                     />
-                    <View style={{ alignItems: "center", flex: 1 }}>
+                    <View style={{ alignItems: "center", flex: 1, justifyContent: "center" }}>
                       <View
                         style={{
                           backgroundColor: COLORS.white,
                           width: "90%",
+                          height: 500,
                           borderRadius: 10,
-                          marginTop: "40%",
                         }}
                       >
                         <View
@@ -2155,12 +2151,10 @@ const styles = StyleSheet.create({
   },
   imageIos: {
     width: "100%",
-    height: 260,
     resizeMode: "cover",
   },
   imageAndroid: {
     width: "100%",
-    height: 260,
     resizeMode: "cover",
   },
   iOSBackdrop: {

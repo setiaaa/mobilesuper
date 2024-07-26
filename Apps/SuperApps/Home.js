@@ -1462,7 +1462,7 @@ export const Home = () => {
                   backgroundColor: COLORS.white,
                   borderRadius: 10,
                   padding: 20,
-                   width: '90%'
+                  width: '90%'
                 }}
               >
                 <View
@@ -1644,7 +1644,7 @@ export const Home = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    flexWrap:'wrap',
+                    flexWrap: 'wrap',
                     gap: 10,
                     marginTop: 10,
                   }}

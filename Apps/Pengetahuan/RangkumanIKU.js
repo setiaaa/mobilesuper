@@ -370,7 +370,7 @@ export const RangkumanIKU = () => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {}
+    } catch (e) { }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -405,7 +405,7 @@ export const RangkumanIKU = () => {
       } catch (e) {
         throw new Error(e);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
   const saveIosFile = async (fileUri) => {
     try {
@@ -432,7 +432,7 @@ export const RangkumanIKU = () => {
       if (token !== "") {
         dispatch(getListPegawai(param));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -524,335 +524,334 @@ export const RangkumanIKU = () => {
         </View>
       </View>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginHorizontal: "5%",
-          width: "90%",
-          marginVertical: 20,
-          gap: 10,
-        }}
-      >
-        <TouchableOpacity
+      <View style={{ flex: 1 }}>
+        <View
           style={{
-            backgroundColor: switchView ? COLORS.primary : COLORS.white,
-            padding: 10,
-            width: "47%",
-            borderRadius: 8,
-            height: device === "tablet" ? 65 : 45,
-            justifyContent: "center",
-            //shadow ios
-            shadowOffset: switchView
-              ? { width: -2, height: 4 }
-              : { width: 0, height: 0 },
-            shadowColor: switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: switchView ? 0.2 : 0,
-            //shadow android
-            elevation: switchView ? 2 : 0,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+            marginVertical: 20,
+            paddingHorizontal: 20,
+            gap: 10,
           }}
-          onPress={switchRangkumanView}
         >
-          <Text
+          <TouchableOpacity
             style={{
-              color: switchView ? COLORS.white : COLORS.primary,
-              textAlign: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              fontWeight: 600,
+              backgroundColor: switchView ? COLORS.primary : COLORS.white,
+              padding: 10,
+              width: "47%",
+              borderRadius: 8,
+              height: device === "tablet" ? 65 : 45,
+              justifyContent: "center",
+              //shadow ios
+              shadowOffset: switchView
+                ? { width: -2, height: 4 }
+                : { width: 0, height: 0 },
+              shadowColor: switchView ? "#8E1414" : "FFFFFF",
+              shadowOpacity: switchView ? 0.2 : 0,
+              //shadow android
+              elevation: switchView ? 2 : 0,
             }}
+            onPress={switchRangkumanView}
           >
-            Rangkuman
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: !switchView ? COLORS.primary : COLORS.white,
-            padding: 10,
-            width: "47%",
-            borderRadius: 8,
-            height: device === "tablet" ? 65 : 45,
-            justifyContent: "center",
-            //shadow ios
-            shadowOffset: !switchView
-              ? { width: -2, height: 4 }
-              : { width: 0, height: 0 },
-            shadowColor: !switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: !switchView ? 0.2 : 0,
-            //shadow android
-            elevation: !switchView ? 2 : 0,
-          }}
-          onPress={switchDaftarPegawaiView}
-        >
-          <Text
-            style={{
-              color: !switchView ? COLORS.white : COLORS.primary,
-              textAlign: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              fontWeight: 600,
-            }}
-          >
-            Daftar Pegawai
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ paddingHorizontal: 5 }}>
-        {switchView ? (
-          <View
-            style={{
-              height: "85%",
-              paddingHorizontal: "5%",
-              width: "100%",
-            }}
-          >
-            <WebView
-              // originWhitelist={["*"]}
-              source={{
-                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
-                headers: { Authorization: `${token}` },
+            <Text
+              style={{
+                color: switchView ? COLORS.white : COLORS.primary,
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+                fontWeight: 600,
               }}
-              style={{ flex: 1, borderRadius: 8 }}
-              allowFileAccess={true}
-              androidLayerType={"software"}
-              mixedContentMode={"always"}
-              allowUniversalAccessFromFileURLs={true}
-              scalesPageToFit={false}
-              thirdPartyCookiesEnabled={true}
-            />
-          </View>
-        ) : (
-          <>
+            >
+              Rangkuman
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: !switchView ? COLORS.primary : COLORS.white,
+              padding: 10,
+              width: "47%",
+              borderRadius: 8,
+              height: device === "tablet" ? 65 : 45,
+              justifyContent: "center",
+              //shadow ios
+              shadowOffset: !switchView
+                ? { width: -2, height: 4 }
+                : { width: 0, height: 0 },
+              shadowColor: !switchView ? "#8E1414" : "FFFFFF",
+              shadowOpacity: !switchView ? 0.2 : 0,
+              //shadow android
+              elevation: !switchView ? 2 : 0,
+            }}
+            onPress={switchDaftarPegawaiView}
+          >
+            <Text
+              style={{
+                color: !switchView ? COLORS.white : COLORS.primary,
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+                fontWeight: 600,
+              }}
+            >
+              Daftar Pegawai
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ paddingHorizontal: 20, flex: 1 }}>
+          {switchView ? (
             <View
               style={{
-                flexDirection: "column",
-                gap: 5,
-                paddingHorizontal: "5%",
+                height: device === 'tablet' ? '85%' : '80%',
                 width: "100%",
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  bottomSheetAttachSelect();
-                  // setFilterData([]);
+              <WebView
+                // originWhitelist={["*"]}
+                source={{
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                  headers: { Authorization: `${token}` },
                 }}
-                // style={{ width: "46%" }}
+                style={{ flex: 1, borderRadius: 8 }}
+                allowFileAccess={true}
+                androidLayerType={"software"}
+                mixedContentMode={"always"}
+                allowUniversalAccessFromFileURLs={true}
+                scalesPageToFit={false}
+                thirdPartyCookiesEnabled={true}
+              />
+            </View>
+          ) : (
+            <>
+              <View
+                style={{
+                  flexDirection: "column",
+                  gap: 5,
+                  width: "100%",
+                }}
               >
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    marginVertical: 10,
-                    height: 54,
-                    justifyContent: "center",
-                    borderRadius: 8,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 4 },
-                    shadowColor: "#171717",
-                    shadowOpacity: 0.2,
-                    //shadow android
-                    elevation: 2,
+                <TouchableOpacity
+                  onPress={() => {
+                    bottomSheetAttachSelect();
+                    // setFilterData([]);
                   }}
+                // style={{ width: "46%" }}
                 >
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 20,
-                      color: COLORS.lighter,
-                      fontSize: fontSizeResponsive("H4", device),
+                      backgroundColor: COLORS.white,
+                      marginVertical: 10,
+                      height: 54,
+                      justifyContent: "center",
+                      borderRadius: 8,
+                      //shadow ios
+                      shadowOffset: { width: -2, height: 4 },
+                      shadowColor: "#171717",
+                      shadowOpacity: 0.2,
+                      //shadow android
+                      elevation: 2,
                     }}
                   >
-                    Pilih Tahun dan Triwulan dan Unit Kerja
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              <BottomSheetModal
-                ref={bottomSheetModalSelectRef}
-                snapPoints={initialSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
-                  <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                  />
-                )}
-              >
-                <BottomSheetView onLayout={handleContentLayout}>
-                  <View style={{ flex: 1 }}>
-                    <View
+                    <Text
                       style={{
-                        marginHorizontal: "5%",
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        paddingVertical: 14,
+                        marginLeft: 20,
+                        color: COLORS.lighter,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      <Text
+                      Pilih Tahun dan Triwulan dan Unit Kerja
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <BottomSheetModal
+                  ref={bottomSheetModalSelectRef}
+                  snapPoints={initialSnapPoints}
+                  handleHeight={animatedHandleHeight}
+                  contentHeight={animatedContentHeight}
+                  index={0}
+                  style={{ borderRadius: 50 }}
+                  keyboardBlurBehavior="restore"
+                  android_keyboardInputMode="adjust"
+                  backdropComponent={({ style }) => (
+                    <View
+                      style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                    />
+                  )}
+                >
+                  <BottomSheetView onLayout={handleContentLayout}>
+                    <View style={{ flex: 1 }}>
+                      <View
                         style={{
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H1", device),
-                        }}
-                      >
-                        Pilih
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          bottomSheetAttachSelectClose();
-                        }}
-                      >
-                        <Ionicons
-                          name="close-outline"
-                          size={24}
-                          color={COLORS.lighter}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        // gap: 26,
-                        marginHorizontal: "5%",
-                        paddingBottom: 15,
-                      }}
-                    >
-                      <View style={{ width: "47%" }}>
-                        {year?.key === "" ? (
-                          <Dropdown
-                            placeHolder={"Pilih Tahun"}
-                            borderWidth={1}
-                            data={datalistYear}
-                            // selected={year}
-                            setSelected={setYear}
-                            borderColor={COLORS.ExtraDivinder}
-                            borderwidthDrop={1}
-                            borderColorDrop={COLORS.ExtraDivinder}
-                            borderWidthValue={1}
-                            borderColorValue={COLORS.ExtraDivinder}
-                          />
-                        ) : (
-                          <Dropdown
-                            // placeHolder={"Pilih Tahun"}
-                            borderWidth={1}
-                            data={datalistYear}
-                            selected={year}
-                            setSelected={setYear}
-                            borderColor={COLORS.ExtraDivinder}
-                            borderwidthDrop={1}
-                            borderColorDrop={COLORS.ExtraDivinder}
-                            borderWidthValue={1}
-                            borderColorValue={COLORS.ExtraDivinder}
-                          />
-                        )}
-                      </View>
-
-                      <View style={{ width: "47%" }}>
-                        {quarter?.key === "" ? (
-                          <Dropdown
-                            placeHolder={"Pilih Triwulan"}
-                            borderWidth={1}
-                            data={dataKuartal}
-                            // selected={quarter}
-                            setSelected={setQuarter}
-                            borderColor={COLORS.ExtraDivinder}
-                            borderwidthDrop={1}
-                            borderColorDrop={COLORS.ExtraDivinder}
-                            borderWidthValue={1}
-                            borderColorValue={COLORS.ExtraDivinder}
-                          />
-                        ) : (
-                          <Dropdown
-                            // placeHolder={"Pilih Triwulan"}
-                            borderWidth={1}
-                            data={dataKuartal}
-                            selected={quarter}
-                            setSelected={setQuarter}
-                            borderColor={COLORS.ExtraDivinder}
-                            borderwidthDrop={1}
-                            borderColorDrop={COLORS.ExtraDivinder}
-                            borderWidthValue={1}
-                            borderColorValue={COLORS.ExtraDivinder}
-                          />
-                        )}
-                      </View>
-                    </View>
-
-                    <View style={{ marginHorizontal: "5%" }}>
-                      {selectedUnitKerja?.key === "" ? (
-                        <Dropdown
-                          placeHolder={"Pilih Unit Kerja"}
-                          borderWidth={1}
-                          data={dataUnitKerja()}
-                          setSelected={setSelectedUnitKerja}
-                          borderColor={COLORS.ExtraDivinder}
-                          borderwidthDrop={1}
-                          borderColorDrop={COLORS.ExtraDivinder}
-                          borderWidthValue={1}
-                          borderColorValue={COLORS.ExtraDivinder}
-                        />
-                      ) : (
-                        <Dropdown
-                          borderWidth={1}
-                          data={dataUnitKerja()}
-                          selected={selectedUnitKerja}
-                          setSelected={setSelectedUnitKerja}
-                          borderColor={COLORS.ExtraDivinder}
-                          borderwidthDrop={1}
-                          borderColorDrop={COLORS.ExtraDivinder}
-                          borderWidthValue={1}
-                          borderColorValue={COLORS.ExtraDivinder}
-                        />
-                      )}
-                    </View>
-
-                    {choiceTipe.key === "3" ||
-                    choiceTipe.key === "4" ||
-                    choiceTipe.key === "5" ? (
-                      <></>
-                    ) : null}
-
-                    <View
-                      style={{
-                        height: 190,
-                        paddingVertical: 20,
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <TouchableOpacity
-                        style={{
-                          width: "90%",
-                          backgroundColor: COLORS.primary,
-                          height: 50,
-                          // marginTop: ,
-                          borderRadius: 8,
-                          alignItems: "center",
                           marginHorizontal: "5%",
-                          justifyContent: "center",
-                        }}
-                        onPress={() => {
-                          handlePilihSimpan();
-                          bottomSheetAttachSelectClose();
+                          marginTop: 10,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          paddingVertical: 14,
                         }}
                       >
                         <Text
                           style={{
-                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
                             fontSize: fontSizeResponsive("H1", device),
-                            fontWeight: 500,
                           }}
                         >
-                          Simpan
+                          Pilih
                         </Text>
-                      </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            bottomSheetAttachSelectClose();
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          // gap: 26,
+                          marginHorizontal: "5%",
+                          paddingBottom: 15,
+                        }}
+                      >
+                        <View style={{ width: "47%" }}>
+                          {year?.key === "" ? (
+                            <Dropdown
+                              placeHolder={"Pilih Tahun"}
+                              borderWidth={1}
+                              data={datalistYear}
+                              // selected={year}
+                              setSelected={setYear}
+                              borderColor={COLORS.ExtraDivinder}
+                              borderwidthDrop={1}
+                              borderColorDrop={COLORS.ExtraDivinder}
+                              borderWidthValue={1}
+                              borderColorValue={COLORS.ExtraDivinder}
+                            />
+                          ) : (
+                            <Dropdown
+                              // placeHolder={"Pilih Tahun"}
+                              borderWidth={1}
+                              data={datalistYear}
+                              selected={year}
+                              setSelected={setYear}
+                              borderColor={COLORS.ExtraDivinder}
+                              borderwidthDrop={1}
+                              borderColorDrop={COLORS.ExtraDivinder}
+                              borderWidthValue={1}
+                              borderColorValue={COLORS.ExtraDivinder}
+                            />
+                          )}
+                        </View>
+
+                        <View style={{ width: "47%" }}>
+                          {quarter?.key === "" ? (
+                            <Dropdown
+                              placeHolder={"Pilih Triwulan"}
+                              borderWidth={1}
+                              data={dataKuartal}
+                              // selected={quarter}
+                              setSelected={setQuarter}
+                              borderColor={COLORS.ExtraDivinder}
+                              borderwidthDrop={1}
+                              borderColorDrop={COLORS.ExtraDivinder}
+                              borderWidthValue={1}
+                              borderColorValue={COLORS.ExtraDivinder}
+                            />
+                          ) : (
+                            <Dropdown
+                              // placeHolder={"Pilih Triwulan"}
+                              borderWidth={1}
+                              data={dataKuartal}
+                              selected={quarter}
+                              setSelected={setQuarter}
+                              borderColor={COLORS.ExtraDivinder}
+                              borderwidthDrop={1}
+                              borderColorDrop={COLORS.ExtraDivinder}
+                              borderWidthValue={1}
+                              borderColorValue={COLORS.ExtraDivinder}
+                            />
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={{ marginHorizontal: "5%" }}>
+                        {selectedUnitKerja?.key === "" ? (
+                          <Dropdown
+                            placeHolder={"Pilih Unit Kerja"}
+                            borderWidth={1}
+                            data={dataUnitKerja()}
+                            setSelected={setSelectedUnitKerja}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        ) : (
+                          <Dropdown
+                            borderWidth={1}
+                            data={dataUnitKerja()}
+                            selected={selectedUnitKerja}
+                            setSelected={setSelectedUnitKerja}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        )}
+                      </View>
+
+                      {choiceTipe.key === "3" ||
+                        choiceTipe.key === "4" ||
+                        choiceTipe.key === "5" ? (
+                        <></>
+                      ) : null}
+
+                      <View
+                        style={{
+                          height: 190,
+                          paddingVertical: 20,
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={{
+                            width: "90%",
+                            backgroundColor: COLORS.primary,
+                            height: 50,
+                            // marginTop: ,
+                            borderRadius: 8,
+                            alignItems: "center",
+                            marginHorizontal: "5%",
+                            justifyContent: "center",
+                          }}
+                          onPress={() => {
+                            handlePilihSimpan();
+                            bottomSheetAttachSelectClose();
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H1", device),
+                              fontWeight: 500,
+                            }}
+                          >
+                            Simpan
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                </BottomSheetView>
-              </BottomSheetModal>
-              {/* 
+                  </BottomSheetView>
+                </BottomSheetModal>
+                {/* 
               <BottomSheetModal
                 ref={bottomSheetModalRef}
                 snapPoints={animatedSnapPoints}
@@ -923,29 +922,51 @@ export const RangkumanIKU = () => {
                 </BottomSheetView>
               </BottomSheetModal> */}
 
-              <View style={{ marginVertical: 10 }}>
-                <Search
-                  placeholder={"Cari..."}
-                  iconColor={COLORS.primary}
-                  onSearch={filter}
-                />
+                <View style={{ marginVertical: 10 }}>
+                  <Search
+                    placeholder={"Cari..."}
+                    iconColor={COLORS.primary}
+                    onSearch={filter}
+                  />
+                </View>
               </View>
-            </View>
 
-            <View
-              style={{
-                marginHorizontal: "5%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {"*) Nilai Minimum = 3"}
-              </Text>
-              <View style={{ flexDirection: "row", gap: 10 }}>
-                {exportPegawai?.lists?.length !== 0 ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {"*) Nilai Minimum = 3"}
+                </Text>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  {exportPegawai?.lists?.length !== 0 ? (
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: COLORS.white,
+                        width: 40,
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      onPress={() => {
+                        downloadFile(
+                          exportPegawai?.lists?.file,
+                          "application/vnd.ms-excel",
+                          "sample.xls"
+                        );
+                        // openFile();
+                      }}
+                    >
+                      <Icon name="get-app" size={24} color={COLORS.grey} />
+                    </TouchableOpacity>
+                  ) : null}
+
                   <TouchableOpacity
+                    onPress={!ascending ? asc : desc}
                     style={{
                       backgroundColor: COLORS.white,
                       width: 40,
@@ -954,113 +975,88 @@ export const RangkumanIKU = () => {
                       alignItems: "center",
                       borderRadius: 30,
                     }}
-                    onPress={() => {
-                      downloadFile(
-                        exportPegawai?.lists?.file,
-                        "application/vnd.ms-excel",
-                        "sample.xls"
-                      );
-                      // openFile();
-                    }}
                   >
-                    <Icon name="get-app" size={24} color={COLORS.grey} />
+                    <Ionicons
+                      name="filter-outline"
+                      size={24}
+                      color={COLORS.grey}
+                    />
                   </TouchableOpacity>
-                ) : null}
+                </View>
+              </View>
 
-                <TouchableOpacity
-                  onPress={!ascending ? asc : desc}
+              <View
+                style={{ marginVertical: 10, gap: 2 }}
+              >
+                <Text
                   style={{
-                    backgroundColor: COLORS.white,
-                    width: 40,
-                    height: 40,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 30,
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: 500,
+                    color: COLORS.grey,
                   }}
                 >
-                  <Ionicons
-                    name="filter-outline"
-                    size={24}
-                    color={COLORS.grey}
-                  />
-                </TouchableOpacity>
+                  Yang dipilih:
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: 700,
+                  }}
+                >
+                  {year.value ? year.value : "-"} /{" "}
+                  {quarter.value ? quarter.value : "-"} /{" "}
+                  {selectedUnitKerja.value ? selectedUnitKerja.value : "-"}
+                </Text>
               </View>
-            </View>
 
-            <View
-              style={{ paddingHorizontal: "5%", marginVertical: 10, gap: 2 }}
-            >
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H4", device),
-                  fontWeight: 500,
-                  color: COLORS.grey,
-                }}
-              >
-                Yang dipilih:
-              </Text>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H4", device),
-                  fontWeight: 700,
-                }}
-              >
-                {year.value ? year.value : "-"} /{" "}
-                {quarter.value ? quarter.value : "-"} /{" "}
-                {selectedUnitKerja.value ? selectedUnitKerja.value : "-"}
-              </Text>
-            </View>
-
-            <View>
-              <View
-                style={{
-                  marginTop: 10,
-                  gap: 15,
-                }}
-              >
-                <FlatList
-                  data={filterData}
-                  renderItem={({ item }) => (
-                    <View key={item.id} style={{ marginVertical: 10 }}>
-                      <ListDaftarPegawai
-                        item={item}
-                        token={token}
-                        device={device}
-                      />
-                    </View>
-                  )}
-                  ListFooterComponent={() =>
-                    loading === true ? (
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: 24,
-                        }}
-                      >
-                        <ActivityIndicator
-                          size="large"
-                          color={COLORS.primary}
+              <View>
+                <View
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FlatList
+                    data={filterData}
+                    renderItem={({ item }) => (
+                      <View key={item.id} style={{ marginVertical: 10 }}>
+                        <ListDaftarPegawai
+                          item={item}
+                          token={token}
+                          device={device}
                         />
                       </View>
-                    ) : null
-                  }
-                  keyExtractor={(item) => item.id}
-                  ListEmptyComponent={() => <ListEmpty />}
-                  onEndReached={loadMore}
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                    />
-                  }
-                  style={{
-                    height: device === "tablet" ? "79%" : "64%",
-                    paddingHorizontal: "5%",
-                  }}
-                />
+                    )}
+                    ListFooterComponent={() =>
+                      loading === true ? (
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            padding: 24,
+                          }}
+                        >
+                          <ActivityIndicator
+                            size="large"
+                            color={COLORS.primary}
+                          />
+                        </View>
+                      ) : null
+                    }
+                    keyExtractor={(item) => item.id}
+                    ListEmptyComponent={() => <ListEmpty />}
+                    onEndReached={loadMore}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                      />
+                    }
+                    style={{
+                      height: device === "tablet" ? "79%" : "64%",
+                    }}
+                  />
 
-                {/* {pegawai.lists.length !== 0
+                  {/* {pegawai.lists.length !== 0
                   ? pegawai.lists.map((item, index) => {
                       const getDetail = (id) => {
                         const param = { token, id };
@@ -1129,10 +1125,11 @@ export const RangkumanIKU = () => {
                     );
                   })
                   : ""} */}
+                </View>
               </View>
-            </View>
-          </>
-        )}
+            </>
+          )}
+        </View>
       </View>
     </>
   );
