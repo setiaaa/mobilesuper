@@ -145,20 +145,17 @@ export function initAgenda(data) {
       //init event kegiatan
       if (e.key == "event_1") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan = [temp];
+          data.kegiatan = [e.value];
         }
       }
       if (e.key == "event_2") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan.push(temp);
+          data.kegiatan.push(e.value);
         }
       }
       if (e.key == "event_3") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan.push(temp);
+          data.kegiatan.push(e.value);
         }
       }
     }
@@ -409,20 +406,17 @@ export function initLetter(data) {
       //init event kegiatan
       if (e.key == "event_1") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan = [temp];
+          data.kegiatan = [e.value];
         }
       }
       if (e.key == "event_2") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan.push(temp);
+          data.kegiatan.push(e.value);
         }
       }
       if (e.key == "event_3") {
         if (e.value != "") {
-          var temp = formatString(e.value);
-          data.kegiatan.push(temp);
+          data.kegiatan.push(e.value);
         }
       }
     }
