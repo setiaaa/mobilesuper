@@ -1891,7 +1891,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: 350 }]}>
+          <View style={[styles.containerr, { marginBottom: '60%' }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}

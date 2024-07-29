@@ -178,7 +178,7 @@ const ListBankom = ({
             >
               Tanggal
             </Text>
-            <Text>: {item?.extra_attributes?.tanggalSertif}</Text>
+            <Text style={{fontSize: fontSizeResponsive("H3", device),}}>: {item?.extra_attributes?.tanggalSertif}</Text>
             {/* {item?.receivers[0]?.display_title !== undefined ? (
               <Text
                 style={{
@@ -454,10 +454,10 @@ export const Bankom = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         {loading ? <Loading /> : null}
-        <View style={{ position: "relative" }}>
+        <View style={{ position: "relative", flex: 1 }}>
           {filterData !== null ? (
             <>
               <View

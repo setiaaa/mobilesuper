@@ -234,6 +234,7 @@ function TabViewBg({
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         tabBarPosition={position}
+        swipeEnabled={false}
       />
       {/* <Snackbar visible={snackbar}>Copied to clipboard</Snackbar> */}
     </View>

@@ -122,8 +122,8 @@ export const MenuDashboard = () => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 26,
-                  height: device === "tablet" ? 40 : 18,
+                  width: device === "tablet" ? 70 : 26,
+                  height: device === "tablet" ? 50 : 18,
                 }}
                 source={require("../../assets/superApp/ikon-keuangan.png")}
               />
@@ -181,7 +181,7 @@ export const MenuDashboard = () => {
                 <Image
                   style={{
                     width: device === "tablet" ? 60 : 24,
-                    height: device === "tablet" ? 40 : 24,
+                    height: device === "tablet" ? 60 : 24,
                   }}
                   source={require("../../assets/superApp/LPMUKP.png")}
                 />

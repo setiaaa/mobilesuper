@@ -77,7 +77,7 @@ export const ListFaq = () => {
         }}
       >
         <View>
-          <Text style={fontSizeResponsive("headingL", device)}>
+          <Text style={{fontSize :fontSizeResponsive("H4", device)}}>
             Halo, Ada yang bisa kami bantu?
           </Text>
         </View>

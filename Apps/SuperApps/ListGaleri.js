@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, fontSizeResponsive, PADDING } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive, getOrientation, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
@@ -91,6 +91,10 @@ export const ListGaleri = () => {
       setRefreshing(false);
     }, 2000);
   }, [token, page]);
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <View style={{ flex: 1 }}>
@@ -224,9 +228,9 @@ export const ListGaleri = () => {
                 }
                 style={{
                   width:
-                    device === "tablet" ? useWindowDimensions().width : 390,
+                    device === "tablet" && orientation === 'landscape' ? useWindowDimensions().width : device === "tablet" && orientation === 'potrait' ? 800:390,
                   height:
-                    device === "tablet" ? useWindowDimensions().height : 283,
+                    device === "tablet" && orientation === 'landscape'? useWindowDimensions().height : device === "tablet" && orientation === 'potrait' ?800:283,
                 }}
               />
             </TouchableOpacity>

@@ -163,45 +163,45 @@ function DetailAgendaInpro({
     });
   }
 
-  const printToFile = async () => {
-    let html = getWatermarkHTML(profile, data, body);
-    // On iOS/android prints the given html. On web prints the HTML from the current page.
-    await Print.printToFileAsync({
-      html,
-      width: 595,
-      height: 842,
-    }).then(
-      async ({ uri }) => {
-        // this changes the bit after the last slash of the uri (the document's name) to "invoice_<date of transaction"
+  // const printToFile = async () => {
+  //   let html = getWatermarkHTML(profile, data, body);
+  //   // On iOS/android prints the given html. On web prints the HTML from the current page.
+  //   await Print.printToFileAsync({
+  //     html,
+  //     width: 595,
+  //     height: 842,
+  //   }).then(
+  //     async ({ uri }) => {
+  //       // this changes the bit after the last slash of the uri (the document's name) to "invoice_<date of transaction"
 
-        const pdfName = `${uri?.slice(0, uri?.lastIndexOf("/") + 1)}${
-          Platform.OS == "android"
-            ? data.subject
-            : data.subject.slice(0, 55).replaceAll(" ", "_")
-        }.pdf`;
-        try {
-          await FileSystem.moveAsync({
-            from: uri,
-            to: pdfName,
-          }).then(async () => {
-            if (Platform.OS == "android") {
-              saveAndroidFile(
-                pdfName,
-                data.subject + ".pdf",
-                "application/pdf"
-              );
-            } else {
-              await shareAsync(pdfName, {
-                UTI: ".pdf",
-                mimeType: "application/pdf",
-              });
-            }
-          });
-        } catch (error) {}
-      },
-      (error) => {}
-    );
-  };
+  //       const pdfName = `${uri?.slice(0, uri?.lastIndexOf("/") + 1)}${
+  //         Platform.OS == "android"
+  //           ? data.subject
+  //           : data.subject.slice(0, 55).replaceAll(" ", "_")
+  //       }.pdf`;
+  //       try {
+  //         await FileSystem.moveAsync({
+  //           from: uri,
+  //           to: pdfName,
+  //         }).then(async () => {
+  //           if (Platform.OS == "android") {
+  //             saveAndroidFile(
+  //               pdfName,
+  //               data.subject + ".pdf",
+  //               "application/pdf"
+  //             );
+  //           } else {
+  //             await shareAsync(pdfName, {
+  //               UTI: ".pdf",
+  //               mimeType: "application/pdf",
+  //             });
+  //           }
+  //         });
+  //       } catch (error) {}
+  //     },
+  //     (error) => {}
+  //   );
+  // };
 
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {

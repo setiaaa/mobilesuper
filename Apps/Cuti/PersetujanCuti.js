@@ -107,9 +107,9 @@ export const PersetujanCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
+      <View style={{ position: "relative", flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -168,7 +168,7 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}>
+        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -200,7 +200,7 @@ export const PersetujanCuti = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={{flex: 1}}>
             {/* <View
               style={{
                 backgroundColor: "white",
@@ -393,6 +393,8 @@ export const PersetujanCuti = () => {
               </TouchableOpacity>
             </View>
             {/* </View> */}
+            <View style={{flex: 1}}>
+
             {variant === "Completed" ? (
               <FlatList
                 data={filterData}
@@ -414,7 +416,6 @@ export const PersetujanCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
               />
             ) : variant === "Rejected" ? (
               <FlatList
@@ -484,6 +485,8 @@ export const PersetujanCuti = () => {
                 style={{ height: "70%" }}
               />
             ) : null}
+            </View>
+
           </View>
         </View>
       </View>
