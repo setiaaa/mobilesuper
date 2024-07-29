@@ -188,6 +188,45 @@ export const LPMUKP = () => {
     `;
   return (
     <View style={{ width: "100%", height: "100%" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: COLORS.primary,
+          height: 80,
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 20,
+          }}
+        >
+          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="chevron-back-outline"
+              size={device === "tablet" ? 40 : 24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
+            LPMUKP
+          </Text>
+        </View>
+      </View>
       <View style={{ height: "90%", width: "100%", padding: 10 }}>
         {Platform.OS === "ios" ? (
           <WebView

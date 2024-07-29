@@ -12,44 +12,46 @@ export const GaleriHome = ({ item, index, parallaxProps }) => {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const getWidthCarousel = () => {
-    let tempWidth = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempWidth = screenWidth - 110
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 110;
       } else {
-        tempWidth = screenWidth - 100
+        tempWidth = screenWidth - 100;
       }
     } else {
-      tempWidth = screenWidth - 60
+      tempWidth = screenWidth - 60;
     }
 
-    return tempWidth
-  }
+    return tempWidth;
+  };
 
   const getHeightCarousel = () => {
-    let tempHeight = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempHeight = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempHeight = screenWidth - 400
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempHeight = screenWidth - 400;
       } else {
-        tempHeight = screenWidth - 250
+        tempHeight = screenWidth - 250;
       }
     } else {
-      tempHeight = screenWidth - 170
+      tempHeight = screenWidth;
     }
 
-    return tempHeight
-  }
+    return tempHeight;
+  };
 
   return (
-    <View style={{
-      width: getWidthCarousel(),
-      height: getHeightCarousel()
-    }}>
+    <View
+      style={{
+        width: getWidthCarousel(),
+        height: getHeightCarousel(),
+      }}
+    >
       <ParallaxImage
         source={{ uri: item.main_images.image }}
         containerStyle={styles.galeri}

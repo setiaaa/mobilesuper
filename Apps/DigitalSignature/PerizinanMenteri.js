@@ -171,10 +171,10 @@ export const PerizinanMenteri = () => {
 
   const { device } = useSelector((state) => state.apps);
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         {loading ? <Loading /> : null}
-        <View style={{ position: "relative" }}>
+        <View style={{ position: "relative", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -343,28 +343,29 @@ export const PerizinanMenteri = () => {
           {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
 
           {/* </ScrollView> */}
-          <FlatList
-            data={filterData}
-            keyExtractor={(item) => item?.id}
-            renderItem={({ item }) => (
-              <View key={item.id}>
-                <CardListPerizinanMenteri
-                  item={item}
-                  token={token}
-                  variant={variant}
-                  device={device}
-                  isSelected={isSelected}
-                  setSelection={setSelection}
-                  nip={profile.nip}
-                />
-              </View>
-            )}
-            ListEmptyComponent={() => <ListEmpty />}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            style={{ height: "65%" }}
-          />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={filterData}
+              keyExtractor={(item) => item?.id}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardListPerizinanMenteri
+                    item={item}
+                    token={token}
+                    variant={variant}
+                    device={device}
+                    isSelected={isSelected}
+                    setSelection={setSelection}
+                    nip={profile.nip}
+                  />
+                </View>
+              )}
+              ListEmptyComponent={() => <ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
 
           <BottomSheetModal
             ref={bottomSheetModalRef}

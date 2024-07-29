@@ -48,8 +48,8 @@ export const CardApps = ({
   const isFocused = useIsFocused();
   const { profile, typeMenu } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
-  const [limitCard, setLimitCard] = useState(0)
-  const { width, height } = useWindowDimensions()
+  const [limitCard, setLimitCard] = useState(0);
+  const { width, height } = useWindowDimensions();
 
   const roleEvent = ["EVENT.USER"];
   const roleKalender = ["CALENDAR.USER"];
@@ -79,21 +79,20 @@ export const CardApps = ({
     rolePerizinanMenteri.includes(item)
   );
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let orientation = getOrientation(width, height)
-    let tempLimit = 0
-    if (device === 'tablet' && orientation === 'landscape') {
-      tempLimit = 15
-    } else if (device === 'tablet' && orientation === 'potrait') {
-      tempLimit = 11
+    let orientation = getOrientation(width, height);
+    let tempLimit = 0;
+    if (device === "tablet" && orientation === "landscape") {
+      tempLimit = 15;
+    } else if (device === "tablet" && orientation === "potrait") {
+      tempLimit = 11;
     } else {
-      tempLimit = 7
+      tempLimit = 7;
     }
-    setLimitCard(tempLimit)
-  }, [width])
+    setLimitCard(tempLimit);
+  }, [width]);
 
   useEffect(() => {
     let tmpMenu = [];
@@ -448,17 +447,24 @@ export const CardApps = ({
   return (
     <>
       {listMenu.length === 0 ? null : (
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              minHeight: device === "tablet" ? 330 : 230,
+            },
+          ]}
+        >
           <View
             style={{
               flexDirection: "row",
-              gap: device === 'tablet' ? 24 : 16,
+              gap: device === "tablet" ? 24 : 16,
               justifyContent: listMenu.length > 8 ? "center" : null,
               alignItems: "center",
               flex: 1,
               paddingHorizontal: 16,
               paddingVertical: 8,
-              flexWrap: 'wrap'
+              flexWrap: "wrap",
             }}
           >
             {listMenu &&
@@ -501,49 +507,49 @@ export const CardApps = ({
                           {item.title === "Task" ? (
                             <MaterialIcons
                               name="task-alt"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kalender" ? (
                             <FontAwesome
                               name="calendar"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Preparing dan Sharing" ? (
                             <Entypo
                               name="folder"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Regulasi" ? (
                             <Entypo
                               name="shield"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Survei Layanan" ? (
                             <MaterialCommunityIcons
                               name="email-newsletter"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Agenda Rapat" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "SPPD" ? (
                             <MaterialIcons
                               name="travel-explore"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
-                              size={device === 'tablet' ? 60 : 30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : (
@@ -568,9 +574,9 @@ export const CardApps = ({
                           marginTop: 10,
                           justifyContent: "center",
                           alignItems: "center",
-                          textAlign: 'center',
+                          textAlign: "center",
                           fontSize: fontSizeResponsive("H4", device),
-                          width: device === 'tablet' ? 100 : 60,
+                          width: device === "tablet" ? 100 : 60,
                         }}
                         numberOfLines={1}
                       >
@@ -605,7 +611,7 @@ export const CardApps = ({
                   >
                     <MaterialIcons
                       name="dashboard"
-                      size={device === 'tablet' ? 60 : 30}
+                      size={device === "tablet" ? 60 : 30}
                       color={COLORS.iconMenu}
                     />
                   </View>
@@ -740,7 +746,6 @@ export const CardApps = ({
                     </View>
                   );
               })} */}
-
         </View>
       )}
     </>

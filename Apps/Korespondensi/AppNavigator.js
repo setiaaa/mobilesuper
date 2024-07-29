@@ -1518,6 +1518,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="LPMUKP"
+            component={LPMUKP}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
 
         {modal === true ? (
