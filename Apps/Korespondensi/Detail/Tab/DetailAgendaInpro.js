@@ -842,7 +842,7 @@ function DetailAgendaInpro({
                           paddingRight: 20,
                         }}
                       >
-                        Lokasi Kegiatan
+                        Lokasi
                       </Text>
                       <Text
                         style={{
@@ -886,217 +886,218 @@ function DetailAgendaInpro({
                   </View>
                 </>
               )}
-              {(data.jenis_surat == "Surat Perintah" ||
-                data.jenis_surat == "Surat Tugas") && (
-                <>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600 }}>
-                      Informasi Tambahan
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 20,
-                      borderRadius: 16,
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        paddingVertical: 5,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 600,
-                          width: "40%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        Kota Awal
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 400,
-                          width: "60%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        {data?.from_city == "" ? "-" : data?.from_city}
+              {data?.kegiatan[0]?.start_date &&
+                (data.jenis_surat == "Surat Perintah" ||
+                  data.jenis_surat == "Surat Tugas") && (
+                  <>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                        Informasi Tambahan
                       </Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        paddingVertical: 5,
+                        backgroundColor: COLORS.white,
+                        padding: 20,
+                        borderRadius: 16,
                       }}
                     >
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 600,
-                          width: "40%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        Catatan
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 400,
-                          width: "60%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        {data?.notes == "" ? "-" : data?.notes}
-                      </Text>
-                    </View>
-                    {data?.kegiatan?.map((item, index) => (
                       <View
-                        key={index}
                         style={{
-                          paddingTop: 10,
+                          flexDirection: "row",
+                          paddingVertical: 5,
                         }}
                       >
-                        <View
-                          style={{ flexDirection: "row", paddingVertical: 5 }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color: "#8f8b99",
-                              fontWeight: 600,
-                            }}
-                          >
-                            Kegiatan {index + 1}
-                          </Text>
-                        </View>
-                        <View
+                        <Text
                           style={{
-                            flexDirection: "row",
-                            paddingVertical: 5,
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
                           }}
                         >
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 600,
-                              width: "40%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            Tanggal Kegiatan
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 400,
-                              width: "60%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            {moment(item?.start_date)
-                              .locale("id")
-                              .format(DATETIME.LONG_DATE)}{" "}
-                            -{" "}
-                            {moment(item?.end_date)
-                              .locale("id")
-                              .format(DATETIME.LONG_DATE)}
-                          </Text>
-                        </View>
-
-                        <View
+                          Kota Awal
+                        </Text>
+                        <Text
                           style={{
-                            flexDirection: "row",
-                            paddingVertical: 5,
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
                           }}
                         >
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 600,
-                              width: "40%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            Kota Kegiatan
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 400,
-                              width: "60%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            {item?.city == "" ? "-" : item?.city}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            paddingVertical: 5,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 600,
-                              width: "40%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            Transportasi
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 400,
-                              width: "60%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            {item?.transportation == ""
-                              ? "-"
-                              : item?.transportation}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            paddingVertical: 5,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 600,
-                              width: "40%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            Lokasi Kegiatan
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: 400,
-                              width: "60%",
-                              paddingRight: 20,
-                            }}
-                          >
-                            {item?.location == "" ? "-" : item?.location}
-                          </Text>
-                        </View>
+                          {data?.from_city == "" ? "-" : data?.from_city}
+                        </Text>
                       </View>
-                    ))}
-                  </View>
-                </>
-              )}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingVertical: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Catatan
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          {data?.notes == "" ? "-" : data?.notes}
+                        </Text>
+                      </View>
+                      {data?.kegiatan?.map((item, index) => (
+                        <View
+                          key={index}
+                          style={{
+                            paddingTop: 10,
+                          }}
+                        >
+                          <View
+                            style={{ flexDirection: "row", paddingVertical: 5 }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: "#8f8b99",
+                                fontWeight: 600,
+                              }}
+                            >
+                              Tujuan {index + 1}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              paddingVertical: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                width: "40%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              Tanggal Kegiatan
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {moment(item?.start_date)
+                                .locale("id")
+                                .format(DATETIME.LONG_DATE)}{" "}
+                              -{" "}
+                              {moment(item?.end_date)
+                                .locale("id")
+                                .format(DATETIME.LONG_DATE)}
+                            </Text>
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              paddingVertical: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                width: "40%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              Kota
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {item?.city == "" ? "-" : item?.city}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              paddingVertical: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                width: "40%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              Lokasi
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {item?.location == "" ? "-" : item?.location}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              paddingVertical: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 600,
+                                width: "40%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              Transportasi
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {item?.transportation == ""
+                                ? "-"
+                                : item?.transportation}
+                            </Text>
+                          </View>
+                        </View>
+                      ))}
+                    </View>
+                  </>
+                )}
             </>
           )}
 
