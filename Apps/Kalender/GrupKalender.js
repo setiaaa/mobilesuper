@@ -1029,6 +1029,7 @@ export const GrupKalender = () => {
                         renderItem={({ item }) => (
                           <CardAgenda
                             item={item}
+                            kegiatan={kegiatan}
                             stringToColor={stringToColor}
                             idKategori={kategoriField.key}
                           />

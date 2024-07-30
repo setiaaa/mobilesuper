@@ -591,7 +591,7 @@ function NeedFollowUpList({ route }) {
                                 ? 520
                                 : device === "tablet" &&
                                   orientation === "potrait"
-                                ? 380
+                                ? 330
                                 : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
@@ -639,7 +639,7 @@ function NeedFollowUpList({ route }) {
                                 ? 520
                                 : device === "tablet" &&
                                   orientation === "potrait"
-                                ? 380
+                                ? 330
                                 : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,

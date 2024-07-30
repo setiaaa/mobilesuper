@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
@@ -17,6 +18,7 @@ import {
   FONTWEIGHT,
   extraKeyKorespondensi,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -30,6 +32,10 @@ export const DetailKalenderPersonal = () => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -130,7 +136,7 @@ export const DetailKalenderPersonal = () => {
                     height={20}
                   />
                 ) : (
-                  <View style={{ width: device === "tablet" ? 350 : 150 }}>
+                  <View style={{ width: device === "tablet" ? 300 : 150 }}>
                     <Text
                       style={{
                         justifyContent: "center",
@@ -321,7 +327,7 @@ export const DetailKalenderPersonal = () => {
                             /> */}
                             <Text
                               style={{
-                                width: device === "tablet" ? 350 : 100,
+                                width: device === "tablet" ? 300 : 100,
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
@@ -408,7 +414,7 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet" ? 350 : 100,
+                              width: device === "tablet"  && orientation === 'potrait'? 250 :device === "tablet"  && orientation === 'landscape'? 300: 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -807,7 +813,7 @@ export const DetailKalenderPersonal = () => {
                   <Text
                     style={{
                       justifyContent: "center",
-                      width: "60%",
+                      width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 400: 150,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
@@ -1099,7 +1105,7 @@ export const DetailKalenderPersonal = () => {
                             </Text>
                             <Text
                               style={{
-                                width: device === "tablet" ? 350 : 120,
+                                width: device === "tablet" ? 300 : 120,
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
@@ -1186,7 +1192,7 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet" ? 350 : 100,
+                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 300: 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -1265,7 +1271,7 @@ export const DetailKalenderPersonal = () => {
                               >
                                 <Text
                                   style={{
-                                    width: device === "tablet" ? 350 : 160,
+                                    width: device === "tablet" ? 300 : 160,
                                     fontSize: fontSizeResponsive("H4", device),
                                   }}
                                 >
@@ -1280,7 +1286,7 @@ export const DetailKalenderPersonal = () => {
                               </View>
                               <Text
                                 style={{
-                                  width: device === "tablet" ? 350 : 160,
+                                  width: device === "tablet" ? 300 : 160,
                                   marginVertical: 5,
                                   fontSize: fontSizeResponsive("H4", device),
                                 }}
@@ -1501,7 +1507,7 @@ export const DetailKalenderPersonal = () => {
                             </Text>
                             <Text
                               style={{
-                                width: device === "tablet" ? 350 : 120,
+                                width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 350: 120,
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
@@ -1584,7 +1590,7 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet" ? 350 : 100,
+                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 350: 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -1663,7 +1669,7 @@ export const DetailKalenderPersonal = () => {
                               >
                                 <Text
                                   style={{
-                                    width: device === "tablet" ? 350 : 160,
+                                    width: device === "tablet" ? 300 : 160,
                                     fontSize: fontSizeResponsive("H4", device),
                                   }}
                                 >
@@ -1678,7 +1684,7 @@ export const DetailKalenderPersonal = () => {
                               </View>
                               <Text
                                 style={{
-                                  width: device === "tablet" ? 350 : 160,
+                                  width: device === "tablet" ? 300 : 160,
                                   marginVertical: 5,
                                   fontSize: fontSizeResponsive("H4", device),
                                 }}

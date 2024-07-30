@@ -599,7 +599,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     }"
                     clearText="Hapus"
                     confirmText="Simpan"
-                    penColor="red"
                   />
                 </View>
                 {Config.todo && (

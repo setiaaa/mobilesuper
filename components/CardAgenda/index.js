@@ -58,7 +58,7 @@ export const CardAgenda = ({
     >
       <View
         style={{
-          width: device === "tablet" ? "50%" : "100%",
+          // width: device === "tablet" ? "50%" : "100%",
           backgroundColor: COLORS.white,
           borderRadius: 8,
           flexDirection: "row",
@@ -85,11 +85,15 @@ export const CardAgenda = ({
 
         <View
           style={{
-            justifyContent: "center",
+            justifyContent: "space-between",
             marginHorizontal: 20,
-            width: device === "tablet" ? "75%" : "70%",
+            width: '90%',
+            flexDirection: 'row',
+            alignItems: 'center'
           }}
         >
+          <View>
+
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item.name || item.title}
           </Text>
@@ -118,15 +122,9 @@ export const CardAgenda = ({
                 .format("YYYY-MM-DD")}
             </Text>
           </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          {/* {subAvatar.map((data, index) => {
-                        return ( */}
+          </View>
+
+
           <View>
             <Image
               source={{ uri: item.pic.avatar_url }}
@@ -140,9 +138,15 @@ export const CardAgenda = ({
               }}
             />
           </View>
-          {/* )
-                     })} */}
         </View>
+        {/* <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+         
+        </View> */}
       </View>
     </TouchableOpacity>
   );

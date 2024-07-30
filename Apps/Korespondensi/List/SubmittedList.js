@@ -508,7 +508,7 @@ function SubmittedList({ route }) {
                                 ? 520
                                 : device === "tablet" &&
                                   orientation === "potrait"
-                                ? 380
+                                ? 330
                                 : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
@@ -556,7 +556,7 @@ function SubmittedList({ route }) {
                                 ? 520
                                 : device === "tablet" &&
                                   orientation === "potrait"
-                                ? 380
+                                ? 330
                                 : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,

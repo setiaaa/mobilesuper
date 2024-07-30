@@ -1391,7 +1391,7 @@ export const Home = () => {
               </TouchableOpacity>
               <View
                 style={{
-                  width: device === "tablet" ? 800 : 380,
+                  width: device === "tablet" ? 700 : 380,
                   height: device === "tablet" ? 500 : 283,
                 }}
               >
@@ -1848,7 +1848,7 @@ export const Home = () => {
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{ textAlign: "center", fontSize: FONTSIZE.H4, fontSize: fontSizeResponsive("H4", device), }}
                       >
                         My SAPK
                       </Text>

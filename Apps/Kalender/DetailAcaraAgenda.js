@@ -388,7 +388,7 @@ export const DetailAcaraAgenda = () => {
                         width={100}
                         height={20}
                       />
-                    ) : detail.members.length < 3 ? (
+                    ) : detail?.members?.length < 3 ? (
                       <View style={{ flexDirection: "row" }}>
                         {detail.members?.map((item, index) => {
                           return (

@@ -106,6 +106,7 @@ const CardPenilaian = ({ item, token, device }) => {
             style={{
               fontWeight: FONTWEIGHT.bold,
               fontSize: fontSizeResponsive("H4", device),
+              width: device === 'tablet'&& orientation=== 'potrait'? '70%': '90%' 
             }}
           >
             {item.title}

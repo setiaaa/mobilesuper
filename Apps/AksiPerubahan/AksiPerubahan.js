@@ -41,6 +41,7 @@ import { Dropdown } from "../../components/DropDown";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import { StyleSheet } from "react-native";
 import { Rating } from "react-native-ratings";
+import { ScrollView } from "react-native";
 
 export const AksiPerubahan = () => {
   const dataKategori = [
@@ -392,6 +393,10 @@ export const AksiPerubahan = () => {
           )}
         >
           <BottomSheetView onLayout={handleContentLayout}>
+              <View style={{
+                height: device === 'tablet' && orientation === 'landscape'? '90%': '100%'
+                }}>
+            <ScrollView>
             <View
               style={{
                 marginHorizontal: 20,
@@ -400,6 +405,7 @@ export const AksiPerubahan = () => {
                 padding: 10,
                 borderBottomWidth: 2,
                 borderBottomColor: COLORS.grey,
+                marginTop: 20
               }}
             >
               <Text
@@ -646,6 +652,8 @@ export const AksiPerubahan = () => {
                   ? detail.title
                   : "-"}
               </Text> */}
+            </View>
+            </ScrollView>
             </View>
           </BottomSheetView>
         </BottomSheetModal>
