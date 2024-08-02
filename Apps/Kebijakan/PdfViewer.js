@@ -116,7 +116,8 @@ const PdfViewer = ({ route }) => {
         }
 
         try {
-            const response = await fetch('${data.link}');
+        alert('${data}')
+            const response = await fetch('${data}');
             const blob = await response.blob();
 
             pdfjsLib.getDocument(URL.createObjectURL(blob)).promise.then(function (pdfDoc_) {
@@ -127,12 +128,29 @@ const PdfViewer = ({ route }) => {
             });
 
         } catch (error) {
+         alert(error)
             console.error('Error loading PDF:', error);
             window.ReactNativeWebView.postMessage('Error loading PDF: ' + error.message);
         }
     })();
+  `;
+  let pdfUrl = data; // Your PDF URL
+  let url = `./web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
 
-    
+  injectJavaScript = `
+        (function () {
+          const iframe = document.getElementById("iframe");
+          if (iframe) {
+            iframe.src = "${url}";
+            iframe.onload = function () {
+              if (iframe.contentWindow && iframe.contentWindow.PDFViewerApplication) {
+                iframe.contentWindow.PDFViewerApplication.open('${pdfUrl}');
+                } else {
+                  console.log('PDFViewerApplication is not available.');
+                  }
+                };
+            }
+        })();
   `;
 
   const [key, setKey] = useState(0);
@@ -176,7 +194,7 @@ const PdfViewer = ({ route }) => {
                 </View> */}
       </View>
       <View style={{ flex: 1 }}>
-        {/* {type !== undefined ? (
+        {type !== undefined ? (
           <WebView
             originWhitelist={["*"]}
             source={{
@@ -187,8 +205,8 @@ const PdfViewer = ({ route }) => {
             androidLayerType={"software"}
             mixedContentMode={"always"}
             allowUniversalAccessFromFileURLs={true}
-            scalesPageToFit={false}
-            injectedJavaScript={inject}
+            scalesPageToFit={true}
+            injectedJavaScript={injectJavaScript}
             javaScriptEnabled={true}
             domStorageEnabled={true}
             onMessage={(event) => {
@@ -198,18 +216,18 @@ const PdfViewer = ({ route }) => {
               );
             }}
           />
-        ) : ( */}
-        <Pdf
-          trustAllCerts={false}
-          key={key}
-          source={{ uri: data }}
-          style={{
-            flex: 1,
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-          }}
-        />
-        {/* )} */}
+        ) : (
+          <Pdf
+            trustAllCerts={false}
+            key={key}
+            source={{ uri: data }}
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
+            }}
+          />
+        )}
       </View>
     </>
   );

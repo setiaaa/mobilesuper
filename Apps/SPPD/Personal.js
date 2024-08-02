@@ -349,7 +349,12 @@ export const Personal = () => {
           </Text>
 
           <View style={{ flexDirection: "row" }}>
-            <View style={[styles.cardStatus, { backgroundColor: COLORS.info }]}>
+            <TouchableOpacity
+              style={[styles.cardStatus, { backgroundColor: COLORS.info }]}
+              onPress={() => {
+                navigation.navigate("DokumenSPPD");
+              }}
+            >
               <View style={{ alignItems: "center", rowGap: 20 }}>
                 <Ionicons
                   name="document-outline"
@@ -370,12 +375,17 @@ export const Personal = () => {
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  Kegiatan Bulan ini
+                  Total Perjalanan Dinas
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
 
-            <View style={[styles.cardStatus, { backgroundColor: COLORS.info }]}>
+            <TouchableOpacity
+              style={[styles.cardStatus, { backgroundColor: COLORS.info }]}
+              onPress={() => {
+                navigation.navigate("DokumenSPPD");
+              }}
+            >
               <View style={{ alignItems: "center", rowGap: 20 }}>
                 <Ionicons
                   name="document-outline"
@@ -397,10 +407,10 @@ export const Personal = () => {
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  Jumlah Dokumen Bulan ini
+                  Jumlah Dokumen Total
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View style={{ gap: 10, marginBottom: 30 }}>
