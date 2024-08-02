@@ -300,7 +300,7 @@ export default function Dashboard(params) {
             >
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -403,7 +403,7 @@ export default function Dashboard(params) {
                 >
                   <View
                     style={{
-                      width: "85%",
+                      width: device === "tablet" ? "90%" : "85%",
                       backgroundColor: COLORS.white,
                       borderRadius: 8,
                     }}
@@ -432,8 +432,8 @@ export default function Dashboard(params) {
                     <TouchableOpacity onPress={!ascending ? asc : desc}>
                       <View
                         style={{
-                          width: 40,
-                          height: 40,
+                          width: device === "tablet" ? 50 : 40,
+                          height: device === "tablet" ? 50 : 40,
                           borderRadius: 30,
                           backgroundColor: COLORS.white,
                           justifyContent: "center",

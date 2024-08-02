@@ -247,13 +247,12 @@ export const PersonalCuti = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
                     alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
-                      marginRight: "80%",
                       fontSize: 13,
                       fontWeight: 600,
                       fontSize: fontSizeResponsive("H3", device),
@@ -416,6 +415,7 @@ export const PersonalCuti = () => {
                 );
               })}
             </ScrollView> */}
+            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
             <FlatList
               data={personal.data_jenis_cuti}
               renderItem={({ item }) => (
@@ -428,13 +428,14 @@ export const PersonalCuti = () => {
                 </View>
               )}
               columnWrapperStyle={{
-                gap: 5,
-                marginVertical: 10,
+                gap: device === 'tablet' ? 5 : 5,
               }}
               numColumns={3}
               keyExtractor={(item) => item.id}
               ListEmptyComponent={() => <ListEmpty />}
             />
+            </View>
+
           </View>
           <View style={{ paddingHorizontal: "5%" }}>
             <Text

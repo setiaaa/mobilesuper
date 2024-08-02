@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
@@ -16,6 +17,8 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   extraKeyKorespondensi,
+  fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -29,6 +32,12 @@ export const DetailKalenderPersonal = () => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <ScrollView>
@@ -44,26 +53,29 @@ export const DetailKalenderPersonal = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("Judul", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Detail Kalender Personal
           </Text>
         </View>
@@ -76,7 +88,6 @@ export const DetailKalenderPersonal = () => {
               backgroundColor: COLORS.white,
               width: "90%",
               borderRadius: 8,
-              marginLeft: 20,
             }}
           >
             {loading ? (
@@ -92,7 +103,7 @@ export const DetailKalenderPersonal = () => {
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   {detail.name}
@@ -111,7 +122,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -125,10 +136,11 @@ export const DetailKalenderPersonal = () => {
                     height={20}
                   />
                 ) : (
-                  <View style={{ width: 150 }}>
+                  <View style={{ width: device === "tablet" ? 300 : 150 }}>
                     <Text
                       style={{
                         justifyContent: "center",
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
@@ -165,7 +177,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -183,6 +195,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "60%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail.extra_attributes?.start_time}{" "}
@@ -217,7 +230,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -237,7 +250,9 @@ export const DetailKalenderPersonal = () => {
                       width: "50%",
                     }}
                   >
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {detail?.location === "" ? "-" : detail?.location}
                     </Text>
                   </View>
@@ -266,7 +281,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -292,7 +307,13 @@ export const DetailKalenderPersonal = () => {
                               alignItems: "center",
                             }}
                           >
-                            <Text>{index + 1}. </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {index + 1}.{" "}
+                            </Text>
                             {/* <Image
                               source={{ uri: item.avatar_url }}
                               style={{
@@ -304,12 +325,23 @@ export const DetailKalenderPersonal = () => {
                                 height: 30,
                               }}
                             /> */}
-                            <Text style={{ width: 100 }}>{item}</Text>
+                            <Text
+                              style={{
+                                width: device === "tablet" ? 300 : 100,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {item}
+                            </Text>
                           </View>
                         );
                       })
                     ) : (
-                      <Text>-</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
                     )}
                   </View>
                 )}
@@ -337,7 +369,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -362,7 +394,13 @@ export const DetailKalenderPersonal = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Text>{index + 1}. </Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {index + 1}.{" "}
+                          </Text>
                           <Image
                             source={{ uri: item.avatar_url }}
                             style={{
@@ -370,11 +408,18 @@ export const DetailKalenderPersonal = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
-                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                          <Text
+                            style={{
+                              width: device === "tablet"  && orientation === 'potrait'? 250 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
                         </View>
                       );
                     })}
@@ -405,7 +450,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -430,7 +475,12 @@ export const DetailKalenderPersonal = () => {
                       }
                     }}
                   >
-                    <Text style={{ color: COLORS.info }}>
+                    <Text
+                      style={{
+                        color: COLORS.info,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {detail?.letter_number}
                     </Text>
                   </Pressable>
@@ -658,7 +708,6 @@ export const DetailKalenderPersonal = () => {
               backgroundColor: COLORS.white,
               width: "90%",
               borderRadius: 8,
-              marginLeft: 20,
             }}
           >
             {loading ? (
@@ -674,7 +723,7 @@ export const DetailKalenderPersonal = () => {
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   {detail.name}
@@ -693,7 +742,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -711,6 +760,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "60%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
@@ -746,7 +796,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -763,7 +813,8 @@ export const DetailKalenderPersonal = () => {
                   <Text
                     style={{
                       justifyContent: "center",
-                      width: "60%",
+                      width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 400: 150,
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail.location}
@@ -793,7 +844,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -811,6 +862,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "50%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail?.creator?.nama}
@@ -840,7 +892,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -858,6 +910,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "50%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail?.extra_attributes?.alasan
@@ -889,7 +942,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -907,6 +960,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "50%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail?.extra_attributes?.kota
@@ -933,7 +987,6 @@ export const DetailKalenderPersonal = () => {
               backgroundColor: COLORS.white,
               width: "90%",
               borderRadius: 8,
-              marginLeft: 20,
             }}
           >
             {loading ? (
@@ -949,7 +1002,7 @@ export const DetailKalenderPersonal = () => {
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   {detail.name}
@@ -968,7 +1021,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -986,6 +1039,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "50%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail?.extra_attributes?.kota_awal}
@@ -1015,7 +1069,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1042,13 +1096,30 @@ export const DetailKalenderPersonal = () => {
                               marginTop: 5,
                             }}
                           >
-                            <Text>{index + 1}. </Text>
-                            <Text style={{ width: 120 }}>{item}</Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {index + 1}.{" "}
+                            </Text>
+                            <Text
+                              style={{
+                                width: device === "tablet" ? 300 : 120,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {item}
+                            </Text>
                           </View>
                         );
                       })
                     ) : (
-                      <Text>-</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
                     )}
                   </View>
                 )}
@@ -1076,7 +1147,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1101,7 +1172,13 @@ export const DetailKalenderPersonal = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Text>{index + 1}. </Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {index + 1}.{" "}
+                          </Text>
                           <Image
                             source={{ uri: item.avatar_url }}
                             style={{
@@ -1109,11 +1186,18 @@ export const DetailKalenderPersonal = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
-                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                          <Text
+                            style={{
+                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
                         </View>
                       );
                     })}
@@ -1144,7 +1228,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1168,7 +1252,13 @@ export const DetailKalenderPersonal = () => {
                               gap: 5,
                             }}
                           >
-                            <Text style={{ fontSize: 20 }}>-</Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              -
+                            </Text>
                             <View>
                               <View
                                 key={index}
@@ -1179,7 +1269,12 @@ export const DetailKalenderPersonal = () => {
                                   marginTop: 5,
                                 }}
                               >
-                                <Text style={{ width: 160 }}>
+                                <Text
+                                  style={{
+                                    width: device === "tablet" ? 300 : 160,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {moment(item?.tangal_mulai).format(
                                     "DD/MM/YYYY"
                                   )}{" "}
@@ -1189,16 +1284,32 @@ export const DetailKalenderPersonal = () => {
                                   )}
                                 </Text>
                               </View>
-                              <Text style={{ width: 160, marginVertical: 5 }}>
+                              <Text
+                                style={{
+                                  width: device === "tablet" ? 300 : 160,
+                                  marginVertical: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
                                 Lokasi {index + 1} Perjalanan Dinas
                               </Text>
-                              <Text>{item.kota}</Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item.kota}
+                              </Text>
                             </View>
                           </View>
                         );
                       })
                     ) : (
-                      <Text>-</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
                     )}
                   </View>
                 )}
@@ -1226,7 +1337,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1250,8 +1361,9 @@ export const DetailKalenderPersonal = () => {
                     <Text
                       style={{
                         justifyContent: "center",
-                        width: "80%",
+                        width: device === "tablet" ? "100%" : "80%",
                         color: COLORS.info,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       {detail?.extra_attributes?.nomor_surat}
@@ -1277,7 +1389,6 @@ export const DetailKalenderPersonal = () => {
               backgroundColor: COLORS.white,
               width: "90%",
               borderRadius: 8,
-              marginLeft: 20,
             }}
           >
             {loading ? (
@@ -1293,7 +1404,7 @@ export const DetailKalenderPersonal = () => {
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   {detail.name}
@@ -1312,7 +1423,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1330,6 +1441,7 @@ export const DetailKalenderPersonal = () => {
                     style={{
                       justifyContent: "center",
                       width: "50%",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {detail?.extra_attributes?.kota_awal}
@@ -1359,7 +1471,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1386,8 +1498,21 @@ export const DetailKalenderPersonal = () => {
                               marginTop: 5,
                             }}
                           >
-                            <Text>{index + 1}. </Text>
-                            <Text style={{ width: 120 }}>{item}</Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {index + 1}.{" "}
+                            </Text>
+                            <Text
+                              style={{
+                                width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 350: 120,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {item}
+                            </Text>
                           </View>
                         );
                       })
@@ -1420,7 +1545,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1445,7 +1570,13 @@ export const DetailKalenderPersonal = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Text>{index + 1}. </Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {index + 1}.{" "}
+                          </Text>
                           <Image
                             source={{ uri: item.avatar_url }}
                             style={{
@@ -1453,11 +1584,18 @@ export const DetailKalenderPersonal = () => {
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
                             }}
                           />
-                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                          <Text
+                            style={{
+                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 350: 100,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
                         </View>
                       );
                     })}
@@ -1488,7 +1626,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1512,7 +1650,13 @@ export const DetailKalenderPersonal = () => {
                               gap: 5,
                             }}
                           >
-                            <Text style={{ fontSize: 20 }}>-</Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              -
+                            </Text>
                             <View>
                               <View
                                 key={index}
@@ -1523,7 +1667,12 @@ export const DetailKalenderPersonal = () => {
                                   marginTop: 5,
                                 }}
                               >
-                                <Text style={{ width: 160 }}>
+                                <Text
+                                  style={{
+                                    width: device === "tablet" ? 300 : 160,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {moment(item?.tangal_mulai).format(
                                     "DD/MM/YYYY"
                                   )}{" "}
@@ -1533,16 +1682,32 @@ export const DetailKalenderPersonal = () => {
                                   )}
                                 </Text>
                               </View>
-                              <Text style={{ width: 160, marginVertical: 5 }}>
+                              <Text
+                                style={{
+                                  width: device === "tablet" ? 300 : 160,
+                                  marginVertical: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
                                 Lokasi {index + 1} Perjalanan Dinas
                               </Text>
-                              <Text>{item.kota}</Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item.kota}
+                              </Text>
                             </View>
                           </View>
                         );
                       })
                     ) : (
-                      <Text>-</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
                     )}
                   </View>
                 )}
@@ -1569,7 +1734,7 @@ export const DetailKalenderPersonal = () => {
                 <View style={{ width: "50%" }}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1593,8 +1758,9 @@ export const DetailKalenderPersonal = () => {
                     <Text
                       style={{
                         justifyContent: "center",
-                        width: "50%",
+                        width: device === "tablet" ? "100%" : "50%",
                         color: COLORS.info,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       {detail?.extra_attributes?.nomor_surat}
@@ -1638,5 +1804,6 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
     flex: 1,
+    alignItems: "center",
   },
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { TextInput, View } from "react-native";
+import { Alert, TextInput, View } from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -56,14 +56,32 @@ export const DetailPerizinanMenteri = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  const [file, setFile] = useState();
-  useEffect(() => {
-    if (file === undefined) {
-      item.attachments?.map((item) => {
-        setFile({ link: item.file });
-      });
-    }
-  }, [file, item]);
+  // const [file, setFile] = useState();
+  // const [fileMemo, setFileMemo] = useState();
+  // useEffect(() => {
+  //   // if (item && item?.attachments?.length === 2) {
+  //   if (file === undefined) {
+  //     item.attachments?.map((item, index) => {
+  //       if (index === 0) {
+  //         setFile(item.file);
+  //       } else {
+  //         setFileMemo(item.file);
+  //       }
+  //     });
+  //   }
+  //   //   if (fileMemo === undefined) {
+  //   //     item.attachments[1]?.map((item) => {
+  //   //       setFileMemo({ link: item.file });
+  //   //     });
+  //   //   }
+  //   // } else {
+  //   //   if (file === undefined) {
+  //   //     item.attachments[0]?.map((item) => {
+  //   //       setFileMemo({ link: item.file });
+  //   //     });
+  //   //   }
+  //   // }
+  // }, [item, file]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
   const dispatch = useDispatch();
@@ -82,6 +100,42 @@ export const DetailPerizinanMenteri = ({ route }) => {
   };
 
   const { profile } = useSelector((state) => state.superApps);
+
+  const handleShowAttachment = (type) => {
+    let idxAtt = 0;
+
+    if (type === "dokumen_undangan") {
+      if (profile?.nip === "196212301990031006") {
+        idxAtt = 0;
+      } else if (profile?.nip === "190001") {
+        idxAtt = 1;
+      } else if (profile?.nip === "88888") {
+        idxAtt = 2;
+      }
+    } else if (type === "memo") {
+      if (profile?.nip === "190001") {
+        idxAtt = 0;
+      } else if (profile?.nip === "88888") {
+        idxAtt = 1;
+      }
+    } else if (type === "dokumen_perizinan") {
+      if (profile?.nip === "88888") {
+        idxAtt = 0;
+      }
+    }
+
+    if (
+      item.attachments.length !== 0 &&
+      item.attachments[idxAtt] !== undefined
+    ) {
+      navigation.navigate("PdfViewer", {
+        data: item.attachments[idxAtt].file,
+        type: "DokumenLain",
+      });
+    } else {
+      Alert.alert("File Tidak Ada");
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -169,7 +223,36 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
-                    No Dokumen
+                    ID Dokumen
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
+                        {item.extra_attributes?.id_permohonan}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Nomor Surat
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
@@ -198,7 +281,36 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
-                    Penerima Sertifikat
+                    Jenis Permohonan
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
+                        {item.extra_attributes?.jenis}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Operator
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
@@ -219,69 +331,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                         />
                       ) : (
                         <View>
-                          {item.receivers !== undefined ? (
-                            <View>
-                              {item.receivers?.display_title !== undefined ? (
-                                <View>
-                                  <Text
-                                    style={{
-                                      fontWeight: FONTWEIGHT.bold,
-                                      color: COLORS.info,
-                                      marginBottom: 5,
-                                      fontSize: fontSizeResponsive(
-                                        "H2",
-                                        device
-                                      ),
-                                    }}
-                                  >
-                                    {item.receivers?.display_title !== undefined
-                                      ? item.receivers?.display_title
-                                      : null}
-                                  </Text>
-                                  <Text
-                                    style={{
-                                      color: COLORS.lighter,
-                                      width: "80%",
-                                      fontSize: fontSizeResponsive(
-                                        "H2",
-                                        device
-                                      ),
-                                    }}
-                                  >
-                                    {item.receivers?.officer?.nama !== undefined
-                                      ? item.receivers?.officer?.nama
-                                      : "-"}
-                                  </Text>
-                                </View>
-                              ) : (
-                                <Text
-                                  style={{
-                                    color: COLORS.lighter,
-                                    width: "80%",
-                                    fontSize: fontSizeResponsive("H2", device),
-                                  }}
-                                >
-                                  {item.receivers?.nama !== undefined
-                                    ? item.receivers?.nama
-                                    : "-"}
-                                </Text>
-                              )}
-                            </View>
-                          ) : (
-                            <>
-                              <Text
-                                style={{
-                                  fontWeight: FONTWEIGHT.bold,
-                                  color: COLORS.info,
-                                  width: "80%",
-                                  marginBottom: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                }}
-                              >
-                                -
-                              </Text>
-                            </>
-                          )}
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item?.composer?.is_title
+                              ? item?.composer?.officer?.nama
+                              : item?.composer?.nama}
+                          </Text>
                         </View>
                       )}
                     </View>
@@ -629,15 +687,64 @@ export const DetailPerizinanMenteri = ({ route }) => {
             ""
           )}
 
+          {/* {profile?.nip === "88888" ? (
+                
+                ) : null}
+                 */}
           <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
-            {loading ? null : (
+            {(profile?.nip === "196212301990031006" ||
+              profile?.nip === "190001" ||
+              profile?.nip === "88888") && (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("PdfViewer", {
-                    data: file,
-                    type: "DokumenLain",
-                  })
-                }
+                onPress={() => handleShowAttachment("dokumen_undangan")}
+                style={{
+                  width: "90%",
+                  backgroundColor: "#2296f4",
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Lihat Dokumen Undangan
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {(profile?.nip === "190001" || profile?.nip === "88888") && (
+              <TouchableOpacity
+                onPress={() => handleShowAttachment("memo")}
+                style={{
+                  width: "90%",
+                  backgroundColor: "rgb(245, 127, 23)",
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Lihat Dokumen Memo
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {profile?.nip === "88888" && (
+              <TouchableOpacity
+                onPress={() => handleShowAttachment("dokumen_perizinan")}
                 style={{
                   width: "90%",
                   backgroundColor: COLORS.info,
@@ -654,10 +761,11 @@ export const DetailPerizinanMenteri = ({ route }) => {
                     fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
-                  Lihat Dokumen
+                  Lihat Dokumen Perizinan
                 </Text>
               </TouchableOpacity>
             )}
+
             {variant.variant === "inprogress" &&
             profile.nip !== "197208122001121002" ? (
               <>

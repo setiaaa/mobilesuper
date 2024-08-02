@@ -48,6 +48,7 @@ import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import SignatureScreen from "react-native-signature-canvas";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
@@ -70,6 +71,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   let header = {};
   const [btnAdd, setbtnAdd] = useState(false);
   const [isLoading, setIsLoading] = useState();
+  const [scrollEnabled, setScrollEnabled] = useState();
+  const [stylusFile, setStylusFile] = useState("");
   const refresh = navigation.addListener("focus", () => {
     setSelectedAddressbook(addressbook);
   });
@@ -275,6 +278,14 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         });
         // console.log(request);
         let payload = {
+          attachments: [
+            {
+              base64: stylusFile,
+              description: "notes-stylus",
+              name: "Catatan_Disposisi.svg",
+              size: 0,
+            },
+          ],
           request: request,
           id: ids,
           copy_log: "1",
@@ -326,10 +337,39 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       );
     }
   }
+
+  const ref = useRef();
+
+  // Called after ref.current.readSignature() reads a non-empty base64 string
+  const handleOK = (signature) => {
+    console.log(signature);
+    setStylusFile(signature);
+  };
+
+  // Called after ref.current.readSignature() reads an empty string
+  const handleEmpty = () => {
+    console.log("Empty");
+  };
+
+  // Called after ref.current.clearSignature()
+  const handleClear = () => {
+    console.log("clear success!");
+  };
+
+  // Called after end of stroke
+  const handleEnd = () => {
+    ref.current.readSignature();
+  };
+
+  // Called after ref.current.getData()
+  const handleData = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <ScrollView>
+        <ScrollView scrollEnabled={scrollEnabled}>
           {loadingOverlay}
           <View style={styles.screen}>
             <View style={styles.containerLabel}>
@@ -526,6 +566,41 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   style={[styles.titleLabel, { paddingVertical: 12 }]}
                 />
 
+                <View
+                  style={{
+                    height: 600,
+                    width: "100%",
+                    marginTop: 10,
+                  }}
+                >
+                  <SignatureScreen
+                    ref={ref}
+                    onBegin={() => setScrollEnabled(false)}
+                    onEnd={() => setScrollEnabled(true)}
+                    onOK={handleOK}
+                    onEmpty={handleEmpty}
+                    onClear={handleClear}
+                    onGetData={handleData}
+                    autoClear={false}
+                    imageType="image/svg+xml"
+                    descriptionText=" "
+                    webStyle=".m-signature-pad {
+                    position: absolute;
+                    font-size: 10px;
+                    width: 100%;
+                    height: 89%;
+                    top: 0;
+                    left: 0;
+                    margin-left: 0;
+                    margin-top: 0;
+                    border: 1px solid #e8e8e8;
+                    background-color: #ffff;
+                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+                    }"
+                    clearText="Hapus"
+                    confirmText="Simpan"
+                  />
+                </View>
                 {Config.todo && (
                   <>
                     <View style={styles.containerTitleLeft}>

@@ -159,7 +159,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
               {item?.approvers.slice(1).map((data) => (
                 <Image
                   source={{ uri: data.avatar_url }}
-                  style={{ width: 20, height: 20, borderRadius: 50 }}
+                  style={{ width: device === 'tablet'? 40: 20, height: device === 'tablet'? 40 : 20, borderRadius: 50 }}
                 />
               ))}
             </View>
@@ -292,9 +292,9 @@ export const DokumenLain = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
+      <View style={{ position: "relative", flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -478,6 +478,7 @@ export const DokumenLain = () => {
           </TouchableOpacity>
         </View>
         {/* </ScrollView> */}
+        <View style={{flex: 1}}>
         <FlatList
           data={filterData}
           keyExtractor={(item) => item?.id}
@@ -488,7 +489,7 @@ export const DokumenLain = () => {
                 token={token}
                 variant={variant}
                 device={device}
-              />
+                />
             </View>
           )}
           ListEmptyComponent={() => <ListEmpty />}
@@ -496,7 +497,8 @@ export const DokumenLain = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           style={{ height: "69%" }}
-        />
+          />
+</View>
 
         {/* <TouchableOpacity onPress={() => {
                         navigation.navigate('TambahDokumenLain')

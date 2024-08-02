@@ -420,10 +420,10 @@ export const Dokumen = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true && dokumen.lists.length === 0 ? <Loading /> : null}
       <>
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ marginBottom: 20, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -454,7 +454,7 @@ export const Dokumen = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("H1", device),
+                  fontSize: fontSizeResponsive("Judul", device),
                   fontWeight: 600,
                   color: "white",
                 }}
@@ -481,7 +481,7 @@ export const Dokumen = () => {
               />
             </View>
           </View>
-          <View>
+          <View style={{ flex: 1 }}>
             <FlatList
               key={"_"}
               data={filterData}

@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, fontSizeResponsive, FONTWEIGHT } from "../../config/SuperAppps";
 import * as FileSystem from "expo-file-system";
 const { StorageAccessFramework } = FileSystem;
 import * as Sharing from "expo-sharing";
@@ -126,80 +126,57 @@ const LihatSuratSPPD = ({ route }) => {
 
   const fileName = data?.replace(/\s/g, "_");
 
+  const { device } = useSelector((state) => state.apps);
+
+
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: COLORS.primary,
-          height: 80,
-        }}
-      >
         <View
           style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
+            backgroundColor: COLORS.primary,
+            height: "10%",
+            flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 20,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons
-              name="chevron-back-outline"
-              size={24}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: FONTSIZE.H1,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.white,
-              marginRight: status === "share" ? 0 : 50,
-            }}
-          >
-            Surat Perjalanan Dinas
-          </Text>
-        </View>
-        {status === "share" ? (
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 20,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                downloadFile(
-                  Config.base_url +
-                    "monperdin/document/back-form/" +
-                    detailPersonal.id +
-                    "/",
-                  "application/pdf",
-                  fileName + ".pdf"
-                );
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
               }}
             >
               <Ionicons
-                name="share-social-outline"
-                size={18}
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
-            </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: 40,
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+              }}
+            >
+              Surat Perjalanan Dinas
+            </Text>
           </View>
-        ) : null}
-      </View>
+        </View>
       <View style={{ width: "100%", height: "90%" }}>
         {status === "share" && cetak !== null ? (
           <Pdf

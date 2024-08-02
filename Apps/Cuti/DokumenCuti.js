@@ -100,9 +100,9 @@ export const DokumenCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
+      <View style={{ position: "relative", flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -162,7 +162,7 @@ export const DokumenCuti = () => {
           </View>
         </View>
 
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}>
+        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -170,7 +170,7 @@ export const DokumenCuti = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "85%" }}>
+            <View style={{ width: device === 'tablet' ? "90%":"85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -180,8 +180,8 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: device === 'tablet'? 50:40,
+                  height: device === 'tablet'? 50:40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -195,7 +195,7 @@ export const DokumenCuti = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 10, flex: 1 }}>
             <View
               style={{
                 backgroundColor: "white",
@@ -565,7 +565,7 @@ export const DokumenCuti = () => {
                 </TouchableOpacity>
               </View>
             </View>
-
+<View style={{flex: 1}}>
             {variant === "Postponed" || variant === "Rejected" ? (
               <FlatList
                 data={filterData}
@@ -662,6 +662,7 @@ export const DokumenCuti = () => {
                 style={{ height: device === "tablet" ? "79%" : "70%" }}
               />
             ) : null}
+            </View>
           </View>
         </View>
       </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, Text, useWindowDimensions, View } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,
@@ -64,8 +64,8 @@ export const AksiPerubahanView = ({ route }) => {
 
       <View
         style={{
-          height: "100%",
-          width: "100%",
+          height: useWindowDimensions().height,
+          width: useWindowDimensions().width,
           padding: 10,
         }}
       >
@@ -76,8 +76,8 @@ export const AksiPerubahanView = ({ route }) => {
           }}
           style={{
             flex: 1,
-            height: 100,
-            width: 399,
+            height: "100%",
+            width: "100%",
           }}
           allowFileAccess={true}
           androidLayerType={"software"}

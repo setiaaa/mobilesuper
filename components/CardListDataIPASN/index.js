@@ -1,11 +1,15 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { useDispatch } from "react-redux";
 import { getDataDetailIPASN } from "../../service/api";
 import { useNavigation } from "@react-navigation/native";
 
-export const CardListDataIPASN = ({ item, token }) => {
+export const CardListDataIPASN = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
@@ -25,53 +29,103 @@ export const CardListDataIPASN = ({ item, token }) => {
       }}
     >
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>NAMA</Text>
-        <Text>:</Text>
-        <Text style={{ width: 200 }}>{item.nama}</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          NAMA
+        </Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text
+          style={{ width: 200, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.nama}
+        </Text>
       </View>
 
       <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           KUALIFIKASI
         </Text>
-        <Text>:</Text>
-        <Text>
-          {item.ipasn_kualifikasi} ({(item.ipasn_kualifikasi / 25) * 100}%)
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.ipasn_kualifikasi} (
+          {Math.round((item.ipasn_kualifikasi / 25) * 100)}%)
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           kOMPETENSI
         </Text>
-        <Text>:</Text>
-        <Text>
-          {item.ipasn_kompetensi} ({(item.ipasn_kompetensi / 40) * 100}%)
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.ipasn_kompetensi} (
+          {Math.round((item.ipasn_kompetensi / 40) * 100)}%)
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>KINERJA</Text>
-        <Text>:</Text>
-        <Text>
-          {item.ipasn_kinerja} ({(item.ipasn_kinerja / 30) * 100}%)
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          KINERJA
+        </Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.ipasn_kinerja} ({Math.round((item.ipasn_kinerja / 30) * 100)}%)
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           DISIPLIN
         </Text>
-        <Text>:</Text>
-        <Text>
-          {item.ipasn_disiplin} ({(item.ipasn_disiplin / 5) * 100}%)
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.ipasn_disiplin} ({Math.round((item.ipasn_disiplin / 5) * 100)}%)
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>NILAI</Text>
-        <Text>:</Text>
-        <Text>{item.ipasn_nilai}</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          NILAI
+        </Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.ipasn_nilai}
+        </Text>
       </View>
 
       <View
@@ -82,10 +136,16 @@ export const CardListDataIPASN = ({ item, token }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           PREDIKAT
         </Text>
-        <Text>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <View
           style={{
             backgroundColor:
@@ -114,6 +174,7 @@ export const CardListDataIPASN = ({ item, token }) => {
                   : item.ipasn_nilai <= 60 && item.ipasn_nilai > 50
                   ? "rgb(251, 192,45)"
                   : COLORS.danger,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             {item.ipasn_nilai <= 100 && item.ipasn_nilai > 90

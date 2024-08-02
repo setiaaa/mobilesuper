@@ -17,6 +17,7 @@ import {
   COLORS,
   DATETIME,
   FONTSIZE,
+  fontSizeResponsive,
   FONTWEIGHT,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -126,6 +127,8 @@ export const DetailAcara = ({ route }) => {
     return formatedDate;
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <GestureHandlerRootView>
@@ -134,18 +137,17 @@ export const DetailAcara = ({ route }) => {
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "flex-end",
+                alignItems: "center",
                 backgroundColor: COLORS.primary,
                 height: 80,
-                paddingBottom: 20,
               }}
             >
               <View
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginLeft: 20,
@@ -154,14 +156,18 @@ export const DetailAcara = ({ route }) => {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Ionicons
                     name="chevron-back-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
                 <Text
-                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                    color: COLORS.white,
+                  }}
                 >
                   Detail Kalender
                 </Text>
@@ -174,7 +180,6 @@ export const DetailAcara = ({ route }) => {
                   backgroundColor: COLORS.white,
                   width: "90%",
                   borderRadius: 8,
-                  marginLeft: 20,
                 }}
               >
                 {loading ? (
@@ -190,7 +195,7 @@ export const DetailAcara = ({ route }) => {
                     <Text
                       style={{
                         fontWeight: FONTWEIGHT.bold,
-                        fontSize: FONTSIZE.Judul,
+                        fontSize: fontSizeResponsive("Judul", device),
                       }}
                     >
                       {detail.name}
@@ -208,7 +213,7 @@ export const DetailAcara = ({ route }) => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -221,7 +226,9 @@ export const DetailAcara = ({ route }) => {
                       height={20}
                     />
                   ) : (
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {detail?.created_at === undefined
                         ? ""
                         : convertDate(detail?.created_at)}
@@ -240,7 +247,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -255,7 +262,11 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>{detail.location}</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          {detail.location}
+                        </Text>
                       </View>
                     )}
                   </View>
@@ -282,7 +293,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -297,7 +308,9 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {moment(detail?.start_date)
                             .locale("id")
                             .format(DATETIME.LONG_DATETIME)}
@@ -329,7 +342,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -344,7 +357,9 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {moment(detail?.end_date)
                             .locale("id")
                             .format(DATETIME.LONG_DATETIME)}
@@ -375,7 +390,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -408,11 +423,20 @@ export const DetailAcara = ({ route }) => {
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 50 : 30,
+                                      height: device === "tablet" ? 50 : 30,
                                     }}
                                   />
-                                  <Text>{item.nama}</Text>
+                                  <Text
+                                    style={{
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    {item.nama}
+                                  </Text>
                                 </View>
                               );
                             })
@@ -443,7 +467,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -469,8 +493,8 @@ export const DetailAcara = ({ route }) => {
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 50 : 30,
+                                      height: device === "tablet" ? 50 : 30,
                                     }}
                                   />
                                 </View>
@@ -503,7 +527,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -518,7 +542,9 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {detail.dresscode == null ? "-" : detail.dresscode}
                         </Text>
                       </View>
@@ -547,7 +573,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -562,7 +588,11 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>{detail.reminder}</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          {detail.reminder}
+                        </Text>
                       </View>
                     )}
                   </View>
@@ -589,7 +619,7 @@ export const DetailAcara = ({ route }) => {
                     <View style={{ width: "50%" }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H4", device),
                           fontWeight: FONTWEIGHT.bold,
                         }}
                       >
@@ -604,7 +634,9 @@ export const DetailAcara = ({ route }) => {
                       />
                     ) : (
                       <View style={{ justifyContent: "center" }}>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {detail.extra_attributes?.catatan == null
                             ? "-"
                             : detail.extra_attributes.catatan}
@@ -615,7 +647,7 @@ export const DetailAcara = ({ route }) => {
                 </View>
               </View>
             </View>
-            {isRoleMember === false ? (
+            {/* {isRoleMember === false ? (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -661,7 +693,7 @@ export const DetailAcara = ({ route }) => {
                   <Text>Edit</Text>
                 </TouchableOpacity>
               </>
-            ) : null}
+            ) : null} */}
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
@@ -701,5 +733,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     flex: 1,
+    alignItems: "center",
   },
 });

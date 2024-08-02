@@ -171,10 +171,10 @@ export const PerizinanMenteri = () => {
 
   const { device } = useSelector((state) => state.apps);
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         {loading ? <Loading /> : null}
-        <View style={{ position: "relative" }}>
+        <View style={{ position: "relative", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -258,28 +258,39 @@ export const PerizinanMenteri = () => {
               width: "90%",
               padding: 16,
               marginTop: 10,
+              alignItems: "center",
             }}
           >
             {variant === "inprogress" &&
               profile.nip !== "197208122001121002" && (
-                <View style={{ flexDirection: "row", gap: 10 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
                   {/* Checkbox All */}
                   <Checkbox
                     value={dokumenlain.lists.length === isSelected.length}
                     onValueChange={() => checkAll()}
                     color={isSelected === true ? COLORS.lighter : null}
                   />
-                  <Text>Pilih Semua</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Pilih Semua
+                  </Text>
                 </View>
               )}
 
-            <View style={{ flexDirection: "row", gap: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 10,
+              }}
+            >
               <TouchableOpacity
                 style={{
-                  width: device === "tablet" ? "19%" : null,
-
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
+                  padding: 10,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "inprogress" ? COLORS.primary : COLORS.input,
@@ -305,10 +316,7 @@ export const PerizinanMenteri = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  width: device === "tablet" ? "19%" : null,
-
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
+                  padding: 10,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "signed" ? COLORS.primary : COLORS.input,
@@ -335,28 +343,29 @@ export const PerizinanMenteri = () => {
           {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
 
           {/* </ScrollView> */}
-          <FlatList
-            data={filterData}
-            keyExtractor={(item) => item?.id}
-            renderItem={({ item }) => (
-              <View key={item.id}>
-                <CardListPerizinanMenteri
-                  item={item}
-                  token={token}
-                  variant={variant}
-                  device={device}
-                  isSelected={isSelected}
-                  setSelection={setSelection}
-                  nip={profile.nip}
-                />
-              </View>
-            )}
-            ListEmptyComponent={() => <ListEmpty />}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            style={{ height: "65%" }}
-          />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={filterData}
+              keyExtractor={(item) => item?.id}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardListPerizinanMenteri
+                    item={item}
+                    token={token}
+                    variant={variant}
+                    device={device}
+                    isSelected={isSelected}
+                    setSelection={setSelection}
+                    nip={profile.nip}
+                  />
+                </View>
+              )}
+              ListEmptyComponent={() => <ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
 
           <BottomSheetModal
             ref={bottomSheetModalRef}

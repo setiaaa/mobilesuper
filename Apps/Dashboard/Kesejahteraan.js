@@ -412,6 +412,7 @@ export const Kesejahteraan = () => {
               flexDirection: "row",
               gap: 10,
               alignItems: "center",
+              flex: 1,
             }}
           >
             <TouchableOpacity
@@ -448,6 +449,8 @@ export const Kesejahteraan = () => {
               padding: 20,
               marginTop: 20,
               borderRadius: 8,
+              flex: 1,
+              marginBottom: '50%'
             }}
           >
             <Text
@@ -479,10 +482,10 @@ export const Kesejahteraan = () => {
             {/* custom divider */}
             <View
               style={{
-                height: 1,
                 width: "100%",
                 backgroundColor: "#DBDADE",
                 marginTop: 10,
+                flex: 1,
               }}
             />
 

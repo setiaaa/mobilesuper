@@ -118,6 +118,7 @@ import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
 import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
 import { SuperApps } from "../Apps/Faq/SuperApps";
 import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
+import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -149,6 +150,11 @@ export const BottomTabs = () => {
           <Tab.Screen
             name="Profile"
             component={Profile}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="MenuDashboard"
+            component={MenuDashboard}
             options={{ headerShown: false }}
           />
           {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
@@ -198,8 +204,9 @@ export const BottomTabsRepo = () => {
     <BottomSheetModalProvider>
       <View
         style={{
-          height: Platform.OS === "ios" ? "100%" : height - 10,
-          width,
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+          width: "100%",
         }}
       >
         <Tab.Navigator
@@ -963,12 +970,6 @@ export const TopsProduksiBudidaya = () => {
 
 export const TopsKeuanganKinerja = () => {
   const { device } = useSelector((state) => state.apps);
-  const dataRoleLPMUKP = ["LPMUKP_DASHBOARD"];
-  const { profile } = useSelector((state) => state.superApps);
-
-  const isRoleLPMUKP = profile.roles_access?.some((item) =>
-    dataRoleLPMUKP.includes(item)
-  );
 
   return (
     <BottomSheetModalProvider>
@@ -1008,15 +1009,6 @@ export const TopsKeuanganKinerja = () => {
             title: "IKU",
           }}
         />
-        {isRoleLPMUKP ? (
-          <Top.Screen
-            name="LPMUKP"
-            component={LPMUKP}
-            options={{
-              title: "LPMUKP",
-            }}
-          />
-        ) : null}
       </Top.Navigator>
     </BottomSheetModalProvider>
   );

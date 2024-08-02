@@ -8,7 +8,8 @@ import { Image } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
+import moment from "moment";
 
 export const CardListBeritaHome = ({
   image,
@@ -66,7 +67,7 @@ export const CardListBeritaHome = ({
               fontWeight: 400,
             }}
           >
-            {tanggal}
+            {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)}
           </Text>
           <Text
             style={{

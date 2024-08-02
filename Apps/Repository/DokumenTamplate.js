@@ -342,10 +342,10 @@ export const DokumenTamplate = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true && tamplate.lists.length === 0 ? <Loading /> : null}
       <>
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ marginBottom: 20, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -569,7 +569,7 @@ export const DokumenTamplate = () => {
             </BottomSheetModalProvider>
           </Portal>
 
-          <View>
+          <View style={{ flex: 1 }}>
             <FlatList
               key={"_"}
               data={tamplate.lists}

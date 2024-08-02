@@ -107,9 +107,9 @@ export const PersetujanCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
+      <View style={{ position: "relative", flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -168,7 +168,7 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}>
+        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -176,7 +176,7 @@ export const PersetujanCuti = () => {
               alignItems: "center",
             }}
           >
-            <View style={{ width: "85%" }}>
+            <View style={{ width: device === 'tablet' ? "90%":"85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -186,8 +186,8 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: device === 'tablet'? 50:40,
+                  height: device === 'tablet'? 50:40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -200,7 +200,7 @@ export const PersetujanCuti = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={{flex: 1}}>
             {/* <View
               style={{
                 backgroundColor: "white",
@@ -393,6 +393,8 @@ export const PersetujanCuti = () => {
               </TouchableOpacity>
             </View>
             {/* </View> */}
+            <View style={{flex: 1}}>
+
             {variant === "Completed" ? (
               <FlatList
                 data={filterData}
@@ -414,7 +416,6 @@ export const PersetujanCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
               />
             ) : variant === "Rejected" ? (
               <FlatList
@@ -484,6 +485,8 @@ export const PersetujanCuti = () => {
                 style={{ height: "70%" }}
               />
             ) : null}
+            </View>
+
           </View>
         </View>
       </View>

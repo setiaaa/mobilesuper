@@ -591,14 +591,18 @@ export const LaporanDigitalSign = () => {
                 <View style={{ ...styles.card, alignItems: "center" }}>
                   <View style={{ flexDirection: "row" }}>
                     <View
-                      style={{
-                        ...styles.circle,
-                        backgroundColor: COLORS.successLight,
-                      }}
+                      style={[
+                        device === "tablet"
+                          ? styles.circleTablet
+                          : styles.circle,
+                        {
+                          backgroundColor: COLORS.successLight,
+                        },
+                      ]}
                     >
                       <Ionicons
                         name="clipboard-outline"
-                        size={24}
+                        size={device === "tablet" ? 50 : 24}
                         color={COLORS.success}
                       />
                     </View>
@@ -639,14 +643,18 @@ export const LaporanDigitalSign = () => {
                   <View style={styles.cardsmall}>
                     <View style={{ flexDirection: "row" }}>
                       <View
-                        style={{
-                          ...styles.circle,
-                          backgroundColor: COLORS.infoLight,
-                        }}
+                        style={[
+                          device === "tablet"
+                            ? styles.circleTablet
+                            : styles.circle,
+                          {
+                            backgroundColor: COLORS.infoLight,
+                          },
+                        ]}
                       >
                         <Ionicons
                           name="clipboard-outline"
-                          size={24}
+                          size={device === "tablet" ? 50 : 24}
                           color={COLORS.info}
                         />
                       </View>
@@ -669,7 +677,7 @@ export const LaporanDigitalSign = () => {
                           style={{
                             fontSize: fontSizeResponsive("H3", device),
                             fontWeight: 400,
-                            width: "60%",
+                            width: device === "tablet" ? "100%" : "60%",
                           }}
                         >
                           Total Klasikal
@@ -678,16 +686,22 @@ export const LaporanDigitalSign = () => {
                     </View>
                   </View>
                   <View style={styles.cardsmall}>
-                    <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
                       <View
-                        style={{
-                          ...styles.circle,
-                          backgroundColor: COLORS.warningLight,
-                        }}
+                        style={[
+                          device === "tablet"
+                            ? styles.circleTablet
+                            : styles.circle,
+                          {
+                            backgroundColor: COLORS.warningLight,
+                          },
+                        ]}
                       >
                         <Ionicons
                           name="clipboard-outline"
-                          size={24}
+                          size={device === "tablet" ? 50 : 24}
                           color={COLORS.warning}
                         />
                       </View>
@@ -710,7 +724,7 @@ export const LaporanDigitalSign = () => {
                           style={{
                             fontSize: fontSizeResponsive("H3", device),
                             fontWeight: 400,
-                            width: "55%",
+                            width: device === "tablet" ? "100%" : "55%",
                           }}
                         >
                           Total Non Klasikal
@@ -739,14 +753,16 @@ export const LaporanDigitalSign = () => {
               >
                 <View style={{ flexDirection: "row" }}>
                   <View
-                    style={{
-                      ...styles.circle,
-                      backgroundColor: COLORS.successLight,
-                    }}
+                    style={[
+                      device === "tablet" ? styles.circleTablet : styles.circle,
+                      {
+                        backgroundColor: COLORS.successLight,
+                      },
+                    ]}
                   >
                     <Ionicons
                       name="clipboard-outline"
-                      size={24}
+                      size={device === "tablet" ? 50 : 24}
                       color={COLORS.success}
                     />
                   </View>
@@ -2578,5 +2594,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 25,
+  },
+  circleTablet: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
   },
 });

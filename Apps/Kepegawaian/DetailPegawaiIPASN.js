@@ -82,7 +82,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
         <View
           style={{
             backgroundColor: COLORS.white,
-            width: wp(87),
+            width: "100%",
             borderRadius: 8,
             justifyContent: "center",
             alignItems: "center",
@@ -129,7 +129,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
           flexDirection: "row",
           gap: 7,
           justifyContent: "center",
-          width: wp(87),
+          width: device === "tablet" ? "100%" : "90%",
           alignSelf: "center",
         }}
       >
@@ -146,7 +146,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
             shadowOpacity: 0.2,
             //shadow android
             elevation: 2,
-            width: wp(43),
+            width: "48%",
           }}
         >
           {/* <Text
@@ -219,7 +219,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
               style={{
                 flexDirection: "row",
                 marginTop: 10,
-                gap: wp(3),
+                gap: 10,
               }}
             >
               <Text
@@ -249,7 +249,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
             shadowOpacity: 0.2,
             //shadow android
             elevation: 2,
-            width: wp(43),
+            width: "48%",
           }}
         >
           <Text

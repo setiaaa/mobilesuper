@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 
-export const CardListNominatif = ({ item }) => {
+export const CardListNominatif = ({ item, device }) => {
   return (
     <View
       style={{
@@ -20,29 +20,43 @@ export const CardListNominatif = ({ item }) => {
           marginBottom: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>NAMA</Text>
-          <Text>NIP</Text>
-          <Text>TEMPAT/TANGGAL LAHIR</Text>
-          <Text>NO KARPEG KARIS/KARSU</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            NAMA
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            NIP
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            TEMPAT/TANGGAL LAHIR
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            NO KARPEG KARIS/KARSU
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_nama_lengkap
               ? item?.updated_getrefpeg_data?.pegawai_nama_lengkap
               : item?.nama
               ? item?.nama
               : "-"}
           </Text>
-          <Text>{item?.nip ? item?.nip : "-"}</Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.nip ? item?.nip : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_tempat_tanggal_lahir
               ? item?.updated_getrefpeg_data?.pegawai_tempat_tanggal_lahir
               : "-"}
           </Text>
-          <Text>{item?.karis ? item.karis : "-"}</Text>
-          <Text>{item?.karpeg ? item.karpeg : "-"}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.karis ? item.karis : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.karpeg ? item.karpeg : "-"}
+          </Text>
         </View>
       </View>
       <View
@@ -61,16 +75,28 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>JENIS KELAMIN</Text>
-          <Text>STAT.KELUARGA</Text>
-          <Text>AGAMA</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            JENIS KELAMIN
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            STAT.KELUARGA
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            AGAMA
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>{item?.jenis_kelamin ? item?.jenis_kelamin : "-"}</Text>
-          <Text>{item?.status_kel ? item?.status_kel : "-"}</Text>
-          <Text>{item?.religion ? item?.religion : "-"}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.jenis_kelamin ? item?.jenis_kelamin : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.status_kel ? item?.status_kel : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.religion ? item?.religion : "-"}
+          </Text>
         </View>
       </View>
       <View
@@ -89,14 +115,20 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>GOL/RU</Text>
-          <Text>TMT MASA KERJA GOL. TERAKHIR</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            GOL/RU
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            TMT MASA KERJA GOL. TERAKHIR
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>{item?.golongan ? item?.golongan : "-"}</Text>
-          <Text>{`${
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.golongan ? item?.golongan : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>{`${
             item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan ?? "-"
           } ${
             item?.updated_getrefpeg_data?.pegawai_tahun_masa_kerja_golongan
@@ -131,18 +163,22 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>TMT STRUKTURAL MASA KERJA JAB.TERAKHIR</Text>
-          <Text>JAB.FUNGSIONAL TMT FUNGSIONAL</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            TMT STRUKTURAL MASA KERJA JAB.TERAKHIR
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            JAB.FUNGSIONAL TMT FUNGSIONAL
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_nama_jabatan
               ? item?.updated_getrefpeg_data?.pegawai_nama_jabatan
               : "-"}
           </Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan
               ? item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan
               : "-"}
@@ -165,12 +201,16 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>UNIT KERJA</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            UNIT KERJA
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>{item?.unit_kerja ? item?.unit_kerja : "-"}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.unit_kerja ? item?.unit_kerja : "-"}
+          </Text>
         </View>
       </View>
       <View
@@ -189,13 +229,17 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>PENDIDIKAN AKHIR/TAHUN SEKOLAH/UNIVERSITAS</Text>
-          <Text>FAKULTAS JURUSAN</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            PENDIDIKAN AKHIR/TAHUN SEKOLAH/UNIVERSITAS
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            FAKULTAS JURUSAN
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.pendidikan ? item?.pendidikan : "-"}/
             {item?.updated_getrefpeg_data?.pegawai_pendidikan_tahun_lulus
               ? item?.updated_getrefpeg_data?.pegawai_pendidikan_tahun_lulus
@@ -205,7 +249,7 @@ export const CardListNominatif = ({ item }) => {
               ? item?.updated_getrefpeg_data?.pegawai_pendidikan_nama
               : "-"}
           </Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_pendidikan_program_studi_nama
               ? item?.updated_getrefpeg_data
                   ?.pegawai_pendidikan_program_studi_nama
@@ -229,30 +273,38 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>DIKLAT PERJENJANGAN</Text>
-          <Text>NAMA DIKLAT</Text>
-          <Text>TAHUN</Text>
-          <Text>LEMHANAS/ANGKATAN</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            DIKLAT PERJENJANGAN
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            NAMA DIKLAT
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            TAHUN
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            LEMHANAS/ANGKATAN
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.jenis_diklat_nama
               ? item?.updated_getrefpeg_data?.jenis_diklat_nama
               : "-"}
           </Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_diklat_nama
               ? item?.updated_getrefpeg_data?.pegawai_diklat_nama
               : "-"}
           </Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_diklat_tahun
               ? item?.updated_getrefpeg_data?.pegawai_diklat_tahun
               : "-"}
           </Text>
-          <Text>-</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>-</Text>
         </View>
       </View>
       <View
@@ -271,18 +323,22 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>TGL.CAPEG MASA KERJA KESELURUHAN</Text>
-          <Text>STATUS KEPEGAWAIAN</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            TGL.CAPEG MASA KERJA KESELURUHAN
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            STATUS KEPEGAWAIAN
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
-          <Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
               ? item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
               : "-"}
           </Text>
-          <Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.updated_getrefpeg_data?.masa_kerja_keseluruhan
               ? item?.updated_getrefpeg_data?.masa_kerja_keseluruhan
               : "-"}
@@ -305,18 +361,22 @@ export const CardListNominatif = ({ item }) => {
           marginVertical: 10,
         }}
       >
-        <View style={{ width: 150 }}>
-          <Text>PHOTO</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            PHOTO
+          </Text>
         </View>
-        <Text>:</Text>
-        <View style={{ width: 150 }}>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <View style={{ width: device === "tablet" ? 350 : 150 }}>
           {item?.updated_getrefpeg_data?.pegawai_image_path ? (
             <Image
               source={{ uri: item?.updated_getrefpeg_data?.pegawai_image_path }}
               style={{ width: 70, height: 70, borderRadius: 50 }}
             />
           ) : (
-            <Text>-</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              -
+            </Text>
           )}
         </View>
       </View>

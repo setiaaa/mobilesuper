@@ -16,18 +16,17 @@ export const DetailDokumenPersonal = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "flex-end",
+          alignItems: "center",
           backgroundColor: COLORS.primary,
           height: 80,
-          paddingBottom: 20,
         }}
       >
         <View
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -36,7 +35,7 @@ export const DetailDokumenPersonal = () => {
           <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
@@ -188,7 +187,7 @@ export const DetailDokumenPersonal = () => {
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   KOTA DENPASAR - Hotel Kempinsky
                 </Text> */}
-                <Text>
+                <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
                   {detailPersonal?.detail?.officer?.name} /
                   {detailPersonal?.detail?.officer?.nip}
                 </Text>

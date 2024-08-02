@@ -2,10 +2,15 @@ import React from "react";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
-import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import moment from "moment/min/moment-with-locales";
 
-export const CardKegiatanTerbaru = ({ item }) => {
+export const CardKegiatanTerbaru = ({ item, device }) => {
   return (
     <View style={{ alignItems: "center", gap: 10 }}>
       {/* <View>
@@ -28,7 +33,13 @@ export const CardKegiatanTerbaru = ({ item }) => {
           elevation: 2,
         }}
       >
-        <Text style={{ marginTop: 10, color: COLORS.lighter }}>
+        <Text
+          style={{
+            marginTop: 10,
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {moment(item.start_date, "DD-MM-YYYY")
             .locale("id")
             .format(DATETIME.LONG_DATE)}{" "}
@@ -37,12 +48,29 @@ export const CardKegiatanTerbaru = ({ item }) => {
             .locale("id")
             .format(DATETIME.LONG_DATE)}
         </Text>
-        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            marginTop: 5,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {item.fullname}
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ color: COLORS.infoDanger }}>* </Text>
-          <Text style={{ marginTop: 5 }}>{item.venue}</Text>
+          <Text
+            style={{
+              color: COLORS.infoDanger,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            *{" "}
+          </Text>
+          <Text
+            style={{ marginTop: 5, fontSize: fontSizeResponsive("H4", device) }}
+          >
+            {item.venue}
+          </Text>
         </View>
       </View>
     </View>

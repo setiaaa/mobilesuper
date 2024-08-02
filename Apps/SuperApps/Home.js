@@ -13,6 +13,7 @@ import {
   Platform,
   FlatList,
   AppState,
+  useWindowDimensions,
 } from "react-native";
 import { CardMenu } from "../../components/CardMenu";
 // import { Carousel } from '../../components/Carousel/Carousel'
@@ -50,6 +51,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
   imageApps,
 } from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -104,7 +106,6 @@ import { Easing } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import CryptoJS from "react-native-crypto-js";
 import { OneSignal } from "react-native-onesignal";
-const { width: screenWidth } = Dimensions.get("window");
 const numColumns = 3;
 
 const _color = "#6E01EF";
@@ -138,6 +139,8 @@ export const Home = () => {
 
   const dispatch = useDispatch();
   const route = useRoute();
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const refreshPage = () => {
     setRefresh(true);
@@ -491,11 +494,21 @@ export const Home = () => {
 
   const renderRow = ({ item }) => {
     if (item.empty === true) {
-      return <View style={[styles.items, styles.itemInvisible]} />;
+      return (
+        <View
+          style={[
+            { width: screenWidth - 60, height: screenWidth - 170 },
+            styles.itemInvisible,
+          ]}
+        />
+      );
     }
     return (
       <View
-        style={[styles.items, { height: device === "tablet" ? 200 : 100 }]}
+        style={[
+          { width: screenWidth - 60, height: screenWidth - 170 },
+          { height: device === "tablet" ? 200 : 100 },
+        ]}
         key={item.title}
       >
         <TouchableOpacity
@@ -689,6 +702,23 @@ export const Home = () => {
   //   }
   // };
 
+  const getWidthCarousel = () => {
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
+
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 120;
+      } else {
+        tempWidth = screenWidth - 100;
+      }
+    } else {
+      tempWidth = screenWidth - 60;
+    }
+
+    return tempWidth;
+  };
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -700,51 +730,41 @@ export const Home = () => {
         >
           <View
             style={{
-              width: "100%",
-              height: hp(25),
-              position: "absolute",
-              top: 0,
-              borderBottomLeftRadius: 14,
-              borderBottomRightRadius: 14,
+              minHeight: device === "tablet" ? 530 : 350,
+              position: "relative",
             }}
           >
-            <Image
-              source={require("../../assets/superApp/headerdark.png")}
+            <View
               style={{
                 width: "100%",
-                height: "100%",
+                height: device === "tablet" ? 280 : 180,
+                position: "absolute",
+                top: 0,
                 borderBottomLeftRadius: 14,
                 borderBottomRightRadius: 14,
               }}
-            />
-          </View>
+            >
+              <Image
+                source={require("../../assets/superApp/headerdark.png")}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderBottomLeftRadius: 14,
+                  borderBottomRightRadius: 14,
+                }}
+              />
+            </View>
 
-          <View
-            style={{
-              height: "3.5%",
-              flexDirection: "row",
-              paddingTop: 20,
-              gap: 20,
-            }}
-          >
-            {/* <View style={{ paddingLeft: 20 }}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={25}
-                  color={"white"}
-                />
-              </View> */}
             <View
               style={{
                 justifyContent: "flex-end",
                 flex: 1,
-                marginTop: 5,
                 flexDirection: "row",
-                gap: 10,
-                marginRight: "11%",
+                gap: 16,
+                padding: 20,
               }}
             >
-              <View style={{ width: "80%" }}>
+              <View>
                 <Text
                   style={{
                     color: COLORS.white,
@@ -780,11 +800,17 @@ export const Home = () => {
                 />
               </View>
             </View>
-          </View>
 
-          <View style={{ marginTop: profile.nip === "100062" ? 40 : 0 }}>
-            {profile.nip === "100062" ? null : (
-              <View style={{ alignItems: "center" }}>
+            <View
+              style={{
+                width: "100%",
+                position: "absolute",
+                zIndex: 9,
+                top: "30%",
+                paddingHorizontal: 20,
+              }}
+            >
+              <View style={{ alignItems: "center", display: "flex" }}>
                 <CardApps
                   handlePressModal={handlePressModal}
                   setModalBankom={setModalBankom}
@@ -853,7 +879,10 @@ export const Home = () => {
                   </BottomSheetModal>
                 </Portal>
               </View>
-            )}
+
+              {/* {profile.nip === "100062" ? null : (
+              )} */}
+            </View>
           </View>
 
           <Modal
@@ -1210,7 +1239,7 @@ export const Home = () => {
             </View>
           </Modal>
 
-          <View style={[styles.containerr, { marginTop: 20 }]}>
+          <View style={[styles.containerr]}>
             <View
               style={{
                 justifyContent: "center",
@@ -1223,7 +1252,7 @@ export const Home = () => {
               ref={carouselRef}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
-              itemWidth={screenWidth - 60}
+              itemWidth={getWidthCarousel()}
               data={banner}
               renderItem={({ item }, parallaxProps) => (
                 <BannerKegiatan parallaxProps={parallaxProps} item={item} />
@@ -1263,6 +1292,7 @@ export const Home = () => {
               </Text>
             </TouchableOpacity>
           </View>
+
           <View
             style={{
               justifyContent: "center",
@@ -1359,9 +1389,14 @@ export const Home = () => {
                   />
                 </View>
               </TouchableOpacity>
-              <View style={{ width: 380, height: 283 }}>
+              <View
+                style={{
+                  width: device === "tablet" ? 700 : 380,
+                  height: device === "tablet" ? 500 : 283,
+                }}
+              >
                 <YoutubePlayer
-                  height={300}
+                  height={useWindowDimensions().height}
                   play={playing}
                   videoId={"tV6yMXX2hPs"}
                   onChangeState={onStateChange}
@@ -1408,9 +1443,11 @@ export const Home = () => {
                 ref={carouselRef}
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
+                itemWidth={getWidthCarousel()}
                 data={berita.lists.slice(0, 5)}
-                renderItem={BeritaHome}
+                renderItem={({ item }, parallaxProps) => (
+                  <BeritaHome parallaxProps={parallaxProps} item={item} />
+                )}
                 hasParallaxImages={true}
                 onSnapToItem={setSlide4}
               />
@@ -1436,6 +1473,7 @@ export const Home = () => {
             onRequestClose={() => {
               setModalVisible(!modalVisible);
             }}
+            style={{}}
           >
             <TouchableOpacity
               style={[
@@ -1445,20 +1483,23 @@ export const Home = () => {
                 styles.backdrop,
               ]}
             />
-            <View style={{ alignItems: "center", flex: 1 }}>
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
               <View
                 style={{
                   backgroundColor: COLORS.white,
-                  width: "90%",
-                  height: device === "tablet" ? 730 : 550,
                   borderRadius: 10,
-                  marginTop: 100,
+                  padding: 20,
+                  width: "90%",
                 }}
               >
                 <View
                   style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
                     flexDirection: "row",
                     alignItems: "center",
                   }}
@@ -1487,8 +1528,7 @@ export const Home = () => {
                   style={{
                     flexDirection: "row",
                     gap: 10,
-                    marginHorizontal: 20,
-                    marginTop: 20,
+                    marginTop: 10,
                   }}
                 >
                   <TouchableOpacity
@@ -1512,7 +1552,7 @@ export const Home = () => {
                   </TouchableOpacity>
                 </View>
 
-                <View style={{ marginHorizontal: 20, marginTop: 40 }}>
+                <View style={{ marginTop: 30 }}>
                   <Text
                     style={{
                       fontSize: fontSizeResponsive("H1", device),
@@ -1527,8 +1567,7 @@ export const Home = () => {
                   style={{
                     flexDirection: "row",
                     gap: 10,
-                    marginHorizontal: 20,
-                    marginTop: 20,
+                    marginTop: 10,
                   }}
                 >
                   <TouchableOpacity
@@ -1624,7 +1663,7 @@ export const Home = () => {
                   </TouchableOpacity>
                 </View>
 
-                <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                <View style={{ marginTop: 30 }}>
                   <Text
                     style={{
                       fontSize: fontSizeResponsive("H1", device),
@@ -1638,9 +1677,9 @@ export const Home = () => {
                 <View
                   style={{
                     flexDirection: "row",
+                    flexWrap: "wrap",
                     gap: 10,
-                    marginHorizontal: 20,
-                    marginTop: 20,
+                    marginTop: 10,
                   }}
                 >
                   <TouchableOpacity
@@ -1793,67 +1832,29 @@ export const Home = () => {
                     </View>
                   </TouchableOpacity>
 
-                  {device === "tablet" ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        Linking.openURL("https://mysapk.bkn.go.id/");
-                      }}
-                    >
-                      <View>
-                        <Image
-                          source={require("../../assets/superApp/mysapk.png")}
-                          style={{
-                            width: device === "tablet" ? 100 : 48,
-                            height: device === "tablet" ? 100 : 48,
-                          }}
-                        />
-                      </View>
-                      <View>
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          My SAPK
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-                {device === "phone" ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 10,
-                      marginHorizontal: 20,
-                      marginTop: 20,
+                  <TouchableOpacity
+                    onPress={() => {
+                      Linking.openURL("https://mysapk.bkn.go.id/");
                     }}
                   >
-                    <TouchableOpacity
-                      onPress={() => {
-                        Linking.openURL("https://mysapk.bkn.go.id/");
-                      }}
-                    >
-                      <View>
-                        <Image
-                          source={require("../../assets/superApp/mysapk.png")}
-                          style={{
-                            width: device === "tablet" ? 100 : 48,
-                            height: device === "tablet" ? 100 : 48,
-                          }}
-                        />
-                      </View>
-                      <View>
-                        <Text
-                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
-                        >
-                          My SAPK
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                ) : null}
+                    <View>
+                      <Image
+                        source={require("../../assets/superApp/mysapk.png")}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{ textAlign: "center", fontSize: FONTSIZE.H4, fontSize: fontSizeResponsive("H4", device), }}
+                      >
+                        My SAPK
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
@@ -1890,14 +1891,16 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: "80%" }]}>
+          <View style={[styles.containerr, { marginBottom: '60%' }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
-              itemWidth={screenWidth - 60}
+              itemWidth={getWidthCarousel()}
               data={galeri.lists.slice(0, 5)}
-              renderItem={GaleriHome}
+              renderItem={({ item }, parallaxProps) => (
+                <GaleriHome parallaxProps={parallaxProps} item={item} />
+              )}
               hasParallaxImages={true}
               onSnapToItem={setSlide3}
             />
@@ -1932,14 +1935,6 @@ const styles = StyleSheet.create({
   },
   containerr: {
     flex: 1,
-  },
-  item: {
-    width: screenWidth - 60,
-    height: screenWidth - 60,
-  },
-  items: {
-    width: screenWidth - 60,
-    height: screenWidth - 170,
   },
   imageContainer: {
     flex: 1, // Prevent a random Android rendering issue

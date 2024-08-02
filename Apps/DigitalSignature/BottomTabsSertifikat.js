@@ -132,7 +132,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 95,
                 }}
               >
                 <View
@@ -174,7 +174,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 95,
                 }}
               >
                 <Ionicons
@@ -293,7 +293,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <View
@@ -334,7 +334,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <Ionicons
@@ -370,7 +370,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <View
@@ -411,7 +411,7 @@ export const MyTabSertifikat = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <Ionicons

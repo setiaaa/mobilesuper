@@ -51,7 +51,7 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "flex-start",
+                    alignItems: "center",
                     gap: spacing.medium,
                   }}
                 >
@@ -63,8 +63,8 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                     style={[
                       {
                         fontWeight: FONTWEIGHT.bold,
+                        fontSize:fontSizeResponsive("H4", device),
                       },
-                      fontSizeResponsive("textL", device),
                     ]}
                   >
                     Biodata
@@ -116,19 +116,22 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Nama
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
+                  
                 ]}
               >
                 {profile.nama}
@@ -146,19 +149,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
-                  },
-                  fontSizeResponsive("textS", device),
+                    fontSize:fontSizeResponsive("H4", device)
+                  }, 
                 ]}
               >
                 NIP
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.nip}
@@ -176,13 +181,15 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Karpeg/Karis-Karsu/NPWP
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <View
                 style={{
                   flex: 5,
@@ -192,25 +199,39 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 }}
               >
                 {profile.karpeg == null ? (
-                  <Text style={fontSizeResponsive("textS", device)}>-</Text>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>-</Text>
                 ) : (
-                  <Text style={fontSizeResponsive("textS", device)}>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>
                     {profile.karpeg}
                   </Text>
                 )}
-                <Text style={fontSizeResponsive("textS", device)}>/</Text>
+                <Text style={{
+                  fontSize:fontSizeResponsive("H4", device)
+                }}>/</Text>
                 {profile.karis == null ? (
                   <Text>-</Text>
                 ) : (
-                  <Text style={fontSizeResponsive("textS", device)}>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>
                     {profile.karis}
                   </Text>
                 )}
-                <Text style={fontSizeResponsive("textS", device)}>/</Text>
+                <Text style={{
+                  fontSize:fontSizeResponsive("H4", device)
+                }}>/</Text>
                 {profile.npwp === "" ? (
-                  <Text style={fontSizeResponsive("textS", device)}>-</Text>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>-</Text>
                 ) : (
-                  <Text style={fontSizeResponsive("textS", device)}>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>
                     {profile.npwp}
                   </Text>
                 )}
@@ -228,19 +249,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Tempat/Tanggal Lahir
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.place_birth}/{profile.date_birth}
@@ -260,19 +283,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                     style={[
                       {
                         flex: 4,
+                        fontSize:fontSizeResponsive("H4", device)
                       },
-                      fontSizeResponsive("textS", device),
                     ]}
                   >
                     Telepon Seluler
                   </Text>
-                  <Text style={fontSizeResponsive("textS", device)}>:</Text>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>:</Text>
                   <Text
                     style={[
                       {
                         flex: 5,
+                        fontSize:fontSizeResponsive("H4", device)
                       },
-                      fontSizeResponsive("textS", device),
                     ]}
                   >
                     {profile.mobile}
@@ -290,19 +315,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                     style={[
                       {
                         flex: 4,
+                        fontSize:fontSizeResponsive("H4", device)
                       },
-                      fontSizeResponsive("textS", device),
                     ]}
                   >
                     No KTP
                   </Text>
-                  <Text style={fontSizeResponsive("textS", device)}>:</Text>
+                  <Text style={{
+                    fontSize:fontSizeResponsive("H4", device)
+                  }}>:</Text>
                   <Text
                     style={[
                       {
                         flex: 5,
+                        fontSize:fontSizeResponsive("H4", device)
                       },
-                      fontSizeResponsive("textS", device),
                     ]}
                   >
                     {profile.ktp}
@@ -322,19 +349,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Email KKP
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.email}
@@ -353,19 +382,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Email Lain
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.email_alt}
@@ -384,19 +415,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Pendidikan Terakhir
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.pendidikan}
@@ -414,8 +447,8 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Unit Kerja
@@ -425,8 +458,8 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.satuan_kerja_nama}
@@ -445,19 +478,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Satker
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.unit_kerja}
@@ -475,19 +510,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Pangkat
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.pangkat == null ? "-" : profile.pangkat}
@@ -505,19 +542,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Golongan
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.golongan == null ? "-" : profile.golongan}
@@ -535,19 +574,21 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                 style={[
                   {
                     flex: 4,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 Alamat Kantor
               </Text>
-              <Text style={fontSizeResponsive("textS", device)}>:</Text>
+              <Text style={{
+                fontSize:fontSizeResponsive("H4", device)
+              }}>:</Text>
               <Text
                 style={[
                   {
                     flex: 5,
+                    fontSize:fontSizeResponsive("H4", device)
                   },
-                  fontSizeResponsive("textS", device),
                 ]}
               >
                 {profile.office_address == null ? "-" : profile.office_address}

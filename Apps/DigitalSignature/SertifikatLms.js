@@ -34,7 +34,7 @@ export const SertifikatLms = () => {
   const { courseList } = useSelector((state) => state.digitalsign);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
@@ -76,11 +76,11 @@ export const SertifikatLms = () => {
         </View>
       </View>
 
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 10, flex: 1 }}>
         <FlatList
           data={courseList}
           keyExtractor={(item) => item?.id}
-          renderItem={({ item }) => <CardListLMS item={item} />}
+          renderItem={({ item }) => <CardListLMS item={item} device={device}/>}
           ListEmptyComponent={() => <ListEmpty />}
           // refreshControl={
           //   <RefreshControl
