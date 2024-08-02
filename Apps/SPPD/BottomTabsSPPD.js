@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   COLORS,
   FONTSIZE,
@@ -19,9 +19,10 @@ import { useMemo } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {} from "react-native";
 import { useSelector } from "react-redux";
+import { useRoute } from "@react-navigation/native";
 
-function MyTabBarSPPD({ props, navigation }) {
-  const [tabItemIndex, setTabItemIndex] = useState(1);
+function MyTabBarSPPD({ state, descriptors, navigation }) {
+  const [tabItemIndex, setTabItemIndex] = useState(0);
   const bottomSheetModalAddRef = useRef(null);
   const { device } = useSelector((state) => state.apps);
 
@@ -36,6 +37,11 @@ function MyTabBarSPPD({ props, navigation }) {
   const bottomSheetAdd = () => {
     bottomSheetModalAddRef.current?.present();
   };
+
+  useEffect(() => {
+    setTabItemIndex(state.index);
+    console.log(state.index);
+  }, [state.index]);
 
   return (
     <>
@@ -52,12 +58,12 @@ function MyTabBarSPPD({ props, navigation }) {
           <TouchableOpacity
             key={1}
             onPress={() => {
-              setTabItemIndex(1);
+              setTabItemIndex(0);
               navigation.navigate("Personal", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
-            {tabItemIndex === 1 ? (
+            {tabItemIndex === 0 ? (
               <View
                 style={{
                   alignItems: "center",
@@ -128,14 +134,14 @@ function MyTabBarSPPD({ props, navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
-            key={2}
+            key={1}
             onPress={() => {
-              setTabItemIndex(2);
+              setTabItemIndex(1);
               navigation.navigate("DokumenSPPD", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
-            {tabItemIndex === 2 ? (
+            {tabItemIndex === 1 ? (
               <View
                 style={{
                   alignItems: "center",

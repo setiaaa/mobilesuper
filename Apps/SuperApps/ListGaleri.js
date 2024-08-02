@@ -13,7 +13,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, fontSizeResponsive, getOrientation, PADDING } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+  PADDING,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
@@ -82,6 +87,7 @@ export const ListGaleri = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(setGaleri([]));
         dispatch(getGaleri({ token, page }));
       }
     } catch (error) {}
@@ -228,9 +234,17 @@ export const ListGaleri = () => {
                 }
                 style={{
                   width:
-                    device === "tablet" && orientation === 'landscape' ? useWindowDimensions().width : device === "tablet" && orientation === 'potrait' ? 800:390,
+                    device === "tablet" && orientation === "landscape"
+                      ? useWindowDimensions().width
+                      : device === "tablet" && orientation === "potrait"
+                      ? 800
+                      : 390,
                   height:
-                    device === "tablet" && orientation === 'landscape'? useWindowDimensions().height : device === "tablet" && orientation === 'potrait' ?800:283,
+                    device === "tablet" && orientation === "landscape"
+                      ? useWindowDimensions().height
+                      : device === "tablet" && orientation === "potrait"
+                      ? 800
+                      : 283,
                 }}
               />
             </TouchableOpacity>

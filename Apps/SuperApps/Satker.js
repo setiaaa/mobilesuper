@@ -396,16 +396,29 @@ export const Satker = () => {
       marginVertical: 40,
     },
     p: {
-      fontSize: 14,
+      display: "none",
     },
-    h5: {
+    h4: {
       fontSize: 18,
+      marginBottom: 0, // Mengurangi jarak bawah
+      marginTop: 10, // Mengurangi jarak atas
+    },
+    ul: {
+      marginBottom: 0,
+    },
+    li: {
+      // backgroundColor: "orange",
+      // marginTop: 5,
+    },
+    ol: {
+      fontSize: 15,
+      marginTop: 10,
     },
   };
 
   const classesStyles = {
     content: {
-      padding: 30,
+      padding: 10,
     },
     "news-title": {
       fontSize: 18,
@@ -421,6 +434,7 @@ export const Satker = () => {
   };
 
   const baseStyles = {};
+
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -669,6 +683,23 @@ export const Satker = () => {
               }}
               nestedScrollEnabled={true}
             >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.info,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.nama}
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  marginTop: 10,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.position}
+              </Text>
               <RenderHTML
                 source={{ html: pesan[pesan.length - 1]?.content }}
                 tagsStyles={tagsStyles}

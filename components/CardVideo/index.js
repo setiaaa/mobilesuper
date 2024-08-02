@@ -14,7 +14,7 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
         alignItems: "center",
         height: device === "tablet" ? "15%" : "8%",
         marginHorizontal: 25,
-        marginBottom: device === "tablet" ? 100 : 60,
+        marginBottom: device === "tablet" ? 120 : 80,
       }}
     >
       <Image
@@ -22,18 +22,17 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 16,
           resizeMode: "cover",
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
         }}
       />
       <View
         style={{
           backgroundColor: COLORS.white,
-          width: "80%",
-          borderRadius: 16,
-          position: "absolute",
-          bottom: -50,
-          padding: 5,
+          width: "100%",
+          borderBottomLeftRadius: 16,
+          borderBottomRightRadius: 16,
         }}
       >
         <View
@@ -73,6 +72,7 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
               textAlign: "center",
               color: COLORS.lighter,
               fontSize: fontSizeResponsive("H4", device),
+              marginHorizontal: 10,
             }}
           >
             Menteri Trenggono Melakukan Panen Parsial Kedua di BUBK Kebumen

@@ -87,7 +87,7 @@ export const CardApps = ({
     if (device === "tablet" && orientation === "landscape") {
       tempLimit = 15;
     } else if (device === "tablet" && orientation === "potrait") {
-      tempLimit = width >= 834 ?  11: 9;
+      tempLimit = width >= 834 ? 11 : 9;
     } else {
       tempLimit = 7;
     }

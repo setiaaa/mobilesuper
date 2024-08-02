@@ -700,9 +700,8 @@ export const Profile = () => {
                 {
                   marginTop: spacing.default,
                   color: COLORS.info,
-                  fontSize:fontSizeResponsive("H4", device),
+                  fontSize: fontSizeResponsive("H4", device),
                 },
-                
               ]}
             >
               {profile.nama}
@@ -712,7 +711,7 @@ export const Profile = () => {
                 {
                   color: COLORS.lighter,
                   textAlign: "center",
-                  fontSize:fontSizeResponsive("H5", device),
+                  fontSize: fontSizeResponsive("H5", device),
                 },
               ]}
             >
@@ -758,14 +757,18 @@ export const Profile = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H5", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Jumlah hari kerja
                 </Text>
-                <Text style={{
-                  fontSize:fontSizeResponsive("H5", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {profile.working_day}
                 </Text>
               </View>
@@ -776,14 +779,18 @@ export const Profile = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Jumlah hadir
                 </Text>
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {profile.present_day}
                 </Text>
               </View>
@@ -794,14 +801,18 @@ export const Profile = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Terlambat
                 </Text>
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {profile.late_day}
                 </Text>
               </View>
@@ -812,12 +823,18 @@ export const Profile = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>Dinas</Text>
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dinas
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {profile.outstation_day}
                 </Text>
               </View>
@@ -828,12 +845,20 @@ export const Profile = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{
-                   fontSize:fontSizeResponsive("H4", device),
-                }}>Cuti</Text>
-                <Text style={{
-                   fontSize:fontSizeResponsive("H4", device),
-                }}>-</Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Cuti
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  -
+                </Text>
               </View>
             </View>
           </View>
@@ -851,15 +876,20 @@ export const Profile = () => {
             <View style={{ padding: spacing.default, rowGap: spacing.medium }}>
               <Text
                 style={[
-                  { marginVertical: -16, fontSize:fontSizeResponsive("H4", device), },
+                  {
+                    marginVertical: -16,
+                    fontSize: fontSizeResponsive("H4", device),
+                  },
                 ]}
               >
                 IP ASN
               </Text>
-              <Text style={{
-                fontSize:fontSizeResponsive("H4", device),
-                marginTop: 10
-              }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  marginTop: 10,
+                }}
+              >
                 Sumber Data SIASN
               </Text>
               <View
@@ -895,28 +925,32 @@ export const Profile = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: 'center'
+                  alignItems: "center",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                  width: device === 'tablet'? '88%': '78%'
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
+                  }}
+                >
                   Kualifikasi
                 </Text>
-                <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View
                     style={{
-                      width: device === 'tablet'? 30 : 20,
-                      height: device === 'tablet'? 30 : 20,
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
                       backgroundColor: "#FF9900",
                       borderRadius: 50,
                       marginRight: spacing.small,
                     }}
                   />
-                  <Text style={{
-                    fontSize:fontSizeResponsive("H4", device),
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {profile.ipasn_kualifikasi}
                   </Text>
                 </View>
@@ -925,28 +959,32 @@ export const Profile = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: 'center'
+                  alignItems: "center",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                  width: device === 'tablet'? '88%': '78%'
-                }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
+                  }}
+                >
                   Kompetensi
                 </Text>
-                <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View
                     style={{
-                      width: device === 'tablet'? 30: 20,
-                      height: device === 'tablet'? 30: 20,
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
                       backgroundColor: COLORS.success,
                       borderRadius: 50,
                       marginRight: spacing.small,
                     }}
                   />
-                  <Text style={{
-                    fontSize:fontSizeResponsive("H4", device),
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {profile.ipasn_kompetensi}
                   </Text>
                 </View>
@@ -955,26 +993,32 @@ export const Profile = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: 'center'
+                  alignItems: "center",
                 }}
               >
-                <Text style={{
-                  fontSize:fontSizeResponsive("H4", device),
-                  width: device === 'tablet'? '88%': '78%'
-                }}>Kinerja</Text>
-                <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
+                  }}
+                >
+                  Kinerja
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View
                     style={{
-                      width: device === 'tablet'? 30: 20,
-                      height: device === 'tablet'? 30: 20,
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
                       backgroundColor: "#CED06C",
                       borderRadius: 50,
                       marginRight: spacing.small,
                     }}
                   />
-                  <Text style={{
-                    fontSize:fontSizeResponsive("H4", device),
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {profile.ipasn_kinerja}
                   </Text>
                 </View>
@@ -983,28 +1027,32 @@ export const Profile = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: 'center'
+                  alignItems: "center",
                 }}
               >
-                <Text style={{
-                  width: device === 'tablet'? '88%': '78%',
-                  fontSize:fontSizeResponsive("H4", device),
-                }}>
+                <Text
+                  style={{
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Disiplin
                 </Text>
                 <View style={{ flexDirection: "row" }}>
                   <View
                     style={{
-                      width: device === 'tablet'? 30: 20,
-                      height: device === 'tablet'? 30: 20,
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
                       backgroundColor: COLORS.success,
                       borderRadius: 50,
                       marginRight: spacing.small,
                     }}
                   />
-                  <Text style={{
-                    fontSize:fontSizeResponsive("H4", device),
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {profile.ipasn_disiplin}
                   </Text>
                 </View>
@@ -1042,12 +1090,15 @@ export const Profile = () => {
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
-              <Ionicons name="chatbubbles-outline" size={device === "tablet" ? 40 : 24} />
+              <Ionicons
+                name="chatbubbles-outline"
+                size={device === "tablet" ? 40 : 24}
+              />
               <Text
                 style={[
                   {
                     fontWeight: "700",
-                    fontSize:fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   },
                 ]}
               >
@@ -1078,7 +1129,12 @@ export const Profile = () => {
               ]}
             >
               <View>
-                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize:fontSizeResponsive("H4", device), }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Pengaturan Menu
                 </Text>
                 {isEnabled ? (
@@ -1091,7 +1147,7 @@ export const Profile = () => {
                       style={{
                         marginVertical: spacing.medium,
                         color: COLORS.info,
-                        fontSize:fontSizeResponsive("H4", device),
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Pilih menu yang ingin ditampilkan
@@ -1140,9 +1196,11 @@ export const Profile = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Text style={{
-                    fontSize:fontSizeResponsive("H4", device),
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Aplikasi
                   </Text>
                   <TouchableOpacity
@@ -1193,7 +1251,7 @@ export const Profile = () => {
                       style={[
                         {
                           color: COLORS.white,
-                          fontSize:fontSizeResponsive("H4", device),
+                          fontSize: fontSizeResponsive("H4", device),
                         },
                       ]}
                     >
@@ -1256,7 +1314,7 @@ export const Profile = () => {
               style={[
                 {
                   color: COLORS.white,
-                  fontSize:fontSizeResponsive("H4", device),
+                  fontSize: fontSizeResponsive("H4", device),
                 },
               ]}
             >
@@ -1306,14 +1364,14 @@ export const Profile = () => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   padding: spacing.default,
-                  alignItems: 'center'
+                  alignItems: "center",
                 }}
               >
                 <Text
                   style={[
                     {
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize:fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H4", device),
                     },
                   ]}
                 >
@@ -1327,7 +1385,7 @@ export const Profile = () => {
                 >
                   <Ionicons
                     name="close-outline"
-                    size={device === 'tablet' ? 40 : 24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
@@ -1351,15 +1409,17 @@ export const Profile = () => {
                     >
                       <View
                         style={{
-                          width: device === 'tablet'? 10 : 5,
-                          height: device === 'tablet'? 10 : 5,
+                          width: device === "tablet" ? 10 : 5,
+                          height: device === "tablet" ? 10 : 5,
                           borderRadius: 10,
                           backgroundColor: COLORS.primary,
                         }}
                       />
-                      <Text style={{
-                        fontSize:fontSizeResponsive("H4", device),
-                      }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {item.description}
                       </Text>
                     </View>
