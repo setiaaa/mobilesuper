@@ -43,6 +43,7 @@ export const fontSizeResponsive = (type, device) => {
     H3: device === "phone" ? 13 : 23,
     H4: device === "phone" ? 12 : 22,
     H5: device === "phone" ? 10 : 21,
+    H6: device === "phone" ? 8 : 14,
     Judul: device === "phone" ? 17 : 28,
     textS: device === "phone" ? textStyle.textS : 22,
     textM: device === "phone" ? textStyle.textM : 24,

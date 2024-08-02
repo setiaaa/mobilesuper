@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -256,7 +256,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["85%", "CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -837,11 +837,10 @@ export const Home = () => {
                     )}
                   >
                     <View onLayout={handleContentLayout}>
-                      <View style={{ marginVertical: 20 }}>
+                      <View style={{ marginTop: device === 'tablet' ? 50 : 30 }}>
                         <View
                           style={{
                             marginHorizontal: 20,
-                            marginTop: 10,
                             flexDirection: "row",
                             justifyContent: "space-between",
                             padding: 14,
@@ -867,7 +866,7 @@ export const Home = () => {
                             />
                           </TouchableOpacity>
                         </View>
-                        <View style={{ marginVertical: 20 }}>
+                        <View>
                           <CardAppsB
                             setModalBankom={setModalBankom}
                             setModalKepegawaian={setModalKepegawaian}
@@ -1142,8 +1141,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1159,8 +1158,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                                  ? "#B745FF"
+                                  : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1175,8 +1174,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
