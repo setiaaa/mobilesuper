@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -837,7 +837,9 @@ export const Home = () => {
                     )}
                   >
                     <View onLayout={handleContentLayout}>
-                      <View style={{ marginTop: device === 'tablet' ? 50 : 30 }}>
+                      <View
+                        style={{ marginTop: device === "tablet" ? 50 : 30 }}
+                      >
                         <View
                           style={{
                             marginHorizontal: 20,
@@ -1141,8 +1143,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1158,8 +1160,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                  ? "#B745FF"
-                                  : null,
+                                ? "#B745FF"
+                                : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1174,8 +1176,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1847,7 +1849,11 @@ export const Home = () => {
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4, fontSize: fontSizeResponsive("H4", device), }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: FONTSIZE.H4,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         My SAPK
                       </Text>
@@ -1890,7 +1896,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: '60%' }]}>
+          <View style={[styles.containerr, { marginBottom: "60%" }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}

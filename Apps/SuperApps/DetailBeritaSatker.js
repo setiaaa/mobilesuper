@@ -116,9 +116,10 @@ export const DetailBeritaSatker = () => {
             >
               <FontAwesome name="calendar" size={24} color="black" />
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {moment(detail.updated_at, "DD MMMM YYYY").format(
+                {/* {moment(detail.updated_at, "DD MMMM YYYY").format(
                   DATETIME.LONG_DATE
-                )}
+                )} */}
+                {detail.updated_at}
               </Text>
             </View>
           </View>

@@ -16,7 +16,6 @@ import Carousel, {
   ParallaxImage,
 } from "react-native-snap-carousel";
 import { useRef } from "react";
-import { Dimensions } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Banner, Divider } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
@@ -564,7 +563,7 @@ export const Satker = () => {
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
-            data={gallery.results}
+            data={gallery?.results?.slice(0, 5)}
             renderItem={({ item }, parallaxProps) => (
               <BannerGallery parallaxProps={parallaxProps} item={item} />
             )}
@@ -572,7 +571,7 @@ export const Satker = () => {
             onSnapToItem={setSlide}
           />
           <Pagination
-            dotsLength={gallery?.results?.length}
+            dotsLength={gallery?.results?.slice(0, 5).length}
             dotColor={"black"}
             inactiveDotColor={COLORS.grey}
             dotStyle={styles.paginationDot}

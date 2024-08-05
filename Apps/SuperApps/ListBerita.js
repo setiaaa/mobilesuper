@@ -71,10 +71,10 @@ export const ListBerita = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(setBerita([]));
         dispatch(getBerita({ token, page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

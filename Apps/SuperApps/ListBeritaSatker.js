@@ -73,6 +73,7 @@ export const ListBeritaSatker = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(setBeritaSatker([]));
         dispatch(getSatkerNews({ token, page }));
       }
     } catch (error) {}
