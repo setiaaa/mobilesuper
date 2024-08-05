@@ -217,6 +217,7 @@ import { DetailPerizinanMenteri } from "../DigitalSignature/DetailPerizinanMente
 import NeedSignList from "./List/NeedSignList";
 import { ListAplikasiKepegawaian } from "../Kepegawaian/ListAplikasiKepegawaian";
 import { LPMUKP } from "../Dashboard/LPMUKP";
+import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 
 const Stack = createNativeStackNavigator();
 
@@ -1344,6 +1345,13 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
+            name="DokumenSPPD"
+            component={DokumenSPPD}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="Libur"
             component={Libur}
             options={{
@@ -1514,6 +1522,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="ListAplikasiKepegawaian"
             component={ListAplikasiKepegawaian}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="LPMUKP"
+            component={LPMUKP}
             options={{
               headerShown: false,
             }}

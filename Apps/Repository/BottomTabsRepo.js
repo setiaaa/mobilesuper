@@ -28,6 +28,7 @@ function MyTabBarRepo({ props, navigation }) {
               navigation.navigate("Dokumen", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 1 ? (
               <View
@@ -35,7 +36,6 @@ function MyTabBarRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -71,9 +71,8 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons
@@ -100,6 +99,7 @@ function MyTabBarRepo({ props, navigation }) {
               navigation.navigate("Dibagikan", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 2 ? (
               <View
@@ -107,7 +107,6 @@ function MyTabBarRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 100 : 80,
                 }}
               >
                 <View
@@ -145,7 +144,6 @@ function MyTabBarRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 100 : 80,
                 }}
               >
                 <Ionicons
@@ -172,14 +170,14 @@ function MyTabBarRepo({ props, navigation }) {
               navigation.navigate("DokumenTamplate", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 3 ? (
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -215,9 +213,8 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons

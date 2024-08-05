@@ -420,10 +420,10 @@ export const Dokumen = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true && dokumen.lists.length === 0 ? <Loading /> : null}
       <>
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ marginBottom: 20, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -454,7 +454,7 @@ export const Dokumen = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("H1", device),
+                  fontSize: fontSizeResponsive("Judul", device),
                   fontWeight: 600,
                   color: "white",
                 }}
@@ -471,7 +471,7 @@ export const Dokumen = () => {
               onSearch={filter}
               iconColor={COLORS.primary}
             />
-            <View style={{ marginTop: 20 }}>
+            {/* <View style={{ marginTop: 20 }}>
               <Dropdown
                 data={dropdownFilter}
                 placeHolder={"Filter"}
@@ -479,9 +479,84 @@ export const Dokumen = () => {
                 selected={type}
                 setSelected={setType}
               />
-            </View>
+            </View> */}
           </View>
-          <View>
+
+          <View
+            style={{
+              paddingVertical: 10,
+              flexDirection: "row",
+              marginHorizontal: "5%",
+              gap: 7,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "Draft" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "Draft" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "false",
+                  value: "Draft",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "Draft" ? COLORS.white : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Draft
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "Published" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "Published" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "true",
+                  value: "Published",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "Published"
+                      ? COLORS.white
+                      : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Published
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flex: 1 }}>
             <FlatList
               key={"_"}
               data={filterData}

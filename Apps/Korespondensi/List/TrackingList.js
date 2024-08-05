@@ -12,6 +12,7 @@ import {
   TextInput,
   Image,
   Modal,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -37,10 +38,11 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
 
@@ -208,7 +210,10 @@ function TrackingList({ route }) {
             onPress={() => {
               navigation.navigate("TrackingDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nLacak",
+                title:
+                  device === "tablet"
+                    ? "Detail Surat Keluar Lacak"
+                    : "Detail Surat Keluar\nLacak",
               });
             }}
           />
@@ -305,6 +310,13 @@ function TrackingList({ route }) {
     setEndDate(date);
     hideEndDate();
   };
+
+  const { width: screenWidthFilter, height: screenHeightFilter } =
+    useWindowDimensions();
+
+  let orientation = getOrientation(screenWidthFilter, screenHeightFilter);
+
+  const { device } = useSelector((state) => state.apps);
 
   const loadingOverlay = (
     <>
@@ -476,7 +488,13 @@ function TrackingList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 330
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -518,7 +536,13 @@ function TrackingList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 330
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

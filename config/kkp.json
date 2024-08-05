@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "SuperAppsKKP",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
@@ -14,9 +14,11 @@
   "updates": {
     "fallbackToCacheTimeout": 0
   },
-  "assetBundlePatterns": ["**/*"],
+  "assetBundlePatterns": [
+    "/*"
+  ],
   "ios": {
-    "buildNumber": "7.4.1",
+    "buildNumber": "7.4.3",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
@@ -26,7 +28,7 @@
     }
   },
   "android": {
-    "versionCode": 742,
+    "versionCode": 744,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -56,7 +58,10 @@
             "pathPrefix": "/apps/KnowledgeManagement/detail/:id/:id_user"
           }
         ],
-        "category": ["BROWSABLE", "DEFAULT"]
+        "category": [
+          "BROWSABLE",
+          "DEFAULT"
+        ]
       }
     ]
   },
@@ -107,7 +112,9 @@
       "onesignal-expo-plugin",
       {
         "mode": "development",
-        "smallIcons": ["./assets/ic_stat_onesignal_default.png"],
+        "smallIcons": [
+          "./assets/ic_stat_onesignal_default.png"
+        ],
         "smallIconAccentColor": "#323247"
       }
     ]
@@ -141,12 +148,10 @@
       "getVersionIos": "bridge/mobile-version/",
       "signOutAPI": "crsbe/auth/out",
       "searchglobal": "crsbe/search/",
-
       "profile": "nde/api/v2/mobile/profile/",
       "profiletitle": "crsbe/profile/title/",
       "checkdevice": "crsbe/device/check-device/",
       "switchoffdevice": "crsbe/device/switchoff-device/",
-
       "agendain": "crsbe/agenda/in/?page={$page}",
       "agendaininternal": "crsbe/agenda/in/internal/?page={$page}",
       "agendainsearch": "crsbe/agenda/in/?query={$word}",
@@ -156,7 +161,6 @@
       "agendainbyid": "crsbe/agenda/in/{$id}/",
       "agendainread": "crsbe/agenda/in/{$id}/read/",
       "agendainlog": "crsbe/agenda/in/{$id}/log/",
-
       "dispoaction": "crsbe/agenda/disposition/header/",
       "agendadispo": "crsbe/agenda/disposition/?page={$page}",
       "agendadisposearch": "crsbe/agenda/disposition/?query={$word}",
@@ -167,12 +171,10 @@
       "agendadispolog": "crsbe/agenda/disposition/{$id}/log/",
       "agendamydispo": "crsbe/agenda/disposition/mydisposisi/",
       "agendamydisposearch": "crsbe/agenda/disposition/mydisposisi/?query={$word}",
-
       "agendaout": "crsbe/agenda/out/?page={$page}",
       "agendaoutsearch": "crsbe/agenda/out/?query={$word}",
       "agendaoutbyid": "crsbe/agenda/out/{$id}/",
       "agendaoutlog": "crsbe/agenda/out/{$id}/log/",
-
       "todooverdue": "crsbe/todo/overdue",
       "todonextweek": "crsbe/todo/nextweek",
       "todotoday": "crsbe/todo/today",
@@ -181,7 +183,6 @@
       "todomarkcomplete": "crsbe/todo/{$id}/mark/",
       "todocomment": "crsbe/comment/{$id}/",
       "todocommentreply": "crsbe/comment/{$id}/reply/",
-
       "delegationassigned": "crsbe/delegation/assigned/",
       "delegation": "crsbe/delegation/",
       "delegationsearch": "nde/api/v2/mobile/delegation/?search={$word}",
@@ -190,7 +191,6 @@
       "delegationdeactivate": "nde/api/v2/mobile/delegation/{$id}/deactivate/",
       "createdelegation": "nde/api/v2/mobile/delegation/",
       "checkActiveDelegation": "crsbe/delegation/check-date/?code={$title_code}&end_date={$end_date}&start_date={$start_date}",
-
       "secretaryassigned": "crsbe/secretary/assigned/",
       "editSecretary": "crsbe/secretary/{$id}/edit/",
       "secretary": "crsbe/secretary/",
@@ -200,7 +200,6 @@
       "secretaryactive": "nde/api/v2/mobile/secretary/",
       "createsecretary": "nde/api/v2/mobile/secretary/",
       "checksecretary": "crsbe/secretary/check-secretary/",
-
       "needfollowup": "crsbe/letters/onprogress/?page={$page}",
       "needfollowupsearch": "crsbe/letters/onprogress/?search={$word}",
       "tracking": "crsbe/letters/tracking/?page={$page}",
@@ -218,13 +217,11 @@
       "letteridreturntokonseptor": "crsbe/letters/{$id}/returntokonseptor/",
       "letteridreject": "crsbe/letters/{$id}/reject/",
       "verifytitleprofile": "crsbe/templates/{$id}/verify/",
-
       "listDraft": "crsbe/letters/draft/",
       "listComposer": "crsbe/letters/composer/",
       "listTemplates": "crsbe/templates/",
       "receivedLetter": "crsbe/info/received/{$id}/",
       "preview": "crsbe/letters/{$id}/0_0/preview/",
-
       "kmtree": "crsbe/addressbook/km/tree/",
       "kmSearch": "crsbe/addressbook/km/tree/?query={$word}",
       "employee": "crsbe/addressbook/employees/",
@@ -235,14 +232,11 @@
       "parabydivisionid": "crsbe/addressbook/para/{$id}/",
       "titleSearch": "crsbe/addressbook/title/tree/{$id}/?query={$word}",
       "divisionList": "crsbe/addressbook/organizations/division/1/",
-
       "personallist": "crsbe/addressbook/personals/",
       "personaladd": "crsbe/addressbook/personals/add/",
       "personaldel": "crsbe/addressbook/personals/del/",
       "subordinate": "crsbe/addressbook/subordinates/",
-
       "attachmentshow": "crsbe/attachment/{$id}/preview/",
-
       "listArchiveIn": "crsbe/agenda/in/archive/",
       "listArchiveOut": "crsbe/agenda/out/archive/",
       "listArchiveCanceled": "crsbe/agenda/canceled/archive/",
@@ -250,15 +244,12 @@
       "listArchiveMyDisposition": "crsbe/agenda/disposition/mydisposisi/archive/",
       "listArchiveTodo": "crsbe/todo/archive/",
       "letterShow": "crsbe/letters/{$id}/raw/",
-
       "searchEmailSign": "crsbe/digisign/search_email/?key={$keyword}",
       "sendPenandatangan": "crsbe/digisign/send_penandatangan/",
       "docSigned": "crsbe/agenda/out/1557952/",
       "postDisposition": "crsbe/agenda/{$type}/{$id}/disposition/",
       "downloadDisposisi": "crsbe/agenda/disposition/{$id}/detail-download/",
-
       "postForward": "crsbe/agenda/{$type}/{$id}/forward/",
-
       "cekDays": "crsbe/bg/check_days/",
       "saveDraftBg": "crsbe/letters/savedraft/",
       "submitBg": "crsbe/letters/submit/",
@@ -268,19 +259,15 @@
       "prebg": "crsbe/bg/get_data_bg/{$id}/{$type}/",
       "bankbg": "crsbe/bg/get_data_bank_all/",
       "dataRevisiPermohonanId": "crsbe/bg/get_data_bg/{$id}/{$type_bg}/",
-
       "searchGlobal": "crsbe/search/?query={$keyword}",
-
       "adddevice": "crsbe/device/trusted/",
       "listdevice": "crsbe/device/trusted/",
       "getdevicebyhash": "crsbe/device/trusted/hash/{$hash}/",
       "getdevicebyid": "crsbe/device/trusted/id/{$id}/",
       "deletedevice": "crsbe/device/trusted/{$id}/delete/",
       "deletealldevice": "crsbe/device/trusted/delete-all/",
-
       "postcomment": "crsbe/comment/{$id}/",
       "replycomment": "crsbe/comment/{$id}/reply/",
-
       "getdefaultapprovers": "crsbe/tools/approvers-list/default/",
       "profileapprovers": "crsbe/tools/approvers-list/",
       "profileapproversbyid": "crsbe/tools/approvers-list/{$id}/",

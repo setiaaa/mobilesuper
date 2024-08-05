@@ -94,6 +94,7 @@ export const LoginToken = () => {
       dispatch(Login({ username, password }));
     }
   };
+  const { device } = useSelector((state) => state.apps);
 
   // console.log(loginAuth);
 
@@ -102,6 +103,7 @@ export const LoginToken = () => {
       style={{ flex: 1, backgroundColor: COLORS.white, padding: 0 }}
     >
       {loginAuth.loading ? <Loading /> : null}
+      <ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "height" : "height"}
       >
@@ -122,15 +124,15 @@ export const LoginToken = () => {
           />
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
-            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>
+            <Text style={{fontSize: fontSizeResponsive("Judul", device), fontWeight: 500 }}>
               SSO
             </Text>
-            <Text style={{ fontSize: FONTSIZE.Judul }}>
+            <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
               Kementerian Kelautan & Perikanan
             </Text>
           </View>
           <View style={{ width: "90%" }}>
-            <Text>NIP / Email</Text>
+            <Text style={{fontSize: fontSizeResponsive("H4", device)}}>NIP / Email</Text>
             <TextInput
               style={{
                 borderWidth: 1,
@@ -147,7 +149,7 @@ export const LoginToken = () => {
             />
           </View>
           <View style={{ width: "90%", marginTop: 5 }}>
-            <Text>Kata Sandi</Text>
+            <Text style={{fontSize: fontSizeResponsive("H4", device)}}>Kata Sandi</Text>
             <View
               style={{
                 borderWidth: 1,
@@ -182,7 +184,7 @@ export const LoginToken = () => {
                   >
                     <Ionicons
                       name="eye-off-sharp"
-                      size={24}
+                      size={device === 'tablet'? 30 : 24}
                       color={COLORS.grey}
                     />
                   </TouchableOpacity>
@@ -192,7 +194,7 @@ export const LoginToken = () => {
                       setShow(false);
                     }}
                   >
-                    <Ionicons name="eye-sharp" size={24} color={COLORS.grey} />
+                    <Ionicons name="eye-sharp" size={device === 'tablet'? 30 : 24} color={COLORS.grey} />
                   </TouchableOpacity>
                 )}
               </View>
@@ -212,7 +214,7 @@ export const LoginToken = () => {
                 onValueChange={setSelection}
                 color={isSelected === true ? COLORS.lighter : null}
               />
-              <Text>
+              <Text style={{fontSize: fontSizeResponsive("H4", device)}}>
                 Saya menyetujui Ketentuan Penggunaan dan Ketentuan Layanan BSrE
               </Text>
             </View>
@@ -231,7 +233,7 @@ export const LoginToken = () => {
               handleSubmit();
             }}
           >
-            <Text style={{ color: COLORS.white }}>Masuk</Text>
+            <Text style={{ color: COLORS.white, fontSize: fontSizeResponsive('H4', device) }}>Masuk</Text>
           </TouchableOpacity>
 
           {/* <TouchableOpacity
@@ -254,7 +256,7 @@ export const LoginToken = () => {
               size={24}
               color={"#1868AB"}
             />
-            <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB" }}>
+            <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB", fontSize: fontSizeResponsive("H4", device) }}>
               Log Perubahan Aplikasi
             </Text>
           </TouchableOpacity>
@@ -270,12 +272,12 @@ export const LoginToken = () => {
               <Ionicons
                 style={{ color: COLORS.lighter }}
                 name="calendar-outline"
-                size={24}
+                size={device === 'tablet'? 50: 24}
                 color={COLORS.yourColor}
               />
               <View>
-                <Text style={{ color: COLORS.lighter }}>Senin - Jumat</Text>
-                <Text style={{ color: COLORS.lighter }}>08.00 - 17.00 WIB</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: fontSizeResponsive("H4", device) }}>Senin - Jumat</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: fontSizeResponsive("H4", device) }}>08.00 - 17.00 WIB</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -284,16 +286,17 @@ export const LoginToken = () => {
                 Linking.openURL("https://wa.me/6282211593987");
               }}
             >
-              <Ionicons name="call-outline" size={24} color={COLORS.lighter} />
+              <Ionicons name="call-outline" size={device === 'tablet'? 50:24} color={COLORS.lighter} />
               <View
                 style={{
                   borderRadius: 10,
-                  padding: 5,
                   borderColor: "#E4EEF5",
                   borderWidth: 1,
+                  justifyContent: 'center',
+                  padding: 5
                 }}
               >
-                <Text style={{ color: COLORS.lighter }}>Support Coofis</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: fontSizeResponsive("H4", device) }}>Support Coofis</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -306,9 +309,9 @@ export const LoginToken = () => {
               marginBottom: "10%",
             }}
           >
-            <Text style={{ color: COLORS.grey }}>Terintegrasi</Text>
+            <Text style={{ color: COLORS.grey, fontSize: fontSizeResponsive("H4", device) }}>Terintegrasi</Text>
             <Image source={require("../assets/superApp/bse.png")} />
-            <Text style={{ marginTop: 20, color: COLORS.grey }}>
+            <Text style={{ marginTop: 20, color: COLORS.grey, fontSize: fontSizeResponsive("H4", device) }}>
               Version {Config.app_version}
             </Text>
           </View>
@@ -495,6 +498,7 @@ export const LoginToken = () => {
           </View>
         </Modal>
       </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

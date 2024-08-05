@@ -13,6 +13,7 @@ import {
   Image,
   Modal,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -38,6 +39,7 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  getOrientation,
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
@@ -385,6 +387,13 @@ function IncomingList({ route }) {
     hideEndDate();
   };
 
+  const { width: screenWidthFilter, height: screenHeightFilter } =
+    useWindowDimensions();
+
+  let orientation = getOrientation(screenWidthFilter, screenHeightFilter);
+
+  const { device } = useSelector((state) => state.apps);
+
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -592,7 +601,13 @@ function IncomingList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 330
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -634,7 +649,13 @@ function IncomingList({ route }) {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: 155,
+                            width:
+                              device === "tablet" && orientation === "landscape"
+                                ? 520
+                                : device === "tablet" &&
+                                  orientation === "potrait"
+                                ? 330
+                                : 155,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

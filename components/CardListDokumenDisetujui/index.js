@@ -76,7 +76,13 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                   </Text>
                 </View>
               </View>
-              <View style={{ justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
                 <View
                   style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
                 >
@@ -94,7 +100,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                     Mulai:{" "}
                     {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
                       .locale("id")
-                      .format(DATETIME.LONG_DATETIME)}
+                      .format(DATETIME.LONG_DATE)}
                   </Text>
                 </View>
                 <View
@@ -102,7 +108,6 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                     flexDirection: "row",
                     gap: 4,
                     alignItems: "center",
-                    marginTop: 10,
                   }}
                 >
                   <Ionicons
@@ -116,10 +121,10 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    Mulai:{" "}
+                    Akhir:{" "}
                     {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
                       .locale("id")
-                      .format(DATETIME.LONG_DATETIME)}
+                      .format(DATETIME.LONG_DATE)}
                   </Text>
                 </View>
               </View>

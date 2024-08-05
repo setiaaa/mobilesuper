@@ -19,6 +19,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { getTokenValue } from "../../service/session";
@@ -52,8 +53,12 @@ const CardPostinganSaya = ({ item, token, device }) => {
     dispatch(getViewLinimasa(params));
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
+    <View style={{ width: "100%", alignSelf: "center", marginVertical: 10 }}>
       {item.state === "draft" || item.state === "canceled" ? (
         <TouchableOpacity disabled>
           <View
@@ -154,7 +159,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
-                        width: 30,
+                        paddingVertical: 4,
+                        paddingHorizontal: 8,
                       }}
                     >
                       <Text
@@ -249,8 +255,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.successLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -269,8 +275,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: "#f0f0f0",
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -289,8 +295,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.infoDangerLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -415,7 +421,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
-                        width: 30,
+                        paddingVertical: 4,
+                        paddingHorizontal: 16,
                       }}
                     >
                       <Text
@@ -511,8 +518,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.successLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -531,8 +538,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: "#f0f0f0",
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -551,8 +558,8 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       style={{
                         backgroundColor: COLORS.infoDangerLight,
                         borderRadius: 20,
-                        width: 79,
-                        height: 24,
+                        paddingHorizontal: 16,
+                        paddingVertical: 4,
                         justifyContent: "center",
                       }}
                     >
@@ -688,6 +695,10 @@ export const PostinganSaya = () => {
     setIsFiltered(true);
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -712,10 +723,7 @@ export const PostinganSaya = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => navigation.navigate("Main")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
             <Ionicons
               name="chevron-back-outline"
               size={device === "tablet" ? 40 : 24}
@@ -746,7 +754,6 @@ export const PostinganSaya = () => {
           }}
         >
           <TouchableOpacity
-            style={{}}
             onPress={() => navigation.navigate("JumlahPostingan")}
           >
             <Ionicons
@@ -758,49 +765,66 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
-            marginTop: 15,
-            borderRadius: 8,
-            flexDirection: "row",
-            alignItems: "center",
+            width: "100%",
+            alignSelf: "center",
+            marginTop: 10,
+            paddingHorizontal: 20,
           }}
         >
           <View
             style={{
+              marginTop: 15,
+              borderRadius: 8,
               flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: 15,
             }}
           >
-            <View style={{ width: "85%" }}>
-              <Search
-                placeholder={"Cari..."}
-                iconColor={COLORS.primary}
-                onSearch={filter}
-              />
-            </View>
-            <TouchableOpacity onPress={!ascending ? asc : desc}>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 15,
+              }}
+            >
               <View
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 30,
-                  backgroundColor: COLORS.white,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderColor: COLORS.secondaryLighter,
-                  // borderWidth: isFiltered ? 1 : 0,
+                  width:
+                    device === "tablet" && orientation === "landscape"
+                      ? "95%"
+                      : device === "tablet" && orientation === "potrait"
+                      ? "92%"
+                      : "85%",
                 }}
               >
-                <Ionicons name="filter-outline" size={24} />
+                <Search
+                  placeholder={"Cari..."}
+                  iconColor={COLORS.primary}
+                  onSearch={filter}
+                />
               </View>
-            </TouchableOpacity>
-          </View>
-          {/* <TouchableOpacity
+              <TouchableOpacity onPress={!ascending ? asc : desc}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.white,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderColor: COLORS.secondaryLighter,
+                    // borderWidth: isFiltered ? 1 : 0,
+                  }}
+                >
+                  <Ionicons name="filter-outline" size={24} />
+                </View>
+              </TouchableOpacity>
+            </View>
+            {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
               borderRadius: 8,
@@ -819,36 +843,39 @@ export const PostinganSaya = () => {
           >
             <Ionicons name="add-outline" size={24} color="#FFFFFF" />
           </TouchableOpacity> */}
+          </View>
+        </View>
+
+        <View style={{ paddingHorizontal: 20, flex: 1 }}>
+          <FlatList
+            data={filterData}
+            renderItem={({ item }) => (
+              <View key={item.id}>
+                <CardPostinganSaya item={item} token={token} device={device} />
+              </View>
+            )}
+            ListFooterComponent={() =>
+              loading === true ? (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                </View>
+              ) : null
+            }
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={() => <ListEmpty />}
+            onEndReached={loadMore}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
         </View>
       </View>
-
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <CardPostinganSaya item={item} token={token} device={device} />
-          </View>
-        )}
-        ListFooterComponent={() =>
-          loading === true ? (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 24,
-              }}
-            >
-              <ActivityIndicator size="large" color={COLORS.primary} />
-            </View>
-          ) : null
-        }
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-        onEndReached={loadMore}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
     </>
   );
 };

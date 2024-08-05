@@ -51,14 +51,16 @@ export const DetailDokumenLain = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  const [file, setFile] = useState();
-  useEffect(() => {
-    if (file === undefined) {
-      item.attachments?.map((item) => {
-        setFile({ link: item.file });
-      });
-    }
-  }, [file, item]);
+  // const [file, setFile] = useState();
+  // useEffect(() => {
+  //   if (file === undefined) {
+  //     item.attachments?.map((item) => {
+  //       setFile({ link: item.file });
+  //     });
+  //   }
+  // }, [file, item]);
+
+  // console.log(file);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
   return (
@@ -505,7 +507,12 @@ export const DetailDokumenLain = ({ route }) => {
                               </View>
                             ) : null}
                           </View>
-                          <View style={{ flexDirection: "row", columnGap: 20 }}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
                             <Image
                               source={{ uri: data.avatar_url }}
                               style={{
@@ -514,12 +521,11 @@ export const DetailDokumenLain = ({ route }) => {
                                 borderRadius: device === "tablet" ? 80 : 50,
                                 marginVertical: 10,
                                 marginHorizontal: 10,
-                                marginLeft: 5,
                               }}
                             />
                             <View>
                               {data?.officer ? (
-                                <View style={{ width: "95%" }}>
+                                <View style={{}}>
                                   {loading ? (
                                     <ShimmerPlaceHolder
                                       style={{ borderRadius: 4, marginTop: 5 }}
@@ -529,7 +535,6 @@ export const DetailDokumenLain = ({ route }) => {
                                   ) : (
                                     <Text
                                       style={{
-                                        marginTop: 10,
                                         color: COLORS.info,
                                         fontWeight: FONTWEIGHT.bold,
                                         fontSize: fontSizeResponsive(
@@ -568,7 +573,7 @@ export const DetailDokumenLain = ({ route }) => {
                                   )}
                                 </View>
                               ) : (
-                                <View style={{ width: "95%" }}>
+                                <View style={{}}>
                                   {loading ? (
                                     <ShimmerPlaceHolder
                                       style={{ borderRadius: 4, marginTop: 5 }}
@@ -578,7 +583,6 @@ export const DetailDokumenLain = ({ route }) => {
                                   ) : (
                                     <Text
                                       style={{
-                                        marginTop: 10,
                                         color: COLORS.lighter,
                                         fontWeight: FONTWEIGHT.bold,
                                         fontSize: fontSizeResponsive(
@@ -610,12 +614,19 @@ export const DetailDokumenLain = ({ route }) => {
           <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
             {loading ? null : (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("PdfViewer", {
-                    data: file,
-                    type: "DokumenLain",
-                  })
-                }
+                onPress={() => {
+                  if (
+                    item.attachments.length !== 0 &&
+                    item.attachments[0].file !== undefined
+                  ) {
+                    navigation.navigate("PdfViewer", {
+                      data: item?.attachments[0]?.file,
+                      type: "DokumenLain",
+                    });
+                  } else {
+                    alert("File Tidak Ada");
+                  }
+                }}
                 style={{
                   width: "90%",
                   backgroundColor: COLORS.info,

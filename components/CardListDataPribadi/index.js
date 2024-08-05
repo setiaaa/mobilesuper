@@ -2,10 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { getDataPribadiDetail } from "../../service/api";
 
-export const CardListDataPribadi = ({ item, token }) => {
+export const CardListDataPribadi = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
@@ -25,9 +29,24 @@ export const CardListDataPribadi = ({ item, token }) => {
       }}
     >
       <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>NAMA</Text>
-        <Text>:</Text>
-        <Text style={{ width: 200 }}>{item.nama}</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          NAMA
+        </Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 200,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          {item.nama}
+        </Text>
       </View>
 
       <View
@@ -38,9 +57,19 @@ export const CardListDataPribadi = ({ item, token }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>NIP</Text>
-        <Text>:</Text>
-        <Text>{item.nip}</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          NIP
+        </Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.nip}
+        </Text>
       </View>
 
       <View
@@ -51,11 +80,19 @@ export const CardListDataPribadi = ({ item, token }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           SATUAN KERJA
         </Text>
-        <Text>:</Text>
-        <Text>{item.department_name}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.department_name}
+        </Text>
       </View>
 
       <View
@@ -66,11 +103,24 @@ export const CardListDataPribadi = ({ item, token }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ width: 100, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            width: device === "tablet" ? 350 : 100,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           UNIT KERJA
         </Text>
-        <Text>:</Text>
-        <Text style={{ width: 200 }}>{item.organization_name}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+        <Text
+          style={{
+            width: device === "tablet" ? "90%" : 200,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          {item.organization_name}
+        </Text>
       </View>
     </TouchableOpacity>
   );

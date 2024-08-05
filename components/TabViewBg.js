@@ -49,6 +49,7 @@ function TabViewBg({
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.apps);
   const snackbar = useSelector((state) => state.snackbar.clipboard);
   useEffect(() => {
     if (
@@ -184,7 +185,7 @@ function TabViewBg({
       <IconButton
         icon={route.icon}
         iconColor={focused ? COLORS.primary : COLORS.tertiary}
-        size={18}
+        size={device === 'tablet'? 30: 18}
         style={{ margin: -10 }}
       />
     );
@@ -209,7 +210,7 @@ function TabViewBg({
       ]}
       labelStyle={{
         color: GlobalStyles.colors.textBlack,
-        fontSize: GlobalStyles.font.sm,
+        fontSize: GlobalStyles.font.lg,
       }}
       activeColor={COLORS.primary}
       inactiveColor={GlobalStyles.colors.textBlack}
@@ -234,6 +235,7 @@ function TabViewBg({
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         tabBarPosition={position}
+        swipeEnabled={false}
       />
       {/* <Snackbar visible={snackbar}>Copied to clipboard</Snackbar> */}
     </View>

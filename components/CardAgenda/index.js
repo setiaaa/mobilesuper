@@ -1,12 +1,18 @@
 import React from "react";
 import { Dimensions, Touchable, View } from "react-native";
 import { Text } from "react-native";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Image } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment/min/moment-with-locales";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailAcara,
   getDetailAgendaAcara,
@@ -36,6 +42,7 @@ export const CardAgenda = ({
       dispatch(getListSubAgenda(params));
     }
   };
+  const { device } = useSelector((state) => state.apps);
   return (
     <TouchableOpacity
       key={item.id}
@@ -51,7 +58,7 @@ export const CardAgenda = ({
     >
       <View
         style={{
-          width: "100%",
+          // width: device === "tablet" ? "50%" : "100%",
           backgroundColor: COLORS.white,
           borderRadius: 8,
           flexDirection: "row",
@@ -77,35 +84,47 @@ export const CardAgenda = ({
         />
 
         <View
-          style={{ justifyContent: "center", marginHorizontal: 20, width: 250 }}
+          style={{
+            justifyContent: "space-between",
+            marginHorizontal: 20,
+            width: '90%',
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}
         >
-          <Text>{item.name || item.title}</Text>
+          <View>
+
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item.name || item.title}
+          </Text>
           <View style={{ flexDirection: "row", marginTop: 5 }}>
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {moment(item.start_date)
                 .locale("id")
                 .locale("id")
                 .format("YYYY-MM-DD")}{" "}
               -{" "}
             </Text>
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {moment(item.end_date)
                 .locale("id")
                 .locale("id")
                 .format("YYYY-MM-DD")}
             </Text>
           </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {/* {subAvatar.map((data, index) => {
-                        return ( */}
+          </View>
+
+
           <View>
             <Image
               source={{ uri: item.pic.avatar_url }}
@@ -114,14 +133,20 @@ export const CardAgenda = ({
                 borderWidth: 2,
                 borderRadius: 50,
                 borderColor: COLORS.white,
-                width: 40,
-                height: 40,
+                width: device === "tablet" ? 50 : 40,
+                height: device === "tablet" ? 50 : 40,
               }}
             />
           </View>
-          {/* )
-                     })} */}
         </View>
+        {/* <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+         
+        </View> */}
       </View>
     </TouchableOpacity>
   );

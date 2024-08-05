@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
@@ -22,6 +22,19 @@ const PdfViewer = ({ route }) => {
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
   const pdfResource = { uri: data.link, chace: true };
+  const [pdfLink, setPdfLink] = useState(data?.link);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // This function runs when the screen is focused
+      return () => {
+        // This function runs when the screen is unfocused or back is pressed
+        setPdfLink(null);
+      };
+    }, [])
+  );
+
+  console.log(data);
 
   const inject = `
     (async function () {
@@ -103,7 +116,8 @@ const PdfViewer = ({ route }) => {
         }
 
         try {
-            const response = await fetch('${data.link}');
+        alert('${data}')
+            const response = await fetch('${data}');
             const blob = await response.blob();
 
             pdfjsLib.getDocument(URL.createObjectURL(blob)).promise.then(function (pdfDoc_) {
@@ -114,13 +128,36 @@ const PdfViewer = ({ route }) => {
             });
 
         } catch (error) {
+         alert(error)
             console.error('Error loading PDF:', error);
             window.ReactNativeWebView.postMessage('Error loading PDF: ' + error.message);
         }
     })();
-
-    
   `;
+  let pdfUrl = data; // Your PDF URL
+  let url = `./web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
+
+  injectJavaScript = `
+        (function () {
+          const iframe = document.getElementById("iframe");
+          if (iframe) {
+            iframe.src = "${url}";
+            iframe.onload = function () {
+              if (iframe.contentWindow && iframe.contentWindow.PDFViewerApplication) {
+                iframe.contentWindow.PDFViewerApplication.open('${pdfUrl}');
+                } else {
+                  console.log('PDFViewerApplication is not available.');
+                  }
+                };
+            }
+        })();
+  `;
+
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1); // Update key to force re-render
+  }, [data?.link]);
 
   return (
     <>
@@ -168,8 +205,8 @@ const PdfViewer = ({ route }) => {
             androidLayerType={"software"}
             mixedContentMode={"always"}
             allowUniversalAccessFromFileURLs={true}
-            scalesPageToFit={false}
-            injectedJavaScript={inject}
+            scalesPageToFit={true}
+            injectedJavaScript={injectJavaScript}
             javaScriptEnabled={true}
             domStorageEnabled={true}
             onMessage={(event) => {
@@ -182,9 +219,8 @@ const PdfViewer = ({ route }) => {
         ) : (
           <Pdf
             trustAllCerts={false}
-            source={{
-              uri: pdfResource,
-            }}
+            key={key}
+            source={{ uri: data }}
             style={{
               flex: 1,
               width: Dimensions.get("window").width,

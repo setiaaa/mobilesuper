@@ -9,19 +9,30 @@ import { useSelector } from "react-redux";
 export const CardVideo = ({ setModalVisibleVideo }) => {
   const { device } = useSelector((state) => state.apps);
   return (
-    <View style={{ alignItems: "center", height: "15%" }}>
+    <View
+      style={{
+        alignItems: "center",
+        height: device === "tablet" ? "15%" : "8%",
+        marginHorizontal: 25,
+        marginBottom: device === "tablet" ? 120 : 80,
+      }}
+    >
       <Image
         source={require("../../assets/superApp/hq720.webp")}
-        style={{ width: "90%", height: "90%", borderRadius: 16 }}
+        style={{
+          width: "100%",
+          height: "100%",
+          resizeMode: "cover",
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+        }}
       />
       <View
         style={{
           backgroundColor: COLORS.white,
-          width: "80%",
-          borderRadius: 16,
-          position: "absolute",
-          bottom: 0,
-          padding: 5,
+          width: "100%",
+          borderBottomLeftRadius: 16,
+          borderBottomRightRadius: 16,
         }}
       >
         <View
@@ -61,6 +72,7 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
               textAlign: "center",
               color: COLORS.lighter,
               fontSize: fontSizeResponsive("H4", device),
+              marginHorizontal: 10,
             }}
           >
             Menteri Trenggono Melakukan Panen Parsial Kedua di BUBK Kebumen

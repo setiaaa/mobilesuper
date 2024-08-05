@@ -36,7 +36,7 @@ function MyTabPegawiIPASN({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 100,
+                  width: device === "tablet" ? 200 : 100,
                 }}
               >
                 <View
@@ -77,7 +77,7 @@ function MyTabPegawiIPASN({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 100,
+                  width: device === "tablet" ? 200 : 100,
                 }}
               >
                 <Ionicons

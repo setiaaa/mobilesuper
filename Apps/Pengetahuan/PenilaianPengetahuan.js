@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import {
   COLORS,
   DATETIME,
@@ -9,6 +15,7 @@ import {
   FORMATDATE,
   fixedDateString,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
@@ -54,12 +61,15 @@ const CardPenilaian = ({ item, token, device }) => {
 
   // const tanggal = item.published_date;
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <TouchableOpacity
         style={{
           flexDirection: "row",
-          width: "90%",
           gap: 10,
           marginVertical: 5,
           backgroundColor: COLORS.white,
@@ -74,6 +84,7 @@ const CardPenilaian = ({ item, token, device }) => {
           shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
+          width: "100%",
         }}
         onPress={() => {
           dispatch(getDetailPenilaian({ token: token, id: item.id }));
@@ -90,11 +101,12 @@ const CardPenilaian = ({ item, token, device }) => {
             }}
           />
         </View>
-        <View style={{ width: "75%" }}>
+        <View>
           <Text
             style={{
               fontWeight: FONTWEIGHT.bold,
               fontSize: fontSizeResponsive("H4", device),
+              width: device === 'tablet'&& orientation=== 'potrait'? '70%': '90%' 
             }}
           >
             {item.title}
@@ -435,6 +447,10 @@ export const PenilaianPenggetahaun = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   console.log(penilaian?.total);
 
   return (
@@ -490,13 +506,17 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            marginHorizontal: "5%",
-            width: "90%",
+            paddingHorizontal: 20,
           }}
         >
           <View
             style={{
-              width: "85%",
+              width:
+                device === "tablet" && orientation === "landscape"
+                  ? "95%"
+                  : device === "tablet" && orientation === "potrait"
+                  ? "92%"
+                  : "85%",
               backgroundColor: COLORS.white,
               borderRadius: 8,
             }}
@@ -542,9 +562,8 @@ export const PenilaianPenggetahaun = () => {
           style={{
             flexDirection: "row",
             marginVertical: 20,
-            marginHorizontal: "5%",
-            gap: 5,
-            width: "90%",
+            paddingHorizontal: 20,
+            gap: 20,
           }}
         >
           <View
@@ -709,9 +728,8 @@ export const PenilaianPenggetahaun = () => {
         <View
           style={{
             flexDirection: "row",
-            marginHorizontal: "5%",
-            gap: 5,
-            width: "90%",
+            paddingHorizontal: 20,
+            gap: 20,
           }}
         >
           <TouchableOpacity
@@ -719,6 +737,7 @@ export const PenilaianPenggetahaun = () => {
               backgroundColor:
                 !ditinjau && ditinjau !== "" ? COLORS.primary : COLORS.white,
               width: "49.5%",
+              flex: 1,
               height: 130,
               borderRadius: 16,
               justifyContent: "center",
@@ -770,7 +789,7 @@ export const PenilaianPenggetahaun = () => {
             style={{
               backgroundColor:
                 ditinjau && ditinjau !== "" ? COLORS.primary : COLORS.white,
-              width: "49.5%",
+              flex: 1,
               height: 130,
               borderRadius: 16,
               justifyContent: "center",
@@ -823,13 +842,12 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
-            height: device === "tablet" ? "64%" : "43%",
+            flex: 1,
+            marginHorizontal: 20,
             // backgroundColor: "brown",
           }}
         >
-          <View
-            style={{ marginHorizontal: "5%", marginBottom: 10, width: "90%" }}
-          >
+          <View style={{ marginBottom: 10 }}>
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
@@ -847,7 +865,6 @@ export const PenilaianPenggetahaun = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            style={{ height: 400 }}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={penilaian?.lists.length === 0 ? null : loadMore}

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -511,7 +511,7 @@ export const JumlahPostingan = () => {
         shadowOpacity: 0.2,
         elevation: 2,
       }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: fontSizeResponsive("H4", device)}}
     />
   );
 
@@ -673,6 +673,7 @@ export const JumlahPostingan = () => {
             />
           </TouchableOpacity>
         </View>
+
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
@@ -685,7 +686,8 @@ export const JumlahPostingan = () => {
           </Text>
         </View>
       </View>
-      <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
+
+      <View style={{ width: "100%", alignSelf: "center", marginTop: 10, paddingHorizontal: 20 }}>
         <View
           style={{
             backgroundColor: "#FFFFFF",
@@ -723,9 +725,9 @@ export const JumlahPostingan = () => {
             </Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}

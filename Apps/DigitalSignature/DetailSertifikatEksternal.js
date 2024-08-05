@@ -298,7 +298,7 @@ export const DetailSertifikatEksternal = () => {
               downloadFile(fileUrl.file);
             }}
           >
-            <Text style={{ color: COLORS.white }}>
+            <Text style={{ color: COLORS.white, fontSize: fontSizeResponsive("H4", device) }}>
               Bagikan Dokumen Sertifikat
             </Text>
           </TouchableOpacity>

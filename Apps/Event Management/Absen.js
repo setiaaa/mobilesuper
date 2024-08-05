@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, useWindowDimensions, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -60,9 +61,7 @@ const CardListAbsen = ({ item, loading, device }) => {
           </Text>
         )}
         <View style={{ marginTop: 10 }}>
-          <View
-            style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}
-          >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text
               style={{
                 width: device === "tablet" ? 220 : 105,
@@ -152,12 +151,11 @@ const CardListAbsen = ({ item, loading, device }) => {
                   alignItems: "center",
                   marginTop: 10,
                   flexDirection: "row",
-                  gap: wp(2),
                 }}
               >
                 <Text
                   style={{
-                    width: "35%",
+                    width: device === "tablet" ? 220 : 105,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -172,9 +170,7 @@ const CardListAbsen = ({ item, loading, device }) => {
                 ) : (
                   <View
                     style={{
-                      width: wp(52),
-                      paddingHorizontal: 3,
-                      paddingVertical: 1,
+                      padding: 10,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,
                       justifyContent: "center",
@@ -290,6 +286,10 @@ export const Absen = () => {
   //         setFilterData(absen)
   //     }
   // }, [search])
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -424,7 +424,16 @@ export const Absen = () => {
           justifyContent: "space-between",
         }}
       >
-        <View style={{ width: "85%" }}>
+        <View
+          style={{
+            width:
+              device === "tablet" && orientation === "landscape"
+                ? "95%"
+                : device === "tablet" && orientation === "potrait"
+                ? "92%"
+                : "85%",
+          }}
+        >
           <Search
             placeholder={"Cari"}
             onSearch={filter}

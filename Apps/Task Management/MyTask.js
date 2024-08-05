@@ -368,7 +368,6 @@ export const MyTask = () => {
                   backgroundColor: COLORS.white,
                   marginVertical: 20,
                   paddingVertical: 14,
-                  paddingHorizontal: 10,
                   justifyContent: "space-between",
                   alignContent: "center",
                   borderRadius: 8,

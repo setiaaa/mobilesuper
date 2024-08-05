@@ -9,7 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Calendar, modeToNum } from "react-native-big-calendar";
@@ -167,6 +172,8 @@ export const KalenderPersonal = () => {
     },
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <ScrollView>
       <View
@@ -181,8 +188,8 @@ export const KalenderPersonal = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -191,13 +198,19 @@ export const KalenderPersonal = () => {
           <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("Judul", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Kalender Personal
           </Text>
         </View>
@@ -320,7 +333,14 @@ export const KalenderPersonal = () => {
         />
 
         <View>
-          <Text style={{ marginTop: 20 }}>Informasi Kalender :</Text>
+          <Text
+            style={{
+              marginTop: 20,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Informasi Kalender :
+          </Text>
 
           <View style={{ flexDirection: "row", gap: 10 }}>
             <View>
@@ -340,7 +360,14 @@ export const KalenderPersonal = () => {
                     backgroundColor: "#ffebc7",
                   }}
                 />
-                <Text style={{ width: 100 }}>Kategori Surat Tugas</Text>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 250 : 100,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kategori Surat Tugas
+                </Text>
               </View>
 
               <View
@@ -359,7 +386,14 @@ export const KalenderPersonal = () => {
                     backgroundColor: "#dadcde",
                   }}
                 />
-                <Text style={{ width: 100 }}>Kategori Surat Perintah</Text>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 250 : 100,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kategori Surat Perintah
+                </Text>
               </View>
             </View>
 
@@ -380,7 +414,14 @@ export const KalenderPersonal = () => {
                     backgroundColor: "#c5e1d4",
                   }}
                 />
-                <Text style={{ width: 100 }}>Kategori Surat Undangan</Text>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 250 : 100,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kategori Surat Undangan
+                </Text>
               </View>
 
               <View
@@ -399,7 +440,14 @@ export const KalenderPersonal = () => {
                     backgroundColor: "#c2dbfe",
                   }}
                 />
-                <Text style={{ width: 100 }}>Kategori Surat Cuti</Text>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 250 : 100,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kategori Surat Cuti
+                </Text>
               </View>
             </View>
           </View>

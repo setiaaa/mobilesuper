@@ -18,7 +18,7 @@ export const CardSatker = ({ profile }) => {
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, {height: device === 'tablet' ? 130 : 100}]}>
       <View style={{ flex: 1, justifyContent: "center" }}>
         <Text
           style={{
@@ -39,8 +39,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
-    width: "90%",
-    height: hp(12),
+    width: "100%",
     borderTopLeftRadius: 12,
     borderBottomRightRadius: 12,
     //shadow ios

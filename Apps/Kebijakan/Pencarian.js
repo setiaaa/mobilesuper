@@ -47,9 +47,7 @@ import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
-import {
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 
 export const Pencarian = () => {
@@ -58,7 +56,7 @@ export const Pencarian = () => {
   const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [ascending, setAscending] = useState(false);
-  const [page, setPage] = useState(5);
+  const [page, setPage] = useState(10);
 
   const dispatch = useDispatch();
 
@@ -114,8 +112,8 @@ export const Pencarian = () => {
 
   const loadMore = () => {
     if (general.length !== 0) {
-      if (general?.length % 5 === 0) {
-        setPage(page + 5);
+      if (general?.length % 10 === 0) {
+        setPage(page + 10);
       }
     }
   };
@@ -207,7 +205,7 @@ export const Pencarian = () => {
               >
                 <View
                   style={{
-                    width: "85%",
+                    width: device === "tablet" ? "90%" : "85%",
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                   }}
@@ -236,8 +234,8 @@ export const Pencarian = () => {
                   <TouchableOpacity onPress={!ascending ? asc : desc}>
                     <View
                       style={{
-                        width: 40,
-                        height: 40,
+                        width: device === "tablet" ? 50 : 40,
+                        height: device === "tablet" ? 50 : 40,
                         borderRadius: 30,
                         backgroundColor: COLORS.white,
                         justifyContent: "center",

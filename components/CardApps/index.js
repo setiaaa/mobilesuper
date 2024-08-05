@@ -6,6 +6,7 @@ import {
   View,
   Image,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import {
@@ -19,6 +20,7 @@ import {
   COLORS,
   FONTSIZE,
   fontSizeResponsive,
+  getOrientation,
   imageApps,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,6 +48,8 @@ export const CardApps = ({
   const isFocused = useIsFocused();
   const { profile, typeMenu } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
+  const [limitCard, setLimitCard] = useState(0);
+  const { width, height } = useWindowDimensions();
 
   const roleEvent = ["EVENT.USER"];
   const roleKalender = ["CALENDAR.USER"];
@@ -75,9 +79,26 @@ export const CardApps = ({
     rolePerizinanMenteri.includes(item)
   );
 
-  const isTablet = Device.DeviceType.TABLET;
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    let orientation = getOrientation(width, height);
+    let tempLimit = 0;
+    if (device === "tablet") {
+      if(orientation === 'landscape'){
+        tempLimit = 15;
+      }else if(orientation === 'potrait'){
+        tempLimit = width >= 834 ? 11 : 9;
+      }
+    } else {
+      if (width <= 375) {
+        tempLimit = 5
+      } else {
+        tempLimit = 7;
+      }
+    }
+    setLimitCard(tempLimit);
+  }, [width]);
 
   useEffect(() => {
     let tmpMenu = [];
@@ -128,7 +149,7 @@ export const CardApps = ({
             hp: 28,
           },
           height: {
-            tablet: 50,
+            tablet: 60,
             hp: 35,
           },
         },
@@ -150,7 +171,7 @@ export const CardApps = ({
         image: require("../../assets/superApp/cuti.png"),
         imagestyle: {
           width: {
-            tablet: 60,
+            tablet: 70,
             hp: 40,
           },
           height: {
@@ -160,24 +181,6 @@ export const CardApps = ({
         },
         titleStyle: {
           width: null,
-        },
-      },
-      {
-        title: "Pengembangan Kompetensi",
-        navigation: "ListAplikasiKepegawaian",
-        image: require("../../assets/superApp/Bankomicon.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 30,
-          },
-          height: {
-            tablet: 40,
-            hp: 24,
-          },
-        },
-        titleStyle: {
-          width: wp(15),
         },
       },
       {
@@ -260,6 +263,25 @@ export const CardApps = ({
       //     width: null,
       //   },
       // },
+
+      {
+        title: "Pengembangan Kompetensi",
+        navigation: "ListAplikasiKepegawaian",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
       {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
@@ -277,7 +299,7 @@ export const CardApps = ({
         titleStyle: {
           width: null,
         },
-      }
+      },
     );
     if (isRolePreShare) {
       tmpMenu.splice(2, 0, {
@@ -300,7 +322,7 @@ export const CardApps = ({
       });
     }
     if (isRoleKalender) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(6, 0, {
         title: "Kalender",
         navigation: "MainKalender",
         image: require("../../assets/superApp/kalender.png"),
@@ -347,8 +369,8 @@ export const CardApps = ({
       });
     }
     if (isRoleEvent) {
-      tmpMenu.push({
-        title: "Agenda Rapat",
+      tmpMenu.splice(8, 0, {
+        title: "Event Management",
         navigation: "HalamanUtama",
         image: require("../../assets/superApp/event.png"),
         imagestyle: {
@@ -367,7 +389,7 @@ export const CardApps = ({
       });
     }
     if (isRoleMenteri) {
-      tmpMenu.splice(8, 0, {
+      tmpMenu.splice(11, 0, {
         title: "Perizinan Menteri",
         navigation: "PerizinanMenteri",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -377,7 +399,7 @@ export const CardApps = ({
             hp: 30,
           },
           height: {
-            tablet: 40,
+            tablet: 50,
             hp: 30,
           },
         },
@@ -432,27 +454,37 @@ export const CardApps = ({
   return (
     <>
       {listMenu.length === 0 ? null : (
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              minHeight: device === "tablet" ? 330 : 230,
+            },
+          ]}
+        >
           <View
             style={{
               flexDirection: "row",
-              gap: wp(6),
+              gap: device === "tablet" ? 24 : 16,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "center",
+              alignItems: "start",
               flex: 1,
-              marginHorizontal: listMenu.length < 8 ? 15 : null,
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              flexWrap: "wrap",
             }}
           >
             {listMenu &&
               listMenu.length > 0 &&
               listMenu.map((item, index) => {
-                if (index <= 3) {
+                if (index < limitCard) {
                   return (
                     <View
                       style={{
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
+                        width: device === 'tablet' ? 100 : 60,
                       }}
                       key={index}
                     >
@@ -483,49 +515,49 @@ export const CardApps = ({
                           {item.title === "Task" ? (
                             <MaterialIcons
                               name="task-alt"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kalender" ? (
                             <FontAwesome
                               name="calendar"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Preparing dan Sharing" ? (
                             <Entypo
                               name="folder"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Regulasi" ? (
                             <Entypo
                               name="shield"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Survei Layanan" ? (
                             <MaterialCommunityIcons
                               name="email-newsletter"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Agenda Rapat" ? (
+                          ) : item.title === "Event Management" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "SPPD" ? (
                             <MaterialIcons
                               name="travel-explore"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
-                              size={30}
+                              size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : (
@@ -550,10 +582,9 @@ export const CardApps = ({
                           marginTop: 10,
                           justifyContent: "center",
                           alignItems: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                          width: item.titleStyle.width,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H6", device),
                         }}
-                        numberOfLines={1}
                       >
                         {item.title}
                       </Text>
@@ -561,19 +592,51 @@ export const CardApps = ({
                   );
                 }
               })}
+
+            {listMenu && listMenu.length > limitCard && (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  width: device === 'tablet' ? 100 : 60,
+                }}
+              >
+                <TouchableOpacity onPress={handlePressModal}>
+                  <View
+                    style={[
+                      device == "tablet"
+                        ? styles.cardAppsTablet
+                        : styles.cardApps,
+                      {
+                        backgroundColor: COLORS.secondary,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        display: "flex",
+                      },
+                    ]}
+                  >
+                    <MaterialIcons
+                      name="dashboard"
+                      size={device === "tablet" ? 60 : 30}
+                      color={COLORS.iconMenu}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    marginTop: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: fontSizeResponsive("H6", device),
+                  }}
+                >
+                  More
+                </Text>
+              </View>
+            )}
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              gap: wp(6),
-              justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "center",
-              flex: 1,
-              marginHorizontal: listMenu.length < 8 ? 15 : null,
-              marginTop: 10,
-            }}
-          >
-            {listMenu &&
+          {/* {listMenu &&
               listMenu.length > 4 &&
               listMenu.map((item, index) => {
                 if (index > 3 && index < 7)
@@ -613,49 +676,49 @@ export const CardApps = ({
                           {item.title === "Task" ? (
                             <MaterialIcons
                               name="task-alt"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kalender" ? (
                             <FontAwesome
                               name="calendar"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Preparing dan Sharing" ? (
                             <Entypo
                               name="folder"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Regulasi" ? (
                             <Entypo
                               name="shield"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Survei Layanan" ? (
                             <MaterialCommunityIcons
                               name="email-newsletter"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Agenda Rapat" ? (
+                          ) : item.title === "Event Management" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "SPPD" ? (
                             <MaterialIcons
                               name="travel-explore"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
-                              size={30}
+                              size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
                           ) : (
@@ -689,49 +752,7 @@ export const CardApps = ({
                       </Text>
                     </View>
                   );
-              })}
-            {listMenu && listMenu.length > 7 && (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <TouchableOpacity onPress={handlePressModal}>
-                  <View
-                    style={[
-                      device == "tablet"
-                        ? styles.cardAppsTablet
-                        : styles.cardApps,
-                      {
-                        backgroundColor: COLORS.secondary,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: "flex",
-                      },
-                    ]}
-                  >
-                    <MaterialIcons
-                      name="dashboard"
-                      size={30}
-                      color={COLORS.iconMenu}
-                    />
-                  </View>
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    marginTop: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  More
-                </Text>
-              </View>
-            )}
-          </View>
+              })} */}
         </View>
       )}
     </>
@@ -742,10 +763,9 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
-    width: "90%",
+    width: "100%",
     // height: hp(30),
     borderRadius: 12,
-    marginTop: 60,
     padding: 10,
     //shadow ios
     shadowOffset: { width: -2, height: 4 },
@@ -762,13 +782,13 @@ const styles = StyleSheet.create({
     left: 16,
   },
   cardApps: {
-    width: wp(15),
-    height: hp(7),
+    width: 60,
+    height: 60,
     borderRadius: 8,
   },
   cardAppsTablet: {
-    width: wp(15),
-    height: hp(10),
+    width: 100,
+    height: 100,
     borderRadius: 8,
   },
 });
