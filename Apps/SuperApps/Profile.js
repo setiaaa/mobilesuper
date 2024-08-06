@@ -61,6 +61,7 @@ import { GlobalStyles } from "../../constants/styles";
 import { Divider } from "react-native-paper";
 import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDataUtama";
 import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
+import { CollapseCardSIASNRwSkp } from "../../components/CollapseCardSIASNRwSkp";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1082,6 +1083,15 @@ export const Profile = () => {
           <View style={{ paddingVertical: spacing.default }}>
             <CollapseCardSIASNJabatan
               profile={profile.siasn_data.siasn_jabatan}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN RW SKP */}
+        {profile?.siasn_data.siasn_rw_skp != null && (
+          <View style={{ paddingVertical: spacing.default }}>
+            <CollapseCardSIASNRwSkp
+              profile={profile.siasn_data.siasn_rw_skp}
               device={device}
             />
           </View>
