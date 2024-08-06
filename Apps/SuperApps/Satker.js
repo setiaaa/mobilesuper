@@ -31,7 +31,7 @@ import {
   getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getBennerSatker,
@@ -51,6 +51,7 @@ import {
 } from "react-native-responsive-screen";
 import RenderHTML from "react-native-render-html";
 import { Config } from "../../constants/config";
+import { setResetDetailLinimasa } from "../../store/Pengetahuan";
 
 // const BannerSetjen = [
 //   {
@@ -196,6 +197,7 @@ export const Satker = () => {
           style={{ flexDirection: "row", marginVertical: 20 }}
           onPress={() => {
             // getDetail(item.id);
+            dispatch(setResetDetailLinimasa());
             navigation.navigate("DetailLinimasa", {
               id: item.id,
             });
@@ -239,8 +241,8 @@ export const Satker = () => {
                     item.category === "Video / Jurnal"
                       ? COLORS.successLight
                       : item.category === "Infografis"
-                        ? COLORS.warningLight
-                        : COLORS.infoLight,
+                      ? COLORS.warningLight
+                      : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
                   width: device === "tablet" ? 200 : 110,
@@ -276,8 +278,8 @@ export const Satker = () => {
                       item.category === "Infografis"
                         ? COLORS.warning
                         : item.category === "Kegiatan"
-                          ? COLORS.info
-                          : COLORS.success,
+                        ? COLORS.info
+                        : COLORS.success,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -696,7 +698,6 @@ export const Satker = () => {
               />
             </ScrollView>
           </View>
-
         </View>
         {/* <Calendar
                     onDayPress={day => {

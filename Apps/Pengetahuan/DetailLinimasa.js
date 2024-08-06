@@ -168,9 +168,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
         >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
-          {getFileSize(size)}
-        </Text>
+        <Text style={{ color: COLORS.lighter }}>{getFileSize(size)}</Text>
       </View>
     </TouchableOpacity>
   ) : type === "xls" || type === "xlsx" ? (
@@ -575,7 +573,7 @@ const ShimmerParagraph = (device) => {
           borderRadius: 4,
           marginTop: 20,
           marginHorizontal: 25,
-          width: device === 'tablet' ? '93%' : '85%'
+          width: device === "tablet" ? "93%" : "85%",
         }}
         height={20}
       />
@@ -584,7 +582,7 @@ const ShimmerParagraph = (device) => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
-          width: device === 'tablet' ? '93%' : '85%'
+          width: device === "tablet" ? "93%" : "85%",
         }}
         height={20}
       />
@@ -593,7 +591,7 @@ const ShimmerParagraph = (device) => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
-          width: device === 'tablet' ? '93%' : '85%'
+          width: device === "tablet" ? "93%" : "85%",
         }}
         height={20}
       />
@@ -602,7 +600,7 @@ const ShimmerParagraph = (device) => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
-          width: device === 'tablet' ? '93%' : '85%'
+          width: device === "tablet" ? "93%" : "85%",
         }}
         height={20}
       />
@@ -611,7 +609,7 @@ const ShimmerParagraph = (device) => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
-          width: device === 'tablet' ? '93%' : '85%'
+          width: device === "tablet" ? "93%" : "85%",
         }}
         height={20}
       />
@@ -656,7 +654,7 @@ export const DetailLinimasa = ({ route }) => {
   const [komen, setKomen] = useState("");
 
   useEffect(() => {
-    dispatch(setResetDetailLinimasa())
+    // dispatch(setResetDetailLinimasa())
     getTokenValue().then((val) => {
       setToken(val);
     });
@@ -880,7 +878,7 @@ export const DetailLinimasa = ({ route }) => {
                         borderRadius: 4,
                         marginHorizontal: 25,
                         marginBottom: 20,
-                        width: device === 'tablet' ? '93%' : '85%'
+                        width: device === "tablet" ? "93%" : "85%",
                       }}
                       height={30}
                     />
@@ -926,7 +924,7 @@ export const DetailLinimasa = ({ route }) => {
                           style={{
                             borderRadius: 4,
                           }}
-                          width={device === 'tablet' ? 300 : 150}
+                          width={device === "tablet" ? 300 : 150}
                           height={20}
                         />
                       ) : (
@@ -944,7 +942,7 @@ export const DetailLinimasa = ({ route }) => {
                           style={{
                             borderRadius: 4,
                           }}
-                          width={device === 'tablet' ? 200 : 100}
+                          width={device === "tablet" ? 200 : 100}
                           height={20}
                         />
                       ) : (
@@ -981,7 +979,7 @@ export const DetailLinimasa = ({ route }) => {
                         style={{
                           borderRadius: 4,
                         }}
-                        width={device === 'tablet' ? 200 : 100}
+                        width={device === "tablet" ? 200 : 100}
                         height={20}
                       />
                     ) : (
@@ -1047,7 +1045,7 @@ export const DetailLinimasa = ({ route }) => {
                         borderRadius: 4,
                         marginTop: 20,
                         marginHorizontal: 25,
-                        width: device === 'tablet' ? '93%' : '85%'
+                        width: device === "tablet" ? "93%" : "85%",
                       }}
                       height={40}
                     />
