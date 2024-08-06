@@ -19,6 +19,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getFileSize,
 } from "../../config/SuperAppps";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -46,7 +47,7 @@ import {
   postComment,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import { setRefresh } from "../../store/Pengetahuan";
+import { setRefresh, setResetDetailLinimasa } from "../../store/Pengetahuan";
 import ShimmerPlaceHolder, {
   createShimmerPlaceHolder,
 } from "expo-shimmer-placeholder";
@@ -93,7 +94,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -129,7 +130,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -168,7 +169,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           {name}
         </Text>
         <Text style={{ color: COLORS.lighter }}>
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -206,7 +207,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -250,7 +251,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -294,7 +295,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {Math.floor(size / 1000)} MB
+          {getFileSize(size)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -564,7 +565,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
   );
 };
 
-const ShimmerParagraph = () => {
+const ShimmerParagraph = (device) => {
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
   return (
@@ -573,9 +574,9 @@ const ShimmerParagraph = () => {
         style={{
           borderRadius: 4,
           marginTop: 20,
-          marginHorizontal: 100,
+          marginHorizontal: 25,
+          width: device === 'tablet' ? '93%' : '85%'
         }}
-        width={250}
         height={20}
       />
       <ShimmerPlaceHolder
@@ -583,8 +584,8 @@ const ShimmerParagraph = () => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
+          width: device === 'tablet' ? '93%' : '85%'
         }}
-        width={325}
         height={20}
       />
       <ShimmerPlaceHolder
@@ -592,8 +593,8 @@ const ShimmerParagraph = () => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
+          width: device === 'tablet' ? '93%' : '85%'
         }}
-        width={325}
         height={20}
       />
       <ShimmerPlaceHolder
@@ -601,8 +602,8 @@ const ShimmerParagraph = () => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
+          width: device === 'tablet' ? '93%' : '85%'
         }}
-        width={325}
         height={20}
       />
       <ShimmerPlaceHolder
@@ -610,8 +611,8 @@ const ShimmerParagraph = () => {
           borderRadius: 4,
           marginTop: 5,
           marginHorizontal: 25,
+          width: device === 'tablet' ? '93%' : '85%'
         }}
-        width={325}
         height={20}
       />
     </>
@@ -655,6 +656,7 @@ export const DetailLinimasa = ({ route }) => {
   const [komen, setKomen] = useState("");
 
   useEffect(() => {
+    dispatch(setResetDetailLinimasa())
     getTokenValue().then((val) => {
       setToken(val);
     });
@@ -677,6 +679,7 @@ export const DetailLinimasa = ({ route }) => {
   const { linimasa, refresh, loading } = useSelector(
     (state) => state.pengetahuan
   );
+
   const detail = linimasa.detail;
   const resetData = () => {
     linimasa.detail = {};
@@ -878,8 +881,8 @@ export const DetailLinimasa = ({ route }) => {
                         borderRadius: 4,
                         marginHorizontal: 25,
                         marginBottom: 20,
+                        width: device === 'tablet' ? '93%' : '85%'
                       }}
-                      width={325}
                       height={30}
                     />
                   ) : (
@@ -924,7 +927,7 @@ export const DetailLinimasa = ({ route }) => {
                           style={{
                             borderRadius: 4,
                           }}
-                          width={150}
+                          width={device === 'tablet' ? 300 : 150}
                           height={20}
                         />
                       ) : (
@@ -942,7 +945,7 @@ export const DetailLinimasa = ({ route }) => {
                           style={{
                             borderRadius: 4,
                           }}
-                          width={100}
+                          width={device === 'tablet' ? 200 : 100}
                           height={20}
                         />
                       ) : (
@@ -979,7 +982,7 @@ export const DetailLinimasa = ({ route }) => {
                         style={{
                           borderRadius: 4,
                         }}
-                        width={100}
+                        width={device === 'tablet' ? 200 : 100}
                         height={20}
                       />
                     ) : (
@@ -1045,8 +1048,8 @@ export const DetailLinimasa = ({ route }) => {
                         borderRadius: 4,
                         marginTop: 20,
                         marginHorizontal: 25,
+                        width: device === 'tablet' ? '93%' : '85%'
                       }}
-                      width={325}
                       height={40}
                     />
                   ) : detail.summary !== null ? (
@@ -1069,9 +1072,9 @@ export const DetailLinimasa = ({ route }) => {
 
                   {loading ? (
                     <View style={{ marginBottom: 20 }}>
-                      <ShimmerParagraph />
-                      <ShimmerParagraph />
-                      <ShimmerParagraph />
+                      <ShimmerParagraph device={device} />
+                      <ShimmerParagraph device={device} />
+                      <ShimmerParagraph device={device} />
                     </View>
                   ) : (
                     <View

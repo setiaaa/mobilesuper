@@ -112,6 +112,9 @@ const PengetahuanSlice = createSlice({
     setRefresh: (state, action) => {
       state.refresh = action.payload;
     },
+    setResetDetailLinimasa: (state, action) => {
+      state.linimasa.detail = {}
+    }
   },
 
   extraReducers(builder) {
@@ -461,6 +464,7 @@ export const {
   setPostinganSayaJumlah,
   setPenilaian,
   setRefresh,
+  setResetDetailLinimasa
 } = PengetahuanSlice.actions;
 
 export default PengetahuanSlice.reducer;
