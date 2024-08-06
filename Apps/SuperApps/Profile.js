@@ -9,7 +9,7 @@ import {
   Switch,
   FlatList,
 } from "react-native";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import {
   COLORS,
   FONTSIZE,
@@ -59,6 +59,9 @@ import { Portal } from "react-native-portalize";
 import { CardListAplikasi } from "../../components/CardListAplikasi";
 import { GlobalStyles } from "../../constants/styles";
 import { Divider } from "react-native-paper";
+import moment from "moment";
+import CollapseEpegIPASN from "../../components/CollapseEpegIPASN";
+import CollapseSIASNIPASN from "../../components/CollapseSIASNIPASN";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -219,8 +222,6 @@ export const Profile = () => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
-
-  console.log(isPejabatTinggi);
 
   useEffect(() => {
     let tmpMenu = [];
@@ -609,8 +610,6 @@ export const Profile = () => {
     setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
-  console.log(profile);
-
   return (
     <>
       {loading ? <Loading /> : null}
@@ -673,7 +672,8 @@ export const Profile = () => {
         {/* Profile */}
         <View
           style={{
-            padding: spacing.default,
+            paddingHorizontal: spacing.default,
+            paddingTop: spacing.default
           }}
         >
           <View
@@ -842,11 +842,38 @@ export const Profile = () => {
                 -
               </Text>
             </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 1
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Update Terakhir:
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {moment(
+                  profile?.request_updated_get_from_siasn,
+                  "YYYY-MM-DD HH:mm:ss"
+                )
+                  .locale("id")
+                  .format("DD MMMM YYYY HH:mm:ss")}
+              </Text>
+            </View>
           </View>
         </View>
-
-        {/* Content */}
-        <View
+        
+        {/* <View
           style={{
             display: "flex",
             flexDirection: "row",
@@ -856,7 +883,7 @@ export const Profile = () => {
             columnGap: spacing.default,
           }}
         >
-          {/* Content Absensi */}
+  
           <View
             style={[
               {
@@ -867,351 +894,385 @@ export const Profile = () => {
               shadow.cardShadow,
             ]}
           >
-            {/* <Text
-              style={{
-                fontSize: fontSizeResponsive("Judul", device),
-                fontWeight: FONTWEIGHT.bold,
-              }}
-            >
-              Absensi
-            </Text> */}
             <View
-              style={[
-                {
-                  backgroundColor: COLORS.white,
-                  borderRadius: 8,
-                  flex: 1,
-                },
-                shadow.cardShadow,
-              ]}
+              style={{ padding: spacing.default, rowGap: spacing.medium }}
             >
+              <Text
+                style={[
+                  {
+                    marginVertical: -10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  },
+                ]}
+              >
+                IP ASN
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H5", device),
+                  marginTop: 10,
+                }}
+              >
+                Sumber Data EPEG 2024
+              </Text>
               <View
-                style={{ padding: spacing.default, rowGap: spacing.medium }}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
               >
                 <Text
-                  style={[
-                    {
-                      marginVertical: -10,
-                      fontSize: fontSizeResponsive("H4", device),
-                    },
-                  ]}
+                  style={{
+                    fontSize: device === "tablet" ? 60 : 30,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
                 >
-                  IP ASN
+                  {profile?.epeg_ipasn_data?.nilai}
                 </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <Text
                   style={{
-                    fontSize: fontSizeResponsive("H5", device),
-                    marginTop: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
                   }}
                 >
-                  Sumber Data EPEG 2024
+                  Kualifikasi
                 </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
                     style={{
-                      fontSize: device === "tablet" ? 60 : 30,
-                      fontWeight: FONTWEIGHT.bold,
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: "#FF9900",
+                      borderRadius: 50,
+                      marginRight: spacing.small,
                     }}
-                  >
-                    {profile?.epeg_ipasn_data?.nilai}
-                  </Text>
-                  {/* <View
-                  style={{
-                    backgroundColor: "#CED06C",
-                    width: wp(18),
-                    height: wp(5),
-                    borderRadius: 30,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    Tinggi
-                  </Text>
-                </View> */}
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+                  />
                   <Text
                     style={{
                       fontSize: fontSizeResponsive("H4", device),
-                      width: device === "tablet" ? "88%" : "78%",
                     }}
                   >
-                    Kualifikasi
+                    {profile?.epeg_ipasn_data?.kualifikasi}
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: "#FF9900",
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.kualifikasi}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
                   }}
                 >
+                  Kompetensi
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: COLORS.success,
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
                       fontSize: fontSizeResponsive("H4", device),
-                      width: device === "tablet" ? "88%" : "78%",
                     }}
                   >
-                    Kompetensi
+                    {profile?.epeg_ipasn_data?.kompetensi}
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: COLORS.success,
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.kompetensi}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "88%" : "78%",
                   }}
                 >
+                  Kinerja
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: "#CED06C",
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
                       fontSize: fontSizeResponsive("H4", device),
-                      width: device === "tablet" ? "88%" : "78%",
                     }}
                   >
-                    Kinerja
+                    {profile?.epeg_ipasn_data?.kinerja}
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: "#CED06C",
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.kinerja}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
+                  Disiplin
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: COLORS.orange,
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
-                      width: device === "tablet" ? "88%" : "78%",
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Disiplin
+                    {profile?.epeg_ipasn_data?.disiplin}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: COLORS.orange,
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.disiplin}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
+                  Diklat
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: COLORS.success,
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
-                      width: device === "tablet" ? "88%" : "78%",
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Diklat
+                    {profile?.epeg_ipasn_data?.diklat20jp}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: COLORS.success,
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.diklat20jp}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
+                  Fungsional
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: "#CED06C",
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
-                      width: device === "tablet" ? "88%" : "78%",
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Fungsional
+                    {profile?.epeg_ipasn_data?.fungsional}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: "#CED06C",
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.fungsional}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
+                  Hukdis
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: COLORS.orange,
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
-                      width: device === "tablet" ? "88%" : "78%",
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Hukdis
+                    {profile?.epeg_ipasn_data?.hukdis}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: COLORS.orange,
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.hukdis}
-                    </Text>
-                  </View>
                 </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
+                  PPKP
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: COLORS.success,
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
                   <Text
                     style={{
-                      width: device === "tablet" ? "88%" : "78%",
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    PPKP
+                    {profile?.epeg_ipasn_data?.ppkp}
                   </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        width: device === "tablet" ? 30 : 20,
-                        height: device === "tablet" ? 30 : 20,
-                        backgroundColor: COLORS.success,
-                        borderRadius: 50,
-                        marginRight: spacing.small,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      {profile?.epeg_ipasn_data?.ppkp}
-                    </Text>
-                  </View>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Seminar
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: "#CED06C",
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {profile?.epeg_ipasn_data?.seminar}
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    width: device === "tablet" ? "88%" : "78%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Struktural
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: device === "tablet" ? 30 : 20,
+                      height: device === "tablet" ? 30 : 20,
+                      backgroundColor: '#FF9900',
+                      borderRadius: 50,
+                      marginRight: spacing.small,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {profile?.epeg_ipasn_data?.struktural}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
 
-          {/* Content IP ASN */}
           <View
             style={[
               {
@@ -1255,20 +1316,6 @@ export const Profile = () => {
                 >
                   {profile.ipasn_nilai}
                 </Text>
-                {/* <View
-                  style={{
-                    backgroundColor: "#CED06C",
-                    width: wp(18),
-                    height: wp(5),
-                    borderRadius: 30,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    Tinggi
-                  </Text>
-                </View> */}
               </View>
 
               <View
@@ -1408,6 +1455,16 @@ export const Profile = () => {
               </View>
             </View>
           </View>
+        </View> */}
+
+        {/* Collapse Content IPASN EPEG */}
+        <View style={{ paddingTop: spacing.default }}>
+          <CollapseEpegIPASN profile={profile} device={device} />
+        </View>
+
+        {/* Collapse Content IPASN SIASN */}
+        <View style={{ paddingTop: spacing.default }}>
+          <CollapseSIASNIPASN profile={profile} device={device} />
         </View>
 
         {/* Biodata */}
