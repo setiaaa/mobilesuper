@@ -67,6 +67,8 @@ import { CollapseCardSIASNRwPnsUnor } from "../../components/CollapseCardSIASNRw
 import { CollapseCardSIASNAngkaKredit } from "../../components/CollapseCardSIASNAngkaKredit";
 import { CollapseCardSIASNRwPenghargaan } from "../../components/CollapseCardSIASNRwPenghargaan";
 import { CollapseCardSIASNRwPendidikan } from "../../components/CollapseCardSIASNRwPendidikan";
+import { CollapseCardPasangan } from "../../components/CollapseCardPasangan";
+import { CollapseCardAnak } from "../../components/CollapseCardAnak";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1146,6 +1148,27 @@ export const Profile = () => {
             />
           </View>
         )}
+        {/* Pasangan */}
+        {profile?.siasn_data.siasn_data_pasangan != null &&
+          profile?.siasn_data?.siasn_data_pasangan?.lisPasangan?.length !=
+            0 && (
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardPasangan
+                profile={profile.siasn_data.siasn_data_pasangan}
+                device={device}
+              />
+            </View>
+          )}
+        {/* Anak */}
+        {profile?.siasn_data.siasn_data_anak != null &&
+          profile?.siasn_data?.siasn_data_anak?.lisPasangan?.length != 0 && (
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardAnak
+                profile={profile.siasn_data.siasn_data_anak}
+                device={device}
+              />
+            </View>
+          )}
 
         {/* Faq */}
         <View
