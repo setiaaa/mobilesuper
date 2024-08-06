@@ -63,6 +63,10 @@ import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDa
 import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
 import { CollapseCardSIASNRwSkp } from "../../components/CollapseCardSIASNRwSkp";
 import { CollapseCardSIASNRwSkp22 } from "../../components/CollapseCardSIASNRwSkp22";
+import { CollapseCardSIASNRwPnsUnor } from "../../components/CollapseCardSIASNRwPnsUnor";
+import { CollapseCardSIASNAngkaKredit } from "../../components/CollapseCardSIASNAngkaKredit";
+import { CollapseCardSIASNRwPenghargaan } from "../../components/CollapseCardSIASNRwPenghargaan";
+import { CollapseCardSIASNRwPendidikan } from "../../components/CollapseCardSIASNRwPendidikan";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1102,6 +1106,42 @@ export const Profile = () => {
           <View style={{ paddingBottom: spacing.default }}>
             <CollapseCardSIASNRwSkp22
               profile={profile.siasn_data.siasn_rw_skp22}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN RW PNS Unor */}
+        {profile?.siasn_data.siasn_rw_pnsunor != null && (
+          <View style={{ paddingBottom: spacing.default }}>
+            <CollapseCardSIASNRwPnsUnor
+              profile={profile.siasn_data.siasn_rw_pnsunor}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN Angka Kredit */}
+        {profile?.siasn_data.siasn_rw_angkakredit != null && (
+          <View style={{ paddingBottom: spacing.default }}>
+            <CollapseCardSIASNAngkaKredit
+              profile={profile.siasn_data.siasn_rw_angkakredit}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN RW Pendidikan */}
+        {profile?.siasn_data.siasn_rw_pendidikan != null && (
+          <View style={{ paddingBottom: spacing.default }}>
+            <CollapseCardSIASNRwPendidikan
+              profile={profile.siasn_data.siasn_rw_pendidikan}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN Penghargaan */}
+        {profile?.siasn_data.siasn_rw_penghargaan != null && (
+          <View style={{ paddingBottom: spacing.default }}>
+            <CollapseCardSIASNRwPenghargaan
+              profile={profile.siasn_data.siasn_rw_penghargaan}
               device={device}
             />
           </View>

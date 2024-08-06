@@ -15,7 +15,7 @@ import {
   shadow,
 } from "../../config/SuperAppps";
 
-export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
+export const CollapseCardSIASNRwPendidikan = ({ profile, device, data }) => {
   const [collapse, setCollapse] = useState(false);
   const [collapseChild, setCollapseChild] = useState([]);
   useEffect(() => {
@@ -66,10 +66,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                     gap: spacing.medium,
                   }}
                 >
-                  <Ionicons
-                    name="star"
-                    size={device === "tablet" ? 40 : 24}
-                  />
+                  {/* <Ionicons name="star" size={device === "tablet" ? 40 : 24} /> */}
                   <Text
                     style={[
                       {
@@ -78,7 +75,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                       },
                     ]}
                   >
-                    SIASN Jabatan
+                    SIASN RW Pendidikan
                   </Text>
                 </View>
                 <View
@@ -150,7 +147,8 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              Tanggal SK : {sk.tanggalSk ? sk.tanggalSk : "-"}
+                              Tanggal Kelulusan :{" "}
+                              {sk.tahunLulus ? sk.tahunLulus : "-"}
                             </Text>
                           </View>
                           <View
@@ -216,7 +214,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.nipBaru.length == 0 ? "-" : sk.nipBaru}
+                          {sk.nipBaru == null || sk.nipBaru.length == 0
+                            ? "-"
+                            : sk.nipBaru}
                         </Text>
                       </View>
                       <View
@@ -252,81 +252,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.nipLama.length == 0 ? "-" : sk.nipLama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Jenis Jabatan
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.jenisJabatan.length == 0 ? "-" : sk.jenisJabatan}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Instansi Kerja
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.instansiKerjaNama.length == 0
+                          {sk.nipLama == null || sk.nipLama.length == 0
                             ? "-"
-                            : sk.instansiKerjaNama}
+                            : sk.nipLama}
                         </Text>
                       </View>
                       <View
@@ -345,7 +273,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          Satuan Kerja
+                          Pendidikan
                         </Text>
                         <Text
                           style={{
@@ -362,9 +290,10 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.satuanKerjaNama.length == 0
+                          {sk.pendidikanNama == null ||
+                          sk.pendidikanNama.length == 0
                             ? "-"
-                            : sk.satuanKerjaNama}
+                            : sk.pendidikanNama}
                         </Text>
                       </View>
                       <View
@@ -383,7 +312,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          Unor
+                          TK Pendidikan
                         </Text>
                         <Text
                           style={{
@@ -400,45 +329,10 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.unorNama.length == 0 ? "-" : sk.unorNama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Unor Induk
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.unorIndukNama.length == 0
+                          {sk.tkPendidikanNama == null ||
+                          sk.tkPendidikanNama.length == 0
                             ? "-"
-                            : sk.unorIndukNama}
+                            : sk.tkPendidikanNama}
                         </Text>
                       </View>
                       <View
@@ -457,7 +351,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          Eselon
+                          Tanggal Kelulusan
                         </Text>
                         <Text
                           style={{
@@ -474,45 +368,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.eselon == null ? "-" : sk.eselon}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Jabatan Fungsional
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.jabatanFungsionalNama.length == 0
+                          {sk.tglLulus == null || sk.tglLulus.length == 0
                             ? "-"
-                            : sk.jabatanFungsionalNama}
+                            : sk.tglLulus}
                         </Text>
                       </View>
                       <View
@@ -531,7 +389,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          Jabatan Fungsional Umum
+                          Nomor Ijazah
                         </Text>
                         <Text
                           style={{
@@ -548,9 +406,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.jabatanFungsionalUmumNama == null
+                          {sk.nomorIjasah == null || sk.nomorIjasah.length == 0
                             ? "-"
-                            : sk.jabatanFungsionalUmumNama}
+                            : sk.nomorIjasah}
                         </Text>
                       </View>
                       <View
@@ -569,7 +427,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          TMT Jabatan
+                          Nama Sekolah
                         </Text>
                         <Text
                           style={{
@@ -586,189 +444,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.tmtJabatan.length == 0 ? "-" : sk.tmtJabatan}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nomor SK
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.nomorSk.length == 0 ? "-" : sk.nomorSk}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Tanggal SK
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.tanggalSk.length == 0 ? "-" : sk.tanggalSk}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nama Unor
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.namaUnor.length == 0 ? "-" : sk.namaUnor}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nama Jabatan
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.namaJabatan == null ? "-" : sk.namaJabatan}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          jenisPenugasanId
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.jenisPenugasanId.length == 0
+                          {sk.namaSekolah == null || sk.namaSekolah.length == 0
                             ? "-"
-                            : sk.jenisPenugasanId}
+                            : sk.namaSekolah}
                         </Text>
                       </View>
                       <View
@@ -787,7 +465,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          jenisMutasiId
+                          Gelar Depan
                         </Text>
                         <Text
                           style={{
@@ -804,9 +482,9 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.jenisMutasiId.length == 0
+                          {sk.gelarDepan == null || sk.gelarDepan.length == 0
                             ? "-"
-                            : sk.jenisMutasiId}
+                            : sk.gelarDepan}
                         </Text>
                       </View>
                       <View
@@ -825,7 +503,7 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          subJabatanId
+                          Gelar Belakang
                         </Text>
                         <Text
                           style={{
@@ -842,43 +520,10 @@ export const CollapseCardSIASNJabatan = ({ profile, device, data }) => {
                             },
                           ]}
                         >
-                          {sk.subJabatanId.length == 0 ? "-" : sk.subJabatanId}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          tmtMutasi
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.tmtMutasi.length == 0 ? "-" : sk.tmtMutasi}
+                          {sk.gelarBelakang == null ||
+                          sk.gelarBelakang.length == 0
+                            ? "-"
+                            : sk.gelarBelakang}
                         </Text>
                       </View>
                     </View>
