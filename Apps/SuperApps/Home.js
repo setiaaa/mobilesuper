@@ -112,11 +112,9 @@ const _color = "#6E01EF";
 const _size = 100;
 
 export const Home = () => {
-  const carouselRef = useRef(null);
-
-  const goForward = () => {
-    carouselRef.current.snapToNext();
-  };
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
 
   const [slide2, setSlide2] = useState(0);
   const [slide3, setSlide3] = useState(0);
@@ -1250,7 +1248,7 @@ export const Home = () => {
             ></View>
 
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefHome}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1441,7 +1439,7 @@ export const Home = () => {
           <View>
             <View style={styles.containerr}>
               <Carousel
-                ref={carouselRef}
+                ref={carouselRefBerita}
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={getWidthCarousel()}
@@ -1460,8 +1458,8 @@ export const Home = () => {
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
                 activeDotIndex={slide4}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
+                carouselRef={carouselRefBerita}
+                tappableDots={!!carouselRefBerita}
               />
             </View>
             {/* <Carousel data={CarouselData} /> */}
@@ -1898,7 +1896,7 @@ export const Home = () => {
 
           <View style={[styles.containerr, { marginBottom: "60%" }]}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefGaleri}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1917,8 +1915,8 @@ export const Home = () => {
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}
               activeDotIndex={slide3}
-              carouselRef={carouselRef}
-              tappableDots={!!carouselRef}
+              carouselRef={carouselRefGaleri}
+              tappableDots={!!carouselRefGaleri}
             />
           </View>
         </ScrollView>

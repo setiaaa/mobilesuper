@@ -75,8 +75,10 @@ import { Config } from "../../constants/config";
 // ];
 
 export const Satker = () => {
-  const carouselRef = useRef(null);
-
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
+  
   const [entries, setEntries] = useState([]);
   // const [berita, setBerita] = useState([]);
   const [selected, setSelected] = useState("");
@@ -535,7 +537,7 @@ export const Satker = () => {
 
         <View style={[styles.containerr, { marginTop: 20 }]}>
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefHome}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
@@ -559,7 +561,7 @@ export const Satker = () => {
             </Text>
           </View>
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefGaleri}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
@@ -578,8 +580,8 @@ export const Satker = () => {
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}
             activeDotIndex={slide}
-            carouselRef={carouselRef}
-            tappableDots={!!carouselRef}
+            carouselRef={carouselRefGaleri}
+            tappableDots={!!carouselRefGaleri}
           />
         </View>
 
@@ -614,7 +616,7 @@ export const Satker = () => {
         <View>
           <View style={styles.containerr}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefBerita}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
