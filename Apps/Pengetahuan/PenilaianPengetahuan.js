@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import {
   COLORS,
   DATETIME,
@@ -9,6 +15,7 @@ import {
   FORMATDATE,
   fixedDateString,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
@@ -38,7 +45,7 @@ import {
 } from "../../service/api";
 import moment from "moment/min/moment-with-locales";
 // import "moment/locale/id";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native";
 import { RefreshControl } from "react-native";
@@ -53,6 +60,10 @@ const CardPenilaian = ({ item, token, device }) => {
   };
 
   // const tanggal = item.published_date;
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -73,7 +84,7 @@ const CardPenilaian = ({ item, token, device }) => {
           shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
-          width: '100%'
+          width: "100%",
         }}
         onPress={() => {
           dispatch(getDetailPenilaian({ token: token, id: item.id }));
@@ -95,6 +106,7 @@ const CardPenilaian = ({ item, token, device }) => {
             style={{
               fontWeight: FONTWEIGHT.bold,
               fontSize: fontSizeResponsive("H4", device),
+              width: device === 'tablet'&& orientation=== 'potrait'? '70%': '90%' 
             }}
           >
             {item.title}
@@ -415,7 +427,7 @@ export const PenilaianPenggetahaun = () => {
         dispatch(getTotalPenilaian(data));
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -434,6 +446,10 @@ export const PenilaianPenggetahaun = () => {
   ]);
 
   const { device } = useSelector((state) => state.apps);
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   console.log(penilaian?.total);
 
@@ -490,12 +506,17 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            paddingHorizontal: 20
+            paddingHorizontal: 20,
           }}
         >
           <View
             style={{
-              width: "85%",
+              width:
+                device === "tablet" && orientation === "landscape"
+                  ? "95%"
+                  : device === "tablet" && orientation === "potrait"
+                  ? "92%"
+                  : "85%",
               backgroundColor: COLORS.white,
               borderRadius: 8,
             }}
@@ -822,13 +843,11 @@ export const PenilaianPenggetahaun = () => {
             marginTop: 10,
             paddingVertical: 5,
             flex: 1,
-            marginHorizontal: 20
+            marginHorizontal: 20,
             // backgroundColor: "brown",
           }}
         >
-          <View
-            style={{ marginBottom: 10 }}
-          >
+          <View style={{ marginBottom: 10 }}>
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,

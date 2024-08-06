@@ -31,8 +31,9 @@ import { putTandaTangan } from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/DigitalSign";
 
-export const DetailSertifikat = (route) => {
-  // const { data } = route.params
+export const DetailSertifikat = ({ route }) => {
+  const data = route.params;
+  console.log(data);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const [paraphrase, setParaphrase] = useState("");
@@ -935,7 +936,7 @@ export const DetailSertifikat = (route) => {
               </TouchableOpacity>
             )}
 
-            {isApprover === true ? (
+            {isApprover === true && (data === "ready" || data === "retry") ? (
               <TouchableOpacity
                 style={{
                   width: "90%",

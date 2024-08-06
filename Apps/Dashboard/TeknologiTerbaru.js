@@ -31,12 +31,11 @@ const ListTeknologi = ({ item, loading, device }) => {
       style={{
         backgroundColor: "white",
         borderRadius: 16,
-        width: "91%",
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
         marginTop: 30,
-        marginHorizontal: device === "tablet" ? 35 : 20,
+        margin: 20
       }}
     >
       <View>

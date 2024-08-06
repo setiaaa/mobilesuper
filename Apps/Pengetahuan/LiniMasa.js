@@ -1,7 +1,14 @@
 import React, { useMemo, useRef } from "react";
-import { KeyboardAvoidingView, Modal, Platform, Text, TextInput } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Text,
+  TextInput,
+  useWindowDimensions,
+} from "react-native";
 import { View } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -10,6 +17,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
@@ -172,8 +180,8 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                  (toggleComment.id !== listData.id &&
-                    listData.child.length > 0) ? (
+                (toggleComment.id !== listData.id &&
+                  listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -402,7 +410,7 @@ const CardLiniMasa = ({ item, token, device }) => {
         backgroundColor: COLORS.white,
         borderRadius: 16,
         marginTop: 20,
-        width: '100%',
+        width: "100%",
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -437,7 +445,9 @@ const CardLiniMasa = ({ item, token, device }) => {
               />
             </View>
 
-            <View style={{ display: 'flex', alignItems: 'flex-start', flex: 1 }}>
+            <View
+              style={{ display: "flex", alignItems: "flex-start", flex: 1 }}
+            >
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.bold,
@@ -471,8 +481,8 @@ const CardLiniMasa = ({ item, token, device }) => {
                       item.category === "video / jurnal"
                         ? COLORS.successLight
                         : item.category === "infografis"
-                          ? COLORS.warningLight
-                          : COLORS.infoLight,
+                        ? COLORS.warningLight
+                        : COLORS.infoLight,
                     borderRadius: 30,
                     paddingHorizontal: 16,
                     paddingVertical: 4,
@@ -486,21 +496,21 @@ const CardLiniMasa = ({ item, token, device }) => {
                     <Ionicons
                       name="document-outline"
                       color={"#F6AD1D"}
-                      size={device === 'tablet' ? 20 : 16}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 2 }}
                     />
                   ) : item.category === "kegiatan" ? (
                     <Ionicons
                       name="analytics-outline"
                       color={"#1868AB"}
-                      size={device === 'tablet' ? 20 : 16}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 3 }}
                     />
                   ) : (
                     <Ionicons
                       name="videocam-outline"
                       color={"#11C15B"}
-                      size={device === 'tablet' ? 20 : 16}
+                      size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 2 }}
                     />
                   )}
@@ -510,8 +520,8 @@ const CardLiniMasa = ({ item, token, device }) => {
                         item.category === "infografis"
                           ? COLORS.warning
                           : item.category === "kegiatan"
-                            ? COLORS.info
-                            : COLORS.success,
+                          ? COLORS.info
+                          : COLORS.success,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
@@ -525,7 +535,11 @@ const CardLiniMasa = ({ item, token, device }) => {
           <View style={{ marginVertical: 20 }}>
             <Image
               source={{ uri: item.cover }}
-              style={{ width: "100%", height: device === 'tablet' ? 300 : 160, borderRadius: 8 }}
+              style={{
+                width: "100%",
+                height: device === "tablet" ? 300 : 160,
+                borderRadius: 8,
+              }}
             />
           </View>
 
@@ -611,7 +625,9 @@ const CardLiniMasa = ({ item, token, device }) => {
             styles.backdrop,
           ]}
         />
-        <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }}>
+        <View
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
           <View
             style={{
               backgroundColor: COLORS.white,
@@ -749,7 +765,7 @@ const CardLiniMasa = ({ item, token, device }) => {
                 }}
               >
                 {detail?.members_agenda !== "" &&
-                  detail?.members_agenda !== null
+                detail?.members_agenda !== null
                   ? detail.members_agenda
                   : "-"}
               </Text>
@@ -904,7 +920,7 @@ const CardLiniMasa = ({ item, token, device }) => {
                 }}
               >
                 {detail?.start_date_agenda !== "" &&
-                  detail?.start_date_agenda !== null
+                detail?.start_date_agenda !== null
                   ? detail.start_date_agenda?.slice(0, -9)
                   : "-"}
               </Text>
@@ -928,7 +944,9 @@ const CardLiniMasa = ({ item, token, device }) => {
             styles.backdrop,
           ]}
         />
-        <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }}>
+        <View
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
           <View
             style={{
               backgroundColor: COLORS.white,
@@ -1726,7 +1744,7 @@ export const LiniMasa = () => {
         );
         dispatch(setRefresh(false));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -1739,6 +1757,10 @@ export const LiniMasa = () => {
       setFilterData(linimasa.lists);
     }
   }, [linimasa]);
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -1817,7 +1839,12 @@ export const LiniMasa = () => {
             >
               <View
                 style={{
-                  width: "85%",
+                  width:
+                    device === "tablet" && orientation === "landscape"
+                      ? "95%"
+                      : device === "tablet" && orientation === "potrait"
+                      ? "92%"
+                      : "85%",
                   // marginRight: 10,
                   backgroundColor: COLORS.white,
                   borderRadius: 8,
@@ -2118,7 +2145,7 @@ export const LiniMasa = () => {
                   </Text>
                 </TouchableOpacity>
               </ScrollView>
-              <View style={{ width: "15%", alignItems: "flex-end" }}>
+              <View>
                 <TouchableOpacity onPress={clearBadge}>
                   <Ionicons
                     name="close-outline"

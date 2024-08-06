@@ -6,7 +6,12 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
@@ -24,6 +29,7 @@ export const KegiatanBaru = () => {
   const [collapse, setCollapse] = useState({ toggle: false });
 
   const { dashboard, loading } = useSelector((state) => state.sppd);
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView>
@@ -42,8 +48,8 @@ export const KegiatanBaru = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -52,7 +58,7 @@ export const KegiatanBaru = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -60,7 +66,7 @@ export const KegiatanBaru = () => {
             <View style={{ alignItems: "center", flex: 1, marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -75,7 +81,7 @@ export const KegiatanBaru = () => {
               data={dashboard.events}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <CardKegiatanTerbaru item={item} />
+                  <CardKegiatanTerbaru item={item} device={device} />
                 </View>
               )}
               keyExtractor={(item) => item.id}

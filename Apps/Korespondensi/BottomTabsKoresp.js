@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {} from "react-native";
 import { Config } from "../../constants/config";
 import { useSelector } from "react-redux";
@@ -55,8 +55,19 @@ function MyTabKoresp({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="home" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Dashboard</Text>
+                <Ionicons
+                  name="home"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dashboard
+                </Text>
               </View>
             ) : (
               <View
@@ -70,9 +81,16 @@ function MyTabKoresp({ props, navigation }) {
                 <Ionicons
                   name="home-outline"
                   color={COLORS.tertiary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.tertiary }}>Dashboard</Text>
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dashboard
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -109,8 +127,19 @@ function MyTabKoresp({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="mail" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Dokumen</Text>
+                <Ionicons
+                  name="apps"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Menu
+                </Text>
               </View>
             ) : (
               <View
@@ -122,11 +151,18 @@ function MyTabKoresp({ props, navigation }) {
                 }}
               >
                 <Ionicons
-                  name="mail-outline"
+                  name="apps-outline"
                   color={COLORS.tertiary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.tertiary }}>Dokumen</Text>
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Menu
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -162,8 +198,19 @@ function MyTabKoresp({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="search" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Pencarian</Text>
+                <Ionicons
+                  name="search"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Pencarian
+                </Text>
               </View>
             ) : (
               <View
@@ -177,9 +224,16 @@ function MyTabKoresp({ props, navigation }) {
                 <Ionicons
                   name="search-outline"
                   color={COLORS.tertiary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.tertiary }}>Pencarian</Text>
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Pencarian
+                </Text>
               </View>
             )}
           </TouchableOpacity>

@@ -19,6 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export const MenuDashboard = () => {
   const { device } = useSelector((state) => state.apps);
@@ -33,6 +34,7 @@ export const MenuDashboard = () => {
   const dataRoleDashboardbudidaya = ["D_BD"];
   const dataRoleDashboardpenangkapan = ["D_PK"];
   const dataRoleDashboardBantuanPemerintah = ["D_KP"];
+  const dataRoleLPMUKP = ["LPMUKP_DASHBOARD"];
 
   const numColumns = 3;
 
@@ -53,6 +55,9 @@ export const MenuDashboard = () => {
   );
   const isRoleBantuanPemerintah = profile.roles_access?.some((item) =>
     dataRoleDashboardBantuanPemerintah.includes(item)
+  );
+  const isRoleLPMUKP = profile.roles_access?.some((item) =>
+    dataRoleLPMUKP.includes(item)
   );
 
   const numRows = Math.ceil(listMenu.length / 3);
@@ -94,7 +99,8 @@ export const MenuDashboard = () => {
         <View
           style={{
             alignItems: "center",
-            height: 150,
+            justifyContent: "flex-start",
+            flex: 1,
           }}
         >
           <TouchableOpacity
@@ -105,7 +111,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
+                device === "tablet" ? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#11C15B",
                   justifyContent: "center",
@@ -116,8 +122,8 @@ export const MenuDashboard = () => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 26,
-                  height: device === "tablet" ? 40 : 18,
+                  width: device === "tablet" ? 70 : 26,
+                  height: device === "tablet" ? 50 : 18,
                 }}
                 source={require("../../assets/superApp/ikon-keuangan.png")}
               />
@@ -139,12 +145,72 @@ export const MenuDashboard = () => {
       );
     }
 
+    if (isRoleLPMUKP) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flex: 1,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 100,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("LPMUKP");
+                // setVisibleModal(false);
+              }}
+            >
+              <View
+                style={[
+                  device === "tablet" ? styles.cardApps : styles.cardAppsHP,
+                  {
+                    backgroundColor: "#6B7280",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  },
+                ]}
+              >
+                <Image
+                  style={{
+                    width: device === "tablet" ? 60 : 24,
+                    height: device === "tablet" ? 60 : 24,
+                  }}
+                  source={require("../../assets/superApp/LPMUKP.png")}
+                />
+              </View>
+            </TouchableOpacity>
+            <Text
+              style={{
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: fontSizeResponsive("H4", device),
+                width: device === "tablet" ? 200 : 100,
+                textAlign: "center",
+              }}
+            >
+              LPMUKP
+            </Text>
+          </View>
+        </View>
+      );
+    }
+
     if (isRoleKepegawaian) {
       menuDash.push(
         <View
           style={{
             alignItems: "center",
-            height: 150,
+            justifyContent: "flex-start",
+            flex: 1,
           }}
         >
           <TouchableOpacity
@@ -155,7 +221,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
+                device === "tablet" ? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#F6AD1D",
                   justifyContent: "center",
@@ -194,7 +260,8 @@ export const MenuDashboard = () => {
         <View
           style={{
             alignItems: "center",
-            height: 150,
+            justifyContent: "flex-start",
+            flex: 1,
           }}
         >
           <TouchableOpacity
@@ -205,7 +272,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
+                device === "tablet" ? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#B745FF",
                   justifyContent: "center",
@@ -243,7 +310,8 @@ export const MenuDashboard = () => {
         <View
           style={{
             alignItems: "center",
-            height: 150,
+            justifyContent: "flex-start",
+            flex: 1,
           }}
         >
           <TouchableOpacity
@@ -254,7 +322,7 @@ export const MenuDashboard = () => {
           >
             <View
               style={[
-                device === 'tablet'? styles.cardApps : styles.cardAppsHP,
+                device === "tablet" ? styles.cardApps : styles.cardAppsHP,
                 {
                   backgroundColor: "#38B2AC",
                   justifyContent: "center",
@@ -292,7 +360,8 @@ export const MenuDashboard = () => {
         <View
           style={{
             alignItems: "center",
-            height: 150,
+            justifyContent: "flex-start",
+            flex: 1,
           }}
         >
           <View
@@ -310,7 +379,7 @@ export const MenuDashboard = () => {
             >
               <View
                 style={[
-                  device === 'tablet'? styles.cardApps : styles.cardAppsHP,
+                  device === "tablet" ? styles.cardApps : styles.cardAppsHP,
                   {
                     backgroundColor: "#1868AB",
                     justifyContent: "center",

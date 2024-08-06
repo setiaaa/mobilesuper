@@ -507,7 +507,12 @@ export const DetailDokumenLain = ({ route }) => {
                               </View>
                             ) : null}
                           </View>
-                          <View style={{ flexDirection: "row", columnGap: 20 }}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
                             <Image
                               source={{ uri: data.avatar_url }}
                               style={{
@@ -516,12 +521,11 @@ export const DetailDokumenLain = ({ route }) => {
                                 borderRadius: device === "tablet" ? 80 : 50,
                                 marginVertical: 10,
                                 marginHorizontal: 10,
-                                marginLeft: 5,
                               }}
                             />
                             <View>
                               {data?.officer ? (
-                                <View style={{ width: "95%" }}>
+                                <View style={{}}>
                                   {loading ? (
                                     <ShimmerPlaceHolder
                                       style={{ borderRadius: 4, marginTop: 5 }}
@@ -531,7 +535,6 @@ export const DetailDokumenLain = ({ route }) => {
                                   ) : (
                                     <Text
                                       style={{
-                                        marginTop: 10,
                                         color: COLORS.info,
                                         fontWeight: FONTWEIGHT.bold,
                                         fontSize: fontSizeResponsive(
@@ -570,7 +573,7 @@ export const DetailDokumenLain = ({ route }) => {
                                   )}
                                 </View>
                               ) : (
-                                <View style={{ width: "95%" }}>
+                                <View style={{}}>
                                   {loading ? (
                                     <ShimmerPlaceHolder
                                       style={{ borderRadius: 4, marginTop: 5 }}
@@ -580,7 +583,6 @@ export const DetailDokumenLain = ({ route }) => {
                                   ) : (
                                     <Text
                                       style={{
-                                        marginTop: 10,
                                         color: COLORS.lighter,
                                         fontWeight: FONTWEIGHT.bold,
                                         fontSize: fontSizeResponsive(

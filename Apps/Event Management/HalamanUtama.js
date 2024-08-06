@@ -1,5 +1,10 @@
 import React, { useMemo, useRef } from "react";
-import { RefreshControl, StyleSheet, View } from "react-native";
+import {
+  RefreshControl,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -8,6 +13,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -472,6 +478,10 @@ export const HalamanUtama = () => {
     setStatusFilter(status);
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -527,7 +537,16 @@ export const HalamanUtama = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "85%" }}>
+            <View
+              style={{
+                width:
+                  device === "tablet" && orientation === "landscape"
+                    ? "95%"
+                    : device === "tablet" && orientation === "potrait"
+                    ? "92%"
+                    : "85%",
+              }}
+            >
               {variant === "hariini" ? (
                 <Search
                   placeholder={"Cari"}

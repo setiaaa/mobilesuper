@@ -706,6 +706,8 @@ export const TambahCutiTahunan = ({ route }) => {
   };
   const { device } = useSelector((state) => state.apps);
 
+  const currentMonth = new Date().getMonth() + 1;
+
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -1250,7 +1252,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               justifyContent: "center",
                               width: "90%",
                               borderRadius: 10,
-                              height: device === 'tablet' ? '90%' : '70%'
+                              height: device === "tablet" ? "90%" : "70%",
                             }}
                           >
                             <View style={{ width: "100%", flex: 1 }}>
@@ -1384,8 +1386,8 @@ export const TambahCutiTahunan = ({ route }) => {
                                       backgroundColor: COLORS.primary,
                                       borderRadius: 20,
                                       marginLeft: 20,
-                                      width: device === 'tablet' ? 40:24,
-                                      height: device === 'tablet' ? 40:24,
+                                      width: device === "tablet" ? 40 : 24,
+                                      height: device === "tablet" ? 40 : 24,
                                       justifyContent: "center",
                                       alignItems: "center",
                                     }}
@@ -1395,7 +1397,7 @@ export const TambahCutiTahunan = ({ route }) => {
                                     >
                                       <Ionicons
                                         name="close-outline"
-                                        size={device === 'tablet' ? 40:24}
+                                        size={device === "tablet" ? 40 : 24}
                                         color={COLORS.white}
                                       />
                                     </TouchableOpacity>
@@ -1741,7 +1743,7 @@ export const TambahCutiTahunan = ({ route }) => {
             </View>
             {form.data_kuota_cuti === null ? null : (
               <>
-                <View style={{ gap: 10 }}>
+                <View style={{ gap: currentMonth !== 12 ? 5 : 10 }}>
                   <View
                     style={{
                       flexDirection: "row",
@@ -1767,18 +1769,20 @@ export const TambahCutiTahunan = ({ route }) => {
 
                   <View
                     style={{
-                      padding: 5,
+                      padding: currentMonth !== 12 ? 0 : 5,
                       columnGap: 10,
                     }}
                   >
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      Kuota Periode Tahun Berjalan
-                    </Text>
+                    {currentMonth !== 12 ? null : (
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Kuota Periode Tahun Berjalan
+                      </Text>
+                    )}
                   </View>
                   <View style={{ flexDirection: "row", gap: 5 }}>
                     <View
@@ -1855,95 +1859,99 @@ export const TambahCutiTahunan = ({ route }) => {
                     </View>
                   </View>
 
-                  <View
-                    style={{
-                      padding: 5,
-                      columnGap: 10,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      Kuota Periode Tahun Depan
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: "row", gap: 5 }}>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.info },
-                      ]}
-                    >
-                      <Text
+                  {currentMonth !== 12 ? null : (
+                    <>
+                      <View
                         style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
+                          padding: 5,
+                          columnGap: 10,
                         }}
                       >
-                        Kuota Penuh
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.full_kuota_np1}
-                      </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.danger },
-                      ]}
-                    >
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Terpakai
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.kuota_terpakai_np1}
-                      </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.success },
-                      ]}
-                    >
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Sisa
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.kuota_sisa_np1}
-                      </Text>
-                    </View>
-                  </View>
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Kuota Periode Tahun Depan
+                        </Text>
+                      </View>
+                      <View style={{ flexDirection: "row", gap: 5 }}>
+                        <View
+                          style={[
+                            styles.cardInfoCuti,
+                            { backgroundColor: COLORS.info },
+                          ]}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Kuota Penuh
+                          </Text>
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {form.data_kuota_cuti?.full_kuota_np1}
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.cardInfoCuti,
+                            { backgroundColor: COLORS.danger },
+                          ]}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Kuota Terpakai
+                          </Text>
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {form.data_kuota_cuti?.kuota_terpakai_np1}
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.cardInfoCuti,
+                            { backgroundColor: COLORS.success },
+                          ]}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Kuota Sisa
+                          </Text>
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {form.data_kuota_cuti?.kuota_sisa_np1}
+                          </Text>
+                        </View>
+                      </View>
+                    </>
+                  )}
                 </View>
               </>
             )}

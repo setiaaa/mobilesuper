@@ -19,6 +19,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { getTokenValue } from "../../service/session";
@@ -51,6 +52,10 @@ const CardPostinganSaya = ({ item, token, device }) => {
     dispatch(getDetailLinimasa(params));
     dispatch(getViewLinimasa(params));
   };
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <View style={{ width: "100%", alignSelf: "center", marginVertical: 10 }}>
@@ -155,7 +160,7 @@ const CardPostinganSaya = ({ item, token, device }) => {
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
                         paddingVertical: 4,
-                        paddingHorizontal: 8
+                        paddingHorizontal: 8,
                       }}
                     >
                       <Text
@@ -417,7 +422,7 @@ const CardPostinganSaya = ({ item, token, device }) => {
                         backgroundColor: COLORS.success,
                         borderRadius: 8,
                         paddingVertical: 4,
-                        paddingHorizontal: 16
+                        paddingHorizontal: 16,
                       }}
                     >
                       <Text
@@ -661,7 +666,7 @@ export const PostinganSaya = () => {
       if (token !== "") {
         dispatch(getMyPostList({ token: token, page: page }));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -690,6 +695,10 @@ export const PostinganSaya = () => {
     setIsFiltered(true);
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -714,10 +723,7 @@ export const PostinganSaya = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => navigation.navigate("Main")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
             <Ionicons
               name="chevron-back-outline"
               size={device === "tablet" ? 40 : 24}
@@ -748,7 +754,6 @@ export const PostinganSaya = () => {
           }}
         >
           <TouchableOpacity
-            style={{}}
             onPress={() => navigation.navigate("JumlahPostingan")}
           >
             <Ionicons
@@ -761,7 +766,14 @@ export const PostinganSaya = () => {
       </View>
 
       <View style={{ flex: 1 }}>
-        <View style={{ width: "100%", alignSelf: "center", marginTop: 10, paddingHorizontal: 20 }}>
+        <View
+          style={{
+            width: "100%",
+            alignSelf: "center",
+            marginTop: 10,
+            paddingHorizontal: 20,
+          }}
+        >
           <View
             style={{
               marginTop: 15,
@@ -779,7 +791,16 @@ export const PostinganSaya = () => {
                 marginBottom: 15,
               }}
             >
-              <View style={{ width: "85%" }}>
+              <View
+                style={{
+                  width:
+                    device === "tablet" && orientation === "landscape"
+                      ? "95%"
+                      : device === "tablet" && orientation === "potrait"
+                      ? "92%"
+                      : "85%",
+                }}
+              >
                 <Search
                   placeholder={"Cari..."}
                   iconColor={COLORS.primary}
@@ -825,7 +846,7 @@ export const PostinganSaya = () => {
           </View>
         </View>
 
-        <View style={{ paddingHorizontal: 20, flex: 1, }}>
+        <View style={{ paddingHorizontal: 20, flex: 1 }}>
           <FlatList
             data={filterData}
             renderItem={({ item }) => (
@@ -855,7 +876,6 @@ export const PostinganSaya = () => {
           />
         </View>
       </View>
-
     </>
   );
 };

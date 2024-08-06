@@ -256,7 +256,7 @@ export const Nominatif = () => {
               justifyContent: "center",
             }}
           >
-            <View style={{ width: "45%" }}>
+            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
               <Dropdown
                 data={golongan}
                 setSelected={setFirstGolongan}
@@ -271,7 +271,7 @@ export const Nominatif = () => {
               />
             </View>
             <Text>s/d</Text>
-            <View style={{ width: "45%" }}>
+            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
               <Dropdown
                 data={pickSecondGologan()}
                 setSelected={setSecondGolongan}
@@ -306,7 +306,7 @@ export const Nominatif = () => {
               justifyContent: "center",
             }}
           >
-            <View style={{ width: "45%" }}>
+            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
               <Dropdown
                 data={eselon}
                 setSelected={setFirstEselon}
@@ -321,7 +321,7 @@ export const Nominatif = () => {
               />
             </View>
             <Text>s/d</Text>
-            <View style={{ width: "45%" }}>
+            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
               <Dropdown
                 data={eselon}
                 setSelected={setSecondEselon}

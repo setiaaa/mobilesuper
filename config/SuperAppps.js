@@ -40,9 +40,10 @@ export const fontSizeResponsive = (type, device) => {
   let data = {
     H1: device === "phone" ? 15 : 26,
     H2: device === "phone" ? 14 : 25,
-    H3: device === "phone" ? 12 : 23,
-    H4: device === "phone" ? 11 : 22,
+    H3: device === "phone" ? 13 : 23,
+    H4: device === "phone" ? 12 : 22,
     H5: device === "phone" ? 10 : 21,
+    H6: device === "phone" ? 8 : 14,
     Judul: device === "phone" ? 17 : 28,
     textS: device === "phone" ? textStyle.textS : 22,
     textM: device === "phone" ? textStyle.textM : 24,
@@ -55,15 +56,15 @@ export const fontSizeResponsive = (type, device) => {
 };
 
 export const getOrientation = (width, height) => {
-  let orientation = ''
-  if(width > height){
-    orientation = 'landscape'
-  }else{
-    orientation = 'potrait'
+  let orientation = "";
+  if (width > height) {
+    orientation = "landscape";
+  } else {
+    orientation = "potrait";
   }
 
-  return orientation
-}
+  return orientation;
+};
 
 export const imageApps = (type) => {
   if (type === "Korespondensi") {

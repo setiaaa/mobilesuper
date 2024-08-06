@@ -105,7 +105,6 @@ export const SurveyLayanan = () => {
       ...penilaian,
       [realKey]: [actualValue],
     });
-    alert(value);
   };
 
   const [menuKonfirmasi, setMenuKonfirmasi] = useState({

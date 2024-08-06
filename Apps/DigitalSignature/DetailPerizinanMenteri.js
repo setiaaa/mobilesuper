@@ -100,6 +100,31 @@ export const DetailPerizinanMenteri = ({ route }) => {
   };
 
   const { profile } = useSelector((state) => state.superApps);
+
+  const handleShowAttachment = (type) => {
+    let idxAtt = -1;
+
+    let attachments = item?.attachments;
+
+    if (attachments.length !== 0) {
+      attachments.map((item, i) => {
+        let name = item.name.toLowerCase();
+        if (name.includes(type)) {
+          idxAtt = i;
+        }
+      });
+    }
+
+    if (attachments.length !== 0 && attachments[idxAtt] !== undefined) {
+      navigation.navigate("PdfViewer", {
+        data: attachments[idxAtt].file,
+        type: "DokumenLain",
+      });
+    } else {
+      Alert.alert("File Tidak Ada");
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -294,7 +319,11 @@ export const DetailPerizinanMenteri = ({ route }) => {
                         />
                       ) : (
                         <View>
-                          <Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             {item?.composer?.is_title
                               ? item?.composer?.officer?.nama
                               : item?.composer?.nama}
@@ -646,79 +675,85 @@ export const DetailPerizinanMenteri = ({ route }) => {
             ""
           )}
 
-          <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
-            {loading ? null : (
-              <>
-                {profile?.nip === "88888" ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (
-                        item.attachments.length !== 0 &&
-                        item.attachments[1].file !== undefined
-                      ) {
-                        navigation.navigate("PdfViewer", {
-                          data: item.attachments[1].file,
-                          type: "DokumenLain",
-                        });
-                      } else {
-                        Alert.alert("File Tidak Ada");
-                      }
-                    }}
-                    style={{
-                      width: "90%",
-                      backgroundColor: "rgb(245, 127, 23)",
-                      borderRadius: 6,
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                      marginHorizontal: "5%",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        marginVertical: 15,
-                        fontSize: fontSizeResponsive("H2", device),
-                      }}
-                    >
-                      Lihat Dokumen Memo
-                    </Text>
-                  </TouchableOpacity>
+          {/* {profile?.nip === "88888" ? (
+                
                 ) : null}
-                <TouchableOpacity
-                  onPress={() => {
-                    if (
-                      item.attachments.length !== 0 &&
-                      item.attachments[0].file !== undefined
-                    ) {
-                      navigation.navigate("PdfViewer", {
-                        data: item.attachments[0].file,
-                        type: "DokumenLain",
-                      });
-                    } else {
-                      Alert.alert("File Tidak Ada");
-                    }
-                  }}
+                 */}
+          <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
+            {(profile?.nip === "196212301990031006" ||
+              profile?.nip === "190001" ||
+              profile?.nip === "88888") && (
+              <TouchableOpacity
+                onPress={() => handleShowAttachment("undangan")}
+                style={{
+                  width: "90%",
+                  backgroundColor: "#2296f4",
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
                   style={{
-                    width: "90%",
-                    backgroundColor: COLORS.info,
-                    borderRadius: 6,
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    marginHorizontal: "5%",
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
-                  <Text
-                    style={{
-                      color: COLORS.white,
-                      marginVertical: 15,
-                      fontSize: fontSizeResponsive("H2", device),
-                    }}
-                  >
-                    Lihat Dokumen Perizinan
-                  </Text>
-                </TouchableOpacity>
-              </>
+                  Lihat Dokumen Undangan
+                </Text>
+              </TouchableOpacity>
             )}
+
+            {(profile?.nip === "190001" || profile?.nip === "88888") && (
+              <TouchableOpacity
+                onPress={() => handleShowAttachment("memo")}
+                style={{
+                  width: "90%",
+                  backgroundColor: "rgb(245, 127, 23)",
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Lihat Dokumen Memo
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {profile?.nip === "88888" && (
+              <TouchableOpacity
+                onPress={() => handleShowAttachment("persetujuan")}
+                style={{
+                  width: "90%",
+                  backgroundColor: COLORS.info,
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Lihat Dokumen Perizinan
+                </Text>
+              </TouchableOpacity>
+            )}
+
             {variant.variant === "inprogress" &&
             profile.nip !== "197208122001121002" ? (
               <>

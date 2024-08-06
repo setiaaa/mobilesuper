@@ -171,7 +171,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 70,
+                  width: device === "tablet" ? 200 : 70,
                 }}
               >
                 <View
@@ -213,7 +213,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 70,
+                  width: device === "tablet" ? 200 : 70,
                 }}
               >
                 <Ionicons
@@ -252,7 +252,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     alignItems: "center",
                     height: device === "tablet" ? 140 : 95,
                     justifyContent: "center",
-                    width: device === "tablet" ? 150 : 70,
+                    width: device === "tablet" ? 200 : 70,
                   }}
                 >
                   <View
@@ -283,6 +283,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       fontSize: fontSizeResponsive("H3", device),
                       bottom: device === "tablet" ? 20 : 24,
                       position: "absolute",
+                      bottom: device === "tablet" ? 50 : 24,
                     }}
                   >
                     Rangkuman IKU
@@ -294,7 +295,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     alignItems: "center",
                     height: device === "tablet" ? 140 : 95,
                     justifyContent: "center",
-                    width: device === "tablet" ? 150 : 70,
+                    width: device === "tablet" ? 200 : 70,
                   }}
                 >
                   <Ionicons
@@ -310,6 +311,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       fontSize: fontSizeResponsive("H3", device),
                       bottom: device === "tablet" ? 20 : 24,
                       position: "absolute",
+                      bottom: device === "tablet" ? 50 : 24,
                     }}
                   >
                     Rangkuman IKU

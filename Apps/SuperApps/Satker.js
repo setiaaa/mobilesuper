@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList, Platform, useWindowDimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Platform,
+  useWindowDimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 import { CardSatker } from "../../components/CardSatker";
@@ -9,7 +16,6 @@ import Carousel, {
   ParallaxImage,
 } from "react-native-snap-carousel";
 import { useRef } from "react";
-import { Dimensions } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Banner, Divider } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
@@ -25,7 +31,7 @@ import {
   getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getBennerSatker,
@@ -67,7 +73,6 @@ import { Config } from "../../constants/config";
 //       "Pada hari Selasa (20/8) telah dilaksanakan Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)",
 //   },
 // ];
-
 
 export const Satker = () => {
   const carouselRef = useRef(null);
@@ -111,45 +116,50 @@ export const Satker = () => {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const getWidthCarousel = () => {
-    let tempWidth = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempWidth = screenWidth - 110
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 110;
       } else {
-        tempWidth = screenWidth - 100
+        tempWidth = screenWidth - 100;
       }
     } else {
-      tempWidth = screenWidth - 60
+      tempWidth = screenWidth - 60;
     }
 
-    return tempWidth
-  }
+    return tempWidth;
+  };
 
   const getHeightCarousel = () => {
-    let tempHeight = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempHeight = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempHeight = screenWidth - 400
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempHeight = screenWidth - 400;
       } else {
-        tempHeight = screenWidth - 250
+        tempHeight = screenWidth - 250;
       }
     } else {
-      tempHeight = screenWidth - 170
+      tempHeight = screenWidth - 50;
     }
 
-    return tempHeight
-  }
+    return tempHeight;
+  };
 
   const BannerGallery = ({ item, index, parallaxProps }) => {
     return (
-      <View style={[{
-        width: getWidthCarousel(),
-        height: getHeightCarousel()
-      }, { marginVertical: 20 }]}>
+      <View
+        style={[
+          {
+            width: getWidthCarousel(),
+            height: getHeightCarousel(),
+          },
+          { marginVertical: 20 },
+        ]}
+      >
         <ParallaxImage
           source={{ uri: item.main_images?.image }}
           containerStyle={styles.imageContainer}
@@ -230,8 +240,8 @@ export const Satker = () => {
                     item.category === "Video / Jurnal"
                       ? COLORS.successLight
                       : item.category === "Infografis"
-                        ? COLORS.warningLight
-                        : COLORS.infoLight,
+                      ? COLORS.warningLight
+                      : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
                   width: device === "tablet" ? 200 : 110,
@@ -267,8 +277,8 @@ export const Satker = () => {
                       item.category === "Infografis"
                         ? COLORS.warning
                         : item.category === "Kegiatan"
-                          ? COLORS.info
-                          : COLORS.success,
+                        ? COLORS.info
+                        : COLORS.success,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -291,10 +301,12 @@ export const Satker = () => {
 
   const BannerBerita = ({ item, index, parallaxProps }) => {
     return (
-      <View style={{
-        width: getWidthCarousel(),
-        height: getHeightCarousel()
-      }}>
+      <View
+        style={{
+          width: getWidthCarousel(),
+          height: getHeightCarousel(),
+        }}
+      >
         <ParallaxImage
           source={{ uri: item.image }}
           containerStyle={styles.imageContainer}
@@ -321,10 +333,12 @@ export const Satker = () => {
 
   const BannerKegiatan = ({ item, parallaxProps }) => {
     return (
-      <View style={{
-        width: getWidthCarousel(),
-        height: getHeightCarousel()
-      }}>
+      <View
+        style={{
+          width: getWidthCarousel(),
+          height: getHeightCarousel(),
+        }}
+      >
         <ParallaxImage
           source={{ uri: item.image }}
           containerStyle={styles.imageContainer}
@@ -381,16 +395,29 @@ export const Satker = () => {
       marginVertical: 40,
     },
     p: {
-      fontSize: 14,
+      display: "none",
     },
-    h5: {
+    h4: {
       fontSize: 18,
+      marginBottom: 0, // Mengurangi jarak bawah
+      marginTop: 10, // Mengurangi jarak atas
+    },
+    ul: {
+      marginBottom: 0,
+    },
+    li: {
+      // backgroundColor: "orange",
+      // marginTop: 5,
+    },
+    ol: {
+      fontSize: 15,
+      marginTop: 10,
     },
   };
 
   const classesStyles = {
     content: {
-      padding: 30,
+      padding: 10,
     },
     "news-title": {
       fontSize: 18,
@@ -406,15 +433,21 @@ export const Satker = () => {
   };
 
   const baseStyles = {};
+
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
       <ScrollView style={{ flexGrow: 1 }} nestedScrollEnabled={true}>
-        <View style={{ minHeight: device === 'tablet' ? 350 : 250, position: 'relative' }}>
+        <View
+          style={{
+            minHeight: device === "tablet" ? 350 : 250,
+            position: "relative",
+          }}
+        >
           <View
             style={{
               width: "100%",
-              height: device === 'tablet' ? 280 : 180,
+              height: device === "tablet" ? 280 : 180,
               position: "absolute",
               top: 0,
               borderBottomLeftRadius: 14,
@@ -438,7 +471,7 @@ export const Satker = () => {
               flex: 1,
               flexDirection: "row",
               gap: 16,
-              padding: 20
+              padding: 20,
             }}
           >
             <View>
@@ -478,11 +511,19 @@ export const Satker = () => {
             </View>
           </View>
 
-          <View style={{ width: '100%', position: 'absolute', zIndex: 9, top: device === 'tablet' ? '55%' : '50%', paddingHorizontal: 20 }}>
-            <View style={{ alignItems: "center", display: 'flex' }}>
+          <View
+            style={{
+              width: "100%",
+              position: "absolute",
+              zIndex: 9,
+              top: device === "tablet" ? "55%" : "50%",
+              paddingHorizontal: 20,
+            }}
+          >
+            <View style={{ alignItems: "center", display: "flex" }}>
               <View
                 style={{
-                  width: '100%',
+                  width: "100%",
                   alignItems: "center",
                 }}
               >
@@ -522,7 +563,7 @@ export const Satker = () => {
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
-            data={gallery.results}
+            data={gallery?.results?.slice(0, 5)}
             renderItem={({ item }, parallaxProps) => (
               <BannerGallery parallaxProps={parallaxProps} item={item} />
             )}
@@ -530,7 +571,7 @@ export const Satker = () => {
             onSnapToItem={setSlide}
           />
           <Pagination
-            dotsLength={gallery?.results?.length}
+            dotsLength={gallery?.results?.slice(0, 5).length}
             dotColor={"black"}
             inactiveDotColor={COLORS.grey}
             dotStyle={styles.paginationDot}
@@ -641,6 +682,23 @@ export const Satker = () => {
               }}
               nestedScrollEnabled={true}
             >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.info,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.nama}
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  marginTop: 10,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.position}
+              </Text>
               <RenderHTML
                 source={{ html: pesan[pesan.length - 1]?.content }}
                 tagsStyles={tagsStyles}

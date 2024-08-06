@@ -56,8 +56,8 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
           ) : (
             <Text
               style={[
-                { fontWeight: FONTWEIGHT.bold },
-                fontSizeResponsive("textL", device),
+                { fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive('H4', device) },
+                
               ]}
             >
               {item.title}

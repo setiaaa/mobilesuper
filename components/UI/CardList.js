@@ -19,6 +19,7 @@ function CardList({ data, tipe, onPress }) {
   const { profile } = useSelector((state) => state.profile);
   const selected = useSelector((state) => state.listbulk.list);
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.apps);
 
   let header = {};
   useEffect(() => {
@@ -73,7 +74,12 @@ function CardList({ data, tipe, onPress }) {
         ]}
       >
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "15%", alignItems: "center" }}>
+          <View
+            style={{
+              width: device === "tablet" ? "10%" : "15%",
+              alignItems: "center",
+            }}
+          >
             {errorAvatar && (
               <Image
                 source={Config.avatar}

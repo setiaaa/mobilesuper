@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -256,7 +256,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["85%", "CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -494,11 +494,21 @@ export const Home = () => {
 
   const renderRow = ({ item }) => {
     if (item.empty === true) {
-      return <View style={[{ width: screenWidth - 60, height: screenWidth - 170 }, styles.itemInvisible]} />;
+      return (
+        <View
+          style={[
+            { width: screenWidth - 60, height: screenWidth - 170 },
+            styles.itemInvisible,
+          ]}
+        />
+      );
     }
     return (
       <View
-        style={[{ width: screenWidth - 60, height: screenWidth - 170 }, { height: device === "tablet" ? 200 : 100 }]}
+        style={[
+          { width: screenWidth - 60, height: screenWidth - 170 },
+          { height: device === "tablet" ? 200 : 100 },
+        ]}
         key={item.title}
       >
         <TouchableOpacity
@@ -693,21 +703,21 @@ export const Home = () => {
   // };
 
   const getWidthCarousel = () => {
-    let tempWidth = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempWidth = screenWidth - 120
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 120;
       } else {
-        tempWidth = screenWidth - 100
+        tempWidth = screenWidth - 100;
       }
     } else {
-      tempWidth = screenWidth - 60
+      tempWidth = screenWidth - 60;
     }
 
-    return tempWidth
-  }
+    return tempWidth;
+  };
 
   return (
     <GestureHandlerRootView>
@@ -718,11 +728,16 @@ export const Home = () => {
             <RefreshControl refreshing={refresh} onRefresh={refreshPage} />
           }
         >
-          <View style={{ minHeight: device === 'tablet' ? 530 : 350, position: 'relative' }}>
+          <View
+            style={{
+              minHeight: device === "tablet" ? 530 : 350,
+              position: "relative",
+            }}
+          >
             <View
               style={{
                 width: "100%",
-                height: device === 'tablet' ? 280 : 180,
+                height: device === "tablet" ? 280 : 180,
                 position: "absolute",
                 top: 0,
                 borderBottomLeftRadius: 14,
@@ -746,7 +761,7 @@ export const Home = () => {
                 flex: 1,
                 flexDirection: "row",
                 gap: 16,
-                padding: 20
+                padding: 20,
               }}
             >
               <View>
@@ -786,8 +801,16 @@ export const Home = () => {
               </View>
             </View>
 
-            <View style={{ width: '100%', position: 'absolute', zIndex: 9, top: '30%', paddingHorizontal: 20 }}>
-              <View style={{ alignItems: "center", display: 'flex' }}>
+            <View
+              style={{
+                width: "100%",
+                position: "absolute",
+                zIndex: 9,
+                top: "30%",
+                paddingHorizontal: 20,
+              }}
+            >
+              <View style={{ alignItems: "center", display: "flex" }}>
                 <CardApps
                   handlePressModal={handlePressModal}
                   setModalBankom={setModalBankom}
@@ -814,11 +837,12 @@ export const Home = () => {
                     )}
                   >
                     <View onLayout={handleContentLayout}>
-                      <View style={{ marginVertical: 20 }}>
+                      <View
+                        style={{ marginTop: device === "tablet" ? 50 : 30 }}
+                      >
                         <View
                           style={{
                             marginHorizontal: 20,
-                            marginTop: 10,
                             flexDirection: "row",
                             justifyContent: "space-between",
                             padding: 14,
@@ -844,7 +868,7 @@ export const Home = () => {
                             />
                           </TouchableOpacity>
                         </View>
-                        <View style={{ marginVertical: 20 }}>
+                        <View>
                           <CardAppsB
                             setModalBankom={setModalBankom}
                             setModalKepegawaian={setModalKepegawaian}
@@ -1119,8 +1143,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1136,8 +1160,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                  ? "#B745FF"
-                                  : null,
+                                ? "#B745FF"
+                                : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1152,8 +1176,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1366,9 +1390,14 @@ export const Home = () => {
                   />
                 </View>
               </TouchableOpacity>
-              <View style={{ width: 380, height: 283 }}>
+              <View
+                style={{
+                  width: device === "tablet" ? 700 : 380,
+                  height: device === "tablet" ? 500 : 283,
+                }}
+              >
                 <YoutubePlayer
-                  height={300}
+                  height={useWindowDimensions().height}
                   play={playing}
                   videoId={"tV6yMXX2hPs"}
                   onChangeState={onStateChange}
@@ -1445,8 +1474,7 @@ export const Home = () => {
             onRequestClose={() => {
               setModalVisible(!modalVisible);
             }}
-            style={{
-            }}
+            style={{}}
           >
             <TouchableOpacity
               style={[
@@ -1456,13 +1484,19 @@ export const Home = () => {
                 styles.backdrop,
               ]}
             />
-            <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }}>
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
               <View
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 10,
                   padding: 20,
-                  width: '90%'
+                  width: "90%",
                 }}
               >
                 <View
@@ -1644,7 +1678,7 @@ export const Home = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    flexWrap: 'wrap',
+                    flexWrap: "wrap",
                     gap: 10,
                     marginTop: 10,
                   }}
@@ -1815,7 +1849,11 @@ export const Home = () => {
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: FONTSIZE.H4,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         My SAPK
                       </Text>
@@ -1858,7 +1896,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: 350 }]}>
+          <View style={[styles.containerr, { marginBottom: "60%" }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}

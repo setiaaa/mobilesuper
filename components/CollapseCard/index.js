@@ -469,7 +469,8 @@ export const CollapseCard = ({
                     flexDirection: "row",
                     gap: 5,
                     display: "flex",
-                    alignItems: "baseline",
+                    alignItems: "center",
+                    justifyContent: 'center'
                   }}
                 >
                   <Ionicons

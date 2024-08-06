@@ -103,7 +103,7 @@ export const CardAppsB = ({
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
+      <View style={[styles.item, { height: device === "tablet" ? 200 : 110 }]}>
         <View
           style={{
             justifyContent: "center",
@@ -155,7 +155,7 @@ export const CardAppsB = ({
                   size={device === 'tablet' ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
-              ) : item.title === "Agenda Rapat" ? (
+              ) : item.title === "Event Management" ? (
                 <MaterialCommunityIcons
                   name="folder-star-multiple"
                   size={device === 'tablet' ? 60 : 30}
@@ -195,11 +195,10 @@ export const CardAppsB = ({
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
+              fontSize: fontSizeResponsive("H6", device),
               width: device === 'tablet' ? 100 : 60,
               textAlign: 'center'
             }}
-            numberOfLines={1}
           >
             {item.title}
           </Text>
@@ -241,7 +240,7 @@ export const CardAppsB = ({
         }}
         numColumns={numColumns}
         scrollEnabled={true}
-        style={{height: '90%'}}
+        style={{ height: '95%' }}
       />
     </View>
   );

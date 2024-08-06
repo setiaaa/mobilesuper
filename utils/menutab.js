@@ -119,6 +119,7 @@ import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
 import { SuperApps } from "../Apps/Faq/SuperApps";
 import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
 import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
+import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -204,8 +205,9 @@ export const BottomTabsRepo = () => {
     <BottomSheetModalProvider>
       <View
         style={{
-          height: Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
-          width: '100%'
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+          width: "100%",
         }}
       >
         <Tab.Navigator
@@ -969,12 +971,6 @@ export const TopsProduksiBudidaya = () => {
 
 export const TopsKeuanganKinerja = () => {
   const { device } = useSelector((state) => state.apps);
-  const dataRoleLPMUKP = ["LPMUKP_DASHBOARD"];
-  const { profile } = useSelector((state) => state.superApps);
-
-  const isRoleLPMUKP = profile.roles_access?.some((item) =>
-    dataRoleLPMUKP.includes(item)
-  );
 
   return (
     <BottomSheetModalProvider>
@@ -1014,15 +1010,13 @@ export const TopsKeuanganKinerja = () => {
             title: "IKU",
           }}
         />
-        {isRoleLPMUKP ? (
-          <Top.Screen
-            name="LPMUKP"
-            component={LPMUKP}
-            options={{
-              title: "LPMUKP",
-            }}
-          />
-        ) : null}
+        <Top.Screen
+          name="DetailAPBN"
+          component={DetailAPBN}
+          options={{
+            title: "APBN Detail",
+          }}
+        />
       </Top.Navigator>
     </BottomSheetModalProvider>
   );

@@ -4,12 +4,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -60,6 +62,10 @@ export const PegawaiIPASN = () => {
   const filterSearch = () => {
     setSearch(inputValue);
   };
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <View>
@@ -124,7 +130,12 @@ export const PegawaiIPASN = () => {
             borderColor: COLORS.ExtraDivinder,
             borderRadius: 8,
             backgroundColor: COLORS.white,
-            width: "90%",
+            width:
+              device === "tablet" && orientation === "landscape"
+                ? "96.5%"
+                : device === "tablet" && orientation === "potrait"
+                ? "95%"
+                : "90%",
             marginHorizontal: 20,
             marginTop: 20,
           }}

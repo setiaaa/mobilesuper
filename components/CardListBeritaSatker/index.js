@@ -8,11 +8,12 @@ import { Image } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import moment from "moment";
 
 export const CardListBeritaSatker = ({
   image,
@@ -66,6 +67,7 @@ export const CardListBeritaSatker = ({
               fontWeight: 400,
             }}
           >
+            {/* {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)} */}
             {tanggal}
           </Text>
           <Text

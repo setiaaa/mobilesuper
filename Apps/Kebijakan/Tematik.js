@@ -141,7 +141,6 @@ export const Tematik = () => {
 
   const unitKerjaTematik = unitKerja.lists;
 
-
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -160,8 +159,8 @@ export const Tematik = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -170,7 +169,7 @@ export const Tematik = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
