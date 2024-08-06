@@ -59,6 +59,8 @@ import { Portal } from "react-native-portalize";
 import { CardListAplikasi } from "../../components/CardListAplikasi";
 import { GlobalStyles } from "../../constants/styles";
 import { Divider } from "react-native-paper";
+import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDataUtama";
+import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1066,6 +1068,24 @@ export const Profile = () => {
           <CollapseCardBiodata profile={profile} device={device} />
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
+        {/* SIASN Data Utama */}
+        {profile?.siasn_data.siasn_data_utama != null && (
+          <View style={{ paddingVertical: spacing.default }}>
+            <CollapseCardSIASNDataUtama
+              profile={profile.siasn_data.siasn_data_utama}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN Jabatan */}
+        {profile?.siasn_data.siasn_jabatan != null && (
+          <View style={{ paddingVertical: spacing.default }}>
+            <CollapseCardSIASNJabatan
+              profile={profile.siasn_data.siasn_jabatan}
+              device={device}
+            />
+          </View>
+        )}
 
         {/* Faq */}
         <View
