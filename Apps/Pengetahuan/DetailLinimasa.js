@@ -329,7 +329,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
         shadowOpacity: 0.2,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
       }}
     >
       <View
@@ -338,7 +338,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
           borderRadius: 10,
           marginVertical: 5,
           paddingVertical: 8,
-          width: '100%',
+          width: "100%",
           elevation: 5,
         }}
       >
@@ -424,8 +424,8 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                  (toggleComment.id !== listData.id &&
-                    listData.child.length > 0) ? (
+                (toggleComment.id !== listData.id &&
+                  listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -816,7 +816,7 @@ export const DetailLinimasa = ({ route }) => {
                   <View
                     style={{
                       width: "100%",
-                      height: device === 'tablet' ? 400 : 260,
+                      height: device === "tablet" ? 400 : 260,
                       backgroundColor: COLORS.grey,
                     }}
                   ></View>
@@ -828,10 +828,9 @@ export const DetailLinimasa = ({ route }) => {
                         ? styles.imageIos
                         : styles.imageAndroid,
                       {
-                        height: device === 'tablet' ? 400 : 260
-                      }
-                    ]
-                    }
+                        height: device === "tablet" ? 400 : 260,
+                      },
+                    ]}
                   />
                 )}
 
@@ -955,10 +954,10 @@ export const DetailLinimasa = ({ route }) => {
                           {/* {detail.published_date?.slice(0, -9)} */}
                           {detail.published_date !== undefined
                             ? DateFormat({
-                              date: detail?.published_date,
-                              fromDate: DATETIME.LONG_DATETIME,
-                              toDate: DATETIME.LONG_DATE,
-                            })
+                                date: detail?.published_date,
+                                fromDate: DATETIME.LONG_DATETIME,
+                                toDate: DATETIME.LONG_DATE,
+                              })
                             : null}
                         </Text>
                       )}
@@ -989,8 +988,8 @@ export const DetailLinimasa = ({ route }) => {
                             detail.category === "Video / Jurnal"
                               ? COLORS.successLight
                               : detail.category === "Infografis"
-                                ? COLORS.warningLight
-                                : COLORS.infoLight,
+                              ? COLORS.warningLight
+                              : COLORS.infoLight,
                           borderRadius: 30,
                           paddingHorizontal: 16,
                           paddingVertical: 4,
@@ -1004,21 +1003,21 @@ export const DetailLinimasa = ({ route }) => {
                           <Ionicons
                             name="document-outline"
                             color={"#F6AD1D"}
-                            size={device === 'tablet' ? 20 : 16}
+                            size={device === "tablet" ? 20 : 16}
                             style={{ marginTop: 2 }}
                           />
                         ) : detail.category === "Kegiatan" ? (
                           <Ionicons
                             name="analytics-outline"
                             color={"#1868AB"}
-                            size={device === 'tablet' ? 20 : 16}
+                            size={device === "tablet" ? 20 : 16}
                             style={{ marginTop: 3 }}
                           />
                         ) : (
                           <Ionicons
                             name="videocam-outline"
                             color={"#11C15B"}
-                            size={device === 'tablet' ? 20 : 16}
+                            size={device === "tablet" ? 20 : 16}
                             style={{ marginTop: 2 }}
                           />
                         )}
@@ -1028,8 +1027,8 @@ export const DetailLinimasa = ({ route }) => {
                               detail.category === "Infografis"
                                 ? COLORS.warning
                                 : detail.category === "Kegiatan"
-                                  ? COLORS.info
-                                  : COLORS.success,
+                                ? COLORS.info
+                                : COLORS.success,
                             fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
@@ -1136,7 +1135,13 @@ export const DetailLinimasa = ({ route }) => {
                             styles.backdrop,
                           ]}
                         />
-                        <View style={{ alignItems: "center", flex: 1, justifyContent: "center" }}>
+                        <View
+                          style={{
+                            alignItems: "center",
+                            flex: 1,
+                            justifyContent: "center",
+                          }}
+                        >
                           <View
                             style={{
                               backgroundColor: COLORS.white,
@@ -1673,8 +1678,8 @@ export const DetailLinimasa = ({ route }) => {
                           </View>
                         </TouchableOpacity>
                         {getFileExtension(lampiranById.name) === "png" ||
-                          getFileExtension(lampiranById.name) === "jpg" ||
-                          getFileExtension(lampiranById.name) === "jpeg" ? (
+                        getFileExtension(lampiranById.name) === "jpg" ||
+                        getFileExtension(lampiranById.name) === "jpeg" ? (
                           <View>
                             <Image
                               source={{ uri: lampiranById.file }}
@@ -1716,7 +1721,13 @@ export const DetailLinimasa = ({ route }) => {
                         styles.backdrop,
                       ]}
                     />
-                    <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }}>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
                       <View
                         style={{
                           backgroundColor: COLORS.white,
@@ -2017,7 +2028,13 @@ export const DetailLinimasa = ({ route }) => {
                         styles.backdrop,
                       ]}
                     />
-                    <View style={{ alignItems: "center", flex: 1, justifyContent: "center" }}>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
                       <View
                         style={{
                           backgroundColor: COLORS.white,

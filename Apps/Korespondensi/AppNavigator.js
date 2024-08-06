@@ -425,6 +425,7 @@ function AuthenticatedStack({ route }) {
     }
     checkDevice();
   }, [profile, deviceUUID, deviceId, deviceName, deviceOS]);
+  const { device } = useSelector((state) => state.apps);
 
   const loadingOverlay = (
     <>
@@ -438,7 +439,12 @@ function AuthenticatedStack({ route }) {
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
         />
-        <Stack.Navigator initialRouteName={route}>
+        <Stack.Navigator
+          initialRouteName={route}
+          screenOptions={{
+            orientation: device === "tablet" ? "default" : "portrait",
+          }}
+        >
           <Stack.Screen
             name="LoginToken"
             component={LoginToken}
