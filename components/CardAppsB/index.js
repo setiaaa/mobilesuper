@@ -107,7 +107,7 @@ export const CardAppsB = ({
         <View
           style={{
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "flex-start",
             display: "flex",
           }}
         >
@@ -229,7 +229,7 @@ export const CardAppsB = ({
   const numColumns = device === 'tablet' ? 4 : 3;
 
   return (
-    <View>
+    <View style={{ marginTop: 24 }}>
       <FlatList
         data={formatData(listMenu, numColumns)}
         renderItem={renderRow}
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flex: 1,
     margin: 1, // approximate a square
   },

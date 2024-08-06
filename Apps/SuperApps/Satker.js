@@ -31,7 +31,7 @@ import {
   getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getBennerSatker,
@@ -78,7 +78,7 @@ export const Satker = () => {
   const carouselRefHome = useRef(null);
   const carouselRefBerita = useRef(null);
   const carouselRefGaleri = useRef(null);
-  
+
   const [entries, setEntries] = useState([]);
   // const [berita, setBerita] = useState([]);
   const [selected, setSelected] = useState("");
@@ -123,9 +123,9 @@ export const Satker = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 110;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -242,8 +242,8 @@ export const Satker = () => {
                     item.category === "Video / Jurnal"
                       ? COLORS.successLight
                       : item.category === "Infografis"
-                      ? COLORS.warningLight
-                      : COLORS.infoLight,
+                        ? COLORS.warningLight
+                        : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
                   width: device === "tablet" ? 200 : 110,
@@ -279,8 +279,8 @@ export const Satker = () => {
                       item.category === "Infografis"
                         ? COLORS.warning
                         : item.category === "Kegiatan"
-                        ? COLORS.info
-                        : COLORS.success,
+                          ? COLORS.info
+                          : COLORS.success,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -817,7 +817,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
     // marginHorizontal: 20,
-    alignSelf: "center",
   },
   vertical: {
     rotation: 12,

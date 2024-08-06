@@ -18,9 +18,9 @@ export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
 
     if (device === 'tablet') {
       if (orientation === 'landscape') {
-        tempWidth = screenWidth - 110
+        tempWidth = screenWidth - 50
       } else {
-        tempWidth = screenWidth - 100
+        tempWidth = screenWidth - 50
       }
     } else {
       tempWidth = screenWidth - 60
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   images: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   paginationDot: {
     width: 8,

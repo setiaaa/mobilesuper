@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -706,9 +706,9 @@ export const Home = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 120;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -1141,8 +1141,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1158,8 +1158,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                                  ? "#B745FF"
+                                  : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1174,8 +1174,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
