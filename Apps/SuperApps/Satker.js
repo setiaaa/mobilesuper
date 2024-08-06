@@ -31,7 +31,7 @@ import {
   getOrientation,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getBennerSatker,
@@ -75,14 +75,13 @@ import { Config } from "../../constants/config";
 // ];
 
 export const Satker = () => {
-  const carouselRef = useRef(null);
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
 
   const [entries, setEntries] = useState([]);
-  // const [berita, setBerita] = useState([]);
   const [selected, setSelected] = useState("");
 
-  const [slide, setSlide] = useState(0);
-  const [slide2, setSlide2] = useState(0);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
 
@@ -121,9 +120,9 @@ export const Satker = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 110;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -240,8 +239,8 @@ export const Satker = () => {
                     item.category === "Video / Jurnal"
                       ? COLORS.successLight
                       : item.category === "Infografis"
-                      ? COLORS.warningLight
-                      : COLORS.infoLight,
+                        ? COLORS.warningLight
+                        : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
                   width: device === "tablet" ? 200 : 110,
@@ -277,8 +276,8 @@ export const Satker = () => {
                       item.category === "Infografis"
                         ? COLORS.warning
                         : item.category === "Kegiatan"
-                        ? COLORS.info
-                        : COLORS.success,
+                          ? COLORS.info
+                          : COLORS.success,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -533,9 +532,9 @@ export const Satker = () => {
           </View>
         </View>
 
-        <View style={[styles.containerr, { marginTop: 20 }]}>
+        <View style={[styles.containerr, { marginVertical: 20 }]}>
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefHome}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
@@ -558,8 +557,9 @@ export const Satker = () => {
               Galeri
             </Text>
           </View>
+
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefGaleri}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
@@ -568,23 +568,11 @@ export const Satker = () => {
               <BannerGallery parallaxProps={parallaxProps} item={item} />
             )}
             hasParallaxImages={true}
-            onSnapToItem={setSlide}
-          />
-          <Pagination
-            dotsLength={gallery?.results?.slice(0, 5).length}
-            dotColor={"black"}
-            inactiveDotColor={COLORS.grey}
-            dotStyle={styles.paginationDot}
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.6}
-            activeDotIndex={slide}
-            carouselRef={carouselRef}
-            tappableDots={!!carouselRef}
           />
         </View>
 
         <View
-          style={{ marginLeft: 30, flexDirection: "row", marginBottom: 20 }}
+          style={{ marginLeft: 30, flexDirection: "row", marginVertical: 20 }}
         >
           <Text
             style={{
@@ -612,9 +600,9 @@ export const Satker = () => {
         </View>
 
         <View>
-          <View style={styles.containerr}>
+          <View style={[styles.containerr, { marginVertical: 20 }]}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefBerita}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -631,7 +619,7 @@ export const Satker = () => {
           style={[
             styles.containerr,
             {
-              marginTop: 10,
+              marginVertical: 20,
               justifyContent: "center",
               alignItems: "center",
             },
@@ -658,6 +646,7 @@ export const Satker = () => {
             carouselRef={carouselRef}
             tappableDots={!!carouselRef}
           /> */}
+
           <View
             style={{
               flexDirection: "row",
@@ -707,6 +696,7 @@ export const Satker = () => {
               />
             </ScrollView>
           </View>
+
         </View>
         {/* <Calendar
                     onDayPress={day => {
@@ -765,9 +755,8 @@ export const Satker = () => {
 
         <View
           style={{
-            marginBottom: 40,
+            marginVertical: 20,
             marginHorizontal: 30,
-            marginTop: profile?.nip === "100062" ? 10 : 0,
           }}
         >
           <CardUltah ultah={ultah} device={device} />
@@ -815,7 +804,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
     // marginHorizontal: 20,
-    alignSelf: "center",
   },
   vertical: {
     rotation: 12,

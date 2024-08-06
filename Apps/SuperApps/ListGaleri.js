@@ -235,16 +235,17 @@ export const ListGaleri = () => {
                 style={{
                   width:
                     device === "tablet" && orientation === "landscape"
-                      ? useWindowDimensions().width
+                      ? 900
                       : device === "tablet" && orientation === "potrait"
                       ? 800
                       : 390,
                   height:
                     device === "tablet" && orientation === "landscape"
-                      ? useWindowDimensions().height
+                      ? 900
                       : device === "tablet" && orientation === "potrait"
                       ? 800
                       : 283,
+                  resizeMode: 'contain'
                 }}
               />
             </TouchableOpacity>
