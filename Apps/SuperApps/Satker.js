@@ -80,11 +80,8 @@ export const Satker = () => {
   const carouselRefGaleri = useRef(null);
 
   const [entries, setEntries] = useState([]);
-  // const [berita, setBerita] = useState([]);
   const [selected, setSelected] = useState("");
 
-  const [slide, setSlide] = useState(0);
-  const [slide2, setSlide2] = useState(0);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
 
@@ -535,7 +532,7 @@ export const Satker = () => {
           </View>
         </View>
 
-        <View style={[styles.containerr, { marginTop: 20 }]}>
+        <View style={[styles.containerr, { marginVertical: 20 }]}>
           <Carousel
             ref={carouselRefHome}
             sliderWidth={screenWidth}
@@ -560,6 +557,7 @@ export const Satker = () => {
               Galeri
             </Text>
           </View>
+
           <Carousel
             ref={carouselRefGaleri}
             sliderWidth={screenWidth}
@@ -570,23 +568,11 @@ export const Satker = () => {
               <BannerGallery parallaxProps={parallaxProps} item={item} />
             )}
             hasParallaxImages={true}
-            onSnapToItem={setSlide}
-          />
-          <Pagination
-            dotsLength={gallery?.results?.slice(0, 5).length}
-            dotColor={"black"}
-            inactiveDotColor={COLORS.grey}
-            dotStyle={styles.paginationDot}
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.6}
-            activeDotIndex={slide}
-            carouselRef={carouselRefGaleri}
-            tappableDots={!!carouselRefGaleri}
           />
         </View>
 
         <View
-          style={{ marginLeft: 30, flexDirection: "row", marginBottom: 20 }}
+          style={{ marginLeft: 30, flexDirection: "row", marginVertical: 20 }}
         >
           <Text
             style={{
@@ -614,7 +600,7 @@ export const Satker = () => {
         </View>
 
         <View>
-          <View style={styles.containerr}>
+          <View style={[styles.containerr, { marginVertical: 20 }]}>
             <Carousel
               ref={carouselRefBerita}
               sliderWidth={screenWidth}
@@ -633,7 +619,7 @@ export const Satker = () => {
           style={[
             styles.containerr,
             {
-              marginTop: 10,
+              marginVertical: 20,
               justifyContent: "center",
               alignItems: "center",
             },
@@ -660,6 +646,7 @@ export const Satker = () => {
             carouselRef={carouselRef}
             tappableDots={!!carouselRef}
           /> */}
+
           <View
             style={{
               flexDirection: "row",
@@ -709,6 +696,7 @@ export const Satker = () => {
               />
             </ScrollView>
           </View>
+
         </View>
         {/* <Calendar
                     onDayPress={day => {
@@ -767,9 +755,8 @@ export const Satker = () => {
 
         <View
           style={{
-            marginBottom: 40,
+            marginVertical: 20,
             marginHorizontal: 30,
-            marginTop: profile?.nip === "100062" ? 10 : 0,
           }}
         >
           <CardUltah ultah={ultah} device={device} />
