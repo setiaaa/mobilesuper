@@ -415,27 +415,30 @@ export const PersonalCuti = () => {
                 );
               })}
             </ScrollView> */}
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-            <FlatList
-              data={personal.data_jenis_cuti}
-              renderItem={({ item }) => (
-                <View key={item.id}>
-                  <CardFormPengajuanCuti
-                    item={item}
-                    profile={profile}
-                    device={device}
-                  />
-                </View>
-              )}
-              columnWrapperStyle={{
-                gap: device === 'tablet' ? 5 : 5,
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              numColumns={3}
-              keyExtractor={(item) => item.id}
-              ListEmptyComponent={() => <ListEmpty />}
-            />
+            >
+              <FlatList
+                data={personal.data_jenis_cuti}
+                renderItem={({ item }) => (
+                  <View key={item.id}>
+                    <CardFormPengajuanCuti
+                      item={item}
+                      profile={profile}
+                      device={device}
+                    />
+                  </View>
+                )}
+                numColumns={3}
+                keyExtractor={(item) => item.id}
+                ListEmptyComponent={() => <ListEmpty />}
+                scrollEnabled={true}
+              />
             </View>
-
           </View>
           <View style={{ paddingHorizontal: "5%" }}>
             <Text
