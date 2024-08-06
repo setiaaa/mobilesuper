@@ -106,7 +106,7 @@ export const CollapseCardSIASNRwSkp = ({ profile, device, data }) => {
         <CollapseBody>
           <View style={[styles.cardCollapse, shadow.cardShadow]}>
             {profile.map((sk, i) => (
-              <View>
+              <View key={i}>
                 <Collapse isExpanded={collapseChild[i]}>
                   <CollapseHeader>
                     <TouchableOpacity onPress={() => changeCollapseChild(i)}>
@@ -150,7 +150,7 @@ export const CollapseCardSIASNRwSkp = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              Tahun : {sk.tahun ? sk.tahun : "-"}
+                              Tahun {sk.tahun ? sk.tahun : "-"}
                             </Text>
                           </View>
                           <View
@@ -176,7 +176,13 @@ export const CollapseCardSIASNRwSkp = ({ profile, device, data }) => {
                   </CollapseHeader>
                   {}
                   <CollapseBody>
-                    <View style={[styles.cardCollapse, shadow.cardShadow]}>
+                    <View
+                      style={[
+                        { marginBottom: spacing.medium },
+                        styles.cardCollapse,
+                        shadow.cardShadow,
+                      ]}
+                    >
                       <View
                         style={{
                           display: "flex",

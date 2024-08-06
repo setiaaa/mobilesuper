@@ -62,6 +62,7 @@ import { Divider } from "react-native-paper";
 import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDataUtama";
 import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
 import { CollapseCardSIASNRwSkp } from "../../components/CollapseCardSIASNRwSkp";
+import { CollapseCardSIASNRwSkp22 } from "../../components/CollapseCardSIASNRwSkp22";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1071,7 +1072,7 @@ export const Profile = () => {
         </View>
         {/* SIASN Data Utama */}
         {profile?.siasn_data.siasn_data_utama != null && (
-          <View style={{ paddingVertical: spacing.default }}>
+          <View style={{ paddingBottom: spacing.default }}>
             <CollapseCardSIASNDataUtama
               profile={profile.siasn_data.siasn_data_utama}
               device={device}
@@ -1080,7 +1081,7 @@ export const Profile = () => {
         )}
         {/* SIASN Jabatan */}
         {profile?.siasn_data.siasn_jabatan != null && (
-          <View style={{ paddingVertical: spacing.default }}>
+          <View style={{ paddingBottom: spacing.default }}>
             <CollapseCardSIASNJabatan
               profile={profile.siasn_data.siasn_jabatan}
               device={device}
@@ -1089,9 +1090,18 @@ export const Profile = () => {
         )}
         {/* SIASN RW SKP */}
         {profile?.siasn_data.siasn_rw_skp != null && (
-          <View style={{ paddingVertical: spacing.default }}>
+          <View style={{ paddingBottom: spacing.default }}>
             <CollapseCardSIASNRwSkp
               profile={profile.siasn_data.siasn_rw_skp}
+              device={device}
+            />
+          </View>
+        )}
+        {/* SIASN RW SKP 22 */}
+        {profile?.siasn_data.siasn_rw_skp22 != null && (
+          <View style={{ paddingBottom: spacing.default }}>
+            <CollapseCardSIASNRwSkp22
+              profile={profile.siasn_data.siasn_rw_skp22}
               device={device}
             />
           </View>
