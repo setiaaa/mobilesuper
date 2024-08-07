@@ -210,7 +210,10 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                                     },
                                   ]}
                                 >
-                                  {sk.namaDiklat ? sk.namaDiklat : "-"}
+                                  {sk.latihanStrukturalNama == null ||
+                                  sk.latihanStrukturalNama.length == 0
+                                    ? "-"
+                                    : sk.latihanStrukturalNama}
                                 </Text>
                               </View>
                               <View
@@ -259,7 +262,7 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              Jenis Diklat
+                              NIP Baru
                             </Text>
                             <Text
                               style={{
@@ -276,10 +279,9 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              {sk.jenisDiklatNama == null ||
-                              sk.jenisDiklatNama.length == 0
+                              {sk.nipBaru == null || sk.nipBaru.length == 0
                                 ? "-"
-                                : sk.jenisDiklatNama}
+                                : sk.nipBaru}
                             </Text>
                           </View>
                           <View
@@ -298,7 +300,7 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              Jenis Diklat Sertifikat
+                              NIP Lama
                             </Text>
                             <Text
                               style={{
@@ -315,10 +317,163 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                                 },
                               ]}
                             >
-                              {sk.jenisDiklatSertifikatNama == null ||
-                              sk.jenisDiklatSertifikatNama.length == 0
+                              {sk.nipLama == null || sk.nipLama.length == 0
                                 ? "-"
-                                : sk.jenisDiklatSertifikatNama}
+                                : sk.nipLama}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: spacing.small,
+                              marginBottom: spacing.medium,
+                            }}
+                          >
+                            <Text
+                              style={[
+                                {
+                                  flex: 4,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              Latihan Struktural
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              :
+                            </Text>
+                            <Text
+                              style={[
+                                {
+                                  flex: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              {sk.latihanStrukturalNama == null ||
+                              sk.latihanStrukturalNama.length == 0
+                                ? "-"
+                                : sk.latihanStrukturalNama}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: spacing.small,
+                              marginBottom: spacing.medium,
+                            }}
+                          >
+                            <Text
+                              style={[
+                                {
+                                  flex: 4,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              Nomor
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              :
+                            </Text>
+                            <Text
+                              style={[
+                                {
+                                  flex: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              {sk.nomor == null || sk.nomor.length == 0
+                                ? "-"
+                                : sk.nomor}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: spacing.small,
+                              marginBottom: spacing.medium,
+                            }}
+                          >
+                            <Text
+                              style={[
+                                {
+                                  flex: 4,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              Tahun
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              :
+                            </Text>
+                            <Text
+                              style={[
+                                {
+                                  flex: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              {sk.tahun == null || sk.tahun.length == 0
+                                ? "-"
+                                : sk.tahun}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: spacing.small,
+                              marginBottom: spacing.medium,
+                            }}
+                          >
+                            <Text
+                              style={[
+                                {
+                                  flex: 4,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              Tanggal Selesai
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              :
+                            </Text>
+                            <Text
+                              style={[
+                                {
+                                  flex: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                },
+                              ]}
+                            >
+                              {sk.tanggalSelesai == null ||
+                              sk.tanggalSelesai.length == 0
+                                ? "-"
+                                : sk.tanggalSelesai}
                             </Text>
                           </View>
                           <View
@@ -358,200 +513,6 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
                               sk.institusiPenyelenggara.length == 0
                                 ? "-"
                                 : sk.institusiPenyelenggara}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              gap: spacing.small,
-                              marginBottom: spacing.medium,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                {
-                                  flex: 4,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              Jumlah Jam
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              :
-                            </Text>
-                            <Text
-                              style={[
-                                {
-                                  flex: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              {sk.jumlahJam == null || sk.jumlahJam.length == 0
-                                ? "-"
-                                : sk.jumlahJam}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              gap: spacing.small,
-                              marginBottom: spacing.medium,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                {
-                                  flex: 4,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              No. Sertifikat
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              :
-                            </Text>
-                            <Text
-                              style={[
-                                {
-                                  flex: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              {sk.noSertipikat == null ||
-                              sk.noSertipikat.length == 0
-                                ? "-"
-                                : sk.noSertipikat}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              gap: spacing.small,
-                              marginBottom: spacing.medium,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                {
-                                  flex: 4,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              Tahun
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              :
-                            </Text>
-                            <Text
-                              style={[
-                                {
-                                  flex: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              {sk.tahunDiklat == null ||
-                              sk.tahunDiklat.length == 0
-                                ? "-"
-                                : sk.tahunDiklat}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              gap: spacing.small,
-                              marginBottom: spacing.medium,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                {
-                                  flex: 4,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              Tanggal Diklat
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              :
-                            </Text>
-                            <Text
-                              style={[
-                                {
-                                  flex: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              {sk.tanggalDiklat == null ||
-                              sk.tanggalDiklat.length == 0
-                                ? "-"
-                                : sk.tanggalDiklat}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              gap: spacing.small,
-                              marginBottom: spacing.medium,
-                            }}
-                          >
-                            <Text
-                              style={[
-                                {
-                                  flex: 4,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              Tanggal Selesai
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              :
-                            </Text>
-                            <Text
-                              style={[
-                                {
-                                  flex: 5,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
-                            >
-                              {sk.tanggalSelesaiDiklat == null ||
-                              sk.tanggalSelesaiDiklat.length == 0
-                                ? "-"
-                                : sk.tanggalSelesaiDiklat}
                             </Text>
                           </View>
                         </View>
