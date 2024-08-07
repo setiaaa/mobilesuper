@@ -50,10 +50,7 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     gap: spacing.medium,
                   }}
                 >
-                  <Ionicons
-                    name="heart"
-                    size={device === "tablet" ? 40 : 24}
-                  />
+                  <Ionicons name="heart" size={device === "tablet" ? 40 : 24} />
                   <Text
                     style={[
                       {
@@ -88,238 +85,277 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          <View style={[styles.cardCollapse, shadow.cardShadow]}>
+          {profile == undefined ? (
             <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
+              style={[
+                { marginBottom: spacing.medium },
+                styles.cardCollapse,
+                shadow.cardShadow,
+              ]}
             >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Akta Menikah
-              </Text>
-              <Text
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                {profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah
-                  ?.length == 0
-                  ? "-"
-                  : profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah}
-              </Text>
+                <Text
+                  style={[
+                    {
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tidak Ada Data
+                </Text>
+              </View>
             </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
-            >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Tanggal Menikah
-              </Text>
-              <Text
+          ) : (
+            <View style={[styles.cardCollapse, shadow.cardShadow]}>
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Akta Menikah
+                </Text>
+                <Text
+                  style={{
                     fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                {profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah
-                  ?.length == 0
-                  ? "-"
-                  : profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
-            >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Nama
-              </Text>
-              <Text
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah ==
+                    null ||
+                  profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah
+                    ?.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tanggal Menikah
+                </Text>
+                <Text
+                  style={{
                     fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                {profile?.listPasangan[0]?.orang?.nama?.length == 0
-                  ? "-"
-                  : profile?.listPasangan[0]?.orang?.nama}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
-            >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Jenis Kelamin
-              </Text>
-              <Text
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah ==
+                    null ||
+                  profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah
+                    ?.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Nama
+                </Text>
+                <Text
+                  style={{
                     fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                {profile?.listPasangan[0]?.orang?.jenisKelamin == "M"
-                  ? "Laki-laki"
-                  : "Perempuan"}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
-            >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Tanggal Lahir
-              </Text>
-              <Text
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.orang?.nama == null ||
+                  profile?.listPasangan[0]?.orang?.nama?.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.orang?.nama}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Jenis Kelamin
+                </Text>
+                <Text
+                  style={{
                     fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                {profile?.listPasangan[0]?.orang?.tglLahir?.length == 0
-                  ? "-"
-                  : profile?.listPasangan[0]?.orang?.tglLahir}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: spacing.small,
-                marginBottom: spacing.medium,
-              }}
-            >
-              <Text
-                style={[
-                  {
-                    flex: 4,
-                    fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
-              >
-                Tempat Lahir
-              </Text>
-              <Text
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.orang?.jenisKelamin == null ||
+                  profile?.listPasangan[0]?.orang?.jenisKelamin.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.orang?.jenisKelamin == "M"
+                    ? "Laki-laki"
+                    : "Perempuan"}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H4", device),
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
                 }}
               >
-                :
-              </Text>
-              <Text
-                style={[
-                  {
-                    flex: 5,
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tanggal Lahir
+                </Text>
+                <Text
+                  style={{
                     fontSize: fontSizeResponsive("H4", device),
-                  },
-                ]}
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.orang?.tglLahir == null ||
+                  profile?.listPasangan[0]?.orang?.tglLahir?.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.orang?.tglLahir}
+                </Text>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
+                }}
               >
-                {profile?.listPasangan[0]?.orang?.tempatLahir?.length == 0
-                  ? "-"
-                  : profile?.listPasangan[0]?.orang?.tempatLahir}
-              </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 4,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tempat Lahir
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  :
+                </Text>
+                <Text
+                  style={[
+                    {
+                      flex: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  {profile?.listPasangan[0]?.orang?.tempatLahir == null ||
+                  profile?.listPasangan[0]?.orang?.tempatLahir?.length == 0
+                    ? "-"
+                    : profile?.listPasangan[0]?.orang?.tempatLahir}
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
         </CollapseBody>
       </Collapse>
     </View>

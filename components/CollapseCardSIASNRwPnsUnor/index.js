@@ -21,12 +21,12 @@ export const CollapseCardSIASNRwPnsUnor = ({ profile, device, data }) => {
   useEffect(() => {
     function init() {
       const temp = [];
-      profile.map((e, i) => {
+      profile?.map((e, i) => {
         temp[i] = false;
       });
       setCollapseChild(temp);
     }
-    init();
+    if (profile != undefined) init();
   }, []);
   function changeCollapseChild(index) {
     const temp = [...collapseChild];
@@ -104,208 +104,237 @@ export const CollapseCardSIASNRwPnsUnor = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          <View style={[styles.cardCollapse, shadow.cardShadow]}>
-            {profile.map((sk, i) => (
-              <View key={i}>
-                <Collapse isExpanded={collapseChild[i]}>
-                  <CollapseHeader>
-                    <TouchableOpacity onPress={() => changeCollapseChild(i)}>
-                      <View style={styles.card}>
-                        <View
-                          style={[
-                            {
-                              backgroundColor:
-                                collapseChild[i] === true
-                                  ? COLORS.secondaryLighter
-                                  : COLORS.white,
-                              padding: spacing.default,
-                              marginBottom:
-                                collapseChild[i] === true ? 0 : spacing.default,
-                              borderTopLeftRadius: 8,
-                              borderTopRightRadius: 8,
-                              borderBottomLeftRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              borderBottomRightRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                            },
-                            shadow.cardShadow,
-                          ]}
-                        >
+          {profile == undefined ? (
+            <View
+              style={[
+                { marginBottom: spacing.medium },
+                styles.cardCollapse,
+                shadow.cardShadow,
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
+                }}
+              >
+                <Text
+                  style={[
+                    {
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tidak Ada Data
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View style={[styles.cardCollapse, shadow.cardShadow]}>
+              {profile.map((sk, i) => (
+                <View key={i}>
+                  <Collapse isExpanded={collapseChild[i]}>
+                    <CollapseHeader>
+                      <TouchableOpacity onPress={() => changeCollapseChild(i)}>
+                        <View style={styles.card}>
                           <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: spacing.medium,
-                            }}
+                            style={[
+                              {
+                                backgroundColor:
+                                  collapseChild[i] === true
+                                    ? COLORS.secondaryLighter
+                                    : COLORS.white,
+                                padding: spacing.default,
+                                marginBottom:
+                                  collapseChild[i] === true
+                                    ? 0
+                                    : spacing.default,
+                                borderTopLeftRadius: 8,
+                                borderTopRightRadius: 8,
+                                borderBottomLeftRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                borderBottomRightRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              },
+                              shadow.cardShadow,
+                            ]}
                           >
-                            <Text
-                              style={[
-                                {
-                                  fontWeight: FONTWEIGHT.bold,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
+                            <View
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: spacing.medium,
+                              }}
                             >
-                              Tanggal SK : {sk.skTanggal ? sk.skTanggal : "-"}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              marginRight: spacing.default,
-                            }}
-                          >
-                            {collapseChild[i] === true ? (
-                              <Ionicons
-                                name="chevron-up-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            ) : (
-                              <Ionicons
-                                name="chevron-down-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            )}
+                              <Text
+                                style={[
+                                  {
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  },
+                                ]}
+                              >
+                                Tanggal SK : {sk.skTanggal ? sk.skTanggal : "-"}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                marginRight: spacing.default,
+                              }}
+                            >
+                              {collapseChild[i] === true ? (
+                                <Ionicons
+                                  name="chevron-up-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              ) : (
+                                <Ionicons
+                                  name="chevron-down-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              )}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  </CollapseHeader>
-                  {}
-                  <CollapseBody>
-                    <View
-                      style={[
-                        { marginBottom: spacing.medium },
-                        styles.cardCollapse,
-                        shadow.cardShadow,
-                      ]}
-                    >
+                      </TouchableOpacity>
+                    </CollapseHeader>
+                    {}
+                    <CollapseBody>
                       <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
+                        style={[
+                          { marginBottom: spacing.medium },
+                          styles.cardCollapse,
+                          shadow.cardShadow,
+                        ]}
                       >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nomor SK
-                        </Text>
-                        <Text
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Nomor SK
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.skNomor == null ||
-                          sk.skNomor.length == 0
-                            ? "-"
-                            : sk.skNomor}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nama Unor Baru
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.skNomor == null || sk.skNomor.length == 0
+                              ? "-"
+                              : sk.skNomor}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Nama Unor Baru
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.namaUnorBaru == null ||
-                          sk.namaUnorBaru.length == 0
-                            ? "-"
-                            : sk.namaUnorBaru}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Asal Nama
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.namaUnorBaru == null ||
+                            sk.namaUnorBaru.length == 0
+                              ? "-"
+                              : sk.namaUnorBaru}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Asal Nama
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.asalNama == null ||
-                          sk.asalNama.length == 0
-                            ? "-"
-                            : sk.asalNama}
-                        </Text>
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.asalNama == null || sk.asalNama.length == 0
+                              ? "-"
+                              : sk.asalNama}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </CollapseBody>
-                </Collapse>
-              </View>
-            ))}
-          </View>
+                    </CollapseBody>
+                  </Collapse>
+                </View>
+              ))}
+            </View>
+          )}
         </CollapseBody>
       </Collapse>
     </View>

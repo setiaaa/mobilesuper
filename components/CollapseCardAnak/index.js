@@ -28,7 +28,7 @@ export const CollapseCardAnak = ({ profile, device, data }) => {
       });
       setCollapseChild(temp);
     }
-    init();
+    if (profile != undefined) init();
   }, []);
   function changeCollapseChild(index) {
     const temp = [...collapseChild];
@@ -106,242 +106,282 @@ export const CollapseCardAnak = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          <View style={[styles.cardCollapse, shadow.cardShadow]}>
-            {profile?.listAnak?.map((listAnak, i) => (
-              <View key={i}>
-                <Collapse isExpanded={collapseChild[i]}>
-                  <CollapseHeader>
-                    <TouchableOpacity onPress={() => changeCollapseChild(i)}>
-                      <View style={styles.card}>
-                        <View
-                          style={[
-                            {
-                              backgroundColor:
-                                collapseChild[i] === true
-                                  ? COLORS.secondaryLighter
-                                  : COLORS.white,
-                              padding: spacing.default,
-                              marginBottom:
-                                collapseChild[i] === true ? 0 : spacing.default,
-                              borderTopLeftRadius: 8,
-                              borderTopRightRadius: 8,
-                              borderBottomLeftRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              borderBottomRightRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                            },
-                            shadow.cardShadow,
-                          ]}
-                        >
+          {profile == undefined ? (
+            <View
+              style={[
+                { marginBottom: spacing.medium },
+                styles.cardCollapse,
+                shadow.cardShadow,
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
+                }}
+              >
+                <Text
+                  style={[
+                    {
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tidak Ada Data
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View style={[styles.cardCollapse, shadow.cardShadow]}>
+              {profile?.listAnak?.map((listAnak, i) => (
+                <View key={i}>
+                  <Collapse isExpanded={collapseChild[i]}>
+                    <CollapseHeader>
+                      <TouchableOpacity onPress={() => changeCollapseChild(i)}>
+                        <View style={styles.card}>
                           <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: spacing.medium,
-                            }}
+                            style={[
+                              {
+                                backgroundColor:
+                                  collapseChild[i] === true
+                                    ? COLORS.secondaryLighter
+                                    : COLORS.white,
+                                padding: spacing.default,
+                                marginBottom:
+                                  collapseChild[i] === true
+                                    ? 0
+                                    : spacing.default,
+                                borderTopLeftRadius: 8,
+                                borderTopRightRadius: 8,
+                                borderBottomLeftRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                borderBottomRightRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              },
+                              shadow.cardShadow,
+                            ]}
                           >
-                            <Text
-                              style={[
-                                {
-                                  fontWeight: FONTWEIGHT.bold,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
+                            <View
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: spacing.medium,
+                              }}
                             >
-                              Anak ke-{i + 1}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              marginRight: spacing.default,
-                            }}
-                          >
-                            {collapseChild[i] === true ? (
-                              <Ionicons
-                                name="chevron-up-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            ) : (
-                              <Ionicons
-                                name="chevron-down-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            )}
+                              <Text
+                                style={[
+                                  {
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  },
+                                ]}
+                              >
+                                Anak ke-{i + 1}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                marginRight: spacing.default,
+                              }}
+                            >
+                              {collapseChild[i] === true ? (
+                                <Ionicons
+                                  name="chevron-up-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              ) : (
+                                <Ionicons
+                                  name="chevron-down-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              )}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  </CollapseHeader>
-                  {}
-                  <CollapseBody>
-                    <View
-                      style={[
-                        { marginBottom: spacing.medium },
-                        styles.cardCollapse,
-                        shadow.cardShadow,
-                      ]}
-                    >
+                      </TouchableOpacity>
+                    </CollapseHeader>
+                    {}
+                    <CollapseBody>
                       <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
+                        style={[
+                          { marginBottom: spacing.medium },
+                          styles.cardCollapse,
+                          shadow.cardShadow,
+                        ]}
                       >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nama
-                        </Text>
-                        <Text
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Nama
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {listAnak.nama.length == 0 ? "-" : listAnak.nama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Jenis Kelamin
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {listAnak.nama == null || listAnak.nama.length == 0
+                              ? "-"
+                              : listAnak.nama}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Jenis Kelamin
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {listAnak.jenisKelamin == "M"
-                            ? "Laki-laki"
-                            : "Perempuan"}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Tempat Lahir
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {listAnak.jenisKelamin == null ||
+                            listAnak.jenisKelamin?.length == 0
+                              ? "-"
+                              : listAnak.jenisKelamin == "M"
+                              ? "Laki-laki"
+                              : "Perempuan"}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Tempat Lahir
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {listAnak.tempatLahir.length == 0
-                            ? "-"
-                            : listAnak.tempatLahir}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Tanggal Lahir
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {listAnak.tempatLahir == null ||
+                            listAnak.tempatLahir.length == 0
+                              ? "-"
+                              : listAnak.tempatLahir}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Tanggal Lahir
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {moment(
-                            listAnak.tglLahir,
-                            DATETIME.SHORT_DATE
-                          ).format(DATETIME.LONG_DATE)}
-                        </Text>
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {listAnak.tglLahir == null ||
+                            listAnak.tglLahir?.length == 0
+                              ? "-"
+                              : moment(
+                                  listAnak.tglLahir,
+                                  DATETIME.SHORT_DATE
+                                ).format(DATETIME.LONG_DATE)}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </CollapseBody>
-                </Collapse>
-              </View>
-            ))}
-          </View>
+                    </CollapseBody>
+                  </Collapse>
+                </View>
+              ))}
+            </View>
+          )}
         </CollapseBody>
       </Collapse>
     </View>

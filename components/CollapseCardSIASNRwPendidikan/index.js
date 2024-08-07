@@ -26,7 +26,7 @@ export const CollapseCardSIASNRwPendidikan = ({ profile, device, data }) => {
       });
       setCollapseChild(temp);
     }
-    init();
+    if (profile != undefined) init();
   }, []);
   function changeCollapseChild(index) {
     const temp = [...collapseChild];
@@ -101,437 +101,470 @@ export const CollapseCardSIASNRwPendidikan = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          <View style={[styles.cardCollapse, shadow.cardShadow]}>
-            {profile.map((sk, i) => (
-              <View key={i}>
-                <Collapse isExpanded={collapseChild[i]}>
-                  <CollapseHeader>
-                    <TouchableOpacity onPress={() => changeCollapseChild(i)}>
-                      <View style={styles.card}>
-                        <View
-                          style={[
-                            {
-                              backgroundColor:
-                                collapseChild[i] === true
-                                  ? COLORS.secondaryLighter
-                                  : COLORS.white,
-                              padding: spacing.default,
-                              marginBottom:
-                                collapseChild[i] === true ? 0 : spacing.default,
-                              borderTopLeftRadius: 8,
-                              borderTopRightRadius: 8,
-                              borderBottomLeftRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              borderBottomRightRadius:
-                                collapseChild[i] === true ? 0 : 8,
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                            },
-                            shadow.cardShadow,
-                          ]}
-                        >
+          {profile == undefined ? (
+            <View
+              style={[
+                { marginBottom: spacing.medium },
+                styles.cardCollapse,
+                shadow.cardShadow,
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: spacing.small,
+                  marginBottom: spacing.medium,
+                }}
+              >
+                <Text
+                  style={[
+                    {
+                      fontSize: fontSizeResponsive("H4", device),
+                    },
+                  ]}
+                >
+                  Tidak Ada Data
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View style={[styles.cardCollapse, shadow.cardShadow]}>
+              {profile.map((sk, i) => (
+                <View key={i}>
+                  <Collapse isExpanded={collapseChild[i]}>
+                    <CollapseHeader>
+                      <TouchableOpacity onPress={() => changeCollapseChild(i)}>
+                        <View style={styles.card}>
                           <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: spacing.medium,
-                            }}
+                            style={[
+                              {
+                                backgroundColor:
+                                  collapseChild[i] === true
+                                    ? COLORS.secondaryLighter
+                                    : COLORS.white,
+                                padding: spacing.default,
+                                marginBottom:
+                                  collapseChild[i] === true
+                                    ? 0
+                                    : spacing.default,
+                                borderTopLeftRadius: 8,
+                                borderTopRightRadius: 8,
+                                borderBottomLeftRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                borderBottomRightRadius:
+                                  collapseChild[i] === true ? 0 : 8,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              },
+                              shadow.cardShadow,
+                            ]}
                           >
-                            <Text
-                              style={[
-                                {
-                                  fontWeight: FONTWEIGHT.bold,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                },
-                              ]}
+                            <View
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: spacing.medium,
+                              }}
                             >
-                              Tanggal Kelulusan :{" "}
-                              {sk.tahunLulus ? sk.tahunLulus : "-"}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              marginRight: spacing.default,
-                            }}
-                          >
-                            {collapseChild[i] === true ? (
-                              <Ionicons
-                                name="chevron-up-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            ) : (
-                              <Ionicons
-                                name="chevron-down-outline"
-                                size={device === "tablet" ? 40 : 20}
-                              />
-                            )}
+                              <Text
+                                style={[
+                                  {
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  },
+                                ]}
+                              >
+                                Tanggal Kelulusan :{" "}
+                                {sk.tahunLulus ? sk.tahunLulus : "-"}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                marginRight: spacing.default,
+                              }}
+                            >
+                              {collapseChild[i] === true ? (
+                                <Ionicons
+                                  name="chevron-up-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              ) : (
+                                <Ionicons
+                                  name="chevron-down-outline"
+                                  size={device === "tablet" ? 40 : 20}
+                                />
+                              )}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  </CollapseHeader>
-                  {}
-                  <CollapseBody>
-                    <View
-                      style={[
-                        { marginBottom: spacing.medium },
-                        styles.cardCollapse,
-                        shadow.cardShadow,
-                      ]}
-                    >
+                      </TouchableOpacity>
+                    </CollapseHeader>
+                    {}
+                    <CollapseBody>
                       <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
+                        style={[
+                          { marginBottom: spacing.medium },
+                          styles.cardCollapse,
+                          shadow.cardShadow,
+                        ]}
                       >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          NIP Baru
-                        </Text>
-                        <Text
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            NIP Baru
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.nipBaru == null || sk.nipBaru.length == 0
-                            ? "-"
-                            : sk.nipBaru}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          NIP Lama
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.nipBaru == null || sk.nipBaru.length == 0
+                              ? "-"
+                              : sk.nipBaru}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            NIP Lama
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.nipLama == null || sk.nipLama.length == 0
-                            ? "-"
-                            : sk.nipLama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Pendidikan
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.nipLama == null || sk.nipLama.length == 0
+                              ? "-"
+                              : sk.nipLama}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Pendidikan
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.pendidikanNama == null ||
-                          sk.pendidikanNama.length == 0
-                            ? "-"
-                            : sk.pendidikanNama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          TK Pendidikan
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.pendidikanNama == null ||
+                            sk.pendidikanNama.length == 0
+                              ? "-"
+                              : sk.pendidikanNama}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            TK Pendidikan
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.tkPendidikanNama == null ||
-                          sk.tkPendidikanNama.length == 0
-                            ? "-"
-                            : sk.tkPendidikanNama}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Tanggal Kelulusan
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.tkPendidikanNama == null ||
+                            sk.tkPendidikanNama.length == 0
+                              ? "-"
+                              : sk.tkPendidikanNama}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Tanggal Kelulusan
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.tglLulus == null || sk.tglLulus.length == 0
-                            ? "-"
-                            : sk.tglLulus}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nomor Ijazah
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.tglLulus == null || sk.tglLulus.length == 0
+                              ? "-"
+                              : sk.tglLulus}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Nomor Ijazah
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.nomorIjasah == null || sk.nomorIjasah.length == 0
-                            ? "-"
-                            : sk.nomorIjasah}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Nama Sekolah
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.nomorIjasah == null ||
+                            sk.nomorIjasah.length == 0
+                              ? "-"
+                              : sk.nomorIjasah}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Nama Sekolah
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.namaSekolah == null || sk.namaSekolah.length == 0
-                            ? "-"
-                            : sk.namaSekolah}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Gelar Depan
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.namaSekolah == null ||
+                            sk.namaSekolah.length == 0
+                              ? "-"
+                              : sk.namaSekolah}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Gelar Depan
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.gelarDepan == null || sk.gelarDepan.length == 0
-                            ? "-"
-                            : sk.gelarDepan}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: spacing.small,
-                          marginBottom: spacing.medium,
-                        }}
-                      >
-                        <Text
-                          style={[
-                            {
-                              flex: 4,
-                              fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          Gelar Belakang
-                        </Text>
-                        <Text
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.gelarDepan == null || sk.gelarDepan.length == 0
+                              ? "-"
+                              : sk.gelarDepan}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: spacing.small,
+                            marginBottom: spacing.medium,
                           }}
                         >
-                          :
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              flex: 5,
+                          <Text
+                            style={[
+                              {
+                                flex: 4,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            Gelar Belakang
+                          </Text>
+                          <Text
+                            style={{
                               fontSize: fontSizeResponsive("H4", device),
-                            },
-                          ]}
-                        >
-                          {sk.gelarBelakang == null ||
-                          sk.gelarBelakang.length == 0
-                            ? "-"
-                            : sk.gelarBelakang}
-                        </Text>
+                            }}
+                          >
+                            :
+                          </Text>
+                          <Text
+                            style={[
+                              {
+                                flex: 5,
+                                fontSize: fontSizeResponsive("H4", device),
+                              },
+                            ]}
+                          >
+                            {sk.gelarBelakang == null ||
+                            sk.gelarBelakang.length == 0
+                              ? "-"
+                              : sk.gelarBelakang}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </CollapseBody>
-                </Collapse>
-              </View>
-            ))}
-          </View>
+                    </CollapseBody>
+                  </Collapse>
+                </View>
+              ))}
+            </View>
+          )}
         </CollapseBody>
       </Collapse>
     </View>
