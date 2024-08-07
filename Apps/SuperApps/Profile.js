@@ -72,6 +72,7 @@ import { CollapseCardAnak } from "../../components/CollapseCardAnak";
 import { CollapseCardOrangTua } from "../../components/CollapseCardOrangTua";
 import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
 import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
+import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -1167,6 +1168,13 @@ export const Profile = () => {
         <View style={{ paddingBottom: spacing.default }}>
           <CollapseCardHukumanDisiplin
             profile={profile?.siasn_data?.siasn_rw_hukdis}
+            device={device}
+          />
+        </View>
+        {/* Kursus Diklat */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwKursusDiklat
+            profile={profile?.siasn_data}
             device={device}
           />
         </View>
