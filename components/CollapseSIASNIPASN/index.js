@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, fontSizeResponsive, FONTWEIGHT, shadow, spacing } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Collapse, CollapseBody, CollapseHeader } from "accordion-collapse-react-native";
+import { convertChip } from "../CollapseEpegIPASN";
 
 const CollapseSIASNIPASN = ({ profile, device }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -79,25 +80,30 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                             marginBottom: 10,
                             flexDirection: "row",
                             alignItems: "center",
+                            justifyContent: 'space-between'
                         }}
                     >
                         <Text
                             style={{
                                 fontSize: device === "tablet" ? 60 : 30,
-                                width: device === "tablet" ? "88%" : "78%",
                                 fontWeight: FONTWEIGHT.bold
                             }}
                         >
                             Nilai
                         </Text>
-                        <Text
-                            style={{
-                                fontSize: device === "tablet" ? 60 : 30,
-                                fontWeight: FONTWEIGHT.bold,
-                            }}
-                        >
-                            {profile?.ipasn_nilai}
-                        </Text>
+                        {/* Niai dan Badge */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+                            <Text
+                                style={{
+                                    fontSize: device === "tablet" ? 60 : 30,
+                                    fontWeight: FONTWEIGHT.bold,
+                                }}
+                            >
+                                {profile?.ipasn_nilai}
+                            </Text>
+                            {/* Badge Indikator */}
+                            {convertChip(parseInt(profile?.ipasn_nilai))}
+                        </View>
                     </View>
 
                     {/* Kualifikasi */}
