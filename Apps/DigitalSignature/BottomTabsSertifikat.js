@@ -167,7 +167,7 @@ export const MyTabSertifikat = () => {
                   textAlign: "center",
                   position: "absolute",
                   fontSize: fontSizeResponsive("H3", device),
-                  bottom: 40,
+                  bottom: device === "tablet" ? 30 : 40,
                 }}
               >
                 Sertifikat TTDE
@@ -302,7 +302,7 @@ export const MyTabSertifikat = () => {
                 style={{
                   color: tabItemIndex === 3 ? COLORS.primary : COLORS.tertiary,
                   position: "absolute",
-                  bottom: device === "tablet" ? 40 : 40,
+                  bottom: device === "tablet" ? 30 : 40,
                   fontSize: fontSizeResponsive("H3", device),
                 }}
               >
@@ -357,7 +357,7 @@ export const MyTabSertifikat = () => {
                 style={{
                   color: tabItemIndex === 4 ? COLORS.primary : COLORS.tertiary,
                   position: "absolute",
-                  bottom: device === "tablet" ? 40 : 35,
+                  bottom: device === "tablet" ? 30 : 40,
                   fontSize: fontSizeResponsive("H3", device),
                 }}
               >
