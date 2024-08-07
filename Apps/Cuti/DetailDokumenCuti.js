@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import {
   COLORS,
@@ -14,7 +17,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native";
 import moment from "moment/min/moment-with-locales";
 import { FlatList } from "react-native";
@@ -1942,21 +1944,27 @@ export const DetailDokumenCuti = ({ route }) => {
                     />
                   </TouchableOpacity>
                 </View>
-                <FlatList
-                  data={arsipDetail?.komentar_dokumen}
-                  renderItem={({ item }) => (
-                    <CardKomen
-                      listData={item}
-                      inputRef={inputRef}
-                      setParentId={setParentId}
-                      bottomSheetAttachCommentClose={
-                        bottomSheetAttachCommentClose
-                      }
-                      device={device}
-                    />
-                  )}
-                  style={{ height: 500 }}
-                />
+                <ScrollView nestedScrollEnabled={true} style={{ height: 400 }}>
+                  <FlatList
+                    data={arsipDetail?.komentar_dokumen}
+                    renderItem={({ item }) => (
+                      <CardKomen
+                        listData={item}
+                        inputRef={inputRef}
+                        setParentId={setParentId}
+                        bottomSheetAttachCommentClose={
+                          bottomSheetAttachCommentClose
+                        }
+                        device={device}
+                      />
+                    )}
+                    scrollEnabled={true}
+                    nestedScrollEnabled={true}
+                    onScroll={(e) => {
+                      console.log("Scrolling", e.nativeEvent.contentOffset.y);
+                    }}
+                  />
+                </ScrollView>
 
                 {/* <View style={{ justifyContent: "flex-end" }}>
                                 <View

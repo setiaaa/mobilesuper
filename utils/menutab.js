@@ -245,7 +245,12 @@ export const BottomTabsRepo = () => {
 export const BottomTabsKeb = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabBarKeb {...props} />}
           initialRouteName="Pencarian"
@@ -281,7 +286,12 @@ export const BottomTabsKeb = () => {
 export const BottomTabsDetailRepo = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabBarDetailRepo {...props} />}
           initialRouteName="DetailActivity"
@@ -376,7 +386,12 @@ export const BottomTabsDetailKorespondensi = () => {
 export const BottomTabsDigitalSign = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabDigitalSign {...props} />}
           initialRouteName="Bankom"
@@ -400,7 +415,12 @@ export const BottomTabsDigitalSign = () => {
 export const BottomTabsSertifikat = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabSertifikat {...props} />}
           initialRouteName="Bankom"
@@ -429,7 +449,12 @@ export const BottomTabsSertifikat = () => {
 export const BottomTabsPengetahuan = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabBarPengetahuan {...props} />}
           initialRouteName="LiniMasa"
@@ -468,7 +493,12 @@ export const BottomTabsPengetahuan = () => {
 export const BottomTabsDetailEvent = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabDetailEvent {...props} />}
           initialRouteName="DetailEvent"
@@ -492,7 +522,12 @@ export const BottomTabsDetailEvent = () => {
 export const BottomTabsDetailAgenda = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabDetailAgenda {...props} />}
           initialRouteName="DetailAgenda"
@@ -521,7 +556,12 @@ export const BottomTabsDetailAgenda = () => {
 export const BottomTabsSPPD = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabBarSPPD {...props} />}
           initialRouteName="Personal"
@@ -576,7 +616,12 @@ export const BottomTabsOutgoingKorespondensi = () => {
 export const BottomTabsCuti = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabCuti {...props} />}
           initialRouteName="PersonalCuti"
@@ -605,7 +650,12 @@ export const BottomTabsCuti = () => {
 export const BottomTabsPegawaiIPASN = () => {
   return (
     <BottomSheetModalProvider>
-      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
         <Tab.Navigator
           tabBar={(props) => <MyTabPegawiIPASN {...props} />}
           initialRouteName="PegawaiIPASN"

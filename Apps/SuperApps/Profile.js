@@ -9,7 +9,7 @@ import {
   Switch,
   FlatList,
 } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import {
   COLORS,
   FONTSIZE,
@@ -610,6 +610,8 @@ export const Profile = () => {
     setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
+  console.log(profile?.request_updated_get_from_siasn);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -673,7 +675,7 @@ export const Profile = () => {
         <View
           style={{
             paddingHorizontal: spacing.default,
-            paddingTop: spacing.default
+            paddingTop: spacing.default,
           }}
         >
           <View
@@ -847,7 +849,7 @@ export const Profile = () => {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: 1
+                marginTop: 1,
               }}
             >
               <Text
@@ -862,17 +864,20 @@ export const Profile = () => {
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                {moment(
-                  profile?.request_updated_get_from_siasn,
-                  "YYYY-MM-DD HH:mm:ss"
-                )
-                  .locale("id")
-                  .format("DD MMMM YYYY HH:mm:ss")}
+                {profile?.request_updated_get_from_siasn === null ||
+                profile?.request_updated_get_from_siasn === undefined
+                  ? "-"
+                  : moment(
+                      profile?.request_updated_get_from_siasn,
+                      "YYYY-MM-DD HH:mm:ss"
+                    )
+                      .locale("id")
+                      .format("DD MMMM YYYY HH:mm:ss")}
               </Text>
             </View>
           </View>
         </View>
-        
+
         {/* <View
           style={{
             display: "flex",

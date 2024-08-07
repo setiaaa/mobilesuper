@@ -108,9 +108,9 @@ export const PersonalCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
+      <View style={{ flex: 1 }}>
         <ScrollView>
           <View
             style={{
@@ -170,7 +170,9 @@ export const PersonalCuti = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ paddingVertical: 20, paddingHorizontal: "5%" }}>
+          <View
+            style={{ paddingVertical: 20, paddingHorizontal: "5%", flex: 1 }}
+          >
             <View
               style={{
                 justifyContent: "center",
@@ -372,7 +374,7 @@ export const PersonalCuti = () => {
               ) : null}
             </View>
           </View>
-          <View style={{ paddingHorizontal: "5%", gap: 10 }}>
+          <View style={{ paddingHorizontal: "5%", gap: 10, flex: 1 }}>
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
@@ -440,7 +442,7 @@ export const PersonalCuti = () => {
               />
             </View>
           </View>
-          <View style={{ paddingHorizontal: "5%" }}>
+          <View style={{ paddingHorizontal: "5%", flex: 1 }}>
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
@@ -595,7 +597,11 @@ export const PersonalCuti = () => {
           </View>
 
           <View
-            style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}
+            style={{
+              paddingVertical: PADDING.Page,
+              marginHorizontal: "5%",
+              flex: 1,
+            }}
           >
             <Text
               style={{

@@ -9,6 +9,7 @@ import {
   Pressable,
   FlatList,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -21,6 +22,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -708,6 +710,10 @@ export const TambahCutiTahunan = ({ route }) => {
 
   const currentMonth = new Date().getMonth() + 1;
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -1136,7 +1142,7 @@ export const TambahCutiTahunan = ({ route }) => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: wp(35),
+                        width: device === "tablet" ? 300 : 150,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -1180,7 +1186,7 @@ export const TambahCutiTahunan = ({ route }) => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: wp(35),
+                        width: device === "tablet" ? 300 : 150,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -1423,7 +1429,7 @@ export const TambahCutiTahunan = ({ route }) => {
                                   customDayHeaderStyles={customDayHeaderStyles}
                                   customDatesStyles={customDatesStyles}
                                   startFromMonday={true}
-                                  width={wp(95)}
+                                  width={device === "tablet" ? 700 : 350}
                                   weekdays={[
                                     "Sen",
                                     "Sel",
@@ -2098,73 +2104,74 @@ export const TambahCutiTahunan = ({ route }) => {
                 </TouchableOpacity>
               </View>
             ) : null}
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
-                <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                {/* <KeyboardAvoidingView
+            <BottomSheetModalProvider>
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                  {/* <KeyboardAvoidingView
                                 behavior={Platform.OS === "ios" ? "height" : "height"}
                             > */}
-                <View
-                  style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: 10,
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.grey,
-                  }}
-                >
-                  <Text
+                  <View
                     style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      fontSize: fontSizeResponsive("H4", device),
+                      marginHorizontal: 20,
+                      marginTop: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      padding: 10,
+                      borderBottomWidth: 2,
+                      borderBottomColor: COLORS.grey,
                     }}
                   >
-                    Histori Komentar
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      bottomSheetAttachCommentClose();
-                    }}
-                  >
-                    <Ionicons
-                      name="close-outline"
-                      size={device === "tablet" ? 40 : 24}
-                      color={COLORS.lighter}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <FlatList
-                  data={arsipDetail?.komentar_dokumen}
-                  renderItem={({ item }) => (
-                    <CardKomen
-                      listData={item}
-                      inputRef={inputRef}
-                      setParentId={setParentId}
-                      bottomSheetAttachCommentClose={
-                        bottomSheetAttachCommentClose
-                      }
-                      device={device}
-                    />
-                  )}
-                  style={{ height: 500 }}
-                />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Histori Komentar
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        bottomSheetAttachCommentClose();
+                      }}
+                    >
+                      <Ionicons
+                        name="close-outline"
+                        size={device === "tablet" ? 40 : 24}
+                        color={COLORS.lighter}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <FlatList
+                    data={arsipDetail?.komentar_dokumen}
+                    renderItem={({ item }) => (
+                      <CardKomen
+                        listData={item}
+                        inputRef={inputRef}
+                        setParentId={setParentId}
+                        bottomSheetAttachCommentClose={
+                          bottomSheetAttachCommentClose
+                        }
+                        device={device}
+                      />
+                    )}
+                    style={{ height: 500 }}
+                  />
 
-                {/* <View style={{ justifyContent: "flex-end" }}>
+                  {/* <View style={{ justifyContent: "flex-end" }}>
                                 <View
                                     style={{
                                         height: 1,
@@ -2219,9 +2226,10 @@ export const TambahCutiTahunan = ({ route }) => {
                                     </View>
                                 </View>
                             </View> */}
-                {/* </KeyboardAvoidingView> */}
-              </BottomSheetView>
-            </BottomSheetModal>
+                  {/* </KeyboardAvoidingView> */}
+                </BottomSheetView>
+              </BottomSheetModal>
+            </BottomSheetModalProvider>
           </View>
 
           <View

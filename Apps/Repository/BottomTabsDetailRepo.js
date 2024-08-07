@@ -28,15 +28,15 @@ function MyTabBarDetailRepo({ props, navigation }) {
               navigation.navigate("DetailActivity", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 1 ? (
               <View
-              style={{
-                alignItems: "center",
-                height: device === "tablet" ? 120 : 95,
-                justifyContent: "center",
-                width: device === "tablet" ? 95 : 80,
-              }}
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
               >
                 <View
                   style={{
@@ -57,14 +57,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: 'absolute', top: 20 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
-                    position: 'absolute',
-                    bottom: 24
+                    position: "absolute",
+                    bottom: 24,
                   }}
                 >
                   Dibagikan
@@ -76,21 +76,20 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
-              }}
+                }}
               >
                 <Ionicons
                   name="information-circle-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: 'absolute', top: 20 }}
+                  style={{ position: "absolute", top: 20 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
-                    position: 'absolute',
-                    bottom:24
+                    position: "absolute",
+                    bottom: 24,
                   }}
                 >
                   Dibagikan
@@ -106,6 +105,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
               navigation.navigate("Lampiran", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 2 ? (
               <View
@@ -113,7 +113,6 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -142,7 +141,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
                     position: "absolute",
-                    bottom:24,
+                    bottom: 24,
                   }}
                 >
                   lampiran
@@ -154,7 +153,6 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons
@@ -168,7 +166,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                     position: "absolute",
-                    bottom:24,
+                    bottom: 24,
                   }}
                 >
                   Lampiran
@@ -184,14 +182,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
               navigation.navigate("Komentar", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
+            style={{ flex: 1 }}
           >
             {tabItemIndex === 3 ? (
               <View
                 style={{
                   alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -220,7 +218,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
                     position: "absolute",
-                    bottom:24,
+                    bottom: 24,
                   }}
                 >
                   Komentar
@@ -228,12 +226,11 @@ function MyTabBarDetailRepo({ props, navigation }) {
               </View>
             ) : (
               <View
-              style={{
-                alignItems: "center",
-                height: device === "tablet" ? 120 : 95,
-                justifyContent: "center",
-                width: device === "tablet" ? 95 : 80,
-              }}
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
               >
                 <Ionicons
                   name="chatbox-outline"
@@ -246,7 +243,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                     position: "absolute",
-                    bottom:24,
+                    bottom: 24,
                   }}
                 >
                   Komentar
