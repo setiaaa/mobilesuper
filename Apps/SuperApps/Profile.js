@@ -217,6 +217,7 @@ export const Profile = () => {
     "196510221994031001",
     "197204102002122003",
   ];
+  const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -235,6 +236,10 @@ export const Profile = () => {
   // );
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
+  );
+
+  const isRoleMenteri = profile.roles_access?.some((item) =>
+    rolePerizinanMenteri.includes(item)
   );
 
   useEffect(() => {
@@ -323,24 +328,6 @@ export const Profile = () => {
         },
       },
       {
-        title: "Pengembangan Kompetensi",
-        navigation: "bankom",
-        image: require("../../assets/superApp/Bankomicon.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 30,
-          },
-          height: {
-            tablet: 40,
-            hp: 24,
-          },
-        },
-        titleStyle: {
-          width: wp(15),
-        },
-      },
-      {
         title: "SPPD",
         navigation: "MainSPPD",
         image: require("../../assets/superApp/sppd.png"),
@@ -402,6 +389,24 @@ export const Profile = () => {
         //   },
         // ],
       },
+      {
+        title: "Pengembangan Kompetensi",
+        navigation: "bankom",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
       // {
       //   title: "Pegawai",
       //   navigation: "ListPegawai",
@@ -460,7 +465,7 @@ export const Profile = () => {
       });
     }
     if (isRoleKalender) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(6, 0, {
         title: "Kalender",
         navigation: "MainKalender",
         image: require("../../assets/superApp/kalender.png"),
@@ -507,7 +512,7 @@ export const Profile = () => {
       });
     }
     if (isRoleEvent) {
-      tmpMenu.push({
+      tmpMenu.splice(8, 0, {
         title: "Agenda Rapat",
         navigation: "HalamanUtama",
         image: require("../../assets/superApp/event.png"),
@@ -523,6 +528,26 @@ export const Profile = () => {
         },
         titleStyle: {
           width: null,
+        },
+      });
+    }
+    if (isRoleMenteri) {
+      tmpMenu.splice(11, 0, {
+        title: "Perizinan Menteri",
+        navigation: "PerizinanMenteri",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 50,
+            hp: 30,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
         },
       });
     }
