@@ -411,12 +411,12 @@ export function initLetter(data) {
       }
       if (e.key == "event_2") {
         if (e.value != "") {
-          data.kegiatan[3] = e.value;
+          data.kegiatan[1] = e.value;
         }
       }
       if (e.key == "event_3") {
         if (e.value != "") {
-          data.kegiatan.push(e.value);
+          data.kegiatan[2] = e.value;
         }
       }
     }

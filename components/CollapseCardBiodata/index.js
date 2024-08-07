@@ -482,7 +482,7 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
                   },
                 ]}
               >
-                Satker
+                Satuan kerja
               </Text>
               <Text style={{
                 fontSize:fontSizeResponsive("H4", device)

@@ -9,7 +9,7 @@ import {
   Switch,
   FlatList,
 } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import {
   COLORS,
   FONTSIZE,
@@ -62,6 +62,20 @@ import { Divider } from "react-native-paper";
 import moment from "moment";
 import CollapseEpegIPASN from "../../components/CollapseEpegIPASN";
 import CollapseSIASNIPASN from "../../components/CollapseSIASNIPASN";
+import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDataUtama";
+import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
+import { CollapseCardSIASNRwSkp } from "../../components/CollapseCardSIASNRwSkp";
+import { CollapseCardSIASNRwSkp22 } from "../../components/CollapseCardSIASNRwSkp22";
+import { CollapseCardSIASNRwPnsUnor } from "../../components/CollapseCardSIASNRwPnsUnor";
+import { CollapseCardSIASNAngkaKredit } from "../../components/CollapseCardSIASNAngkaKredit";
+import { CollapseCardSIASNRwPenghargaan } from "../../components/CollapseCardSIASNRwPenghargaan";
+import { CollapseCardSIASNRwPendidikan } from "../../components/CollapseCardSIASNRwPendidikan";
+import { CollapseCardPasangan } from "../../components/CollapseCardPasangan";
+import { CollapseCardAnak } from "../../components/CollapseCardAnak";
+import { CollapseCardOrangTua } from "../../components/CollapseCardOrangTua";
+import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
+import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
+import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -610,6 +624,8 @@ export const Profile = () => {
     setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
+  console.log(profile?.request_updated_get_from_siasn);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -673,7 +689,7 @@ export const Profile = () => {
         <View
           style={{
             paddingHorizontal: spacing.default,
-            paddingTop: spacing.default
+            paddingTop: spacing.default,
           }}
         >
           <View
@@ -847,7 +863,7 @@ export const Profile = () => {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: 1
+                marginTop: 1,
               }}
             >
               <Text
@@ -862,17 +878,20 @@ export const Profile = () => {
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                {moment(
-                  profile?.request_updated_get_from_siasn,
-                  "YYYY-MM-DD HH:mm:ss"
-                )
-                  .locale("id")
-                  .format("DD MMMM YYYY HH:mm:ss")}
+                {profile?.request_updated_get_from_siasn === null ||
+                profile?.request_updated_get_from_siasn === undefined
+                  ? "-"
+                  : moment(
+                      profile?.request_updated_get_from_siasn,
+                      "YYYY-MM-DD HH:mm:ss"
+                    )
+                      .locale("id")
+                      .format("DD MMMM YYYY HH:mm:ss")}
               </Text>
             </View>
           </View>
         </View>
-        
+
         {/* <View
           style={{
             display: "flex",
@@ -1472,7 +1491,104 @@ export const Profile = () => {
           <CollapseCardBiodata profile={profile} device={device} />
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
-
+        {/* SIASN Data Utama */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNDataUtama
+            profile={profile?.siasn_data?.siasn_data_utama}
+            device={device}
+          />
+        </View>
+        {/* SIASN Jabatan */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNJabatan
+            profile={profile?.siasn_data?.siasn_jabatan}
+            device={device}
+          />
+        </View>
+        {/* SIASN RW SKP */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwSkp
+            profile={profile?.siasn_data?.siasn_rw_skp}
+            device={device}
+          />
+        </View>
+        {/* SIASN RW SKP 22 */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwSkp22
+            profile={profile?.siasn_data?.siasn_rw_skp22}
+            device={device}
+          />
+        </View>
+        {/* SIASN RW PNS Unor */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwPnsUnor
+            profile={profile?.siasn_data?.siasn_rw_pnsunor}
+            device={device}
+          />
+        </View>
+        {/* SIASN Angka Kredit */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNAngkaKredit
+            profile={profile?.siasn_data?.siasn_rw_angkakredit}
+            device={device}
+          />
+        </View>
+        {/* SIASN RW Pendidikan */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwPendidikan
+            profile={profile?.siasn_data?.siasn_rw_pendidikan}
+            device={device}
+          />
+        </View>
+        {/* SIASN Penghargaan */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwPenghargaan
+            profile={profile?.siasn_data?.siasn_rw_penghargaan}
+            device={device}
+          />
+        </View>
+        {/* Pasangan */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardPasangan
+            profile={profile?.siasn_data?.siasn_data_pasangan}
+            device={device}
+          />
+        </View>
+        {/* Anak */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardAnak
+            profile={profile?.siasn_data?.siasn_data_anak}
+            device={device}
+          />
+        </View>
+        {/* Ortang tua */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardOrangTua
+            profile={profile?.siasn_data?.siasn_data_ortu}
+            device={device}
+          />
+        </View>
+        {/* Masa Kerja */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardMasaKerja
+            profile={profile?.siasn_data?.siasn_rw_masakerja}
+            device={device}
+          />
+        </View>
+        {/* Hukuman Disiplin */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardHukumanDisiplin
+            profile={profile?.siasn_data?.siasn_rw_hukdis}
+            device={device}
+          />
+        </View>
+        {/* Kursus Diklat */}
+        <View style={{ paddingBottom: spacing.default }}>
+          <CollapseCardSIASNRwKursusDiklat
+            profile={profile?.siasn_data}
+            device={device}
+          />
+        </View>
         {/* Faq */}
         <View
           style={{
