@@ -19,8 +19,23 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
     dispatch(getFormCuti(params));
   };
   return (
-    <View style={{ flexDirection: "row", width: device === 'tablet'? 250: 120, paddingVertical: 16, }}>
-      <View style={{ alignItems: "center", gap: 10, justifyContent: 'center', display: 'flex', flexDirection: 'column',  width: '100%' }}>
+    <View
+      style={{
+        flexDirection: "row",
+        width: device === "tablet" ? 250 : 100,
+        paddingVertical: 16,
+      }}
+    >
+      <View
+        style={{
+          alignItems: "center",
+          gap: 10,
+          justifyContent: "center",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
         <TouchableOpacity
           onPress={() => {
             formCuti(item.id);

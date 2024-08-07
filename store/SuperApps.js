@@ -129,7 +129,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         // state.galeri.lists = action.payload;
-        // state.loading = false
+        state.loading = false;
         let dataPrev = state.galeri.lists;
         let dataNext = action.payload;
         let gabung = dataPrev.concat(dataNext);
@@ -137,10 +137,10 @@ const SuperAppsSlice = createSlice({
         // state.loading = false;
       })
       .addCase(getGaleri.pending, (state, action) => {
-        // state.loading = true;
+        state.loading = true;
       })
       .addCase(getGaleri.rejected, (state, action) => {
-        // state.loading = false;
+        state.loading = false;
         Sentry.captureException(action.payload);
       })
       .addCase(getBerita.fulfilled, (state, action) => {
@@ -148,24 +148,25 @@ const SuperAppsSlice = createSlice({
         let dataNext = action.payload;
         let gabung = dataPrev.concat(dataNext);
         state.berita.lists = gabung;
+        state.loading = false;
         // state.loading = false;
       })
       .addCase(getBerita.pending, (state, action) => {
-        // state.loading = true;
+        state.loading = true;
       })
       .addCase(getBerita.rejected, (state, action) => {
-        // state.loading = false;
+        state.loading = false;
         Sentry.captureException(action.payload);
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
-        // state.loading = false;
+        state.loading = false;
       })
       .addCase(getDetailBerita.pending, (state, action) => {
-        // state.loading = true;
+        state.loading = true;
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
-        // state.loading = false;
+        state.loading = false;
         Sentry.captureException(action.payload);
       })
       .addCase(getLastLogAttendence.fulfilled, (state, action) => {

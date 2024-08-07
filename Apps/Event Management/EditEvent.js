@@ -16,6 +16,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -110,7 +111,7 @@ const CardListPeserta = ({ item, addressbook, device }) => {
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-      (item.title !== undefined && item.title?.name !== "") ? (
+        (item.title !== undefined && item.title?.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -319,7 +320,6 @@ export const EditEvent = () => {
     };
     dispatch(postAttachment(data));
   };
-
   const [stateConfig, setStateConfig] = useState({});
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
@@ -492,7 +492,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -549,7 +549,7 @@ export const EditEvent = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: 10,
+                        marginTop: device === 'tablet' ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -615,7 +615,7 @@ export const EditEvent = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: 10,
+                        marginTop: device === 'tablet' ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -684,7 +684,7 @@ export const EditEvent = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                    modalVisiblePicker === "selesai"
+                      modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -709,40 +709,36 @@ export const EditEvent = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: COLORS.white,
                         alignItems: "center",
                         justifyContent: "center",
                         width: "90%",
-                        height: 500,
                         borderRadius: 10,
+                        flex: 1,
                       }}
                     >
-                      <TouchableOpacity
-                        onPress={() => setModalVisiblePicker("")}
-                        style={{
-                          paddingRight: "85%",
-                          marginBottom: 3,
-                          marginLeft: 20,
-                        }}
-                      >
-                        <View
-                          style={{
-                            backgroundColor: COLORS.primary,
-                            borderRadius: 50,
-                            width: 35,
-                            height: 35,
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
+                      <View style={{ marginVertical: 20, width: '100%' }}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisiblePicker("")}
                         >
-                          <Ionicons
-                            name="close-outline"
-                            size={device === "tablet" ? 36 : 24}
-                            color={COLORS.white}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                      <View style={{ width: "100%" }}>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.primary,
+                              borderRadius: 50,
+                              width: 35,
+                              height: 35,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={device === "tablet" ? 36 : 24}
+                              color={COLORS.white}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -758,7 +754,7 @@ export const EditEvent = () => {
                             .format("YYYY-MM-DD")}
                           mode="calendar"
                           minuteInterval={30}
-                          style={{ borderRadius: 10 }}
+                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
                           onSelectedChange={(date) => {
                             const [year, month, day] = date
                               .split("/")
@@ -818,7 +814,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -868,7 +864,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1003,7 +999,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1079,6 +1075,7 @@ export const EditEvent = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+
                 <FlatList
                   data={pilihanPesertaEvent}
                   renderItem={({ item }) => (
@@ -1094,7 +1091,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1169,6 +1166,7 @@ export const EditEvent = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+
                 <FlatList
                   data={pilihanNotulenEvent}
                   renderItem={({ item }) => (
@@ -1184,7 +1182,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1259,6 +1257,7 @@ export const EditEvent = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+
                 <FlatList
                   data={pilihanPetugasAbsenEvent}
                   renderItem={({ item }) => (
@@ -1274,7 +1273,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1329,7 +1328,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1544,7 +1543,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1575,7 +1574,7 @@ export const EditEvent = () => {
                     }}
                   >
                     <Ionicons
-                      name="md-cloud-upload-outline"
+                      name="cloud-upload-outline"
                       size={30}
                       color={COLORS.white}
                     />
@@ -1677,6 +1676,7 @@ export const EditEvent = () => {
                     ))}
                   </View>
                 )}
+
                 <View style={{ marginVertical: 10, marginHorizontal: "5%" }}>
                   <Text
                     style={{
@@ -1785,7 +1785,7 @@ export const EditEvent = () => {
                         <Text
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
                         >
-                          Berhasil Ditambahkan!
+                          Berhasil Diubah!
                         </Text>
                       </View>
                       <TouchableOpacity

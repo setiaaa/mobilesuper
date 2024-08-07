@@ -13,6 +13,7 @@ import { ActivityIndicator } from "react-native";
 import { setBerita } from "../../store/SuperApps";
 import ListEmpty from "../../components/ListEmpty";
 import { RefreshControl } from "react-native";
+import { Loading } from "../../components/Loading";
 
 export const ListBerita = () => {
   const navigation = useNavigation();
@@ -71,10 +72,10 @@ export const ListBerita = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(setBerita([]));
         dispatch(getBerita({ token, page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -84,6 +85,7 @@ export const ListBerita = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      {loading ? <Loading /> : null}
       <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{

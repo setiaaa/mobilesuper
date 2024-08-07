@@ -43,6 +43,7 @@ export const fontSizeResponsive = (type, device) => {
     H3: device === "phone" ? 13 : 23,
     H4: device === "phone" ? 12 : 22,
     H5: device === "phone" ? 10 : 21,
+    H6: device === "phone" ? 8 : 14,
     Judul: device === "phone" ? 17 : 28,
     textS: device === "phone" ? textStyle.textS : { fontsize: 22 },
     textM: device === "phone" ? textStyle.textM : { fontsize: 24 },
@@ -173,4 +174,13 @@ export const extraKeyKorespondensi = {
   kepada_eksternal: "Kepada Eksternal",
   tembusan_internal: "Tembusan Internal",
   tembusan_eksternal: "Tembusan Eksternal",
+};
+
+export const getFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  let k = 1024,
+    dm = 2,
+    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };

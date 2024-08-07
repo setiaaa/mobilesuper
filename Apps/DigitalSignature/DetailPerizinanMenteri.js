@@ -102,34 +102,22 @@ export const DetailPerizinanMenteri = ({ route }) => {
   const { profile } = useSelector((state) => state.superApps);
 
   const handleShowAttachment = (type) => {
-    let idxAtt = 0;
+    let idxAtt = -1;
 
-    if (type === "dokumen_undangan") {
-      if (profile?.nip === "196212301990031006") {
-        idxAtt = 0;
-      } else if (profile?.nip === "190001") {
-        idxAtt = 1;
-      } else if (profile?.nip === "88888") {
-        idxAtt = 2;
-      }
-    } else if (type === "memo") {
-      if (profile?.nip === "190001") {
-        idxAtt = 0;
-      } else if (profile?.nip === "88888") {
-        idxAtt = 1;
-      }
-    } else if (type === "dokumen_perizinan") {
-      if (profile?.nip === "88888") {
-        idxAtt = 0;
-      }
+    let attachments = item?.attachments;
+
+    if (attachments.length !== 0) {
+      attachments.map((item, i) => {
+        let name = item.name.toLowerCase();
+        if (name.includes(type)) {
+          idxAtt = i;
+        }
+      });
     }
 
-    if (
-      item.attachments.length !== 0 &&
-      item.attachments[idxAtt] !== undefined
-    ) {
+    if (attachments.length !== 0 && attachments[idxAtt] !== undefined) {
       navigation.navigate("PdfViewer", {
-        data: item.attachments[idxAtt].file,
+        data: attachments[idxAtt].file,
         type: "DokumenLain",
       });
     } else {
@@ -696,7 +684,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
               profile?.nip === "190001" ||
               profile?.nip === "88888") && (
               <TouchableOpacity
-                onPress={() => handleShowAttachment("dokumen_undangan")}
+                onPress={() => handleShowAttachment("undangan")}
                 style={{
                   width: "90%",
                   backgroundColor: "#2296f4",
@@ -744,7 +732,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
 
             {profile?.nip === "88888" && (
               <TouchableOpacity
-                onPress={() => handleShowAttachment("dokumen_perizinan")}
+                onPress={() => handleShowAttachment("persetujuan")}
                 style={{
                   width: "90%",
                   backgroundColor: COLORS.info,

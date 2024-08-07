@@ -119,6 +119,7 @@ import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
 import { SuperApps } from "../Apps/Faq/SuperApps";
 import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
 import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
+import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -1007,6 +1008,13 @@ export const TopsKeuanganKinerja = () => {
           component={IKU}
           options={{
             title: "IKU",
+          }}
+        />
+        <Top.Screen
+          name="DetailAPBN"
+          component={DetailAPBN}
+          options={{
+            title: "APBN Detail",
           }}
         />
       </Top.Navigator>

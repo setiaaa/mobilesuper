@@ -84,10 +84,12 @@ export const CardApps = ({
   useEffect(() => {
     let orientation = getOrientation(width, height);
     let tempLimit = 0;
-    if (device === "tablet" && orientation === "landscape") {
-      tempLimit = 15;
-    } else if (device === "tablet" && orientation === "potrait") {
-      tempLimit = width >= 834 ?  11: 9;
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempLimit = 15;
+      } else if (orientation === "potrait") {
+        tempLimit = width >= 834 ? 11 : 9;
+      }
     } else {
       tempLimit = 7;
     }
@@ -178,24 +180,6 @@ export const CardApps = ({
         },
       },
       {
-        title: "Pengembangan Kompetensi",
-        navigation: "ListAplikasiKepegawaian",
-        image: require("../../assets/superApp/Bankomicon.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 30,
-          },
-          height: {
-            tablet: 40,
-            hp: 24,
-          },
-        },
-        titleStyle: {
-          width: wp(15),
-        },
-      },
-      {
         title: "SPPD",
         navigation: "MainSPPD",
         image: require("../../assets/superApp/sppd.png"),
@@ -275,6 +259,25 @@ export const CardApps = ({
       //     width: null,
       //   },
       // },
+
+      {
+        title: "Pengembangan Kompetensi",
+        navigation: "ListAplikasiKepegawaian",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      },
       {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
@@ -315,7 +318,7 @@ export const CardApps = ({
       });
     }
     if (isRoleKalender) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(6, 0, {
         title: "Kalender",
         navigation: "MainKalender",
         image: require("../../assets/superApp/kalender.png"),
@@ -362,8 +365,8 @@ export const CardApps = ({
       });
     }
     if (isRoleEvent) {
-      tmpMenu.push({
-        title: "Agenda Rapat",
+      tmpMenu.splice(8, 0, {
+        title: "Event Management",
         navigation: "HalamanUtama",
         image: require("../../assets/superApp/event.png"),
         imagestyle: {
@@ -382,7 +385,7 @@ export const CardApps = ({
       });
     }
     if (isRoleMenteri) {
-      tmpMenu.splice(8, 0, {
+      tmpMenu.splice(11, 0, {
         title: "Perizinan Menteri",
         navigation: "PerizinanMenteri",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -460,7 +463,7 @@ export const CardApps = ({
               flexDirection: "row",
               gap: device === "tablet" ? 24 : 16,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "center",
+              alignItems: "flex-start",
               flex: 1,
               paddingHorizontal: 16,
               paddingVertical: 8,
@@ -477,6 +480,8 @@ export const CardApps = ({
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
+                        width:
+                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                       }}
                       key={index}
                     >
@@ -501,6 +506,18 @@ export const CardApps = ({
                               justifyContent: "center",
                               alignItems: "center",
                               display: "flex",
+                              width:
+                                device === "tablet"
+                                  ? 100
+                                  : width <= 375
+                                    ? 53
+                                    : 60,
+                              height:
+                                device === "tablet"
+                                  ? 100
+                                  : width <= 375
+                                    ? 53
+                                    : 60,
                             },
                           ]}
                         >
@@ -534,7 +551,7 @@ export const CardApps = ({
                               size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Agenda Rapat" ? (
+                          ) : item.title === "Event Management" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
                               size={device === "tablet" ? 60 : 30}
@@ -575,10 +592,8 @@ export const CardApps = ({
                           justifyContent: "center",
                           alignItems: "center",
                           textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                          width: device === "tablet" ? 100 : 60,
+                          fontSize: fontSizeResponsive("H6", device),
                         }}
-                        numberOfLines={1}
                       >
                         {item.title}
                       </Text>
@@ -593,6 +608,7 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
+                  width: device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                 }}
               >
                 <TouchableOpacity onPress={handlePressModal}>
@@ -606,6 +622,18 @@ export const CardApps = ({
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
+                        width:
+                          device === "tablet"
+                            ? 100
+                            : width <= 375
+                              ? 53
+                              : 60,
+                        height:
+                          device === "tablet"
+                            ? 100
+                            : width <= 375
+                              ? 53
+                              : 60,
                       },
                     ]}
                   >
@@ -621,14 +649,14 @@ export const CardApps = ({
                     marginTop: 10,
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H6", device),
                   }}
                 >
                   More
                 </Text>
               </View>
             )}
-          </View>
+          </View >
           {/* {listMenu &&
               listMenu.length > 4 &&
               listMenu.map((item, index) => {
@@ -696,7 +724,7 @@ export const CardApps = ({
                               size={device === 'tablet' ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Agenda Rapat" ? (
+                          ) : item.title === "Event Management" ? (
                             <MaterialCommunityIcons
                               name="folder-star-multiple"
                               size={device === 'tablet' ? 60 : 30}
@@ -746,7 +774,7 @@ export const CardApps = ({
                     </View>
                   );
               })} */}
-        </View>
+        </View >
       )}
     </>
   );
@@ -775,13 +803,9 @@ const styles = StyleSheet.create({
     left: 16,
   },
   cardApps: {
-    width: 60,
-    height: 60,
     borderRadius: 8,
   },
   cardAppsTablet: {
-    width: 100,
-    height: 100,
     borderRadius: 8,
   },
 });

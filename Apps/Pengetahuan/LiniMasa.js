@@ -24,7 +24,11 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setLiniMasa, setRefresh } from "../../store/Pengetahuan";
+import {
+  setLiniMasa,
+  setRefresh,
+  setResetDetailLinimasa,
+} from "../../store/Pengetahuan";
 import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
@@ -425,6 +429,8 @@ const CardLiniMasa = ({ item, token, device }) => {
         onPress={(e) => {
           e.stopPropagation();
           // getDetail(item.id);
+          dispatch(setResetDetailLinimasa());
+
           navigation.navigate("DetailLinimasa", {
             // like_list: item.like_list,
             id: item.id,
@@ -2160,7 +2166,7 @@ export const LiniMasa = () => {
           <View
             style={{
               flex: 1,
-              width: '100%',
+              width: "100%",
             }}
           >
             <FlatList

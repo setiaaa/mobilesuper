@@ -16,7 +16,6 @@ import Carousel, {
   ParallaxImage,
 } from "react-native-snap-carousel";
 import { useRef } from "react";
-import { Dimensions } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Banner, Divider } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
@@ -52,6 +51,7 @@ import {
 } from "react-native-responsive-screen";
 import RenderHTML from "react-native-render-html";
 import { Config } from "../../constants/config";
+import { setResetDetailLinimasa } from "../../store/Pengetahuan";
 
 // const BannerSetjen = [
 //   {
@@ -76,14 +76,13 @@ import { Config } from "../../constants/config";
 // ];
 
 export const Satker = () => {
-  const carouselRef = useRef(null);
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
 
   const [entries, setEntries] = useState([]);
-  // const [berita, setBerita] = useState([]);
   const [selected, setSelected] = useState("");
 
-  const [slide, setSlide] = useState(0);
-  const [slide2, setSlide2] = useState(0);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
 
@@ -122,9 +121,9 @@ export const Satker = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 110;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -198,6 +197,7 @@ export const Satker = () => {
           style={{ flexDirection: "row", marginVertical: 20 }}
           onPress={() => {
             // getDetail(item.id);
+            dispatch(setResetDetailLinimasa());
             navigation.navigate("DetailLinimasa", {
               id: item.id,
             });
@@ -396,16 +396,29 @@ export const Satker = () => {
       marginVertical: 40,
     },
     p: {
-      fontSize: 14,
+      display: "none",
     },
-    h5: {
+    h4: {
       fontSize: 18,
+      marginBottom: 0, // Mengurangi jarak bawah
+      marginTop: 10, // Mengurangi jarak atas
+    },
+    ul: {
+      marginBottom: 0,
+    },
+    li: {
+      // backgroundColor: "orange",
+      // marginTop: 5,
+    },
+    ol: {
+      fontSize: 15,
+      marginTop: 10,
     },
   };
 
   const classesStyles = {
     content: {
-      padding: 30,
+      padding: 10,
     },
     "news-title": {
       fontSize: 18,
@@ -421,6 +434,7 @@ export const Satker = () => {
   };
 
   const baseStyles = {};
+
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -520,9 +534,9 @@ export const Satker = () => {
           </View>
         </View>
 
-        <View style={[styles.containerr, { marginTop: 20 }]}>
+        <View style={[styles.containerr, { marginVertical: 20 }]}>
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefHome}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
@@ -545,33 +559,22 @@ export const Satker = () => {
               Galeri
             </Text>
           </View>
+
           <Carousel
-            ref={carouselRef}
+            ref={carouselRefGaleri}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={getWidthCarousel()}
-            data={gallery.results}
+            data={gallery?.results?.slice(0, 5)}
             renderItem={({ item }, parallaxProps) => (
               <BannerGallery parallaxProps={parallaxProps} item={item} />
             )}
             hasParallaxImages={true}
-            onSnapToItem={setSlide}
-          />
-          <Pagination
-            dotsLength={gallery?.results?.length}
-            dotColor={"black"}
-            inactiveDotColor={COLORS.grey}
-            dotStyle={styles.paginationDot}
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.6}
-            activeDotIndex={slide}
-            carouselRef={carouselRef}
-            tappableDots={!!carouselRef}
           />
         </View>
 
         <View
-          style={{ marginLeft: 30, flexDirection: "row", marginBottom: 20 }}
+          style={{ marginLeft: 30, flexDirection: "row", marginVertical: 20 }}
         >
           <Text
             style={{
@@ -599,9 +602,9 @@ export const Satker = () => {
         </View>
 
         <View>
-          <View style={styles.containerr}>
+          <View style={[styles.containerr, { marginVertical: 20 }]}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefBerita}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -618,7 +621,7 @@ export const Satker = () => {
           style={[
             styles.containerr,
             {
-              marginTop: 10,
+              marginVertical: 20,
               justifyContent: "center",
               alignItems: "center",
             },
@@ -645,6 +648,7 @@ export const Satker = () => {
             carouselRef={carouselRef}
             tappableDots={!!carouselRef}
           /> */}
+
           <View
             style={{
               flexDirection: "row",
@@ -669,6 +673,23 @@ export const Satker = () => {
               }}
               nestedScrollEnabled={true}
             >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.info,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.nama}
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  marginTop: 10,
+                }}
+              >
+                {pesan[pesan?.length - 1]?.position}
+              </Text>
               <RenderHTML
                 source={{ html: pesan[pesan.length - 1]?.content }}
                 tagsStyles={tagsStyles}
@@ -735,9 +756,8 @@ export const Satker = () => {
 
         <View
           style={{
-            marginBottom: 40,
+            marginVertical: 20,
             marginHorizontal: 30,
-            marginTop: profile?.nip === "100062" ? 10 : 0,
           }}
         >
           <CardUltah ultah={ultah} device={device} />
@@ -785,7 +805,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
     // marginHorizontal: 20,
-    alignSelf: "center",
   },
   vertical: {
     rotation: 12,

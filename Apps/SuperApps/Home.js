@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -112,11 +112,9 @@ const _color = "#6E01EF";
 const _size = 100;
 
 export const Home = () => {
-  const carouselRef = useRef(null);
-
-  const goForward = () => {
-    carouselRef.current.snapToNext();
-  };
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
 
   const [slide2, setSlide2] = useState(0);
   const [slide3, setSlide3] = useState(0);
@@ -256,7 +254,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["85%", "CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -708,9 +706,9 @@ export const Home = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 120;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -837,11 +835,12 @@ export const Home = () => {
                     )}
                   >
                     <View onLayout={handleContentLayout}>
-                      <View style={{ marginVertical: 20 }}>
+                      <View
+                        style={{ marginTop: device === "tablet" ? 50 : 30 }}
+                      >
                         <View
                           style={{
                             marginHorizontal: 20,
-                            marginTop: 10,
                             flexDirection: "row",
                             justifyContent: "space-between",
                             padding: 14,
@@ -867,7 +866,7 @@ export const Home = () => {
                             />
                           </TouchableOpacity>
                         </View>
-                        <View style={{ marginVertical: 20 }}>
+                        <View>
                           <CardAppsB
                             setModalBankom={setModalBankom}
                             setModalKepegawaian={setModalKepegawaian}
@@ -1142,8 +1141,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1159,8 +1158,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                                  ? "#B745FF"
+                                  : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1175,8 +1174,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                              ? "#B745FF"
-                              : null,
+                                ? "#B745FF"
+                                : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1249,7 +1248,7 @@ export const Home = () => {
             ></View>
 
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefHome}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1440,7 +1439,7 @@ export const Home = () => {
           <View>
             <View style={styles.containerr}>
               <Carousel
-                ref={carouselRef}
+                ref={carouselRefBerita}
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={getWidthCarousel()}
@@ -1459,8 +1458,8 @@ export const Home = () => {
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
                 activeDotIndex={slide4}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
+                carouselRef={carouselRefBerita}
+                tappableDots={!!carouselRefBerita}
               />
             </View>
             {/* <Carousel data={CarouselData} /> */}
@@ -1848,7 +1847,11 @@ export const Home = () => {
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4, fontSize: fontSizeResponsive("H4", device), }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: FONTSIZE.H4,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         My SAPK
                       </Text>
@@ -1891,9 +1894,9 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: '60%' }]}>
+          <View style={[styles.containerr, { marginBottom: "60%" }]}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefGaleri}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1912,8 +1915,8 @@ export const Home = () => {
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}
               activeDotIndex={slide3}
-              carouselRef={carouselRef}
-              tappableDots={!!carouselRef}
+              carouselRef={carouselRefGaleri}
+              tappableDots={!!carouselRefGaleri}
             />
           </View>
         </ScrollView>

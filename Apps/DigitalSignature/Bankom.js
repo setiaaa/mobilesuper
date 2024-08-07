@@ -94,7 +94,7 @@ const ListBankom = ({
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={(e) => {
           getDetail(item?.id);
-          navigation.navigate("DetailSertifikat");
+          navigation.navigate("DetailSertifikat", variant);
         }}
       >
         {variant === "ready" ? (
@@ -178,7 +178,9 @@ const ListBankom = ({
             >
               Tanggal
             </Text>
-            <Text style={{fontSize: fontSizeResponsive("H3", device),}}>: {item?.extra_attributes?.tanggalSertif}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+              : {item?.extra_attributes?.tanggalSertif}
+            </Text>
             {/* {item?.receivers[0]?.display_title !== undefined ? (
               <Text
                 style={{

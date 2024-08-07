@@ -103,11 +103,11 @@ export const CardAppsB = ({
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
+      <View style={[styles.item, { height: device === "tablet" ? 200 : 110 }]}>
         <View
           style={{
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "flex-start",
             display: "flex",
           }}
         >
@@ -155,7 +155,7 @@ export const CardAppsB = ({
                   size={device === 'tablet' ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
-              ) : item.title === "Agenda Rapat" ? (
+              ) : item.title === "Event Management" ? (
                 <MaterialCommunityIcons
                   name="folder-star-multiple"
                   size={device === 'tablet' ? 60 : 30}
@@ -195,11 +195,10 @@ export const CardAppsB = ({
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
+              fontSize: fontSizeResponsive("H6", device),
               width: device === 'tablet' ? 100 : 60,
               textAlign: 'center'
             }}
-            numberOfLines={1}
           >
             {item.title}
           </Text>
@@ -230,7 +229,7 @@ export const CardAppsB = ({
   const numColumns = device === 'tablet' ? 4 : 3;
 
   return (
-    <View>
+    <View style={{ marginTop: 24 }}>
       <FlatList
         data={formatData(listMenu, numColumns)}
         renderItem={renderRow}
@@ -241,7 +240,7 @@ export const CardAppsB = ({
         }}
         numColumns={numColumns}
         scrollEnabled={true}
-        style={{height: '90%'}}
+        style={{ height: '95%' }}
       />
     </View>
   );
@@ -267,7 +266,7 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flex: 1,
     margin: 1, // approximate a square
   },

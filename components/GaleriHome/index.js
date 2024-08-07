@@ -17,9 +17,9 @@ export const GaleriHome = ({ item, index, parallaxProps }) => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 110;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
