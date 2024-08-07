@@ -99,7 +99,7 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                                     fontWeight: FONTWEIGHT.bold,
                                 }}
                             >
-                                {profile?.ipasn_nilai}
+                                {profile?.ipasn_nilai ? profile?.ipasn_nilai : '0'}
                             </Text>
                             {/* Badge Indikator */}
                             {convertChip(parseInt(profile?.ipasn_nilai))}
@@ -136,7 +136,7 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile.ipasn_kualifikasi}
+                                {profile.ipasn_kualifikasi ? profile.ipasn_kualifikasi : '0'}
                             </Text>
                         </View>
                     </View>
@@ -170,7 +170,7 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile.ipasn_kompetensi}
+                                {profile.ipasn_kompetensi ? profile.ipasn_kompetensi : '0'}
                             </Text>
                         </View>
                     </View>
@@ -204,7 +204,7 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile.ipasn_kinerja}
+                                {profile.ipasn_kinerja ? profile.ipasn_kinerja : '0'}
                             </Text>
                         </View>
                     </View>
@@ -238,7 +238,7 @@ const CollapseSIASNIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile.ipasn_disiplin}
+                                {profile.ipasn_disiplin ? profile.ipasn_disiplin : '0'}
                             </Text>
                         </View>
                     </View>

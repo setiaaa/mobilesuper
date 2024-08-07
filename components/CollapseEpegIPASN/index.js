@@ -131,7 +131,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontWeight: FONTWEIGHT.bold,
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.nilai}
+                                {profile?.epeg_ipasn_data?.nilai ? profile?.epeg_ipasn_data?.nilai : '0'}
                             </Text>
                             {/* Badge Indikator */}
                             {convertChip(parseInt(profile?.epeg_ipasn_data?.nilai))}
@@ -168,7 +168,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.kualifikasi}
+                                {profile?.epeg_ipasn_data?.kualifikasi ? profile?.epeg_ipasn_data?.kualifikasi : '0'}
                             </Text>
                         </View>
                     </View>
@@ -202,7 +202,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.kompetensi}
+                                {profile?.epeg_ipasn_data?.kompetensi ? profile?.epeg_ipasn_data?.kompetensi : '0'}
                             </Text>
                         </View>
                     </View>
@@ -236,7 +236,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.kinerja}
+                                {profile?.epeg_ipasn_data?.kinerja ? profile?.epeg_ipasn_data?.kinerja : '0'}
                             </Text>
                         </View>
                     </View>
@@ -270,7 +270,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.disiplin}
+                                {profile?.epeg_ipasn_data?.disiplin ? profile?.epeg_ipasn_data?.disiplin : '0'}
                             </Text>
                         </View>
                     </View>
@@ -304,7 +304,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.diklat20jp}
+                                {profile?.epeg_ipasn_data?.diklat20jp ? profile?.epeg_ipasn_data?.diklat20jp : '0'}
                             </Text>
                         </View>
                     </View>
@@ -338,7 +338,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.fungsional}
+                                {profile?.epeg_ipasn_data?.fungsional ? profile?.epeg_ipasn_data?.fungsional : '0'}
                             </Text>
                         </View>
                     </View>
@@ -372,7 +372,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.hukdis}
+                                {profile?.epeg_ipasn_data?.hukdis ? profile?.epeg_ipasn_data?.hukdis : '0'}
                             </Text>
                         </View>
                     </View>
@@ -406,7 +406,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.ppkp}
+                                {profile?.epeg_ipasn_data?.ppkp ? profile?.epeg_ipasn_data?.ppkp : '0'}
                             </Text>
                         </View>
                     </View>
@@ -440,7 +440,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.seminar}
+                                {profile?.epeg_ipasn_data?.seminar ? profile?.epeg_ipasn_data?.seminar : '0'}
                             </Text>
                         </View>
                     </View>
@@ -474,7 +474,7 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                                     fontSize: fontSizeResponsive("H4", device),
                                 }}
                             >
-                                {profile?.epeg_ipasn_data?.struktural}
+                                {profile?.epeg_ipasn_data?.struktural ? profile?.epeg_ipasn_data?.struktural : '0'}
                             </Text>
                         </View>
                     </View>
