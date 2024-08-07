@@ -256,12 +256,12 @@ const CardEventFilter = ({ item, token, device }) => {
                   {data.user_role.is_member
                     ? "Peserta"
                     : data.user_role.is_notulensi
-                    ? "Notulen"
-                    : data.user_role.is_pic
-                    ? "PIC"
-                    : data.user_role.is_presensi
-                    ? "Presensi"
-                    : "Pembuat"}
+                      ? "Notulen"
+                      : data.user_role.is_pic
+                        ? "PIC"
+                        : data.user_role.is_presensi
+                          ? "Presensi"
+                          : "Pembuat"}
                 </Text>
 
                 <View
@@ -462,7 +462,7 @@ export const HalamanUtama = () => {
           dispatch(getEventProgress(token));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -543,8 +543,8 @@ export const HalamanUtama = () => {
                   device === "tablet" && orientation === "landscape"
                     ? "95%"
                     : device === "tablet" && orientation === "potrait"
-                    ? "92%"
-                    : "85%",
+                      ? "92%"
+                      : "85%",
               }}
             >
               {variant === "hariini" ? (
@@ -864,24 +864,25 @@ export const HalamanUtama = () => {
           {variant === "hariini" ? (
             <>
               {loading ? <Loading /> : null}
-              <FlatList
-                data={filterDataHariIni}
-                renderItem={({ item }) => (
-                  <CardListEvent token={token} item={item} loading={loading} />
-                )}
-                keyExtractor={(item) => item.id}
-                style={{ marginBottom: 300 }}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-              />
+              <View style={{ flex: 1 }}>
+                <FlatList
+                  data={filterDataHariIni}
+                  renderItem={({ item }) => (
+                    <CardListEvent token={token} item={item} loading={loading} />
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                />
+              </View>
             </>
           ) : (
-            <View>
+            <View style={{ flex: 1 }}>
               {loading ? <Loading /> : null}
               <View
                 style={{
@@ -938,32 +939,34 @@ export const HalamanUtama = () => {
                   </View>
                 </View>
               </View>
-              <FlatList
-                data={
-                  search === "" && !isFiltered
-                    ? event.listsprogress
-                    : filterData
-                }
-                // data={event.listsprogress}
-                renderItem={({ item }) => (
-                  <CardProgresEvent
-                    token={token}
-                    item={item}
-                    bottomSheetAttach={bottomSheetAttach}
-                    loading={loading}
-                    device={device}
-                  />
-                )}
-                keyExtractor={(item) => item.id}
-                style={{ marginBottom: 300 }}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-              />
+
+              <View style={{ flex: 1 }}>
+                <FlatList
+                  data={
+                    search === "" && !isFiltered
+                      ? event.listsprogress
+                      : filterData
+                  }
+                  // data={event.listsprogress}
+                  renderItem={({ item }) => (
+                    <CardProgresEvent
+                      token={token}
+                      item={item}
+                      bottomSheetAttach={bottomSheetAttach}
+                      loading={loading}
+                      device={device}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                />
+              </View>
             </View>
           )}
 

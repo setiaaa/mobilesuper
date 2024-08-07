@@ -36,7 +36,7 @@ import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
 import moment from "moment/min/moment-with-locales";
-import {} from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,7 +88,7 @@ const CardListPeserta = ({
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-      (item.title !== undefined && item.title.name !== "") ? (
+        (item.title !== undefined && item.title.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -494,7 +494,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -535,7 +535,7 @@ export const EditSubAgenda = () => {
                   <View>
                     <View
                       style={{
-                        marginTop: 10,
+                        marginTop: device === 'tablet' ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -609,7 +609,7 @@ export const EditSubAgenda = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: 10,
+                        marginTop: device === 'tablet' ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -677,7 +677,7 @@ export const EditSubAgenda = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: 10,
+                        marginTop: device === 'tablet' ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -748,7 +748,7 @@ export const EditSubAgenda = () => {
                   transparent={true}
                   visible={
                     modalVisibleTimePicker === "mulai" ||
-                    modalVisibleTimePicker === "selesai"
+                      modalVisibleTimePicker === "selesai"
                       ? true
                       : false
                   }
@@ -773,40 +773,35 @@ export const EditSubAgenda = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: COLORS.white,
                         alignItems: "center",
                         justifyContent: "center",
                         width: "90%",
-                        height: 500,
                         borderRadius: 10,
                       }}
                     >
-                      <TouchableOpacity
-                        onPress={() => setModalVisibleTimePicker("")}
-                        style={{
-                          paddingRight: "85%",
-                          marginBottom: 3,
-                          marginLeft: 20,
-                        }}
-                      >
-                        <View
-                          style={{
-                            backgroundColor: COLORS.primary,
-                            borderRadius: 50,
-                            width: 35,
-                            height: 35,
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
+                      <View style={{ marginVertical: 20, width: '100%' }}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisibleTimePicker("")}
                         >
-                          <Ionicons
-                            name="close-outline"
-                            size={device === "tablet" ? 36 : 24}
-                            color={COLORS.white}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                      <View style={{ width: "100%" }}>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.primary,
+                              borderRadius: 50,
+                              width: 35,
+                              height: 35,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={device === "tablet" ? 36 : 24}
+                              color={COLORS.white}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -818,6 +813,7 @@ export const EditSubAgenda = () => {
                             borderColor: "rgba(122, 146, 165, 0.1)",
                           }}
                           mode="time"
+                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
                           minuteInterval={3}
                           onTimeChange={(selectedTime) => {
                             if (modalVisibleTimePicker === "mulai") {
@@ -862,40 +858,36 @@ export const EditSubAgenda = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: COLORS.white,
                         alignItems: "center",
                         justifyContent: "center",
                         width: "90%",
-                        height: 500,
                         borderRadius: 10,
+                        flex: 1
                       }}
                     >
-                      <TouchableOpacity
-                        onPress={() => setModalVisiblePicker("")}
-                        style={{
-                          paddingRight: "85%",
-                          marginBottom: 3,
-                          marginLeft: 20,
-                        }}
-                      >
-                        <View
-                          style={{
-                            backgroundColor: COLORS.primary,
-                            borderRadius: 50,
-                            width: 35,
-                            height: 35,
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
+                      <View style={{ marginVertical: 20, width: '100%' }}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisiblePicker("")}
                         >
-                          <Ionicons
-                            name="close-outline"
-                            size={device === "tablet" ? 36 : 24}
-                            color={COLORS.white}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                      <View style={{ width: "100%" }}>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.primary,
+                              borderRadius: 50,
+                              width: 35,
+                              height: 35,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={device === "tablet" ? 36 : 24}
+                              color={COLORS.white}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -915,7 +907,7 @@ export const EditSubAgenda = () => {
                           current={event.detailEvent?.start_date.split("T")[0]}
                           mode="calendar"
                           minuteInterval={30}
-                          style={{ borderRadius: 10 }}
+                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
                           onSelectedChange={(date) => {
                             const [year, month, day] = date
                               .split("/")
@@ -967,7 +959,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1032,6 +1024,7 @@ export const EditSubAgenda = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+
                 <FlatList
                   data={arrIsChecked}
                   renderItem={({ item }) => (
@@ -1175,7 +1168,7 @@ export const EditSubAgenda = () => {
                                     onValueChange={() =>
                                       handleChangeChecked(item, index)
                                     }
-                                    // color={isChecked ? '#4630EB' : undefined}
+                                  // color={isChecked ? '#4630EB' : undefined}
                                   />
                                 </View>
                                 {/* custom divider */}
@@ -1249,7 +1242,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1325,6 +1318,7 @@ export const EditSubAgenda = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+
                 <FlatList
                   data={pilihanPesertaTambahanInternal}
                   renderItem={({ item }) => (
@@ -1340,7 +1334,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1466,7 +1460,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1516,7 +1510,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1662,7 +1656,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: 10,
+                    marginTop: device === 'tablet' ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1693,7 +1687,7 @@ export const EditSubAgenda = () => {
                     }}
                   >
                     <Ionicons
-                      name="md-cloud-upload-outline"
+                      name="cloud-upload-outline"
                       size={30}
                       color={COLORS.white}
                     />
@@ -1904,7 +1898,7 @@ export const EditSubAgenda = () => {
                         <Text
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
                         >
-                          Berhasil Ditambahkan!
+                          Berhasil Diubah!
                         </Text>
                       </View>
                       <TouchableOpacity
