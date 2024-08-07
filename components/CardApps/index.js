@@ -510,14 +510,14 @@ export const CardApps = ({
                                 device === "tablet"
                                   ? 100
                                   : width <= 375
-                                  ? 53
-                                  : 60,
+                                    ? 53
+                                    : 60,
                               height:
                                 device === "tablet"
                                   ? 100
                                   : width <= 375
-                                  ? 53
-                                  : 60,
+                                    ? 53
+                                    : 60,
                             },
                           ]}
                         >
@@ -608,7 +608,7 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  width: device === "tablet" ? 100 : 60,
+                  width: device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                 }}
               >
                 <TouchableOpacity onPress={handlePressModal}>
@@ -622,8 +622,18 @@ export const CardApps = ({
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
-                        width: device === "tablet" ? 100 : 60,
-                        height: device === "tablet" ? 100 : 60,
+                        width:
+                          device === "tablet"
+                            ? 100
+                            : width <= 375
+                              ? 53
+                              : 60,
+                        height:
+                          device === "tablet"
+                            ? 100
+                            : width <= 375
+                              ? 53
+                              : 60,
                       },
                     ]}
                   >
@@ -646,7 +656,7 @@ export const CardApps = ({
                 </Text>
               </View>
             )}
-          </View>
+          </View >
           {/* {listMenu &&
               listMenu.length > 4 &&
               listMenu.map((item, index) => {
@@ -764,7 +774,7 @@ export const CardApps = ({
                     </View>
                   );
               })} */}
-        </View>
+        </View >
       )}
     </>
   );
