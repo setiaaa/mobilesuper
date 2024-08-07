@@ -5,8 +5,42 @@ import { COLORS, fontSizeResponsive, FONTWEIGHT, shadow, spacing } from "../../c
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Collapse, CollapseBody, CollapseHeader } from "accordion-collapse-react-native";
 
+export const convertChip = (data) => {
+    let tingkat = ''
+    let color = ''
+    if (data <= 100 && data > 90) {
+        tingkat = 'Sangat Tinggi'
+        color = '#CED06C'
+    } else if (data <= 90 && data > 80) {
+        tingkat = 'Tinggi'
+        color = "#81c784"
+    } else if (data <= 80 && data > 70) {
+        tingkat = 'Sedang'
+        color = "#ffee58";
+    } else {
+        tingkat = 'Rendah'
+        color = "#e57373";
+    }
+
+    return (
+        <View
+            style={{
+                backgroundColor: color,
+                borderRadius: 50,
+                paddingHorizontal: 10,
+                paddingVertical: 5
+            }}
+        >
+            <Text style={{ color: '#000' }}>
+                {tingkat}
+            </Text>
+        </View>
+    )
+}
+
 const CollapseEpegIPASN = ({ profile, device }) => {
     const [isOpen, setIsOpen] = useState(false);
+
     return (
         <Collapse isExpanded={isOpen}>
             <CollapseHeader>
@@ -78,25 +112,30 @@ const CollapseEpegIPASN = ({ profile, device }) => {
                             marginBottom: 10,
                             flexDirection: "row",
                             alignItems: "center",
+                            justifyContent: 'space-between'
                         }}
                     >
                         <Text
                             style={{
                                 fontSize: device === "tablet" ? 60 : 30,
-                                width: device === "tablet" ? "88%" : "78%",
                                 fontWeight: FONTWEIGHT.bold
                             }}
                         >
                             Nilai
                         </Text>
-                        <Text
-                            style={{
-                                fontSize: device === "tablet" ? 60 : 30,
-                                fontWeight: FONTWEIGHT.bold,
-                            }}
-                        >
-                            {profile?.epeg_ipasn_data?.nilai}
-                        </Text>
+                        {/* Niai dan Badge */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
+                            <Text
+                                style={{
+                                    fontSize: device === "tablet" ? 60 : 30,
+                                    fontWeight: FONTWEIGHT.bold,
+                                }}
+                            >
+                                {profile?.epeg_ipasn_data?.nilai}
+                            </Text>
+                            {/* Badge Indikator */}
+                            {convertChip(parseInt(profile?.epeg_ipasn_data?.nilai))}
+                        </View>
                     </View>
 
                     {/* Kualifikasi */}
