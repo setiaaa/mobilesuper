@@ -78,7 +78,7 @@ export const SuperApps = () => {
   }, [search, faqByCategory.SA]);
   return (
     <>
-      <View style={{ marginTop: spacing.medium }}>
+      <View style={{ marginVertical: spacing.medium }}>
         <Search
           placeholder={"Cari"}
           iconColor={COLORS.primary}

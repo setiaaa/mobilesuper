@@ -33,7 +33,7 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
         display: "flex",
         backgroundColor: COLORS.white,
         padding: spacing.default,
-        marginTop: spacing.medium,
+        marginBottom: spacing.medium,
         borderRadius: 8,
         alignSelf: "center",
       }}
@@ -56,8 +56,10 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
           ) : (
             <Text
               style={[
-                { fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive('H4', device) },
-                
+                {
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                },
               ]}
             >
               {item.title}

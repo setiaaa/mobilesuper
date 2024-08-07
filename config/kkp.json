@@ -1,7 +1,7 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "SuperAppsKKP",
+  "slug": "superappskkp",
   "version": "0.2.5",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-icon.png",
@@ -14,9 +14,7 @@
   "updates": {
     "fallbackToCacheTimeout": 0
   },
-  "assetBundlePatterns": [
-    "/*"
-  ],
+  "assetBundlePatterns": ["/*"],
   "ios": {
     "buildNumber": "7.4.3",
     "supportsTablet": true,
@@ -58,10 +56,7 @@
             "pathPrefix": "/apps/KnowledgeManagement/detail/:id/:id_user"
           }
         ],
-        "category": [
-          "BROWSABLE",
-          "DEFAULT"
-        ]
+        "category": ["BROWSABLE", "DEFAULT"]
       }
     ]
   },
@@ -112,9 +107,7 @@
       "onesignal-expo-plugin",
       {
         "mode": "development",
-        "smallIcons": [
-          "./assets/ic_stat_onesignal_default.png"
-        ],
+        "smallIcons": ["./assets/ic_stat_onesignal_default.png"],
         "smallIconAccentColor": "#323247"
       }
     ]
@@ -123,7 +116,7 @@
     "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "a16ddb1c-a4a4-4cc1-a3c4-e78f53295f67"
+      "projectId": "a501cd5f-dc07-4d90-b59d-1c2097fe6aa2"
     },
     "id": "kkp",
     "base_url": "https://apigw.kubekkp.coofis.com/",

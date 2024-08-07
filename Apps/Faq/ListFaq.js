@@ -73,11 +73,13 @@ export const ListFaq = () => {
       {/* FAQ */}
       <View
         style={{
+          paddingTop: spacing.default,
           padding: spacing.default,
+          paddingBottom: 160,
         }}
       >
         <View>
-          <Text style={{fontSize :fontSizeResponsive("H4", device)}}>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             Halo, Ada yang bisa kami bantu?
           </Text>
         </View>
@@ -121,7 +123,7 @@ export const ListFaq = () => {
           style={{
             flexDirection: "row",
             marginVertical: spacing.default,
-            height: "80%",
+            height: "100%",
             flexGrow: 0,
           }}
         >

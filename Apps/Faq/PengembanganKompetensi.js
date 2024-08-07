@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   RefreshControl,
@@ -26,7 +26,7 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { CardListFaq } from "../../components/CardListFaq";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 
@@ -48,6 +48,15 @@ export const PengembanganKompetensi = () => {
   const { device } = useSelector((state) => state.apps);
 
   const [group, setFaqGroup] = useState();
+
+  useFocusEffect(
+    useCallback(() => {
+      setFilterData("");
+      if (group != undefined || group != "") {
+        setFaqGroup("");
+      }
+    }, [])
+  );
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -124,7 +133,7 @@ export const PengembanganKompetensi = () => {
 
   return (
     <>
-      <View style={{ marginVertical: spacing.medium }}>
+      <View style={{ marginTop: spacing.medium }}>
         <Dropdown
           data={dataGroup}
           heightValue={"90%"}
@@ -145,7 +154,7 @@ export const PengembanganKompetensi = () => {
           search={true}
         />
       </View>
-      <View>
+      <View style={{ marginVertical: spacing.medium }}>
         <Search
           placeholder={"Cari"}
           iconColor={COLORS.primary}
