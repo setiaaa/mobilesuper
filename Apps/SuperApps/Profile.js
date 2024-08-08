@@ -649,8 +649,6 @@ export const Profile = () => {
     setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
-  console.log(profile?.request_updated_get_from_siasn);
-
   return (
     <>
       {loading ? <Loading /> : null}

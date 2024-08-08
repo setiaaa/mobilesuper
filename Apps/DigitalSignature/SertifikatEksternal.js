@@ -26,8 +26,13 @@ export const SertifikatEksternal = () => {
   const [token, setToken] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
+
   const scrollRef = useRef(null);
   const [page, setPage] = useState(1);
+  const [tipe, setTipe] = useState(
+    profile?.nip === "197908162002121003" ? " " : "personal"
+  );
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -35,8 +40,12 @@ export const SertifikatEksternal = () => {
     });
   }, []);
 
+  console.log(tipe);
+
   useEffect(() => {
-    dispatch(getListSertifikatEksternal({ token: token, page: page }));
+    dispatch(
+      getListSertifikatEksternal({ token: token, page: page, tipe: tipe })
+    );
   }, [token]);
 
   const onRefresh = React.useCallback(() => {

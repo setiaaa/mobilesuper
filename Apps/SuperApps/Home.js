@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -67,6 +67,8 @@ import { useCallback } from "react";
 import { Portal } from "react-native-portalize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  getMenu,
+  getMenuLite,
   getPushNotif,
   getTokenValue,
   removeMenuLite,
@@ -131,6 +133,7 @@ export const Home = () => {
   const [dataNotif, setDataNotif] = useState();
   const [menuBankom, setMenuBankom] = useState([]);
   const [menuKepegawaian, setMenuKepegawaian] = useState([]);
+  const [menuLiteLength, setMenuliteLength] = useState();
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
   const isFocused = useIsFocused();
@@ -182,6 +185,7 @@ export const Home = () => {
     status,
     post,
     iosNotif,
+    typeMenu,
   } = useSelector((state) => state.superApps);
 
   useEffect(() => {
@@ -717,6 +721,40 @@ export const Home = () => {
     return tempWidth;
   };
 
+  useEffect(() => {
+    if (typeMenu !== null) {
+      if (typeMenu === false) {
+        getMenu().then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            console.log(parsedVal, "menu");
+            if (parsedVal === null) {
+              setMenuliteLength([]);
+            } else {
+              setMenuliteLength(parsedVal);
+            }
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      } else {
+        getMenuLite(profile.nip).then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            console.log(parsedVal, "lite");
+            if (parsedVal === null) {
+              setMenuliteLength([]);
+            } else {
+              setMenuliteLength(parsedVal);
+            }
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      }
+    }
+  }, [typeMenu, isFocused, profile.nip]);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -728,7 +766,16 @@ export const Home = () => {
         >
           <View
             style={{
-              minHeight: device === "tablet" ? 530 : 350,
+              minHeight:
+                device === "phone"
+                  ? menuLiteLength?.length !== 0
+                    ? 350
+                    : 200
+                  : device === "tablet"
+                  ? menuLiteLength?.length !== 0
+                    ? 530
+                    : 380
+                  : 200,
               position: "relative",
             }}
           >
@@ -1141,8 +1188,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1158,8 +1205,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                  ? "#B745FF"
-                                  : null,
+                                ? "#B745FF"
+                                : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1174,8 +1221,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",

@@ -90,9 +90,9 @@ export const setMenuLite = async (value, nip) => {
   } catch (e) {}
 };
 
-export const removeMenuLite = async (value, nip) => {
+export const removeMenuLite = async (nip) => {
   try {
-    await AsyncStorage.removeItem(`menulite-${nip}`, value);
+    await AsyncStorage.removeItem(`menulite-${nip}`);
   } catch (e) {}
 };
 

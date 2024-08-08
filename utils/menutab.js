@@ -1060,13 +1060,13 @@ export const TopsKeuanganKinerja = () => {
             title: "IKU",
           }}
         />
-        <Top.Screen
+        {/* <Top.Screen
           name="DetailAPBN"
           component={DetailAPBN}
           options={{
             title: "APBN Detail",
           }}
-        />
+        /> */}
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1242,7 +1242,7 @@ export const TopsFaq = () => {
             fontWeight: FONTWEIGHT.bold,
           },
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: "auto", minWidht: "100" },
+          tabBarItemStyle: { width: "auto", minWidth: 100 },
         }}
       >
         <Top.Screen
