@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   RefreshControl,
@@ -26,8 +26,9 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { CardListFaq } from "../../components/CardListFaq";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Dropdown } from "../../components/DropDown";
+import { Search } from "../../components/Search";
 
 export const PengembanganKompetensi = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export const PengembanganKompetensi = () => {
     useSelector((state) => state.Faq);
 
   const idPK = faqCategory?.lists[3]?.id;
+  const [filterData, setFilterData] = useState([]);
   const [search, setSearch] = useState("");
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -46,6 +48,15 @@ export const PengembanganKompetensi = () => {
   const { device } = useSelector((state) => state.apps);
 
   const [group, setFaqGroup] = useState();
+
+  useFocusEffect(
+    useCallback(() => {
+      setFilterData("");
+      if (group != undefined || group != "") {
+        setFaqGroup("");
+      }
+    }, [])
+  );
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -105,9 +116,24 @@ export const PengembanganKompetensi = () => {
     }
   }
 
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = faqByGroup?.lists.filter((item) => {
+        return item.title?.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(faqByGroup?.lists);
+    }
+  }, [search, faqByGroup?.lists]);
+
   return (
     <>
-      <View style={{ marginVertical: spacing.medium }}>
+      <View style={{ marginTop: spacing.medium }}>
         <Dropdown
           data={dataGroup}
           heightValue={"90%"}
@@ -115,6 +141,7 @@ export const PengembanganKompetensi = () => {
           setSelected={setFaqGroup}
           handleClick={(item) => {
             getDataFaqByGroup(item.key);
+            setSearch("");
           }}
           borderWidth={1}
           borderColor={COLORS.ExtraDivinder}
@@ -127,8 +154,15 @@ export const PengembanganKompetensi = () => {
           search={true}
         />
       </View>
+      <View style={{ marginVertical: spacing.medium }}>
+        <Search
+          placeholder={"Cari"}
+          iconColor={COLORS.primary}
+          onSearch={filter}
+        />
+      </View>
       <FlatList
-        data={faqByGroup?.lists}
+        data={filterData}
         renderItem={({ item }) => (
           <CardListFaq
             item={item}

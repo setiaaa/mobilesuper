@@ -1241,6 +1241,8 @@ export const TopsFaq = () => {
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: "auto", minWidht: "100" },
         }}
       >
         <Top.Screen
