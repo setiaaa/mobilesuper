@@ -3,7 +3,6 @@
   "name": "SuperApps KKP",
   "slug": "superappskkp",
   "version": "0.2.5",
-  "orientation": "portrait",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
