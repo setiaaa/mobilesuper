@@ -1,9 +1,8 @@
 {
   "scheme": "kkp",
-  "name": "SuperApps KKP",
-  "slug": "SuperAppsKKP",
-  "version": "0.2.5",
-  "orientation": "portrait",
+  "name": "Dev SuperApps KKP",
+  "slug": "devsuperapps",
+  "version": "0.0.1",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
@@ -14,13 +13,11 @@
   "updates": {
     "fallbackToCacheTimeout": 0
   },
-  "assetBundlePatterns": [
-    "/*"
-  ],
+  "assetBundlePatterns": ["/*"],
   "ios": {
-    "buildNumber": "7.4.3",
+    "buildNumber": "0.0.1",
     "supportsTablet": true,
-    "bundleIdentifier": "go.id.kkp.portal",
+    "bundleIdentifier": "go.id.kkp.portal.dev",
     "infoPlist": {
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library",
       "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
@@ -28,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 744,
+    "versionCode": 1,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -46,7 +43,7 @@
       "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.kkp.portal",
+    "package": "go.id.kkp.portal.dev",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -58,10 +55,7 @@
             "pathPrefix": "/apps/KnowledgeManagement/detail/:id/:id_user"
           }
         ],
-        "category": [
-          "BROWSABLE",
-          "DEFAULT"
-        ]
+        "category": ["BROWSABLE", "DEFAULT"]
       }
     ]
   },
@@ -112,9 +106,7 @@
       "onesignal-expo-plugin",
       {
         "mode": "development",
-        "smallIcons": [
-          "./assets/ic_stat_onesignal_default.png"
-        ],
+        "smallIcons": ["./assets/ic_stat_onesignal_default.png"],
         "smallIconAccentColor": "#323247"
       }
     ]
@@ -123,14 +115,14 @@
     "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "a16ddb1c-a4a4-4cc1-a3c4-e78f53295f67"
+      "projectId": "ee29c3ba-c4c6-402e-b2ce-f519736eb454"
     },
     "id": "kkp",
-    "base_url": "https://portal.kkp.go.id/api/",
-    "base_url_kores": "https://portal-crs.kkp.go.id/",
-    "base_url_auth": "https://portal.kkp.go.id/service/auth/mobile/login/",
-    "base_url_cuti": "https://portal.kkp.go.id/service/cuti/api/",
-    "base_url_helpdesk": "https://portal.kkp.go.id/service/helpdesk/",
+    "base_url": "https://apigw.kubekkp.coofis.com/",
+    "base_url_kores": "https://crsfe3.kubekkp.coofis.com/",
+    "base_url_auth": "https://auth.kubekkp.coofis.com/mobile/login/",
+    "base_url_cuti": "https://cuti.kubekkp.coofis.com/api/",
+    "base_url_helpdesk": "https://helpdesk.kubekkp.coofis.com/api/",
     "upgrade_url": "https://portal.kkp.go.id/kkp",
     "loginSSO": false,
     "termOfUse": true,

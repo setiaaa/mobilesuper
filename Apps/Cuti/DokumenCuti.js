@@ -68,7 +68,7 @@ export const DokumenCuti = () => {
       if (profile.nip !== "") {
         dispatch(getArsipCuti(profile?.nip));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -100,7 +100,7 @@ export const DokumenCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
       <View style={{ position: "relative", flex: 1 }}>
         <View
@@ -170,7 +170,7 @@ export const DokumenCuti = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: device === 'tablet' ? "90%":"85%" }}>
+            <View style={{ width: device === 'tablet' ? "90%" : "85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -180,8 +180,8 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: device === 'tablet'? 50:40,
-                  height: device === 'tablet'? 50:40,
+                  width: device === 'tablet' ? 50 : 40,
+                  height: device === 'tablet' ? 50 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -394,7 +394,7 @@ export const DokumenCuti = () => {
 
                 <TouchableOpacity
                   style={{
-                    maxWidth: 120,
+                    flex: 1,
                     borderColor:
                       variant === "Draft"
                         ? COLORS.infoDangerLight
@@ -437,7 +437,7 @@ export const DokumenCuti = () => {
 
                 <TouchableOpacity
                   style={{
-                    maxWidth: 120,
+                    flex: 1,
                     borderColor:
                       variant === "Onprogress"
                         ? COLORS.infoDangerLight
@@ -480,7 +480,7 @@ export const DokumenCuti = () => {
 
                 <TouchableOpacity
                   style={{
-                    maxWidth: 120,
+                    flex: 1,
                     borderColor:
                       variant === "Completed"
                         ? COLORS.infoDangerLight
@@ -523,7 +523,7 @@ export const DokumenCuti = () => {
 
                 <TouchableOpacity
                   style={{
-                    maxWidth: 120,
+                    flex: 1,
                     borderColor:
                       variant === "Rejected"
                         ? COLORS.infoDangerLight
@@ -565,103 +565,103 @@ export const DokumenCuti = () => {
                 </TouchableOpacity>
               </View>
             </View>
-<View style={{flex: 1}}>
-            {variant === "Postponed" || variant === "Rejected" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenTidakDisetujui
-                      item={item}
-                      nip={profile.nip}
-                      variant={variant}
-                      device={device}
+            <View style={{ flex: 1 }}>
+              {variant === "Postponed" || variant === "Rejected" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenTidakDisetujui
+                        item={item}
+                        nip={profile.nip}
+                        variant={variant}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: device === "tablet" ? "79%" : "70%" }}
-              />
-            ) : variant === "Draft" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenDraft
-                      item={item}
-                      variant={variant}
-                      nip={profile.nip}
-                      device={device}
+                  }
+                  style={{ height: device === "tablet" ? "79%" : "70%" }}
+                />
+              ) : variant === "Draft" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenDraft
+                        item={item}
+                        variant={variant}
+                        nip={profile.nip}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{
-                  height: device === "tablet" ? "79%" : "70%",
-                }}
-              />
-            ) : variant === "Onprogress" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenOnProgress
-                      item={item}
-                      variant={variant}
-                      nip={profile.nip}
-                      device={device}
+                  }
+                  style={{
+                    height: device === "tablet" ? "79%" : "70%",
+                  }}
+                />
+              ) : variant === "Onprogress" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenOnProgress
+                        item={item}
+                        variant={variant}
+                        nip={profile.nip}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: device === "tablet" ? "79%" : "70%" }}
-              />
-            ) : variant === "Completed" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenDisetujui
-                      item={item}
-                      variant={variant}
-                      nip={profile.nip}
-                      pembatalan={"pembatalan"}
-                      device={device}
+                  }
+                  style={{ height: device === "tablet" ? "79%" : "70%" }}
+                />
+              ) : variant === "Completed" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenDisetujui
+                        item={item}
+                        variant={variant}
+                        nip={profile.nip}
+                        pembatalan={"pembatalan"}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: device === "tablet" ? "79%" : "70%" }}
-              />
-            ) : null}
+                  }
+                  style={{ height: device === "tablet" ? "79%" : "70%" }}
+                />
+              ) : null}
             </View>
           </View>
         </View>

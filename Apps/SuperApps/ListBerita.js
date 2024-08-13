@@ -10,9 +10,10 @@ import { getTokenValue } from "../../service/session";
 import { getBerita, getDetailBerita } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { ActivityIndicator } from "react-native";
-import { setBerita } from "../../store/SuperApps";
+import { setBerita, setLoading } from "../../store/SuperApps";
 import ListEmpty from "../../components/ListEmpty";
 import { RefreshControl } from "react-native";
+import { Loading } from "../../components/Loading";
 
 export const ListBerita = () => {
   const navigation = useNavigation();
@@ -31,6 +32,7 @@ export const ListBerita = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(setLoading(""));
     if (token !== "") {
       dispatch(getBerita({ token, page }));
     }
@@ -71,10 +73,10 @@ export const ListBerita = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(setBerita([]));
         dispatch(getBerita({ token, page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -84,6 +86,7 @@ export const ListBerita = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      {loading ? <Loading /> : null}
       <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
@@ -138,7 +141,7 @@ export const ListBerita = () => {
             onSearch={filter}
           />
         </View>
-        <View style={{ flex: 1, paddingHorizontal: PADDING.Page }}>
+        {/* <View style={{ flex: 1, paddingHorizontal: PADDING.Page }}>
           <FlatList
             data={filterData}
             renderItem={({ item, index }) => (
@@ -156,20 +159,61 @@ export const ListBerita = () => {
             )}
             ListEmptyComponent={() => <ListEmpty />}
             style={{ flex: 1 }}
-            ListFooterComponent={() =>
-              loading && (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
-                  }}
-                >
-                  <ActivityIndicator size="large" color={COLORS.primary} />
-                </View>
-              )
-            }
+            // ListFooterComponent={() =>
+            //   loading && (
+            //     <View
+            //       style={{
+            //         justifyContent: "center",
+            //         alignItems: "center",
+            //         padding: 24,
+            //       }}
+            //     >
+            //       <ActivityIndicator size="large" color={COLORS.primary} />
+            //     </View>
+            //   )
+            // }
             keyExtractor={(item) => item.id}
+            onEndReached={
+              search === "" && berita.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </View> */}
+        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+          <FlatList
+            key={"#"}
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListBeritaHome
+                image={item.image}
+                tanggal={item.updated_at}
+                // subtitle={item.subtitle}
+                title={item.title}
+                id={item.id}
+                item={item}
+                token={token}
+              />
+            )}
+            ListEmptyComponent={() =>
+              loading !== "" || (loading === true && <ListEmpty />)
+            }
+            // ListFooterComponent={() =>
+            //   loading && (
+            //     <View
+            //       style={{
+            //         justifyContent: "center",
+            //         alignItems: "center",
+            //         padding: 24,
+            //       }}
+            //     >
+            //       <ActivityIndicator size="large" color={COLORS.primary} />
+            //     </View>
+            //   )
+            // }
+            numColumns={2}
+            keyExtractor={(item) => "#" + item.id}
             onEndReached={
               search === "" && berita.lists.length !== 0 ? loadMore : null
             }

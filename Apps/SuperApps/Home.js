@@ -58,7 +58,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -67,6 +67,8 @@ import { useCallback } from "react";
 import { Portal } from "react-native-portalize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  getMenu,
+  getMenuLite,
   getPushNotif,
   getTokenValue,
   removeMenuLite,
@@ -112,11 +114,9 @@ const _color = "#6E01EF";
 const _size = 100;
 
 export const Home = () => {
-  const carouselRef = useRef(null);
-
-  const goForward = () => {
-    carouselRef.current.snapToNext();
-  };
+  const carouselRefHome = useRef(null);
+  const carouselRefBerita = useRef(null);
+  const carouselRefGaleri = useRef(null);
 
   const [slide2, setSlide2] = useState(0);
   const [slide3, setSlide3] = useState(0);
@@ -133,6 +133,7 @@ export const Home = () => {
   const [dataNotif, setDataNotif] = useState();
   const [menuBankom, setMenuBankom] = useState([]);
   const [menuKepegawaian, setMenuKepegawaian] = useState([]);
+  const [menuLiteLength, setMenuliteLength] = useState();
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
   const isFocused = useIsFocused();
@@ -184,6 +185,7 @@ export const Home = () => {
     status,
     post,
     iosNotif,
+    typeMenu,
   } = useSelector((state) => state.superApps);
 
   useEffect(() => {
@@ -256,7 +258,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["90%", "CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["100%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -708,9 +710,9 @@ export const Home = () => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempWidth = screenWidth - 120;
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 100;
+        tempWidth = screenWidth - 50;
       }
     } else {
       tempWidth = screenWidth - 60;
@@ -718,6 +720,40 @@ export const Home = () => {
 
     return tempWidth;
   };
+
+  useEffect(() => {
+    if (typeMenu !== null) {
+      if (typeMenu === false) {
+        getMenu().then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            // console.log(parsedVal, "menu");
+            if (parsedVal === null) {
+              setMenuliteLength([]);
+            } else {
+              setMenuliteLength(parsedVal);
+            }
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      } else {
+        getMenuLite(profile.nip).then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            console.log(parsedVal, "lite");
+            if (parsedVal === null) {
+              setMenuliteLength([]);
+            } else {
+              setMenuliteLength(parsedVal);
+            }
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      }
+    }
+  }, [typeMenu, isFocused, profile.nip]);
 
   return (
     <GestureHandlerRootView>
@@ -730,7 +766,16 @@ export const Home = () => {
         >
           <View
             style={{
-              minHeight: device === "tablet" ? 530 : 350,
+              minHeight:
+                device === "phone"
+                  ? menuLiteLength?.length !== 0
+                    ? 350
+                    : 200
+                  : device === "tablet"
+                  ? menuLiteLength?.length !== 0
+                    ? 530
+                    : 380
+                  : 200,
               position: "relative",
             }}
           >
@@ -837,7 +882,9 @@ export const Home = () => {
                     )}
                   >
                     <View onLayout={handleContentLayout}>
-                      <View style={{ marginTop: device === 'tablet' ? 50 : 30 }}>
+                      <View
+                        style={{ marginTop: device === "tablet" ? 50 : 30 }}
+                      >
                         <View
                           style={{
                             marginHorizontal: 20,
@@ -1141,8 +1188,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1158,8 +1205,8 @@ export const Home = () => {
                               lastLog?.next_action === "I"
                                 ? COLORS.success
                                 : lastLog?.next_action === "O"
-                                  ? "#B745FF"
-                                  : null,
+                                ? "#B745FF"
+                                : null,
                             fontWeight: FONTWEIGHT.bold,
                           }}
                         >
@@ -1174,8 +1221,8 @@ export const Home = () => {
                             lastLog?.next_action === "I"
                               ? COLORS.success
                               : lastLog?.next_action === "O"
-                                ? "#B745FF"
-                                : null,
+                              ? "#B745FF"
+                              : null,
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
@@ -1248,7 +1295,7 @@ export const Home = () => {
             ></View>
 
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefHome}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1439,7 +1486,7 @@ export const Home = () => {
           <View>
             <View style={styles.containerr}>
               <Carousel
-                ref={carouselRef}
+                ref={carouselRefBerita}
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={getWidthCarousel()}
@@ -1458,8 +1505,8 @@ export const Home = () => {
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
                 activeDotIndex={slide4}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
+                carouselRef={carouselRefBerita}
+                tappableDots={!!carouselRefBerita}
               />
             </View>
             {/* <Carousel data={CarouselData} /> */}
@@ -1847,7 +1894,11 @@ export const Home = () => {
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4, fontSize: fontSizeResponsive("H4", device), }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: FONTSIZE.H4,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         My SAPK
                       </Text>
@@ -1890,9 +1941,9 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: '60%' }]}>
+          <View style={[styles.containerr, { marginBottom: "60%" }]}>
             <Carousel
-              ref={carouselRef}
+              ref={carouselRefGaleri}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={getWidthCarousel()}
@@ -1911,8 +1962,8 @@ export const Home = () => {
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}
               activeDotIndex={slide3}
-              carouselRef={carouselRef}
-              tappableDots={!!carouselRef}
+              carouselRef={carouselRefGaleri}
+              tappableDots={!!carouselRefGaleri}
             />
           </View>
         </ScrollView>

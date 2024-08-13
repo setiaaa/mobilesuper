@@ -39,6 +39,7 @@ import {
 import { getTokenValue } from "../../service/session";
 import { color } from "react-native-reanimated";
 import { ResizeMode, Video } from "expo-av";
+import { setResetDetailLinimasa } from "../../store/Pengetahuan";
 
 const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
   const navigation = useNavigation();
@@ -1033,6 +1034,7 @@ export const DetailPenilaian = () => {
           onPress={() => {
             // console.log("data", data.id);
             // getDetail(data?.id);
+            dispatch(setResetDetailLinimasa());
             navigation.navigate("DetailLinimasa", {
               // like_list: item.like_list,
               id: data.id,

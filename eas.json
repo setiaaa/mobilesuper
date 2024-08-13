@@ -45,6 +45,8 @@
         "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
         "SENTRY_ORG": "sentry",
         "SENTRY_PROJECT": "kkp-mobile-prod",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "SENTRY_ALLOW_FAILURE": "true",
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
@@ -62,7 +64,7 @@
     "production": {
       "ios": {
         "appleId": "aziz@armsolusi.com",
-        "ascAppId": "6478191000",
+        "ascAppId": "6618150903",
         "appleTeamId": "H7BL72G773"
       }
     }

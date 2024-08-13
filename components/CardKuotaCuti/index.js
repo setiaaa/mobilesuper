@@ -23,19 +23,33 @@ export const CardKuotaCuti = ({ item, device }) => {
         backgroundColor: COLORS.white,
         marginTop: 10,
         padding: 12,
-        height: item.jenis_cuti === "Cuti Besar" ? 100 : 140,
+        minHeight: item.jenis_cuti === "Cuti Besar" ? 100 : 140,
+        position: "relative",
+        borderRadius: 8,
       }}
     >
-      <Image
-        source={require("../../assets/superApp/Vector2.png")}
+      <View
         style={{
           position: "absolute",
-          alignSelf: "flex-end",
-          height: item.jenis_cuti === "Cuti Besar" ? 100 : 140,
-          width: item.jenis_cuti === "Cuti Besar" ? 105 : 145,
+          // alignSelf: "flex-end",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          // height: "100%",
+          display: "flex",
+          alignItems: "flex-end",
         }}
-      />
-      <View style={{ gap: 20, flexDirection: "row" }}>
+      >
+        <Image
+          source={require("../../assets/superApp/Vector2.png")}
+          style={{
+            height: "100%",
+            width: item.jenis_cuti === "Cuti Besar" ? 105 : 145,
+          }}
+        />
+      </View>
+      <View>
         <View style={[styles.cardKouta]}>
           <View
             style={{
@@ -43,10 +57,10 @@ export const CardKuotaCuti = ({ item, device }) => {
               borderTopLeftRadius: 8,
               borderBottomLeftRadius: 8,
               // backgroundColor: COLORS.white,
-              alignItems: "center",
+              alignItems: "flex-start",
             }}
           >
-            <View style={{ rowGap: hp(0.5) }}>
+            <View>
               <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
                 Jenis : {item.jenis_cuti}
               </Text>
@@ -64,9 +78,11 @@ export const CardKuotaCuti = ({ item, device }) => {
                     }}
                   >
                     Mulai Dipakai:{" "}
-                    {moment(item.mulai_dipakai, "DD MMMM YYYY HH:mm:ss")
-                      .locale("id")
-                      .format(DATETIME.LONG_DATE)}
+                    {item.mulai_dipakai === "-"
+                      ? "-"
+                      : moment(item.mulai_dipakai, "DD MMMM YYYY HH:mm:ss")
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}
                   </Text>
                   <Text
                     style={{
@@ -75,9 +91,11 @@ export const CardKuotaCuti = ({ item, device }) => {
                     }}
                   >
                     Akhir Dipakai:{" "}
-                    {moment(item.akhir_dipakai, "DD MMMM YYYY HH:mm:ss")
-                      .locale("id")
-                      .format(DATETIME.LONG_DATE)}
+                    {item.akhir_dipakai === "-"
+                      ? "-"
+                      : moment(item.akhir_dipakai, "DD MMMM YYYY HH:mm:ss")
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}
                   </Text>
                 </>
               ) : (

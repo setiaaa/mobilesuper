@@ -39,9 +39,10 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
         >
           <Image
             source={{ uri: image }}
-            style={
-              Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid
-            }
+            style={{
+              height: device === "tablet" ? 350 : 193,
+              borderRadius: 16,
+            }}
           />
           <View
             style={{

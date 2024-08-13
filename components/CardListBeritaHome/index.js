@@ -30,56 +30,62 @@ export const CardListBeritaHome = ({
     dispatch(getDetailBerita(params));
   };
   return (
-    <View
-      style={{
-        backgroundColor: "#fff",
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        shadowOffset: {
-          height: 0,
-          width: 0,
-        },
-        borderRadius: 16,
-        width: "100%",
-        marginBottom: 16,
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => {
-          getDetail(id);
-          navigation.navigate("DetailBerita");
+    <View style={{ flex: 0.5 }}>
+      <View
+        style={{
+          backgroundColor: "#fff",
+          shadowOpacity: 0.3,
+          shadowRadius: 3,
+          shadowOffset: {
+            height: 0,
+            width: 0,
+          },
+          borderRadius: 16,
+          marginHorizontal: 8,
+          marginBottom: 16,
         }}
       >
-        <View>
-          <Image
-            source={{ uri: image }}
-            style={
-              Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid
-            }
-          />
-        </View>
-        <View style={{ padding: 10 }}>
-          <Text
-            style={{
-              color: COLORS.grey,
-              marginVertical: 5,
-              fontSize: fontSizeResponsive("H5", device),
-              fontWeight: 400,
-            }}
-          >
-            {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)}
-          </Text>
-          <Text
-            style={{
-              marginVertical: 5,
-              fontSize: fontSizeResponsive("H5", device),
-              fontWeight: 600,
-            }}
-          >
-            {title}
-          </Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            getDetail(id);
+            navigation.navigate("DetailBerita");
+          }}
+        >
+          <View>
+            <Image
+              source={{ uri: image }}
+              style={{
+                height: device === "tablet" ? 300 : 193,
+                borderRadius: 16,
+              }}
+            />
+          </View>
+          <View style={{ padding: 10 }}>
+            <Text
+              style={{
+                color: COLORS.grey,
+                marginVertical: 5,
+                fontSize: fontSizeResponsive("H5", device),
+                fontWeight: 400,
+              }}
+            >
+              {/* {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)} */}
+              {tanggal}
+            </Text>
+            <Text
+              numberOfLines={3}
+              style={{
+                marginVertical: 5,
+                fontSize: fontSizeResponsive("H5", device),
+                fontWeight: 600,
+                // width: 140,
+              }}
+            >
+              {title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -91,13 +97,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   imageIos: {
-    height: 193,
-    width: "100%",
     borderRadius: 16,
   },
   imageAndroid: {
     height: 193,
-    width: "100%",
     borderRadius: 16,
   },
 });

@@ -85,17 +85,13 @@ export const CardApps = ({
     let orientation = getOrientation(width, height);
     let tempLimit = 0;
     if (device === "tablet") {
-      if(orientation === 'landscape'){
+      if (orientation === "landscape") {
         tempLimit = 15;
-      }else if(orientation === 'potrait'){
+      } else if (orientation === "potrait") {
         tempLimit = width >= 834 ? 11 : 9;
       }
     } else {
-      if (width <= 375) {
-        tempLimit = 5
-      } else {
-        tempLimit = 7;
-      }
+      tempLimit = 7;
     }
     setLimitCard(tempLimit);
   }, [width]);
@@ -299,7 +295,7 @@ export const CardApps = ({
         titleStyle: {
           width: null,
         },
-      },
+      }
     );
     if (isRolePreShare) {
       tmpMenu.splice(2, 0, {
@@ -465,9 +461,9 @@ export const CardApps = ({
           <View
             style={{
               flexDirection: "row",
-              gap: device === "tablet" ? 24 : 16,
+              gap: device === "tablet" ? 24 : width <= 375 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "start",
+              alignItems: "flex-start",
               flex: 1,
               paddingHorizontal: 16,
               paddingVertical: 8,
@@ -484,7 +480,9 @@ export const CardApps = ({
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
-                        width: device === 'tablet' ? 100 : 60,
+                        width:
+                          device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                        marginTop: 5,
                       }}
                       key={index}
                     >
@@ -509,6 +507,18 @@ export const CardApps = ({
                               justifyContent: "center",
                               alignItems: "center",
                               display: "flex",
+                              width:
+                                device === "tablet"
+                                  ? 100
+                                  : width <= 375
+                                  ? 53
+                                  : 60,
+                              height:
+                                device === "tablet"
+                                  ? 100
+                                  : width <= 375
+                                  ? 53
+                                  : 60,
                             },
                           ]}
                         >
@@ -599,7 +609,8 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  width: device === 'tablet' ? 100 : 60,
+                  width: device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                  marginTop: 5,
                 }}
               >
                 <TouchableOpacity onPress={handlePressModal}>
@@ -613,6 +624,10 @@ export const CardApps = ({
                         justifyContent: "center",
                         alignItems: "center",
                         display: "flex",
+                        width:
+                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
+                        height:
+                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                       },
                     ]}
                   >
@@ -782,13 +797,9 @@ const styles = StyleSheet.create({
     left: 16,
   },
   cardApps: {
-    width: 60,
-    height: 60,
     borderRadius: 8,
   },
   cardAppsTablet: {
-    width: 100,
-    height: 100,
     borderRadius: 8,
   },
 });

@@ -96,7 +96,7 @@ export const PersetujanCuti = () => {
       if (profile.nip !== "") {
         dispatch(getDokumenPersetujuan(profile?.nip));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -107,7 +107,7 @@ export const PersetujanCuti = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
       <View style={{ position: "relative", flex: 1 }}>
         <View
@@ -176,7 +176,7 @@ export const PersetujanCuti = () => {
               alignItems: "center",
             }}
           >
-            <View style={{ width: device === 'tablet' ? "90%":"85%" }}>
+            <View style={{ width: device === 'tablet' ? "90%" : "85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -186,8 +186,8 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: device === 'tablet'? 50:40,
-                  height: device === 'tablet'? 50:40,
+                  width: device === 'tablet' ? 50 : 40,
+                  height: device === 'tablet' ? 50 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -200,7 +200,7 @@ export const PersetujanCuti = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             {/* <View
               style={{
                 backgroundColor: "white",
@@ -222,7 +222,7 @@ export const PersetujanCuti = () => {
             >
               <TouchableOpacity
                 style={{
-                  maxWidth: wp(22),
+                  flex: 1,
                   borderColor:
                     variant === "On Progress"
                       ? COLORS.infoDangerLight
@@ -266,7 +266,7 @@ export const PersetujanCuti = () => {
 
               <TouchableOpacity
                 style={{
-                  maxWidth: wp(22),
+                  flex: 1,
                   borderColor:
                     variant === "Completed"
                       ? COLORS.infoDangerLight
@@ -310,7 +310,7 @@ export const PersetujanCuti = () => {
 
               <TouchableOpacity
                 style={{
-                  maxWidth: wp(22),
+                  flex: 1,
                   borderColor:
                     variant === "Rejected"
                       ? COLORS.infoDangerLight
@@ -352,7 +352,7 @@ export const PersetujanCuti = () => {
 
               <TouchableOpacity
                 style={{
-                  maxWidth: wp(22),
+                  flex: 1,
                   borderColor:
                     variant === "Returned"
                       ? COLORS.infoDangerLight
@@ -393,98 +393,98 @@ export const PersetujanCuti = () => {
               </TouchableOpacity>
             </View>
             {/* </View> */}
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
 
-            {variant === "Completed" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenDisetujui
-                      item={item}
-                      nip={profile.nip}
-                      variant={variant}
-                      device={device}
+              {variant === "Completed" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenDisetujui
+                        item={item}
+                        nip={profile.nip}
+                        variant={variant}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-              />
-            ) : variant === "Rejected" ? (
-              <FlatList
-                data={filterData}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenTidakDisetujui
-                      item={item}
-                      nip={profile.nip}
-                      variant={variant}
-                      device={device}
+                  }
+                />
+              ) : variant === "Rejected" ? (
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenTidakDisetujui
+                        item={item}
+                        nip={profile.nip}
+                        variant={variant}
+                        device={device}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: "70%" }}
-              />
-            ) : variant === "Returned" ? (
-              <FlatList
-                data={persetujuan.lists?.data}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenDikembalikan
-                      item={item}
-                      nip={profile.nip}
-                      variant={variant}
+                  }
+                  style={{ height: "70%" }}
+                />
+              ) : variant === "Returned" ? (
+                <FlatList
+                  data={persetujuan.lists?.data}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenDikembalikan
+                        item={item}
+                        nip={profile.nip}
+                        variant={variant}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: "70%" }}
-              />
-            ) : variant === "On Progress" ? (
-              <FlatList
-                data={persetujuan.lists?.data}
-                renderItem={({ item }) => (
-                  <View key={item.id}>
-                    <CardListDokumenPerluDisetujui
-                      item={item}
-                      nip={profile.nip}
-                      variant={variant}
+                  }
+                  style={{ height: "70%" }}
+                />
+              ) : variant === "On Progress" ? (
+                <FlatList
+                  data={persetujuan.lists?.data}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardListDokumenPerluDisetujui
+                        item={item}
+                        nip={profile.nip}
+                        variant={variant}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
                     />
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={() => <ListEmpty />}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                style={{ height: "70%" }}
-              />
-            ) : null}
+                  }
+                  style={{ height: "70%" }}
+                />
+              ) : null}
             </View>
 
           </View>

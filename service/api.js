@@ -1912,9 +1912,9 @@ export const getCourseDigiSign = createAsyncThunk(
 
 export const getListSertifikatEksternal = createAsyncThunk(
   "digitalsign/getListSertifikatEksternal",
-  async ({ token, page }) => {
+  async ({ token, page, tipe }) => {
     const respon = await axios.get(
-      `${digitalSign}external-certificate/?page=${page}&limit=10`,
+      `${digitalSign}external-certificate/?page=${page}&limit=10&type=${tipe}`,
       { headers: { Authorization: token } }
     );
     return respon?.data.results;

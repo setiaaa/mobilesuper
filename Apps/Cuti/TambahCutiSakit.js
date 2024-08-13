@@ -9,6 +9,7 @@ import {
   Pressable,
   FlatList,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -21,6 +22,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -86,7 +88,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={{ uri: lampiran }}
           style={{ width: 90, height: 90, borderRadius: 8 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -102,7 +104,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "mp4" ? (
@@ -122,7 +124,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/mp4.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -138,7 +140,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "doc" || type === "docx" ? (
@@ -166,7 +168,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/word.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -182,7 +184,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "xls" || type === "xlsx" ? (
@@ -210,7 +212,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/excel.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -226,7 +228,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "pdf" ? (
@@ -254,7 +256,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/pdf.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -270,7 +272,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "ppt" || type === "pptx" ? (
@@ -298,7 +300,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/ppt.png")}
           style={{ width: 70, height: 70 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -314,7 +316,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : null;
@@ -811,9 +813,14 @@ export const TambahCutiSakit = () => {
     dispatch(setAttachmentCuti([]));
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   const { device } = useSelector((state) => state.apps);
+
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ position: "relative" }}>
         <ScrollView>
           <View
@@ -1628,7 +1635,6 @@ export const TambahCutiSakit = () => {
               {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
                 <View
                   style={{
-                    height: 184,
                     borderRadius: 16,
                     backgroundColor: "white",
                     paddingVertical: 16,
@@ -1641,39 +1647,31 @@ export const TambahCutiSakit = () => {
                     paddingHorizontal: 16,
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("Judul", device),
-                      fontWeight: FONTWEIGHT.bold,
-                    }}
-                  >
-                    <FlatList
-                      key={"#"}
-                      data={arsipDetail.detail_dokumen?.attachment}
-                      renderItem={({ item }) => (
-                        <View key={item.id}>
-                          <CardLampiran
-                            lampiran={item.attachment}
-                            id={item.id}
-                            name={item.name}
-                            size={item.file_size}
-                            type={getFileExtension(item.attachment)}
-                            onClick={() => {
-                              setVisibleModal(true);
-                              setLampiranById(item);
-                            }}
-                            device={device}
-                          />
-                        </View>
-                      )}
-                      scrollEnabled={true}
-                      horizontal={true}
-                      style={{ marginTop: 20 }}
-                      // columnWrapperStyle={{ justifyContent: "space-evenly" }}
-                      // numColumns={2}
-                      keyExtractor={(item) => "#" + item.id}
-                    />
-                  </Text>
+                  <FlatList
+                    key={"#"}
+                    data={arsipDetail.detail_dokumen?.attachment}
+                    renderItem={({ item }) => (
+                      <View key={item.id}>
+                        <CardLampiran
+                          lampiran={item.attachment}
+                          id={item.id}
+                          name={item.name}
+                          size={item.file_size}
+                          type={getFileExtension(item.attachment)}
+                          onClick={() => {
+                            setVisibleModal(true);
+                            setLampiranById(item);
+                          }}
+                          device={device}
+                        />
+                      </View>
+                    )}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    // columnWrapperStyle={{ justifyContent: "space-evenly" }}
+                    // numColumns={2}
+                    keyExtractor={(item) => "#" + item.id}
+                  />
                 </View>
               ) : (
                 <ScrollView
@@ -2055,131 +2053,6 @@ export const TambahCutiSakit = () => {
               </View>
             </View>
 
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
-                <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                {/* <KeyboardAvoidingView
-                                behavior={Platform.OS === "ios" ? "height" : "height"}
-                            > */}
-                <View
-                  style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: 10,
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.grey,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Histori Komentar
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      bottomSheetAttachCommentClose();
-                    }}
-                  >
-                    <Ionicons
-                      name="close-outline"
-                      size={device === "tablet" ? 40 : 24}
-                      color={COLORS.lighter}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <FlatList
-                  data={arsipDetail?.komentar_dokumen}
-                  renderItem={({ item }) => (
-                    <CardKomen
-                      listData={item}
-                      inputRef={inputRef}
-                      setParentId={setParentId}
-                      bottomSheetAttachCommentClose={
-                        bottomSheetAttachCommentClose
-                      }
-                      device={device}
-                    />
-                  )}
-                  style={{ height: 500 }}
-                />
-
-                {/* <View style={{ justifyContent: "flex-end" }}>
-                                <View
-                                    style={{
-                                        height: 1,
-                                        width: "90%",
-                                        backgroundColor: COLORS.lighter,
-                                        opacity: 0.3,
-                                        marginTop: 10,
-                                        marginHorizontal: 20,
-                                    }}
-                                />
-                                <View
-                                    style={{
-                                        borderWidth: 1,
-                                        width: "90%",
-                                        marginLeft: 17,
-                                        borderRadius: 16,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: "row",
-                                        backgroundColor: COLORS.ExtraDivinder,
-                                        marginTop: 10,
-                                        marginBottom: 40,
-                                    }}
-                                >
-                                    <BottomSheetTextInput
-                                        numberOfLines={1}
-                                        maxLength={40}
-                                        placeholder="Ketik Komentar Disini"
-                                        ref={inputRef}
-                                        style={{ padding: 10 }}
-                                        onChangeText={setKomen}
-                                        value={komen}
-                                    />
-                                    <View
-                                        style={{
-                                            alignItems: "flex-end",
-                                            flex: 1,
-                                            marginRight: 10,
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                handleComment();
-                                            }}
-                                        >
-                                            <Ionicons
-                                                name="send-sharp"
-                                                size={20}
-                                                color={COLORS.primary}
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View> */}
-                {/* </KeyboardAvoidingView> */}
-              </BottomSheetView>
-            </BottomSheetModal>
-
             <View>
               <View
                 style={{
@@ -2352,6 +2225,79 @@ export const TambahCutiSakit = () => {
           </View>
         </ScrollView>
       </View>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          snapPoints={animatedSnapPoints}
+          handleHeight={animatedHandleHeight}
+          contentHeight={animatedContentHeight}
+          index={0}
+          style={{ borderRadius: 50 }}
+          keyboardBlurBehavior="restore"
+          android_keyboardInputMode="adjust"
+          backdropComponent={({ style }) => (
+            <View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]} />
+          )}
+        >
+          <BottomSheetView onLayout={handleContentLayout}>
+            {/* <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "height" : "height"}
+                            > */}
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Histori Komentar
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  bottomSheetAttachCommentClose();
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
+            </View>
+            <ScrollView nestedScrollEnabled={true} style={{ height: 300 }}>
+              <FlatList
+                data={arsipDetail?.komentar_dokumen}
+                renderItem={({ item }) => (
+                  <CardKomen
+                    listData={item}
+                    inputRef={inputRef}
+                    setParentId={setParentId}
+                    bottomSheetAttachCommentClose={
+                      bottomSheetAttachCommentClose
+                    }
+                    device={device}
+                  />
+                )}
+                scrollEnabled={true}
+                nestedScrollEnabled={true}
+                onScroll={(e) => {
+                  console.log("Scrolling", e.nativeEvent.contentOffset.y);
+                }}
+              />
+            </ScrollView>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
       <ModalSubmit
         status={status}
         setStatus={setStatus}

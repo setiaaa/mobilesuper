@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import {
   COLORS,
@@ -14,7 +17,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native";
 import moment from "moment/min/moment-with-locales";
 import { FlatList } from "react-native";
@@ -60,7 +62,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={{ uri: lampiran }}
           style={{ width: 90, height: 90, borderRadius: 8 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -68,15 +70,15 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           numberOfLines={1}
         >
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "mp4" ? (
@@ -96,17 +98,17 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/mp4.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        {/* <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "doc" || type === "docx" ? (
@@ -134,7 +136,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/word.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -142,15 +144,15 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           numberOfLines={1}
         >
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "xls" || type === "xlsx" ? (
@@ -178,7 +180,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/excel.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -186,15 +188,15 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           numberOfLines={1}
         >
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "pdf" ? (
@@ -222,7 +224,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/pdf.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -230,15 +232,15 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           numberOfLines={1}
         >
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : type === "ppt" || type === "pptx" ? (
@@ -266,7 +268,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           source={require("../../assets/superApp/ppt.png")}
           style={{ width: 70, height: 70 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
@@ -274,15 +276,15 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
           numberOfLines={1}
         >
           {name}
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             color: COLORS.lighter,
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {Math.floor(size / 1000)} MB
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   ) : null;
@@ -626,8 +628,6 @@ export const DetailDokumenCuti = ({ route }) => {
   );
   const arsipDetail = arsip.detail;
 
-  console.log(arsipDetail);
-
   const [collapse, setCollapse] = useState({
     nip: "",
     toggle: false,
@@ -704,12 +704,14 @@ export const DetailDokumenCuti = ({ route }) => {
   };
 
   useEffect(() => {
-    console.log("masuk effect");
+    // console.log("masuk effect");
     removePushNotif();
     dispatch(setNotifIos(false));
   }, [arsipDetail, loading]);
 
   const { device } = useSelector((state) => state.apps);
+
+  console.log(arsipDetail);
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -1294,7 +1296,6 @@ export const DetailDokumenCuti = ({ route }) => {
                 {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
                   <View
                     style={{
-                      height: 184,
                       borderRadius: 16,
                       backgroundColor: "white",
                       paddingVertical: 16,
@@ -1943,21 +1944,27 @@ export const DetailDokumenCuti = ({ route }) => {
                     />
                   </TouchableOpacity>
                 </View>
-                <FlatList
-                  data={arsipDetail?.komentar_dokumen}
-                  renderItem={({ item }) => (
-                    <CardKomen
-                      listData={item}
-                      inputRef={inputRef}
-                      setParentId={setParentId}
-                      bottomSheetAttachCommentClose={
-                        bottomSheetAttachCommentClose
-                      }
-                      device={device}
-                    />
-                  )}
-                  style={{ height: 500 }}
-                />
+                <ScrollView nestedScrollEnabled={true} style={{ height: 400 }}>
+                  <FlatList
+                    data={arsipDetail?.komentar_dokumen}
+                    renderItem={({ item }) => (
+                      <CardKomen
+                        listData={item}
+                        inputRef={inputRef}
+                        setParentId={setParentId}
+                        bottomSheetAttachCommentClose={
+                          bottomSheetAttachCommentClose
+                        }
+                        device={device}
+                      />
+                    )}
+                    scrollEnabled={true}
+                    nestedScrollEnabled={true}
+                    onScroll={(e) => {
+                      console.log("Scrolling", e.nativeEvent.contentOffset.y);
+                    }}
+                  />
+                </ScrollView>
 
                 {/* <View style={{ justifyContent: "flex-end" }}>
                                 <View

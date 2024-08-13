@@ -4,13 +4,14 @@ import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales";
 import ListEmpty from "../../components/ListEmpty";
-import { COLORS, DATETIME } from "../../config/SuperAppps";
+import { COLORS, DATETIME, spacing } from "../../config/SuperAppps";
 import { Loading } from "../../components/Loading";
 import { setFaqByCategory, setFaqCategory } from "../../store/Faq";
 import { getFaqByCategory, getFaqCategory } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { CardListFaq } from "../../components/CardListFaq";
 import { useNavigation } from "@react-navigation/native";
+import { Search } from "../../components/Search";
 
 export const Regulasi = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export const Regulasi = () => {
   );
 
   const idR = faqCategory?.lists[1]?.id;
+  const [filterData, setFilterData] = useState([]);
   const [search, setSearch] = useState("");
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -59,10 +61,32 @@ export const Regulasi = () => {
     //   setRefreshing(false);
     // }, 2000);
   }, [token]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = faqByCategory.R.filter((item) => {
+        return item.title?.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(faqByCategory.R);
+    }
+  }, [search, faqByCategory.R]);
   return (
     <>
+      <View style={{ marginVertical: spacing.medium }}>
+        <Search
+          placeholder={"Cari"}
+          iconColor={COLORS.primary}
+          onSearch={filter}
+        />
+      </View>
       <FlatList
-        data={faqByCategory.R}
+        data={filterData}
         renderItem={({ item }) => (
           <CardListFaq
             item={item}
