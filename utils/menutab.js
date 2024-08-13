@@ -1249,7 +1249,7 @@ export const TopsFaq = () => {
           name="DashboardDanReport"
           component={DashboardDanReport}
           options={{
-            title: "Dashboard Dan Report",
+            title: "Dashboard dan Report",
           }}
         />
         <Top.Screen

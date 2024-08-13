@@ -79,7 +79,12 @@ export const ListFaq = () => {
         }}
       >
         <View>
-          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             Halo, Ada yang bisa kami bantu?
           </Text>
         </View>
