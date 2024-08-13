@@ -54,26 +54,24 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "left",
     // paddingHorizontal:20,
-    paddingTop: 10,
   },
   deskripsi: {
     color: "grey",
     fontSize: 15,
-    marginTop: 10,
     fontWeight: "600",
     // paddingHorizontal:20,
+    paddingTop: 10,
   },
   tanggal: {
     fontSize: 14,
     color: "grey",
-    marginTop: 10,
   },
   card: {
     backgroundColor: "#FFFFFF",
     flex: 1,
     width: "100%",
     // marginLeft: 20,
-    paddingHorizontal: 10,
+    padding: 10,
     marginBottom: 10,
     borderRadius: 8,
     //shadow ios
@@ -83,6 +81,5 @@ const styles = StyleSheet.create({
     //shadow android
     elevation: 2,
     alignContent: "center",
-    marginBottom: 10,
   },
 });

@@ -18,7 +18,7 @@ export const CardLiburTahunan = ({ item, device }) => {
         style={{
           width: "100%",
           // borderWidth: 1,
-          marginTop: 5,
+          marginTop: 10,
           padding: 10,
           borderRadius: 8,
           // borderColor: COLORS.grey,
@@ -31,14 +31,11 @@ export const CardLiburTahunan = ({ item, device }) => {
           elevation: 2,
         }}
       >
-        <Text
-          style={{ marginTop: 10, fontSize: fontSizeResponsive("H4", device) }}
-        >
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
           {item.tanggal_libur}
         </Text>
         <Text
           style={{
-            marginTop: 5,
             fontWeight: FONTWEIGHT.bold,
             fontSize: fontSizeResponsive("H4", device),
           }}

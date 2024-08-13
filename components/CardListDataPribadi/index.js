@@ -20,7 +20,7 @@ export const CardListDataPribadi = ({ item, token, device }) => {
       style={{
         backgroundColor: COLORS.white,
         padding: 10,
-        marginVertical: 10,
+        marginTop: 10,
         borderRadius: 8,
       }}
       onPress={() => {
@@ -90,7 +90,12 @@ export const CardListDataPribadi = ({ item, token, device }) => {
           SATUAN KERJA
         </Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
-        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+        <Text
+          style={{
+            width: device === "tablet" ? "90%" : 200,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {item.department_name}
         </Text>
       </View>
