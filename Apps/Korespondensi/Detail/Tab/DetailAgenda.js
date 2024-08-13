@@ -122,6 +122,8 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                           selected: data?.attachments[0],
                           title: "Lihat Surat",
                           tipe: tipe,
+                          id: data?.id,
+                          token: data?.w_token,
                         });
                         dispatch(setFAB(false));
                       }}
@@ -197,6 +199,8 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                                 selected: item,
                                 title: "Lihat Surat",
                                 tipe: tipe,
+                                id: data?.id,
+                                token: data?.w_token,
                               });
                               dispatch(setFAB(false));
                             }}
