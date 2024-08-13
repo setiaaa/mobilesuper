@@ -258,7 +258,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["90%", "CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["100%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -727,7 +727,7 @@ export const Home = () => {
         getMenu().then((val) => {
           try {
             const parsedVal = JSON.parse(val);
-            console.log(parsedVal, "menu");
+            // console.log(parsedVal, "menu");
             if (parsedVal === null) {
               setMenuliteLength([]);
             } else {

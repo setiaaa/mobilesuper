@@ -134,7 +134,7 @@ export const ListBeritaSatker = () => {
             onSearch={filter}
           />
         </View>
-        <FlatList
+        {/* <FlatList
           data={filterData}
           renderItem={({ item, index }) => (
             <View key={index}>
@@ -171,7 +171,49 @@ export const ListBeritaSatker = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-        />
+        /> */}
+        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+          <FlatList
+            key={"#"}
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListBeritaSatker
+                image={item.image}
+                tanggal={item.updated_at}
+                // subtitle={item.subtitle}
+                title={item.title}
+                id={item.id}
+                item={item}
+                token={token}
+                device={device}
+              />
+            )}
+            ListEmptyComponent={() =>
+              loading !== "" || (loading === true && <ListEmpty />)
+            }
+            // ListFooterComponent={() =>
+            //   loading && (
+            //     <View
+            //       style={{
+            //         justifyContent: "center",
+            //         alignItems: "center",
+            //         padding: 24,
+            //       }}
+            //     >
+            //       <ActivityIndicator size="large" color={COLORS.primary} />
+            //     </View>
+            //   )
+            // }
+            numColumns={2}
+            keyExtractor={(item) => "#" + item.id}
+            onEndReached={
+              search === "" && berita.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </View>
       </View>
     </View>
   );

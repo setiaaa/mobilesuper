@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
-import { setGaleri } from "../../store/SuperApps";
+import { setGaleri, setLoading } from "../../store/SuperApps";
 import { getGaleri } from "../../service/api";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
@@ -49,6 +49,8 @@ export const ListGaleri = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(setLoading(""));
+    setFilterData([]);
     if (token !== "") {
       dispatch(getGaleri({ token, page }));
     }
@@ -172,20 +174,23 @@ export const ListGaleri = () => {
                 }}
               />
             )}
-            ListEmptyComponent={() => <ListEmpty />}
-            ListFooterComponent={() =>
-              loading && (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
-                  }}
-                >
-                  <ActivityIndicator size="large" color={COLORS.primary} />
-                </View>
-              )
+            li
+            ListEmptyComponent={() =>
+              loading !== "" || (loading === true && <ListEmpty />)
             }
+            // ListFooterComponent={() =>
+            //   loading && (
+            //     <View
+            //       style={{
+            //         justifyContent: "center",
+            //         alignItems: "center",
+            //         padding: 24,
+            //       }}
+            //     >
+            //       <ActivityIndicator size="large" color={COLORS.primary} />
+            //     </View>
+            //   )
+            // }
             numColumns={2}
             keyExtractor={(item) => "#" + item.id}
             onEndReached={
@@ -245,7 +250,7 @@ export const ListGaleri = () => {
                       : device === "tablet" && orientation === "potrait"
                       ? 800
                       : 283,
-                  resizeMode: 'contain'
+                  resizeMode: "contain",
                 }}
               />
             </TouchableOpacity>

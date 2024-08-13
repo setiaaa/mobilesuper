@@ -42,8 +42,8 @@ export const fontSizeResponsive = (type, device) => {
     H2: device === "phone" ? 14 : 25,
     H3: device === "phone" ? 13 : 23,
     H4: device === "phone" ? 12 : 22,
-    H5: device === "phone" ? 10 : 21,
-    H6: device === "phone" ? 8 : 14,
+    H5: device === "phone" ? 11 : 21,
+    H6: device === "phone" ? 10 : 14,
     Judul: device === "phone" ? 17 : 28,
     textS: device === "phone" ? textStyle.textS : { fontsize: 22 },
     textM: device === "phone" ? textStyle.textM : { fontsize: 24 },
@@ -177,10 +177,10 @@ export const extraKeyKorespondensi = {
 };
 
 export const getFileSize = (bytes) => {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
   let k = 1024,
     dm = 2,
-    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
     i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };

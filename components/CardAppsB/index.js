@@ -31,7 +31,6 @@ import {
   FontAwesome6,
 } from "@expo/vector-icons";
 
-
 export const CardAppsB = ({
   handlePressModal,
   setModalBankom,
@@ -107,7 +106,7 @@ export const CardAppsB = ({
         <View
           style={{
             justifyContent: "center",
-            alignItems: "flex-start",
+            alignItems: "center",
             display: "flex",
           }}
         >
@@ -136,41 +135,49 @@ export const CardAppsB = ({
               {item.title === "Task" ? (
                 <MaterialIcons
                   name="task-alt"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : item.title === "Kalender" ? (
                 <FontAwesome
                   name="calendar"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : item.title === "Preparing dan Sharing" ? (
-                <Entypo name="folder" size={device === 'tablet' ? 60 : 30} color={COLORS.iconMenu} />
+                <Entypo
+                  name="folder"
+                  size={device === "tablet" ? 60 : 30}
+                  color={COLORS.iconMenu}
+                />
               ) : item.title === "Regulasi" ? (
-                <Entypo name="shield" size={device === 'tablet' ? 60 : 30} color={COLORS.iconMenu} />
+                <Entypo
+                  name="shield"
+                  size={device === "tablet" ? 60 : 30}
+                  color={COLORS.iconMenu}
+                />
               ) : item.title === "Survei Layanan" ? (
                 <MaterialCommunityIcons
                   name="email-newsletter"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : item.title === "Event Management" ? (
                 <MaterialCommunityIcons
                   name="folder-star-multiple"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : item.title === "SPPD" ? (
                 <MaterialIcons
                   name="travel-explore"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : item.title === "Kepegawaian" ? (
                 <FontAwesome6
                   name="people-line"
-                  size={device === 'tablet' ? 60 : 30}
+                  size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
               ) : (
@@ -195,9 +202,9 @@ export const CardAppsB = ({
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: fontSizeResponsive("H6", device),
-              width: device === 'tablet' ? 100 : 60,
-              textAlign: 'center'
+              fontSize: fontSizeResponsive("H5", device),
+              width: device === "tablet" ? 150 : 95,
+              textAlign: "center",
             }}
           >
             {item.title}
@@ -226,7 +233,7 @@ export const CardAppsB = ({
     return data;
   };
 
-  const numColumns = device === 'tablet' ? 4 : 3;
+  const numColumns = device === "tablet" ? 4 : 3;
 
   return (
     <View style={{ marginTop: 24 }}>
@@ -240,7 +247,7 @@ export const CardAppsB = ({
         }}
         numColumns={numColumns}
         scrollEnabled={true}
-        style={{ height: '95%' }}
+        style={{ height: "95%" }}
       />
     </View>
   );

@@ -94,6 +94,9 @@ const SuperAppsSlice = createSlice({
     setNotifIos: (state, action) => {
       state.iosNotif = action.payload;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -213,6 +216,7 @@ export const {
   setPost,
   setTypeMenu,
   setNotifIos,
+  setLoading,
 } = SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

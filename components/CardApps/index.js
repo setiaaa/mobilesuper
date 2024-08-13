@@ -461,7 +461,7 @@ export const CardApps = ({
           <View
             style={{
               flexDirection: "row",
-              gap: device === "tablet" ? 24 : 16,
+              gap: device === "tablet" ? 24 : width <= 375 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
               alignItems: "flex-start",
               flex: 1,
@@ -481,7 +481,8 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                         width:
-                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
+                          device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                        marginTop: 5,
                       }}
                       key={index}
                     >
@@ -510,14 +511,14 @@ export const CardApps = ({
                                 device === "tablet"
                                   ? 100
                                   : width <= 375
-                                    ? 53
-                                    : 60,
+                                  ? 53
+                                  : 60,
                               height:
                                 device === "tablet"
                                   ? 100
                                   : width <= 375
-                                    ? 53
-                                    : 60,
+                                  ? 53
+                                  : 60,
                             },
                           ]}
                         >
@@ -608,7 +609,8 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  width: device === "tablet" ? 100 : width <= 375 ? 53 : 60,
+                  width: device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                  marginTop: 5,
                 }}
               >
                 <TouchableOpacity onPress={handlePressModal}>
@@ -623,17 +625,9 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                         width:
-                          device === "tablet"
-                            ? 100
-                            : width <= 375
-                              ? 53
-                              : 60,
+                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                         height:
-                          device === "tablet"
-                            ? 100
-                            : width <= 375
-                              ? 53
-                              : 60,
+                          device === "tablet" ? 100 : width <= 375 ? 53 : 60,
                       },
                     ]}
                   >
@@ -656,7 +650,7 @@ export const CardApps = ({
                 </Text>
               </View>
             )}
-          </View >
+          </View>
           {/* {listMenu &&
               listMenu.length > 4 &&
               listMenu.map((item, index) => {
@@ -774,7 +768,7 @@ export const CardApps = ({
                     </View>
                   );
               })} */}
-        </View >
+        </View>
       )}
     </>
   );
