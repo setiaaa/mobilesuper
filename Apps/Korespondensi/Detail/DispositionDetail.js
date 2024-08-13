@@ -42,6 +42,7 @@ function DispositionDetail({ route }) {
       } else {
         initAgenda(response.data.obj);
         response.data.obj.agenda_number = response.data.agenda_number;
+        response.data.obj.w_token = response.data.w_token;
         setDetail(response?.data);
         setPreview(response?.data?.preview);
         setLog(response.data.log);

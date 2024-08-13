@@ -70,21 +70,38 @@ function ViewAttachment({ route }) {
               />
             )}
             {!stylus && (
-              <Pdf
-                trustAllCerts={false}
-                source={{
-                  uri:
-                    nde_api.baseurl +
-                      "crsbe/" +
-                      data?.file.slice(5, data?.file.length) || undefined,
-                  headers: header,
-                }}
-                style={{
-                  flex: 1,
-                  width: Dimensions.get("window").width,
-                  height: Dimensions.get("window").height,
-                }}
-              />
+              <WebView
+              source={{
+                uri:
+                  nde_api.baseurl_kores +
+                    "stylus-mobile/" +
+                    id +
+                    "?stylusToken=" +
+                    token || undefined+"&previewPDF=1",
+                headers: header,
+              }}
+              style={{
+                flex: 1,
+                width: Dimensions.get("window").width,
+                height: Dimensions.get("window").height,
+              }}
+              incognito={true}
+            />
+              // <Pdf
+              //   trustAllCerts={false}
+              //   source={{
+              //     uri:
+              //       nde_api.baseurl +
+              //         "crsbe/" +
+              //         data?.file.slice(5, data?.file.length) || undefined,
+              //     headers: header,
+              //   }}
+              //   style={{
+              //     flex: 1,
+              //     width: Dimensions.get("window").width,
+              //     height: Dimensions.get("window").height,
+              //   }}
+              // />
             )}
           </View>
         </>
