@@ -31,7 +31,7 @@ import DispositionForm from "../Apps/Korespondensi/Form/DispositionForm";
 import ForwardForm from "../Apps/Korespondensi/Form/ForwardForm";
 import { removeAll } from "../store/addressbook";
 import { removeAllDispoMulti } from "../store/dispoMulti";
-import { COLORS } from "../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../config/SuperAppps";
 import DetailAgendaInpro from "../Apps/Korespondensi/Detail/Tab/DetailAgendaInpro";
 
 const project = Constants.expoConfig.extra.id;
@@ -185,7 +185,7 @@ function TabViewBg({
       <IconButton
         icon={route.icon}
         iconColor={focused ? COLORS.primary : COLORS.tertiary}
-        size={device === 'tablet'? 30: 18}
+        size={device === "tablet" ? 30 : 18}
         style={{ margin: -10 }}
       />
     );
@@ -210,7 +210,7 @@ function TabViewBg({
       ]}
       labelStyle={{
         color: GlobalStyles.colors.textBlack,
-        fontSize: GlobalStyles.font.lg,
+        fontSize: fontSizeResponsive("H4", device),
       }}
       activeColor={COLORS.primary}
       inactiveColor={GlobalStyles.colors.textBlack}

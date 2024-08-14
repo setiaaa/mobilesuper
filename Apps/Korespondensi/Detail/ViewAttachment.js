@@ -63,10 +63,15 @@ function ViewAttachment({ route }) {
                 }}
                 style={{
                   flex: 1,
-                  width: Dimensions.get("window").width,
-                  height: Dimensions.get("window").height,
+                  width: "100%",
+                  height: "100%",
                 }}
                 incognito={true}
+                allowFileAccess={true}
+                androidLayerType={"software"}
+                mixedContentMode={"always"}
+                allowUniversalAccessFromFileURLs={true}
+                scalesPageToFit={false}
               />
             )}
             {!stylus && (
@@ -83,10 +88,15 @@ function ViewAttachment({ route }) {
                 }}
                 style={{
                   flex: 1,
-                  width: Dimensions.get("window").width,
-                  height: Dimensions.get("window").height,
+                  width: "100%",
+                  height: "100%",
                 }}
                 incognito={true}
+                allowFileAccess={true}
+                androidLayerType={"software"}
+                mixedContentMode={"always"}
+                allowUniversalAccessFromFileURLs={true}
+                scalesPageToFit={false}
               />
               // <Pdf
               //   trustAllCerts={false}
