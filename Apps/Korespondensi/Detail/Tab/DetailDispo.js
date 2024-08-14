@@ -260,6 +260,8 @@ function DetailDispo({ data, noAgenda, preview, title }) {
               navigation.navigate("ViewAttachment", {
                 selected: data?.obj?.attachments[0],
                 title: "Lihat Surat",
+                id: data?.obj?.id,
+                token: data?.w_token,
               });
             }}
           >
