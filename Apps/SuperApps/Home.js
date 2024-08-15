@@ -715,7 +715,7 @@ export const Home = () => {
         tempWidth = screenWidth - 50;
       }
     } else {
-      tempWidth = screenWidth - 60;
+      tempWidth = screenWidth - 30;
     }
 
     return tempWidth;
@@ -1941,7 +1941,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: "60%" }]}>
+          <View style={[styles.containerr, { marginBottom: "5%" }]}>
             <Carousel
               ref={carouselRefGaleri}
               sliderWidth={screenWidth}

@@ -22,7 +22,7 @@ export const GaleriHome = ({ item, index, parallaxProps }) => {
         tempWidth = screenWidth - 50;
       }
     } else {
-      tempWidth = screenWidth - 60;
+      tempWidth = screenWidth - 30;
     }
 
     return tempWidth;
