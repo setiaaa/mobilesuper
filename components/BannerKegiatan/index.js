@@ -3,54 +3,59 @@ import { Dimensions, useWindowDimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { ParallaxImage } from "react-native-snap-carousel";
-import { COLORS, fontSizeResponsive, getOrientation } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import { Text } from "react-native";
 import { useSelector } from "react-redux";
-
 
 export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
   const { device } = useSelector((state) => state.apps);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const getWidthCarousel = () => {
-    let tempWidth = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempWidth = screenWidth - 50
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 50;
       } else {
-        tempWidth = screenWidth - 50
+        tempWidth = screenWidth - 50;
       }
     } else {
-      tempWidth = screenWidth - 60
+      tempWidth = screenWidth - 60;
     }
 
-    return tempWidth
-  }
+    return tempWidth;
+  };
 
   const getHeightCarousel = () => {
-    let tempHeight = 0
-    let orientation = getOrientation(screenWidth, screenHeight)
+    let tempHeight = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
 
-    if (device === 'tablet') {
-      if (orientation === 'landscape') {
-        tempHeight = screenWidth - 400
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempHeight = screenWidth;
       } else {
-        tempHeight = screenWidth - 250
+        tempHeight = screenWidth;
       }
     } else {
-      tempHeight = screenWidth - 170
+      tempHeight = screenWidth;
     }
 
-    return tempHeight
-  }
+    return tempHeight;
+  };
 
   return (
-    <View style={{
-      width: getWidthCarousel(),
-      height: getHeightCarousel()
-    }}>
+    <View
+      style={{
+        width: getWidthCarousel(),
+        height: getHeightCarousel(),
+      }}
+    >
       <ParallaxImage
         source={type === "portal" ? item.image : { uri: item.image }}
         containerStyle={styles.imageContainer}
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
   images: {
     ...StyleSheet.absoluteFillObject,

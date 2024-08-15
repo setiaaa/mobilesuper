@@ -1,18 +1,30 @@
 import React from "react";
-import { Image, Text } from "react-native";
+import { Image, Text, useWindowDimensions } from "react-native";
 import { View } from "react-native";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 export const CardVideo = ({ setModalVisibleVideo }) => {
   const { device } = useSelector((state) => state.apps);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
   return (
     <View
       style={{
         alignItems: "center",
-        height: device === "tablet" ? "15%" : "8%",
+        height:
+          device === "tablet" && orientation === "landscape"
+            ? 600
+            : device === "tablet" && orientation === "potrait"
+            ? 450
+            : 200,
         marginHorizontal: 25,
         marginBottom: device === "tablet" ? 120 : 80,
       }}
@@ -22,7 +34,6 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
         style={{
           width: "100%",
           height: "100%",
-          resizeMode: "cover",
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
         }}

@@ -33,9 +33,9 @@ export const BeritaHome = ({ item, index, parallaxProps }) => {
 
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempHeight = screenWidth - 400;
+        tempHeight = screenWidth;
       } else {
-        tempHeight = screenWidth - 250;
+        tempHeight = screenWidth;
       }
     } else {
       tempHeight = screenWidth;
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
   images: {
     ...StyleSheet.absoluteFillObject,
