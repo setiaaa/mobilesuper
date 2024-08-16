@@ -15,7 +15,7 @@
   },
   "assetBundlePatterns": ["/*"],
   "ios": {
-    "buildNumber": "0.0.3",
+    "buildNumber": "0.0.4",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal.dev",
     "infoPlist": {
@@ -96,9 +96,9 @@
     [
       "@sentry/react-native/expo",
       {
-        "url": "https://newsentry.armsolusi.com/",
-        "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
-        "project": "kkp-mobile-prod",
+        "url": "https://sentry.armsolusi.com",
+        "note": "afc791465b7811efae970242ac120024",
+        "project": "kkp-superapps-dev",
         "organization": "sentry"
       }
     ],

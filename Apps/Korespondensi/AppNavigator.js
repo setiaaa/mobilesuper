@@ -1569,7 +1569,7 @@ function AppNavigator() {
   const [linking, setLinking] = useState();
 
   Sentry.init({
-    dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+    dsn: "https://8d6b71eba2221c3262ecc7d04229bf2b@sentry.armsolusi.com/5",
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.

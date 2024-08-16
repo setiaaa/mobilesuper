@@ -17,9 +17,11 @@
     },
     "preview": {
       "env": {
-        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_AUTH_TOKEN": "afc791465b7811efae970242ac120024",
         "SENTRY_ORG": "sentry",
-        "SENTRY_PROJECT": "kkp-mobile-prod",
+        "SENTRY_PROJECT": "kkp-superapps-dev",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "SENTRY_ALLOW_FAILURE": "true",
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
@@ -42,9 +44,9 @@
     },
     "production": {
       "env": {
-        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_AUTH_TOKEN": "afc791465b7811efae970242ac120024",
         "SENTRY_ORG": "sentry",
-        "SENTRY_PROJECT": "kkp-mobile-prod",
+        "SENTRY_PROJECT": "kkp-superapps-dev",
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "SENTRY_ALLOW_FAILURE": "true",
         "EXPO_OPTIMIZE": "true"
