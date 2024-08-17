@@ -155,7 +155,7 @@ export const Satker = () => {
         style={[
           {
             width: getWidthCarousel(),
-            height: getHeightCarousel(),
+            // height: getHeightCarousel(),
           },
           { marginVertical: 20 },
         ]}
@@ -305,7 +305,7 @@ export const Satker = () => {
       <View
         style={{
           width: getWidthCarousel(),
-          height: getHeightCarousel(),
+          // height: getHeightCarousel(),
         }}
       >
         <ParallaxImage
@@ -337,7 +337,7 @@ export const Satker = () => {
       <View
         style={{
           width: getWidthCarousel(),
-          height: getHeightCarousel(),
+          // height: getHeightCarousel(),
         }}
       >
         <ParallaxImage
@@ -787,14 +787,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     // borderTopLeftRadius: 8,
     // borderTopRightRadius: 8
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   image: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   images: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   cardListSatker: {
     backgroundColor: "#FFFFFF",

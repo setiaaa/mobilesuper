@@ -49,7 +49,7 @@ export const GaleriHome = ({ item, index, parallaxProps }) => {
     <View
       style={{
         width: getWidthCarousel(),
-        height: getHeightCarousel(),
+        // height: getHeightCarousel(),
       }}
     >
       <ParallaxImage
@@ -99,12 +99,10 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
-  images: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
-  },
+
   paginationDot: {
     width: 8,
     height: 8,
@@ -115,6 +113,8 @@ const styles = StyleSheet.create({
     flex: 1, // Prevent a random Android rendering issue
     backgroundColor: "white",
     borderRadius: 8,
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   iOSBackdrop: {
     backgroundColor: "#000000",

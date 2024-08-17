@@ -48,7 +48,7 @@ export const BeritaHome = ({ item, index, parallaxProps }) => {
     <View
       style={{
         width: getWidthCarousel(),
-        height: getHeightCarousel(),
+        // height: getHeightCarousel(),
       }}
     >
       <ParallaxImage
@@ -105,14 +105,13 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
-  },
-  images: {
-    ...StyleSheet.absoluteFillObject,
     resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   paginationDot: {
     width: 8,

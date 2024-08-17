@@ -43,7 +43,7 @@ export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
         tempHeight = screenWidth;
       }
     } else {
-      tempHeight = screenWidth;
+      tempHeight = 200;
     }
 
     return tempHeight;
@@ -53,14 +53,14 @@ export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
     <View
       style={{
         width: getWidthCarousel(),
-        height: getHeightCarousel(),
+        // height: getHeightCarousel(),
       }}
     >
       <ParallaxImage
         source={type === "portal" ? item.image : { uri: item.image }}
         containerStyle={styles.imageContainer}
         style={styles.images}
-        parallaxFactor={0.4}
+        parallaxFactor={0}
         {...parallaxProps}
       />
       <View
@@ -112,18 +112,15 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1, // Prevent a random Android rendering issue
-    backgroundColor: "white",
-    // borderRadius: 8,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
+    borderRadius: 8,
+    resizeMode: "cover",
+    aspectRatio: 16 / 8,
+    backgroundColor: COLORS.white,
   },
   images: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "cover",
+    aspectRatio: 16 / 8,
   },
   paginationDot: {
     width: 8,
