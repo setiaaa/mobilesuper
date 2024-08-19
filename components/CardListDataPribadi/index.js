@@ -9,7 +9,12 @@ import {
 } from "../../config/SuperAppps";
 import { getDataPribadiDetail } from "../../service/api";
 
-export const CardListDataPribadi = ({ item, token, device }) => {
+export const CardListDataPribadi = ({
+  item,
+  token,
+  device,
+  isRoleOperator,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
@@ -17,6 +22,7 @@ export const CardListDataPribadi = ({ item, token, device }) => {
   };
   return (
     <TouchableOpacity
+      disabled={isRoleOperator === true ? false : true}
       style={{
         backgroundColor: COLORS.white,
         padding: 10,
@@ -87,7 +93,7 @@ export const CardListDataPribadi = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          SATUAN KERJA
+          PANGKAT/GOLONGAN
         </Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <Text
@@ -96,7 +102,13 @@ export const CardListDataPribadi = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {item.department_name}
+          {item?.updated_getrefpeg_data?.golongan_pangkat === undefined
+            ? "-"
+            : item?.updated_getrefpeg_data?.golongan_pangkat}
+          /
+          {item?.updated_getrefpeg_data?.golongan_nama === undefined
+            ? "-"
+            : item?.updated_getrefpeg_data?.golongan_nama}
         </Text>
       </View>
 
@@ -115,7 +127,7 @@ export const CardListDataPribadi = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          UNIT KERJA
+          NAMA JABATAN/UNIT KERJA
         </Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <Text
@@ -124,7 +136,13 @@ export const CardListDataPribadi = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          {item.organization_name}
+          {item?.updated_getrefpeg_data?.pegawai_nama_jabatan === undefined
+            ? "-"
+            : item?.updated_getrefpeg_data?.pegawai_nama_jabatan}
+          /
+          {item?.updated_getrefpeg_data?.unit_kerja_nama === undefined
+            ? "-"
+            : item?.updated_getrefpeg_data?.unit_kerja_nama}
         </Text>
       </View>
     </TouchableOpacity>

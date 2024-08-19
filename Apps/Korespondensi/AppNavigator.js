@@ -218,6 +218,8 @@ import NeedSignList from "./List/NeedSignList";
 import { ListAplikasiKepegawaian } from "../Kepegawaian/ListAplikasiKepegawaian";
 import { LPMUKP } from "../Dashboard/LPMUKP";
 import { DokumenSPPD } from "../SPPD/DokumenSPPD";
+import { MainIPASN } from "../Kepegawaian/MainIPASN";
+import { DataPribadi } from "../Kepegawaian/DataPribadi";
 
 const Stack = createNativeStackNavigator();
 
@@ -1477,19 +1479,26 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
-            name="IPASN"
-            component={IPASN}
+            name="MainIPASN"
+            component={MainIPASN}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
+            name="DataPribadi"
+            component={DataPribadi}
+            options={{
+              headerShown: false,
+            }}
+          />
+          {/* <Stack.Screen
             name="MainPegawaiIPASN"
             component={MainPegawaiIPASN}
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="DetailPegawaiIPASN"
             component={DetailPegawaiIPASN}

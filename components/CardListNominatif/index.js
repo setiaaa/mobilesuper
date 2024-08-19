@@ -92,10 +92,12 @@ export const CardListNominatif = ({ item, device }) => {
             {item?.jenis_kelamin ? item?.jenis_kelamin : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.status_kel ? item?.status_kel : "-"}
+            {item?.siasn_data?.statusPerkawinan
+              ? item?.siasn_data?.statusPerkawinan
+              : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.religion ? item?.religion : "-"}
+            {item?.siasn_data?.agama ? item?.siasn_data.agama : "-"}
           </Text>
         </View>
       </View>
@@ -129,20 +131,8 @@ export const CardListNominatif = ({ item, device }) => {
             {item?.golongan ? item?.golongan : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>{`${
-            item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan ?? "-"
-          } ${
-            item?.updated_getrefpeg_data?.pegawai_tahun_masa_kerja_golongan
-              ? item?.updated_getrefpeg_data
-                  ?.pegawai_tahun_masa_kerja_golongan +
-                " " +
-                "Tahun"
-              : "-"
-          } ${
-            item?.updated_getrefpeg_data?.pegawai_bulan_masa_kerja_golongan
-              ? item?.updated_getrefpeg_data
-                  ?.pegawai_bulan_masa_kerja_golongan +
-                " " +
-                "Bulan"
+            item?.siasn_data?.tmtGolonganAkhir
+              ? item?.siasn_data?.tmtGolonganAkhir
               : "-"
           }`}</Text>
         </View>
@@ -165,7 +155,7 @@ export const CardListNominatif = ({ item, device }) => {
       >
         <View style={{ width: device === "tablet" ? 350 : 150 }}>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            TMT STRUKTURAL MASA KERJA JAB.TERAKHIR
+            JAB.STRUKTURAL TMT STRUKTURAL MASA KERJA JAB.TERAKHIR
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             JAB.FUNGSIONAL TMT FUNGSIONAL
@@ -174,13 +164,13 @@ export const CardListNominatif = ({ item, device }) => {
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <View style={{ width: device === "tablet" ? 350 : 150 }}>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.updated_getrefpeg_data?.pegawai_nama_jabatan
-              ? item?.updated_getrefpeg_data?.pegawai_nama_jabatan
+            {item?.siasn_data?.jabatanStrukturalNama
+              ? item?.siasn_data?.jabatanStrukturalNama
               : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan
-              ? item?.updated_getrefpeg_data?.pegawai_tanggal_tmt_jabatan
+            {item?.siasn_data?.jabatanStrukturalNama
+              ? item?.siasn_data?.jabatanStrukturalNama
               : "-"}
           </Text>
         </View>
@@ -334,14 +324,13 @@ export const CardListNominatif = ({ item, device }) => {
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <View style={{ width: device === "tablet" ? 350 : 150 }}>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
-              ? item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
-              : "-"}
+            {item?.siasn_data?.tmtCpns ? item?.siasn_data?.tmtCpns : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.updated_getrefpeg_data?.masa_kerja_keseluruhan
-              ? item?.updated_getrefpeg_data?.masa_kerja_keseluruhan
-              : "-"}
+            {item?.siasn_data?.masaKerja ? item?.siasn_data?.masaKerja : "-"}
+          </Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item?.jenis_pegawai ? item?.jenis_pegawai : "-"}
           </Text>
         </View>
       </View>

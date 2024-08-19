@@ -120,6 +120,8 @@ import { SuperApps } from "../Apps/Faq/SuperApps";
 import { LPMUKP } from "../Apps/Dashboard/LPMUKP";
 import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
 import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
+import { IPASN } from "../Apps/Kepegawaian/IPASN";
+import MyTabIPASN from "../Apps/Kepegawaian/BottomTabsIPASN";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -668,6 +670,35 @@ export const BottomTabsPegawaiIPASN = () => {
           <Tab.Screen
             name="DataPribadi"
             component={DataPribadi}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsIPASN = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
+        <Tab.Navigator
+          tabBar={(props) => <MyTabIPASN {...props} />}
+          initialRouteName="IPASN"
+        >
+          <Tab.Screen
+            name="IPASN"
+            component={IPASN}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="PegawaiIPASN"
+            component={PegawaiIPASN}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

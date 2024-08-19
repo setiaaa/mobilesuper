@@ -73,11 +73,11 @@ export const ListAplikasiKepegawaian = ({ route }) => {
     tmpMenuKepegawaian.push(
       {
         title: "IPASN",
-        navigation: "IPASN",
+        navigation: "MainIPASN",
       },
       {
         title: "Pegawai",
-        navigation: "MainPegawaiIPASN",
+        navigation: "DataPribadi",
       },
       {
         title: "Nominatif Pegawai",

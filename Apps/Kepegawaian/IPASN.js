@@ -69,7 +69,7 @@ export const IPASN = () => {
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={false}
         />
-        <Text style={{ color: COLORS.primary }}>
+        <Text style={{ color: COLORS.primary, marginBottom: 20 }}>
           *) Gunakan 2 jari untuk menyesuaikan zoom
         </Text>
       </View>

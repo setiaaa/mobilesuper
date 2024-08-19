@@ -39,6 +39,7 @@ export const Nominatif = () => {
   const [firstEselon, setFirstEselon] = useState("");
   const [secondEselon, setSecondEselon] = useState("");
   const [statusPegawai, setStatusPegawai] = useState("");
+  const [toggleFilter, setTonggleFilter] = useState(false);
   const [tahunTMT, setTahunTMT] = useState({
     key: "",
     value: "",
@@ -204,15 +205,17 @@ export const Nominatif = () => {
           borderRadius: 8,
         }}
       >
-        <Text
-          style={{
-            fontWeight: FONTWEIGHT.bold,
-            fontSize: fontSizeResponsive("Judul", device),
-            marginBottom: 10,
-          }}
-        >
-          Filter Nominatif
-        </Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("Judul", device),
+              marginBottom: 10,
+            }}
+          >
+            Filter Nominatif
+          </Text>
+        </View>
 
         <View>
           <Text
@@ -238,156 +241,209 @@ export const Nominatif = () => {
           />
         </View>
 
-        <View>
-          <Text
+        {toggleFilter === true ? (
+          <>
+            <View>
+              <Text
+                style={{
+                  marginVertical: 10,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.grey,
+                }}
+              >
+                Golongan
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 5,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
+                  <Dropdown
+                    data={golongan}
+                    setSelected={setFirstGolongan}
+                    selected={firstGolongan}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
+                </View>
+                <Text>s/d</Text>
+                <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
+                  <Dropdown
+                    data={pickSecondGologan()}
+                    setSelected={setSecondGolongan}
+                    selected={secondGolongan}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
+                </View>
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginVertical: 10,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.grey,
+                }}
+              >
+                Eselon
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 5,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
+                  <Dropdown
+                    data={eselon}
+                    setSelected={setFirstEselon}
+                    selected={firstEselon}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
+                </View>
+                <Text>s/d</Text>
+                <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
+                  <Dropdown
+                    data={eselon}
+                    setSelected={setSecondEselon}
+                    selected={secondEselon}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  marginVertical: 10,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.grey,
+                }}
+              >
+                Status Kepegawaian
+              </Text>
+              <Dropdown
+                data={status}
+                setSelected={setStatusPegawai}
+                selected={statusPegawai}
+                borderWidth={1}
+                borderwidthDrop={1}
+                borderWidthValue={1}
+                borderColor={COLORS.ExtraDivinder}
+                borderColorDrop={COLORS.ExtraDivinder}
+                borderColorValue={COLORS.ExtraDivinder}
+                search={true}
+              />
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  marginVertical: 10,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.grey,
+                }}
+              >
+                Tahun TMT CPNS
+              </Text>
+              <Dropdown
+                data={pickYears()}
+                setSelected={setTahunTMT}
+                selected={tahunTMT}
+                borderWidth={1}
+                borderwidthDrop={1}
+                borderWidthValue={1}
+                borderColor={COLORS.ExtraDivinder}
+                borderColorDrop={COLORS.ExtraDivinder}
+                borderColorValue={COLORS.ExtraDivinder}
+                search={true}
+              />
+              <Text style={{ marginTop: 5, color: COLORS.grey }}>
+                (dikosongkan bila tidak digunakan)
+              </Text>
+            </View>
+          </>
+        ) : null}
+
+        {toggleFilter === false ? (
+          <TouchableOpacity
             style={{
-              marginVertical: 10,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.grey,
-            }}
-          >
-            Golongan
-          </Text>
-          <View
-            style={{
+              marginTop: 10,
+              marginBottom: 10,
               flexDirection: "row",
-              gap: 5,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 5,
+            }}
+            onPress={() => {
+              setTonggleFilter(true);
             }}
           >
-            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
-              <Dropdown
-                data={golongan}
-                setSelected={setFirstGolongan}
-                selected={firstGolongan}
-                borderWidth={1}
-                borderwidthDrop={1}
-                borderWidthValue={1}
-                borderColor={COLORS.ExtraDivinder}
-                borderColorDrop={COLORS.ExtraDivinder}
-                borderColorValue={COLORS.ExtraDivinder}
-                search={true}
-              />
-            </View>
-            <Text>s/d</Text>
-            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
-              <Dropdown
-                data={pickSecondGologan()}
-                setSelected={setSecondGolongan}
-                selected={secondGolongan}
-                borderWidth={1}
-                borderwidthDrop={1}
-                borderWidthValue={1}
-                borderColor={COLORS.ExtraDivinder}
-                borderColorDrop={COLORS.ExtraDivinder}
-                borderColorValue={COLORS.ExtraDivinder}
-                search={true}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View>
-          <Text
+            <Ionicons
+              name="chevron-down-circle"
+              size={24}
+              color={COLORS.primary}
+            />
+            <Text
+              style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+            >
+              Pencarian Lanjutan
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
             style={{
-              marginVertical: 10,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.grey,
-            }}
-          >
-            Eselon
-          </Text>
-          <View
-            style={{
+              marginTop: 10,
+              marginBottom: 10,
               flexDirection: "row",
-              gap: 5,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 5,
+            }}
+            onPress={() => {
+              setTonggleFilter(false);
             }}
           >
-            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
-              <Dropdown
-                data={eselon}
-                setSelected={setFirstEselon}
-                selected={firstEselon}
-                borderWidth={1}
-                borderwidthDrop={1}
-                borderWidthValue={1}
-                borderColor={COLORS.ExtraDivinder}
-                borderColorDrop={COLORS.ExtraDivinder}
-                borderColorValue={COLORS.ExtraDivinder}
-                search={true}
-              />
-            </View>
-            <Text>s/d</Text>
-            <View style={{ width: device === "tablet" ? "48.5%" : "45%" }}>
-              <Dropdown
-                data={eselon}
-                setSelected={setSecondEselon}
-                selected={secondEselon}
-                borderWidth={1}
-                borderwidthDrop={1}
-                borderWidthValue={1}
-                borderColor={COLORS.ExtraDivinder}
-                borderColorDrop={COLORS.ExtraDivinder}
-                borderColorValue={COLORS.ExtraDivinder}
-                search={true}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View>
-          <Text
-            style={{
-              marginVertical: 10,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.grey,
-            }}
-          >
-            Status Kepegawaian
-          </Text>
-          <Dropdown
-            data={status}
-            setSelected={setStatusPegawai}
-            selected={statusPegawai}
-            borderWidth={1}
-            borderwidthDrop={1}
-            borderWidthValue={1}
-            borderColor={COLORS.ExtraDivinder}
-            borderColorDrop={COLORS.ExtraDivinder}
-            borderColorValue={COLORS.ExtraDivinder}
-            search={true}
-          />
-        </View>
-
-        <View>
-          <Text
-            style={{
-              marginVertical: 10,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.grey,
-            }}
-          >
-            Tahun TMT CPNS
-          </Text>
-          <Dropdown
-            data={pickYears()}
-            setSelected={setTahunTMT}
-            selected={tahunTMT}
-            borderWidth={1}
-            borderwidthDrop={1}
-            borderWidthValue={1}
-            borderColor={COLORS.ExtraDivinder}
-            borderColorDrop={COLORS.ExtraDivinder}
-            borderColorValue={COLORS.ExtraDivinder}
-            search={true}
-          />
-          <Text style={{ marginTop: 5, color: COLORS.grey }}>
-            (dikosongkan bila tidak digunakan)
-          </Text>
-        </View>
+            <Ionicons
+              name="chevron-up-circle"
+              size={24}
+              color={COLORS.primary}
+            />
+            <Text
+              style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+            >
+              Sembunyikan
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           style={{

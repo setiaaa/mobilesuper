@@ -8,7 +8,7 @@ import {
   shadow,
   spacing,
 } from "../../config/SuperAppps";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import {
   Collapse,
   CollapseBody,

@@ -2432,9 +2432,13 @@ export const getDataDetailIPASN = createAsyncThunk(
 
 export const getDataPribadi = createAsyncThunk(
   "kepegawaian/getDataPribadi",
-  async ({ token, page, search }) => {
+  async ({ token, page, search, unker, satker }) => {
+    console.log(unker, "unker");
+    console.log(satker, "satker");
     const respon = await axios.get(
-      `${DataPribadi}?limit=${page}&offset=0&search=${search}`,
+      `${DataPribadi}?limit=${page}&offset=0&search=${search}&unker${
+        satker !== "" ? "" : unker
+      }&satker=${satker}`,
       {
         headers: { Authorization: token },
       }

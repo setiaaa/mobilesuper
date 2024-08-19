@@ -7,6 +7,7 @@ import {
   fontSizeResponsive,
   FONTWEIGHT,
   PADDING,
+  shadow,
   spacing,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
@@ -17,6 +18,23 @@ import {
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
 import { CollapseCardBiodata } from "../../components/CollapseCardBiodata";
+import CollapseEpegIPASN from "../../components/CollapseEpegIPASN";
+import CollapseSIASNIPASN from "../../components/CollapseSIASNIPASN";
+import { CollapseCardSIASNDataUtama } from "../../components/CollapseCardSIASNDataUtama";
+import { CollapseCardSIASNJabatan } from "../../components/CollapseCardSIASNJabatan";
+import { CollapseCardSIASNRwSkp } from "../../components/CollapseCardSIASNRwSkp";
+import { CollapseCardSIASNRwSkp22 } from "../../components/CollapseCardSIASNRwSkp22";
+import { CollapseCardSIASNRwPnsUnor } from "../../components/CollapseCardSIASNRwPnsUnor";
+import { CollapseCardSIASNAngkaKredit } from "../../components/CollapseCardSIASNAngkaKredit";
+import { CollapseCardSIASNRwPendidikan } from "../../components/CollapseCardSIASNRwPendidikan";
+import { CollapseCardSIASNRwPenghargaan } from "../../components/CollapseCardSIASNRwPenghargaan";
+import { CollapseCardPasangan } from "../../components/CollapseCardPasangan";
+import { CollapseCardAnak } from "../../components/CollapseCardAnak";
+import { CollapseCardOrangTua } from "../../components/CollapseCardOrangTua";
+import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
+import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
+import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
+import moment from "moment";
 
 export const DetailPegawaiIPASN = ({ route }) => {
   const item = route.params;
@@ -27,7 +45,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
   );
   const BASE_URL = Config.base_url + "bridge";
   const profile = item === "pegawai" ? DataIPASN.detail : DataPribadi.detail;
-  console.log(DataPribadi.detail);
+  console.log(DataPribadi.detail.siasn_data_full, "cek");
   return (
     <ScrollView>
       {loading ? <Loading /> : null}
@@ -74,29 +92,25 @@ export const DetailPegawaiIPASN = ({ route }) => {
 
       <View
         style={{
-          justifyContent: "center",
-          alignItems: "center",
-          padding: PADDING.Page,
+          paddingHorizontal: spacing.default,
+          paddingTop: spacing.default,
         }}
       >
         <View
-          style={{
-            backgroundColor: COLORS.white,
-            width: "100%",
-            borderRadius: 8,
-            justifyContent: "center",
-            alignItems: "center",
-            padding: PADDING.Page,
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-          }}
+          style={[
+            {
+              backgroundColor: COLORS.white,
+              width: "100%",
+              borderRadius: 8,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: spacing.default,
+            },
+            shadow.cardShadow,
+          ]}
         >
           <Image
-            source={{ uri: BASE_URL + profile.avatar }}
+            source={{ uri: BASE_URL + profile.avatar_signed }}
             style={{
               width: device === "tablet" ? 100 : 61,
               height: device === "tablet" ? 100 : 61,
@@ -104,327 +118,295 @@ export const DetailPegawaiIPASN = ({ route }) => {
             }}
           />
           <Text
-            style={{
-              marginVertical: 10,
-              color: COLORS.info,
-              fontWeight: FONTWEIGHT.bold,
-              fontSize: fontSizeResponsive("H4", device),
-            }}
+            style={[
+              {
+                marginTop: spacing.default,
+                color: COLORS.info,
+                fontSize: fontSizeResponsive("H4", device),
+              },
+            ]}
           >
             {profile.nama}
           </Text>
           <Text
-            style={{
-              color: COLORS.lighter,
-              fontSize: fontSizeResponsive("H4", device),
-            }}
+            style={[
+              {
+                color: COLORS.lighter,
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H5", device),
+              },
+            ]}
           >
             {profile.unit_kerja}
           </Text>
         </View>
+
+        <View
+          style={[
+            {
+              padding: spacing.default,
+              rowGap: spacing.medium,
+              backgroundColor: COLORS.white,
+              marginTop: 10,
+              borderRadius: 8,
+            },
+            shadow.cardShadow,
+          ]}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Jumlah hari kerja
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {profile.working_day}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Jumlah hadir
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {profile.present_day}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Terlambat
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {profile.late_day}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Dinas
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {profile.outstation_day}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Cuti
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              -
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 1,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Update Terakhir:
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {profile?.request_updated_get_from_siasn === null ||
+              profile?.request_updated_get_from_siasn === undefined
+                ? "-"
+                : moment(
+                    profile?.request_updated_get_from_siasn,
+                    "YYYY-MM-DD HH:mm:ss"
+                  )
+                    .locale("id")
+                    .format("DD MMMM YYYY HH:mm:ss")}
+            </Text>
+          </View>
+        </View>
       </View>
 
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 7,
-          justifyContent: "center",
-          width: device === "tablet" ? "100%" : "90%",
-          alignSelf: "center",
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            width: 177,
-            paddingHorizontal: 10,
-            paddingTop: 20,
-            borderRadius: 8,
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-            width: "48%",
-          }}
-        >
-          {/* <Text
-              style={{
-                fontSize: fontSizeResponsive("Judul", device),
-                fontWeight: FONTWEIGHT.bold,
-              }}
-            >
-              Absensi
-            </Text> */}
+      {/* Collapse Content IPASN EPEG */}
+      <View style={{ paddingTop: spacing.default }}>
+        <CollapseEpegIPASN profile={profile} device={device} />
+      </View>
 
-          <View style={{ paddingBottom: 20 }}>
-            <View style={{ flexDirection: "row", marginTop: 20, gap: wp(2) }}>
-              <Text
-                style={{
-                  width: "80%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Jumlah hari kerja
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.working_day}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
-              <Text
-                style={{
-                  width: "80%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Jumlah hadir
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.present_day}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
-              <Text
-                style={{
-                  width: "80%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Terlambat
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.late_day}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
-              <Text
-                style={{
-                  width: "80%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Dinas
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.outstation_day}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                gap: 10,
-              }}
-            >
-              <Text
-                style={{
-                  width: "80%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Cuti
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                -
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            paddingHorizontal: 10,
-            paddingTop: 20,
-            borderRadius: 8,
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-            width: "48%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: fontSizeResponsive("Judul", device),
-              fontWeight: FONTWEIGHT.bold,
-            }}
-          >
-            IP ASN
-          </Text>
-          <Text
-            style={{
-              fontSize: fontSizeResponsive("H4", device),
-              marginTop: 5,
-            }}
-          >
-            Sumber Data SIASN
-          </Text>
-
-          <View style={{ paddingBottom: 20 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 20,
-                width: "60%",
-                gap: wp(5),
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: device === "tablet" ? 60 : 30,
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                {profile.ipasn_nilai}
-              </Text>
-              {/* <View
-                  style={{
-                    backgroundColor: "#CED06C",
-                    width: wp(18),
-                    height: wp(5),
-                    borderRadius: 30,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    Tinggi
-                  </Text>
-                </View> */}
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                alignItems: "center",
-                gap: wp(1),
-              }}
-            >
-              <Text
-                style={{
-                  width: "72%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Kualifikasi
-              </Text>
-              <View
-                style={{
-                  width: wp(3),
-                  height: wp(3),
-                  backgroundColor: "#FF9900",
-                  borderRadius: 30,
-                }}
-              />
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.ipasn_kualifikasi}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                alignItems: "center",
-                gap: wp(1),
-              }}
-            >
-              <Text
-                style={{
-                  width: "72%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Kompetensi
-              </Text>
-              <View
-                style={{
-                  width: wp(3),
-                  height: wp(3),
-                  backgroundColor: COLORS.success,
-                  borderRadius: 30,
-                }}
-              />
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.ipasn_kompetensi}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                alignItems: "center",
-                gap: wp(1),
-              }}
-            >
-              <Text
-                style={{
-                  width: "72%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Kinerja
-              </Text>
-              <View
-                style={{
-                  width: wp(3),
-                  height: wp(3),
-                  backgroundColor: "#CED06C",
-                  borderRadius: 30,
-                }}
-              />
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.ipasn_kinerja}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                alignItems: "center",
-                gap: wp(1),
-              }}
-            >
-              <Text
-                style={{
-                  width: "72%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Disiplin
-              </Text>
-              <View
-                style={{
-                  width: wp(3),
-                  height: wp(3),
-                  backgroundColor: COLORS.success,
-                  borderRadius: 30,
-                }}
-              />
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {profile.ipasn_disiplin}
-              </Text>
-            </View>
-          </View>
-        </View>
+      <View style={{ paddingTop: spacing.default }}>
+        <CollapseSIASNIPASN profile={profile} device={device} />
       </View>
 
       <View style={{ paddingVertical: spacing.default }}>
         <CollapseCardBiodata profile={profile} device={device} />
         {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
+      </View>
+
+      {/* SIASN Data Utama */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNDataUtama
+          profile={profile?.siasn_data_full?.siasn_data_utama}
+          device={device}
+        />
+      </View>
+      {/* SIASN Jabatan */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNJabatan
+          profile={profile?.siasn_data_full?.siasn_jabatan}
+          device={device}
+        />
+      </View>
+      {/* SIASN RW SKP */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwSkp
+          profile={profile?.siasn_data_full?.siasn_rw_skp}
+          device={device}
+        />
+      </View>
+      {/* SIASN RW SKP 22 */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwSkp22
+          profile={profile?.siasn_data_full?.siasn_rw_skp22}
+          device={device}
+        />
+      </View>
+      {/* SIASN RW PNS Unor */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwPnsUnor
+          profile={profile?.siasn_data_full?.siasn_rw_pnsunor}
+          device={device}
+        />
+      </View>
+      {/* SIASN Angka Kredit */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNAngkaKredit
+          profile={profile?.siasn_data_full?.siasn_rw_angkakredit}
+          device={device}
+        />
+      </View>
+      {/* SIASN RW Pendidikan */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwPendidikan
+          profile={profile?.siasn_data_full?.siasn_rw_pendidikan}
+          device={device}
+        />
+      </View>
+      {/* SIASN Penghargaan */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwPenghargaan
+          profile={profile?.siasn_data_full?.siasn_rw_penghargaan}
+          device={device}
+        />
+      </View>
+      {/* Pasangan */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardPasangan
+          profile={profile?.siasn_data_full?.siasn_data_pasangan}
+          device={device}
+        />
+      </View>
+      {/* Anak */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardAnak
+          profile={profile?.siasn_data_full?.siasn_data_anak}
+          device={device}
+        />
+      </View>
+      {/* Ortang tua */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardOrangTua
+          profile={profile?.siasn_data_full?.siasn_data_ortu}
+          device={device}
+        />
+      </View>
+      {/* Masa Kerja */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardMasaKerja
+          profile={profile?.siasn_data_full?.siasn_rw_masakerja}
+          device={device}
+        />
+      </View>
+      {/* Hukuman Disiplin */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardHukumanDisiplin
+          profile={profile?.siasn_data_full?.siasn_rw_hukdis}
+          device={device}
+        />
+      </View>
+      {/* Kursus Diklat */}
+      <View style={{ paddingBottom: spacing.default }}>
+        <CollapseCardSIASNRwKursusDiklat
+          profile={profile?.siasn_data_full}
+          device={device}
+        />
       </View>
     </ScrollView>
   );
