@@ -41,7 +41,7 @@ function DLetter() {
       navName: "IncomingList",
     },
     {
-      icon: "inbox-arrow-down",
+      icon: "inbox",
       navName: "InternalSatkerList",
     },
     {
@@ -53,7 +53,7 @@ function DLetter() {
       navName: "NeedFollowUpList",
     },
     {
-      icon: "email-edit-outline",
+      icon: "email-edit",
       navName: "NeedSignList",
     },
     {
