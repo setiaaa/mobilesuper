@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 import {
   COLORS,
@@ -10,7 +10,7 @@ import {
   shadow,
   spacing,
 } from "../../config/SuperAppps";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
@@ -35,17 +35,29 @@ import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
 import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
 import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
 import moment from "moment";
+import { setDataDetailIPASN } from "../../store/Kepegawain";
+import { getDataDetailIPASN, getDataPribadiDetail } from "../../service/api";
 
 export const DetailPegawaiIPASN = ({ route }) => {
   const item = route.params;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (item.type === "pegawai") {
+      dispatch(getDataDetailIPASN({ token: item.token, id: item.nip }));
+    } else {
+      dispatch(getDataPribadiDetail({ token: item.token, id: item.nip }));
+    }
+  }, [item.nip]);
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
+
   const { DataPribadi, DataIPASN, loading } = useSelector(
     (state) => state.kepegawaian
   );
   const BASE_URL = Config.base_url + "bridge";
-  const profile = item === "pegawai" ? DataIPASN.detail : DataPribadi.detail;
-  console.log(DataPribadi.detail.siasn_data_full, "cek");
+  const profile =
+    item.type === "pegawai" ? DataIPASN.detail : DataPribadi.detail;
+  console.log(item, "cek");
   return (
     <ScrollView>
       {loading ? <Loading /> : null}
@@ -109,14 +121,25 @@ export const DetailPegawaiIPASN = ({ route }) => {
             shadow.cardShadow,
           ]}
         >
-          <Image
-            source={{ uri: BASE_URL + profile.avatar_signed }}
-            style={{
-              width: device === "tablet" ? 100 : 61,
-              height: device === "tablet" ? 100 : 61,
-              borderRadius: device === "tablet" ? 50 : 30,
-            }}
-          />
+          {profile?.avatar_signed ? (
+            <Image
+              source={{ uri: BASE_URL + profile.avatar_signed }}
+              style={{
+                width: device === "tablet" ? 100 : 61,
+                height: device === "tablet" ? 100 : 61,
+                borderRadius: device === "tablet" ? 50 : 30,
+              }}
+            />
+          ) : (
+            <Image
+              source={require("../../assets/superApp/profile.png")}
+              style={{
+                width: device === "tablet" ? 100 : 61,
+                height: device === "tablet" ? 100 : 61,
+                borderRadius: device === "tablet" ? 50 : 30,
+              }}
+            />
+          )}
           <Text
             style={[
               {
@@ -126,7 +149,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
               },
             ]}
           >
-            {profile.nama}
+            {profile.nama ? profile.nama : "Tidak ada data"}
           </Text>
           <Text
             style={[
@@ -137,7 +160,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
               },
             ]}
           >
-            {profile.unit_kerja}
+            {profile.unit_kerja ? profile.unit_kerja : "Tidak ada data"}
           </Text>
         </View>
 
@@ -171,7 +194,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {profile.working_day}
+              {profile.working_day ? profile.working_day : "Tidak ada data"}
             </Text>
           </View>
 
@@ -193,7 +216,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {profile.present_day}
+              {profile.present_day ? profile.present_day : "Tidak ada data"}
             </Text>
           </View>
 
@@ -215,7 +238,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {profile.late_day}
+              {profile.late_day ? profile.late_day : "Tidak ada data"}
             </Text>
           </View>
 
@@ -237,7 +260,9 @@ export const DetailPegawaiIPASN = ({ route }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {profile.outstation_day}
+              {profile.outstation_day
+                ? profile.outstation_day
+                : "Tidak ada data"}
             </Text>
           </View>
 
@@ -259,7 +284,23 @@ export const DetailPegawaiIPASN = ({ route }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              -
+              {profile.big_leave_day === undefined
+                ? 0
+                : parseInt(profile.big_leave_day) + profile.labor_leave_day ===
+                  undefined
+                ? 0
+                : parseInt(profile.labor_leave_day) + profile.sick_leave_day ===
+                  undefined
+                ? 0
+                : parseInt(profile.sick_leave_day) +
+                    profile.urgent_leave_day ===
+                  undefined
+                ? 0
+                : parseInt(profile.urgent_leave_day) +
+                    profile.year_leave_day ===
+                  undefined
+                ? 0
+                : parseInt(profile.year_leave_day)}
             </Text>
           </View>
 
@@ -284,7 +325,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
             >
               {profile?.request_updated_get_from_siasn === null ||
               profile?.request_updated_get_from_siasn === undefined
-                ? "-"
+                ? "Tidak ada data"
                 : moment(
                     profile?.request_updated_get_from_siasn,
                     "YYYY-MM-DD HH:mm:ss"

@@ -8,13 +8,14 @@ import {
 import { useDispatch } from "react-redux";
 import { getDataDetailIPASN } from "../../service/api";
 import { useNavigation } from "@react-navigation/native";
+import { setDataDetailIPASN } from "../../store/Kepegawain";
 
 export const CardListDataIPASN = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const getDetail = (id) => {
-    dispatch(getDataDetailIPASN({ token, id }));
-  };
+  // const getDetail = (id) => {
+  //   dispatch(getDataDetailIPASN({ token, id }));
+  // };
   return (
     <TouchableOpacity
       style={{
@@ -24,8 +25,13 @@ export const CardListDataIPASN = ({ item, token, device }) => {
         borderRadius: 8,
       }}
       onPress={() => {
-        getDetail(item.nip);
-        navigation.navigate("DetailPegawaiIPASN", "pegawai");
+        dispatch(setDataDetailIPASN());
+        // getDetail(item.nip);
+        navigation.navigate("DetailPegawaiIPASN", {
+          type: "pegawai",
+          nip: item.nip,
+          token: token,
+        });
       }}
     >
       <View style={{ flexDirection: "row", gap: 5 }}>

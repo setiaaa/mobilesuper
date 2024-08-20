@@ -28,7 +28,13 @@ const KepegawaianSlice = createSlice({
     unitKerja: [],
     loading: false,
   },
-  reducers: {},
+  reducers: {
+    setDataDetailIPASN: (state, action) => {
+      console.log("ajdad");
+      state.DataIPASN.detail = {};
+      state.DataPribadi.detail = {};
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getDataIPASN.fulfilled, (state, action) => {
@@ -73,7 +79,7 @@ const KepegawaianSlice = createSlice({
         state.loading = true;
       })
       .addCase(getDataPribadiDetail.rejected, (state, action) => {
-        state.loading = true;
+        state.loading = false;
         Sentry.captureException(action.payload);
       })
       .addCase(getFilterUnitKerja.fulfilled, (state, action) => {
@@ -112,6 +118,6 @@ const KepegawaianSlice = createSlice({
   },
 });
 
-export const {} = KepegawaianSlice.actions;
+export const { setDataDetailIPASN } = KepegawaianSlice.actions;
 
 export default KepegawaianSlice.reducer;

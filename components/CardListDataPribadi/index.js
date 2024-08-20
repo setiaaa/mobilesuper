@@ -8,6 +8,7 @@ import {
   FONTWEIGHT,
 } from "../../config/SuperAppps";
 import { getDataPribadiDetail } from "../../service/api";
+import { setDataDetailIPASN } from "../../store/Kepegawain";
 
 export const CardListDataPribadi = ({
   item,
@@ -17,9 +18,9 @@ export const CardListDataPribadi = ({
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const getDetail = (id) => {
-    dispatch(getDataPribadiDetail({ token, id }));
-  };
+  // const getDetail = (id) => {
+  //   dispatch(getDataPribadiDetail({ token, id }));
+  // };
   return (
     <TouchableOpacity
       disabled={isRoleOperator === true ? false : true}
@@ -30,8 +31,13 @@ export const CardListDataPribadi = ({
         borderRadius: 8,
       }}
       onPress={() => {
-        getDetail(item.nip);
-        navigation.navigate("DetailPegawaiIPASN", "pribadi");
+        // getDetail(item.nip);
+        dispatch(setDataDetailIPASN());
+        navigation.navigate("DetailPegawaiIPASN", {
+          type: "pribadi",
+          nip: item.nip,
+          token: token,
+        });
       }}
     >
       <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>

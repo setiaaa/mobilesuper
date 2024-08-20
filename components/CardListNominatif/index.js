@@ -324,7 +324,9 @@ export const CardListNominatif = ({ item, device }) => {
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <View style={{ width: device === "tablet" ? 350 : 150 }}>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {item?.siasn_data?.tmtCpns ? item?.siasn_data?.tmtCpns : "-"}
+            {item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
+              ? item?.updated_getrefpeg_data?.pegawai_cpns_tanggal_tmt
+              : "-"}
           </Text>
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
             {item?.siasn_data?.masaKerja ? item?.siasn_data?.masaKerja : "-"}
