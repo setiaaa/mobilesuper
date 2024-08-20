@@ -245,7 +245,7 @@ export const Satker = () => {
                       : COLORS.infoLight,
                   borderRadius: 30,
                   height: device === "tablet" ? 60 : 30,
-                  width: device === "tablet" ? 200 : 110,
+                  width: device === "tablet" ? 200 : 120,
                   justifyContent: "center",
                   alignItems: "center",
                 }}

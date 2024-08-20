@@ -27,6 +27,7 @@ import { getGaleri } from "../../service/api";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { RefreshControl } from "react-native";
+import { Loading } from "../../components/Loading";
 
 export const ListGaleri = () => {
   const { galeri, loading } = useSelector((state) => state.superApps);
@@ -106,6 +107,7 @@ export const ListGaleri = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      {loading ? <Loading /> : null}
       <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
