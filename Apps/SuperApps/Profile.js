@@ -878,23 +878,24 @@ export const Profile = () => {
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                {profile.big_leave_day === undefined
+                {profile.big_leave_day === undefined ||
+                profile.big_leave_day === null
                   ? 0
                   : parseInt(profile.big_leave_day) +
                       profile.labor_leave_day ===
-                    undefined
+                      undefined || profile.labor_leave_day === null
                   ? 0
                   : parseInt(profile.labor_leave_day) +
                       profile.sick_leave_day ===
-                    undefined
+                      undefined || profile.sick_leave_day === null
                   ? 0
                   : parseInt(profile.sick_leave_day) +
                       profile.urgent_leave_day ===
-                    undefined
+                      undefined || profile.urgent_leave_day === null
                   ? 0
                   : parseInt(profile.urgent_leave_day) +
                       profile.year_leave_day ===
-                    undefined
+                      undefined || profile.year_leave_day === null
                   ? 0
                   : parseInt(profile.year_leave_day)}
               </Text>
