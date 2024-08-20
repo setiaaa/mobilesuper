@@ -30,7 +30,6 @@ const KepegawaianSlice = createSlice({
   },
   reducers: {
     setDataDetailIPASN: (state, action) => {
-      console.log("ajdad");
       state.DataIPASN.detail = {};
       state.DataPribadi.detail = {};
     },
