@@ -42,7 +42,7 @@ function DCounter() {
       navName: "NeedFollowUpList",
     },
     {
-      icon: "email-edit-outline",
+      icon: "email-edit",
       color: "#49b0aa",
       navName: "NeedSignList",
     },
@@ -52,7 +52,7 @@ function DCounter() {
       navName: "IncomingUnread",
     },
     {
-      icon: "inbox-arrow-down",
+      icon: "inbox",
       color: "rgba(236, 202, 12, 0.6)",
       navName: "InternalUnread",
     },
