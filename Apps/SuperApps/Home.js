@@ -1492,7 +1492,7 @@ export const Home = () => {
                 itemWidth={getWidthCarousel()}
                 data={berita.lists.slice(0, 5)}
                 renderItem={({ item }, parallaxProps) => (
-                  <BeritaHome parallaxProps={parallaxProps} item={item} />
+                  <BeritaHome parallaxProps={parallaxProps} item={item} token={token}/>
                 )}
                 hasParallaxImages={true}
                 onSnapToItem={setSlide4}

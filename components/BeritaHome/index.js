@@ -1,14 +1,24 @@
 import React from "react";
-import { useWindowDimensions, View } from "react-native";
+import { TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { ParallaxImage } from "react-native-snap-carousel";
 import { COLORS, FONTWEIGHT, getOrientation } from "../../config/SuperAppps";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { getDetailBerita } from "../../service/api";
 
-export const BeritaHome = ({ item, index, parallaxProps }) => {
+export const BeritaHome = ({ item, index, parallaxProps, token }) => {
   const { device } = useSelector((state) => state.apps);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
+
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDetailBerita(params));
+  };
 
   const getWidthCarousel = () => {
     let tempWidth = 0;
@@ -45,7 +55,11 @@ export const BeritaHome = ({ item, index, parallaxProps }) => {
   };
 
   return (
-    <View
+    <TouchableOpacity
+    onPress={()=>{
+      getDetail(item.id)
+      navigation.navigate('DetailBerita')
+    }}
       style={{
         width: getWidthCarousel(),
         // height: getHeightCarousel(),
@@ -81,7 +95,7 @@ export const BeritaHome = ({ item, index, parallaxProps }) => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
