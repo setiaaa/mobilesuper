@@ -52,6 +52,10 @@ import {
 import RenderHTML from "react-native-render-html";
 import { Config } from "../../constants/config";
 import { setResetDetailLinimasa } from "../../store/Pengetahuan";
+import { BannerKegiatanSatker } from "../../components/BannerKegiatanSatker";
+import { BannerGallerySatker } from "../../components/BannerGallerySatker";
+import { BannerBeritaSatker } from "../../components/BeritaSatker";
+import { CardLiniMasaSatker } from "../../components/CardLinimasaSatker";
 
 // const BannerSetjen = [
 //   {
@@ -147,239 +151,6 @@ export const Satker = () => {
     }
 
     return tempHeight;
-  };
-
-  const BannerGallery = ({ item, index, parallaxProps }) => {
-    return (
-      <View
-        style={[
-          {
-            width: getWidthCarousel(),
-            // height: getHeightCarousel(),
-          },
-          { marginVertical: 20 },
-        ]}
-      >
-        <ParallaxImage
-          source={{ uri: item.main_images?.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-      </View>
-    );
-  };
-
-  const CardLiniMasaSatker = ({
-    image,
-    judul,
-    nama,
-    jenis,
-    index,
-    item,
-    token,
-    device,
-  }) => {
-    const getDetail = (id) => {
-      const params = { token, id };
-      // const data = event.listsprogress.find(item => item.id === id)
-      dispatch(getDetailLinimasa(params));
-      dispatch(getViewLinimasa(params));
-    };
-
-    return (
-      <View
-        key={index}
-        style={{ flex: 1, justifyContent: "center", marginHorizontal: 20 }}
-      >
-        <TouchableOpacity
-          style={{ flexDirection: "row", marginVertical: 20 }}
-          onPress={() => {
-            // getDetail(item.id);
-            dispatch(setResetDetailLinimasa());
-            navigation.navigate("DetailLinimasa", {
-              id: item.id,
-            });
-          }}
-        >
-          <Image
-            source={{ uri: item.cover }}
-            style={{
-              width: device === "tablet" ? 200 : 80,
-              height: device === "tablet" ? 200 : 80,
-            }}
-          />
-          <View style={{ marginLeft: device === "tablet" ? 20 : 10 }}>
-            <View style={{ width: device === "tablet" ? "85%" : "88%" }}>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H2", device),
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                {item.title}
-              </Text>
-            </View>
-            <View style={{ justifyContent: "flex-start", marginTop: 10 }}>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H4", device),
-                  color: COLORS.lighter,
-                }}
-              >
-                {item.creator.name}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  gap: 5,
-                  backgroundColor:
-                    item.category === "Video / Jurnal"
-                      ? COLORS.successLight
-                      : item.category === "Infografis"
-                      ? COLORS.warningLight
-                      : COLORS.infoLight,
-                  borderRadius: 30,
-                  height: device === "tablet" ? 60 : 30,
-                  width: device === "tablet" ? 200 : 120,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {item.category === "Infografis" ? (
-                  <Ionicons
-                    name="document-outline"
-                    color={"#F6AD1D"}
-                    size={device === "tablet" ? 30 : 24}
-                    style={{ marginTop: 2 }}
-                  />
-                ) : item.category === "Kegiatan" ? (
-                  <Ionicons
-                    name="analytics-outline"
-                    size={device === "tablet" ? 30 : 24}
-                    color={"#1868AB"}
-                    style={{ marginTop: 3 }}
-                  />
-                ) : (
-                  <Ionicons
-                    name="videocam-outline"
-                    size={device === "tablet" ? 30 : 24}
-                    color={"#11C15B"}
-                    style={{ marginTop: 2 }}
-                  />
-                )}
-                <Text
-                  style={{
-                    color:
-                      item.category === "Infografis"
-                        ? COLORS.warning
-                        : item.category === "Kegiatan"
-                        ? COLORS.info
-                        : COLORS.success,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {item.category}
-                </Text>
-              </View>
-
-              {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
-              {/* custom divider */}
-              {/* <View
-                style={{ height: "100%", width: 1, backgroundColor: "#DBDADE" }}
-              /> */}
-            </View>
-          </View>
-        </TouchableOpacity>
-        <Divider bold style={{ width: "90%" }} />
-      </View>
-    );
-  };
-
-  const BannerBerita = ({ item, index, parallaxProps }) => {
-    return (
-      <View
-        style={{
-          width: getWidthCarousel(),
-          // height: getHeightCarousel(),
-        }}
-      >
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: "white",
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{ marginLeft: 10, color: "#6B7280", marginVertical: 10 }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  const BannerKegiatan = ({ item, parallaxProps }) => {
-    return (
-      <View
-        style={{
-          width: getWidthCarousel(),
-          // height: getHeightCarousel(),
-        }}
-      >
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.images}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: 70,
-              opacity: 0.5,
-            }}
-          />
-          <Text
-            numberOfLines={2}
-            style={{
-              color: COLORS.white,
-              marginVertical: 20,
-              marginHorizontal: 40,
-              textAlign: "center",
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
   };
 
   const navigation = useNavigation();
@@ -542,7 +313,7 @@ export const Satker = () => {
             itemWidth={getWidthCarousel()}
             data={benner}
             renderItem={({ item }, parallaxProps) => (
-              <BannerKegiatan parallaxProps={parallaxProps} item={item} />
+              <BannerKegiatanSatker parallaxProps={parallaxProps} item={item} />
             )}
             hasParallaxImages={true}
           />
@@ -567,7 +338,7 @@ export const Satker = () => {
             itemWidth={getWidthCarousel()}
             data={gallery?.results?.slice(0, 5)}
             renderItem={({ item }, parallaxProps) => (
-              <BannerGallery parallaxProps={parallaxProps} item={item} />
+              <BannerGallerySatker parallaxProps={parallaxProps} item={item} />
             )}
             hasParallaxImages={true}
           />
@@ -610,7 +381,7 @@ export const Satker = () => {
               itemWidth={getWidthCarousel()}
               data={berita.lists}
               renderItem={({ item }, parallaxProps) => (
-                <BannerBerita parallaxProps={parallaxProps} item={item} />
+                <BannerBeritaSatker parallaxProps={parallaxProps} item={item} />
               )}
               hasParallaxImages={true}
             />
@@ -664,6 +435,7 @@ export const Satker = () => {
               style={{
                 width: device === "tablet" ? 300 : 100,
                 height: device === "tablet" ? 400 : 150,
+                borderWidth: 1
               }}
             />
             <ScrollView

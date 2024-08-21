@@ -1,33 +1,141 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { COLORS, fontSizeResponsive, FONTWEIGHT } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
+import { Divider } from "react-native-paper";
+import { setResetDetailLinimasa } from "../../store/Pengetahuan";
+
 
 export const CardLiniMasaSatker = ({
   image,
   judul,
   nama,
   jenis,
-  deskripsi,
+  index,
+  item,
+  token,
+  device,
 }) => {
-  const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDetailLinimasa(params));
+    dispatch(getViewLinimasa(params));
+  };
+
+  const navigation = useNavigation()
+
   return (
-    <View style={styles.card}>
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <Text
+    <View
+      key={index}
+      style={{ flex: 1, justifyContent: "center", marginHorizontal: 20 }}
+    >
+      <TouchableOpacity
+        style={{ flexDirection: "row", marginVertical: 20 }}
+        onPress={() => {
+          // getDetail(item.id);
+          dispatch(setResetDetailLinimasa());
+          navigation.navigate("DetailLinimasa", {
+            id: item.id,
+          });
+        }}
+      >
+        <Image
+          source={{ uri: item.cover }}
           style={{
-            marginLeft: 20,
-            color: "#111827",
-            fontWeight: 600,
-            fontSize: 17,
+            width: device === "tablet" ? 200 : 80,
+            height: device === "tablet" ? 200 : 80,
           }}
-        >
-          Linimasa Pengetahuan
-        </Text>
-      </View>
-      <View>
-        <Image source={image} />
-        <Text>{judul}</Text>
-      </View>
+        />
+        <View style={{ marginLeft: device === "tablet" ? 20 : 10 }}>
+          <View style={{ width: device === "tablet" ? "85%" : "88%" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H2", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
+            >
+              {item.title}
+            </Text>
+          </View>
+          <View style={{ justifyContent: "flex-start", marginTop: 10 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+                color: COLORS.lighter,
+              }}
+            >
+              {item.creator.name}
+            </Text>
+          </View>
+
+          <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 5,
+                backgroundColor:
+                  item.category === "Video / Jurnal"
+                    ? COLORS.successLight
+                    : item.category === "Infografis"
+                    ? COLORS.warningLight
+                    : COLORS.infoLight,
+                borderRadius: 30,
+                height: device === "tablet" ? 60 : 30,
+                width: device === "tablet" ? 200 : 120,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {item.category === "Infografis" ? (
+                <Ionicons
+                  name="document-outline"
+                  color={"#F6AD1D"}
+                  size={device === "tablet" ? 30 : 24}
+                  style={{ marginTop: 2 }}
+                />
+              ) : item.category === "Kegiatan" ? (
+                <Ionicons
+                  name="analytics-outline"
+                  size={device === "tablet" ? 30 : 24}
+                  color={"#1868AB"}
+                  style={{ marginTop: 3 }}
+                />
+              ) : (
+                <Ionicons
+                  name="videocam-outline"
+                  size={device === "tablet" ? 30 : 24}
+                  color={"#11C15B"}
+                  style={{ marginTop: 2 }}
+                />
+              )}
+              <Text
+                style={{
+                  color:
+                    item.category === "Infografis"
+                      ? COLORS.warning
+                      : item.category === "Kegiatan"
+                      ? COLORS.info
+                      : COLORS.success,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {item.category}
+              </Text>
+            </View>
+
+            {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
+            {/* custom divider */}
+            {/* <View
+              style={{ height: "100%", width: 1, backgroundColor: "#DBDADE" }}
+            /> */}
+          </View>
+        </View>
+      </TouchableOpacity>
+      <Divider bold style={{ width: "90%" }} />
     </View>
   );
 };
