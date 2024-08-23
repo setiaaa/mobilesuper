@@ -7,12 +7,18 @@ import {
   TouchableOpacity,
   Modal,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, PADDING, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  PADDING,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
@@ -162,6 +168,10 @@ export const ListBeritaSatker = () => {
   }, [berita.lists, gallery.results, page]);
 
   // console.log(combineBanner);
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <View style={{ flex: 1 }}>
