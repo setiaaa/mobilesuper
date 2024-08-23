@@ -814,8 +814,8 @@ export const getBanner = createAsyncThunk("banner/getBanner", async (token) => {
 
 export const getGaleri = createAsyncThunk(
   "galeri/getGaleri",
-  async ({ token, page }) => {
-    const respon = await axios.get(`${galeri}?page=${page}`, {
+  async ({ token, pageGaleri }) => {
+    const respon = await axios.get(`${galeri}?page=${pageGaleri}`, {
       headers: { Authorization: token },
     });
     return respon?.data.results;

@@ -95,6 +95,8 @@ import {
 import { Config } from "../../constants/config";
 import { setLogout } from "../../store/LoginAuth";
 import {
+  setBerita,
+  setGaleri,
   setHandleError,
   setPost,
   setProfile,
@@ -117,10 +119,12 @@ export const Home = () => {
   const carouselRefHome = useRef(null);
   const carouselRefBerita = useRef(null);
   const carouselRefGaleri = useRef(null);
+  const carouselRefCombine = useRef(null);
 
   const [slide2, setSlide2] = useState(0);
   const [slide3, setSlide3] = useState(0);
   const [slide4, setSlide4] = useState(0);
+  const [slide5, setSlide5] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
@@ -134,6 +138,7 @@ export const Home = () => {
   const [menuBankom, setMenuBankom] = useState([]);
   const [menuKepegawaian, setMenuKepegawaian] = useState([]);
   const [menuLiteLength, setMenuliteLength] = useState();
+  const [combineBanner, setCombineBanner] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
   const isFocused = useIsFocused();
@@ -755,6 +760,67 @@ export const Home = () => {
     }
   }, [typeMenu, isFocused, profile.nip]);
 
+  useEffect(() => {
+    const dataVideo = [
+      {
+        title:
+          " Menteri Trenggono Melakukan Panen Parsial Kedua di BUBK Kebumen",
+        image: require("../../assets/superApp/hq720.webp"),
+        time: "",
+        type: "video",
+      },
+    ];
+    const dataBerita = berita.lists.map((item) => ({
+      id: item?.id,
+      title: item?.title,
+      image: item?.image,
+      time: item.created_at,
+      type: "berita",
+    }));
+
+    const uniqueDataCombineBerita = dataBerita.filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t?.id === item?.id &&
+            t?.title === item?.title &&
+            t?.image === item?.image &&
+            t?.created_at === item?.created_at
+        )
+    );
+
+    const dataGaleri = galeri.lists.map((item) => ({
+      id: item?.id,
+      title: item?.title,
+      image: item?.main_images?.image,
+      time: item?.created_at,
+      type: "galeri",
+    }));
+
+    const uniqueDataCombineGaleri = dataGaleri.filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t?.id === item?.id &&
+            t.title === item.title &&
+            t?.main_images?.image === item?.main_images?.image &&
+            t?.created_at === item?.created_at
+        )
+    );
+
+    // console.log(uniqueDataCombineBerita);
+
+    setCombineBanner([
+      ...dataVideo,
+      ...uniqueDataCombineBerita,
+      ...uniqueDataCombineGaleri,
+    ]);
+  }, [berita.lists, galeri.lists]);
+
+  // console.log(combineBanner);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -1349,7 +1415,7 @@ export const Home = () => {
             <CardTautan setModalVisible={setModalVisible} />
           </View>
 
-          <View
+          {/* <View
             style={{
               marginVertical: 20,
               marginLeft: 25,
@@ -1365,24 +1431,9 @@ export const Home = () => {
             >
               Video
             </Text>
-            {/* <TouchableOpacity
-                onPress={() => navigation.navigate("")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
-              >
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: FONTSIZE.H3,
-                    flex: 1,
-                    color: "#1868AB",
-                  }}
-                >
-                  Selengkapnya
-                </Text>
-              </TouchableOpacity> */}
           </View>
 
-          <CardVideo setModalVisibleVideo={setModalVisibleVideo} />
+          <CardVideo setModalVisibleVideo={setModalVisibleVideo} /> */}
 
           <Modal
             animationType="fade"
@@ -1451,7 +1502,7 @@ export const Home = () => {
             </View>
           </Modal>
 
-          <View
+          {/* <View
             style={{
               marginVertical: 20,
               marginLeft: 25,
@@ -1492,7 +1543,11 @@ export const Home = () => {
                 itemWidth={getWidthCarousel()}
                 data={berita.lists.slice(0, 5)}
                 renderItem={({ item }, parallaxProps) => (
-                  <BeritaHome parallaxProps={parallaxProps} item={item} token={token}/>
+                  <BeritaHome
+                    parallaxProps={parallaxProps}
+                    item={item}
+                    token={token}
+                  />
                 )}
                 hasParallaxImages={true}
                 onSnapToItem={setSlide4}
@@ -1509,8 +1564,7 @@ export const Home = () => {
                 tappableDots={!!carouselRefBerita}
               />
             </View>
-            {/* <Carousel data={CarouselData} /> */}
-          </View>
+          </View> */}
 
           <Modal
             animationType="fade"
@@ -1909,7 +1963,7 @@ export const Home = () => {
             </View>
           </Modal>
 
-          <View
+          {/* <View
             style={{
               marginLeft: 25,
               marginVertical: 20,
@@ -1939,9 +1993,9 @@ export const Home = () => {
                 Selengkapnya
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
-          <View style={[styles.containerr, { marginBottom: "5%" }]}>
+          {/* <View style={[styles.containerr, { marginBottom: "5%" }]}>
             <Carousel
               ref={carouselRefGaleri}
               sliderWidth={screenWidth}
@@ -1964,6 +2018,62 @@ export const Home = () => {
               activeDotIndex={slide3}
               carouselRef={carouselRefGaleri}
               tappableDots={!!carouselRefGaleri}
+            />
+          </View> */}
+
+          <View
+            style={{
+              marginLeft: 25,
+              marginVertical: 20,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
+            >
+              Banner
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(setBerita([]));
+                dispatch(setGaleri([]));
+                navigation.navigate("ListBanner");
+              }}
+              style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
+            >
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H3", device),
+                  flex: 1,
+                  color: "#1868AB",
+                }}
+              >
+                Selengkapnya
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={[styles.containerr, { marginBottom: "5%" }]}>
+            <Carousel
+              ref={carouselRefCombine}
+              sliderWidth={screenWidth}
+              sliderHeight={screenWidth}
+              itemWidth={getWidthCarousel()}
+              data={combineBanner.slice(0, 5)}
+              renderItem={({ item }, parallaxProps) => (
+                <BeritaHome
+                  parallaxProps={parallaxProps}
+                  item={item}
+                  token={token}
+                  setModalVisibleVideo={setModalVisibleVideo}
+                />
+              )}
+              hasParallaxImages={true}
+              onSnapToItem={setSlide5}
             />
           </View>
         </ScrollView>

@@ -19,6 +19,8 @@ export const CardListBeritaHome = ({
   index,
   id,
   token,
+  setModalVisibleVideo,
+  onclick,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -47,31 +49,40 @@ export const CardListBeritaHome = ({
       >
         <TouchableOpacity
           onPress={() => {
-            getDetail(id);
-            navigation.navigate("DetailBerita");
+            if (item.type === "berita") {
+              getDetail(item.id);
+              navigation.navigate("DetailBerita");
+            } else if (item.type === "video") {
+              setModalVisibleVideo(true);
+            } else {
+              onclick();
+            }
           }}
         >
           <View>
             <Image
-              source={{ uri: image }}
+              source={item.type === "video" ? item.image : { uri: item.image }}
               style={{
                 height: device === "tablet" ? 300 : 193,
+                width: item.type === "video" ? "100%" : null,
                 borderRadius: 16,
               }}
             />
           </View>
           <View style={{ padding: 10 }}>
-            <Text
-              style={{
-                color: COLORS.grey,
-                marginVertical: 5,
-                fontSize: fontSizeResponsive("H5", device),
-                fontWeight: 400,
-              }}
-            >
-              {/* {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)} */}
-              {tanggal}
-            </Text>
+            {item.type === "berita" ? (
+              <Text
+                style={{
+                  color: COLORS.grey,
+                  marginVertical: 5,
+                  fontSize: fontSizeResponsive("H5", device),
+                  fontWeight: 400,
+                }}
+              >
+                {moment(tanggal, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
+                {/* {tanggal} */}
+              </Text>
+            ) : null}
             <Text
               numberOfLines={3}
               style={{

@@ -24,6 +24,7 @@ export const CardListBeritaSatker = ({
   id,
   token,
   device,
+  onclick,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -51,8 +52,12 @@ export const CardListBeritaSatker = ({
       >
         <TouchableOpacity
           onPress={() => {
-            getDetail(id);
-            navigation.navigate("DetailBeritaSatker");
+            if (item.type === "berita") {
+              getDetail(id);
+              navigation.navigate("DetailBeritaSatker");
+            } else {
+              onclick();
+            }
           }}
         >
           <View>
@@ -64,18 +69,18 @@ export const CardListBeritaSatker = ({
               }}
             />
           </View>
-          <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
-            <Text
-              style={{
-                color: COLORS.grey,
-                marginVertical: 5,
-                fontSize: fontSizeResponsive("H5", device),
-                fontWeight: 400,
-              }}
-            >
-              {/* {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)} */}
-              {tanggal}
-            </Text>
+          <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+            {item.type === "berita" ? (
+              <Text
+                style={{
+                  color: COLORS.grey,
+                  fontSize: fontSizeResponsive("H5", device),
+                  fontWeight: 400,
+                }}
+              >
+                {moment(tanggal, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
+              </Text>
+            ) : null}
             <Text
               numberOfLines={3}
               style={{

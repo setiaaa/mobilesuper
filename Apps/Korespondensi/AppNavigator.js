@@ -220,6 +220,7 @@ import { LPMUKP } from "../Dashboard/LPMUKP";
 import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { MainIPASN } from "../Kepegawaian/MainIPASN";
 import { DataPribadi } from "../Kepegawaian/DataPribadi";
+import { ListBanner } from "../SuperApps/ListBanner";
 
 const Stack = createNativeStackNavigator();
 
@@ -553,6 +554,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListBanner"
+            component={ListBanner}
             options={{
               headerShown: false,
             }}

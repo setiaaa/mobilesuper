@@ -1,18 +1,31 @@
 import React from "react";
 import { TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { ParallaxImage } from "react-native-snap-carousel";
-import { COLORS, FONTWEIGHT, getOrientation } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  fontSizeResponsive,
+  FONTWEIGHT,
+  getOrientation,
+} from "../../config/SuperAppps";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { getDetailBerita } from "../../service/api";
+import moment from "moment";
 
-export const BeritaHome = ({ item, index, parallaxProps, token }) => {
+export const BeritaHome = ({
+  item,
+  index,
+  parallaxProps,
+  token,
+  setModalVisibleVideo,
+}) => {
   const { device } = useSelector((state) => state.apps);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const getDetail = (id) => {
     const params = { token, id };
@@ -56,17 +69,21 @@ export const BeritaHome = ({ item, index, parallaxProps, token }) => {
 
   return (
     <TouchableOpacity
-    onPress={()=>{
-      getDetail(item.id)
-      navigation.navigate('DetailBerita')
-    }}
+      onPress={() => {
+        if (item.type === "berita") {
+          getDetail(item.id);
+          navigation.navigate("DetailBerita");
+        } else if (item.type === "video") {
+          setModalVisibleVideo(true);
+        }
+      }}
       style={{
         width: getWidthCarousel(),
         // height: getHeightCarousel(),
       }}
     >
       <ParallaxImage
-        source={{ uri: item.image }}
+        source={item.type === "video" ? item.image : { uri: item.image }}
         containerStyle={styles.imageContainer}
         style={styles.image}
         parallaxFactor={0.4}
@@ -80,16 +97,33 @@ export const BeritaHome = ({ item, index, parallaxProps, token }) => {
         }}
       >
         <View style={{ margin: 10 }}>
-          <Text
-            style={{
-              color: COLORS.grey,
-              marginVertical: 5,
-              fontSize: 10,
-              fontWeight: 400,
-            }}
-          >
-            {item.updated_at}
-          </Text>
+          {item.type === "berita" ? (
+            <Text
+              style={{
+                color: COLORS.grey,
+                marginVertical: 5,
+                fontSize: fontSizeResponsive("H5", device),
+                fontWeight: 400,
+              }}
+            >
+              {moment(item.time, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
+              {/* {tanggal} */}
+            </Text>
+          ) : item.type === "galeri" ? (
+            <Text
+              style={{
+                color: COLORS.grey,
+                marginVertical: 5,
+                fontSize: fontSizeResponsive("H5", device),
+                fontWeight: 400,
+              }}
+            >
+              {moment(item.time, "DD MMMM YYYY HH:mm:ss").format(
+                DATETIME.LONG_DATE
+              )}
+              {/* {tanggal} */}
+            </Text>
+          ) : null}
           <Text style={{ fontSize: 15, marginVertical: 10, fontWeight: 600 }}>
             {item.title}
           </Text>
@@ -119,7 +153,7 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    resizeMode: "cover",
+    // resizeMode: "cover",
     aspectRatio: 16 / 8,
   },
   image: {

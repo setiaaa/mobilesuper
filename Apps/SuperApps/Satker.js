@@ -85,6 +85,7 @@ export const Satker = () => {
   const carouselRefGaleri = useRef(null);
 
   const [entries, setEntries] = useState([]);
+  const [combineBanner, setCombineBanner] = useState([]);
   const [selected, setSelected] = useState("");
 
   const [token, setToken] = useState("");
@@ -206,6 +207,56 @@ export const Satker = () => {
 
   const baseStyles = {};
 
+  useEffect(() => {
+    const dataBerita = berita?.lists?.map((item) => ({
+      id: item?.id,
+      title: item?.title,
+      image: item?.image,
+      time: item?.created_at,
+      type: "berita",
+    }));
+
+    const uniqueDataCombineBerita = dataBerita?.filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t?.id === item?.id &&
+            t?.title === item?.title &&
+            t?.image === item?.image &&
+            t?.created_at === item?.created_at
+        )
+    );
+
+    if (gallery.results !== undefined) {
+      const dataGaleri = gallery?.results?.map((item) => ({
+        id: item?.id,
+        title: item?.title,
+        image: item?.main_images?.image,
+        time: item?.created_at,
+        type: "galeri",
+      }));
+
+      const uniqueDataCombineGaleri = dataGaleri?.filter(
+        (item, index, self) =>
+          index ===
+          self.findIndex(
+            (t) =>
+              t?.id === item?.id &&
+              t?.title === item?.title &&
+              t?.main_images?.image === item?.main_images?.image &&
+              t?.created_at === item?.created_at
+          )
+      );
+      setCombineBanner([
+        ...uniqueDataCombineBerita,
+        ...uniqueDataCombineGaleri,
+      ]);
+    }
+
+    // console.log(uniqueDataCombineBerita);
+  }, [berita?.lists, gallery?.results]);
+
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -319,7 +370,7 @@ export const Satker = () => {
           />
         </View>
 
-        <View style={[styles.containerr, { marginTop: 20 }]}>
+        {/* <View style={[styles.containerr, { marginTop: 20 }]}>
           <View style={{ marginLeft: 30 }}>
             <Text
               style={{
@@ -342,9 +393,9 @@ export const Satker = () => {
             )}
             hasParallaxImages={true}
           />
-        </View>
+        </View> */}
 
-        <View
+        {/* <View
           style={{ marginLeft: 30, flexDirection: "row", marginVertical: 20 }}
         >
           <Text
@@ -382,6 +433,52 @@ export const Satker = () => {
               data={berita.lists}
               renderItem={({ item }, parallaxProps) => (
                 <BannerBeritaSatker parallaxProps={parallaxProps} item={item} />
+              )}
+              hasParallaxImages={true}
+            />
+          </View>
+        </View> */}
+
+        <View style={{ marginLeft: 30, flexDirection: "row", marginTop: 10 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
+            Berita Terkini
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ListBeritaSatker")}
+            style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+                flex: 1,
+                color: "#1868AB",
+              }}
+            >
+              Selengkapnya
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <View style={[styles.containerr, { marginVertical: 20 }]}>
+            <Carousel
+              ref={carouselRefBerita}
+              sliderWidth={screenWidth}
+              sliderHeight={screenWidth}
+              itemWidth={getWidthCarousel()}
+              data={combineBanner.slice(0, 5)}
+              renderItem={({ item }, parallaxProps) => (
+                <BannerBeritaSatker
+                  parallaxProps={parallaxProps}
+                  item={item}
+                  token={token}
+                />
               )}
               hasParallaxImages={true}
             />
@@ -435,7 +532,7 @@ export const Satker = () => {
               style={{
                 width: device === "tablet" ? 300 : 100,
                 height: device === "tablet" ? 400 : 150,
-                borderWidth: 1
+                borderWidth: 1,
               }}
             />
             <ScrollView
@@ -503,7 +600,7 @@ export const Satker = () => {
                 marginLeft: 20,
                 fontWeight: FONTWEIGHT.bold,
                 fontSize: fontSizeResponsive("Judul", device),
-                marginTop: 20,
+                marginTop: 10,
               }}
             >
               Linimasa Pengetahuan

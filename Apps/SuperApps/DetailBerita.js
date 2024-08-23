@@ -73,7 +73,7 @@ export const DetailBerita = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(detail);
+  // console.log(detail);
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -127,7 +127,10 @@ export const DetailBerita = () => {
                 {/* {moment(detail.updated_at, "DD MMMM YYYY").format(
                   DATETIME.LONG_DATE
                 )} */}
-                {detail.updated_at}
+                {/* {detail.created_at} */}
+                {moment(detail.created_at, "DD mmmm yyyy").format(
+                  DATETIME.LONG_DATE
+                )}
               </Text>
             </View>
           </View>

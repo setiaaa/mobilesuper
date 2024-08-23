@@ -28,6 +28,9 @@ const SatkerSlice = createSlice({
     setBeritaSatker: (state, action) => {
       state.berita.lists = action.payload;
     },
+    setGaleriSatker: (state, action) => {
+      state.gallery = [];
+    },
   },
   extraReducers(builder) {
     builder
@@ -116,6 +119,6 @@ const SatkerSlice = createSlice({
   },
 });
 
-export const { setBeritaSatker } = SatkerSlice.actions;
+export const { setBeritaSatker, setGaleriSatker } = SatkerSlice.actions;
 
 export default SatkerSlice.reducer;
