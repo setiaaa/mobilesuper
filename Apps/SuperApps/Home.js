@@ -2034,7 +2034,7 @@ export const Home = () => {
                 fontSize: fontSizeResponsive("H2", device),
               }}
             >
-              Banner
+              Berita Terkini
             </Text>
             <TouchableOpacity
               onPress={() => {

@@ -88,6 +88,7 @@ export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
             marginVertical: 20,
             marginHorizontal: 40,
             textAlign: "center",
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {item.description}
