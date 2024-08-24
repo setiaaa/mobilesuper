@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
+  // ScrollView,
   Image,
   Dimensions,
   Linking,
@@ -110,6 +110,7 @@ import { Easing } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import CryptoJS from "react-native-crypto-js";
 import { OneSignal } from "react-native-onesignal";
+import { ScrollView } from "react-native-gesture-handler";
 const numColumns = 3;
 
 const _color = "#6E01EF";
@@ -947,46 +948,56 @@ export const Home = () => {
                       />
                     )}
                   >
-                    <View onLayout={handleContentLayout}>
-                      <View
-                        style={{ marginTop: device === "tablet" ? 50 : 30 }}
+                    <View onLayout={handleContentLayout} style={{ flex: 1 }}>
+                      <ScrollView
+                        nestedScrollEnabled={true}
+                        style={{
+                          height: useWindowDimensions().height - 150,
+                        }}
                       >
                         <View
                           style={{
-                            marginHorizontal: 20,
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            padding: 14,
+                            marginTop: device === "tablet" ? 50 : 30,
+                            flex: 1,
                           }}
                         >
-                          <Text
+                          <View
                             style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H1", device),
+                              marginHorizontal: 20,
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              padding: 14,
                             }}
                           >
-                            Aplikasi
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => {
-                              closeBottomSheet();
-                            }}
-                          >
-                            <Ionicons
-                              name="close-outline"
-                              size={device === "tablet" ? 40 : 24}
-                              color={COLORS.lighter}
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H1", device),
+                              }}
+                            >
+                              Aplikasi
+                            </Text>
+                            <TouchableOpacity
+                              onPress={() => {
+                                closeBottomSheet();
+                              }}
+                            >
+                              <Ionicons
+                                name="close-outline"
+                                size={device === "tablet" ? 40 : 24}
+                                color={COLORS.lighter}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                          <View>
+                            <CardAppsB
+                              setModalBankom={setModalBankom}
+                              setModalKepegawaian={setModalKepegawaian}
+                              closeBottomSheet={closeBottomSheet}
                             />
-                          </TouchableOpacity>
+                          </View>
                         </View>
-                        <View>
-                          <CardAppsB
-                            setModalBankom={setModalBankom}
-                            setModalKepegawaian={setModalKepegawaian}
-                            closeBottomSheet={closeBottomSheet}
-                          />
-                        </View>
-                      </View>
+                      </ScrollView>
                     </View>
                   </BottomSheetModal>
                 </Portal>

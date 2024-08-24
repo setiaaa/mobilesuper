@@ -36,12 +36,15 @@ import {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "react-native-portalize";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
 import { Dropdown } from "../../components/DropDown";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import { StyleSheet } from "react-native";
 import { Rating } from "react-native-ratings";
-import { ScrollView } from "react-native";
+// import { ScrollView } from "react-native";
 
 export const AksiPerubahan = () => {
   const dataKategori = [
@@ -393,253 +396,266 @@ export const AksiPerubahan = () => {
           )}
         >
           <BottomSheetView onLayout={handleContentLayout}>
-              <View style={{
-                height: device === 'tablet' && orientation === 'landscape'? '90%': '100%'
-                }}>
-            <ScrollView>
-            <View
+            {/* <View
+            // style={{
+            //   height:
+            //     device === "tablet" && orientation === "landscape"
+            //       ? "90%"
+            //       : "100%",
+            // }}
+            > */}
+            <ScrollView
+              nestedScrollEnabled={true}
+              scrollEnabled={true}
               style={{
-                marginHorizontal: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                padding: 10,
-                borderBottomWidth: 2,
-                borderBottomColor: COLORS.grey,
-                marginTop: 20
+                height: useWindowDimensions().height - 100,
               }}
             >
-              <Text
-                style={{
-                  fontWeight: FONTWEIGHT.bold,
-                  fontSize: fontSizeResponsive("H3", device),
-                }}
-              >
-                Detail Aksi Perubahan
-              </Text>
-              <TouchableOpacity
-                style={{}}
-                onPress={() => {
-                  bottomSheetAttachDetailClose();
-                }}
-              >
-                <Ionicons
-                  name="close-outline"
-                  size={device === "tablet" ? 40 : 24}
-                  color={COLORS.lighter}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View>
               <View
                 style={{
-                  marginVertical: 20,
-                  marginHorizontal: 40,
+                  marginHorizontal: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: 10,
+                  borderBottomWidth: 2,
+                  borderBottomColor: COLORS.grey,
+                  marginTop: 20,
                 }}
               >
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  Jenis Kategori
+                  Detail Aksi Perubahan
                 </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    bottomSheetAttachDetailClose();
                   }}
                 >
-                  {detail.title}
-                </Text>
+                  <Ionicons
+                    name="close-outline"
+                    size={device === "tablet" ? 40 : 24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
+              </View>
 
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Nama
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.display_name}
-                </Text>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  NIP
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.coach_nip}
-                </Text>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Unit Kerja
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.unker}
-                </Text>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Satuan Kerja
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.satker}
-                </Text>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Coach
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.coach}
-                </Text>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  implementasi
-                </Text>
+              <View>
                 <View
                   style={{
-                    backgroundColor:
-                      detail.implementation === true
-                        ? COLORS.successLight
-                        : COLORS.infoDangerLight,
-                    padding: 4,
-                    width: 100,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 8,
-                    marginTop: 5,
+                    marginVertical: 20,
+                    marginHorizontal: 40,
                   }}
                 >
                   <Text
                     style={{
-                      marginTop: 5,
-                      color:
-                        detail.implementation === true
-                          ? COLORS.success
-                          : COLORS.infoDanger,
+                      fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    {detail.implementation === true ? "Ya" : "Tidak"}
+                    Jenis Kategori
                   </Text>
-                </View>
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Rating
-                </Text>
-                <Rating
-                  fractions={2}
-                  startingValue={detail.rating}
-                  readonly
-                  imageSize={20}
-                  style={{ marginTop: 5, alignItems: "flex-start" }}
-                />
-
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  File
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginHorizontal: 20,
-                    marginVertical: 10,
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  <View
+                  <Text
                     style={{
-                      width: 80,
-                      height: 80,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderWidth: 1,
-                      borderRadius: 8,
-                      borderColor: COLORS.ExtraDivinder,
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    <Image source={require("../../assets/superApp/pdf.png")} />
+                    {detail.title}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Nama
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.display_name}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    NIP
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.coach_nip}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Unit Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.unker}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Satuan Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.satker}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Coach
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.coach}
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    implementasi
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor:
+                        detail.implementation === true
+                          ? COLORS.successLight
+                          : COLORS.infoDangerLight,
+                      padding: 4,
+                      width: 100,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 8,
+                      marginTop: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        color:
+                          detail.implementation === true
+                            ? COLORS.success
+                            : COLORS.infoDanger,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      {detail.implementation === true ? "Ya" : "Tidak"}
+                    </Text>
                   </View>
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Rating
+                  </Text>
+                  <Rating
+                    fractions={2}
+                    startingValue={detail.rating}
+                    readonly
+                    imageSize={20}
+                    style={{ marginTop: 5, alignItems: "flex-start" }}
+                  />
+
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    File
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginHorizontal: 20,
+                      marginVertical: 10,
+                      flexWrap: "wrap",
+                      gap: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 80,
+                        height: 80,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/pdf.png")}
+                      />
+                    </View>
+                  </View>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {detail.file_name}
+                  </Text>
                 </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  {detail.file_name}
-                </Text>
-              </View>
-              {/* 
+                {/* 
               <Text
                 style={{
                   width: "70%",
@@ -652,9 +668,9 @@ export const AksiPerubahan = () => {
                   ? detail.title
                   : "-"}
               </Text> */}
-            </View>
+              </View>
             </ScrollView>
-            </View>
+            {/* </View> */}
           </BottomSheetView>
         </BottomSheetModal>
 

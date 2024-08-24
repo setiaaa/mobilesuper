@@ -236,7 +236,7 @@ export const CardAppsB = ({
   const numColumns = device === "tablet" ? 4 : 3;
 
   return (
-    <View style={{ marginTop: 24 }}>
+    <View style={{}}>
       <FlatList
         data={formatData(listMenu, numColumns)}
         renderItem={renderRow}
@@ -247,7 +247,10 @@ export const CardAppsB = ({
         }}
         numColumns={numColumns}
         scrollEnabled={true}
-        style={{ height: "95%" }}
+        nestedScrollEnabled={true}
+        onScroll={(e) => {
+          console.log("Scrolling", e.nativeEvent.contentOffset.y);
+        }}
       />
     </View>
   );
