@@ -364,7 +364,7 @@ export const Profile = () => {
         },
       },
       {
-        title: "Task",
+        title: "Task Management",
         navigation: "MyTask",
         image: require("../../assets/superApp/taskmanagement.png"),
         imagestyle: {
@@ -513,7 +513,7 @@ export const Profile = () => {
     }
     if (isRoleEvent) {
       tmpMenu.splice(8, 0, {
-        title: "Agenda Rapat",
+        title: "Event Management",
         navigation: "HalamanUtama",
         image: require("../../assets/superApp/event.png"),
         imagestyle: {
@@ -555,16 +555,10 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Penambahan Menu Kepegawaian",
+        description: "Responsive Ipad",
       },
       {
         description: "Update Korespondensi",
-      },
-      {
-        description: "Penambahan Menu Perizinan Menteri",
-      },
-      {
-        description: "Penambahan Menu FAQ",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));

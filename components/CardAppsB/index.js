@@ -132,7 +132,7 @@ export const CardAppsB = ({
                 },
               ]}
             >
-              {item.title === "Task" ? (
+              {item.title === "Task Management" ? (
                 <MaterialIcons
                   name="task-alt"
                   size={device === "tablet" ? 60 : 30}

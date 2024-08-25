@@ -216,7 +216,7 @@ export const CardApps = ({
         },
       },
       {
-        title: "Task",
+        title: "Task Management",
         navigation: "MyTask",
         image: require("../../assets/superApp/taskmanagement.png"),
         imagestyle: {
@@ -522,7 +522,7 @@ export const CardApps = ({
                             },
                           ]}
                         >
-                          {item.title === "Task" ? (
+                          {item.title === "Task Management" ? (
                             <MaterialIcons
                               name="task-alt"
                               size={device === "tablet" ? 60 : 30}
