@@ -357,6 +357,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after ref.current.clearSignature()
   const handleClear = () => {
+    setStylusFile("");
     console.log("clear success!");
   };
 
