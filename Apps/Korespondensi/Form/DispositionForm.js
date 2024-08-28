@@ -278,18 +278,22 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         });
         // console.log(request);
         let payload = {
-          attachments: [
-            {
-              base64: stylusFile,
-              description: "notes-stylus",
-              name: "Catatan_Disposisi.svg",
-              size: 0,
-            },
-          ],
+          attachments:
+            stylusFile === ""
+              ? []
+              : [
+                  {
+                    base64: stylusFile,
+                    description: "notes-stylus",
+                    name: "Catatan_Disposisi.svg",
+                    size: 0,
+                  },
+                ],
           request: request,
           id: ids,
           copy_log: "1",
         };
+        console.log(payload);
         // post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
