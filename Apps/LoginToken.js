@@ -470,14 +470,14 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Responsive Ipad
+                      Handle payload stylus disposisi
                     </Text>
                   </View>
 
                   <View
                     style={{
                       flexDirection: "row",
-                      marginVertical: 20,
+                      marginBottom: 20,
                       alignItems: "center",
                       marginHorizontal: 40,
                     }}
@@ -496,7 +496,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Update Korespondensi
+                      Handle data SIASN
                     </Text>
                   </View>
 

@@ -116,7 +116,9 @@ export const CollapseCardSIASNRwKursusDiklat = ({ profile, device, data }) => {
         {}
         <CollapseBody>
           <View style={[styles.cardCollapse, shadow.cardShadow]}>
-            {profile?.siasn_rw_diklat == null ? (
+            {profile === null ||
+            profile === undefined ||
+            typeof profile === "string" ? (
               <View>
                 <Text
                   style={{

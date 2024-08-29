@@ -26,13 +26,19 @@ export const CollapseCardSIASNRwPenghargaan = ({ profile, device, data }) => {
       });
       setCollapseChild(temp);
     }
-    if (profile != undefined) init();
+    if (
+      profile !== undefined &&
+      profile !== null &&
+      typeof profile !== "string"
+    )
+      init();
   }, []);
   function changeCollapseChild(index) {
     const temp = [...collapseChild];
     temp[index] = !temp[index];
     setCollapseChild(temp);
   }
+
   return (
     <View>
       <Collapse isExpanded={collapse}>
@@ -101,7 +107,9 @@ export const CollapseCardSIASNRwPenghargaan = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          {profile == undefined ? (
+          {profile === undefined ||
+          profile === null ||
+          typeof profile === "string" ? (
             <View
               style={[
                 { marginBottom: spacing.medium },

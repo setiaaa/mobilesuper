@@ -88,7 +88,9 @@ export const CollapseCardSIASNDataUtama = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          {profile == undefined ? (
+          {profile === null ||
+          profile === undefined ||
+          typeof profile === "string" ? (
             <View
               style={[
                 { marginBottom: spacing.medium },
