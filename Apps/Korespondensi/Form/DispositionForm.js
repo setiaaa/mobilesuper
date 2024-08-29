@@ -293,7 +293,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           id: ids,
           copy_log: "1",
         };
-        console.log(payload);
         // post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
@@ -352,6 +351,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after ref.current.readSignature() reads an empty string
   const handleEmpty = () => {
+    setStylusFile("");
     console.log("Empty");
   };
 
@@ -363,6 +363,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after end of stroke
   const handleEnd = () => {
+    setScrollEnabled(true);
     ref.current.readSignature();
   };
 
@@ -581,7 +582,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   <SignatureScreen
                     ref={ref}
                     onBegin={() => setScrollEnabled(false)}
-                    onEnd={() => setScrollEnabled(true)}
+                    onEnd={handleEnd}
                     onOK={handleOK}
                     onEmpty={handleEmpty}
                     onClear={handleClear}
