@@ -218,6 +218,7 @@ export const Profile = () => {
     "197204102002122003",
   ];
   const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
+  const roleSIASN = ["BUKA_SIASN_DATA"];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -240,6 +241,9 @@ export const Profile = () => {
 
   const isRoleMenteri = profile.roles_access?.some((item) =>
     rolePerizinanMenteri.includes(item)
+  );
+  const isRoleSIASN = profile.roles_access?.some((item) =>
+    roleSIASN.includes(item)
   );
 
   useEffect(() => {
@@ -555,10 +559,10 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Responsive Ipad",
+        description: "Handle payload stylus disposisi",
       },
       {
-        description: "Update Korespondensi",
+        description: "Handle data SIASN",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
@@ -1527,104 +1531,110 @@ export const Profile = () => {
           <CollapseCardBiodata profile={profile} device={device} />
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
-        {/* SIASN Data Utama */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNDataUtama
-            profile={profile?.siasn_data?.siasn_data_utama}
-            device={device}
-          />
-        </View>
-        {/* SIASN Jabatan */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNJabatan
-            profile={profile?.siasn_data?.siasn_jabatan}
-            device={device}
-          />
-        </View>
-        {/* SIASN RW SKP */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwSkp
-            profile={profile?.siasn_data?.siasn_rw_skp}
-            device={device}
-          />
-        </View>
-        {/* SIASN RW SKP 22 */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwSkp22
-            profile={profile?.siasn_data?.siasn_rw_skp22}
-            device={device}
-          />
-        </View>
-        {/* SIASN RW PNS Unor */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwPnsUnor
-            profile={profile?.siasn_data?.siasn_rw_pnsunor}
-            device={device}
-          />
-        </View>
-        {/* SIASN Angka Kredit */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNAngkaKredit
-            profile={profile?.siasn_data?.siasn_rw_angkakredit}
-            device={device}
-          />
-        </View>
-        {/* SIASN RW Pendidikan */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwPendidikan
-            profile={profile?.siasn_data?.siasn_rw_pendidikan}
-            device={device}
-          />
-        </View>
-        {/* SIASN Penghargaan */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwPenghargaan
-            profile={profile?.siasn_data?.siasn_rw_penghargaan}
-            device={device}
-          />
-        </View>
-        {/* Pasangan */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardPasangan
-            profile={profile?.siasn_data?.siasn_data_pasangan}
-            device={device}
-          />
-        </View>
-        {/* Anak */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardAnak
-            profile={profile?.siasn_data?.siasn_data_anak}
-            device={device}
-          />
-        </View>
-        {/* Ortang tua */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardOrangTua
-            profile={profile?.siasn_data?.siasn_data_ortu}
-            device={device}
-          />
-        </View>
-        {/* Masa Kerja */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardMasaKerja
-            profile={profile?.siasn_data?.siasn_rw_masakerja}
-            device={device}
-          />
-        </View>
-        {/* Hukuman Disiplin */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardHukumanDisiplin
-            profile={profile?.siasn_data?.siasn_rw_hukdis}
-            device={device}
-          />
-        </View>
-        {/* Kursus Diklat */}
-        <View style={{ paddingBottom: spacing.default }}>
-          <CollapseCardSIASNRwKursusDiklat
-            profile={profile?.siasn_data}
-            device={device}
-          />
-        </View>
+
+        {isRoleSIASN ? (
+          <>
+            {/* SIASN Data Utama */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNDataUtama
+                profile={profile?.siasn_data?.siasn_data_utama}
+                device={device}
+              />
+            </View>
+            {/* SIASN Jabatan */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNJabatan
+                profile={profile?.siasn_data?.siasn_jabatan}
+                device={device}
+              />
+            </View>
+            {/* SIASN RW SKP */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwSkp
+                profile={profile?.siasn_data?.siasn_rw_skp}
+                device={device}
+              />
+            </View>
+            {/* SIASN RW SKP 22 */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwSkp22
+                profile={profile?.siasn_data?.siasn_rw_skp22}
+                device={device}
+              />
+            </View>
+            {/* SIASN RW PNS Unor */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwPnsUnor
+                profile={profile?.siasn_data?.siasn_rw_pnsunor}
+                device={device}
+              />
+            </View>
+            {/* SIASN Angka Kredit */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNAngkaKredit
+                profile={profile?.siasn_data?.siasn_rw_angkakredit}
+                device={device}
+              />
+            </View>
+            {/* SIASN RW Pendidikan */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwPendidikan
+                profile={profile?.siasn_data?.siasn_rw_pendidikan}
+                device={device}
+              />
+            </View>
+            {/* SIASN Penghargaan */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwPenghargaan
+                profile={profile?.siasn_data?.siasn_rw_penghargaan}
+                device={device}
+              />
+            </View>
+            {/* Pasangan */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardPasangan
+                profile={profile?.siasn_data?.siasn_data_pasangan.listPasangan}
+                device={device}
+              />
+            </View>
+            {/* Anak */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardAnak
+                profile={profile?.siasn_data?.siasn_data_anak}
+                device={device}
+              />
+            </View>
+            {/* Ortang tua */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardOrangTua
+                profile={profile?.siasn_data?.siasn_data_ortu}
+                device={device}
+              />
+            </View>
+            {/* Masa Kerja */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardMasaKerja
+                profile={profile?.siasn_data?.siasn_rw_masakerja}
+                device={device}
+              />
+            </View>
+            {/* Hukuman Disiplin */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardHukumanDisiplin
+                profile={profile?.siasn_data?.siasn_rw_hukdis}
+                device={device}
+              />
+            </View>
+            {/* Kursus Diklat */}
+            <View style={{ paddingBottom: spacing.default }}>
+              <CollapseCardSIASNRwKursusDiklat
+                profile={profile?.siasn_data}
+                device={device}
+              />
+            </View>
+          </>
+        ) : null}
+
         {/* Faq */}
         <View
           style={{

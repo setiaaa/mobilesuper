@@ -88,7 +88,9 @@ export const CollapseCardMasaKerja = ({ profile, device, data }) => {
         </CollapseHeader>
         {}
         <CollapseBody>
-          {profile == null || profile == "Data tidak ditemukan" ? (
+          {profile === null ||
+          profile === undefined ||
+          typeof profile === "string" ? (
             <View
               style={[
                 { marginBottom: spacing.medium },
