@@ -278,14 +278,17 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         });
         // console.log(request);
         let payload = {
-          attachments: [
-            {
-              base64: stylusFile,
-              description: "notes-stylus",
-              name: "Catatan_Disposisi.svg",
-              size: 0,
-            },
-          ],
+          attachments:
+            stylusFile === ""
+              ? []
+              : [
+                  {
+                    base64: stylusFile,
+                    description: "notes-stylus",
+                    name: "Catatan_Disposisi.svg",
+                    size: 0,
+                  },
+                ],
           request: request,
           id: ids,
           copy_log: "1",
@@ -348,16 +351,19 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after ref.current.readSignature() reads an empty string
   const handleEmpty = () => {
+    setStylusFile("");
     console.log("Empty");
   };
 
   // Called after ref.current.clearSignature()
   const handleClear = () => {
+    setStylusFile("");
     console.log("clear success!");
   };
 
   // Called after end of stroke
   const handleEnd = () => {
+    setScrollEnabled(true);
     ref.current.readSignature();
   };
 
@@ -576,7 +582,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   <SignatureScreen
                     ref={ref}
                     onBegin={() => setScrollEnabled(false)}
-                    onEnd={() => setScrollEnabled(true)}
+                    onEnd={handleEnd}
                     onOK={handleOK}
                     onEmpty={handleEmpty}
                     onClear={handleClear}
