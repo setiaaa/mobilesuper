@@ -212,7 +212,7 @@ export const AddressBookJabatan = ({ route }) => {
 
   const checkedNodeRadio = (node) => {
     const checkNode = addressbook.selected.filter(
-      (item) => item.id === node.id
+      (item) => item.code === node.code
     );
     if (checkNode.length > 0) {
       return true;
@@ -339,7 +339,7 @@ export const AddressBookJabatan = ({ route }) => {
                     node?.nodes === undefined
                   ) {
                     const checkNode = addressbook.selected.filter(
-                      (item) => item.id === node.id
+                      (item) => item.code === node.code
                     );
                     if (checkNode.length > 0) {
                       Alert.alert("Peringatan", "Data tidak boleh sama");
