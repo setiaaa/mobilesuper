@@ -362,6 +362,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after end of stroke
   const handleEnd = () => {
+    setScrollEnabled(true);
     ref.current.readSignature();
   };
 
@@ -580,7 +581,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   <SignatureScreen
                     ref={ref}
                     onBegin={() => setScrollEnabled(false)}
-                    onEnd={() => setScrollEnabled(true)}
+                    onEnd={handleEnd}
                     onOK={handleOK}
                     onEmpty={handleEmpty}
                     onClear={handleClear}
