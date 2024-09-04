@@ -559,10 +559,16 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Handle payload stylus disposisi",
+        description: "Pengajuan cuti handle loading",
       },
       {
-        description: "Handle data SIASN",
+        description: "Handle data SIASN profile",
+      },
+      {
+        description: "Tambah tab favorit di addressbook disposisi",
+      },
+      {
+        description: "Tampilan gambar detail disposisi di android",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));

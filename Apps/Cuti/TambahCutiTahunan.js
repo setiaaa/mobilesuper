@@ -57,6 +57,7 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import { Loading } from "../../components/Loading";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -411,8 +412,16 @@ export const TambahCutiTahunan = ({ route }) => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment, jumlahCuti, arsip, pilihPejabat } =
-    useSelector((state) => state.cuti);
+  const {
+    form,
+    pilih,
+    status,
+    attachment,
+    jumlahCuti,
+    arsip,
+    pilihPejabat,
+    loading,
+  } = useSelector((state) => state.cuti);
   const arsipDetail = arsip.detail;
 
   useEffect(() => {
@@ -716,553 +725,569 @@ export const TambahCutiTahunan = ({ route }) => {
 
   return (
     <GestureHandlerRootView>
-      <View style={{ position: "relative" }}>
-        <ScrollView>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              alignContent: "center",
-              justifyContent: "center",
-              backgroundColor: COLORS.primary,
-              height: 80,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                borderRadius: 20,
-                marginLeft: 20,
-                width: device === "tablet" ? 40 : 28,
-                height: device === "tablet" ? 40 : 28,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons
-                  name="chevron-back-outline"
-                  size={device === "tablet" ? 40 : 24}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H1", device),
-                  fontWeight: FONTWEIGHT.bold,
-                  color: COLORS.white,
-                }}
-              >
-                Pengajuan Cuti
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ padding: 20, gap: 20 }}>
-            <View style={{ gap: 10 }}>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <View style={{ position: "relative" }}>
+            <ScrollView>
               <View
                 style={{
                   flexDirection: "row",
-                  padding: 5,
-                  columnGap: 10,
                   alignItems: "center",
+                  alignContent: "center",
+                  justifyContent: "center",
+                  backgroundColor: COLORS.primary,
+                  height: 80,
                 }}
               >
-                <Ionicons
-                  name="document-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
+                <View
                   style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
+                    backgroundColor: COLORS.white,
+                    borderRadius: 20,
+                    marginLeft: 20,
+                    width: device === "tablet" ? 40 : 28,
+                    height: device === "tablet" ? 40 : 28,
                   }}
                 >
-                  Jenis Cuti
-                </Text>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons
+                      name="chevron-back-outline"
+                      size={device === "tablet" ? 40 : 24}
+                      color={COLORS.primary}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{ flex: 1, alignItems: "center", marginRight: 50 }}
+                >
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.white,
+                    }}
+                  >
+                    Pengajuan Cuti
+                  </Text>
+                </View>
               </View>
 
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 20,
-                  borderRadius: 16,
-                }}
-              >
-                <View style={{ gap: 5 }}>
+              <View style={{ padding: 20, gap: 20 }}>
+                <View style={{ gap: 10 }}>
                   <View
                     style={{
                       flexDirection: "row",
-                      borderBottomWidth: 2,
-                      borderBottomColor: "#DBDADE",
-                      padding: 10,
+                      padding: 5,
+                      columnGap: 10,
+                      alignItems: "center",
                     }}
                   >
+                    <Ionicons
+                      name="document-outline"
+                      size={18}
+                      color={COLORS.primary}
+                    />
                     <Text
                       style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 600,
-                        width: "40%",
-                        paddingRight: 20,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Jenis Cuti
                     </Text>
-                    {tipe === "draft" ? (
-                      <Text
-                        style={{
-                          fontSize: fontSizeResponsive("H3", device),
-                          fontWeight: 400,
-                          width: "60%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        {arsipDetail?.detail_dokumen?.jenis_cuti?.nama}
-                      </Text>
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: fontSizeResponsive("H3", device),
-                          fontWeight: 400,
-                          width: "60%",
-                          paddingRight: 20,
-                        }}
-                      >
-                        {form.data_jenis_cuti?.nama}
-                      </Text>
-                    )}
                   </View>
 
                   <View
                     style={{
-                      flexDirection: "row",
-                      borderBottomWidth: 2,
-                      borderBottomColor: "#DBDADE",
-                      padding: 10,
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 600,
-                        width: "40%",
-                        paddingRight: 20,
-                      }}
-                    >
-                      Tipe Hari
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 400,
-                        width: "60%",
-                        paddingRight: 20,
-                        color: "#B745FF",
-                      }}
-                    >
-                      {tipe === "draft"
-                        ? arsipDetail?.detail_dokumen?.jenis_cuti?.tipe_hari
-                        : form.data_jenis_cuti?.tipe_hari}
-                    </Text>
-                  </View>
+                    <View style={{ gap: 5 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#DBDADE",
+                          padding: 10,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Jenis Cuti
+                        </Text>
+                        {tipe === "draft" ? (
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H3", device),
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {arsipDetail?.detail_dokumen?.jenis_cuti?.nama}
+                          </Text>
+                        ) : (
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H3", device),
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {form.data_jenis_cuti?.nama}
+                          </Text>
+                        )}
+                      </View>
 
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#DBDADE",
+                          padding: 10,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Tipe Hari
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                            color: "#B745FF",
+                          }}
+                        >
+                          {tipe === "draft"
+                            ? arsipDetail?.detail_dokumen?.jenis_cuti?.tipe_hari
+                            : form.data_jenis_cuti?.tipe_hari}
+                        </Text>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#DBDADE",
+                          padding: 10,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Status Dokumen
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                            color: COLORS.success,
+                          }}
+                        >
+                          {tipe === "draft" ? "Draft" : "Dokumen Baru"}
+                        </Text>
+                      </View>
+
+                      {form.data_jenis_cuti?.advancerole?.length ===
+                      0 ? null : (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            borderBottomWidth: 2,
+                            borderBottomColor: "#DBDADE",
+                            padding: 10,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H3", device),
+                              fontWeight: 600,
+                              width: "40%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            Maksimal
+                          </Text>
+                          {tipe === "draft" ? (
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H3", device),
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {arsipDetail?.detail_dokumen?.jenis_cuti?.max_day}{" "}
+                              Hari
+                            </Text>
+                          ) : (
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H3", device),
+                                fontWeight: 400,
+                                width: "60%",
+                                paddingRight: 20,
+                              }}
+                            >
+                              {jenisCuti.day === undefined
+                                ? "0"
+                                : jenisCuti.day?.toString()}{" "}
+                              Hari
+                            </Text>
+                          )}
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </View>
+
+                {form.data_jenis_cuti?.advancerole?.length === 0 ? null : (
                   <View
                     style={{
-                      flexDirection: "row",
-                      borderBottomWidth: 2,
-                      borderBottomColor: "#DBDADE",
-                      padding: 10,
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 600,
-                        width: "40%",
-                        paddingRight: 20,
-                      }}
-                    >
-                      Status Dokumen
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 400,
-                        width: "60%",
-                        paddingRight: 20,
-                        color: COLORS.success,
-                      }}
-                    >
-                      {tipe === "draft" ? "Draft" : "Dokumen Baru"}
-                    </Text>
-                  </View>
-
-                  {form.data_jenis_cuti?.advancerole?.length === 0 ? null : (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        borderBottomWidth: 2,
-                        borderBottomColor: "#DBDADE",
-                        padding: 10,
-                      }}
-                    >
+                    <View style={{ flexDirection: "row" }}>
                       <Text
                         style={{
                           fontSize: fontSizeResponsive("H3", device),
                           fontWeight: 600,
-                          width: "40%",
-                          paddingRight: 20,
                         }}
                       >
-                        Maksimal
+                        Sub jenis Cuti
                       </Text>
-                      {tipe === "draft" ? (
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H3", device),
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {arsipDetail?.detail_dokumen?.jenis_cuti?.max_day}{" "}
-                          Hari
-                        </Text>
-                      ) : (
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H3", device),
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {jenisCuti.day === undefined
-                            ? "0"
-                            : jenisCuti.day?.toString()}{" "}
-                          Hari
-                        </Text>
-                      )}
-                    </View>
-                  )}
-                </View>
-              </View>
-            </View>
-
-            {form.data_jenis_cuti?.advancerole?.length === 0 ? null : (
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 20,
-                  borderRadius: 16,
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H3", device),
-                      fontWeight: 600,
-                    }}
-                  >
-                    Sub jenis Cuti
-                  </Text>
-                  <Text
-                    style={{
-                      color: COLORS.danger,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    *
-                  </Text>
-                </View>
-                <Dropdown
-                  data={subJenisCuti()}
-                  setSelected={setJenisCuti}
-                  selected={jenisCuti}
-                  borderWidth={1}
-                  borderwidthDrop={1}
-                  borderWidthValue={1}
-                  borderColor={COLORS.ExtraDivinder}
-                  borderColorDrop={COLORS.ExtraDivinder}
-                  borderColorValue={COLORS.ExtraDivinder}
-                />
-              </View>
-            )}
-
-            <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  padding: 5,
-                  columnGap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="person-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Profil Pegawai
-                </Text>
-              </View>
-
-              <View>
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    padding: 15,
-                    borderRadius: 8,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() =>
-                      setCollapse({ nip: profile.nip, toggle: true })
-                    }
-                  >
-                    <View style={{ flexDirection: "row" }}>
-                      <View style={{ width: "90%" }}>
-                        <Text
-                          style={{ fontSize: fontSizeResponsive("H4", device) }}
-                        >
-                          {form.data_user?.nama}
-                        </Text>
-                        <Text
-                          style={{ fontSize: fontSizeResponsive("H4", device) }}
-                        >
-                          NIP. {form.data_user?.nip}
-                        </Text>
-                      </View>
-                      {collapse.nip === profile.nip &&
-                      collapse.toggle === true ? (
-                        <TouchableOpacity
-                          onPress={() =>
-                            setCollapse({ nip: "", toggle: false })
-                          }
-                        >
-                          <Ionicons name="chevron-up" size={24} />
-                        </TouchableOpacity>
-                      ) : (
-                        <Ionicons name="chevron-down" size={24} />
-                      )}
-                    </View>
-                  </TouchableOpacity>
-
-                  {collapse.nip === profile.nip && collapse.toggle === true ? (
-                    <View>
-                      <TouchableOpacity
-                        onPress={() => setCollapse({ nip: "", toggle: false })}
+                      <Text
+                        style={{
+                          color: COLORS.danger,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
                       >
-                        <Text
-                          style={{
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Golongan
-                        </Text>
-                        <Text
-                          style={{
-                            marginTop: 5,
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {form.data_user?.golongan}
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Jabatan
-                        </Text>
-                        <Text
-                          style={{
-                            marginTop: 5,
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {form.data_user?.jabatan}
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginTop: 10,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Unit Kerja
-                        </Text>
-                        <Text
-                          style={{
-                            marginTop: 5,
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          {form.data_user?.unit_kerja}
-                        </Text>
-                      </TouchableOpacity>
+                        *
+                      </Text>
                     </View>
-                  ) : null}
-                </View>
-              </View>
-            </View>
+                    <Dropdown
+                      data={subJenisCuti()}
+                      setSelected={setJenisCuti}
+                      selected={jenisCuti}
+                      borderWidth={1}
+                      borderwidthDrop={1}
+                      borderWidthValue={1}
+                      borderColor={COLORS.ExtraDivinder}
+                      borderColorDrop={COLORS.ExtraDivinder}
+                      borderColorValue={COLORS.ExtraDivinder}
+                    />
+                  </View>
+                )}
 
-            <View style={{}}>
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 15,
-                  borderRadius: 8,
-                  gap: 20,
-                }}
-              >
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                  Periode Cuti
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View>
-                    <View
+                <View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      padding: 5,
+                      columnGap: 10,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="person-outline"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text
                       style={{
-                        borderWidth: 1,
-                        width: device === "tablet" ? 300 : 150,
-                        borderRadius: 4,
-                        borderColor: COLORS.ExtraDivinder,
-                        flexDirection: "row",
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      <TextInput
-                        editable
-                        multiline
-                        numberOfLines={4}
-                        maxLength={40}
-                        placeholder="Mulai"
-                        style={{
-                          padding: 10,
-                          height: 40,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                        value={TanggalMulai}
-                      />
-                      <View
-                        style={{
-                          alignItems: "flex-end",
-                          flex: 1,
-                          marginRight: 10,
-                          justifyContent: "center",
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={() => setModalVisiblePicker("mulai")}
-                        >
-                          <Ionicons
-                            name="calendar-outline"
-                            size={24}
-                            color={COLORS.grey}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
+                      Profil Pegawai
+                    </Text>
                   </View>
 
                   <View>
                     <View
                       style={{
-                        borderWidth: 1,
-                        width: device === "tablet" ? 300 : 150,
-                        borderRadius: 4,
-                        borderColor: COLORS.ExtraDivinder,
-                        flexDirection: "row",
+                        backgroundColor: COLORS.white,
+                        padding: 15,
+                        borderRadius: 8,
                       }}
                     >
-                      <TextInput
-                        editable
-                        multiline
-                        numberOfLines={4}
-                        maxLength={40}
-                        placeholder="Selesai"
-                        style={{
-                          padding: 10,
-                          height: 40,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                        value={TanggalSelesai}
-                      />
-                      <View
-                        style={{
-                          alignItems: "flex-end",
-                          flex: 1,
-                          marginRight: 10,
-                          justifyContent: "center",
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={() => setModalVisiblePicker("selesai")}
-                        >
-                          <Ionicons
-                            name="calendar-outline"
-                            size={24}
-                            color={COLORS.grey}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={
-                          modalVisiblePicker === "mulai" ||
-                          modalVisiblePicker === "selesai"
-                            ? true
-                            : false
+                      <TouchableOpacity
+                        onPress={() =>
+                          setCollapse({ nip: profile.nip, toggle: true })
                         }
-                        onRequestClose={() => {
-                          setModalVisiblePicker(!modalVisiblePicker);
-                        }}
                       >
-                        <TouchableOpacity
-                          style={[
-                            Platform.OS === "ios"
-                              ? styles.iOSBackdrop
-                              : styles.androidBackdrop,
-                            styles.backdrop,
-                          ]}
-                        />
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={{ width: "90%" }}>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {form.data_user?.nama}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              NIP. {form.data_user?.nip}
+                            </Text>
+                          </View>
+                          {collapse.nip === profile.nip &&
+                          collapse.toggle === true ? (
+                            <TouchableOpacity
+                              onPress={() =>
+                                setCollapse({ nip: "", toggle: false })
+                              }
+                            >
+                              <Ionicons name="chevron-up" size={24} />
+                            </TouchableOpacity>
+                          ) : (
+                            <Ionicons name="chevron-down" size={24} />
+                          )}
+                        </View>
+                      </TouchableOpacity>
+
+                      {collapse.nip === profile.nip &&
+                      collapse.toggle === true ? (
+                        <View>
+                          <TouchableOpacity
+                            onPress={() =>
+                              setCollapse({ nip: "", toggle: false })
+                            }
+                          >
+                            <Text
+                              style={{
+                                marginTop: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Golongan
+                            </Text>
+                            <Text
+                              style={{
+                                marginTop: 5,
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {form.data_user?.golongan}
+                            </Text>
+
+                            <Text
+                              style={{
+                                marginTop: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Jabatan
+                            </Text>
+                            <Text
+                              style={{
+                                marginTop: 5,
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {form.data_user?.jabatan}
+                            </Text>
+
+                            <Text
+                              style={{
+                                marginTop: 10,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Unit Kerja
+                            </Text>
+                            <Text
+                              style={{
+                                marginTop: 5,
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {form.data_user?.unit_kerja}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      ) : null}
+                    </View>
+                  </View>
+                </View>
+
+                <View style={{}}>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      padding: 15,
+                      borderRadius: 8,
+                      gap: 20,
+                    }}
+                  >
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Periode Cuti
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View>
                         <View
                           style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flex: 1,
+                            borderWidth: 1,
+                            width: device === "tablet" ? 300 : 150,
+                            borderRadius: 4,
+                            borderColor: COLORS.ExtraDivinder,
+                            flexDirection: "row",
                           }}
                         >
+                          <TextInput
+                            editable
+                            multiline
+                            numberOfLines={4}
+                            maxLength={40}
+                            placeholder="Mulai"
+                            style={{
+                              padding: 10,
+                              height: 40,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                            value={TanggalMulai}
+                          />
                           <View
                             style={{
-                              backgroundColor: COLORS.white,
-                              alignItems: "center",
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
                               justifyContent: "center",
-                              width: "90%",
-                              borderRadius: 10,
-                              height: device === "tablet" ? "90%" : "70%",
                             }}
                           >
-                            <View style={{ width: "100%", flex: 1 }}>
-                              {/* <CalendarPicker
+                            <TouchableOpacity
+                              onPress={() => setModalVisiblePicker("mulai")}
+                            >
+                              <Ionicons
+                                name="calendar-outline"
+                                size={24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+
+                      <View>
+                        <View
+                          style={{
+                            borderWidth: 1,
+                            width: device === "tablet" ? 300 : 150,
+                            borderRadius: 4,
+                            borderColor: COLORS.ExtraDivinder,
+                            flexDirection: "row",
+                          }}
+                        >
+                          <TextInput
+                            editable
+                            multiline
+                            numberOfLines={4}
+                            maxLength={40}
+                            placeholder="Selesai"
+                            style={{
+                              padding: 10,
+                              height: 40,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                            value={TanggalSelesai}
+                          />
+                          <View
+                            style={{
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
+                              justifyContent: "center",
+                            }}
+                          >
+                            <TouchableOpacity
+                              onPress={() => setModalVisiblePicker("selesai")}
+                            >
+                              <Ionicons
+                                name="calendar-outline"
+                                size={24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                          <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={
+                              modalVisiblePicker === "mulai" ||
+                              modalVisiblePicker === "selesai"
+                                ? true
+                                : false
+                            }
+                            onRequestClose={() => {
+                              setModalVisiblePicker(!modalVisiblePicker);
+                            }}
+                          >
+                            <TouchableOpacity
+                              style={[
+                                Platform.OS === "ios"
+                                  ? styles.iOSBackdrop
+                                  : styles.androidBackdrop,
+                                styles.backdrop,
+                              ]}
+                            />
+                            <View
+                              style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flex: 1,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.white,
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "90%",
+                                  borderRadius: 10,
+                                  height: device === "tablet" ? "90%" : "70%",
+                                }}
+                              >
+                                <View style={{ width: "100%", flex: 1 }}>
+                                  {/* <CalendarPicker
                                 startFromMonday={true}
                                 width={wp(90)}
                                 weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
@@ -1303,15 +1328,15 @@ export const TambahCutiTahunan = ({ route }) => {
                                 </Text>
                               </View>
                             </TouchableOpacity> */}
-                              <View
-                                style={{
-                                  width: "100%",
-                                  paddingTop: 10,
-                                  alignSelf: "center",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                {/* <DatePicker
+                                  <View
+                                    style={{
+                                      width: "100%",
+                                      paddingTop: 10,
+                                      alignSelf: "center",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
                                   textHeaderColor: COLORS.primary,
@@ -1380,376 +1405,273 @@ export const TambahCutiTahunan = ({ route }) => {
                                   }
                                 }}
                               /> */}
-                                <View
-                                  style={{
-                                    paddingHorizontal: 20,
-                                    paddingVertical: 10,
-                                    alignItems: "flex-end",
-                                  }}
-                                >
-                                  <View
-                                    style={{
-                                      backgroundColor: COLORS.primary,
-                                      borderRadius: 20,
-                                      marginLeft: 20,
-                                      width: device === "tablet" ? 40 : 24,
-                                      height: device === "tablet" ? 40 : 24,
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <TouchableOpacity
-                                      onPress={() => setModalVisiblePicker("")}
+                                    <View
+                                      style={{
+                                        paddingHorizontal: 20,
+                                        paddingVertical: 10,
+                                        alignItems: "flex-end",
+                                      }}
                                     >
-                                      <Ionicons
-                                        name="close-outline"
-                                        size={device === "tablet" ? 40 : 24}
-                                        color={COLORS.white}
-                                      />
+                                      <View
+                                        style={{
+                                          backgroundColor: COLORS.primary,
+                                          borderRadius: 20,
+                                          marginLeft: 20,
+                                          width: device === "tablet" ? 40 : 24,
+                                          height: device === "tablet" ? 40 : 24,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <TouchableOpacity
+                                          onPress={() =>
+                                            setModalVisiblePicker("")
+                                          }
+                                        >
+                                          <Ionicons
+                                            name="close-outline"
+                                            size={device === "tablet" ? 40 : 24}
+                                            color={COLORS.white}
+                                          />
+                                        </TouchableOpacity>
+                                      </View>
+                                    </View>
+                                    <CalendarPicker
+                                      todayBackgroundColor={COLORS.info}
+                                      disabledDates={tanggalLibur}
+                                      previousComponent={
+                                        <Ionicons
+                                          name="chevron-back-outline"
+                                          size={24}
+                                          color={COLORS.primary}
+                                        />
+                                      }
+                                      nextComponent={
+                                        <Ionicons
+                                          name="chevron-forward-outline"
+                                          size={24}
+                                          color={COLORS.primary}
+                                        />
+                                      }
+                                      customDayHeaderStyles={
+                                        customDayHeaderStyles
+                                      }
+                                      customDatesStyles={customDatesStyles}
+                                      startFromMonday={true}
+                                      width={device === "tablet" ? 700 : 350}
+                                      weekdays={[
+                                        "Sen",
+                                        "Sel",
+                                        "Rab",
+                                        "Kam",
+                                        "Jum",
+                                        "Sab",
+                                        "Min",
+                                      ]}
+                                      months={[
+                                        "Januari",
+                                        "Februari",
+                                        "Maret",
+                                        "April",
+                                        "Mei",
+                                        "Juni",
+                                        "Juli",
+                                        "Augustus",
+                                        "September",
+                                        "Oktober",
+                                        "November",
+                                        "Desember",
+                                      ]}
+                                      onDateChange={(date) => {
+                                        if (modalVisiblePicker === "mulai") {
+                                          setTanggalMulai(
+                                            moment(date, "YYYY-MM-DD HH:mm:ss")
+                                              .locale("id")
+                                              .format("YYYY-MM-DD")
+                                          );
+                                        } else {
+                                          setTanggalSelsai(
+                                            moment(date, "YYYY-MM-DD HH:mm:ss")
+                                              .locale("id")
+                                              .format("YYYY-MM-DD")
+                                          );
+                                        }
+                                      }}
+                                    />
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        if (modalVisiblePicker === "mulai") {
+                                          setModalVisiblePicker("");
+                                        } else {
+                                          selectDate();
+                                          setModalVisiblePicker("");
+                                        }
+                                      }}
+                                      style={{
+                                        marginTop: 10,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <View
+                                        style={{
+                                          backgroundColor: COLORS.primary,
+                                          width: 217,
+                                          height: 39,
+                                          borderRadius: 8,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Text
+                                          style={{
+                                            color: COLORS.white,
+                                            fontSize: fontSizeResponsive(
+                                              "H4",
+                                              device
+                                            ),
+                                          }}
+                                        >
+                                          Ok
+                                        </Text>
+                                      </View>
                                     </TouchableOpacity>
                                   </View>
                                 </View>
-                                <CalendarPicker
-                                  todayBackgroundColor={COLORS.info}
-                                  disabledDates={tanggalLibur}
-                                  previousComponent={
-                                    <Ionicons
-                                      name="chevron-back-outline"
-                                      size={24}
-                                      color={COLORS.primary}
-                                    />
-                                  }
-                                  nextComponent={
-                                    <Ionicons
-                                      name="chevron-forward-outline"
-                                      size={24}
-                                      color={COLORS.primary}
-                                    />
-                                  }
-                                  customDayHeaderStyles={customDayHeaderStyles}
-                                  customDatesStyles={customDatesStyles}
-                                  startFromMonday={true}
-                                  width={device === "tablet" ? 700 : 350}
-                                  weekdays={[
-                                    "Sen",
-                                    "Sel",
-                                    "Rab",
-                                    "Kam",
-                                    "Jum",
-                                    "Sab",
-                                    "Min",
-                                  ]}
-                                  months={[
-                                    "Januari",
-                                    "Februari",
-                                    "Maret",
-                                    "April",
-                                    "Mei",
-                                    "Juni",
-                                    "Juli",
-                                    "Augustus",
-                                    "September",
-                                    "Oktober",
-                                    "November",
-                                    "Desember",
-                                  ]}
-                                  onDateChange={(date) => {
-                                    if (modalVisiblePicker === "mulai") {
-                                      setTanggalMulai(
-                                        moment(date, "YYYY-MM-DD HH:mm:ss")
-                                          .locale("id")
-                                          .format("YYYY-MM-DD")
-                                      );
-                                    } else {
-                                      setTanggalSelsai(
-                                        moment(date, "YYYY-MM-DD HH:mm:ss")
-                                          .locale("id")
-                                          .format("YYYY-MM-DD")
-                                      );
-                                    }
-                                  }}
-                                />
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    if (modalVisiblePicker === "mulai") {
-                                      setModalVisiblePicker("");
-                                    } else {
-                                      selectDate();
-                                      setModalVisiblePicker("");
-                                    }
-                                  }}
-                                  style={{
-                                    marginTop: 10,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <View
-                                    style={{
-                                      backgroundColor: COLORS.primary,
-                                      width: 217,
-                                      height: 39,
-                                      borderRadius: 8,
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <Text
-                                      style={{
-                                        color: COLORS.white,
-                                        fontSize: fontSizeResponsive(
-                                          "H4",
-                                          device
-                                        ),
-                                      }}
-                                    >
-                                      Ok
-                                    </Text>
-                                  </View>
-                                </TouchableOpacity>
                               </View>
                             </View>
-                          </View>
+                          </Modal>
                         </View>
-                      </Modal>
+                      </View>
                     </View>
-                  </View>
-                </View>
 
-                <View style={{ gap: 8 }}>
-                  <View>
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Durasi Cuti
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: "#F8F8F8",
-                      padding: 10,
-                      width: "100%",
-                      borderRadius: 8,
-                    }}
-                  >
-                    {tipe === "draft" ? (
-                      <Text
-                        style={{ fontSize: fontSizeResponsive("H4", device) }}
-                      >
-                        {arsipDetail?.detail_dokumen?.dokumen?.jumlah_cuti}
-                      </Text>
-                    ) : (
-                      <Text
-                        style={{ fontSize: fontSizeResponsive("H4", device) }}
-                      >
-                        {jumlahCuti?.jumlah_cuti === undefined
-                          ? "0"
-                          : jumlahCuti?.jumlah_cuti.toString()}
-                      </Text>
-                    )}
-                  </View>
-                </View>
-
-                <View style={{ gap: 8 }}>
-                  <View>
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Alamat Cuti
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      padding: 10,
-                      width: "100%",
-                      borderRadius: 8,
-                      borderColor: "#F8F8F8",
-                      borderWidth: 1,
-                    }}
-                  >
-                    <TextInput
-                      editable
-                      multiline
-                      onChangeText={setAlamat}
-                      value={alamat}
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    />
-                  </View>
-                </View>
-
-                <View style={{ gap: 8 }}>
-                  <View>
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Telepon
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      padding: 10,
-                      width: "100%",
-                      borderRadius: 8,
-                      borderColor: "#F8F8F8",
-                      borderWidth: 1,
-                    }}
-                  >
-                    <TextInput
-                      editable
-                      multiline
-                      numberOfLines={4}
-                      maxLength={40}
-                      onChangeText={setTelepon}
-                      value={telepon}
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    />
-                  </View>
-                </View>
-
-                <View style={{ gap: 8 }}>
-                  <View>
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    >
-                      Alasan Cuti
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      padding: 10,
-                      width: "100%",
-                      borderRadius: 8,
-                      borderColor: "#F8F8F8",
-                      borderWidth: 1,
-                    }}
-                  >
-                    <TextInput
-                      editable
-                      multiline
-                      numberOfLines={2}
-                      maxLength={50}
-                      placeholder="Ketikan Sesuatu"
-                      onChangeText={setAlasanCuti}
-                      value={alasanCuti}
-                      style={{ fontSize: fontSizeResponsive("H4", device) }}
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-
-            <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  padding: 5,
-                  columnGap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="document-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Lampiran
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 15,
-                  borderRadius: 8,
-                  gap: 20,
-                }}
-              >
-                <View style={{ gap: 5 }}>
-                  <Pressable onPress={pickDocument}>
-                    <View
-                      style={{
-                        width: "100%",
-                        borderRadius: 8,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "row",
-                        gap: 10,
-                        flex: 1,
-                        backgroundColor: COLORS.grey,
-                        padding: 10,
-                      }}
-                    >
-                      <Ionicons
-                        name="cloud-upload-outline"
-                        size={30}
-                        color={COLORS.white}
-                      />
-                      <Text
+                    <View style={{ gap: 8 }}>
+                      <View>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Durasi Cuti
+                        </Text>
+                      </View>
+                      <View
                         style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
+                          backgroundColor: "#F8F8F8",
+                          padding: 10,
+                          width: "100%",
+                          borderRadius: 8,
                         }}
                       >
-                        Klik Untuk Unggah
-                      </Text>
+                        {tipe === "draft" ? (
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {arsipDetail?.detail_dokumen?.dokumen?.jumlah_cuti}
+                          </Text>
+                        ) : (
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {jumlahCuti?.jumlah_cuti === undefined
+                              ? "0"
+                              : jumlahCuti?.jumlah_cuti.toString()}
+                          </Text>
+                        )}
+                      </View>
                     </View>
-                  </Pressable>
-                  {/* ) : null} */}
-                  {document.length < 1 ? null : (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginHorizontal: 20,
-                        marginVertical: 10,
-                        flexWrap: "wrap",
-                        gap: 10,
-                      }}
-                    >
-                      {document?.map((doc, i) => (
-                        <>
-                          {type[i] === "pdf" ? (
-                            <View
-                              style={{
-                                width: 97,
-                                height: 97,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderWidth: 1,
-                                borderRadius: 8,
-                                borderColor: COLORS.ExtraDivinder,
-                              }}
-                            >
-                              <Image
-                                source={require("../../assets/superApp/pdf.png")}
-                              />
-                            </View>
-                          ) : null}
-                        </>
-                      ))}
+
+                    <View style={{ gap: 8 }}>
+                      <View>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Alamat Cuti
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          padding: 10,
+                          width: "100%",
+                          borderRadius: 8,
+                          borderColor: "#F8F8F8",
+                          borderWidth: 1,
+                        }}
+                      >
+                        <TextInput
+                          editable
+                          multiline
+                          onChangeText={setAlamat}
+                          value={alamat}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        />
+                      </View>
                     </View>
-                  )}
+
+                    <View style={{ gap: 8 }}>
+                      <View>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Telepon
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          padding: 10,
+                          width: "100%",
+                          borderRadius: 8,
+                          borderColor: "#F8F8F8",
+                          borderWidth: 1,
+                        }}
+                      >
+                        <TextInput
+                          editable
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          onChangeText={setTelepon}
+                          value={telepon}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        />
+                      </View>
+                    </View>
+
+                    <View style={{ gap: 8 }}>
+                      <View>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Alasan Cuti
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          padding: 10,
+                          width: "100%",
+                          borderRadius: 8,
+                          borderColor: "#F8F8F8",
+                          borderWidth: 1,
+                        }}
+                      >
+                        <TextInput
+                          editable
+                          multiline
+                          numberOfLines={2}
+                          maxLength={50}
+                          placeholder="Ketikan Sesuatu"
+                          onChangeText={setAlasanCuti}
+                          value={alasanCuti}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        />
+                      </View>
+                    </View>
+                  </View>
                 </View>
 
-                <Text
-                  style={{
-                    color: COLORS.lighter,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  *) Hanya pdf yang akan diterima dari total berkas file maks
-                  5mb
-                </Text>
-              </View>
-            </View>
-            {form.data_kuota_cuti === null ? null : (
-              <>
-                <View style={{ gap: currentMonth !== 12 ? 5 : 10 }}>
+                <View>
                   <View
                     style={{
                       flexDirection: "row",
@@ -1769,118 +1691,137 @@ export const TambahCutiTahunan = ({ route }) => {
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Info Cuti
+                      Lampiran
                     </Text>
                   </View>
 
                   <View
                     style={{
-                      padding: currentMonth !== 12 ? 0 : 5,
-                      columnGap: 10,
+                      backgroundColor: COLORS.white,
+                      padding: 15,
+                      borderRadius: 8,
+                      gap: 20,
                     }}
                   >
-                    {currentMonth !== 12 ? null : (
-                      <Text
-                        style={{
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Periode Tahun Berjalan
-                      </Text>
-                    )}
-                  </View>
-                  <View style={{ flexDirection: "row", gap: 5 }}>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.info },
-                      ]}
-                    >
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Penuh
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.full_kuota_n}
-                      </Text>
+                    <View style={{ gap: 5 }}>
+                      <Pressable onPress={pickDocument}>
+                        <View
+                          style={{
+                            width: "100%",
+                            borderRadius: 8,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "row",
+                            gap: 10,
+                            flex: 1,
+                            backgroundColor: COLORS.grey,
+                            padding: 10,
+                          }}
+                        >
+                          <Ionicons
+                            name="cloud-upload-outline"
+                            size={30}
+                            color={COLORS.white}
+                          />
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Klik Untuk Unggah
+                          </Text>
+                        </View>
+                      </Pressable>
+                      {/* ) : null} */}
+                      {document.length < 1 ? null : (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            marginHorizontal: 20,
+                            marginVertical: 10,
+                            flexWrap: "wrap",
+                            gap: 10,
+                          }}
+                        >
+                          {document?.map((doc, i) => (
+                            <>
+                              {type[i] === "pdf" ? (
+                                <View
+                                  style={{
+                                    width: 97,
+                                    height: 97,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderWidth: 1,
+                                    borderRadius: 8,
+                                    borderColor: COLORS.ExtraDivinder,
+                                  }}
+                                >
+                                  <Image
+                                    source={require("../../assets/superApp/pdf.png")}
+                                  />
+                                </View>
+                              ) : null}
+                            </>
+                          ))}
+                        </View>
+                      )}
                     </View>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.danger },
-                      ]}
-                    >
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Terpakai
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.kuota_terpakai_n}
-                      </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.cardInfoCuti,
-                        { backgroundColor: COLORS.success },
-                      ]}
-                    >
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          textAlign: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        Kuota Sisa
-                      </Text>
-                      <Text
-                        style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
-                        }}
-                      >
-                        {form.data_kuota_cuti?.kuota_sisa_n}
-                      </Text>
-                    </View>
-                  </View>
 
-                  {currentMonth !== 12 ? null : (
-                    <>
+                    <Text
+                      style={{
+                        color: COLORS.lighter,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      *) Hanya pdf yang akan diterima dari total berkas file
+                      maks 5mb
+                    </Text>
+                  </View>
+                </View>
+                {form.data_kuota_cuti === null ? null : (
+                  <>
+                    <View style={{ gap: currentMonth !== 12 ? 5 : 10 }}>
                       <View
                         style={{
+                          flexDirection: "row",
                           padding: 5,
                           columnGap: 10,
+                          alignItems: "center",
                         }}
                       >
+                        <Ionicons
+                          name="document-outline"
+                          size={18}
+                          color={COLORS.primary}
+                        />
                         <Text
                           style={{
                             fontWeight: FONTWEIGHT.bold,
                             fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          Kuota Periode Tahun Depan
+                          Info Cuti
                         </Text>
+                      </View>
+
+                      <View
+                        style={{
+                          padding: currentMonth !== 12 ? 0 : 5,
+                          columnGap: 10,
+                        }}
+                      >
+                        {currentMonth !== 12 ? null : (
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Kuota Periode Tahun Berjalan
+                          </Text>
+                        )}
                       </View>
                       <View style={{ flexDirection: "row", gap: 5 }}>
                         <View
@@ -1904,7 +1845,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
-                            {form.data_kuota_cuti?.full_kuota_np1}
+                            {form.data_kuota_cuti?.full_kuota_n}
                           </Text>
                         </View>
                         <View
@@ -1928,7 +1869,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
-                            {form.data_kuota_cuti?.kuota_terpakai_np1}
+                            {form.data_kuota_cuti?.kuota_terpakai_n}
                           </Text>
                         </View>
                         <View
@@ -1952,226 +1893,321 @@ export const TambahCutiTahunan = ({ route }) => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
-                            {form.data_kuota_cuti?.kuota_sisa_np1}
+                            {form.data_kuota_cuti?.kuota_sisa_n}
                           </Text>
                         </View>
                       </View>
-                    </>
-                  )}
-                </View>
-              </>
-            )}
 
-            <View style={{ gap: 10 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  padding: 5,
-                  columnGap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="people-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
-                  style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Yang Menyetujui
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 20,
-                  borderRadius: 16,
-                }}
-              >
-                <View style={{ gap: 5 }}>
-                  <View style={{ flexDirection: "row", padding: 10 }}>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 600,
-                        paddingRight: 20,
-                      }}
-                    >
-                      Atasan Langsung
-                    </Text>
-                  </View>
-
-                  <Dropdown
-                    data={pickAtasan()}
-                    setSelected={setAtasan}
-                    selected={atasan}
-                    borderWidth={1}
-                    borderwidthDrop={1}
-                    borderWidthValue={1}
-                    borderColor={COLORS.ExtraDivinder}
-                    borderColorDrop={COLORS.ExtraDivinder}
-                    borderColorValue={COLORS.ExtraDivinder}
-                    search={true}
-                  />
-
-                  <View style={{ flexDirection: "row", padding: 10 }}>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 600,
-                        paddingRight: 20,
-                      }}
-                    >
-                      Pejabat Berwenang
-                    </Text>
-                  </View>
-
-                  <Dropdown
-                    data={pickJabatan()}
-                    setSelected={setPejabat}
-                    selected={pejabat}
-                    borderWidth={1}
-                    borderwidthDrop={1}
-                    borderWidthValue={1}
-                    borderColor={COLORS.ExtraDivinder}
-                    borderColorDrop={COLORS.ExtraDivinder}
-                    borderColorValue={COLORS.ExtraDivinder}
-                    search={true}
-                  />
-                </View>
-              </View>
-            </View>
-            {tipe === "draft" ? (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    padding: 5,
-                    columnGap: 10,
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="chatbox-outline"
-                    size={device === "tablet" ? 40 : 18}
-                    color={COLORS.primary}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Histori Komentar
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    justifyContent: "flex-end",
-                    backgroundColor: COLORS.white,
-                    borderRadius: 10,
-                    padding: 15,
-                    paddingHorizontal: 25,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 4 },
-                    shadowColor: "#171717",
-                    //shadow android
-                    elevation: 2,
-                  }}
-                  onPress={() => {
-                    bottomSheetAttachComment();
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Lihat Komentar
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ) : null}
-            <BottomSheetModalProvider>
-              <BottomSheetModal
-                ref={bottomSheetModalRef}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
-                  <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                  />
+                      {currentMonth !== 12 ? null : (
+                        <>
+                          <View
+                            style={{
+                              padding: 5,
+                              columnGap: 10,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Kuota Periode Tahun Depan
+                            </Text>
+                          </View>
+                          <View style={{ flexDirection: "row", gap: 5 }}>
+                            <View
+                              style={[
+                                styles.cardInfoCuti,
+                                { backgroundColor: COLORS.info },
+                              ]}
+                            >
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  textAlign: "center",
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Kuota Penuh
+                              </Text>
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {form.data_kuota_cuti?.full_kuota_np1}
+                              </Text>
+                            </View>
+                            <View
+                              style={[
+                                styles.cardInfoCuti,
+                                { backgroundColor: COLORS.danger },
+                              ]}
+                            >
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  textAlign: "center",
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Kuota Terpakai
+                              </Text>
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {form.data_kuota_cuti?.kuota_terpakai_np1}
+                              </Text>
+                            </View>
+                            <View
+                              style={[
+                                styles.cardInfoCuti,
+                                { backgroundColor: COLORS.success },
+                              ]}
+                            >
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  textAlign: "center",
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Kuota Sisa
+                              </Text>
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {form.data_kuota_cuti?.kuota_sisa_np1}
+                              </Text>
+                            </View>
+                          </View>
+                        </>
+                      )}
+                    </View>
+                  </>
                 )}
-              >
-                <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                  {/* <KeyboardAvoidingView
-                                behavior={Platform.OS === "ios" ? "height" : "height"}
-                            > */}
+
+                <View style={{ gap: 10 }}>
                   <View
                     style={{
-                      marginHorizontal: 20,
-                      marginTop: 20,
                       flexDirection: "row",
-                      justifyContent: "space-between",
-                      padding: 10,
-                      borderBottomWidth: 2,
-                      borderBottomColor: COLORS.grey,
+                      padding: 5,
+                      columnGap: 10,
+                      alignItems: "center",
                     }}
                   >
+                    <Ionicons
+                      name="people-outline"
+                      size={18}
+                      color={COLORS.primary}
+                    />
                     <Text
                       style={{
                         fontWeight: FONTWEIGHT.bold,
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Histori Komentar
+                      Yang Menyetujui
                     </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        bottomSheetAttachCommentClose();
+                  </View>
+
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
+                    }}
+                  >
+                    <View style={{ gap: 5 }}>
+                      <View style={{ flexDirection: "row", padding: 10 }}>
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 600,
+                            paddingRight: 20,
+                          }}
+                        >
+                          Atasan Langsung
+                        </Text>
+                      </View>
+
+                      <Dropdown
+                        data={pickAtasan()}
+                        setSelected={setAtasan}
+                        selected={atasan}
+                        borderWidth={1}
+                        borderwidthDrop={1}
+                        borderWidthValue={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                        search={true}
+                      />
+
+                      <View style={{ flexDirection: "row", padding: 10 }}>
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            fontWeight: 600,
+                            paddingRight: 20,
+                          }}
+                        >
+                          Pejabat Berwenang
+                        </Text>
+                      </View>
+
+                      <Dropdown
+                        data={pickJabatan()}
+                        setSelected={setPejabat}
+                        selected={pejabat}
+                        borderWidth={1}
+                        borderwidthDrop={1}
+                        borderWidthValue={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                        search={true}
+                      />
+                    </View>
+                  </View>
+                </View>
+                {tipe === "draft" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        padding: 5,
+                        columnGap: 10,
+                        alignItems: "center",
                       }}
                     >
                       <Ionicons
-                        name="close-outline"
-                        size={device === "tablet" ? 40 : 24}
-                        color={COLORS.lighter}
+                        name="chatbox-outline"
+                        size={device === "tablet" ? 40 : 18}
+                        color={COLORS.primary}
                       />
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Histori Komentar
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-end",
+                        backgroundColor: COLORS.white,
+                        borderRadius: 10,
+                        padding: 15,
+                        paddingHorizontal: 25,
+                        //shadow ios
+                        shadowOffset: { width: -2, height: 4 },
+                        shadowColor: "#171717",
+                        //shadow android
+                        elevation: 2,
+                      }}
+                      onPress={() => {
+                        bottomSheetAttachComment();
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.primary,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Lihat Komentar
+                      </Text>
                     </TouchableOpacity>
                   </View>
-                  <FlatList
-                    data={arsipDetail?.komentar_dokumen}
-                    renderItem={({ item }) => (
-                      <CardKomen
-                        listData={item}
-                        inputRef={inputRef}
-                        setParentId={setParentId}
-                        bottomSheetAttachCommentClose={
-                          bottomSheetAttachCommentClose
-                        }
-                        device={device}
+                ) : null}
+                <BottomSheetModalProvider>
+                  <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    snapPoints={animatedSnapPoints}
+                    handleHeight={animatedHandleHeight}
+                    contentHeight={animatedContentHeight}
+                    index={0}
+                    style={{ borderRadius: 50 }}
+                    keyboardBlurBehavior="restore"
+                    android_keyboardInputMode="adjust"
+                    backdropComponent={({ style }) => (
+                      <View
+                        style={[
+                          style,
+                          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+                        ]}
                       />
                     )}
-                    style={{ height: 500 }}
-                  />
+                  >
+                    <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                      {/* <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "height" : "height"}
+                            > */}
+                      <View
+                        style={{
+                          marginHorizontal: 20,
+                          marginTop: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          padding: 10,
+                          borderBottomWidth: 2,
+                          borderBottomColor: COLORS.grey,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Histori Komentar
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            bottomSheetAttachCommentClose();
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={device === "tablet" ? 40 : 24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <FlatList
+                        data={arsipDetail?.komentar_dokumen}
+                        renderItem={({ item }) => (
+                          <CardKomen
+                            listData={item}
+                            inputRef={inputRef}
+                            setParentId={setParentId}
+                            bottomSheetAttachCommentClose={
+                              bottomSheetAttachCommentClose
+                            }
+                            device={device}
+                          />
+                        )}
+                        style={{ height: 500 }}
+                      />
 
-                  {/* <View style={{ justifyContent: "flex-end" }}>
+                      {/* <View style={{ justifyContent: "flex-end" }}>
                                 <View
                                     style={{
                                         height: 1,
@@ -2226,72 +2262,74 @@ export const TambahCutiTahunan = ({ route }) => {
                                     </View>
                                 </View>
                             </View> */}
-                  {/* </KeyboardAvoidingView> */}
-                </BottomSheetView>
-              </BottomSheetModal>
-            </BottomSheetModalProvider>
-          </View>
+                      {/* </KeyboardAvoidingView> */}
+                    </BottomSheetView>
+                  </BottomSheetModal>
+                </BottomSheetModalProvider>
+              </View>
 
-          <View
-            style={{
-              marginLeft: 17,
-              flexDirection: "row",
-              gap: 10,
-              paddingBottom: 10,
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                backgroundColor: COLORS.success,
-                paddingVertical: 10,
-                borderRadius: 10,
-                width: "46.5%",
-
-                justifyContent: "center",
-              }}
-              onPress={handleSubmit}
-            >
-              <Text
+              <View
                 style={{
-                  textAlign: "center",
-                  color: COLORS.white,
-                  fontSize: fontSizeResponsive("H2", device),
+                  marginLeft: 17,
+                  flexDirection: "row",
+                  gap: 10,
+                  paddingBottom: 10,
                 }}
               >
-                Kirim
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#B745FF",
-                paddingVertical: 10,
-                borderRadius: 10,
-                width: "46.5%",
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: COLORS.success,
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    width: "46.5%",
 
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                handleSubmitDraft();
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: COLORS.white,
-                  fontSize: fontSizeResponsive("H2", device),
-                }}
-              >
-                Simpan Draft
-              </Text>
-            </TouchableOpacity>
+                    justifyContent: "center",
+                  }}
+                  onPress={handleSubmit}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Kirim
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#B745FF",
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    width: "46.5%",
+
+                    justifyContent: "center",
+                  }}
+                  onPress={() => {
+                    handleSubmitDraft();
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Simpan Draft
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
-      <ModalSubmit
-        status={status}
-        setStatus={setStatus}
-        navigate={"MainCuti"}
-      />
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            navigate={"MainCuti"}
+          />
+        </>
+      )}
     </GestureHandlerRootView>
   );
 };
