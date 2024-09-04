@@ -1593,7 +1593,7 @@ export const Profile = () => {
             {/* Pasangan */}
             <View style={{ paddingBottom: spacing.default }}>
               <CollapseCardPasangan
-                profile={profile?.siasn_data?.siasn_data_pasangan.listPasangan}
+                profile={profile?.siasn_data?.siasn_data_pasangan?.listPasangan}
                 device={device}
               />
             </View>

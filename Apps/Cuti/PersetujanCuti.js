@@ -96,7 +96,7 @@ export const PersetujanCuti = () => {
       if (profile.nip !== "") {
         dispatch(getDokumenPersetujuan(profile?.nip));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -105,6 +105,8 @@ export const PersetujanCuti = () => {
   }, [profile?.nip]);
 
   const { device } = useSelector((state) => state.apps);
+
+  console.log(persetujuan.lists?.data);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -168,7 +170,13 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
+        <View
+          style={{
+            paddingVertical: PADDING.Page,
+            marginHorizontal: "5%",
+            flex: 1,
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -176,7 +184,7 @@ export const PersetujanCuti = () => {
               alignItems: "center",
             }}
           >
-            <View style={{ width: device === 'tablet' ? "90%" : "85%" }}>
+            <View style={{ width: device === "tablet" ? "90%" : "85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -186,8 +194,8 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: device === 'tablet' ? 50 : 40,
-                  height: device === 'tablet' ? 50 : 40,
+                  width: device === "tablet" ? 50 : 40,
+                  height: device === "tablet" ? 50 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -394,7 +402,6 @@ export const PersetujanCuti = () => {
             </View>
             {/* </View> */}
             <View style={{ flex: 1 }}>
-
               {variant === "Completed" ? (
                 <FlatList
                   data={filterData}
@@ -449,6 +456,7 @@ export const PersetujanCuti = () => {
                         item={item}
                         nip={profile.nip}
                         variant={variant}
+                        device={device}
                       />
                     </View>
                   )}
@@ -471,6 +479,7 @@ export const PersetujanCuti = () => {
                         item={item}
                         nip={profile.nip}
                         variant={variant}
+                        device={device}
                       />
                     </View>
                   )}
@@ -486,7 +495,6 @@ export const PersetujanCuti = () => {
                 />
               ) : null}
             </View>
-
           </View>
         </View>
       </View>

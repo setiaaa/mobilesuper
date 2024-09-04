@@ -93,7 +93,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                   />
                   <Text
                     style={{
-                      fontSize: fontSizeResponsive("H3", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       color: COLORS.lighter,
                     }}
                   >
@@ -117,7 +117,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                   />
                   <Text
                     style={{
-                      fontSize: fontSizeResponsive("H3", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       color: COLORS.lighter,
                     }}
                   >
