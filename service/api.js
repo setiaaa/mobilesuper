@@ -672,6 +672,25 @@ export const getEmployee = createAsyncThunk(
     }
   }
 );
+export const getFavorit = createAsyncThunk(
+  "calendar/getFavorit",
+  async ({ token, search }) => {
+    if (search === "") {
+      const respon = await axios.get(`${addressbook}addressbook/personals/`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(
+        `${addressbook}addressbook/personals/?search=${search}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      return respon?.data.results;
+    }
+  }
+);
 export const getDivisionTree = createAsyncThunk(
   "calendar/getDivisionTree",
   async ({ token, id }) => {
