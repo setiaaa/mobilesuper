@@ -127,10 +127,10 @@ export const DetailBerita = () => {
                 {/* {moment(detail.updated_at, "DD MMMM YYYY").format(
                   DATETIME.LONG_DATE
                 )} */}
-                {/* {detail.created_at} */}
-                {moment(detail.created_at, "DD mmmm yyyy").format(
+                {detail.created_at}
+                {/* {moment(detail.created_at, "DD mmmm yyyy").format(
                   DATETIME.LONG_DATE
-                )}
+                )} */}
               </Text>
             </View>
           </View>
