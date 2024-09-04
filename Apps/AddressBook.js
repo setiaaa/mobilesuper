@@ -53,7 +53,47 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
   };
   return (
     <View style={{ paddingBottom: 10 }} key={item.nip ? item.nip : item.code}>
-      {item.code !== undefined && item.title !== undefined ? (
+      {item.code !== undefined && item.person !== undefined ? (
+        <View
+          style={{
+            flexDirection: "row",
+            display: "flex",
+            alignItems: "center",
+            marginTop: 10,
+            marginHorizontal: "5%",
+            gap: 10,
+            backgroundColor: COLORS.white,
+            padding: 10,
+            borderRadius: 8,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              if (config.tipeAddress == "korespondensi") {
+                deleteItem(item.code, "jabatan");
+              } else {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              }
+            }}
+          >
+            <Ionicons name="close-circle" size={24} />
+          </TouchableOpacity>
+          <Text
+            style={{ width: "80%", fontSize: fontSizeResponsive("H4", device) }}
+          >
+            {item.person !== undefined ? item.person : ''}
+          </Text>
+        </View>
+      ) : item.code !== undefined && item.title !== undefined ? (
         <View
           style={{
             flexDirection: "row",
