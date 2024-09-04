@@ -122,6 +122,7 @@ import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
 import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
 import { IPASN } from "../Apps/Kepegawaian/IPASN";
 import MyTabIPASN from "../Apps/Kepegawaian/BottomTabsIPASN";
+import { AddressbookFavorit } from "../Apps/AddressbookFavorit";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -1170,6 +1171,7 @@ export const TopsBantuanPemerintah = () => {
   );
 };
 export const TopAddressBook = ({ config, device }) => {
+  console.log(config.tabs.favorit)
   return (
     <Host>
       <BottomSheetModalProvider>
@@ -1185,7 +1187,45 @@ export const TopAddressBook = ({ config, device }) => {
             },
           }}
         >
-          {config.tabs.jabatan && config.tabs.pegawai && config.tabs.para ? (
+          {config.tabs.jabatan &&
+          config.tabs.pegawai &&
+          config.tabs.para &&
+          config.tabs.favorit ? (
+            <>
+              <Top.Screen
+                name="AddressBookJabatan"
+                component={AddressBookJabatan}
+                options={{
+                  title: "Jabatan",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPegawai"
+                component={AddressBookPegawai}
+                options={{
+                  title: "Pegawai",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookFavorit"
+                component={AddressbookFavorit}
+                options={{
+                  title: "Favorit",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPara"
+                component={AddressbookPara}
+                options={{
+                  title: "Para",
+                }}
+                initialParams={{ config: config }}
+              />
+            </>
+          ) : config.tabs.jabatan && config.tabs.pegawai && config.tabs.para ? (
             <>
               <Top.Screen
                 name="AddressBookJabatan"
