@@ -4,25 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../service/session";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { getEmployee } from "../service/api";
-import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../config/SuperAppps";
 import {
-  setAddressbookEmployee,
+  setAddressbookFavorit,
   setAddressbookSelected,
 } from "../store/AddressbookKKP";
 import { Ionicons } from "@expo/vector-icons";
-import { Search } from "../components/Search";
 import { nde_api } from "../utils/api.config";
 import { getHTTP } from "../utils/http";
 
 const CardPegawai = ({ data, addressbook, config, device }) => {
   const dispatch = useDispatch();
-
   const checkedNodeRadio = () => {
     const checkNode = addressbook.selected.filter(
       (item) =>
-        (item.nip === data.nip && item.nik === data.nik) ||
-        item.code === data.nik
+        (item.code === data.code && item.nik === data.nik) ||
+        item.nik === data.code
     );
     if (checkNode.length > 0) {
       return true;
@@ -53,8 +50,8 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
         onPress={() => {
           const checkNode = addressbook.selected.filter(
             (item) =>
-              (item.nip === data.nip && item.nik === data.nik) ||
-              item.code === data.nik
+              (item.code === data.code && item.nik === data.nik) ||
+              item.nik === data.code
           );
           if (checkNode.length > 0) {
             alert("Data tidak boleh sama");
@@ -75,15 +72,7 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
           )}
           <View style={{ flexDirection: "column" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-              {data.nama ? data.nama : data.name}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.lighter,
-                fontSize: fontSizeResponsive("H4", device),
-              }}
-            >
-              {data.nip ? data.nip : data.nik}
+              {data.person ? data.person : data.name}
             </Text>
           </View>
         </View>
@@ -99,7 +88,7 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
   );
 };
 
-export const AddressBookPegawai = ({ route }) => {
+export const AddressbookFavorit = ({ route }) => {
   const [token, setToken] = useState("");
   const { config } = route.params;
 
@@ -119,14 +108,11 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi" && search.length == 0) {
         (async () => {
           let response = await getHTTP(
-            nde_api.employee + "?attr=" + config.senderCode
+            nde_api.personallist + "?attr=" + config.senderCode
           );
-          dispatch(setAddressbookEmployee(response.data));
+          dispatch(setAddressbookFavorit(response.data));
         })();
-      } else {
-        dispatch(getEmployee({ token: token, search: search }));
       }
-      // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
   }, [token, search]);
 
@@ -150,30 +136,25 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.employeeSearch.replace("{$word}", search) +
+            nde_api.personallist +
+              "?query=" +
+              search +
               "&attr=" +
               config.senderCode
           );
           data = response.data;
           setFilterData(data);
         })();
-      } else {
-        data = addressbook.employee?.filter((item) => {
-          return item.nama.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilterData(data);
       }
     } else {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.employee + "?attr=" + config.senderCode
+            nde_api.personallist + "?attr=" + config.senderCode
           );
           data = response.data;
           setFilterData(data);
         })();
-      } else {
-        setFilterData(addressbook.employee);
       }
     }
   }, [search]);
@@ -182,18 +163,6 @@ export const AddressBookPegawai = ({ route }) => {
 
   return (
     <View style={{ height: "95%", paddingVertical: 10 }}>
-      {/* <View style={{ flexDirection: "row", backgroundColor: COLORS.infoLight }}>
-        <Text
-          style={{
-            width: "49%",
-            marginHorizontal: 20,
-            fontWeight: FONTWEIGHT.bold,
-          }}
-        >
-          Nama
-        </Text>
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>NIP</Text>
-      </View> */}
       <View
         style={{
           marginHorizontal: 15,
@@ -230,7 +199,7 @@ export const AddressBookPegawai = ({ route }) => {
           />
         )}
         style={{ marginBottom: 40 }}
-        keyExtractor={(item) => item.nip}
+        keyExtractor={(item) => item.code}
       />
     </View>
   );

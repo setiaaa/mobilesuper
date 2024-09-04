@@ -155,6 +155,7 @@ const CutiSlice = createSlice({
         if (action.payload.success === false) {
           state.status = "error";
           console.log(action.payload);
+          state.loading = false;
         } else {
           state.status = "berhasil";
           state.loading = false;

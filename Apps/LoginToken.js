@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Handle payload stylus disposisi
+                      Pengajuan cuti handle loading
                     </Text>
                   </View>
 
@@ -496,7 +496,59 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Handle data SIASN
+                      Handle data SIASN profile
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 20,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Tambah tab favorit di addressbook disposisi
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 20,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Tampilan gambar detail disposisi di android
                     </Text>
                   </View>
 

@@ -559,10 +559,16 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Handle payload stylus disposisi",
+        description: "Pengajuan cuti handle loading",
       },
       {
-        description: "Handle data SIASN",
+        description: "Handle data SIASN profile",
+      },
+      {
+        description: "Tambah tab favorit di addressbook disposisi",
+      },
+      {
+        description: "Tampilan gambar detail disposisi di android",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
@@ -1593,7 +1599,11 @@ export const Profile = () => {
             {/* Pasangan */}
             <View style={{ paddingBottom: spacing.default }}>
               <CollapseCardPasangan
+<<<<<<< HEAD
                 profile={profile?.siasn_data?.siasn_data_pasangan.listPasangan}
+=======
+                profile={profile?.siasn_data?.siasn_data_pasangan?.listPasangan}
+>>>>>>> 25c66b9bf07f3e2d2afe14a9f2d153e16b28aad3
                 device={device}
               />
             </View>

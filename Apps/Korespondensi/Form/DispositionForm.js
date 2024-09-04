@@ -263,7 +263,13 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           let temp = [];
           let temp_ids = [];
           pilihanKepada.map((item, j) => {
-            temp.push(item.fullname ? item.fullname : item.title);
+            temp.push(
+              item.fullname
+                ? item.fullname
+                : item.title
+                ? item.title
+                : item.person
+            );
             temp_ids.push(item.nik ? item.nik : item.code);
           });
           request[i].kepada = temp.join("\n");
@@ -351,6 +357,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   // Called after ref.current.readSignature() reads an empty string
   const handleEmpty = () => {
+    setStylusFile("");
     console.log("Empty");
   };
 
@@ -438,6 +445,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                           tabs: {
                             jabatan: true,
                             pegawai: true,
+                            favorit: true,
                             para: true,
                             senderCode: senderAttr.code,
                           },
@@ -456,7 +464,11 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                       <Fragment key={index}>
                         <Text style={styles.titleLabel}>
                           {index + 1}.{" "}
-                          {items.fullname ? items.fullname : items.title}
+                          {items.fullname
+                            ? items.fullname
+                            : items.title
+                            ? items.title
+                            : items.person}
                         </Text>
                       </Fragment>
                     ))}
@@ -486,6 +498,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               tabs: {
                                 jabatan: true,
                                 pegawai: true,
+                                favorit: true,
                                 para: true,
                               },
                               multiselect: true,
