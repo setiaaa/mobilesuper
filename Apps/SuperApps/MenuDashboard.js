@@ -300,7 +300,7 @@ export const MenuDashboard = () => {
               textAlign: "center",
             }}
           >
-            Bantuan Pemerintah
+            KUSUKA
           </Text>
         </View>
       );
