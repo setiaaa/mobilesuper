@@ -75,9 +75,8 @@ export const Kepegawaian = () => {
             </View>
           </View>
 
-          <View style={{ height: "100%" }}>
+          
             <TopsDash />
-          </View>
 
           {/* <ScrollView style={{ flex: 1 }}>
 

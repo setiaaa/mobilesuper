@@ -61,29 +61,6 @@ export const APBN = () => {
     head.append(met);
   }, 500)`;
 
-  // console.log('width', screenWidth)
-  // let injected = null
-  // if (device === 'tablet') {
-  //   if (getOrientation(screenWidth, screenHeight) === 'landscape') {
-  //     if (screenWidth <= 1194) {
-  //       console.log('landscape 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape11
-  //     } else {
-  //       console.log('landscape 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape12
-  //     }
-  //   } else {
-  //     if (screenWidth <= 834) {
-  //       console.log('potrait 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait11
-  //     } else {
-  //       console.log('potrait 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait12
-  //     }
-  //   }
-  // } else {
-  //   injected = injectedJavaScriptBeforeContentLoadedMobile
-  // }
 
   
 
