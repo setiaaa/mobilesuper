@@ -123,6 +123,7 @@ import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
 import { IPASN } from "../Apps/Kepegawaian/IPASN";
 import MyTabIPASN from "../Apps/Kepegawaian/BottomTabsIPASN";
 import { AddressbookFavorit } from "../Apps/AddressbookFavorit";
+import { RekapKepegawaian } from "../Apps/Dashboard/RekapKepegawaian";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -1008,6 +1009,13 @@ export const TopsDash = () => {
             title: "ROPEG IP ASN",
           }}
         />
+        <Top.Screen
+          name="RekapKepegawaian"
+          component={RekapKepegawaian}
+          options={{
+            title: "Rekap Kepegawaian",
+          }}
+        />
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1171,7 +1179,7 @@ export const TopsBantuanPemerintah = () => {
   );
 };
 export const TopAddressBook = ({ config, device }) => {
-  console.log(config.tabs.favorit)
+  console.log(config.tabs.favorit);
   return (
     <Host>
       <BottomSheetModalProvider>
