@@ -76,7 +76,7 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -100,7 +100,7 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -125,7 +125,7 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -148,7 +148,7 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -171,7 +171,7 @@ export const Penangkapan = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
           }}
           style={{
             flex: 1,

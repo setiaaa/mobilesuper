@@ -71,7 +71,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -95,7 +95,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -120,7 +120,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -143,7 +143,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -166,7 +166,7 @@ export const Produksi = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
           }}
           style={{
             flex: 1,
