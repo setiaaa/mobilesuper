@@ -85,39 +85,7 @@ export const APBN = () => {
   //   injected = injectedJavaScriptBeforeContentLoadedMobile
   // }
 
-  const getTableauTicket = async () => {
-    try {
-      const response = await fetch("https://dashboard.coofis.com/trusted", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: {
-          username: "armsviewer", // Ganti dengan username Tableau Anda
-          target_site: "kkp",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get Tableau trusted ticket");
-      }
-
-      const ticket = await response.json();
-      return ticket;
-    } catch (error) {
-      console.error("Error fetching Tableau ticket:", error);
-      return null;
-    }
-  };
-
-  // Memperoleh Tableau Ticket dan menggunakannya dalam URL Tableau
-  getTableauTicket().then((ticket) => {
-    if (ticket) {
-      const tableauVizUrl = `https://dashboard.coofis.com/trusted/${ticket}/views/KeuanganMobile/DashboardKeuangan`;
-      console.log("Tableau Viz URL:", tableauVizUrl);
-      // Gunakan tableauVizUrl untuk menampilkan Tableau di WebView
-    }
-  });
+  
 
   const renderWebView = () => {
     if (device === "tablet") {
