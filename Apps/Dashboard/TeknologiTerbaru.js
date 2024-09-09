@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, View } from "react-native";
+import { Platform, useWindowDimensions, View } from "react-native";
 import { Text } from "react-native";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
@@ -26,6 +27,28 @@ import { RefreshControl } from "react-native";
 const ListTeknologi = ({ item, loading, device }) => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
+  const getWidthImage = () => {
+    let tempWidth = 0;
+    let orientation = getOrientation(screenWidth, screenHeight);
+
+    if (device === "tablet") {
+      if (orientation === "landscape") {
+        tempWidth = screenWidth - 45;
+      } else {
+        tempWidth = screenWidth - 45;
+      }
+    } else {
+      tempWidth = 350;
+    }
+
+    return tempWidth;
+  };
+  
   return (
     <View
       style={{
@@ -49,13 +72,11 @@ const ListTeknologi = ({ item, loading, device }) => {
           <View>
             <Image
               source={{ uri: item.image_url }}
-              style={
-                device === "tablet"
-                  ? styles.imageTablet
-                  : Platform.OS === "ios"
-                  ? styles.imageIos
-                  : styles.imageAndroid
-              }
+              style={{
+                width: getWidthImage(),
+                height: device === 'tablet'? 500:350,
+                borderRadius: 16
+              }}
             />
           </View>
         )}
@@ -196,6 +217,6 @@ const styles = StyleSheet.create({
   imageTablet: {
     borderRadius: 16,
     height: 500,
-    width: 730,
+    width: 800,
   },
 });
