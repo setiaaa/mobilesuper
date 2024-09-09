@@ -478,6 +478,7 @@ export const Satker = () => {
                   parallaxProps={parallaxProps}
                   item={item}
                   token={token}
+                  tanggal={item?.time}
                 />
               )}
               hasParallaxImages={true}

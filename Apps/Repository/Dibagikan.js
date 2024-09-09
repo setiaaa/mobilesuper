@@ -325,7 +325,7 @@ export const Dibagikan = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("H1", device),
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 600,
                   color: "white",
                 }}

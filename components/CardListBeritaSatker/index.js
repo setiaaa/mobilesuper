@@ -78,7 +78,8 @@ export const CardListBeritaSatker = ({
                   fontWeight: 400,
                 }}
               >
-                {moment(tanggal, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
+                {/* {moment(tanggal, "DD mmmm yyyy").format(DATETIME.LONG_DATE)} */}
+                {tanggal}
               </Text>
             ) : null}
             <Text

@@ -2081,6 +2081,7 @@ export const Home = () => {
                   item={item}
                   token={token}
                   setModalVisibleVideo={setModalVisibleVideo}
+                  tanggal={item?.time}
                 />
               )}
               hasParallaxImages={true}

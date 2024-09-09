@@ -942,6 +942,7 @@ export const TopsPencarianKorespondensi = (data) => {
 
 export const TopsDash = () => {
   const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
 
   return (
     <BottomSheetModalProvider>
@@ -1009,13 +1010,15 @@ export const TopsDash = () => {
             title: "ROPEG IP ASN",
           }}
         />
-        <Top.Screen
-          name="RekapKepegawaian"
-          component={RekapKepegawaian}
-          options={{
-            title: "Rekap Kepegawaian",
-          }}
-        />
+        {profile.nip === "197208122001121002" ? (
+          <Top.Screen
+            name="RekapKepegawaian"
+            component={RekapKepegawaian}
+            options={{
+              title: "Rekap Kepegawaian",
+            }}
+          />
+        ) : null}
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1179,7 +1182,6 @@ export const TopsBantuanPemerintah = () => {
   );
 };
 export const TopAddressBook = ({ config, device }) => {
-  console.log(config.tabs.favorit);
   return (
     <Host>
       <BottomSheetModalProvider>
