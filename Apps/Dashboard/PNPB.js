@@ -161,7 +161,7 @@ export const PNBP = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/PNBP.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/PNBPMobile.html",
           }}
           style={{
             flex: 1,

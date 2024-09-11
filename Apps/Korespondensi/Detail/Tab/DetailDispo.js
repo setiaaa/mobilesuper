@@ -44,9 +44,6 @@ function DetailDispo({ data, noAgenda, preview, title }) {
   const [selectedAttach, setSelectedAttach] = useState();
   const [selectedIconAttach, setSelectedIconAttach] = useState();
   const [checkScroll, setCheckScroll] = useState(true);
-
-  console.log(checkScroll);
-
   const [downloadProgress, setDownloadProgress] = useState();
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");

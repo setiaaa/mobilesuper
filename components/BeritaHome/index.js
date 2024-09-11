@@ -21,6 +21,7 @@ export const BeritaHome = ({
   parallaxProps,
   token,
   setModalVisibleVideo,
+  tanggal,
 }) => {
   const { device } = useSelector((state) => state.apps);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
@@ -106,8 +107,8 @@ export const BeritaHome = ({
                 fontWeight: 400,
               }}
             >
-              {moment(item.time, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
-              {/* {tanggal} */}
+              {/* {moment(item.time, "DD mmmm yyyy").format(DATETIME.LONG_DATE)} */}
+              {tanggal}
             </Text>
           ) : item.type === "galeri" ? (
             <Text

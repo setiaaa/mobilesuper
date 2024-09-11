@@ -57,7 +57,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
   const BASE_URL = Config.base_url + "bridge";
   const profile =
     item.type === "pegawai" ? DataIPASN.detail : DataPribadi.detail;
-  console.log(profile.sick_leave_day, "cek");
+
   return (
     <ScrollView>
       {loading ? <Loading /> : null}
@@ -411,7 +411,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
       {/* Pasangan */}
       <View style={{ paddingBottom: spacing.default }}>
         <CollapseCardPasangan
-          profile={profile?.siasn_data_full?.siasn_data_pasangan}
+          profile={profile?.siasn_data_full?.siasn_data_pasangan?.listPasangan}
           device={device}
         />
       </View>

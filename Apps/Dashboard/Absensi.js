@@ -71,7 +71,7 @@ export const Absensi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensiMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -95,7 +95,7 @@ export const Absensi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensiMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -120,7 +120,7 @@ export const Absensi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensiMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -143,7 +143,7 @@ export const Absensi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensiMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -166,7 +166,7 @@ export const Absensi = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensiMobile.html",
           }}
           style={{
             flex: 1,

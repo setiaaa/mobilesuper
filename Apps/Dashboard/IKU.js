@@ -66,7 +66,7 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -90,7 +90,7 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -115,7 +115,7 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -138,7 +138,7 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -161,7 +161,7 @@ export const IKU = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
           }}
           style={{
             flex: 1,

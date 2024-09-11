@@ -454,7 +454,7 @@ export const Dokumen = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("Judul", device),
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 600,
                   color: "white",
                 }}

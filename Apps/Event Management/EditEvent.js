@@ -111,7 +111,7 @@ const CardListPeserta = ({ item, addressbook, device }) => {
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-        (item.title !== undefined && item.title?.name !== "") ? (
+      (item.title !== undefined && item.title?.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -308,7 +308,7 @@ export const EditEvent = () => {
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -492,7 +492,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -549,7 +549,7 @@ export const EditEvent = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: device === 'tablet' ? 20 : 10,
+                        marginTop: device === "tablet" ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -615,7 +615,7 @@ export const EditEvent = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: device === 'tablet' ? 20 : 10,
+                        marginTop: device === "tablet" ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -684,7 +684,7 @@ export const EditEvent = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                      modalVisiblePicker === "selesai"
+                    modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -716,7 +716,7 @@ export const EditEvent = () => {
                         flex: 1,
                       }}
                     >
-                      <View style={{ marginVertical: 20, width: '100%' }}>
+                      <View style={{ marginVertical: 20, width: "100%" }}>
                         <TouchableOpacity
                           onPress={() => setModalVisiblePicker("")}
                         >
@@ -738,7 +738,14 @@ export const EditEvent = () => {
                           </View>
                         </TouchableOpacity>
                       </View>
-                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <View
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -754,7 +761,10 @@ export const EditEvent = () => {
                             .format("YYYY-MM-DD")}
                           mode="calendar"
                           minuteInterval={30}
-                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
+                          style={{
+                            borderRadius: 10,
+                            width: device === "tablet" ? 600 : 300,
+                          }}
                           onSelectedChange={(date) => {
                             const [year, month, day] = date
                               .split("/")
@@ -814,7 +824,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -864,7 +874,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -999,7 +1009,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1091,7 +1101,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1182,7 +1192,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1273,7 +1283,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1328,7 +1338,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1543,7 +1553,7 @@ export const EditEvent = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",

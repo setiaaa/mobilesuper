@@ -121,6 +121,7 @@ export const {
   setPengumuman,
   setTeknologiList,
   setKesejahteraanEmpty,
+  setPerencanaanEmpty,
 } = DashboardSlice.actions;
 
 export default DashboardSlice.reducer;

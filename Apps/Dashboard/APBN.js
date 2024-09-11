@@ -61,29 +61,8 @@ export const APBN = () => {
     head.append(met);
   }, 500)`;
 
-  // console.log('width', screenWidth)
-  // let injected = null
-  // if (device === 'tablet') {
-  //   if (getOrientation(screenWidth, screenHeight) === 'landscape') {
-  //     if (screenWidth <= 1194) {
-  //       console.log('landscape 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape11
-  //     } else {
-  //       console.log('landscape 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape12
-  //     }
-  //   } else {
-  //     if (screenWidth <= 834) {
-  //       console.log('potrait 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait11
-  //     } else {
-  //       console.log('potrait 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait12
-  //     }
-  //   }
-  // } else {
-  //   injected = injectedJavaScriptBeforeContentLoadedMobile
-  // }
+
+  
 
   const renderWebView = () => {
     if (device === "tablet") {
@@ -96,7 +75,7 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -120,7 +99,7 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -145,7 +124,7 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -168,7 +147,7 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -191,7 +170,7 @@ export const APBN = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
           }}
           style={{
             flex: 1,
@@ -204,6 +183,9 @@ export const APBN = () => {
           injectedJavaScriptBeforeContentLoaded={
             injectedJavaScriptBeforeContentLoadedMobile
           }
+          thirdPartyCookiesEnabled={true}
+          sharedCookiesEnabled={true}
+          domStorageEnabled={true}
         />
       );
     }

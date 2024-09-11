@@ -18,7 +18,13 @@ import moment from "moment";
 import { getDetailSatkerNews } from "../../service/api";
 import { useNavigation } from "@react-navigation/native";
 
-export const BannerBeritaSatker = ({ item, index, parallaxProps, token }) => {
+export const BannerBeritaSatker = ({
+  item,
+  index,
+  parallaxProps,
+  token,
+  tanggal,
+}) => {
   const { device } = useSelector((state) => state.apps);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -64,8 +70,8 @@ export const BannerBeritaSatker = ({ item, index, parallaxProps, token }) => {
               fontWeight: 400,
             }}
           >
-            {moment(item.time, "DD mmmm yyyy").format(DATETIME.LONG_DATE)}
-            {/* {tanggal} */}
+            {/* {moment(item.time, "DD mmmm yyyy").format(DATETIME.LONG_DATE)} */}
+            {tanggal}
           </Text>
         ) : item.type === "galeri" ? (
           <Text

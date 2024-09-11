@@ -79,7 +79,7 @@ export const CardListBeritaHome = ({
                   fontWeight: 400,
                 }}
               >
-                {/* {moment(tanggal, "DD MMMM YYYY").format(DATETIME.LONG_DATE)} */}
+                {/* {moment(tanggal, "DD mmmm yyyy").format(DATETIME.LONG_DATE)} */}
                 {tanggal}
               </Text>
             ) : null}

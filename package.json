@@ -25,7 +25,6 @@
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/cli": "^2.31.2",
     "@sentry/react-native": "^5.26.0",
-    "@shopify/react-native-skia": "^1.2.3",
     "accordion-collapse-react-native": "^1.1.1",
     "axios": "^0.27.2",
     "base-64": "^1.0.0",
@@ -62,12 +61,14 @@
     "react-native-calendar-picker": "^7.1.4",
     "react-native-calendars": "^1.1299.0",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-charts-wrapper": "^0.6.0",
     "react-native-crypto-js": "^1.0.0",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-element-dropdown": "^2.3.1",
     "react-native-final-tree-view": "^3.0.0",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-gifted-charts": "^1.4.33",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-modal-datetime-picker": "^14.0.1",
@@ -100,8 +101,7 @@
     "react-native-webview": "13.6.4",
     "react-native-youtube-iframe": "^2.3.0",
     "react-redux": "^8.0.2",
-    "rn-pdf-reader-js-improved": "^1.0.0",
-    "victory-native": "^40.1.1"
+    "rn-pdf-reader-js-improved": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

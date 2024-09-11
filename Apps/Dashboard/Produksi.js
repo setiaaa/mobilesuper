@@ -26,7 +26,7 @@ export const Produksi = () => {
 
   const injectedJavaScriptBeforeContentLoadedIpadPotrait11 = `setTimeout(function () {
     var met = document.createElement('meta');
-    met.content = 'width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5';
+    met.content = 'width=device-width, initial-scale=0.6, maximum-scale=0.6, minimum-scale=0.6';
     met.charset = 'UTF-8';
     met.name = 'viewport';
     var head = document.getElementsByTagName("head")[0];
@@ -35,7 +35,7 @@ export const Produksi = () => {
 
   const injectedJavaScriptBeforeContentLoadedIpadLandscape11 = `setTimeout(function () {
     var met = document.createElement('meta');
-    met.content = 'width=device-width, initial-scale=0.7, maximum-scale=0.7, minimum-scale=0.7';
+    met.content = 'width=device-width, initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9';
     met.charset = 'UTF-8';
     met.name = 'viewport';
     var head = document.getElementsByTagName("head")[0];
@@ -71,7 +71,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -95,7 +95,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -120,7 +120,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -143,7 +143,7 @@ export const Produksi = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
                 }}
                 style={{
                   flex: 1,
@@ -166,7 +166,7 @@ export const Produksi = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidayaMobile.html",
           }}
           style={{
             flex: 1,

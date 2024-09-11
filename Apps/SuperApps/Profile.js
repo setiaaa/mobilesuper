@@ -569,6 +569,12 @@ export const Profile = () => {
       },
       {
         description: "Tampilan gambar detail disposisi di android",
+      },
+      {
+        description: "Perbaikan laporan pengembangan kompetensi di android",
+      },
+      {
+        description: "Perbaikan dashboard mobile",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
