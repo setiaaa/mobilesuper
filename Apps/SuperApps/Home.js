@@ -952,7 +952,7 @@ export const Home = () => {
                       <ScrollView
                         nestedScrollEnabled={true}
                         style={{
-                          height: useWindowDimensions().height - 150,
+                          height: useWindowDimensions().height - 80,
                         }}
                       >
                         <View

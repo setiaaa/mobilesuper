@@ -43,12 +43,12 @@ const ListTeknologi = ({ item, loading, device }) => {
         tempWidth = screenWidth - 45;
       }
     } else {
-      tempWidth = 350;
+      tempWidth = screenWidth - 40;
     }
 
     return tempWidth;
   };
-  
+
   return (
     <View
       style={{
@@ -58,7 +58,7 @@ const ListTeknologi = ({ item, loading, device }) => {
         alignItems: "center",
         justifyContent: "center",
         marginTop: 30,
-        margin: 20
+        margin: 20,
       }}
     >
       <View>
@@ -74,8 +74,8 @@ const ListTeknologi = ({ item, loading, device }) => {
               source={{ uri: item.image_url }}
               style={{
                 width: getWidthImage(),
-                height: device === 'tablet'? 500:350,
-                borderRadius: 16
+                height: device === "tablet" ? 500 : 350,
+                borderRadius: 16,
               }}
             />
           </View>
@@ -165,8 +165,7 @@ export const TeknologiTerbaru = () => {
       if (token !== "") {
         dispatch(getTeknologi(token));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

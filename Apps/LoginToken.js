@@ -552,6 +552,58 @@ export const LoginToken = () => {
                     </Text>
                   </View>
 
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 20,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Perbaikan laporan pengembangan kompetensi di android
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 20,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Perbaikan dashboard mobile
+                    </Text>
+                  </View>
+
                   {/* 
               <Text
                 style={{

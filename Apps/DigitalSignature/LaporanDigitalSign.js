@@ -16,7 +16,7 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { BarChart } from "react-native-chart-kit";
+import { BarChart as BarChartKit } from "react-native-chart-kit";
 import {
   GestureHandlerRootView,
   ScrollView,
@@ -39,9 +39,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Dropdown } from "../../components/DropDown";
-import { Area, Bar, BarGroup, CartesianChart, Line } from "victory-native";
-import { useFont } from "@shopify/react-native-skia";
-import inter from "../../assets/superApp/Inter.otf";
 import ProgressCircle from "react-native-progress-circle";
 import PieChart from "react-native-pie-chart";
 import {
@@ -54,40 +51,51 @@ import {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 
+import { BarChart } from "react-native-gifted-charts";
+
 const CardLaporanList = ({ item, token, device }) => {
   return (
     <View style={styles.cardList}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H3", device),
+              fontWeight: 400,
+            }}
+          >
+            {typeof item.tanggalSertif === "string"
+              ? item.tanggalSertif
+              : moment(item.tanggalSertif)
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H3", device),
+              fontWeight: 600,
+            }}
+          >
+            {item.noSertif}
+          </Text>
+        </View>
         <Text
           style={{
+            textAlign: "right",
             fontSize: fontSizeResponsive("H3", device),
             fontWeight: 400,
           }}
         >
-          {typeof item.tanggalSertif === "string"
-            ? item.tanggalSertif
-            : moment(item.tanggalSertif)
-                .locale("id")
-                .format(DATETIME.LONG_DATE)}
-        </Text>
-        <Text
-          style={{
-            fontSize: fontSizeResponsive("H3", device),
-            fontWeight: 600,
-          }}
-        >
-          {item.noSertif}
+          {item.jenis_sertifikat}
         </Text>
       </View>
-      <Text
-        style={{
-          textAlign: "right",
-          fontSize: fontSizeResponsive("H3", device),
-          fontWeight: 400,
-        }}
-      >
-        {item.jenis_sertifikat}
-      </Text>
       <Text
         style={{ fontSize: fontSizeResponsive("H1", device), fontWeight: 600 }}
       >
@@ -467,8 +475,6 @@ export const LaporanDigitalSign = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  const font = useFont(inter, 8);
-
   const widthAndHeight = 250;
   const sliceColorELearning = ["#ff8f28", "#b745ff"];
   const sliceColor = ["#ff8f28", "#b745ff", "#38B2AC"];
@@ -514,6 +520,49 @@ export const LaporanDigitalSign = () => {
       });
     });
     return judulSatker;
+  };
+
+  const pelatihan = (type) => {
+    let maxValue = 100;
+    let pelatihan = [];
+    if (
+      dataGraphAksiPerubahan[type] !== undefined &&
+      dataGraphAksiPerubahan[type].length !== 0
+    ) {
+      maxValue = 0;
+
+      dataGraphAksiPerubahan[type].forEach((item) => {
+        maxValue = Math.max(
+          maxValue,
+          item.Aksi,
+          item.Implementasi,
+          item.Peserta
+        );
+        pelatihan.push(
+          {
+            value: item.Aksi,
+            label: item.name,
+            spacing: 2,
+            labelWidth: 70,
+            labelTextStyle: { color: "gray" },
+            frontColor: "#ff8f28",
+          },
+          {
+            value: item.Implementasi,
+            frontColor: "#b745ff",
+            spacing: 2,
+          },
+          {
+            value: item.Peserta,
+            frontColor: "#38B2AC",
+          }
+        );
+      });
+    }
+    return {
+      data: pelatihan,
+      maxValue: maxValue,
+    };
   };
 
   if (dataGraphAksiPerubahan === null) {
@@ -804,7 +853,7 @@ export const LaporanDigitalSign = () => {
                 >
                   Jumlah pelatihan Klasikal
                 </Text>
-                <BarChart
+                <BarChartKit
                   data={{
                     labels: [
                       "A",
@@ -858,6 +907,7 @@ export const LaporanDigitalSign = () => {
                   style={{ marginHorizontal: -20, marginTop: 20 }}
                   withInnerLines={false}
                 />
+
                 <View style={{ gap: 5 }}>
                   <Text
                     style={{
@@ -1175,7 +1225,7 @@ export const LaporanDigitalSign = () => {
                 >
                   Jumlah pelatihan Non Klasikal
                 </Text>
-                <BarChart
+                <BarChartKit
                   data={{
                     labels: [
                       "A",
@@ -1595,57 +1645,55 @@ export const LaporanDigitalSign = () => {
                     coverFill={"#FFF"}
                     style={{ alignSelf: "center", marginVertical: 20 }}
                   />
-
+                </View>
+                <View
+                  style={{
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <View
                     style={{
                       flexDirection: "row",
+                      gap: 10,
                       justifyContent: "center",
-                      gap: 20,
+                      alignItems: "center",
                     }}
                   >
                     <View
                       style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        backgroundColor: "#ff8f28",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
                       }}
-                    >
-                      <View
-                        style={{
-                          backgroundColor: "#ff8f28",
-                          height: 30,
-                          width: 30,
-                          borderRadius: 50,
-                        }}
-                      />
-                      <Text>
-                        Enrolled{" "}
-                        {numberWithCommas(summary?.count?.lms_enrolled)}
-                      </Text>
-                    </View>
+                    />
+                    <Text>
+                      Enrolled {numberWithCommas(summary?.count?.lms_enrolled)}
+                    </Text>
+                  </View>
 
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
                     <View
                       style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        backgroundColor: "#b745ff",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
                       }}
-                    >
-                      <View
-                        style={{
-                          backgroundColor: "#b745ff",
-                          height: 30,
-                          width: 30,
-                          borderRadius: 50,
-                        }}
-                      />
-                      <Text>
-                        Completed{" "}
-                        {numberWithCommas(summary?.count?.lms_completed)}
-                      </Text>
-                    </View>
+                    />
+                    <Text>
+                      Completed{" "}
+                      {numberWithCommas(summary?.count?.lms_completed)}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -1715,7 +1763,7 @@ export const LaporanDigitalSign = () => {
                   />
                 </View>
 
-                <View style={{ height: 350 }}>
+                {/* <View style={{ height: 350 }}>
                   <CartesianChart
                     data={
                       dataGraphAksiPerubahan["PELATIHAN KEPEMIMPINAN PENGAWAS "]
@@ -1768,7 +1816,25 @@ export const LaporanDigitalSign = () => {
                       </BarGroup>
                     )}
                   </CartesianChart>
-                </View>
+                </View> */}
+                {/* {renderTitle()} */}
+                <BarChart
+                  data={pelatihan("PELATIHAN KEPEMIMPINAN PENGAWAS ")?.data}
+                  barWidth={20}
+                  spacing={24}
+                  roundedTop
+                  roundedBottom
+                  hideRules
+                  // hideAxesAndRules
+                  // showReferenceLine1
+                  xAxisThickness={0}
+                  yAxisThickness={0}
+                  yAxisTextStyle={{ color: "gray" }}
+                  noOfSections={3}
+                  maxValue={
+                    pelatihan("PELATIHAN KEPEMIMPINAN PENGAWAS ")?.maxValue
+                  }
+                />
                 <View
                   style={{
                     alignItems: "flex-start",
@@ -1872,7 +1938,7 @@ export const LaporanDigitalSign = () => {
                   />
                 </View>
 
-                <View style={{ height: 350 }}>
+                {/* <View style={{ height: 350 }}>
                   <CartesianChart
                     data={
                       dataGraphAksiPerubahan[
@@ -1931,7 +1997,26 @@ export const LaporanDigitalSign = () => {
                       </BarGroup>
                     )}
                   </CartesianChart>
-                </View>
+                </View> */}
+                <BarChart
+                  data={
+                    pelatihan("PELATIHAN KEPEMIMPINAN ADMINISTRATOR ")?.data
+                  }
+                  barWidth={20}
+                  spacing={24}
+                  roundedTop
+                  roundedBottom
+                  hideRules
+                  // hideAxesAndRules
+                  // showReferenceLine1
+                  xAxisThickness={0}
+                  yAxisThickness={0}
+                  yAxisTextStyle={{ color: "gray" }}
+                  noOfSections={3}
+                  maxValue={
+                    pelatihan("PELATIHAN KEPEMIMPINAN ADMINISTRATOR ")?.maxValue
+                  }
+                />
                 <View
                   style={{
                     alignItems: "flex-start",
@@ -2404,6 +2489,8 @@ export const LaporanDigitalSign = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  scrollEnabled={true}
+                  nestedScrollEnabled={true}
                 />
               </View>
             </View>
@@ -2543,6 +2630,32 @@ export const LaporanDigitalSign = () => {
                     </View>
                   )}
                 </View>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setFilterSatker([]);
+                    setFilterUnker([]);
+                  }}
+                  style={{
+                    backgroundColor: COLORS.infoDanger,
+                    padding: 10,
+                    borderRadius: 8,
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.white,
+                    }}
+                  >
+                    Reset
+                  </Text>
+                </TouchableOpacity>
               </View>
             </BottomSheetView>
           </BottomSheetModal>

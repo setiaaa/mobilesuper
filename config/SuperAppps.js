@@ -1,4 +1,3 @@
-import { FontWeight } from "@shopify/react-native-skia";
 import moment from "moment/min/moment-with-locales";
 import { Dimensions } from "react-native";
 
