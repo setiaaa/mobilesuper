@@ -548,7 +548,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Tampilan gambar detail disposisi di android
+                      Tampilan gambar detail disposisi
                     </Text>
                   </View>
 
@@ -574,7 +574,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan laporan pengembangan kompetensi di android
+                      Perbaikan laporan pengembangan kompetensi
                     </Text>
                   </View>
 

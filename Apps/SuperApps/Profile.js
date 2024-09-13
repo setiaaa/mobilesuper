@@ -568,10 +568,10 @@ export const Profile = () => {
         description: "Tambah tab favorit di addressbook disposisi",
       },
       {
-        description: "Tampilan gambar detail disposisi di android",
+        description: "Tampilan gambar detail disposisi",
       },
       {
-        description: "Perbaikan laporan pengembangan kompetensi di android",
+        description: "Perbaikan laporan pengembangan kompetensi",
       },
       {
         description: "Perbaikan dashboard mobile",
