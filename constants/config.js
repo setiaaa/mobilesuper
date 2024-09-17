@@ -115,6 +115,7 @@ export const Config = {
     receivedLetter: extra.api.receivedLetter,
     preview: extra.api.preview,
 
+    typeletter: extra.api.typeletter,
     kmtree: extra.api.kmtree,
     kmSearch: extra.api.kmSearch,
     employee: extra.api.employee,

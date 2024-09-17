@@ -214,6 +214,7 @@
       "listTemplates": "crsbe/templates/",
       "receivedLetter": "crsbe/info/received/{$id}/",
       "preview": "crsbe/letters/{$id}/0_0/preview/",
+      "typeletter": "crsbe/addressbook/type-letter/",
       "kmtree": "crsbe/addressbook/km/tree/",
       "kmSearch": "crsbe/addressbook/km/tree/?query={$word}",
       "employee": "crsbe/addressbook/employees/",

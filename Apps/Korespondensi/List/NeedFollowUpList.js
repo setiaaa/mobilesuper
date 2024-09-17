@@ -60,6 +60,11 @@ function NeedFollowUpList({ route }) {
   const [divisionList, setDivisionList] = useState([
     { id: "", name: "SEMUA UNIT KERJA" },
   ]);
+  const [selectedTypeLetter, setSelectedTypeLetter] = useState({
+    id: "",
+    name: "Semua Jenis Surat",
+  });
+  const typeLetter = useSelector((state) => state.listbulk.typeLetter);
   const [selectedDivisi, setSelectedDivisi] = useState({});
   const [isFocus, setIsFocus] = useState();
   const { width: screenWidth } = Dimensions.get("window");
@@ -97,7 +102,14 @@ function NeedFollowUpList({ route }) {
   }, [divisionList]);
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedDivisi]);
+  }, [
+    startDate,
+    endDate,
+    isSearchQuery,
+    isSearchFilter,
+    selectedDivisi,
+    selectedTypeLetter,
+  ]);
 
   async function getDivisionList() {
     try {
@@ -150,7 +162,8 @@ function NeedFollowUpList({ route }) {
         startDate == null &&
         endDate == null &&
         searchQuery.length == 0 &&
-        selectedDivisi.id == undefined
+        selectedDivisi.id == undefined &&
+        selectedTypeLetter.name == "Semua Jenis Surat"
       ) {
         getNeedFollowUp(1);
       } else if (
@@ -158,13 +171,15 @@ function NeedFollowUpList({ route }) {
         (startDate != null ||
           endDate != null ||
           searchQuery.length != 0 ||
-          selectedDivisi.id != undefined)
+          selectedDivisi.id != undefined ||
+          selectedTypeLetter.name != "Semua Jenis Surat")
       ) {
       } else {
         let start;
         let end;
         let word;
         let division = "";
+        let typeletter = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
@@ -190,6 +205,11 @@ function NeedFollowUpList({ route }) {
         } else {
           division = selectedDivisi.id;
         }
+        if (selectedTypeLetter.name == "Semua Jenis Surat") {
+          typeletter = "";
+        } else {
+          typeletter = selectedTypeLetter.name;
+        }
         let url = nde_api.needfollowup;
         url =
           url +
@@ -201,6 +221,8 @@ function NeedFollowUpList({ route }) {
           word +
           "&division=" +
           division +
+          "&type_letter=" +
+          typeletter +
           "&sign=0";
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
@@ -319,6 +341,10 @@ function NeedFollowUpList({ route }) {
     setEndDate();
     setSearchQuery("");
     setSelectedDivisi({});
+    setSelectedTypeLetter({
+      id: "",
+      name: "Semua Jenis Surat",
+    });
     setIsSearchFilter(false);
     if (!isSearchFilter) {
       getNeedFollowUp(1);
@@ -339,12 +365,20 @@ function NeedFollowUpList({ route }) {
           onPress={() => {
             setSearchQuery("");
             setIsSearchQuery("");
-            if (selectedDivisi.id == undefined && startDate == null) {
+            if (
+              selectedDivisi.id == undefined &&
+              startDate == null &&
+              selectedTypeLetter.name == "Semua Jenis Surat"
+            ) {
               setIsSearchFilter(false);
             } else {
               setIsSearchFilter(true);
             }
-            if (startDate == null && endDate == null) {
+            if (
+              startDate == null &&
+              endDate == null &&
+              selectedTypeLetter.name == "Semua Jenis Surat"
+            ) {
               setList([]);
             }
           }}
@@ -404,7 +438,12 @@ function NeedFollowUpList({ route }) {
             <View
               style={{
                 backgroundColor: COLORS.white,
-                marginBottom: isSearchFilter && startDate != null ? 0 : 16,
+                marginBottom:
+                  isSearchFilter &&
+                  (startDate != null ||
+                    selectedTypeLetter.name != "Semua Jenis Surat")
+                    ? 0
+                    : 16,
               }}
             >
               <Dropdown
@@ -430,75 +469,99 @@ function NeedFollowUpList({ route }) {
               />
             </View>
           )}
-          {isSearchFilter && startDate != null && (
-            <View
-              style={{
-                flexDirection: "row",
-                backgroundColor: GlobalStyles.colors.tertiery10,
-              }}
-            >
-              <Text
-                style={[
-                  styles.headerList,
-                  {
-                    backgroundColor: GlobalStyles.colors.textWhite,
-                    color: GlobalStyles.colors.textBlack,
-                    marginBottom: 8,
-                  },
-                ]}
+          {isSearchFilter &&
+            (startDate != null ||
+              selectedTypeLetter.name != "Semua Jenis Surat") && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: GlobalStyles.colors.tertiery10,
+                }}
               >
-                {isSearchQuery.length != 0 &&
-                startDate == null &&
-                selectedDivisi.id == undefined
-                  ? "Cari: "
-                  : "Saring : "}
-              </Text>
-              <View style={[styles.filter, { width: screenWidth - 70 }]}>
-                {startDate && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setStartDate(null);
-                      setEndDate(null);
-                      if (
-                        searchQuery.length == 0 &&
-                        selectedDivisi.id == undefined
-                      ) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {moment(startDate).format("DD/MM/YYYY")} -{" "}
-                    {moment(endDate).format("DD/MM/YYYY")}
-                  </Chip>
-                )}
-                {isSearchQuery && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setSearchQuery("");
-                      setIsSearchQuery("");
-                      if (
-                        startDate == null &&
-                        endDate == null &&
-                        selectedDivisi.id == undefined
-                      ) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {isSearchQuery}
-                  </Chip>
-                )}
+                <Text
+                  style={[
+                    styles.headerList,
+                    {
+                      backgroundColor: GlobalStyles.colors.textWhite,
+                      color: GlobalStyles.colors.textBlack,
+                      marginBottom: 8,
+                    },
+                  ]}
+                >
+                  {isSearchQuery.length != 0 &&
+                  startDate == null &&
+                  selectedDivisi.id == undefined &&
+                  selectedTypeLetter.name != "Semua Jenis Surat"
+                    ? "Cari: "
+                    : "Saring : "}
+                </Text>
+                <View style={[styles.filter, { width: screenWidth - 70 }]}>
+                  {startDate && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setStartDate(null);
+                        setEndDate(null);
+                        if (
+                          searchQuery.length == 0 &&
+                          selectedDivisi.id == undefined &&
+                          selectedTypeLetter.name != "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {moment(startDate).format("DD/MM/YYYY")} -{" "}
+                      {moment(endDate).format("DD/MM/YYYY")}
+                    </Chip>
+                  )}
+                  {isSearchQuery && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSearchQuery("");
+                        setIsSearchQuery("");
+                        if (
+                          startDate == null &&
+                          endDate == null &&
+                          selectedDivisi.id == undefined &&
+                          selectedTypeLetter.name != "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {isSearchQuery}
+                    </Chip>
+                  )}
+                  {selectedTypeLetter.name != "Semua Jenis Surat" && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSelectedTypeLetter({
+                          id: "",
+                          name: "Semua Jenis Surat",
+                        });
+                        if (searchQuery.length == 0 && startDate == null) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {selectedTypeLetter.name}
+                    </Chip>
+                  )}
+                </View>
               </View>
-            </View>
-          )}
+            )}
           <FlatList
             keyExtractor={(item) => item.date}
             data={list?.results}
@@ -737,6 +800,45 @@ function NeedFollowUpList({ route }) {
                       onChangeText={setSearchQuery}
                     />
                   </View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
+                      }}
+                    >
+                      Jenis Surat
+                    </Text>
+                    <Dropdown
+                      style={[
+                        styles.dropdown2,
+                        isFocus && { borderColor: "blue" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      iconStyle={styles.iconStyle}
+                      itemTextStyle={{ fontSize: 13 }}
+                      data={typeLetter}
+                      maxHeight={300}
+                      labelField="name"
+                      valueField="name"
+                      placeholder={!isFocus ? "Pilih Jenis Surat" : "..."}
+                      value={selectedTypeLetter.name}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={(item) => {
+                        setSelectedTypeLetter(item);
+                      }}
+                    />
+                  </View>
                   <View style={{ flexDirection: "column" }}>
                     <TouchableOpacity
                       style={{
@@ -893,5 +995,13 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
+  },
+  dropdown2: {
+    marginTop: 0,
+    borderWidth: 1,
+    minHeight: 40,
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
   },
 });

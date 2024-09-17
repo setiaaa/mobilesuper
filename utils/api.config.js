@@ -124,6 +124,7 @@ export const nde_api = {
   //getPreview BG
   preview: Config.base_url + Config.api.preview,
   //ADDRESSBOOK
+  typeletter: Config.base_url + Config.api.typeletter,
   kmtree: Config.base_url + Config.api.kmtree,
   kmSearch: Config.base_url + Config.api.kmSearch,
 

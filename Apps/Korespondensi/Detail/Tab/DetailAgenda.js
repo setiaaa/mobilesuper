@@ -464,7 +464,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       }
                       navigation.navigate("ReferenceDetail", {
                         id: item?.new_url?.split("/")[3],
-                        title: "Reference\nDetail",
+                        title: "Detail\nReferensi",
                       });
                     }
                   }}
@@ -599,6 +599,29 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 </>
               )}
             </View>
+            {data?.jenis_surat == "Memorandum" && (
+              <>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                    Internal Satker
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
+                  }}
+                >
+                  {data && data.internal_satker?.length == 0 && (
+                    <Text style={{ fontSize: 13 }}>-</Text>
+                  )}
+                  {data && data.internal_satker?.length !== 0 && (
+                    <Text style={{ fontSize: 13 }}>{data.internal_satker}</Text>
+                  )}
+                </View>
+              </>
+            )}
           </>
         )}
         {data?.template?.name == "nota_external" && (
@@ -894,6 +917,35 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
+                      Agenda Kegiatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.agenda?.length == 0 ? "-" : data?.agenda}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
                       Tanggal Kegiatan
                     </Text>
                     <Text
@@ -939,7 +991,10 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
-                      {data?.start_time} - {data?.end_time} {data?.timezone}
+                      {data?.start_time}{" "}
+                      {data?.end_time == "Selesai" ? data?.timezone : null} -{" "}
+                      {data?.end_time}{" "}
+                      {data?.end_time != "Selesai" ? data?.timezone : null}
                     </Text>
                   </View>
 
@@ -959,7 +1014,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
-                      Lokasi Kegiatan
+                      Tempat Kegiatan
                     </Text>
                     <Text
                       style={{
