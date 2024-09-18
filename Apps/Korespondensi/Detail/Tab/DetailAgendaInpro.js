@@ -273,7 +273,7 @@ function DetailAgendaInpro({
                   paddingRight: 20,
                 }}
               >
-                Nomor Surat
+                No Surat
               </Text>
               <Text
                 style={{

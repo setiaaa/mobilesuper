@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -22,7 +22,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, DATETIME } from "../../../../config/SuperAppps";
 import { Image } from "react-native";
 import { setPrevAgenda } from "../../../../store/referensi";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import { getExtensionIcon, initDownload } from "../../../../utils/agenda";
@@ -41,9 +41,21 @@ function DetailAgenda({ id, data, style, tipe, title }) {
     }, 3000);
   }, []);
   const dispatch = useDispatch();
+  
+  useFocusEffect(
+    useCallback(() => {    
+      console.log("back"+tipe)  
+    if (tipe == "in/internal" || tipe=="ReferenceDetail") {
+      dispatch(setFAB(false));
+    } else {
+      dispatch(setFAB(true));
+    }
+    }, [])
+  );
+
   useEffect(() => {
     dispatch(setDataNotif({}));
-    if (tipe == "in/internal") {
+    if (tipe == "in/internal" || tipe=="ReferenceDetail") {
       dispatch(setFAB(false));
     } else {
       dispatch(setFAB(true));
@@ -276,7 +288,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                   paddingRight: 20,
                 }}
               >
-                Nomor Agenda
+                No Agenda
               </Text>
               <Text
                 style={{
@@ -365,7 +377,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 paddingRight: 20,
               }}
             >
-              Jenis Surat
+              Kode Derajat
             </Text>
             <Text
               style={{
@@ -375,7 +387,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 paddingRight: 20,
               }}
             >
-              {data?.jenis_surat}
+              {data?.type ? data?.type : "-"}
             </Text>
           </View>
 
@@ -446,13 +458,13 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
                     } else {
                       if (tipe == "in") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
+                        dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
                       } else if (tipe == "disposition") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "d" }));
+                        dispatch(setPrevAgenda({ id: data?.id, tipe: "d" }));
                       } else if (tipe == "out") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "k" }));
+                        dispatch(setPrevAgenda({ id: data?.id, tipe: "k" }));
                       } else if (tipe == "scanlog") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
+                        dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
                       } else if (
                         tipe == "TrackingDetail" ||
                         tipe == "NeedFollowUpDetail" ||
@@ -462,6 +474,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                           setPrevAgenda({ id: item?.notadinas, tipe: "s" })
                         );
                       }
+                      dispatch(setFAB(false));
                       navigation.navigate("ReferenceDetail", {
                         id: item?.new_url?.split("/")[3],
                         title: "Detail\nReferensi",
