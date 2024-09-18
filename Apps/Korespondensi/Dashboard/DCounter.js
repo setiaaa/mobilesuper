@@ -71,8 +71,6 @@ function DCounter() {
   async function getTypeLetter() {
     try {
       const response = await getHTTP(nde_api.typeletter);
-      console.log(nde_api.typeletter)
-      console.log(response.data);
       dispatch(setTypeLetter(response.data));
     } catch (error) {
       if (error?.response?.status == null && error?.status == null) {

@@ -43,19 +43,18 @@ function DetailAgenda({ id, data, style, tipe, title }) {
   const dispatch = useDispatch();
   
   useFocusEffect(
-    useCallback(() => {    
-      console.log("back"+tipe)  
-    if (tipe == "in/internal" || tipe=="ReferenceDetail") {
-      dispatch(setFAB(false));
-    } else {
-      dispatch(setFAB(true));
-    }
+    useCallback(() => {
+      if (tipe == "in/internal" || tipe == "ReferenceDetail") {
+        dispatch(setFAB(false));
+      } else {
+        dispatch(setFAB(true));
+      }
     }, [])
   );
 
   useEffect(() => {
     dispatch(setDataNotif({}));
-    if (tipe == "in/internal" || tipe=="ReferenceDetail") {
+    if (tipe == "in/internal" || tipe == "ReferenceDetail") {
       dispatch(setFAB(false));
     } else {
       dispatch(setFAB(true));
@@ -443,51 +442,56 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 -
               </Text>
             )}
-            {data?.references?.length != 0 &&
-              data?.references?.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 400,
-                    width: "60%",
-                    paddingRight: 20,
-                  }}
-                  onPress={() => {
-                    if (item.new_url?.split("/")[3] == "0") {
-                      Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
-                    } else {
-                      if (tipe == "in") {
-                        dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
-                      } else if (tipe == "disposition") {
-                        dispatch(setPrevAgenda({ id: data?.id, tipe: "d" }));
-                      } else if (tipe == "out") {
-                        dispatch(setPrevAgenda({ id: data?.id, tipe: "k" }));
-                      } else if (tipe == "scanlog") {
-                        dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
-                      } else if (
-                        tipe == "TrackingDetail" ||
-                        tipe == "NeedFollowUpDetail" ||
-                        tipe == "ReferenceDetail"
-                      ) {
-                        dispatch(
-                          setPrevAgenda({ id: item?.notadinas, tipe: "s" })
-                        );
+            <View>
+              {data?.references?.length != 0 &&
+                data?.references?.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 400,
+                      width: "80%",
+                      paddingRight: 20,
+                    }}
+                    onPress={() => {
+                      if (item.new_url?.split("/")[3] == "0") {
+                        Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
+                      } else {
+                        if (tipe == "in") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
+                        } else if (tipe == "disposition") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "d" }));
+                        } else if (tipe == "out") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "k" }));
+                        } else if (tipe == "scanlog") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
+                        } else if (
+                          tipe == "TrackingDetail" ||
+                          tipe == "NeedFollowUpDetail" ||
+                          tipe == "ReferenceDetail"
+                        ) {
+                          dispatch(
+                            setPrevAgenda({ id: item?.notadinas, tipe: "s" })
+                          );
+                        }
+                        dispatch(setFAB(false));
+                        navigation.navigate("ReferenceDetail", {
+                          id: item?.new_url?.split("/")[3],
+                          title: "Detail\nReferensi",
+                        });
                       }
-                      dispatch(setFAB(false));
-                      navigation.navigate("ReferenceDetail", {
-                        id: item?.new_url?.split("/")[3],
-                        title: "Detail\nReferensi",
-                      });
-                    }
-                  }}
-                >
-                  <View>
-                    <Text style={[styles.textContent]}>{item.subject}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            {/* </Text> */}
+                    }}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Text>
+                        {data?.references.length > 1 ? index + 1 + ". " : ""}
+                      </Text>
+                      <Text style={[styles.textContent]}>{item.subject}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              {/* </Text> */}
+            </View>
           </View>
         </View>
 
@@ -545,7 +549,12 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                     </Text>
                   </View>
                   {data && data?.receivers_display?.length == 1 && (
-                    <Text>{data?.receivers_display[0]}</Text>
+                    <View>
+                      <RenderHTML
+                        contentWidth={width}
+                        source={{ html: data?.receivers_display[0] }}
+                      />
+                    </View>
                   )}
 
                   {data && data?.receivers_display?.length > 1 && (

@@ -249,7 +249,15 @@ function DetailAgendaInpro({
     <GestureHandlerRootView>
       <ScrollView overScrollMode="never" keyboardShouldPersistTaps="handled">
         <View style={{ padding: 20, gap: 10 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600 }}>Form Review</Text>
+          {tipe == "TrackingDetail" ? (
+            <Text style={{ fontSize: 15, fontWeight: 600 }}>
+              Informasi Surat
+            </Text>
+          ) : (
+            <Text style={{ fontSize: 15, fontWeight: 600 }}>
+              Form {data?.type_letter}
+            </Text>
+          )}
           <View
             style={{
               backgroundColor: COLORS.white,
@@ -317,7 +325,18 @@ function DetailAgendaInpro({
               </Text>
             </View>
 
-            <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+            <View
+              style={
+                tipe == "TrackingDetail"
+                  ? {
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }
+                  : { flexDirection: "row", paddingVertical: 10 }
+              }
+            >
               <Text
                 style={{
                   fontSize: 13,
@@ -341,6 +360,90 @@ function DetailAgendaInpro({
                   : data?.senders[0].name}
               </Text>
             </View>
+            {tipe == "TrackingDetail" && (
+              <>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "#DBDADE",
+                    paddingVertical: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Jenis Surat
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    {data?.type_letter ? data?.type_letter : "-"}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "#DBDADE",
+                    paddingVertical: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Kode Derajat
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    {data?.type ? data?.type : "-"}
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Sifat
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    {data?.priority ? data?.priority : data?.prio}
+                  </Text>
+                </View>
+              </>
+            )}
           </View>
           <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
           <View
@@ -702,7 +805,9 @@ function DetailAgendaInpro({
                 </>
               )}
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
+                <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                  Tembusan Internal
+                </Text>
               </View>
               <View
                 style={{
@@ -1176,7 +1281,6 @@ function DetailAgendaInpro({
                 )}
             </>
           )}
-
           {data?.attachments?.length == 1 && (
             <View
               style={{
