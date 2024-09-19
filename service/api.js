@@ -46,8 +46,11 @@ const GET_LIST_COMPETENCE = BASE_URL + "mp/admin/competence/?limit=199";
 
 const GET_LIST_UNIT_KERJA = BASE_URL + "mp/admin/iku/unitkerja-choice/";
 const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
+const GET_LIST_PEGAWAI_V2 = BASE_URL + "mp/admin/iku/employee/v2/";
 const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
+const GET_LIST_PEGAWAI_EXPORT_V2 =
+  BASE_URL + "mp/admin/iku/employee/export/v2/";
 
 const UNITKERJA = BASE_URL + "policy/unker/";
 const UNITKERJAID = BASE_URL + "policy/tematik/";
@@ -1279,7 +1282,6 @@ export const getDetailPenilaian = createAsyncThunk(
 export const postKomentarDetailPenilaian = createAsyncThunk(
   "mp/postKomentarDetailPenilaian",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Linimasa}linimasa/comment/penilaian/`,
       data.payload,
@@ -1705,8 +1707,9 @@ export const getListUnitKerja = createAsyncThunk(
 export const getListPegawai = createAsyncThunk(
   "mp/admin/iku/employee",
   async (data) => {
+    console.log(data);
     const respon = await axios.get(
-      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}&limit=${data.page}`,
+      `${GET_LIST_PEGAWAI_V2}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}&limit=${data.page}`,
       {
         headers: { Authorization: data.token },
       }
@@ -1728,8 +1731,9 @@ export const getListPostPegawai = createAsyncThunk(
 export const getListPegawaiExport = createAsyncThunk(
   "admin/iku/employee/export",
   async (data) => {
+    console.log(data);
     const respon = await axios.get(
-      `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+      `${GET_LIST_PEGAWAI_EXPORT_V2}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
       {
         headers: { Authorization: data.token },
       }

@@ -681,7 +681,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                  */}
           <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
             {(profile?.nip === "196212301990031006" ||
-              profile?.nip === "190001" ||
+              profile?.nip === "69030175" ||
               profile?.nip === "88888") && (
               <TouchableOpacity
                 onPress={() => handleShowAttachment("undangan")}
@@ -706,7 +706,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
               </TouchableOpacity>
             )}
 
-            {(profile?.nip === "190001" || profile?.nip === "88888") && (
+            {(profile?.nip === "69030175" || profile?.nip === "88888") && (
               <TouchableOpacity
                 onPress={() => handleShowAttachment("memo")}
                 style={{

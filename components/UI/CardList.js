@@ -200,7 +200,7 @@ function CardList({ data, tipe, onPress }) {
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   {data.time.substr(0, 5)}
                 </Text>
-                {data.disposisi && tipe != "agendamydispo" && (
+                {data.logs_tag && tipe != "agendamydispo" && (
                   <View style={styles.containerButton}>
                     <IconButton
                       icon="email-send-outline"

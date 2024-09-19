@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "kkpsuperapps",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
@@ -15,7 +15,7 @@
   },
   "assetBundlePatterns": ["/*"],
   "ios": {
-    "buildNumber": "7.4.9",
+    "buildNumber": "7.5.0",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 749,
+    "versionCode": 750,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -214,6 +214,7 @@
       "listTemplates": "crsbe/templates/",
       "receivedLetter": "crsbe/info/received/{$id}/",
       "preview": "crsbe/letters/{$id}/0_0/preview/",
+      "typeletter": "crsbe/addressbook/type-letter/",
       "kmtree": "crsbe/addressbook/km/tree/",
       "kmSearch": "crsbe/addressbook/km/tree/?query={$word}",
       "employee": "crsbe/addressbook/employees/",

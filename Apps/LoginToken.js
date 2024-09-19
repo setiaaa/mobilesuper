@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Pengajuan cuti handle loading
+                      Penambahan filter jenis surat Korespondensi
                     </Text>
                   </View>
 
@@ -496,7 +496,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Handle data SIASN profile
+                      Penyesuaian atribut detail surat Korespondensi
                     </Text>
                   </View>
 
@@ -522,7 +522,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Tambah tab favorit di addressbook disposisi
+                      Responsive Menu
                     </Text>
                   </View>
 
@@ -548,7 +548,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Tampilan gambar detail disposisi
+                      Perbaikan komentar penilaian pengetahuan
                     </Text>
                   </View>
 
@@ -574,33 +574,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan laporan pengembangan kompetensi
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginBottom: 20,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Perbaikan dashboard mobile
+                      Perbaikan user role perizinan menteri
                     </Text>
                   </View>
 

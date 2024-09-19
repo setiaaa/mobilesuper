@@ -6,6 +6,7 @@ const listBulkSlice = createSlice({
     selectedAll: false,
     listAll: [],
     list: [],
+    typeLetter: [{ id: "", name: "Semua Jenis Surat" }],
   },
   reducers: {
     setSelectedAll: (state, action) => {
@@ -42,6 +43,12 @@ const listBulkSlice = createSlice({
     removeAllSelectedList: (state) => {
       state.list = [];
     },
+    setTypeLetter: (state, action) => {
+      if (state.typeLetter.length == 1) {
+        state.typeLetter = state.typeLetter.concat(action.payload);
+        console.log(state.typeLetter)
+      }
+    },
   },
 });
 
@@ -51,6 +58,7 @@ export const {
   initList,
   setSelectedList,
   removeAllSelectedList,
+  setTypeLetter,
 } = listBulkSlice.actions;
 
 export default listBulkSlice.reducer;

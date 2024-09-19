@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Fragment, useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { Alert, FlatList, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
@@ -20,6 +20,7 @@ import { GlobalStyles } from "../../../constants/styles";
 import { removeTokenValue } from "../../../service/session";
 import { setLogout } from "../../../store/LoginAuth";
 import * as Sentry from "@sentry/react-native";
+import { setTypeLetter } from "../../../store/listBulk";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -67,7 +68,24 @@ function DCounter() {
       navName: "ConceptNumb",
     },
   ];
+  async function getTypeLetter() {
+    try {
+      const response = await getHTTP(nde_api.typeletter);
+      dispatch(setTypeLetter(response.data));
+    } catch (error) {
+      if (error?.response?.status == null && error?.status == null) {
+        Alert.alert("Peringatan!", "Silakan cek koneksi anda");
+      } else {
+        handlerError(
+          error,
+          "Peringatan!",
+          "Filter jenis surat tidak berfungsi!"
+        );
+      }
+    }
+  }
   useEffect(() => {
+    getTypeLetter();
     setIsCounter([
       { count: 1, type: "onprogress", value: "-" },
       {
