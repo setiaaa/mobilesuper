@@ -95,6 +95,7 @@ const PengetahuanSlice = createSlice({
     komen: [],
     loading: false,
     komenPenilaian: {},
+    comments: false,
   },
   reducers: {
     setLiniMasa: (state, action) => {
@@ -113,8 +114,11 @@ const PengetahuanSlice = createSlice({
       state.refresh = action.payload;
     },
     setResetDetailLinimasa: (state, action) => {
-      state.linimasa.detail = {}
-    }
+      state.linimasa.detail = {};
+    },
+    setComments: (state, action) => {
+      state.comments = action.payload;
+    },
   },
 
   extraReducers(builder) {
@@ -445,6 +449,7 @@ const PengetahuanSlice = createSlice({
       .addCase(postKomentarDetailPenilaian.fulfilled, (state, action) => {
         state.komenPenilaian = action.payload;
         state.loading = false;
+        state.comments = true;
         console.log("berhasil");
       })
       .addCase(postKomentarDetailPenilaian.pending, (state, action) => {
@@ -452,6 +457,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(postKomentarDetailPenilaian.rejected, (state, action) => {
         state.loading = false;
+        state.comments = false;
         console.log("gagal");
         Sentry.captureException(action.payload);
       });
@@ -464,7 +470,8 @@ export const {
   setPostinganSayaJumlah,
   setPenilaian,
   setRefresh,
-  setResetDetailLinimasa
+  setResetDetailLinimasa,
+  setComments,
 } = PengetahuanSlice.actions;
 
 export default PengetahuanSlice.reducer;

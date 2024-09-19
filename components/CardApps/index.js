@@ -461,7 +461,7 @@ export const CardApps = ({
           <View
             style={{
               flexDirection: "row",
-              gap: device === "tablet" ? 24 : width <= 375 ? 0 : 2,
+              gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
               alignItems: "flex-start",
               flex: 1,

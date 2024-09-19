@@ -126,9 +126,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
                 <View
                   style={{
                     marginVertical: 10,
-                    flexDirection: "row",
-                    gap: 15,
-                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -145,7 +142,13 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     })}
                   </Text>
 
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
                     <Text
                       style={{
                         color: "#6B7280",
@@ -388,9 +391,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
                 <View
                   style={{
                     marginVertical: 10,
-                    flexDirection: "row",
-                    gap: 15,
-                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -407,7 +407,13 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     })}
                   </Text>
 
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
                     <Text
                       style={{
                         color: "#6B7280",
@@ -734,7 +740,7 @@ export const PostinganSaya = () => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text
             style={{
-              fontSize: fontSizeResponsive("H4", device),
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: 600,
               color: COLORS.white,
             }}

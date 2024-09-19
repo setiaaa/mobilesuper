@@ -191,7 +191,7 @@ export const Profile = () => {
     "196510011990031002",
     "198011282005021001",
     "196705021993032001",
-    "190001",
+    "69030175",
     "196407211994031004",
     "197608031999031004",
     "197406261999031004",
@@ -559,22 +559,19 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Pengajuan cuti handle loading",
+        description: "Penambahan filter jenis surat Korespondensi",
       },
       {
-        description: "Handle data SIASN profile",
+        description: "Penyesuaian atribut detail surat Korespondensi",
       },
       {
-        description: "Tambah tab favorit di addressbook disposisi",
+        description: "Responsive Menu",
       },
       {
-        description: "Tampilan gambar detail disposisi di android",
+        description: "Perbaikan komentar penilaian pengetahuan",
       },
       {
-        description: "Perbaikan laporan pengembangan kompetensi di android",
-      },
-      {
-        description: "Perbaikan dashboard mobile",
+        description: "Perbaikan user role perizinan menteri",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
@@ -1544,7 +1541,7 @@ export const Profile = () => {
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
 
-        {isRoleSIASN ? (
+        {isRoleSIASN && profile?.nip !== "100040" ? (
           <>
             {/* SIASN Data Utama */}
             <View style={{ paddingBottom: spacing.default }}>
