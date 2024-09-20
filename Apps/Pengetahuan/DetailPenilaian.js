@@ -779,19 +779,23 @@ export const DetailPenilaian = () => {
               // inverted
             />
 
-            <View style={{ flexDirection: "row", gap: 5 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
+            >
               <Image
                 source={{ uri: data?.logged_in_user_avatar }}
-                style={{ width: 50, height: 50, borderRadius: 50 }}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 50,
+                }}
               />
 
               <View
                 style={{
                   borderWidth: 1,
                   width: "80%",
-                  marginLeft: 17,
                   borderRadius: 16,
-                  marginTop: 10,
                   flexDirection: "row",
                   alignItems: "center",
                   borderColor: COLORS.grey,
