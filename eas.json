@@ -25,7 +25,7 @@
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
         "image": "latest"
       },
       "ios": {
@@ -66,7 +66,7 @@
     "production": {
       "ios": {
         "appleId": "aziz@armsolusi.com",
-        "ascAppId": "6618150903",
+        "ascAppId": "6478191000",
         "appleTeamId": "H7BL72G773"
       }
     }

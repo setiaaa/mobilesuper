@@ -543,7 +543,7 @@ export const LaporanDigitalSign = () => {
             value: item.Aksi,
             label: item.name,
             spacing: 2,
-            labelWidth: 70,
+            labelWidth: 75,
             labelTextStyle: { color: "gray" },
             frontColor: "#ff8f28",
           },

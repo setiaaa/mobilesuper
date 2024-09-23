@@ -249,7 +249,7 @@ export default function DetailDashboard({ route }) {
                 style={[styles.buttonBuka, { backgroundColor: COLORS.primary }]}
                 onPress={() => {
                   navigation.navigate("PdfViewer", {
-                    data: data,
+                    data: data.link,
                   });
                 }}
               >
