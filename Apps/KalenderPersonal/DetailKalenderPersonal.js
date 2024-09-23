@@ -253,7 +253,9 @@ export const DetailKalenderPersonal = () => {
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
-                      {detail?.location === "" ? "-" : detail?.location}
+                      {detail?.location === "" || detail.location === null
+                        ? "-"
+                        : detail?.location}
                     </Text>
                   </View>
                 )}
@@ -296,7 +298,8 @@ export const DetailKalenderPersonal = () => {
                   />
                 ) : (
                   <View style={{ justifyContent: "center", width: 180 }}>
-                    {detail?.extra_attributes?.kepada?.length !== 0 ? (
+                    {detail?.extra_attributes?.kepada?.length !== 0 &&
+                    detail?.extra_attributes?.kepada !== undefined ? (
                       detail?.extra_attributes?.kepada?.map((item, index) => {
                         return (
                           <View
@@ -414,7 +417,99 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 250 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 250
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Disposisi
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 150 }}>
+                    {detail?.disposisi?.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {index + 1}.{" "}
+                          </Text>
+                          <Image
+                            source={{ uri: item.avatar_url }}
+                            style={{
+                              marginLeft: -8,
+                              borderWidth: 2,
+                              borderRadius: 50,
+                              borderColor: COLORS.white,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 250
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -813,7 +908,12 @@ export const DetailKalenderPersonal = () => {
                   <Text
                     style={{
                       justifyContent: "center",
-                      width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 400: 150,
+                      width:
+                        device === "tablet" && orientation === "potrait"
+                          ? 300
+                          : device === "tablet" && orientation === "landscape"
+                          ? 400
+                          : 150,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
@@ -1192,7 +1292,13 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 200
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -1507,7 +1613,14 @@ export const DetailKalenderPersonal = () => {
                             </Text>
                             <Text
                               style={{
-                                width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 350: 120,
+                                width:
+                                  device === "tablet" &&
+                                  orientation === "potrait"
+                                    ? 300
+                                    : device === "tablet" &&
+                                      orientation === "landscape"
+                                    ? 350
+                                    : 120,
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
@@ -1590,7 +1703,13 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 350: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 200
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 350
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >

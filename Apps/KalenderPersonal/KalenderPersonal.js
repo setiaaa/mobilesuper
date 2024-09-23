@@ -36,6 +36,8 @@ export const KalenderPersonal = () => {
   const [modal, setModal] = useState(false);
   const [datalist, setDataList] = useState([]);
 
+  const { profile } = useSelector((state) => state.superApps);
+
   const dispatch = useDispatch();
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -44,7 +46,17 @@ export const KalenderPersonal = () => {
   }, []);
   useEffect(() => {
     if (token !== "") {
-      dispatch(getlistKalenderPersonal(token));
+      dispatch(
+        getlistKalenderPersonal({
+          token: token,
+          satker:
+            profile?.structure?.organizations?.divisions?.departments
+              ?.satker_name == undefined
+              ? ""
+              : profile.structure?.organizations?.divisions?.departments
+                  .satker_name,
+        })
+      );
     }
   }, [token]);
 
