@@ -27,19 +27,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment/moment";
 import { openURL } from "expo-linking";
 
-export const DetailKalenderPersonal = () => {
-  const { personal, loading } = useSelector((state) => state.kalenderPersonal);
+export const DetailKalenderSatker = () => {
+  const { satker, loading } = useSelector((state) => state.KalenderSatker);
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
-  const detail = personal.detail;
+  const detail = satker?.detail;
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
   const { device } = useSelector((state) => state.apps);
-
-  console.log(detail.disposisi);
 
   return (
     <ScrollView>
@@ -200,8 +198,8 @@ export const DetailKalenderPersonal = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    {detail.extra_attributes?.start_time}
-                    {detail.extra_attributes?.timezone}-{" "}
+                    {detail.extra_attributes?.start_time}{" "}
+                    {detail.extra_attributes?.timezone} -{" "}
                     {detail.extra_attributes?.end_time}{" "}
                     {detail.extra_attributes?.end_time === "Selesai"
                       ? ""

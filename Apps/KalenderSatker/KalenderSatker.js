@@ -22,14 +22,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTokenValue } from "../../service/session";
 import {
-  getDetailKalenderPersonal,
-  getlistKalenderPersonal,
+  getDetailKalenderSatker,
+  getlistKalenderSatker,
 } from "../../service/api";
 import dayjs from "dayjs";
 import ListEmpty from "../../components/ListEmpty";
 import { CardListKalenderPersonal } from "../../components/CardListKalenderPersonal";
 
-export const KalenderPersonal = () => {
+export const KalenderSatker = () => {
   const navigation = useNavigation();
   const [token, setToken] = useState("");
   const [events, setEvents] = useState([]);
@@ -46,11 +46,23 @@ export const KalenderPersonal = () => {
   }, []);
   useEffect(() => {
     if (token !== "") {
-      dispatch(getlistKalenderPersonal(token));
+      dispatch(
+        getlistKalenderSatker({
+          token: token,
+          satker:
+            profile?.structure?.organizations?.divisions?.departments
+              ?.satker_code == undefined
+              ? ""
+              : profile.structure?.organizations?.divisions?.departments
+                  .satker_code,
+          month: month,
+          year: year,
+        })
+      );
     }
-  }, [token]);
+  }, [token, year, month]);
 
-  const { personal } = useSelector((state) => state.kalenderPersonal);
+  const { satker } = useSelector((state) => state.KalenderSatker);
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -93,8 +105,8 @@ export const KalenderPersonal = () => {
 
   useEffect(() => {
     let newArr = [];
-    if (personal.lists?.length > 0) {
-      personal.lists?.map((child) => {
+    if (satker.lists?.length > 0) {
+      satker.lists?.map((child) => {
         if (child.kategori !== "perintah" && child.kategori !== "tugas") {
           const startDate = dayjs(child.start_date).format("YYYY-MM-DD");
           const endDate = dayjs(child.end_date).format("YYYY-MM-DD");
@@ -137,7 +149,7 @@ export const KalenderPersonal = () => {
       });
       setEvents(newArr);
     } else setEvents([]);
-  }, [personal]);
+  }, [satker]);
 
   dayjs.locale("id");
   const today = new Date();
@@ -162,7 +174,7 @@ export const KalenderPersonal = () => {
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
-    dispatch(getDetailKalenderPersonal(params));
+    dispatch(getDetailKalenderSatker(params));
   };
 
   const darkTheme = {
@@ -175,7 +187,12 @@ export const KalenderPersonal = () => {
   };
 
   const { device } = useSelector((state) => state.apps);
+  const dates = new Date(date); // Membuat objek Date dari string
 
+  const month = dates.getMonth() + 1; // Mengambil bulan dan menambahkan 1
+  const year = date.getFullYear();
+
+  console.log(year); // Ini akan mencetak "9"
   return (
     <ScrollView>
       <View
@@ -216,7 +233,7 @@ export const KalenderPersonal = () => {
               color: COLORS.white,
             }}
           >
-            Kalender Personal
+            Kalender Satker
           </Text>
         </View>
       </View>
@@ -328,7 +345,7 @@ export const KalenderPersonal = () => {
           activeDate={date}
           onPressEvent={(item) => {
             getDetail(item.id);
-            navigation.navigate("DetailKalenderPersonal");
+            navigation.navigate("DetailKalenderSatker");
           }}
           theme={darkTheme}
           onPressMoreLabel={(event) => {
@@ -499,7 +516,7 @@ export const KalenderPersonal = () => {
                   fontWeight: FONTWEIGHT.bold,
                 }}
               >
-                Kalender Personal
+                Kalender Satker
               </Text>
               <TouchableOpacity
                 style={{}}

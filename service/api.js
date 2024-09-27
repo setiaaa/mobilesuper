@@ -510,10 +510,20 @@ export const getlistKalender = createAsyncThunk(
 //KalenderPersonal
 export const getlistKalenderPersonal = createAsyncThunk(
   "calendar/getlistKalenderPersonal",
-  async ({ token, satker }) => {
-    console.log(satker, "api");
+  async (token) => {
+    const respon = await axios.get(`${kalender}calendar/event/korespondensi/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+//KalenderSatker
+export const getlistKalenderSatker = createAsyncThunk(
+  "calendar/getlistKalenderSatker",
+  async ({ token, satker, month, year }) => {
     const respon = await axios.get(
-      `${kalender}calendar/event/korespondensi/?satker=${satker}`,
+      `${kalender}calendar/event/korespondensi/?satker=${satker}&month=${month}&year=${year}`,
       {
         headers: { Authorization: token },
       }
@@ -524,6 +534,19 @@ export const getlistKalenderPersonal = createAsyncThunk(
 
 export const getDetailKalenderPersonal = createAsyncThunk(
   "calendar/getDetailKalenderPersonal",
+  async (data) => {
+    const respon = await axios.get(
+      `${kalender}calendar/event/${data.id}/retrieve/korespondensi/`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const getDetailKalenderSatker = createAsyncThunk(
+  "calendar/getDetailKalenderSatker",
   async (data) => {
     const respon = await axios.get(
       `${kalender}calendar/event/${data.id}/retrieve/korespondensi/`,

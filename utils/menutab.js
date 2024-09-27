@@ -124,6 +124,9 @@ import { IPASN } from "../Apps/Kepegawaian/IPASN";
 import MyTabIPASN from "../Apps/Kepegawaian/BottomTabsIPASN";
 import { AddressbookFavorit } from "../Apps/AddressbookFavorit";
 import { RekapKepegawaian } from "../Apps/Dashboard/RekapKepegawaian";
+import { KalenderSatker } from "../Apps/KalenderSatker/KalenderSatker";
+import MyTabBarKalSatker from "../Apps/KalenderSatker/BottomTabsKalSatker";
+import MyTabBarGrupKal from "../Apps/Kalender/BottomTabsKalGrupPersonal";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -336,6 +339,55 @@ export const BottomTabsKalender = () => {
         <Tab.Screen
           name="KalenderPersonal"
           component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderSatker"
+          component={KalenderSatker}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsGrupKalender = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarGrupKal {...props} />}
+        initialRouteName="GrupKalender"
+      >
+        <Tab.Screen
+          name="GrupKalender"
+          component={GrupKalender}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderPersonal"
+          component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsKalenderSatker = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarKalSatker {...props} />}
+        initialRouteName="KalenderPersonal"
+      >
+        <Tab.Screen
+          name="KalenderPersonal"
+          component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderSatker"
+          component={KalenderSatker}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>

@@ -31,6 +31,7 @@ import AksiPerubahan from "./AksiPerubahan";
 import FaqReducer from "./Faq";
 import Kepegawain from "./Kepegawain";
 import listBulk from "./listBulk";
+import KalenderSatker from "./KalenderSatker";
 
 export const store = configureStore({
   reducer: {
@@ -61,6 +62,7 @@ export const store = configureStore({
     apps: Apps,
     survey: Survey,
     kalenderPersonal: KalenderPersonal,
+    KalenderSatker: KalenderSatker,
     aksiperubahan: AksiPerubahan,
     Faq: FaqReducer,
     kepegawaian: Kepegawain,

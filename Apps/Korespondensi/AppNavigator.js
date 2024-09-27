@@ -221,6 +221,9 @@ import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { MainIPASN } from "../Kepegawaian/MainIPASN";
 import { DataPribadi } from "../Kepegawaian/DataPribadi";
 import { ListBanner } from "../SuperApps/ListBanner";
+import { MainKalenderSatker } from "../KalenderSatker/MainKalenderSatker";
+import { DetailKalenderSatker } from "../KalenderSatker/DetailKalenderSatker";
+import { MainGrupKalender } from "../Kalender/MainGrupKalender";
 
 const Stack = createNativeStackNavigator();
 
@@ -536,8 +539,31 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
+            name="DetailKalenderSatker"
+            component={DetailKalenderSatker}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainKalender"
             component={MainKalender}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainGrupKalender"
+            component={MainGrupKalender}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainKalenderSatker"
+            component={MainKalenderSatker}
             options={{
               headerShown: false,
               gestureEnabled: false,

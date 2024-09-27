@@ -53,6 +53,7 @@ export const CardApps = ({
 
   const roleEvent = ["EVENT.USER"];
   const roleKalender = ["CALENDAR.USER"];
+  const roleKalenderSatker = ["CALENDAR_SATKER"];
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
@@ -65,6 +66,11 @@ export const CardApps = ({
   const isRoleKalender = profile.roles_access?.some((item) =>
     roleKalender.includes(item)
   );
+
+  const isRoleKalenderSatker = profile.roles_access?.some((item) =>
+    roleKalenderSatker.includes(item)
+  );
+
   const isRolePreShare = profile.roles_access?.some((item) =>
     rolePreShare.includes(item)
   );
@@ -317,7 +323,7 @@ export const CardApps = ({
         },
       });
     }
-    if (isRoleKalender) {
+    if (isRoleKalender && isRoleKalenderSatker) {
       tmpMenu.splice(6, 0, {
         title: "Kalender",
         navigation: "MainKalender",
@@ -343,6 +349,44 @@ export const CardApps = ({
         //     title: "Kalender Personal",
         //   },
         // ],
+      });
+    } else if (isRoleKalender) {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "MainGrupKalender",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      });
+    } else if (isRoleKalenderSatker) {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "MainKalenderSatker",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
       });
     } else {
       tmpMenu.splice(7, 0, {

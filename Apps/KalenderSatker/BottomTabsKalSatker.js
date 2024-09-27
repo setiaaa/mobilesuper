@@ -19,8 +19,8 @@ import { useMemo } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-function MyTabBarKal({ props, navigation }) {
-  const [tabItemIndex, setTabItemIndex] = useState(1);
+function MyTabBarKalSatker({ props, navigation }) {
+  const [tabItemIndex, setTabItemIndex] = useState(2);
   const bottomSheetModalAddRef = useRef(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -48,7 +48,7 @@ function MyTabBarKal({ props, navigation }) {
           borderTopRightRadius: 16,
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           key={1}
           onPress={() => {
             setTabItemIndex(1);
@@ -124,7 +124,7 @@ function MyTabBarKal({ props, navigation }) {
               </Text>
             </View>
           )}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* <TouchableOpacity
                         key={3}
@@ -276,7 +276,6 @@ function MyTabBarKal({ props, navigation }) {
             </View>
           )}
         </TouchableOpacity>
-
         <TouchableOpacity
           key={3}
           onPress={() => {
@@ -362,4 +361,4 @@ function MyTabBarKal({ props, navigation }) {
 }
 
 const styles = StyleSheet.create({});
-export default MyTabBarKal;
+export default MyTabBarKalSatker;
