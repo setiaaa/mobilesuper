@@ -557,23 +557,9 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push(
-      {
-        description: "Penambahan filter jenis surat Korespondensi",
-      },
-      {
-        description: "Penyesuaian atribut detail surat Korespondensi",
-      },
-      {
-        description: "Responsive Menu",
-      },
-      {
-        description: "Perbaikan komentar penilaian pengetahuan",
-      },
-      {
-        description: "Perbaikan user role perizinan menteri",
-      }
-    );
+    tmpLog.push({
+      description: "Penambahan Kalender Satker",
+    });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);

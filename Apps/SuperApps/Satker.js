@@ -297,7 +297,7 @@ export const Satker = () => {
               padding: 20,
             }}
           >
-            <View>
+            <View style={{ width: 300 }}>
               <Text
                 style={{
                   color: COLORS.white,
