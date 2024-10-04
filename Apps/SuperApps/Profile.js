@@ -557,9 +557,14 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push({
-      description: "Penambahan Kalender Satker",
-    });
+    tmpLog.push(
+      {
+        description: "Validasi tombol action ketika ada anotasi",
+      },
+      {
+        description: "Penamban role Baknkom",
+      }
+    );
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);

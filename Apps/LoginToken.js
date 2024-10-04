@@ -451,7 +451,7 @@ export const LoginToken = () => {
                   <View
                     style={{
                       flexDirection: "row",
-                      marginVertical: 20,
+                      marginTop: 20,
                       alignItems: "center",
                       marginHorizontal: 40,
                     }}
@@ -470,7 +470,34 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan Kalender Satker
+                      Validasi tombol action ketika ada anotasi
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                      marginBottom: 20,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penamban role Bankom
                     </Text>
                   </View>
 
