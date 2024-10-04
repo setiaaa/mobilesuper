@@ -352,7 +352,9 @@ export const Bankom = () => {
   const handlePenerimaSertifikat = () => {
     if (
       profile?.roles_access.includes("OPERATOR_BSRE") ||
-      profile?.nip === "197908162002121003"
+      profile?.nip === "197908162002121003" ||
+      profile?.nip === "196804071993032002" ||
+      profile?.nip === "101010101"
     ) {
       return false;
     } else {
@@ -611,7 +613,9 @@ export const Bankom = () => {
                       Draft
                     </Text>
                   </TouchableOpacity> */}
-                  {profile?.nip === "197908162002121003" ? (
+                  {profile?.nip === "197908162002121003" ||
+                  profile?.nip === "196804071993032002" ||
+                  profile?.nip === "101010101" ? (
                     <>
                       <TouchableOpacity
                         style={{
