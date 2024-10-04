@@ -908,7 +908,10 @@ function ActionInprogress({ id, data, page }) {
                 showComment("Setujui", page);
               }}
               style={{
-                backgroundColor: COLORS.success,
+                backgroundColor:
+                  data?.attachments[0]?.annotations?.length == 0
+                    ? COLORS.success
+                    : GlobalStyles.colors.disabled,
                 width: 35,
                 height: 35,
                 borderRadius: 25,
@@ -916,6 +919,7 @@ function ActionInprogress({ id, data, page }) {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              disabled={data?.attachments[0]?.annotations?.length != 0}
             >
               <Ionicons name="send-outline" size={20} color={COLORS.white} />
             </TouchableOpacity>
@@ -924,7 +928,10 @@ function ActionInprogress({ id, data, page }) {
                 showComment("Revisi", page);
               }}
               style={{
-                backgroundColor: GlobalStyles.colors.yellow,
+                backgroundColor:
+                  data?.attachments[0]?.annotations?.length == 0
+                    ? GlobalStyles.colors.yellow
+                    : GlobalStyles.colors.disabled,
                 width: 35,
                 height: 35,
                 borderRadius: 25,
@@ -932,6 +939,7 @@ function ActionInprogress({ id, data, page }) {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              disabled={data?.attachments[0]?.annotations?.length != 0}
             >
               <Ionicons name="arrow-back" size={20} color={COLORS.white} />
             </TouchableOpacity>
