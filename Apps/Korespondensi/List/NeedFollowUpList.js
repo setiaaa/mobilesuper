@@ -673,6 +673,7 @@ function NeedFollowUpList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -721,6 +722,7 @@ function NeedFollowUpList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -798,6 +800,7 @@ function NeedFollowUpList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
                     />
                   </View>
                   <View

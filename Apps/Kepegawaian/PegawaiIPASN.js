@@ -156,6 +156,7 @@ export const PegawaiIPASN = () => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filterSearch}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
 

@@ -171,6 +171,7 @@ export const EditCategory = ({ route }) => {
                   style={{ padding: 10 }}
                   onChangeText={(e) => handleInputKategori("namaProject", e)}
                   value={dataKategori.namaProject}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -198,6 +199,7 @@ export const EditCategory = ({ route }) => {
                   style={{ padding: 10, minHeight: 150 }}
                   onChangeText={(e) => handleInputKategori("deskripsi", e)}
                   value={dataKategori.deskripsi}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -239,6 +241,7 @@ export const EditCategory = ({ route }) => {
                   multiline
                   placeholder="Pilih PIC"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -308,6 +311,7 @@ export const EditCategory = ({ route }) => {
                   multiline
                   placeholder="Pilih Member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{

@@ -1185,6 +1185,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                             value={TanggalMulai}
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -1229,6 +1230,7 @@ export const TambahCutiTahunan = ({ route }) => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                             value={TanggalSelesai}
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -1606,6 +1608,7 @@ export const TambahCutiTahunan = ({ route }) => {
                           onChangeText={setAlamat}
                           value={alamat}
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
+                          allowFontScaling={false}
                         />
                       </View>
                     </View>
@@ -1635,6 +1638,7 @@ export const TambahCutiTahunan = ({ route }) => {
                           onChangeText={setTelepon}
                           value={telepon}
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
+                          allowFontScaling={false}
                         />
                       </View>
                     </View>
@@ -1665,6 +1669,7 @@ export const TambahCutiTahunan = ({ route }) => {
                           onChangeText={setAlasanCuti}
                           value={alasanCuti}
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
+                          allowFontScaling={false}
                         />
                       </View>
                     </View>

@@ -688,6 +688,7 @@ function IncomingList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -736,6 +737,7 @@ function IncomingList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -813,6 +815,7 @@ function IncomingList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
                     />
                   </View>
                   <View

@@ -22,7 +22,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { CardPilihMember } from "../../components/CardPilihMember";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
 import { postGrup } from "../../service/api";
@@ -277,7 +277,7 @@ export const TambahGrup = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      < >
+      <>
         {loading ? <Loading /> : null}
         <BottomSheetModalProvider>
           <ScrollView>
@@ -351,6 +351,7 @@ export const TambahGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setNamaGrup}
                   value={namaGrup}
+                  allowFontScaling={false}
                 />
               </View>
               <View
@@ -408,6 +409,7 @@ export const TambahGrup = () => {
                   placeholder="Pilih member"
                   style={{ padding: 10 }}
                   value={pilihanPimpinanGrup[0]?.title}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -473,6 +475,7 @@ export const TambahGrup = () => {
                   maxLength={40}
                   placeholder="Pilih member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -549,6 +552,7 @@ export const TambahGrup = () => {
                   maxLength={40}
                   placeholder="Pilih member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -646,6 +650,7 @@ export const TambahGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setBusana}
                   value={busana}
+                  allowFontScaling={false}
                 />
               </View>
 
@@ -682,6 +687,7 @@ export const TambahGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setPerlengkapan}
                   value={perlengkapan}
+                  allowFontScaling={false}
                 />
               </View>
 
@@ -719,6 +725,7 @@ export const TambahGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setAtribut}
                   value={atribut}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -752,7 +759,7 @@ export const TambahGrup = () => {
             <ModalSubmit />
           </ScrollView>
         </BottomSheetModalProvider>
-      </ >
+      </>
     </GestureHandlerRootView>
   );
 };

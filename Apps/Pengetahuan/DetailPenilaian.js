@@ -812,6 +812,7 @@ export const DetailPenilaian = () => {
                   onChangeText={setKomen}
                   defaultValue={komen}
                   placeholderTextColor={COLORS.grey}
+                  allowFontScaling={false}
                 />
                 <TouchableOpacity
                   onPress={() => {

@@ -211,6 +211,7 @@ export const AddressbookPara = ({ route }) => {
                 onChangeText={(text) => setinputValue(text)}
                 onEndEditing={getParaSearch}
                 clearButtonMode="always"
+                allowFontScaling={false}
               />
             </View>
           </View>

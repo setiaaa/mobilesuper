@@ -489,6 +489,7 @@ export const EditSubAgenda = () => {
                     }}
                     onChangeText={setJudul}
                     value={Judul}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -576,6 +577,7 @@ export const EditSubAgenda = () => {
                           fontSize: fontSizeResponsive("H3", device),
                         }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -652,6 +654,7 @@ export const EditSubAgenda = () => {
                           width: "49%",
                         }}
                         value={waktuMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -719,6 +722,7 @@ export const EditSubAgenda = () => {
                           width: "49%",
                         }}
                         value={waktuSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -1022,6 +1026,7 @@ export const EditSubAgenda = () => {
                       padding: 10,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1306,6 +1311,7 @@ export const EditSubAgenda = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                     value={pilihanPesertaTambahanInternal}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1406,6 +1412,7 @@ export const EditSubAgenda = () => {
                       }}
                       onChangeText={onChangeValue}
                       value={value}
+                      allowFontScaling={false}
                     />
                   </View>
                   <TouchableOpacity
@@ -1525,6 +1532,7 @@ export const EditSubAgenda = () => {
                     }}
                     onChangeText={setTempat}
                     value={Tempat}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -1581,6 +1589,7 @@ export const EditSubAgenda = () => {
                       }}
                       onChangeText={setNote}
                       value={Note}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1642,6 +1651,7 @@ export const EditSubAgenda = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
 
@@ -1667,6 +1677,7 @@ export const EditSubAgenda = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>

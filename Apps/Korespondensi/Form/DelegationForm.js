@@ -317,6 +317,7 @@ function DelegationForm() {
             multiline={true}
             value={reason}
             onChangeText={setReason}
+            allowFontScaling={false}
           />
           <Button mode="contained" style={styles.button} onPress={activate}>
             Aktifkan

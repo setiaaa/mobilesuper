@@ -207,6 +207,7 @@ export const TambahTodo = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -342,6 +343,7 @@ export const TambahTodo = () => {
                     placeholder="Masukan Tanggal"
                     style={{ padding: 10 }}
                     value={dueDate}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -520,6 +522,7 @@ export const TambahTodo = () => {
                       style={{ padding: 10, height: 150 }}
                       onChangeText={setDescription}
                       value={description}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>

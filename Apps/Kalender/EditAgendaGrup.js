@@ -310,6 +310,7 @@ export const EditAgendaGrup = ({ route }) => {
                     style={{ padding: 10 }}
                     onChangeText={setJudulAcara}
                     value={judulAcara}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -349,6 +350,7 @@ export const EditAgendaGrup = ({ route }) => {
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
                     value={TanggalMulai}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -406,6 +408,7 @@ export const EditAgendaGrup = ({ route }) => {
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
                     value={TanggalSelesai}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -625,6 +628,7 @@ export const EditAgendaGrup = ({ route }) => {
                     multiline
                     placeholder="Pilih Anggota"
                     style={{ padding: 10 }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -863,6 +867,7 @@ export const EditAgendaGrup = ({ route }) => {
                     style={{ padding: 10 }}
                     onChangeText={setKetentuan}
                     value={ketentuan}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -903,6 +908,7 @@ export const EditAgendaGrup = ({ route }) => {
                     style={{ padding: 10 }}
                     onChangeText={setLokasi}
                     value={lokasi}
+                    allowFontScaling={false}
                   />
                 </View>
                 <View
@@ -941,6 +947,7 @@ export const EditAgendaGrup = ({ route }) => {
                       style={{ padding: 10, height: 200 }}
                       onChangeText={setCatatan}
                       value={catatan}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>

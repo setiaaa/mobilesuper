@@ -1603,6 +1603,7 @@ export const TambahCutiSakit = () => {
                       maxLength={50}
                       placeholder="Ketikan Sesuatu"
                       onChangeText={setAlasanCuti}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -2188,6 +2189,7 @@ export const TambahCutiSakit = () => {
                     placeholder="Masukan Komentar"
                     onChangeText={setKomentarPembatan}
                     style={{ padding: 10, height: 40 }}
+                    allowFontScaling={false}
                   />
                 </View>
               </View>

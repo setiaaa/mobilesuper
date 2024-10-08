@@ -293,6 +293,7 @@ export const Laporan = () => {
               onChangeText={(text) => setInputValue(text)}
               onEndEditing={filterData}
               clearButtonMode="always"
+              allowFontScaling={false}
             />
           </View>
 

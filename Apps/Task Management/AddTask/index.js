@@ -290,6 +290,7 @@ export const AddTask = ({ route }) => {
                   style={{ padding: 10 }}
                   onChangeText={(e) => handleInputTask("judulTask", e)}
                   value={dataTask.judulTask}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -319,6 +320,7 @@ export const AddTask = ({ route }) => {
                   placeholder="Pilih Target Tanggal"
                   style={{ padding: 10 }}
                   value={targetTanggal}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -361,6 +363,7 @@ export const AddTask = ({ route }) => {
                   multiline
                   placeholder="Pilih Penanggung Jawab"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -460,6 +463,7 @@ export const AddTask = ({ route }) => {
                   style={{ padding: 10, minHeight: 150 }}
                   onChangeText={(e) => handleInputTask("deskripsi", e)}
                   value={dataTask.deskripsi}
+                  allowFontScaling={false}
                 />
               </View>
             </View>

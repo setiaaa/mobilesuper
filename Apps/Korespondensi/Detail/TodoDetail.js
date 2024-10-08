@@ -361,6 +361,7 @@ function TodoDetail({ route }) {
                     }}
                   />
                 }
+                allowFontScaling={false}
               />
             </View>
             <View style={styles.wrap}>
@@ -444,6 +445,7 @@ function TodoDetail({ route }) {
                                       }}
                                     />
                                   }
+                                  allowFontScaling={false}
                                 />
                               ) : null}
                             </>

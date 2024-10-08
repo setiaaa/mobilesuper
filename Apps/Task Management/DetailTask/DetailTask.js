@@ -1009,6 +1009,7 @@ export const DetailTask = () => {
                               onChangeText={setKomen}
                               defaultValue={komen}
                               placeholderTextColor={COLORS.grey}
+                              allowFontScaling={false}
                             />
                             <View
                               style={{

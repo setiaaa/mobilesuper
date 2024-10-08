@@ -1015,6 +1015,7 @@ function ActionInprogress({ id, data, page }) {
                     style={styles.input}
                     multiline={true}
                     autoFocus
+                    allowFontScaling={false}
                   />
 
                   {tipe == "Setujui" &&
@@ -1031,6 +1032,7 @@ function ActionInprogress({ id, data, page }) {
                             onChangeText={(text) => setPassphrase(text)}
                             style={{ paddingHorizontal: 10, width: "70%" }}
                             secureTextEntry={showPassphrase}
+                            allowFontScaling={false}
                           />
                           <View
                             style={{

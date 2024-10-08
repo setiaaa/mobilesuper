@@ -78,6 +78,7 @@ export const OutgoingList = ({ navigation }) => {
               //shadow android
               elevation: 2,
             }}
+            allowFontScaling={false}
           />
           <TouchableOpacity
             onPress={() => bottomSheetAttach()}
@@ -472,6 +473,7 @@ export const OutgoingList = ({ navigation }) => {
                       placeholder="Mulai"
                       style={{ padding: 10, height: 40 }}
                       value={TanggalMulai}
+                      allowFontScaling={false}
                     />
                     <View
                       style={{
@@ -512,6 +514,7 @@ export const OutgoingList = ({ navigation }) => {
                       placeholder="Selesai"
                       style={{ padding: 10, height: 40 }}
                       value={TanggalSelesai}
+                      allowFontScaling={false}
                     />
                     <View
                       style={{
@@ -669,6 +672,7 @@ export const OutgoingList = ({ navigation }) => {
                   borderRadius: 6,
                   borderColor: "#D0D5DD",
                 }}
+                allowFontScaling={false}
               />
             </View>
 

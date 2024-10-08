@@ -132,10 +132,10 @@ function ScanLogList() {
         {isLoading
           ? "Loading..."
           : isSearchFilter
-            ? "Scan Log Letter not found"
-            : list?.count == 0
-              ? "You don't have Scan Log Letter"
-              : "Loading..."}
+          ? "Scan Log Letter not found"
+          : list?.count == 0
+          ? "You don't have Scan Log Letter"
+          : "Loading..."}
       </Text>
     </View>
   );
@@ -319,7 +319,7 @@ function ScanLogList() {
       </View>
 
       <BottomSheetModalProvider>
-        < >
+        <>
           <BottomSheetModal
             name="filter"
             ref={bottomSheetModalRef}
@@ -344,6 +344,7 @@ function ScanLogList() {
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                   style={styles.bottomsheetInput}
+                  allowFontScaling={false}
                 />
               </View>
               <View style={styles.bottomsheetContent}>
@@ -412,7 +413,7 @@ function ScanLogList() {
               </View>
             </View>
           </BottomSheetModal>
-        </ >
+        </>
       </BottomSheetModalProvider>
     </>
   );

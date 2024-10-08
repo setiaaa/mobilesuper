@@ -255,6 +255,7 @@ export const AddressBookJabatan = ({ route }) => {
                 onChangeText={(text) => setinputValue(text)}
                 onEndEditing={getTitleSearch}
                 clearButtonMode="always"
+                allowFontScaling={false}
               />
             </View>
           </View>

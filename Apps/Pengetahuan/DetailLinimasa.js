@@ -1504,6 +1504,7 @@ export const DetailLinimasa = ({ route }) => {
                                   onChangeText={setKomen}
                                   defaultValue={komen}
                                   placeholderTextColor={COLORS.grey}
+                                  allowFontScaling={false}
                                 />
                                 <View
                                   style={{

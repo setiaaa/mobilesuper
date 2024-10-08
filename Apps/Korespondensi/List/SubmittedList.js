@@ -469,10 +469,7 @@ function SubmittedList({ route }) {
                           id: "",
                           name: "Semua Jenis Surat",
                         });
-                        if (
-                          searchQuery.length == 0 &&
-                          startDate == null
-                        ) {
+                        if (searchQuery.length == 0 && startDate == null) {
                           setIsSearchFilter(false);
                           setIsLoading(true);
                         }
@@ -597,6 +594,7 @@ function SubmittedList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -645,6 +643,7 @@ function SubmittedList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -722,6 +721,7 @@ function SubmittedList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
                     />
                   </View>
                   <View

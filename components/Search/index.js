@@ -21,6 +21,7 @@ export const Search = ({ onSearch, placeholder, iconColor }) => {
         maxLength={30}
         onChangeText={onSearch}
         clearButtonMode="always"
+        allowFontScaling={false}
       />
     </View>
   );

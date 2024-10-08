@@ -935,6 +935,7 @@ export const GrupKalender = () => {
                             paddingTop: 10,
                             borderRadius: 6,
                           }}
+                          allowFontScaling={false}
                         />
                       </View>
 
@@ -961,6 +962,7 @@ export const GrupKalender = () => {
                             paddingTop: 10,
                             borderRadius: 6,
                           }}
+                          allowFontScaling={false}
                         />
                       </View>
 

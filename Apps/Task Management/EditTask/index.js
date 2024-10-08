@@ -355,6 +355,7 @@ export const EditTask = ({ route }) => {
                   }}
                   onChangeText={(e) => handleInputTask("judulTask", e)}
                   value={dataTask.judulTask}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -397,6 +398,7 @@ export const EditTask = ({ route }) => {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                   value={targetTanggal}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -452,6 +454,7 @@ export const EditTask = ({ route }) => {
                     padding: 10,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -588,6 +591,7 @@ export const EditTask = ({ route }) => {
                   }}
                   onChangeText={(e) => handleInputTask("deskripsi", e)}
                   value={dataTask.deskripsi}
+                  allowFontScaling={false}
                 />
               </View>
             </View>

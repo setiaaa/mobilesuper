@@ -402,6 +402,7 @@ export const EditGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setNamaGrup}
                   value={namaGrup}
+                  allowFontScaling={false}
                 />
               </View>
               <View
@@ -461,6 +462,7 @@ export const EditGrup = () => {
                       pilihanPimpinanGrup[0]?.title?.name ||
                       pilihanPimpinanGrup[0]?.title
                     }
+                    allowFontScaling={false}
                   />
                 </View>
                 <View
@@ -526,6 +528,7 @@ export const EditGrup = () => {
                   maxLength={40}
                   placeholder="Pilih member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -604,6 +607,7 @@ export const EditGrup = () => {
                   maxLength={40}
                   placeholder="Pilih member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -706,6 +710,7 @@ export const EditGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setBusana}
                   value={busana}
+                  allowFontScaling={false}
                 />
               </View>
 
@@ -742,6 +747,7 @@ export const EditGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setPerlengkapan}
                   value={perlengkapan}
+                  allowFontScaling={false}
                 />
               </View>
 
@@ -779,6 +785,7 @@ export const EditGrup = () => {
                   style={{ padding: 10 }}
                   onChangeText={setAtribut}
                   value={atribut}
+                  allowFontScaling={false}
                 />
               </View>
             </View>

@@ -743,6 +743,7 @@ export const DetailDokumenLain = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -770,6 +771,7 @@ export const DetailDokumenLain = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 

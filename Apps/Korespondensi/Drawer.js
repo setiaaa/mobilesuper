@@ -3,12 +3,7 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { Avatar, Drawer, Text, List } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -274,6 +269,7 @@ const CustomDrawerContent = (props) => {
           placeholder="Masukan Token"
           onChangeText={setInputToken}
           style={{ padding: 10, height: 40, borderWidth: 1, width: "80%" }}
+          allowFontScaling={false}
         />
         <TouchableOpacity
           onPress={() => {

@@ -154,6 +154,7 @@ export const LoginToken = () => {
                   setUserName(e);
                 }}
                 value={username}
+                allowFontScaling={false}
               />
             </View>
             <View style={{ width: "90%", marginTop: 5 }}>
@@ -177,6 +178,7 @@ export const LoginToken = () => {
                   }}
                   value={password}
                   secureTextEntry={show}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{

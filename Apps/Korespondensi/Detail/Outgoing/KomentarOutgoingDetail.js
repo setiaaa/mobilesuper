@@ -646,6 +646,7 @@ export const KomentarOutgoingDetail = () => {
             maxLength={40}
             placeholder="Ketik Komentar Disini"
             style={{ padding: 20, height: 50, width: "80%" }}
+            allowFontScaling={false}
           />
           <View
             style={{

@@ -510,6 +510,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               config: config,
                             });
                           }}
+                          allowFontScaling={false}
                         />
                       }
                       editable={false}
@@ -555,6 +556,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         }
                         editable={false}
                         style={styles.titleLabel}
+                        allowFontScaling={false}
                       />
                     )}
                     {selectedTindakan.length != 0 &&
@@ -582,6 +584,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     );
                   }}
                   style={[styles.titleLabel, { paddingVertical: 12 }]}
+                  allowFontScaling={false}
                 />
 
                 <View

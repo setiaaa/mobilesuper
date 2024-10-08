@@ -849,6 +849,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -876,6 +877,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 

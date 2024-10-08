@@ -415,6 +415,7 @@ export const TambahSubAgenda = () => {
                     style={{ padding: 10 }}
                     onChangeText={setJudul}
                     value={Judul}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -484,6 +485,7 @@ export const TambahSubAgenda = () => {
                         placeholder="Mulai"
                         style={{ padding: 10 }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -549,6 +551,7 @@ export const TambahSubAgenda = () => {
                         placeholder="Mulai"
                         style={{ padding: 10 }}
                         value={waktuMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -606,6 +609,7 @@ export const TambahSubAgenda = () => {
                         placeholder="Selesai"
                         style={{ padding: 10 }}
                         value={waktuSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -880,6 +884,7 @@ export const TambahSubAgenda = () => {
                     maxLength={40}
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1122,6 +1127,7 @@ export const TambahSubAgenda = () => {
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
                     value={pilihanPesertaTambahanInternal}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1214,6 +1220,7 @@ export const TambahSubAgenda = () => {
                       style={{ padding: 10 }}
                       onChangeText={onChangeValue}
                       value={value}
+                      allowFontScaling={false}
                     />
                   </View>
                   <TouchableOpacity
@@ -1317,6 +1324,7 @@ export const TambahSubAgenda = () => {
                     style={{ padding: 10 }}
                     onChangeText={setTempat}
                     value={Tempat}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -1369,6 +1377,7 @@ export const TambahSubAgenda = () => {
                       style={{ padding: 10, height: 150 }}
                       onChangeText={setNote}
                       value={Note}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1421,6 +1430,7 @@ export const TambahSubAgenda = () => {
                             style={{ padding: 10 }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
 
@@ -1443,6 +1453,7 @@ export const TambahSubAgenda = () => {
                             style={{ padding: 10 }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>

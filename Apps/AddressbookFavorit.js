@@ -185,6 +185,7 @@ export const AddressbookFavorit = ({ route }) => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filter}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
       </View>

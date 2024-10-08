@@ -74,10 +74,10 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
         >
           <View>
             <Image
-              style={{ 
-                width: device === 'tablet' ? 50 : 30, 
-                height: device === 'tablet' ? 50 : 30, 
-                borderRadius: 50 
+              style={{
+                width: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 30,
+                borderRadius: 50,
               }}
               source={{ uri: items.creator_avatar }}
             />
@@ -87,7 +87,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
               style={{
                 fontSize: fontSizeResponsive("H4", device),
                 fontWeight: FONTWEIGHT.bold,
-                lineHeight: device === 'tablet'? 30: 20,
+                lineHeight: device === "tablet" ? 30 : 20,
                 wordWrap: "break-word",
               }}
             >
@@ -99,7 +99,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                   color: COLORS.lighter,
                   fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: device === 'tablet'? 30: 18,
+                  lineHeight: device === "tablet" ? 30 : 18,
                   marginBottom: 10,
                   wordWrap: "break-word",
                 }}
@@ -112,7 +112,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                 color: COLORS.lighter,
                 fontSize: fontSizeResponsive("H5", device),
                 fontWeight: FONTWEIGHT.normal,
-                lineHeight: device === 'tablet'? 30: 18,
+                lineHeight: device === "tablet" ? 30 : 18,
                 wordWrap: "break-word",
               }}
             >
@@ -168,7 +168,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                           color: COLORS.lighter,
                           fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
-                          lineHeight: device === 'tablet'? 30: 18,
+                          lineHeight: device === "tablet" ? 30 : 18,
                           wordWrap: "break-word",
                         }}
                       >
@@ -203,7 +203,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                             style={{
                               fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.bold,
-                              lineHeight: device === 'tablet'? 30: 20,
+                              lineHeight: device === "tablet" ? 30 : 20,
                             }}
                           >
                             {listKomen.creator}
@@ -214,7 +214,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                                 color: COLORS.lighter,
                                 fontSize: fontSizeResponsive("H5", device),
                                 fontWeight: FONTWEIGHT.normal,
-                                lineHeight: device === 'tablet'? 30: 18,
+                                lineHeight: device === "tablet" ? 30 : 18,
                                 marginBottom: 10,
                               }}
                             >
@@ -232,7 +232,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                                 color: COLORS.lighter,
                                 fontSize: fontSizeResponsive("H5", device),
                                 fontWeight: FONTWEIGHT.normal,
-                                lineHeight: device === 'tablet'? 30: 18,
+                                lineHeight: device === "tablet" ? 30 : 18,
                               }}
                             >
                               {listKomen.jam}
@@ -243,7 +243,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                               color: "#999999",
                               fontSize: fontSizeResponsive("H5", device),
                               fontWeight: FONTWEIGHT.normal,
-                              lineHeight: device === 'tablet'? 30: 18,
+                              lineHeight: device === "tablet" ? 30 : 18,
                             }}
                           >
                             {listKomen.message}
@@ -273,7 +273,7 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
                                     color: COLORS.lighter,
                                     fontSize: fontSizeResponsive("H5", device),
                                     fontWeight: FONTWEIGHT.normal,
-                                    lineHeight: device === 'tablet'? 30: 18,
+                                    lineHeight: device === "tablet" ? 30 : 18,
                                   }}
                                 >
                                   Tutup {items.children?.length} Balasan
@@ -469,6 +469,7 @@ export const Komentar = () => {
             }}
             onChangeText={setKomen}
             value={komen}
+            allowFontScaling={false}
           />
           <View
             style={{

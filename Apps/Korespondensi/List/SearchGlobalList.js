@@ -444,6 +444,7 @@ function SearchGlobalList() {
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                   style={styles.input}
+                  allowFontScaling={false}
                 />
                 <Button
                   mode="contained"

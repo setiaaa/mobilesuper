@@ -191,6 +191,7 @@ export const HDFormLaporan = () => {
                   style={{ padding: 10 }}
                   onChangeText={setRequest}
                   value={request}
+                  allowFontScaling={false}
                 />
               </View>
             </View>

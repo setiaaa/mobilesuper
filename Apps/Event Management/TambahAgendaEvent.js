@@ -211,6 +211,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -251,6 +252,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -307,6 +309,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -371,6 +374,7 @@ export const TambahAgendaEvent = () => {
                         style={{ padding: 10 }}
                         onChangeText={onChangeValue}
                         value={value}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -429,6 +433,7 @@ export const TambahAgendaEvent = () => {
                         style={{ padding: 10 }}
                         onChangeText={onChangeValue}
                         value={value}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -673,6 +678,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -729,6 +735,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -785,6 +792,7 @@ export const TambahAgendaEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={onChangeValue}
                     value={value}
+                    allowFontScaling={false}
                   />
                 </View>
 

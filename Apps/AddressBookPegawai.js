@@ -216,6 +216,7 @@ export const AddressBookPegawai = ({ route }) => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filter}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
       </View>

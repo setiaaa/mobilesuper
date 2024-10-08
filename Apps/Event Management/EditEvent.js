@@ -536,6 +536,7 @@ export const EditEvent = () => {
                     }}
                     onChangeText={setJudul}
                     value={Judul}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -590,6 +591,7 @@ export const EditEvent = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -656,6 +658,7 @@ export const EditEvent = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                         value={TanggalSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -869,6 +872,7 @@ export const EditEvent = () => {
                     }}
                     onChangeText={setTempat}
                     value={Tempat}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -921,6 +925,7 @@ export const EditEvent = () => {
                       pilihanPimpinanEvent[0]?.title?.name ||
                       pilihanPimpinanEvent[0]?.title
                     }
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1053,6 +1058,7 @@ export const EditEvent = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                     value={pilihanPesertaEvent}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1144,6 +1150,7 @@ export const EditEvent = () => {
                       padding: 10,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1235,6 +1242,7 @@ export const EditEvent = () => {
                       padding: 10,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1332,6 +1340,7 @@ export const EditEvent = () => {
                       }}
                       onChangeText={setNote}
                       value={Note}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1390,6 +1399,7 @@ export const EditEvent = () => {
                       }}
                       onChangeText={onChangeValue}
                       value={value}
+                      allowFontScaling={false}
                     />
                   </View>
                   <TouchableOpacity
@@ -1519,6 +1529,7 @@ export const EditEvent = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
 
@@ -1544,6 +1555,7 @@ export const EditEvent = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>

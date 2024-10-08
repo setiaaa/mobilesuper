@@ -1032,6 +1032,7 @@ export const DetailSertifikat = ({ route }) => {
                       borderColor: "#D0D5DD",
                     }}
                     onChangeText={setParaphrase}
+                    allowFontScaling={false}
                   />
                 </View>
 

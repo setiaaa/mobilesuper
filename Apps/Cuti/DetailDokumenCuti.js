@@ -1720,6 +1720,7 @@ export const DetailDokumenCuti = ({ route }) => {
                       placeholder="Masukan Komentar"
                       onChangeText={setKomentarApproval}
                       style={{ padding: 10, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
 
@@ -1748,6 +1749,7 @@ export const DetailDokumenCuti = ({ route }) => {
                       placeholder="Masukan Passphrase"
                       onChangeText={setPassphrase}
                       style={{ padding: 10, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>

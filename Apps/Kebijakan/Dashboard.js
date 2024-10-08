@@ -427,6 +427,7 @@ export default function Dashboard(params) {
                         onChangeText={(text) => setInputValue(text)}
                         onEndEditing={filterData}
                         clearButtonMode="always"
+                        allowFontScaling={false}
                       />
                     </View>
                   </View>

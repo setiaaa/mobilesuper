@@ -1873,6 +1873,7 @@ export const LiniMasa = () => {
                     onChangeText={(text) => setInputValue(text)}
                     onEndEditing={filterSearch}
                     clearButtonMode="always"
+                    allowFontScaling={false}
                   />
                 </View>
               </View>
