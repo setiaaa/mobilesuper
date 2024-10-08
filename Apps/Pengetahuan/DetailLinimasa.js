@@ -788,7 +788,7 @@ export const DetailLinimasa = ({ route }) => {
                 onPress={() => {
                   resetData();
                   // navigation.navigate("MainPengetahuan");
-                  navigation.goBack()
+                  navigation.goBack();
                 }}
                 style={{ position: "absolute", zIndex: 1 }}
               >

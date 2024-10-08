@@ -9,7 +9,7 @@ import { GlobalStyles } from "./constants/styles";
 // import AppNavigator from "./screen/AppNavigator";
 import AppNavigator from "./Apps/Korespondensi/AppNavigator";
 import { Host } from "react-native-portalize";
-import { StatusBar, View } from "react-native";
+import { StatusBar, View, Text } from "react-native";
 import { COLORS } from "./config/SuperAppps";
 import { Platform } from "react-native";
 import { useEffect } from "react";
@@ -46,6 +46,9 @@ export default function App() {
       secondaryContainer: GlobalStyles.colors.browhite,
     },
   };
+
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.allowFontScaling = false;
 
   return (
     <>

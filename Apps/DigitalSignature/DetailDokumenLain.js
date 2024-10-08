@@ -399,7 +399,7 @@ export const DetailDokumenLain = ({ route }) => {
                           justifyContent: "center",
                         }}
                       >
-                        <View style={{ width: "98%" }}>
+                        <View>
                           <View
                             style={{
                               flexDirection: "row",
@@ -453,7 +453,7 @@ export const DetailDokumenLain = ({ route }) => {
                                     style={{
                                       color: COLORS.success,
                                       fontSize: fontSizeResponsive(
-                                        "H2",
+                                        "H4",
                                         device
                                       ),
                                     }}
@@ -496,7 +496,7 @@ export const DetailDokumenLain = ({ route }) => {
                                     style={{
                                       color: COLORS.infoDanger,
                                       fontSize: fontSizeResponsive(
-                                        "H2",
+                                        "H4",
                                         device
                                       ),
                                     }}
