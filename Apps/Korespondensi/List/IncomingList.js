@@ -670,7 +670,7 @@ function IncomingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -719,7 +719,7 @@ function IncomingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

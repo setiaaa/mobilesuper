@@ -611,7 +611,8 @@ export const RangkumanIKU = () => {
                 }}
                 style={{ flex: 1, borderRadius: 8 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={false}

@@ -1167,7 +1167,7 @@ export const TambahCutiTahunan = ({ route }) => {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: device === "tablet" ? 300 : 150,
+                            width: device === "tablet" ? 300 : 140,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -1212,7 +1212,7 @@ export const TambahCutiTahunan = ({ route }) => {
                         <View
                           style={{
                             borderWidth: 1,
-                            width: device === "tablet" ? 300 : 150,
+                            width: device === "tablet" ? 300 : 140,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",

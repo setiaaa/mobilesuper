@@ -71,7 +71,8 @@ export const Demografi = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -95,7 +96,8 @@ export const Demografi = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -120,7 +122,8 @@ export const Demografi = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -143,7 +146,8 @@ export const Demografi = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -166,7 +170,8 @@ export const Demografi = () => {
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
+          textZoom={100}
+          androidLayerType={"hardware"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={true}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Dimensions,
   Platform,
@@ -10,9 +10,11 @@ import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, getOrientation, PADDING } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
+import CookieManager from "@react-native-cookies/cookies";
 
 export const APBN = () => {
   const { device } = useSelector((state) => state.apps);
+  const webViewRef = useRef(null);
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
@@ -61,9 +63,6 @@ export const APBN = () => {
     head.append(met);
   }, 500)`;
 
-
-  
-
   const renderWebView = () => {
     if (device === "tablet") {
       if (getOrientation(screenWidth, screenHeight) === "landscape") {
@@ -81,7 +80,8 @@ export const APBN = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -105,7 +105,8 @@ export const APBN = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -130,7 +131,8 @@ export const APBN = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -153,7 +155,8 @@ export const APBN = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -168,6 +171,7 @@ export const APBN = () => {
     } else {
       return (
         <WebView
+          ref={webViewRef}
           originWhitelist={["*"]}
           source={{
             uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
@@ -176,16 +180,17 @@ export const APBN = () => {
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
-          scalesPageToFit={true}
+          scalesPageToFit={false}
           injectedJavaScriptBeforeContentLoaded={
             injectedJavaScriptBeforeContentLoadedMobile
           }
           thirdPartyCookiesEnabled={true}
           sharedCookiesEnabled={true}
           domStorageEnabled={true}
+          textZoom={100}
+          androidLayerType={"hardware"}
         />
       );
     }

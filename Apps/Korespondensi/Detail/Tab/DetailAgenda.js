@@ -41,7 +41,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
     }, 3000);
   }, []);
   const dispatch = useDispatch();
-  
+
   useFocusEffect(
     useCallback(() => {
       if (tipe == "in/internal" || tipe == "ReferenceDetail") {
@@ -553,6 +553,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       <RenderHTML
                         contentWidth={width}
                         source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     </View>
                   )}
@@ -562,6 +563,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       <RenderHTML
                         contentWidth={width}
                         source={{ html: data?.receivers_display }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     </View>
                   )}
@@ -609,6 +611,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display[0] }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                   {data && data.copytos_display?.length > 1 && (
@@ -616,6 +619,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display.join("\n") }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                 </>
@@ -715,6 +719,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data &&
@@ -762,6 +767,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                             style={{ fontSize: 13 }}
                             contentWidth={width}
                             source={{ html: data?.receivers[0] }}
+                            defaultTextProps={{ allowFontScaling: false }}
                           />
                         )}
                       </>
@@ -793,6 +799,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data &&
@@ -855,6 +862,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display[0] }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                   {data && data.copytos_display?.length > 1 && (
@@ -862,6 +870,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display.join("\n") }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                 </>

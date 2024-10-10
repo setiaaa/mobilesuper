@@ -148,6 +148,7 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
                 <RenderHTML
                   source={{ html: item.description }}
                   contentWidth={width}
+                  defaultTextProps={{ allowFontScaling: false }}
                 />
               </>
             )}

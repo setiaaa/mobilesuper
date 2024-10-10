@@ -93,6 +93,8 @@ export const Satker = () => {
 
   const dispatch = useDispatch();
 
+  const { width } = useWindowDimensions();
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -205,7 +207,9 @@ export const Satker = () => {
     },
   };
 
-  const baseStyles = {};
+  const baseStyles = {
+    fontSize: 16, // Set font size sesuai kebutuhan
+  };
 
   useEffect(() => {
     const dataBerita = berita?.lists?.map((item) => ({
@@ -573,9 +577,10 @@ export const Satker = () => {
               </Text>
               <RenderHTML
                 source={{ html: pesan[pesan.length - 1]?.content }}
+                contentWidth={width}
                 tagsStyles={tagsStyles}
                 classesStyles={classesStyles}
-                baseStyle={baseStyles}
+                defaultTextProps={{ allowFontScaling: false }}
               />
             </ScrollView>
           </View>

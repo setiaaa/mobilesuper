@@ -376,6 +376,7 @@ export const Perencanaan = () => {
             <RenderHTML
               source={{ html: detailContent.content }}
               contentWidth={width}
+              defaultTextProps={{ allowFontScaling: false }}
             />
           </View>
         </ScrollView>

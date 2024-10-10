@@ -147,7 +147,7 @@ export const DetailBerita = () => {
               contentWidth={width}
               tagsStyles={tagsStyles}
               classesStyles={classesStyles}
-              baseStyle={baseStyles}
+              defaultTextProps={{ allowFontScaling: false }}
             />
           </View>
         </View>

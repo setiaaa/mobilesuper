@@ -538,9 +538,7 @@ export const DetailPenilaian = () => {
                     source={source}
                     contentWidth={width}
                     enableExperimentalMarginCollapsing={true}
-                    tagsStyles={{
-                      p: { fontSize: fontSizeResponsive("H4", device) },
-                    }}
+                    defaultTextProps={{ allowFontScaling: false }}
                   />
                 )}
                 {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}

@@ -77,7 +77,7 @@ export const CardListDataIPASN = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          kOMPETENSI
+          KOMPETENSI
         </Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>

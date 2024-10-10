@@ -245,6 +245,8 @@ export const LPMUKP = () => {
             onNavigationStateChange={handleNavState}
             sharedCookiesEnabled={true}
             thirdPartyCookiesEnabled={true}
+            textZoom={100}
+            androidLayerType={"hardware"}
           />
         ) : (
           <WebView
@@ -254,12 +256,13 @@ export const LPMUKP = () => {
             }}
             style={{ flex: 1 }}
             allowFileAccess={true}
-            androidLayerType={"software"}
             mixedContentMode={"always"}
             allowUniversalAccessFromFileURLs={true}
             scalesPageToFit={false}
             incognito={true}
             pullToRefreshEnabled={true}
+            textZoom={100}
+            androidLayerType={"hardware"}
           />
         )}
 

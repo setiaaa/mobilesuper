@@ -128,6 +128,7 @@ function TrackingLogDetail({ route, data }) {
                           <RenderHTML
                             contentWidth={width}
                             source={{ html: node?.message }}
+                            defaultTextProps={{ allowFontScaling: false }}
                           />
                         </View>
                       </Card>

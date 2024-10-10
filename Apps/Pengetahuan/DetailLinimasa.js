@@ -1082,9 +1082,7 @@ export const DetailLinimasa = ({ route }) => {
                         source={source}
                         contentWidth={width}
                         enableExperimentalMarginCollapsing={true}
-                        tagsStyles={{
-                          p: { fontSize: fontSizeResponsive("H4", device) },
-                        }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     </View>
                   )}

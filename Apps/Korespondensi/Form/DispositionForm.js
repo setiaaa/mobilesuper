@@ -510,11 +510,11 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               config: config,
                             });
                           }}
-                          allowFontScaling={false}
                         />
                       }
                       editable={false}
                       style={styles.titleLabel}
+                      allowFontScaling={false}
                     />
                   )}
                 </View>
@@ -605,19 +605,28 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     autoClear={false}
                     imageType="image/svg+xml"
                     descriptionText=" "
-                    webStyle=".m-signature-pad {
-                    position: absolute;
-                    font-size: 10px;
-                    width: 100%;
-                    height: 89%;
-                    top: 0;
-                    left: 0;
-                    margin-left: 0;
-                    margin-top: 0;
-                    border: 1px solid #e8e8e8;
-                    background-color: #ffff;
-                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
-                    }"
+                    webStyle={`
+                      .m-signature-pad {
+                        position: absolute;
+                        width: 100%;
+                        height: 89%;
+                        top: 0;
+                        left: 0;
+                        margin-left: 0;
+                        margin-top: 0;
+                        border: 1px solid #e8e8e8;
+                        background-color: #ffff;
+                        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+                      }
+                     .m-signature-pad button {
+                        font-size: 10px !important; /* Ukuran font untuk button */
+                        line-height: normal !important;
+                        padding: 10px 20px; /* Sesuaikan padding */
+                        display: inline-block; /* Memastikan button tidak terpotong */
+                        text-size-adjust: none !important;
+                      }
+                        
+                    `}
                     clearText="Hapus"
                     confirmText="Simpan"
                   />

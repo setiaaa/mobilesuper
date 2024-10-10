@@ -525,6 +525,7 @@ function DetailAgendaInpro({
                         <RenderHTML
                           contentWidth={width}
                           source={{ html: data?.receivers_display }}
+                          defaultTextProps={{ allowFontScaling: false }}
                         />
                       </View>
                     )}
@@ -576,12 +577,14 @@ function DetailAgendaInpro({
                       <RenderHTML
                         contentWidth={width}
                         source={{ html: data?.copytos_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data && data.copytos_display?.length > 1 && (
                       <RenderHTML
                         contentWidth={width}
                         source={{ html: data?.copytos_display.join("\n") }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                   </>
@@ -691,6 +694,7 @@ function DetailAgendaInpro({
                               style={{ fontSize: 13 }}
                               contentWidth={width}
                               source={{ html: data?.receivers_display[0] }}
+                              defaultTextProps={{ allowFontScaling: false }}
                             />
                           )}
                           {data &&
@@ -750,6 +754,7 @@ function DetailAgendaInpro({
                                   source={{
                                     html: data?.receivers[0],
                                   }}
+                                  defaultTextProps={{ allowFontScaling: false }}
                                 />
                               )}
                             </>
@@ -781,6 +786,7 @@ function DetailAgendaInpro({
                               style={{ fontSize: 13 }}
                               contentWidth={width}
                               source={{ html: data?.receivers_display[0] }}
+                              defaultTextProps={{ allowFontScaling: false }}
                             />
                           )}
                           {data &&
@@ -845,6 +851,7 @@ function DetailAgendaInpro({
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.copytos_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data && data.copytos_display?.length > 1 && (
@@ -852,6 +859,7 @@ function DetailAgendaInpro({
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.copytos_display.join("\n") }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                   </>
