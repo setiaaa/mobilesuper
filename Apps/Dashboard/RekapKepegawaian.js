@@ -1,5 +1,11 @@
 import React from "react";
-import { Platform, ScrollView, Text, useWindowDimensions, View } from "react-native";
+import {
+  Platform,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, getOrientation, PADDING } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
@@ -54,9 +60,6 @@ export const RekapKepegawaian = () => {
     head.append(met);
   }, 500)`;
 
-
-  
-
   const renderWebView = () => {
     if (device === "tablet") {
       if (getOrientation(screenWidth, screenHeight) === "landscape") {
@@ -74,7 +77,8 @@ export const RekapKepegawaian = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -98,7 +102,8 @@ export const RekapKepegawaian = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -123,7 +128,8 @@ export const RekapKepegawaian = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -146,7 +152,8 @@ export const RekapKepegawaian = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -169,7 +176,8 @@ export const RekapKepegawaian = () => {
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
+          textZoom={100}
+          androidLayerType={"hardware"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={true}
@@ -183,7 +191,7 @@ export const RekapKepegawaian = () => {
       );
     }
   };
-  
+
   return (
     <ScrollView
       style={{

@@ -39,7 +39,7 @@ const EXPORT_FILE_BY_EMPLOYEE = BASE_URL + "mp/admin/summary/export/pegawai/";
 
 const GET_SUMMARY_COUNT = digitalSign + "document/summary/";
 const GET_SUMMARY_LIST = digitalSign + "document/summary/list/";
-// const GET_EXPORT_SUMMARY_LIST = URL + 'export/';
+const GET_SUBJECTLIST = digitalSign + "subject-list/";
 
 const GET_LIST_CATEGORY = BASE_URL + "mp/admin/category/?limit=10";
 const GET_LIST_COMPETENCE = BASE_URL + "mp/admin/competence/?limit=199";
@@ -1997,11 +1997,31 @@ export const getSummaryCount = createAsyncThunk(
 
 export const getSummaryList = createAsyncThunk(
   "document/summary/list/",
-  async (token) => {
-    const respon = await axios.get(`${GET_SUMMARY_LIST}`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, sertifikat, pelatihan, judul }) => {
+    console.log(sertifikat, pelatihan, judul);
+    const respon = await axios.get(
+      `${GET_SUMMARY_LIST}?sertifikat=${sertifikat}&pelatihan=${pelatihan}&judul=${judul}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log(
+      `${GET_SUMMARY_LIST}?sertifikat=${sertifikat}&pelatihan=${pelatihan}&judul=${judul}`
+    );
     return respon?.data.results;
+  }
+);
+
+export const getSubjectList = createAsyncThunk(
+  "document/getSubjectList",
+  async ({ token, pelatihan }) => {
+    const respon = await axios.get(
+      `${GET_SUBJECTLIST}?pelatihan=${pelatihan}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
   }
 );
 

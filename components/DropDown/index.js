@@ -179,6 +179,8 @@ export const Dropdown = ({
                 borderColor: data.length > 0 ? borderColorValue : null,
                 height: heightValue ? heightValue : "auto",
               }}
+              scrollEnabled={true}
+              nestedScrollEnabled={true}
             >
               {filterData.length > 0 ? (
                 filterData.map((kategori) => {

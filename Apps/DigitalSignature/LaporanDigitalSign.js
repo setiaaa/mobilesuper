@@ -27,6 +27,7 @@ import {
   getDivisionFilter,
   getLaporanAksiPerubahan,
   getSubDivisionFilter,
+  getSubjectList,
   getSummaryCount,
   getSummaryList,
 } from "../../service/api";
@@ -153,7 +154,14 @@ export const LaporanDigitalSign = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getSummaryCount(token));
-      dispatch(getSummaryList(token));
+      dispatch(
+        getSummaryList({
+          token: token,
+          sertifikat: "",
+          pelatihan: "",
+          judul: "",
+        })
+      );
       dispatch(
         getLaporanAksiPerubahan({
           token: token,
@@ -165,7 +173,9 @@ export const LaporanDigitalSign = () => {
     }
   }, [token, filterSatker, filterUnker]);
 
-  const { summary, loading } = useSelector((state) => state.digitalsign);
+  const { summary, loading, subjectLists } = useSelector(
+    (state) => state.digitalsign
+  );
   const { laporan, filterSatkerUnker } = useSelector(
     (state) => state.aksiperubahan
   );
@@ -217,6 +227,9 @@ export const LaporanDigitalSign = () => {
   const [tonggleAngkatan, setToggleAngkatan] = useState(false);
   const [tonggleAngkatanDasar, setToggleAngkatanDasar] = useState(false);
   const [keyPelatihanNasional, setKeyPelatihanNasional] = useState("");
+  const [jenisSertifikat, setJenisSertifikat] = useState([]);
+  const [jenisPelatihan, setJenisPelatihan] = useState([]);
+  const [judulPelatihan, setJudulPelatihan] = useState([]);
 
   const [filter, setFilter] = useState({
     "LATIHAN DASAR ": {
@@ -564,6 +577,136 @@ export const LaporanDigitalSign = () => {
       maxValue: maxValue,
     };
   };
+
+  const optionJenisSertfikat = [
+    {
+      key: "klasikal",
+      value: "Klasikal",
+    },
+    {
+      key: "non_klasikal",
+      value: "Non Klasikal",
+    },
+  ];
+
+  const optionKlasikal = [
+    {
+      key: 1,
+      value: "Pelatihan Struktural Kepemimpinan",
+    },
+    {
+      key: 2,
+      value: "Pelatihan Manajerial",
+    },
+    {
+      key: 3,
+      value: "Pelatihan Teknis",
+    },
+    {
+      key: 4,
+      value: "Pelatihan Fungsional",
+    },
+    {
+      key: 5,
+      value: "Pelatihan Sosial Kultural",
+    },
+    {
+      key: 6,
+      value: "Seminar/Konferensi/Sarasehan",
+    },
+    {
+      key: 7,
+      value: "Workshop atau Lokakarya",
+    },
+    {
+      key: 8,
+      value: "Kursus",
+    },
+    {
+      key: 9,
+      value: "Penataran",
+    },
+    {
+      key: 10,
+      value: "Bimbingan Teknis",
+    },
+    {
+      key: 11,
+      value: "Sosialisasi",
+    },
+  ];
+
+  const optionNonKlasikal = [
+    {
+      key: 1,
+      value: "Coaching",
+    },
+    {
+      key: 2,
+      value: "Mentoring",
+    },
+    // {
+    //     key: 3,
+    //     value: 'e-learning'
+    // },
+    {
+      key: 4,
+      value: "Pelatihan Jarak Jauh",
+    },
+    {
+      key: 5,
+      value: "Detasering (Secondment)",
+    },
+    {
+      key: 6,
+      value: "Pembelajaran Alam Terkbuka (Outbond)",
+    },
+    {
+      key: 7,
+      value: "Patok Banding (Benchmarking)",
+    },
+    {
+      key: 8,
+      value: "Pertukaran antara PNS dengan Pegawai Swasta/BUMN/BUMD",
+    },
+    {
+      key: 9,
+      value: "Belajar Mandiri (Self Development)",
+    },
+    {
+      key: 10,
+      value: "Komunitas Belajar (Community of Practices)",
+    },
+    {
+      key: 11,
+      value: "Bimbingan di Tempat Kerja",
+    },
+    {
+      key: 12,
+      value: "Magang/Praktik Kerja",
+    },
+  ];
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(
+        getSubjectList({ token: token, pelatihan: jenisPelatihan.value })
+      );
+    }
+  }, [jenisPelatihan]);
+
+  const listPelatihan = () => {
+    let judulPelatihan = [];
+    subjectLists.map((item) => {
+      judulPelatihan.push({
+        key: item,
+        value: item,
+      });
+    });
+    return judulPelatihan;
+  };
+
+  console.log(summary.lists);
 
   if (dataGraphAksiPerubahan === null) {
     return <Loading />;
@@ -2467,7 +2610,7 @@ export const LaporanDigitalSign = () => {
                 </View>
               </View>
 
-              <View style={{ ...styles.card, marginTop: 20, height: 500 }}>
+              <View style={{ ...styles.card, marginTop: 20, height: 800 }}>
                 <Text
                   style={{
                     fontSize: fontSizeResponsive("H1", device),
@@ -2477,6 +2620,149 @@ export const LaporanDigitalSign = () => {
                 >
                   List Laporan
                 </Text>
+                <View style={{ marginBottom: 10 }}>
+                  <Text
+                    style={{
+                      marginBottom: 10,
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Jenis Pelatihan
+                  </Text>
+                  <Dropdown
+                    data={optionJenisSertfikat}
+                    selected={jenisSertifikat}
+                    setSelected={setJenisSertifikat}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                  />
+                </View>
+
+                <View style={{ marginBottom: 10 }}>
+                  <Text
+                    style={{
+                      marginBottom: 10,
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Pelatihan
+                  </Text>
+                  {jenisSertifikat.length === 0 ? (
+                    <Text
+                      style={{
+                        color: COLORS.grey,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      <Text style={{ color: COLORS.danger }}>*</Text> Daftar
+                      pelatihan akan muncul setelah memilih jenis pelatihan
+                    </Text>
+                  ) : (
+                    <Dropdown
+                      data={
+                        jenisSertifikat.value === "Klasikal"
+                          ? optionKlasikal
+                          : optionNonKlasikal
+                      }
+                      selected={jenisPelatihan}
+                      setSelected={setJenisPelatihan}
+                      borderWidth={1}
+                      borderwidthDrop={1}
+                      borderWidthValue={1}
+                      borderColor={COLORS.ExtraDivinder}
+                      borderColorDrop={COLORS.ExtraDivinder}
+                      borderColorValue={COLORS.ExtraDivinder}
+                    />
+                  )}
+                </View>
+
+                <View style={{ marginBottom: 10 }}>
+                  <Text
+                    style={{
+                      marginBottom: 10,
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Judul Pelatihan
+                  </Text>
+                  {jenisPelatihan.length === 0 ? (
+                    <Text
+                      style={{
+                        color: COLORS.grey,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      <Text style={{ color: COLORS.danger }}>*</Text> Daftar
+                      judul pelatihan akan muncul setelah memilih pelatihan
+                    </Text>
+                  ) : (
+                    <Dropdown
+                      data={listPelatihan()}
+                      selected={judulPelatihan}
+                      setSelected={setJudulPelatihan}
+                      borderWidth={1}
+                      borderwidthDrop={1}
+                      borderWidthValue={1}
+                      borderColor={COLORS.ExtraDivinder}
+                      borderColorDrop={COLORS.ExtraDivinder}
+                      borderColorValue={COLORS.ExtraDivinder}
+                      heightValue={100}
+                    />
+                  )}
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={{
+                      padding: 10,
+                      backgroundColor: COLORS.infoDanger,
+                      borderRadius: 8,
+                    }}
+                    onPress={() => {
+                      setJenisSertifikat([]);
+                      setJenisPelatihan([]);
+                      setJudulPelatihan([]);
+                    }}
+                  >
+                    <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      padding: 10,
+                      backgroundColor: COLORS.primary,
+                      borderRadius: 8,
+                    }}
+                    onPress={() => {
+                      dispatch(
+                        getSummaryList({
+                          token: token,
+                          sertifikat: jenisSertifikat?.key,
+                          pelatihan: jenisPelatihan?.value,
+                          judul: judulPelatihan?.value,
+                        })
+                      );
+                    }}
+                  >
+                    <Text style={{ color: COLORS.white }}>Terapkan</Text>
+                  </TouchableOpacity>
+                </View>
+
                 <FlatList
                   data={summary?.lists}
                   renderItem={({ item }) => (

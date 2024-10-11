@@ -17,6 +17,7 @@ import {
   getListSertifikatEksternal,
   getDetailSertifikatEksternal,
   tandaTanganMentri,
+  getSubjectList,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -42,6 +43,7 @@ const DigitalSignSlice = createSlice({
       lists: [],
       detail: {},
     },
+    subjectLists: [],
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -243,6 +245,16 @@ const DigitalSignSlice = createSlice({
       .addCase(tandaTanganMentri.rejected, (state, action) => {
         state.loading = false;
         state.status = "error";
+      })
+      .addCase(getSubjectList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subjectLists = action.payload;
+      })
+      .addCase(getSubjectList.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSubjectList.rejected, (state, action) => {
+        state.loading = false;
       });
   },
 });
