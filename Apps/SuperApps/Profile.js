@@ -559,10 +559,13 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Validasi tombol action ketika ada anotasi",
+        description: "Fix setting font scale",
       },
       {
-        description: "Penamban role Baknkom",
+        description: "Penambahan field list Bankom",
+      },
+      {
+        description: "Penambahan filter laporan Bankom",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
