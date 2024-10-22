@@ -557,17 +557,9 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push(
-      {
-        description: "Fix setting font scale",
-      },
-      {
-        description: "Penambahan field list Bankom",
-      },
-      {
-        description: "Penambahan filter laporan Bankom",
-      }
-    );
+    tmpLog.push({
+      description: "Penambahan Role Data IPASN",
+    });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);
