@@ -70,6 +70,8 @@ const ListBankom = ({
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDigisign(params));
   };
+
+  console.log(item.receivers[0]);
   return (
     <View
       key={item?.id}
@@ -148,9 +150,17 @@ const ListBankom = ({
                 width: "45%",
               }}
             >
-              Keterangan
+              No. Sertifikat
             </Text>
-
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
+            </Text>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
@@ -159,7 +169,41 @@ const ListBankom = ({
                 fontWeight: FONTWEIGHT.normal,
               }}
             >
-              :{" "}
+              {item?.extra_attributes?.noSertif === ""
+                ? "-"
+                : item?.extra_attributes?.noSertif}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 110,
+                textAlign: "justify",
+                paddingRight: 12,
+                fontWeight: FONTWEIGHT.normal,
+                width: "45%",
+              }}
+            >
+              Keterangan
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 200,
+                textAlign: "justify",
+                fontWeight: FONTWEIGHT.normal,
+              }}
+            >
               {item?.extra_attributes?.keterangan === ""
                 ? "-"
                 : item?.extra_attributes?.keterangan}
@@ -176,10 +220,21 @@ const ListBankom = ({
                 width: "45%",
               }}
             >
-              Tanggal
+              Tanggal Mulai
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
             </Text>
             <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
-              : {item?.extra_attributes?.tanggalSertif}
+              {moment(item?.extra_attributes?.tanggalMulaiSertif).format(
+                "DD/MM/YYYY"
+              )}
             </Text>
             {/* {item?.receivers[0]?.display_title !== undefined ? (
               <Text
@@ -219,7 +274,35 @@ const ListBankom = ({
               {item?.receivers[0]?.nama}
             </Text> */}
           </View>
-          {/* <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 110,
+                textAlign: "justify",
+                paddingRight: 12,
+                fontWeight: FONTWEIGHT.normal,
+                width: "45%",
+              }}
+            >
+              Tanggal Selesai
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
+            </Text>
+            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+              {moment(item?.extra_attributes?.tanggalSelesaiSertif).format(
+                "DD/MM/YYYY"
+              )}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
@@ -230,7 +313,16 @@ const ListBankom = ({
                 width: "45%",
               }}
             >
-              Penandatangan
+              Penerima Sertifikat
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
             </Text>
             <Text
               style={{
@@ -241,12 +333,45 @@ const ListBankom = ({
                 width: "55%",
               }}
             >
-              :{" "}
-              {item?.approvers[1]?.officer !== undefined
-                ? item?.approvers[1]?.officer?.nama
-                : item?.approvers[1]?.nama}
+              {item?.receivers[0]?.nama === undefined
+                ? "-"
+                : item?.receivers[0]?.nama}
             </Text>
-          </View> */}
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 110,
+                textAlign: "auto",
+                paddingRight: 12,
+                fontWeight: FONTWEIGHT.normal,
+                width: "45%",
+              }}
+            >
+              Operator
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.normal,
+                width: 10,
+              }}
+            >
+              :
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 200,
+                textAlign: "auto",
+                fontWeight: FONTWEIGHT.normal,
+                width: "55%",
+              }}
+            >
+              {item?.composer?.nama === undefined ? "-" : item?.composer?.nama}
+            </Text>
+          </View>
           {/* {variant === "signed" ? (
             <View style={{ flexDirection: "row" }}>
               <Text

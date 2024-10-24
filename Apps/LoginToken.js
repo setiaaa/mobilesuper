@@ -97,7 +97,7 @@ export const LoginToken = () => {
   };
   const { device } = useSelector((state) => state.apps);
 
-  // console.log(loginAuth);
+  console.log(loginAuth);
 
   return (
     <SafeAreaView
@@ -453,7 +453,7 @@ export const LoginToken = () => {
                   <View
                     style={{
                       flexDirection: "row",
-                      marginTop: 20,
+                      marginVertical: 20,
                       alignItems: "center",
                       marginHorizontal: 40,
                     }}
@@ -472,34 +472,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Validasi tombol action ketika ada anotasi
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginTop: 10,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                      marginBottom: 20,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Penamban role Bankom
+                      Penambahan Role Data IPASN
                     </Text>
                   </View>
 

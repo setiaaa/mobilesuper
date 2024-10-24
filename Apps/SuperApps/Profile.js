@@ -557,14 +557,9 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push(
-      {
-        description: "Validasi tombol action ketika ada anotasi",
-      },
-      {
-        description: "Penamban role Baknkom",
-      }
-    );
+    tmpLog.push({
+      description: "Penambahan Role Data IPASN",
+    });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);
