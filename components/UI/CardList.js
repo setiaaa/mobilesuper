@@ -8,9 +8,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Config } from "../../constants/config";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
-import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+import { COLORS, DATETIME } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedList } from "../../store/listBulk";
+import moment from "moment";
 
 function CardList({ data, tipe, onPress }) {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ function CardList({ data, tipe, onPress }) {
   const selected = useSelector((state) => state.listbulk.list);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.apps);
-
+  console.log(tipe);
   let header = {};
   useEffect(() => {
     if (tipe == "agendain") {
@@ -73,6 +74,26 @@ function CardList({ data, tipe, onPress }) {
           { padding: 15 },
         ]}
       >
+        {tipe == "agendadispo" && (
+          <View style={{ marginBottom: 5 }}>
+            <Text
+              style={[
+                { fontSize: 14 },
+                data?.unread ? { fontWeight: "bold" } : {},
+              ]}
+            >
+              {data.asal_surat.title ? data.asal_surat.title : ""}
+              {data.asal_surat.title == null ? data.asal_surat : ""}
+            </Text>
+            <Text style={{ fontSize: 12 }}>
+              {data?.nomor_surat} | (
+              {moment(data?.tanggal_surat, DATETIME.SHORT_DATE).format(
+                DATETIME.SHORT_DATE2
+              )}
+              )
+            </Text>
+          </View>
+        )}
         <View style={{ flexDirection: "row" }}>
           <View
             style={{
@@ -165,18 +186,36 @@ function CardList({ data, tipe, onPress }) {
                       }}
                     />
                   )}
-                  <Text style={{ fontSize: 14 }}>
-                    {data.sender.title && (
-                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                        {data.sender.title}
-                      </Text>
-                    )}
-                    {data.sender.title == null && (
-                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                        {data.sender}
-                      </Text>
-                    )}
-                  </Text>
+                  {tipe !== "agendadispo" && (
+                    <Text style={{ fontSize: 14 }}>
+                      {data.sender.title && (
+                        <Text
+                          style={data?.unread ? { fontWeight: "bold" } : {}}
+                        >
+                          {data.sender.title}
+                        </Text>
+                      )}
+                      {data.sender.title == null && (
+                        <Text
+                          style={data?.unread ? { fontWeight: "bold" } : {}}
+                        >
+                          {data.sender}
+                        </Text>
+                      )}
+                    </Text>
+                  )}
+                  {tipe == "agendadispo" && (
+                    <Text
+                      style={[
+                        { fontSize: 14, color: GlobalStyles.colors.gray400 },
+                        data?.unread ? { fontWeight: "bold" } : {},
+                      ]}
+                    >
+                      PENGIRIM DISPO:{" "}
+                      {data.sender.title ? data.sender.title : ""}
+                      {data.sender.title == null ? data.sender : ""}
+                    </Text>
+                  )}
                 </View>
                 {(tipe == "agendain" || tipe == "needfollowup") && (
                   <Text style={{ fontSize: 12, color: COLORS.infoDanger }}>
@@ -200,7 +239,8 @@ function CardList({ data, tipe, onPress }) {
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   {data.time.substr(0, 5)}
                 </Text>
-                {data.logs_tag && tipe != "agendamydispo" && (
+                {((data.logs_tag && tipe == "agendain") ||
+                  (data.disposisi && tipe == "agendadispo")) && (
                   <View style={styles.containerButton}>
                     <IconButton
                       icon="email-send-outline"
