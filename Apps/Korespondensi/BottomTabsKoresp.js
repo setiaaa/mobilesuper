@@ -3,11 +3,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
-import {} from "react-native";
-import { Config } from "../../constants/config";
 import { useSelector } from "react-redux";
 
-function MyTabKoresp({ props, navigation }) {
+function MyTabKoresp({ navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
 
   const { device } = useSelector((state) => state.apps);
@@ -56,78 +54,6 @@ function MyTabKoresp({ props, navigation }) {
                   }}
                 />
                 <Ionicons
-                  name="home"
-                  color={COLORS.primary}
-                  size={device === "tablet" ? 40 : 24}
-                />
-                <Text
-                  style={{
-                    color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Dashboard
-                </Text>
-              </View>
-            ) : (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 90,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
-                }}
-              >
-                <Ionicons
-                  name="home-outline"
-                  color={COLORS.tertiary}
-                  size={device === "tablet" ? 40 : 24}
-                />
-                <Text
-                  style={{
-                    color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Dashboard
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            key={2}
-            onPress={() => {
-              setTabItemIndex(2);
-              navigation.navigate("DLetter");
-              // props.navigation.navigate('Home', { unread: false })
-            }}
-          >
-            {tabItemIndex === 2 ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 90,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
-                }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons
                   name="apps"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
@@ -138,7 +64,7 @@ function MyTabKoresp({ props, navigation }) {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Menu
+                  Dashboard
                 </Text>
               </View>
             ) : (
@@ -161,20 +87,20 @@ function MyTabKoresp({ props, navigation }) {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Menu
+                  Dashboard
                 </Text>
               </View>
             )}
           </TouchableOpacity>
 
           <TouchableOpacity
-            key={3}
+            key={2}
             onPress={() => {
-              setTabItemIndex(3);
+              setTabItemIndex(2);
               navigation.navigate("DPencarian");
             }}
           >
-            {tabItemIndex === 3 ? (
+            {tabItemIndex === 2 ? (
               <View
                 style={{
                   alignItems: "center",

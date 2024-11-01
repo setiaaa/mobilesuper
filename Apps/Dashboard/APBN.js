@@ -1,16 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import React, { useRef } from "react";
+import { ScrollView, useWindowDimensions } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, getOrientation, PADDING } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
-import CookieManager from "@react-native-cookies/cookies";
 
 export const APBN = () => {
   const { device } = useSelector((state) => state.apps);
