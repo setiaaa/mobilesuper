@@ -92,6 +92,7 @@ export const DATETIME = {
   LONG_DATETIME: "DD MMMM YYYY HH:mm",
   SHORT_DATE: "DD-MM-YYYY",
   LONG_DATE: "DD MMMM YYYY",
+  SHORT_DATE2: "DD MMM YYYY",
 };
 
 export const PADDING = {

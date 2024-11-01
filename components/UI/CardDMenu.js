@@ -1,15 +1,11 @@
-import { Avatar, Card } from "react-native-paper";
-import { Text, StyleSheet } from "react-native";
+import { Divider, List } from "react-native-paper";
+import { StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
-import { COLORS } from "../../config/SuperAppps";
+import { TouchableOpacity } from "react-native";
 
-function CardDCounter({ data, navigation }) {
-  const avatarIcon = StyleSheet.compose(styles.avatarIcon, {
-    backgroundColor: data?.color,
-  });
+function CardDMenu({ data, navigation }) {
   return (
-    <Card
-      style={styles.card}
+    <TouchableOpacity
       onPress={() => {
         navigation.navigate(data?.navName, {
           unread:
@@ -31,9 +27,9 @@ function CardDCounter({ data, navigation }) {
               ? "Disposisi"
               : data?.type == "incoming"
               ? "Surat Masuk"
-              : data?.type == "internal" && data?.navName == "InternalUnread"
+              : data?.type == "internal"
               ? "Internal Satker"
-              : data?.type == "internal" && data?.navName !== "InternalUnread"
+              : data?.type == "internal"
               ? "Internal Satker"
               : data?.type == "disposition"
               ? "Disposisi"
@@ -45,11 +41,8 @@ function CardDCounter({ data, navigation }) {
         });
       }}
     >
-      <Card.Title
-        style={styles.cardTitle}
-        title={<Text>{data?.value}</Text>}
-        titleStyle={{ fontSize: 20, fontWeight: "bold" }}
-        subtitle={
+      <List.Item
+        title={
           data?.type == "draft"
             ? "Nomor Tersedia"
             : data?.type == "onprogress"
@@ -74,39 +67,35 @@ function CardDCounter({ data, navigation }) {
             ? "Terkirim"
             : ""
         }
-        subtitleNumberOfLines={5}
-        subtitleStyle={{ fontSize: 12 }}
-        left={(props) => (
-          <Avatar.Icon
-            {...props}
-            size={50}
-            icon={data?.icon}
-            color={COLORS.white}
-            style={avatarIcon}
-          />
-        )}
-        leftStyle={{ marginRight: 20 }}
+        titleStyle={{ fontSize: 14 }}
+        left={() => <List.Icon icon={data?.icon} />}
+        right={() => <List.Icon icon="chevron-right" />}
       />
-    </Card>
+      <Divider />
+    </TouchableOpacity>
   );
 }
 
-export default CardDCounter;
+export default CardDMenu;
 
 const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
+    marginTop: 16,
+    // marginHorizontal: 16,
     backgroundColor: GlobalStyles.colors.textWhite,
-    width: "48%",
+    width: "98%",
+    alignSelf: "center",
+  },
+  cardTitle: {
+    gap: 20,
   },
   avatarIcon: {
     backgroundColor: GlobalStyles.colors.primary,
-    borderRadius: 10,
   },
   counterText: {
-    fontSize: GlobalStyles.font.hd5,
-    // padding: 15,
+    fontSize: GlobalStyles.font.hd4,
+    padding: 15,
     fontWeight: "bold",
-    textAlign: "center",
   },
 });

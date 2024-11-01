@@ -23,7 +23,7 @@ export const GlobalStyles = {
     error500: colors.error500,
     red: colors.red,
     gray500: colors.gray500,
-    gray700: colors.gray700,
+    gray400: colors.gray400,
     backgroundInput: colors.backgroundInput,
     blue: colors.blue,
     green: colors.green,
