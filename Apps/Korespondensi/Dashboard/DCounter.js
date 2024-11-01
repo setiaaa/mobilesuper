@@ -348,6 +348,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   title: {
+    fontSize:12,
     fontWeight: "bold",
   },
 });
