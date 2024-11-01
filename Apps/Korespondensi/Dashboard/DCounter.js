@@ -305,7 +305,7 @@ function DCounter() {
         {isCounter?.length != 0 && (
           <>
             <View style={styles.container}>
-              <Text style={styles.title}>Surat Masuk Belum Dibaca</Text>
+              <Text style={styles.title}>SURAT BELUM DIBUKA</Text>
               <FlatList
                 keyExtractor={(item) => item.count}
                 data={isCounter}
@@ -320,7 +320,7 @@ function DCounter() {
               />
             </View>
             <View style={styles.container}>
-              <Text style={styles.title}>Menu</Text>
+              <Text style={styles.title}>MENU</Text>
               {isCounterMenu?.map((item, index) => (
                 <CardDMenu key={index} data={item} navigation={navigation} />
               ))}

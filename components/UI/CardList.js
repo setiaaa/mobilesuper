@@ -21,7 +21,6 @@ function CardList({ data, tipe, onPress }) {
   const selected = useSelector((state) => state.listbulk.list);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.apps);
-  console.log(tipe);
   let header = {};
   useEffect(() => {
     if (tipe == "agendain") {
