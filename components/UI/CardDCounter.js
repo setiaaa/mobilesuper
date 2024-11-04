@@ -1,15 +1,17 @@
 import { Avatar, Card } from "react-native-paper";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import { useSelector } from "react-redux";
 
 function CardDCounter({ data, navigation }) {
   const avatarIcon = StyleSheet.compose(styles.avatarIcon, {
     backgroundColor: data?.color,
   });
+  const { device } = useSelector((state) => state.apps);
   return (
     <Card
-      style={styles.card}
+    style={[styles.card, {paddingVertical: device === 'tablet'?10: 0}]}
       onPress={() => {
         navigation.navigate(data?.navName, {
           unread:
@@ -46,9 +48,25 @@ function CardDCounter({ data, navigation }) {
       }}
     >
       <Card.Title
-        style={styles.cardTitle}
-        title={<Text>{data?.value}</Text>}
-        titleStyle={{ fontSize: 20, fontWeight: "bold" }}
+        title={
+          <View style={{ flexDirection: "row", gap: 8, justifyContent: 'center', alignItems: 'center' }}>
+            <Avatar.Icon
+              size={device === 'tablet'? 50: 25}
+              icon={data?.icon}
+              color={COLORS.white}
+              style={avatarIcon}
+            />
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: fontSizeResponsive("Judul", device),
+              }}
+            >
+              {data?.value}
+            </Text>
+          </View>
+        }
+        titleStyle={{ justifyContent: "center" }}
         subtitle={
           data?.type == "draft"
             ? "Nomor Tersedia"
@@ -75,17 +93,7 @@ function CardDCounter({ data, navigation }) {
             : ""
         }
         subtitleNumberOfLines={5}
-        subtitleStyle={{ fontSize: 12 }}
-        left={(props) => (
-          <Avatar.Icon
-            {...props}
-            size={50}
-            icon={data?.icon}
-            color={COLORS.white}
-            style={avatarIcon}
-          />
-        )}
-        leftStyle={{ marginRight: 20 }}
+        subtitleStyle={{ fontSize: fontSizeResponsive("H6", device), paddingTop: device === 'tablet' ? 10:0 }}
       />
     </Card>
   );
@@ -97,16 +105,11 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     backgroundColor: GlobalStyles.colors.textWhite,
-    width: "48%",
+    width: "49%",
+    justifyContent: "center",
   },
   avatarIcon: {
     backgroundColor: GlobalStyles.colors.primary,
-    borderRadius: 10,
-  },
-  counterText: {
-    fontSize: GlobalStyles.font.hd5,
-    // padding: 15,
-    fontWeight: "bold",
-    textAlign: "center",
+    borderRadius: 5,
   },
 });

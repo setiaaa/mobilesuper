@@ -35,23 +35,23 @@ export const CardListDokumenDikembalikan = ({ item, nip, token, device }) => {
               marginTop: 10,
             }}
           >
-            <Text style={{ fontSize: 12 }}>
+            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
               Tanggal Pengajuan:{" "}
               {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss")
                 .locale("id")
                 .format(DATETIME.LONG_DATETIME)}
             </Text>
-            <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+            <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.lighter }}>
               Jenis: {item.jenis_cuti}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+              <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.lighter }}>
                 Tipe Dokumen:{" "}
               </Text>
               <View
                 style={{ backgroundColor: "red", borderRadius: 10, padding: 5 }}
               >
-                <Text style={{ fontSize: 12, color: COLORS.white }}>
+                <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.white }}>
                   {item.tipe_dokumen}
                 </Text>
               </View>

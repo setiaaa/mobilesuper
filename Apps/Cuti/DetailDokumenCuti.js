@@ -1775,7 +1775,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="checkmark-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1806,7 +1806,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="arrow-undo-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1837,7 +1837,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="alert-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1868,7 +1868,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
