@@ -1,9 +1,10 @@
 import { Divider, List } from "react-native-paper";
-import { StyleSheet } from "react-native";
-import { GlobalStyles } from "../../constants/styles";
 import { TouchableOpacity } from "react-native";
+import { fontSizeResponsive } from "../../config/SuperAppps";
+import { useSelector } from "react-redux";
 
 function CardDMenu({ data, navigation }) {
+  const { device } = useSelector((state) => state.apps);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -67,7 +68,7 @@ function CardDMenu({ data, navigation }) {
             ? "Terkirim"
             : ""
         }
-        titleStyle={{ fontSize: 14 }}
+        titleStyle={{ fontSize: fontSizeResponsive("H4", device) }}
         left={() => <List.Icon icon={data?.icon} />}
         right={() => <List.Icon icon="chevron-right" />}
       />
@@ -77,25 +78,3 @@ function CardDMenu({ data, navigation }) {
 }
 
 export default CardDMenu;
-
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 10,
-    marginTop: 16,
-    // marginHorizontal: 16,
-    backgroundColor: GlobalStyles.colors.textWhite,
-    width: "98%",
-    alignSelf: "center",
-  },
-  cardTitle: {
-    gap: 20,
-  },
-  avatarIcon: {
-    backgroundColor: GlobalStyles.colors.primary,
-  },
-  counterText: {
-    fontSize: GlobalStyles.font.hd4,
-    padding: 15,
-    fontWeight: "bold",
-  },
-});
