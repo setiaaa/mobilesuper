@@ -46,9 +46,8 @@ function CardDCounter({ data, navigation }) {
       }}
     >
       <Card.Title
-        style={styles.cardTitle}
         title={<Text>{data?.value}</Text>}
-        titleStyle={{ fontSize: 20, fontWeight: "bold" }}
+        titleStyle={{ fontSize: 20, fontWeight: "bold", paddingTop: 5 }}
         subtitle={
           data?.type == "draft"
             ? "Nomor Tersedia"
@@ -75,14 +74,14 @@ function CardDCounter({ data, navigation }) {
             : ""
         }
         subtitleNumberOfLines={5}
-        subtitleStyle={{ fontSize: 12 }}
+        subtitleStyle={{ fontSize: 9 }}
         left={(props) => (
           <Avatar.Icon
             {...props}
-            size={50}
+            size={45}
             icon={data?.icon}
             color={COLORS.white}
-            style={avatarIcon}
+            style={avatarIcon} // Atur margin agar sesuai kebutuhan
           />
         )}
         leftStyle={{ marginRight: 20 }}
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: GlobalStyles.colors.textWhite,
     width: "48%",
+    justifyContent: "center",
   },
   avatarIcon: {
     backgroundColor: GlobalStyles.colors.primary,
