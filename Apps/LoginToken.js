@@ -472,7 +472,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan Role Data IPASN
+                      Tampilan Baru Dashboard Korespondensi
                     </Text>
                   </View>
 
