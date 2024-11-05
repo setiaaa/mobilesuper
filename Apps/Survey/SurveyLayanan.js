@@ -376,7 +376,7 @@ export const SurveyLayanan = () => {
         </TouchableOpacity>
       ) : null}
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           width: "90%",
           backgroundColor: COLORS.danger,
@@ -426,7 +426,7 @@ export const SurveyLayanan = () => {
         >
           Submit
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <ModalSubmit status={status} setStatus={setStatus} navigate={"Main"} />
     </ScrollView>
   );

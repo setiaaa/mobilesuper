@@ -409,26 +409,26 @@ export const DetailPegawaiIPASN = ({ route }) => {
         />
       </View>
       {/* Pasangan */}
-      <View style={{ paddingBottom: spacing.default }}>
+      {/* <View style={{ paddingBottom: spacing.default }}>
         <CollapseCardPasangan
           profile={profile?.siasn_data_full?.siasn_data_pasangan?.listPasangan}
           device={device}
         />
-      </View>
+      </View> */}
       {/* Anak */}
-      <View style={{ paddingBottom: spacing.default }}>
+      {/* <View style={{ paddingBottom: spacing.default }}>
         <CollapseCardAnak
           profile={profile?.siasn_data_full?.siasn_data_anak}
           device={device}
         />
-      </View>
+      </View> */}
       {/* Ortang tua */}
-      <View style={{ paddingBottom: spacing.default }}>
+      {/* <View style={{ paddingBottom: spacing.default }}>
         <CollapseCardOrangTua
           profile={profile?.siasn_data_full?.siasn_data_ortu}
           device={device}
         />
-      </View>
+      </View> */}
       {/* Masa Kerja */}
       <View style={{ paddingBottom: spacing.default }}>
         <CollapseCardMasaKerja

@@ -558,7 +558,7 @@ export const Profile = () => {
 
     // Log Perbaikan
     tmpLog.push({
-      description: "Penambahan Role Data IPASN",
+      description: "Perubahan design dashboard korespondensi",
     });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
