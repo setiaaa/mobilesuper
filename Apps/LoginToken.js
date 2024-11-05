@@ -472,7 +472,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perubahan design dashboard korespondensi
+                      Tampilan Baru Dashboard Korespondensi
                     </Text>
                   </View>
 
