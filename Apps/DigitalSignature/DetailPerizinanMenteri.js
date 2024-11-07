@@ -6,6 +6,7 @@ import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -86,10 +87,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
   const { device } = useSelector((state) => state.apps);
   const dispatch = useDispatch();
 
+  const currentDate = new Date();
+
   const handleSubmit = () => {
     const payload = {
       passphrase: "",
       id_documents: [item.id],
+      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
       comment: "Dokumen sudah di tanda tangan",
     };
     const data = {

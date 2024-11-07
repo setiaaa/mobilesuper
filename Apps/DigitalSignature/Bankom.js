@@ -71,7 +71,6 @@ const ListBankom = ({
     dispatch(getDetailDigisign(params));
   };
 
-  console.log(item.receivers[0]);
   return (
     <View
       key={item?.id}
@@ -552,26 +551,16 @@ export const Bankom = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
+  const currentDate = new Date();
+
   const handleSubmit = () => {
     const payload = {
       passphrase: paraphrase,
       id_documents: isSelected,
-      array_of_sign: [
-        {
-          kanan_atas_y: "163.0982523076924",
-          kanan_atas_x: "781.2408256615383",
-          kiri_bawah_x: "522.1515948923077",
-          kiri_bawah_y: "100.91683692307703",
-          halaman: "1",
-        },
-        {
-          kanan_atas_y: "163.0982523076924",
-          kanan_atas_x: "781.2408256615383",
-          kiri_bawah_x: "522.1515948923077",
-          kiri_bawah_y: "100.91683692307703",
-          halaman: "2",
-        },
-      ],
+      signature_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
+      komentar: "",
     };
     const data = {
       token: token,

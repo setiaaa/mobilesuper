@@ -9,6 +9,7 @@ import {
 import { Text, Image } from "react-native";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -48,6 +49,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
+import moment from "moment";
 
 export const PerizinanMenteri = () => {
   const [token, setToken] = useState("");
@@ -128,10 +130,15 @@ export const PerizinanMenteri = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
+  const currentDate = new Date();
+
   const handleSubmit = () => {
     const payload = {
       passphrase: "",
       id_documents: isSelected,
+      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
       comment: "Dokumen sudah di tanda tangan",
     };
     const data = {
