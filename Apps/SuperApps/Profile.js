@@ -558,7 +558,7 @@ export const Profile = () => {
 
     // Log Perbaikan
     tmpLog.push({
-      description: "Tampilan Baru Dashboard Korespondensi",
+      description: "Perubahan Payload Bankom",
     });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);

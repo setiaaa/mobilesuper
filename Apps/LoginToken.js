@@ -49,7 +49,7 @@ export const LoginToken = () => {
   const [modalLog, setModalLog] = useState(false);
   const dispatch = useDispatch();
 
-  const loginAuth = useSelector((state) => state.login);
+  const loginAuth = useSelector((state) => state.login || {});
   const url = Linking.useURL();
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export const LoginToken = () => {
   };
   const { device } = useSelector((state) => state.apps);
 
-  console.log(loginAuth);
+  // console.log(loginAuth);
 
   return (
     <SafeAreaView
@@ -106,7 +106,7 @@ export const LoginToken = () => {
       {loginAuth.loading ? <Loading /> : null}
       <ScrollView>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "height" : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <View
             style={{
@@ -472,7 +472,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Tampilan Baru Dashboard Korespondensi
+                      Perubahan Payload Bankom
                     </Text>
                   </View>
 
@@ -502,39 +502,22 @@ export const LoginToken = () => {
 const styles = StyleSheet.create({
   Card: {
     backgroundColor: COLORS.white,
-    width: "90%",
-    marginVertical: 20,
-    marginLeft: 20,
-    borderRadius: 16,
+    width: "90%", // Adjust the width as needed, e.g., "90%" or a fixed value like 300
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // Adds shadow for Android
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
   iOSBackdrop: {
-    backgroundColor: "#000000",
-    opacity: 0.3,
+    backgroundColor: "#000",
+    opacity: 0.5,
   },
   androidBackdrop: {
-    backgroundColor: "#232f34",
-    opacity: 0.32,
+    backgroundColor: "#000",
+    opacity: 0.7,
   },
   backdrop: {
     position: "absolute",
@@ -542,5 +525,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

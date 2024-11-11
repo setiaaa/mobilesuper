@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
   COLORS,
+  DATETIME,
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Config } from "../../constants/config";
+import moment from "moment";
 
 export const PdfPerisai = ({ route }) => {
   const { item } = route.params;
@@ -28,6 +30,11 @@ export const PdfPerisai = ({ route }) => {
   }, []);
 
   console.log(item.attachments[0]?.file);
+
+  const currentDate = moment(new Date(), "YYYY-MM-DD HH:mm:ss").format(
+    DATETIME.LONG_DATE
+  );
+  console.log(currentDate);
 
   let myInjectedJs = `(function(){ 
     let attach = window.localStorage.getItem('attachment');
@@ -127,6 +134,7 @@ $("#submit").click(function () {
     let data = {
       "passphrase": paraphrase,
       "id_documents": ["${item.id}"],
+      "sign_date": "${currentDate}",
   }
   $.ajax({
     url: " ${Config.base_url}digitalsign/document/approve2/",

@@ -4,6 +4,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
+  TextInput,
   View,
 } from "react-native";
 import { Text, Image } from "react-native";
@@ -32,6 +34,7 @@ import {
   getListInProgress,
   getListSignedDigiSign,
   tandaTanganMentri,
+  getListRetry,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -57,9 +60,10 @@ export const PerizinanMenteri = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [tipe, setTipe] = useState("perizinan-mentri");
-  const [variant, SetVariant] = useState("");
+  const [variant, SetVariant] = useState("inprogress");
   const [filterData, setFilterData] = useState([]);
   const [isSelected, setSelection] = useState([]);
+  const [page, setPage] = useState(10);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -68,33 +72,12 @@ export const PerizinanMenteri = () => {
   }, []);
 
   useEffect(() => {
-    SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe }));
+    dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
   }, [token, tipe]);
 
   const { dokumenlain, loading, status } = useSelector(
     (state) => state.digitalsign
   );
-
-  const filter = (event) => {
-    setSearch(event);
-  };
-
-  useEffect(() => {
-    setFilterData(dokumenlain.lists);
-  }, [dokumenlain]);
-
-  useEffect(() => {
-    const item = dokumenlain.lists;
-    if (search !== "") {
-      const data = item.filter((item) => {
-        return item?.subject.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-    } else {
-      setFilterData(item);
-    }
-  }, [search]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -102,7 +85,22 @@ export const PerizinanMenteri = () => {
     try {
       if (token !== "") {
         if (variant === "inprogress") {
-          dispatch(getListInProgress({ token: token, tipe: tipe }));
+          dispatch(
+            getListInProgress({ token: token, tipe: tipe, search: search })
+          );
+        } else if (variant === "signed") {
+          dispatch(
+            getListSignedDigiSign({ token: token, tipe: tipe, search: search })
+          );
+        } else if (variant === "retry") {
+          dispatch(
+            getListRetry({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
       }
     } catch (error) {}
@@ -165,18 +163,61 @@ export const PerizinanMenteri = () => {
 
   const filterHandlerInProgress = () => {
     SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe }));
+    dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
   };
 
   const filterHandlerSigned = () => {
     SetVariant("signed");
-    dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+    dispatch(
+      getListSignedDigiSign({ token: token, tipe: tipe, search: search })
+    );
+  };
+
+  const filterHandlerRetry = () => {
+    SetVariant("retry");
+    dispatch(
+      getListRetry({ token: token, tipe: tipe, page: page, search: search })
+    );
   };
 
   const { profile } = useSelector((state) => state.superApps);
-  console.log(isSelected);
 
   const { device } = useSelector((state) => state.apps);
+
+  const loadMore = () => {
+    if (dokumenlain?.lists?.length !== 0) {
+      if (dokumenlain.lists.length % 5 === 0) {
+        setPage((prevPage) => prevPage + 10);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (variant === "inprogress") {
+      dispatch(
+        getListInProgress({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "signed") {
+      dispatch(
+        getListSignedDigiSign({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "retry") {
+      dispatch(
+        getListRetry({ token: token, tipe: tipe, page: page, search: search })
+      );
+    }
+  }, [page, token, tipe, search]);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -248,12 +289,32 @@ export const PerizinanMenteri = () => {
             ) : null}
           </View>
 
-          <View style={{ flexDirection: "row", gap: 10 }}>
+          {/* <View style={{ flexDirection: "row", gap: 10 }}>
             <View
               style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}
             >
               <Search placeholder={"Cari"} onSearch={filter} />
             </View>
+          </View> */}
+
+          <View style={styles.input}>
+            <Ionicons
+              name="search"
+              size={fontSizeResponsive("H3", device)}
+              color={COLORS.primary}
+            />
+            <TextInput
+              placeholder={"Cari"}
+              placeholderTextColor={COLORS.tertiary}
+              style={{
+                fontSize: fontSizeResponsive("H2", device),
+                flex: 1,
+              }}
+              maxLength={30}
+              onSubmitEditing={(event) => setSearch(event.nativeEvent.text)}
+              clearButtonMode="always"
+              allowFontScaling={false}
+            />
           </View>
 
           <View
@@ -292,12 +353,12 @@ export const PerizinanMenteri = () => {
             <View
               style={{
                 flexDirection: "row",
-                gap: 10,
+                gap: 5,
               }}
             >
               <TouchableOpacity
                 style={{
-                  padding: 10,
+                  padding: 5,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "inprogress" ? COLORS.primary : COLORS.input,
@@ -323,7 +384,31 @@ export const PerizinanMenteri = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  padding: 10,
+                  padding: 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "retry" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "retry" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerRetry()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "retry" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Retry
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: 5,
                   borderWidth: 1,
                   backgroundColor:
                     variant === "signed" ? COLORS.primary : COLORS.input,
@@ -352,7 +437,7 @@ export const PerizinanMenteri = () => {
           {/* </ScrollView> */}
           <View style={{ flex: 1 }}>
             <FlatList
-              data={filterData}
+              data={dokumenlain?.lists}
               keyExtractor={(item) => item?.id}
               renderItem={({ item }) => (
                 <View key={item.id}>
@@ -368,6 +453,8 @@ export const PerizinanMenteri = () => {
                 </View>
               )}
               ListEmptyComponent={() => <ListEmpty />}
+              onEndReached={loadMore}
+              onEndReachedThreshold={0.5}
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
@@ -481,3 +568,20 @@ export const PerizinanMenteri = () => {
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+    backgroundColor: COLORS.white,
+    width: "90%",
+    marginHorizontal: "5%",
+    marginTop: 10,
+  },
+});

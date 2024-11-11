@@ -1,5 +1,11 @@
 import React, { useMemo, useRef } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { Text, Image } from "react-native";
 import {
   COLORS,
@@ -159,7 +165,11 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
               {item?.approvers.slice(1).map((data) => (
                 <Image
                   source={{ uri: data.avatar_url }}
-                  style={{ width: device === 'tablet'? 40: 20, height: device === 'tablet'? 40 : 20, borderRadius: 50 }}
+                  style={{
+                    width: device === "tablet" ? 40 : 20,
+                    height: device === "tablet" ? 40 : 20,
+                    borderRadius: 50,
+                  }}
                 />
               ))}
             </View>
@@ -203,8 +213,9 @@ export const DokumenLain = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [tipe, setTipe] = useState("dokumen_lain");
-  const [variant, SetVariant] = useState("");
+  const [variant, SetVariant] = useState("composer");
   const [filterData, setFilterData] = useState([]);
+  const [page, setPage] = useState(10);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -213,52 +224,55 @@ export const DokumenLain = () => {
   }, []);
 
   useEffect(() => {
-    SetVariant("composer");
-    dispatch(getListComposer({ token: token, tipe: tipe }));
+    dispatch(
+      getListComposer({ token: token, tipe: tipe, page: page, search: search })
+    );
   }, [token, tipe]);
 
   const filterHandlerComposer = () => {
     SetVariant("composer");
-    dispatch(getListComposer({ token: token, tipe: tipe }));
+    dispatch(
+      getListComposer({ token: token, tipe: tipe, page: page, search: search })
+    );
   };
   const filterHandlerInProgress = () => {
     SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe }));
+    dispatch(
+      getListInProgress({
+        token: token,
+        tipe: tipe,
+        page: page,
+        search: search,
+      })
+    );
   };
   const filterHandlerRejected = () => {
     SetVariant("rejected");
-    dispatch(getListRejected({ token: token }));
+    dispatch(getListRejected({ token: token, page: page, search: search }));
   };
   const filterHandlerDraft = () => {
     SetVariant("draft");
-    dispatch(getListDraft({ token: token, tipe: tipe }));
+    dispatch(
+      getListDraft({ token: token, tipe: tipe, page: page, search: search })
+    );
   };
   const filterHandlerSigned = () => {
     SetVariant("signed");
-    dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+    dispatch(
+      getListSignedDigiSign({
+        token: token,
+        tipe: tipe,
+        page: page,
+        search: search,
+      })
+    );
   };
 
   const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
 
-  const filter = (event) => {
-    setSearch(event);
-  };
-
   useEffect(() => {
     setFilterData(dokumenlain.lists);
   }, [dokumenlain]);
-
-  useEffect(() => {
-    const item = dokumenlain.lists;
-    if (search !== "") {
-      const data = item.filter((item) => {
-        return item?.subject.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-    } else {
-      setFilterData(item);
-    }
-  }, [search]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -266,19 +280,54 @@ export const DokumenLain = () => {
     try {
       if (token !== "") {
         if (variant === " composer") {
-          dispatch(getListComposer({ token: token, tipe: tipe }));
+          dispatch(
+            getListComposer({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
         if (variant === "inprogress") {
-          dispatch(getListInProgress({ token: token, tipe: tipe }));
+          dispatch(
+            getListInProgress({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
         if (variant === "rejected") {
-          dispatch(getListRejected({ token: token, tipe: tipe }));
+          dispatch(
+            getListRejected({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
         if (variant === "draft") {
-          dispatch(getListDraft({ token: token, tipe: tipe }));
+          dispatch(
+            getListDraft({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
         if (variant === "signed") {
-          dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+          dispatch(
+            getListSignedDigiSign({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
         }
       }
     } catch (error) {}
@@ -291,8 +340,69 @@ export const DokumenLain = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  const loadMore = () => {
+    if (dokumenlain?.lists?.length !== 0) {
+      if (dokumenlain.lists.length % 5 === 0) {
+        setPage((prevPage) => prevPage + 10);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (variant === "composer") {
+      dispatch(
+        getListComposer({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "ready") {
+      dispatch(
+        getListReady({ token: token, tipe: tipe, page: page, search: search })
+      );
+    } else if (variant === "completed") {
+      dispatch(
+        getListCompleted({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "inprogress") {
+      dispatch(
+        getListInProgress({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "rejected") {
+      dispatch(
+        getListRejected({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "signed") {
+      dispatch(
+        getListSignedDigiSign({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    }
+  }, [page, token, tipe, search]);
+
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
       <View style={{ position: "relative", flex: 1 }}>
         <View
@@ -336,7 +446,26 @@ export const DokumenLain = () => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}>
-            <Search placeholder={"Cari"} onSearch={filter} />
+            {/* <Search placeholder={"Cari"} onSearch={filter} /> */}
+            <View style={styles.input}>
+              <Ionicons
+                name="search"
+                size={fontSizeResponsive("H3", device)}
+                color={COLORS.primary}
+              />
+              <TextInput
+                placeholder={"Cari"}
+                placeholderTextColor={COLORS.tertiary}
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  flex: 1,
+                }}
+                maxLength={30}
+                onSubmitEditing={(event) => setSearch(event.nativeEvent.text)}
+                clearButtonMode="always"
+                allowFontScaling={false}
+              />
+            </View>
           </View>
         </View>
         {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
@@ -478,27 +607,29 @@ export const DokumenLain = () => {
           </TouchableOpacity>
         </View>
         {/* </ScrollView> */}
-        <View style={{flex: 1}}>
-        <FlatList
-          data={filterData}
-          keyExtractor={(item) => item?.id}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <ListDokumenLain
-                item={item}
-                token={token}
-                variant={variant}
-                device={device}
+        <View style={{ flex: 1 }}>
+          <FlatList
+            data={dokumenlain.lists}
+            keyExtractor={(item) => item?.id}
+            renderItem={({ item }) => (
+              <View key={item.id}>
+                <ListDokumenLain
+                  item={item}
+                  token={token}
+                  variant={variant}
+                  device={device}
                 />
-            </View>
-          )}
-          ListEmptyComponent={() => <ListEmpty />}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          style={{ height: "69%" }}
+              </View>
+            )}
+            ListEmptyComponent={() => <ListEmpty />}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.5}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            style={{ height: "69%" }}
           />
-</View>
+        </View>
 
         {/* <TouchableOpacity onPress={() => {
                         navigation.navigate('TambahDokumenLain')
@@ -513,3 +644,17 @@ export const DokumenLain = () => {
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+    backgroundColor: COLORS.white,
+  },
+});

@@ -1776,9 +1776,9 @@ export const getListPegawaiExport = createAsyncThunk(
 //Digital Signature
 export const getListComposer = createAsyncThunk(
   "digitalsign/getListComposer",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/composer/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/composer/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -1789,9 +1789,9 @@ export const getListComposer = createAsyncThunk(
 );
 export const getListInProgress = createAsyncThunk(
   "digitalsign/getListInProgress",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -1803,9 +1803,9 @@ export const getListInProgress = createAsyncThunk(
 
 export const getListRetry = createAsyncThunk(
   "digitalsign/getListRetry",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/retry/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/retry/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -1816,9 +1816,9 @@ export const getListRetry = createAsyncThunk(
 );
 export const getListReady = createAsyncThunk(
   "digitalsign/getListReady",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/ready/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/ready/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -1829,9 +1829,9 @@ export const getListReady = createAsyncThunk(
 );
 export const getListCompleted = createAsyncThunk(
   "digitalsign/getListCompleted",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/completed/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/completed/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -1843,10 +1843,13 @@ export const getListCompleted = createAsyncThunk(
 
 export const getListRejected = createAsyncThunk(
   "digitalsign/getListRejected",
-  async ({ token }) => {
-    const respon = await axios.get(`${digitalSign}document/reject/`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/reject/?limit=${page}&general=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return {
       data: respon?.data.results,
     };
@@ -1880,9 +1883,9 @@ export const addDocumentDigiSign = createAsyncThunk(
 
 export const getListSignedDigiSign = createAsyncThunk(
   "digitalsign/getListSignedDigiSign",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axios.get(
-      `${digitalSign}document/signed/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/signed/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
