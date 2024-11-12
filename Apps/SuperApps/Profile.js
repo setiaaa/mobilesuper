@@ -558,7 +558,7 @@ export const Profile = () => {
 
     // Log Perbaikan
     tmpLog.push({
-      description: "Perubahan Payload Bankom",
+      description: "Penambahan Grafik Survei",
     });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);

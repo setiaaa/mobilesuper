@@ -472,7 +472,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perubahan Payload Bankom
+                      Penambahan Grafik Survei
                     </Text>
                   </View>
 
