@@ -558,7 +558,7 @@ export const Profile = () => {
 
     // Log Perbaikan
     tmpLog.push({
-      description: "Penambahan Grafik Survei",
+      description: "Bug fix text input",
     });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);

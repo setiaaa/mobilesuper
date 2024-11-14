@@ -49,7 +49,7 @@ export const LoginToken = () => {
   const [modalLog, setModalLog] = useState(false);
   const dispatch = useDispatch();
 
-  const loginAuth = useSelector((state) => state.login || {});
+  const loginAuth = useSelector((state) => state.login);
   const url = Linking.useURL();
 
   useEffect(() => {
@@ -105,9 +105,7 @@ export const LoginToken = () => {
     >
       {loginAuth.loading ? <Loading /> : null}
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+        <KeyboardAvoidingView behavior={"height"}>
           <View
             style={{
               backgroundColor: COLORS.white,
@@ -144,7 +142,7 @@ export const LoginToken = () => {
               <TextInput
                 style={{
                   borderWidth: 1,
-                  borderRadius: 5,
+                  borderRadius: 4,
                   height: 40,
                   marginTop: 5,
                   borderColor: COLORS.ExtraDivinder,
@@ -472,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan Grafik Survei
+                      Bug fix text input
                     </Text>
                   </View>
 
