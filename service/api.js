@@ -2173,7 +2173,7 @@ export const getDokumenPersetujuan = createAsyncThunk(
   "cuti/getDokumenPersetujuan",
   async (nip) => {
     const respon = await axios.get(
-      `${Cuti}dokumen-persetujuanku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=5`,
+      `${Cuti}dokumen-persetujuanku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
       {
         // headers: { Authorization: token },
       }

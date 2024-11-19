@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Bug fix text input
+                      Perubahan menu korespondensi
                     </Text>
                   </View>
 
