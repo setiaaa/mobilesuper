@@ -74,6 +74,7 @@ function IncomingList({ route }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const unread = route.params.unread;
+  const tipe = route.params.tipe;
   const animation = useRef(null);
   // ref
   const bottomSheetModalRef = useRef(null);
@@ -151,10 +152,18 @@ function IncomingList({ route }) {
       let response;
       if (unread) {
         response = await getHTTP(
-          nde_api.agendainunread.replace("{$page}", page)
+          nde_api.agendainunread.replace("{$page}", page) + "&dispo=0"
         );
       } else {
-        response = await getHTTP(nde_api.agendain.replace("{$page}", page));
+        if (tipe == "agenda_in_dispo") {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=1"
+          );
+        } else {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=0"
+          );
+        }
       }
       let data = initData(list, response.data);
       setList(data);
@@ -227,9 +236,13 @@ function IncomingList({ route }) {
         }
         let url;
         if (unread) {
-          url = nde_api.agendainunread;
+          url = nde_api.agendainunread + "&dispo=0";
         } else {
-          url = nde_api.agendain;
+          if (tipe == "agenda_in_dispo") {
+            url = nde_api.agendain + "&dispo=1";
+          } else {
+            url = nde_api.agendain + "&dispo=0";
+          }
         }
         url =
           url +

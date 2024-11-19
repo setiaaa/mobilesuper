@@ -23,7 +23,9 @@ function CardDMenu({ data, navigation }) {
               : data?.type == "sign"
               ? "Perlu TTD Elektronik"
               : data?.type == "agenda_in"
-              ? "Surat Masuk"
+              ? "Surat Masuk Belum Disposisi"
+              : data?.type == "agenda_in_dispo"
+              ? "Surat Masuk Sudah Disposisi"
               : data?.type == "agenda_disposition"
               ? "Disposisi"
               : data?.type == "incoming"
@@ -39,6 +41,7 @@ function CardDMenu({ data, navigation }) {
               : data?.type == "submitted"
               ? "Terkirim"
               : "",
+          tipe: data?.type,
         });
       }}
     >
@@ -51,7 +54,9 @@ function CardDMenu({ data, navigation }) {
             : data?.type == "sign"
             ? "Perlu TTD Elektronik"
             : data?.type == "agenda_in"
-            ? "Surat Masuk"
+            ? "Surat Masuk Belum Disposisi"
+            : data?.type == "agenda_in_dispo"
+            ? "Surat Masuk Sudah Disposisi"
             : data?.type == "agenda_disposition"
             ? "Disposisi"
             : data?.type == "incoming"
