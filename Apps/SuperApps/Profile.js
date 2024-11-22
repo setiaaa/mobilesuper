@@ -558,7 +558,7 @@ export const Profile = () => {
 
     // Log Perbaikan
     tmpLog.push({
-      description: "Perubahan menu korespondensi",
+      description: "Perubahan Tautan Pintas MyASN",
     });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
