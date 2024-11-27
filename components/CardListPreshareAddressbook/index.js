@@ -5,12 +5,27 @@ import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
 
-export const CardListPesertaAddresbook = ({ item, addressbook }) => {
+export const CardListPreshareAddressbook = ({
+  item,
+  addressbook,
+  pilihanAnggotaGrup,
+  setStateConfig,
+}) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;
     if (state === "jabatan") {
       data = addressbook.selected.filter((data) => data.id !== id);
+      setStateConfig({
+        title: "Peserta Grup",
+        tabs: {
+          jabatan: true,
+          pegawai: false,
+        },
+        multiselect: true,
+        payload: pilihanAnggotaGrup,
+        tipeAddress: "korespondensi",
+      });
       dispatch(setAddressbookSelected(data));
     } else {
       data = addressbook.selected.filter((data) => data.nip !== id);

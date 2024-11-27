@@ -425,6 +425,27 @@ export const DetailActivity = () => {
                 </TouchableOpacity>
               </View>
             </View>
+
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: COLORS.primary,
+                borderRadius: 8,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: 18,
+                marginTop: 10,
+                marginBottom: "30%",
+              }}
+              onPress={() => {
+                navigation.navigate("BerbagiDokumen", {
+                  data: detail,
+                  type: "edit",
+                });
+              }}
+            >
+              <Text style={{ color: COLORS.white }}>Ubah</Text>
+            </TouchableOpacity>
           </ScrollView>
           <Portal>
             <BottomSheetModalProvider>

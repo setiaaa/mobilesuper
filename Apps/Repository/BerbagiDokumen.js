@@ -1,0 +1,870 @@
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
+import { useDispatch, useSelector } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { CardListPesertaAddresbook } from "../../components/CardListPesertaAddresbook";
+import DatePicker from "react-native-modern-datepicker";
+import moment from "moment";
+import {
+  postAttachmentRepo,
+  postBerbagiDokumen,
+  putBerbagiDokumen,
+} from "../../service/api";
+import { getTokenValue } from "../../service/session";
+import { Loading } from "../../components/Loading";
+import * as DocumentPicker from "expo-document-picker";
+import { Config } from "../../constants/config";
+import Checkbox from "expo-checkbox";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setStatus } from "../../store/Repository";
+import { CardListPreshareAddressbook } from "../../components/CardListPreshareAddressbook";
+
+export const BerbagiDokumen = ({ route }) => {
+  const { device } = useSelector((state) => state.apps);
+  const item = route.params;
+  const navigation = useNavigation();
+  const [stateConfig, setStateConfig] = useState({});
+  const [token, setToken] = useState("");
+  const [judulKegiatan, setJudulKegiatan] = useState("");
+  const [pilihanAnggotaGrup, setPilihanAnggotaGrup] = useState([]);
+  const [tempatAcara, setTempatAcara] = useState("");
+  const [catatan, setCatatan] = useState("");
+  const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
+  const [tanggal, setTanggal] = useState("");
+  const [document, setDocument] = useState([]);
+  const [payloaDocument, setPayloadDocument] = useState([]);
+  const [type, setType] = useState([]);
+  const [isSelected, setSelection] = useState(false);
+  const dispatch = useDispatch();
+  const { addressbook } = useSelector((state) => state.addressBookKKP);
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (item?.type === "draft" || item?.type === "edit") {
+      setJudulKegiatan(item?.data?.title);
+      setTanggal(
+        moment(item?.data?.attributes?.tanggal, "YYYY-MM-DD HH:mm:ss")
+          .locale("id")
+          .format("YYYY-MM-DD")
+      );
+      setTempatAcara(item?.data?.attributes?.tempat);
+      setCatatan(item?.data?.attributes?.deskripsi);
+      const pilihanAnggotaGrup = item?.data?.objid_members.map(
+        (member, index) => ({
+          id: item?.data?.attributes?.id_addressbook?.[index],
+          code: member?.objidposisi,
+          title: member?.title,
+          name: member?.name,
+          objidposisi: member?.objidposisi,
+          officer: {
+            official: member?.name,
+          },
+        })
+      );
+
+      setPilihanAnggotaGrup(pilihanAnggotaGrup);
+
+      let typeDoc = [];
+      item?.data?.attachments.map((item) => {
+        let tipe = item?.files.split("/");
+        tipe = tipe[tipe?.length - 1];
+        tipe = tipe.split(".");
+        tipe = tipe[tipe?.length - 1];
+        typeDoc.push(tipe);
+      });
+      setType(typeDoc);
+      setDocument(item?.data.attachments);
+      setPayloadDocument(item?.data.attachments);
+    }
+  }, [item]);
+
+  useEffect(() => {
+    if (stateConfig.title === "Peserta Grup") {
+      setPilihanAnggotaGrup(addressbook.selected);
+    }
+  }, [addressbook]);
+
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+
+    // const file = convertFileToObject(result)
+    let tipe = result.assets[0].uri.split("/");
+    tipe = tipe[tipe.length - 1];
+    tipe = tipe.split(".");
+    tipe = tipe[tipe.length - 1];
+    setDocument([...document, result.assets]);
+    setType([...type, tipe]);
+    const data = {
+      token: token,
+      result: result.assets[0],
+    };
+    dispatch(postAttachmentRepo(data));
+  };
+
+  const { attachment, loading, status } = useSelector(
+    (state) => state.repository
+  );
+
+  const handleSubmit = (action) => {
+    let attachments = [];
+    attachment.map((item) => {
+      attachments.push(item.id);
+    });
+
+    let document = [];
+    payloaDocument.map((item) => {
+      document.push(item.id);
+    });
+
+    const combinedIds = [...new Set([...attachments, ...document])];
+
+    let objid_member = [];
+    pilihanAnggotaGrup.map((item) => {
+      objid_member.push(item.code);
+    });
+
+    let id_addressbook = [];
+    pilihanAnggotaGrup.map((item) => {
+      id_addressbook.push(item.id);
+    });
+
+    const result = {
+      title: judulKegiatan,
+      objid_members: objid_member,
+      attachments: item.type === "edit" ? combinedIds : attachment,
+      attributes: {
+        tanggal: moment(tanggal),
+        tempat: tempatAcara,
+        deskripsi: catatan,
+        send_notification: isSelected,
+        id_addressbook: id_addressbook,
+      },
+      published: action === "publish" ? true : false,
+      public: false,
+      base_url: "-",
+    };
+
+    const data = {
+      token: token,
+      result: result,
+      id: item?.data?.id,
+    };
+
+    if (item?.type === "edit") {
+      dispatch(putBerbagiDokumen(data));
+    } else {
+      dispatch(postBerbagiDokumen(data));
+    }
+  };
+
+  console.log(addressbook.selected);
+
+  const transformedData = {
+    employee: [],
+    id: 11,
+    listsDivision: [
+      { key: 1, value: "KEMENTERIAN KELAUTAN DAN PERIKANAN" },
+      { key: 2, value: "SEKRETARIAT JENDERAL" },
+      {
+        key: 3,
+        value: "DIREKTORAT JENDERAL PENGELOLAAN KELAUTAN DAN RUANG LAUT",
+      },
+      { key: 4, value: "DIREKTORAT JENDERAL PERIKANAN TANGKAP" },
+      { key: 5, value: "DIREKTORAT JENDERAL PERIKANAN BUDI DAYA" },
+      {
+        key: 6,
+        value:
+          "DIREKTORAT JENDERAL PENGUATAN DAYA SAING PRODUK KELAUTAN DAN PERIKANAN",
+      },
+      {
+        key: 7,
+        value:
+          "DIREKTORAT JENDERAL PENGAWASAN SUMBER DAYA KELAUTAN DAN PERIKANAN",
+      },
+      { key: 8, value: "INSPEKTORAT JENDERAL" },
+      {
+        key: 9,
+        value:
+          "BADAN PENYULUHAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA KELAUTAN DAN PERIKANAN",
+      },
+      {
+        key: 10,
+        value:
+          "BADAN PENGENDALIAN DAN PENGAWASAN MUTU HASIL KELAUTAN DAN PERIKANAN",
+      },
+    ],
+    listsDivisionPara: [],
+    listsDivisiontree: [
+      {
+        code: "",
+        header: true,
+        id: 4,
+        node: 1,
+        nodes: [],
+        officer: {},
+        title: "KEMENTERIAN KELAUTAN DAN PERIKANAN",
+      },
+    ],
+    listsFavorit: [],
+    selected: pilihanAnggotaGrup,
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ display: "flex", flex: 1 }}
+    >
+      {loading ? <Loading /> : null}
+      <ScrollView style={{ display: "flex", flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 20,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              {item?.type === "edit" ? "Edit Dokumen" : "Tambah Dokumen"}
+            </Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.white,
+            borderRadius: 8,
+            margin: 18,
+          }}
+        >
+          <View
+            style={{
+              marginTop: 20,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Judul Kegiatan
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Masukan Judul Kegiatan"
+              style={{ padding: 10 }}
+              onChangeText={setJudulKegiatan}
+              value={judulKegiatan}
+              allowFontScaling={false}
+            />
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Berbagi Dengan
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+              flexDirection: "row",
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Pilih member"
+              style={{ padding: 10 }}
+              allowFontScaling={false}
+            />
+            <View
+              style={{
+                alignItems: "flex-end",
+                flex: 1,
+                marginRight: 10,
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  const config = {
+                    title: "Peserta Grup",
+                    tabs: {
+                      jabatan: true,
+                      pegawai: false,
+                    },
+                    multiselect: true,
+                    payload: pilihanAnggotaGrup,
+                    tipeAddress: "korespondensi",
+                  };
+                  setStateConfig(config);
+                  navigation.navigate("AddressBook", { config: config });
+                }}
+              >
+                <Ionicons name="people-outline" size={24} color={COLORS.grey} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          {item.type === "edit" ? (
+            <FlatList
+              data={pilihanAnggotaGrup}
+              renderItem={({ item }) => (
+                <CardListPreshareAddressbook
+                  item={item}
+                  addressbook={transformedData}
+                  pilihanAnggotaGrup={pilihanAnggotaGrup}
+                  setStateConfig={setStateConfig}
+                />
+              )}
+              scrollEnabled={false}
+              keyExtractor={(index) => index}
+            />
+          ) : (
+            <FlatList
+              data={pilihanAnggotaGrup}
+              renderItem={({ item }) => (
+                <CardListPesertaAddresbook
+                  item={item}
+                  addressbook={addressbook}
+                />
+              )}
+              scrollEnabled={false}
+              keyExtractor={(index) => index}
+            />
+          )}
+          {pilihanAnggotaGrup.length !== 0 ? (
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 5,
+                marginHorizontal: 18,
+                marginTop: 10,
+                alignItems: "center",
+              }}
+            >
+              <Checkbox
+                value={isSelected}
+                onValueChange={setSelection}
+                color={isSelected === true ? COLORS.primary : null}
+              />
+              <Text>Kirim Notifikasi</Text>
+            </View>
+          ) : null}
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Tanggal Acara
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+              flexDirection: "row",
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Pilih Tanggal"
+              style={{ padding: 10 }}
+              allowFontScaling={false}
+              value={tanggal}
+            />
+            <View
+              style={{
+                alignItems: "flex-end",
+                flex: 1,
+                marginRight: 10,
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisiblePicker(true);
+                }}
+              >
+                <Ionicons
+                  name="calendar-outline"
+                  size={24}
+                  color={COLORS.grey}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View>
+            <View>
+              <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisiblePicker}
+                onRequestClose={() => {
+                  setModalVisiblePicker(!modalVisiblePicker);
+                }}
+              >
+                <TouchableOpacity
+                  style={[
+                    Platform.OS === "ios"
+                      ? styles.iOSBackdrop
+                      : styles.androidBackdrop,
+                    styles.backdrop,
+                  ]}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: 1,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "90%",
+                      height: 500,
+                      borderRadius: 10,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => setModalVisiblePicker(false)}
+                      style={{
+                        paddingRight: "85%",
+                        marginBottom: 3,
+                        marginLeft: 20,
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: COLORS.primary,
+                          borderRadius: 50,
+                          width: device === "tablet" ? 40 : 35,
+                          height: device === "tablet" ? 40 : 35,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={device === "tablet" ? 40 : 24}
+                          color={COLORS.white}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                    <View style={{ width: "100%" }}>
+                      <DatePicker
+                        options={{
+                          backgroundColor: COLORS.white,
+                          textHeaderColor: COLORS.primary,
+                          textDefaultColor: COLORS.primary,
+                          selectedTextColor: "#fff",
+                          mainColor: COLORS.primary,
+                          textSecondaryColor: COLORS.primary,
+                          borderColor: "rgba(122, 146, 165, 0.1)",
+                        }}
+                        current={moment(Date.now())
+                          .locale("id")
+                          .format("YYYY-MM-DD")}
+                        mode="calendar"
+                        minuteInterval={30}
+                        style={{ borderRadius: 10 }}
+                        onSelectedChange={(date) => {
+                          const [year, month, day] = date
+                            .split("/")
+                            .map(Number);
+                          const formattedDate = new Date(year, month - 1, day);
+
+                          setTanggal(
+                            moment(formattedDate)
+                              .locale("id")
+                              .format("YYYY-MM-DD")
+                          );
+                        }}
+                      />
+                      <TouchableOpacity
+                        onPress={() => setModalVisiblePicker("")}
+                        style={{
+                          marginTop: 20,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: 217,
+                            height: 39,
+                            borderRadius: 8,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Ok
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Tempat Acara
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Masukan Tempat"
+              style={{ padding: 10 }}
+              onChangeText={setTempatAcara}
+              value={tempatAcara}
+              allowFontScaling={false}
+            />
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Catatan
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              placeholder="Masukan Catatan"
+              style={{ padding: 10, height: 100 }}
+              onChangeText={setCatatan}
+              value={catatan}
+              allowFontScaling={false}
+            />
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Lampiran
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <Pressable onPress={pickDocument}>
+            <View
+              style={{
+                borderWidth: 1,
+                width: "90%",
+                marginLeft: 17,
+                borderRadius: 4,
+                borderColor: COLORS.ExtraDivinder,
+                height: 250,
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              <View>
+                <Ionicons
+                  name="cloud-upload-outline"
+                  size={30}
+                  color={"#66656C"}
+                />
+              </View>
+              <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+            </View>
+          </Pressable>
+
+          <View
+            style={{
+              marginHorizontal: 17,
+              marginTop: 5,
+              marginBottom: document.length == 0 ? 20 : 0,
+            }}
+          >
+            <Text style={{ color: COLORS.lighter }}>
+              *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls, xlsx yang
+              akan diterima dan ukuran file maks 100 MB
+            </Text>
+          </View>
+          {document.length < 1 ? null : (
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 20,
+                marginVertical: 10,
+                flexWrap: "wrap",
+                gap: 10,
+              }}
+            >
+              {document?.map((doc, i) => (
+                <>
+                  {type[i] === "pdf" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/pdf.png")}
+                      />
+                    </View>
+                  ) : (
+                    <>
+                      <Image
+                        key={doc.uri}
+                        source={{ uri: doc.uri }}
+                        style={{ width: 97, height: 97, borderRadius: 8 }}
+                      />
+                    </>
+                  )}
+                </>
+              ))}
+            </View>
+          )}
+        </View>
+        {item.type !== "edit" ? (
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              backgroundColor: COLORS.lightBrown,
+              borderRadius: 8,
+              justifyContent: "center",
+              alignItems: "center",
+              marginHorizontal: 18,
+            }}
+            onPress={() => {
+              handleSubmit("draft");
+            }}
+          >
+            <Text style={{ color: COLORS.white }}>Draft</Text>
+          </TouchableOpacity>
+        ) : null}
+
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 8,
+            justifyContent: "center",
+            alignItems: "center",
+            marginHorizontal: 18,
+            marginTop: 10,
+          }}
+          onPress={() => {
+            handleSubmit("publish");
+          }}
+        >
+          <Text style={{ color: COLORS.white }}>Kirim</Text>
+        </TouchableOpacity>
+
+        <ModalSubmit
+          status={status}
+          setStatus={setStatus}
+          navigate={"MainRepo"}
+        />
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
+const styles = StyleSheet.create({
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});

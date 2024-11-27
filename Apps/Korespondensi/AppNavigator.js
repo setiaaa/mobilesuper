@@ -224,6 +224,8 @@ import { ListBanner } from "../SuperApps/ListBanner";
 import { MainKalenderSatker } from "../KalenderSatker/MainKalenderSatker";
 import { DetailKalenderSatker } from "../KalenderSatker/DetailKalenderSatker";
 import { MainGrupKalender } from "../Kalender/MainGrupKalender";
+import { BerbagiDokumen } from "../Repository/BerbagiDokumen";
+import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
 
 const Stack = createNativeStackNavigator();
 
@@ -1578,6 +1580,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="LPMUKP"
             component={LPMUKP}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="BerbagiDokumen"
+            component={BerbagiDokumen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahDokumenTamplate"
+            component={TambahDokumenTamplate}
             options={{
               headerShown: false,
             }}

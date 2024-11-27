@@ -1,0 +1,323 @@
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
+import { useDispatch, useSelector } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { CardListPesertaAddresbook } from "../../components/CardListPesertaAddresbook";
+import DatePicker from "react-native-modern-datepicker";
+import moment from "moment";
+import { postAttachmentRepo } from "../../service/api";
+import { getTokenValue } from "../../service/session";
+import { Loading } from "../../components/Loading";
+import * as DocumentPicker from "expo-document-picker";
+
+export const TambahDokumenTamplate = () => {
+  const { device } = useSelector((state) => state.apps);
+  const navigation = useNavigation();
+  const [stateConfig, setStateConfig] = useState({});
+  const [token, setToken] = useState("");
+  const [namaTemplate, setNamaTemplate] = useState("");
+
+  const [deskripsi, setDeskripsi] = useState("");
+
+  const [document, setDocument] = useState([]);
+  const [type, setType] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+
+    // const file = convertFileToObject(result)
+    let tipe = result.assets[0].uri.split("/");
+    tipe = tipe[tipe.length - 1];
+    tipe = tipe.split(".");
+    tipe = tipe[tipe.length - 1];
+    setDocument([...document, result.assets]);
+    setType([...type, tipe]);
+    const data = {
+      token: token,
+      result: result.assets,
+    };
+    dispatch(postAttachmentRepo(data));
+  };
+
+  const { attachment, loading } = useSelector((state) => state.repository);
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ display: "flex", flex: 1 }}
+    >
+      {loading ? <Loading /> : null}
+      <ScrollView style={{ display: "flex", flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 20,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Tambah Dokumen Tamplate
+            </Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.white,
+            borderRadius: 8,
+            margin: 18,
+          }}
+        >
+          <View
+            style={{
+              marginTop: 20,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Nama Template
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Masukan Nama Template"
+              style={{ padding: 10 }}
+              onChangeText={setNamaTemplate}
+              value={namaTemplate}
+              allowFontScaling={false}
+            />
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Deskripsi
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              placeholder="Masukan Deskripsi"
+              style={{ padding: 10, height: 100 }}
+              onChangeText={setDeskripsi}
+              value={deskripsi}
+              allowFontScaling={false}
+            />
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Lampiran (file template)
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <Pressable onPress={pickDocument}>
+            <View
+              style={{
+                borderWidth: 1,
+                width: "90%",
+                marginLeft: 17,
+                borderRadius: 4,
+                borderColor: COLORS.ExtraDivinder,
+                height: 250,
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              <View>
+                <Ionicons
+                  name="cloud-upload-outline"
+                  size={30}
+                  color={"#66656C"}
+                />
+              </View>
+              <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+            </View>
+          </Pressable>
+
+          <View
+            style={{
+              marginHorizontal: 17,
+              marginTop: 5,
+              marginBottom: document.length == 0 ? 20 : 0,
+            }}
+          >
+            <Text style={{ color: COLORS.lighter }}>
+              *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls, xlsx yang
+              akan diterima dan ukuran file maks 100 MB
+            </Text>
+          </View>
+          {document.length < 1 ? null : (
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 20,
+                marginVertical: 10,
+                flexWrap: "wrap",
+                gap: 10,
+              }}
+            >
+              {document?.map((doc, i) => (
+                <>
+                  {type[i] === "pdf" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/pdf.png")}
+                      />
+                    </View>
+                  ) : (
+                    <Image
+                      key={doc.uri}
+                      source={{ uri: doc.uri }}
+                      style={{ width: 97, height: 97, borderRadius: 8 }}
+                    />
+                  )}
+                </>
+              ))}
+            </View>
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
+const styles = StyleSheet.create({
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});

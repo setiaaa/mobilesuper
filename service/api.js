@@ -838,6 +838,46 @@ export const postRating = createAsyncThunk(
   }
 );
 
+export const postAttachmentRepo = createAsyncThunk(
+  "repository/postAttachmentRepo",
+  async (data) => {
+    let formData = new FormData();
+    formData.append("files", data.result);
+    const respon = await axios.post(`${repository}attachment/`, formData, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const postBerbagiDokumen = createAsyncThunk(
+  "repository/postBerbagiDokumen",
+  async (data) => {
+    const respon = await axios.post(
+      `${repository}document-share/`,
+      data.result,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const putBerbagiDokumen = createAsyncThunk(
+  "repository/putBerbagiDokumen",
+  async (data) => {
+    const respon = await axios.put(
+      `${repository}${data.id}/document-edit/`,
+      data.result,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
 //profile me
 
 export const getProfileMe = createAsyncThunk(

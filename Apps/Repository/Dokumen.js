@@ -64,8 +64,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: "5%",
-          backgroundColor:
-            item.published === true ? COLORS.white : COLORS.ExtraDivinder,
+          backgroundColor: COLORS.white,
           borderRadius: 8,
           shadowColor: "black",
           shadowOffset: { width: 0, height: 0 },
@@ -201,7 +200,14 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 </View>
               </TouchableOpacity>
             ) : (
-              <View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("BerbagiDokumen", {
+                    data: item,
+                    type: "draft",
+                  });
+                }}
+              >
                 <Text
                   style={{
                     fontSize: fontSizeResponsive("H3", device),
@@ -304,7 +310,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       .format("DD MMMM yyyy")}
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -419,9 +425,12 @@ export const Dokumen = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(load, "load");
+  console.log(dokumen.lists.length);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {loading === true && dokumen.lists.length === 0 ? <Loading /> : null}
+      {loading === true ? <Loading /> : null}
       <>
         <View style={{ marginBottom: 20, flex: 1 }}>
           <View
@@ -568,19 +577,19 @@ export const Dokumen = () => {
                   device={device}
                 />
               )}
-              ListFooterComponent={() =>
-                load === true ? (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      padding: 24,
-                    }}
-                  >
-                    <ActivityIndicator size="large" color={COLORS.primary} />
-                  </View>
-                ) : null
-              }
+              // ListFooterComponent={() =>
+              //   load === true ? (
+              //     <View
+              //       style={{
+              //         justifyContent: "center",
+              //         alignItems: "center",
+              //         padding: 24,
+              //       }}
+              //     >
+              //       <ActivityIndicator size="large" color={COLORS.primary} />
+              //     </View>
+              //   ) : null
+              // }
               keyExtractor={(item) => "_" + item.id}
               style={{
                 height: device === "tablet" ? "79%" : "67%",
@@ -704,6 +713,30 @@ export const Dokumen = () => {
             </Portal> */}
           </View>
         </View>
+
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            width: 50,
+            height: 50,
+            position: "absolute",
+            bottom: 30,
+            right: 20,
+            flex: 1,
+          }}
+          onPress={() => {
+            navigation.navigate("BerbagiDokumen", {
+              data: null,
+              type: "tambah",
+            });
+          }}
+        >
+          <Ionicons name="add" size={24} color={COLORS.white} />
+        </TouchableOpacity>
       </>
     </GestureHandlerRootView>
   );

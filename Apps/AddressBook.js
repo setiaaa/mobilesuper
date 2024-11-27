@@ -90,7 +90,7 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
           <Text
             style={{ width: "80%", fontSize: fontSizeResponsive("H4", device) }}
           >
-            {item.person !== undefined ? item.person : ''}
+            {item.person !== undefined ? item.person : ""}
           </Text>
         </View>
       ) : item.code !== undefined && item.title !== undefined ? (
