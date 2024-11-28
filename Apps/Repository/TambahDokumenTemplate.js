@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -74,13 +75,22 @@ export const TambahDokumenTamplate = ({ route }) => {
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
-    setDocument([...document, result.assets]);
-    setType([...type, tipe]);
-    const data = {
-      token: token,
-      result: result.assets[0],
-    };
-    dispatch(postAttachmentRepo(data));
+    console.log(result);
+    const size = (result.assets[0].size / (1024 * 1024)).toFixed(3);
+
+    if (size <= 100 && (tipe === "ppt" || tipe === "pptx")) {
+      setDocument([...document, result.assets]);
+      setType([...type, tipe]);
+      const data = {
+        token: token,
+        result: result.assets[0],
+      };
+      dispatch(postAttachmentRepo(data));
+    } else
+      Alert.alert(
+        "Peringatan",
+        "File terlalu besar, maksimal 100MB atau format file bukan ppt/pptx"
+      );
   };
 
   const handleSubmit = (action) => {

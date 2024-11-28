@@ -118,13 +118,18 @@ export const BerbagiDokumen = ({ route }) => {
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
-    setDocument([...document, result.assets]);
-    setType([...type, tipe]);
-    const data = {
-      token: token,
-      result: result.assets[0],
-    };
-    dispatch(postAttachmentRepo(data));
+
+    const size = (result.assets[0].size / (1024 * 1024)).toFixed(3);
+
+    if (size <= 100) {
+      setDocument([...document, result.assets]);
+      setType([...type, tipe]);
+      const data = {
+        token: token,
+        result: result.assets[0],
+      };
+      dispatch(postAttachmentRepo(data));
+    } else alert("File terlalu besar, maksimal 100MB");
   };
 
   const { attachment, loading, status } = useSelector(
@@ -796,6 +801,73 @@ export const BerbagiDokumen = ({ route }) => {
                     >
                       <Image
                         source={require("../../assets/superApp/pdf.png")}
+                      />
+                    </View>
+                  ) : type[i] === "jpg" ||
+                    type[i] === "jpeg" ||
+                    type[i] === "png" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/photos.png")}
+                        style={{ width: 60, height: 60 }}
+                      />
+                    </View>
+                  ) : type[i] === "ppt" || type[i] === "pptx" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/ppt.png")}
+                      />
+                    </View>
+                  ) : type[i] === "doc" || type[i] === "docx" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/word.png")}
+                      />
+                    </View>
+                  ) : type[i] === "xls" || type[i] === "xlsx" ? (
+                    <View
+                      style={{
+                        width: 97,
+                        height: 97,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderColor: COLORS.ExtraDivinder,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/superApp/excel.png")}
                       />
                     </View>
                   ) : (
