@@ -58,7 +58,7 @@ export const TambahDokumenTamplate = ({ route }) => {
   }, []);
 
   useEffect(() => {
-    if (item.type === "edit") {
+    if (item?.type === "edit") {
       setNamaTemplate(item.data.title);
       setDeskripsi(item.data.attributes.deskripsi);
     }
@@ -90,14 +90,14 @@ export const TambahDokumenTamplate = ({ route }) => {
     });
 
     let payloadAttachment = [];
-    item.data.attachments.map((item) => {
+    item?.data?.attachments.map((item) => {
       payloadAttachment.push(item.id);
     });
 
     const currentDate = new Date(); // Current date and time
 
     const result = {
-      attachments: item.type === "edit" ? payloadAttachment : attachments,
+      attachments: item?.type === "edit" ? payloadAttachment : attachments,
       attributes: {
         deskripsi: deskripsi,
         send_notification: false,
@@ -117,15 +117,14 @@ export const TambahDokumenTamplate = ({ route }) => {
     const data = {
       token: token,
       result: result,
-      id: item.data.id,
+      id: item?.data?.id,
     };
 
-    if (item.type === "edit") {
+    if (item?.type === "edit") {
       dispatch(putDokumenTamplate(data));
     } else {
       dispatch(postDokumenTamplate(datas));
     }
-    console.log(data.id);
   };
 
   const { attachment, loading, status } = useSelector(
@@ -254,7 +253,7 @@ export const TambahDokumenTamplate = ({ route }) => {
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
-              marginBottom: item.type === "edit" ? 20 : 0,
+              marginBottom: item?.type === "edit" ? 20 : 0,
             }}
           >
             <TextInput
@@ -269,7 +268,7 @@ export const TambahDokumenTamplate = ({ route }) => {
             />
           </View>
 
-          {item.type === "edit" ? null : (
+          {item?.type === "edit" ? null : (
             <>
               <View
                 style={{
