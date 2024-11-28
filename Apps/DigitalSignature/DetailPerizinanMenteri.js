@@ -918,6 +918,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"PerizinanMenteri"}
           />
         </ScrollView>

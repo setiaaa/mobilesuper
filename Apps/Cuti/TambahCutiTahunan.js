@@ -2331,6 +2331,7 @@ export const TambahCutiTahunan = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"MainCuti"}
           />
         </>

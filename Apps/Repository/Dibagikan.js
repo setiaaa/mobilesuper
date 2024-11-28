@@ -35,7 +35,7 @@ import { getTokenValue } from "../../service/session";
 import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { setRating } from "../../store/Repository";
+import { setEdit, setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
@@ -84,6 +84,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 navigation.navigate("MainDetailRepo");
                 getDetailRepo(item.id);
                 dispatch(setRating(true));
+                dispatch(setEdit(""));
               }}
             >
               <Text

@@ -10,7 +10,13 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 
-export const ModalSubmit = ({ status, setStatus, navigate, message }) => {
+export const ModalSubmit = ({
+  status,
+  setStatus,
+  navigate,
+  message,
+  messageSuccess,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
@@ -57,7 +63,8 @@ export const ModalSubmit = ({ status, setStatus, navigate, message }) => {
                     marginTop: 20,
                   }}
                 >
-                  <Text>Berhasil Ditambahkan!</Text>
+                  <Text>Berhasil!</Text>
+                  <Text style={{ marginTop: 5 }}>{messageSuccess}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {

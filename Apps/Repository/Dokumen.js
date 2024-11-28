@@ -29,6 +29,7 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   setDokumentlists,
+  setEdit,
   setLoadMore,
   setRating,
 } from "../../store/Repository";
@@ -94,6 +95,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                   navigation.navigate("MainDetailRepo");
                   getDetailRepo(item.id);
                   dispatch(setRating(true));
+                  dispatch(setEdit("Edit"));
                 }}
               >
                 <Text
@@ -425,9 +427,6 @@ export const Dokumen = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(load, "load");
-  console.log(dokumen.lists.length);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true ? <Loading /> : null}
@@ -577,19 +576,19 @@ export const Dokumen = () => {
                   device={device}
                 />
               )}
-              // ListFooterComponent={() =>
-              //   load === true ? (
-              //     <View
-              //       style={{
-              //         justifyContent: "center",
-              //         alignItems: "center",
-              //         padding: 24,
-              //       }}
-              //     >
-              //       <ActivityIndicator size="large" color={COLORS.primary} />
-              //     </View>
-              //   ) : null
-              // }
+              ListFooterComponent={() =>
+                load === true ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
+                    }}
+                  >
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                ) : null
+              }
               keyExtractor={(item) => "_" + item.id}
               style={{
                 height: device === "tablet" ? "79%" : "67%",

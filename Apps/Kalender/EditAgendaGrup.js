@@ -1040,6 +1040,7 @@ export const EditAgendaGrup = ({ route }) => {
             <ModalSubmit
               status={status}
               setStatus={setStatus}
+              messageSuccess={"Data Ditambahkan"}
               navigate={"GrupKalender"}
             />
             {/* <Modal

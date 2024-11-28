@@ -829,6 +829,7 @@ export const getDownloadLampiran = createAsyncThunk(
 export const postRating = createAsyncThunk(
   "repository/postRating",
   async (data) => {
+    console.log(data);
     const respon = await axios.put(
       `${repository}${data.id}/rate/`,
       data.payload,
@@ -866,6 +867,47 @@ export const postBerbagiDokumen = createAsyncThunk(
 
 export const putBerbagiDokumen = createAsyncThunk(
   "repository/putBerbagiDokumen",
+  async (data) => {
+    const respon = await axios.put(
+      `${repository}${data.id}/document-edit/`,
+      data.result,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const deleteBerbagiDokumen = createAsyncThunk(
+  "repository/deleteBerbagiDokumen",
+  async (data) => {
+    const respon = await axios.delete(
+      `${repository}${data.id}}/document-delete/`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const postDokumenTamplate = createAsyncThunk(
+  "repository/postDokumenTamplate",
+  async (data) => {
+    const respon = await axios.post(
+      `${repository}document-share/`,
+      data.result,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const putDokumenTamplate = createAsyncThunk(
+  "repository/putDokumenTamplate",
   async (data) => {
     const respon = await axios.put(
       `${repository}${data.id}/document-edit/`,

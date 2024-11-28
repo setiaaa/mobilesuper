@@ -42,7 +42,7 @@ import { Divider } from "react-native-paper";
 import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { setRating } from "../../store/Repository";
+import { setEdit, setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
@@ -92,6 +92,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 // bottomSheetAttach(item);
                 // getDetailRepo(item.id);
                 dispatch(setRating(false));
+                dispatch(setEdit("EditTamplate"));
               }}
             >
               <Text

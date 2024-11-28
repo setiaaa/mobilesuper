@@ -1014,7 +1014,7 @@ export const TambahAgenda = () => {
                                 </View>
                             </BottomSheetView>
                         </BottomSheetModal> */}
-            <ModalSubmit />
+
             {/* <Modal
                             animationType="fade"
                             transparent={true}

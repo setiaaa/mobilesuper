@@ -818,6 +818,7 @@ export const EditGrup = () => {
             <ModalSubmit
               status={status}
               setStatus={setStatus}
+              messageSuccess={"Data Ditambahkan"}
               navigate={"GrupKalender"}
             />
           </ScrollView>

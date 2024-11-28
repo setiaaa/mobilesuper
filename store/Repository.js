@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  deleteBerbagiDokumen,
   getDetailDocument,
   getDivisionFilter,
   getDocument,
@@ -9,8 +10,10 @@ import {
   getSubDivisionFilter,
   postAttachmentRepo,
   postBerbagiDokumen,
+  postDokumenTamplate,
   postRating,
   putBerbagiDokumen,
+  putDokumenTamplate,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -43,6 +46,8 @@ const RepositorySlice = createSlice({
     refresh: false,
     rating: false,
     status: "",
+    edit: "",
+    dokumenTamplate: {},
   },
   reducers: {
     // setDokumentlists: (state, action) => {
@@ -62,6 +67,12 @@ const RepositorySlice = createSlice({
     },
     setStatus: (state, action) => {
       state.status = action.payload;
+    },
+    setEdit: (state, action) => {
+      state.edit = action.payload;
+    },
+    setAttachments: (state, action) => {
+      state.attachment = action.payload;
     },
   },
   extraReducers(builder) {
@@ -135,12 +146,14 @@ const RepositorySlice = createSlice({
         let data = [...state.attachment, action.payload];
         state.attachment = data;
         state.loading = false;
+        console.log("berhasil");
       })
       .addCase(postAttachmentRepo.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(postAttachmentRepo.rejected, (state, action) => {
         state.loading = false;
+        console.log(action.error);
         Sentry.captureException(action.payload);
       })
       .addCase(postBerbagiDokumen.fulfilled, (state, action) => {
@@ -168,6 +181,53 @@ const RepositorySlice = createSlice({
       .addCase(putBerbagiDokumen.rejected, (state, action) => {
         state.loading = false;
         state.status = "gagal";
+      })
+      .addCase(postRating.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("berhasil");
+      })
+      .addCase(postRating.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(postRating.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
+      })
+      .addCase(deleteBerbagiDokumen.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("berhasil");
+        state.status = "berhasil";
+      })
+      .addCase(deleteBerbagiDokumen.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteBerbagiDokumen.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+        console.log("gagal");
+      })
+      .addCase(postDokumenTamplate.fulfilled, (state, action) => {
+        state.dokumenTamplate = action.payload;
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(postDokumenTamplate.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(postDokumenTamplate.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
+      .addCase(putDokumenTamplate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(putDokumenTamplate.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(putDokumenTamplate.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
       });
   },
 });
@@ -180,6 +240,8 @@ export const {
   setRefresh,
   setRating,
   setStatus,
+  setEdit,
+  setAttachments,
 } = RepositorySlice.actions;
 
 export default RepositorySlice.reducer;

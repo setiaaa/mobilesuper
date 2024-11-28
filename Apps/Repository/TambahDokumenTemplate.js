@@ -25,12 +25,19 @@ import { useNavigation } from "@react-navigation/native";
 import { CardListPesertaAddresbook } from "../../components/CardListPesertaAddresbook";
 import DatePicker from "react-native-modern-datepicker";
 import moment from "moment";
-import { postAttachmentRepo } from "../../service/api";
+import {
+  postAttachmentRepo,
+  postDokumenTamplate,
+  putDokumenTamplate,
+} from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { Loading } from "../../components/Loading";
 import * as DocumentPicker from "expo-document-picker";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setAttachments, setStatus } from "../../store/Repository";
 
-export const TambahDokumenTamplate = () => {
+export const TambahDokumenTamplate = ({ route }) => {
+  const item = route.params;
   const { device } = useSelector((state) => state.apps);
   const navigation = useNavigation();
   const [stateConfig, setStateConfig] = useState({});
@@ -47,7 +54,17 @@ export const TambahDokumenTamplate = () => {
     getTokenValue().then((val) => {
       setToken(val);
     });
+    dispatch(setAttachments([]));
   }, []);
+
+  useEffect(() => {
+    if (item.type === "edit") {
+      setNamaTemplate(item.data.title);
+      setDeskripsi(item.data.attributes.deskripsi);
+    }
+  }, [item]);
+
+  console.log(item);
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
@@ -61,12 +78,59 @@ export const TambahDokumenTamplate = () => {
     setType([...type, tipe]);
     const data = {
       token: token,
-      result: result.assets,
+      result: result.assets[0],
     };
     dispatch(postAttachmentRepo(data));
   };
 
-  const { attachment, loading } = useSelector((state) => state.repository);
+  const handleSubmit = (action) => {
+    let attachments = [];
+    attachment.map((item) => {
+      attachments.push(item.id);
+    });
+
+    let payloadAttachment = [];
+    item.data.attachments.map((item) => {
+      payloadAttachment.push(item.id);
+    });
+
+    const currentDate = new Date(); // Current date and time
+
+    const result = {
+      attachments: item.type === "edit" ? payloadAttachment : attachments,
+      attributes: {
+        deskripsi: deskripsi,
+        send_notification: false,
+        tanggal: currentDate,
+        tempat: "-",
+      },
+      title: namaTemplate,
+      published: action === "publish" ? true : false,
+      public: true,
+    };
+
+    const datas = {
+      token: token,
+      result: result,
+    };
+
+    const data = {
+      token: token,
+      result: result,
+      id: item.data.id,
+    };
+
+    if (item.type === "edit") {
+      dispatch(putDokumenTamplate(data));
+    } else {
+      dispatch(postDokumenTamplate(datas));
+    }
+    console.log(data.id);
+  };
+
+  const { attachment, loading, status } = useSelector(
+    (state) => state.repository
+  );
 
   return (
     <KeyboardAvoidingView
@@ -190,6 +254,7 @@ export const TambahDokumenTamplate = () => {
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
+              marginBottom: item.type === "edit" ? 20 : 0,
             }}
           >
             <TextInput
@@ -204,102 +269,146 @@ export const TambahDokumenTamplate = () => {
             />
           </View>
 
-          <View
-            style={{
-              marginTop: 10,
-              marginBottom: 10,
-              marginLeft: 17,
-              flexDirection: "row",
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: FONTWEIGHT.bold,
-                fontSize: fontSizeResponsive("H3", device),
-              }}
-            >
-              Lampiran (file template)
-            </Text>
-            <Text style={{ color: COLORS.danger }}>*</Text>
-          </View>
-
-          <Pressable onPress={pickDocument}>
-            <View
-              style={{
-                borderWidth: 1,
-                width: "90%",
-                marginLeft: 17,
-                borderRadius: 4,
-                borderColor: COLORS.ExtraDivinder,
-                height: 250,
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <View>
-                <Ionicons
-                  name="cloud-upload-outline"
-                  size={30}
-                  color={"#66656C"}
-                />
+          {item.type === "edit" ? null : (
+            <>
+              <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 10,
+                  marginLeft: 17,
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Lampiran (file template)
+                </Text>
+                <Text style={{ color: COLORS.danger }}>*</Text>
               </View>
-              <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
-            </View>
-          </Pressable>
 
-          <View
-            style={{
-              marginHorizontal: 17,
-              marginTop: 5,
-              marginBottom: document.length == 0 ? 20 : 0,
-            }}
-          >
-            <Text style={{ color: COLORS.lighter }}>
-              *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls, xlsx yang
-              akan diterima dan ukuran file maks 100 MB
-            </Text>
-          </View>
-          {document.length < 1 ? null : (
-            <View
-              style={{
-                flexDirection: "row",
-                marginHorizontal: 20,
-                marginVertical: 10,
-                flexWrap: "wrap",
-                gap: 10,
-              }}
-            >
-              {document?.map((doc, i) => (
-                <>
-                  {type[i] === "pdf" ? (
-                    <View
-                      style={{
-                        width: 97,
-                        height: 97,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        borderColor: COLORS.ExtraDivinder,
-                      }}
-                    >
-                      <Image
-                        source={require("../../assets/superApp/pdf.png")}
-                      />
-                    </View>
-                  ) : (
-                    <Image
-                      key={doc.uri}
-                      source={{ uri: doc.uri }}
-                      style={{ width: 97, height: 97, borderRadius: 8 }}
+              <Pressable onPress={pickDocument}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "90%",
+                    marginLeft: 17,
+                    borderRadius: 4,
+                    borderColor: COLORS.ExtraDivinder,
+                    height: 250,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  <View>
+                    <Ionicons
+                      name="cloud-upload-outline"
+                      size={30}
+                      color={"#66656C"}
                     />
-                  )}
-                </>
-              ))}
-            </View>
+                  </View>
+                  <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+                </View>
+              </Pressable>
+
+              <View
+                style={{
+                  marginHorizontal: 17,
+                  marginTop: 5,
+                  marginBottom: document.length == 0 ? 20 : 0,
+                }}
+              >
+                <Text style={{ color: COLORS.lighter }}>
+                  *) Hanya ppt, pptx yang akan diterima dan ukuran file maks 100
+                  MB
+                </Text>
+              </View>
+              {document.length < 1 ? null : (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                    flexWrap: "wrap",
+                    gap: 10,
+                  }}
+                >
+                  {document?.map((doc, i) => (
+                    <>
+                      {type[i] === "pdf" ? (
+                        <View
+                          style={{
+                            width: 97,
+                            height: 97,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            borderColor: COLORS.ExtraDivinder,
+                          }}
+                        >
+                          <Image
+                            source={require("../../assets/superApp/pdf.png")}
+                          />
+                        </View>
+                      ) : type[i] === "ppt" || "pptx" ? (
+                        <View
+                          style={{
+                            width: 97,
+                            height: 97,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            borderColor: COLORS.ExtraDivinder,
+                          }}
+                        >
+                          <Image
+                            source={require("../../assets/superApp/ppt.png")}
+                          />
+                        </View>
+                      ) : (
+                        <Image
+                          key={doc.uri}
+                          source={{ uri: doc.uri }}
+                          style={{ width: 97, height: 97, borderRadius: 8 }}
+                        />
+                      )}
+                    </>
+                  ))}
+                </View>
+              )}
+            </>
           )}
         </View>
+
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 8,
+            justifyContent: "center",
+            alignItems: "center",
+            marginHorizontal: 18,
+            marginTop: 10,
+          }}
+          onPress={() => {
+            handleSubmit("publish");
+          }}
+        >
+          <Text style={{ color: COLORS.white }}>Kirim</Text>
+        </TouchableOpacity>
+
+        <ModalSubmit
+          status={status}
+          setStatus={setStatus}
+          messageSuccess={"Data Ditambahkan"}
+          navigate={"MainRepo"}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

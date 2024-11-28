@@ -1159,6 +1159,7 @@ export const Home = () => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             message={"Silahkan Coba Kembali"}
             navigate={"Home"}
           />

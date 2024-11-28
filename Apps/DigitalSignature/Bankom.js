@@ -1163,6 +1163,7 @@ export const Bankom = () => {
             <ModalSubmit
               status={status}
               setStatus={setStatus}
+              messageSuccess={"Data Ditambahkan"}
               navigate={"MainDigitalSign"}
             />
           </>

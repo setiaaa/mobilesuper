@@ -1085,6 +1085,7 @@ export const DetailSertifikat = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"MainDigitalSign"}
           />
         </ScrollView>

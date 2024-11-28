@@ -561,6 +561,7 @@ export const PerizinanMenteri = () => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"PerizinanMenteri"}
           />
         </View>

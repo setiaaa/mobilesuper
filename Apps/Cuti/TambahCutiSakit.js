@@ -2303,6 +2303,7 @@ export const TambahCutiSakit = () => {
       <ModalSubmit
         status={status}
         setStatus={setStatus}
+        messageSuccess={"Data Ditambahkan"}
         navigate={"MainCuti"}
       />
     </GestureHandlerRootView>

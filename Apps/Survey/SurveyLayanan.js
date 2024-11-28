@@ -427,7 +427,12 @@ export const SurveyLayanan = () => {
           Submit
         </Text>
       </TouchableOpacity> */}
-      <ModalSubmit status={status} setStatus={setStatus} navigate={"Main"} />
+      <ModalSubmit
+        status={status}
+        setStatus={setStatus}
+        navigate={"Main"}
+        messageSuccess={"Data Ditambahkan"}
+      />
     </ScrollView>
   );
 };

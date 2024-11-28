@@ -36,7 +36,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { Config } from "../../constants/config";
 import Checkbox from "expo-checkbox";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import { setStatus } from "../../store/Repository";
+import { setAttachments, setStatus } from "../../store/Repository";
 import { CardListPreshareAddressbook } from "../../components/CardListPreshareAddressbook";
 
 export const BerbagiDokumen = ({ route }) => {
@@ -62,6 +62,7 @@ export const BerbagiDokumen = ({ route }) => {
     getTokenValue().then((val) => {
       setToken(val);
     });
+    dispatch(setAttachments([]));
   }, []);
 
   useEffect(() => {
@@ -156,7 +157,7 @@ export const BerbagiDokumen = ({ route }) => {
     const result = {
       title: judulKegiatan,
       objid_members: objid_member,
-      attachments: item.type === "edit" ? combinedIds : attachment,
+      attachments: item.type === "edit" ? combinedIds : attachments,
       attributes: {
         tanggal: moment(tanggal),
         tempat: tempatAcara,
@@ -175,14 +176,18 @@ export const BerbagiDokumen = ({ route }) => {
       id: item?.data?.id,
     };
 
+    const datas = {
+      token: token,
+      result: result,
+    };
+
     if (item?.type === "edit") {
       dispatch(putBerbagiDokumen(data));
     } else {
-      dispatch(postBerbagiDokumen(data));
+      console.log(datas.result, "asd");
+      dispatch(postBerbagiDokumen(datas));
     }
   };
-
-  console.log(addressbook.selected);
 
   const transformedData = {
     employee: [],
@@ -845,6 +850,7 @@ export const BerbagiDokumen = ({ route }) => {
         <ModalSubmit
           status={status}
           setStatus={setStatus}
+          messageSuccess={"Data Ditambahkan"}
           navigate={"MainRepo"}
         />
       </ScrollView>

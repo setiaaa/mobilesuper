@@ -1891,6 +1891,7 @@ export const DetailDokumenCuti = ({ route }) => {
             status={status}
             setStatus={setStatus}
             message={message}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"MainCuti"}
           />
 
