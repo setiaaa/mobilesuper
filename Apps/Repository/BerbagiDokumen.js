@@ -189,7 +189,6 @@ export const BerbagiDokumen = ({ route }) => {
     if (item?.type === "edit") {
       dispatch(putBerbagiDokumen(data));
     } else {
-      console.log(datas.result, "asd");
       dispatch(postBerbagiDokumen(datas));
     }
   };
@@ -870,15 +869,14 @@ export const BerbagiDokumen = ({ route }) => {
                         source={require("../../assets/superApp/excel.png")}
                       />
                     </View>
-                  ) : (
-                    <>
-                      <Image
-                        key={doc.uri}
-                        source={{ uri: doc.uri }}
-                        style={{ width: 97, height: 97, borderRadius: 8 }}
-                      />
-                    </>
-                  )}
+                  ) : // <>
+                  //   <Image
+                  //     key={doc.uri}
+                  //     source={{ uri: doc.uri }}
+                  //     style={{ width: 97, height: 97, borderRadius: 8 }}
+                  //   />
+                  // </>
+                  null}
                 </>
               ))}
             </View>

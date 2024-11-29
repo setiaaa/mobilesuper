@@ -65,8 +65,6 @@ export const TambahDokumenTamplate = ({ route }) => {
     }
   }, [item]);
 
-  console.log(item);
-
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
 
@@ -89,7 +87,7 @@ export const TambahDokumenTamplate = ({ route }) => {
     } else
       Alert.alert(
         "Peringatan",
-        "File terlalu besar, maksimal 100MB atau format file bukan ppt/pptx"
+        "File terlalu besar, maksimal 10MB atau format file bukan ppt/pptx"
       );
   };
 
@@ -332,7 +330,7 @@ export const TambahDokumenTamplate = ({ route }) => {
                 }}
               >
                 <Text style={{ color: COLORS.lighter }}>
-                  *) Hanya ppt, pptx yang akan diterima dan ukuran file maks 100
+                  *) Hanya ppt, pptx yang akan diterima dan ukuran file maks 10
                   MB
                 </Text>
               </View>

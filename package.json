@@ -54,7 +54,7 @@
     "moment": "^2.29.4",
     "onesignal-expo-plugin": "^2.0.3",
     "react": "18.2.0",
-    "react-native": "0.73.4",
+    "react-native": "^0.73.6",
     "react-native-big-calendar": "^4.5.0",
     "react-native-blob-util": "^0.19.6",
     "react-native-calendar-picker": "^7.1.4",

@@ -842,12 +842,28 @@ export const postRating = createAsyncThunk(
 export const postAttachmentRepo = createAsyncThunk(
   "repository/postAttachmentRepo",
   async (data) => {
-    let formData = new FormData();
-    formData.append("files", data.result);
-    const respon = await axios.post(`${repository}attachment/`, formData, {
-      headers: { Authorization: data.token },
-    });
-    return respon?.data.result;
+    try {
+      // Membuat FormData
+      const formData = new FormData();
+      formData.append("files", {
+        uri: data.result.uri, // Path ke file
+        type: data.result.mimeType, // MIME type dari file
+        name: data.result.name, // Nama file (dengan ekstensi)
+      });
+
+      // Kirim data ke server menggunakan Axios
+      const respon = await axios.post(`${repository}attachment/`, formData, {
+        headers: {
+          Authorization: data.token, // Sertakan token otorisasi
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return respon?.data.result; // Kembalikan hasil dari server
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw new Error("Gagal mengunggah file. Silakan coba lagi.");
+    }
   }
 );
 
