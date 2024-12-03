@@ -58,7 +58,7 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-const Cuti = Config.base_url_cuti;
+const Cuti = BASE_URL + "cuti/";
 const HelpDesk = Config.base_url_helpdesk;
 const Survey = BASE_URL + "bridge/";
 
@@ -2157,9 +2157,9 @@ export const tandaTanganMentri = createAsyncThunk(
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",
-  async (nip) => {
-    const respon = await axios.get(`${Cuti}jenis-cuti?nip=${nip}`, {
-      // headers: { Authorization: token },
+  async (token) => {
+    const respon = await axios.get(`${Cuti}jenis-cuti`, {
+      headers: { Authorization: token },
     });
     return respon?.data;
   }
@@ -2167,9 +2167,9 @@ export const getCutiPersonal = createAsyncThunk(
 
 export const getKuotaCuti = createAsyncThunk(
   "cuti/getKuotaCuti",
-  async (nip) => {
-    const respon = await axios.get(`${Cuti}kuota-cuti?nip=${nip}`, {
-      // headers: { Authorization: token },
+  async (token) => {
+    const respon = await axios.get(`${Cuti}kuota-cuti`, {
+      headers: { Authorization: token },
     });
     return respon?.data;
   }
@@ -2177,11 +2177,11 @@ export const getKuotaCuti = createAsyncThunk(
 
 export const getTanggalLibur = createAsyncThunk(
   "cuti/getTanggalLibur",
-  async (nip) => {
+  async (token) => {
     const respon = await axios.get(
-      `${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=`,
+      `${Cuti}tanggal-libur?tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2190,11 +2190,11 @@ export const getTanggalLibur = createAsyncThunk(
 
 export const getLiburKhusus = createAsyncThunk(
   "cuti/getLiburKhusus",
-  async (nip) => {
+  async (token) => {
     const respon = await axios.get(
-      `${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=Private Holiday`,
+      `${Cuti}tanggal-libur?tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=Private Holiday`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2203,11 +2203,11 @@ export const getLiburKhusus = createAsyncThunk(
 
 export const getArsipCuti = createAsyncThunk(
   "cuti/getArsipCuti",
-  async (nip) => {
+  async (token) => {
     const respon = await axios.get(
-      `${Cuti}dokumen-cutiku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`,
+      `${Cuti}dokumen-cutiku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2218,9 +2218,9 @@ export const getDetailArsipCuti = createAsyncThunk(
   "cuti/getDetailArsipCuti",
   async (data) => {
     const respon = await axios.get(
-      `${Cuti}dokumen-detail/?nip=${data.nip}&id_dokumen=${data.id}`,
+      `${Cuti}dokumen-detail/?id_dokumen=${data.id}`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: data.token },
       }
     );
     return respon?.data;
@@ -2231,9 +2231,9 @@ export const getFormCuti = createAsyncThunk(
   "cuti/getFormCuti",
   async (data) => {
     const respon = await axios.get(
-      `${Cuti}form-cuti?nip=${data.nip}&id_jenis_cuti=${data.id}`,
+      `${Cuti}form-cuti?id_jenis_cuti=${data.id}`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: data.token },
       }
     );
     return respon?.data;
@@ -2242,11 +2242,11 @@ export const getFormCuti = createAsyncThunk(
 
 export const getPilihApproval = createAsyncThunk(
   "cuti/getPilihApproval",
-  async ({ nip, type }) => {
+  async ({ token, type }) => {
     const respon = await axios.get(
-      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
+      `${Cuti}pilih-approval?kata_kunci=&type=${type}`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2255,12 +2255,11 @@ export const getPilihApproval = createAsyncThunk(
 
 export const getPilihApprovalPejabat = createAsyncThunk(
   "cuti/getPilihApprovalPejabat",
-  async ({ nip, type }) => {
-    console.log(nip, type);
+  async ({ token, type }) => {
     const respon = await axios.get(
-      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
+      `${Cuti}pilih-approval?kata_kunci=&type=${type}`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2269,11 +2268,11 @@ export const getPilihApprovalPejabat = createAsyncThunk(
 
 export const getDokumenPersetujuan = createAsyncThunk(
   "cuti/getDokumenPersetujuan",
-  async (nip) => {
+  async (token) => {
     const respon = await axios.get(
-      `${Cuti}dokumen-persetujuanku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
+      `${Cuti}dokumen-persetujuanku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
       {
-        // headers: { Authorization: token },
+        headers: { Authorization: token },
       }
     );
     return respon?.data;
@@ -2283,11 +2282,9 @@ export const getDokumenPersetujuan = createAsyncThunk(
 export const postPengajuanCuti = createAsyncThunk(
   "cuti/postPengajuanCuti",
   async (data) => {
-    const respon = await axios.post(
-      `${Cuti}pengajuan-cuti/`,
-      data.payload
-      // headers: { Authorization: token },
-    );
+    const respon = await axios.post(`${Cuti}pengajuan-cuti/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
     return respon?.data;
   }
 );
@@ -2307,11 +2304,9 @@ export const postPengajuanCutiDraft = createAsyncThunk(
 export const postApproval = createAsyncThunk(
   "cuti/postApproval",
   async (data) => {
-    const respon = await axios.post(
-      `${Cuti}approval-cuti/`,
-      data.payload
-      // headers: { Authorization: token },
-    );
+    const respon = await axios.post(`${Cuti}approval-cuti/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
     return respon?.data;
   }
 );
@@ -2319,11 +2314,9 @@ export const postApproval = createAsyncThunk(
 export const postTanggalCuti = createAsyncThunk(
   "cuti/postTanggalCuti",
   async (data) => {
-    const respon = await axios.post(
-      `${Cuti}pilih-tanggal/`,
-      data.payload
-      // headers: { Authorization: token },
-    );
+    const respon = await axios.post(`${Cuti}pilih-tanggal/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
     return respon?.data;
   }
 );
@@ -2338,7 +2331,10 @@ export const postAttachmentCuti = createAsyncThunk(
       name: data.result.name,
     });
     const respon = await axios.post(`${Cuti}unggah-berkas/`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        Authorization: data.token,
+        "Content-Type": "multipart/form-data",
+      },
     });
     return respon?.data;
   }
@@ -2347,11 +2343,9 @@ export const postAttachmentCuti = createAsyncThunk(
 export const postPembatalanCuti = createAsyncThunk(
   "cuti/postPembatalanCuti",
   async (data) => {
-    const respon = await axios.post(
-      `${Cuti}pembatalan-cuti/`,
-      data.payload
-      // headers: { Authorization: token },
-    );
+    const respon = await axios.post(`${Cuti}pembatalan-cuti/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
     return respon?.data;
   }
 );

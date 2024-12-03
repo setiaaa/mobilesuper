@@ -6,11 +6,11 @@ import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenPerluDisetujui = ({ item, nip, token, device }) => {
+export const CardListDokumenPerluDisetujui = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
-    const params = { nip, id };
+    const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailArsipCuti(params));
   };
@@ -41,11 +41,21 @@ export const CardListDokumenPerluDisetujui = ({ item, nip, token, device }) => {
                 .locale("id")
                 .format(DATETIME.LONG_DATETIME)}
             </Text>
-            <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.lighter }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                color: COLORS.lighter,
+              }}
+            >
               Jenis: {item.jenis_cuti}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.lighter }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  color: COLORS.lighter,
+                }}
+              >
                 Tipe Dokumen:{" "}
               </Text>
               <View
@@ -55,7 +65,12 @@ export const CardListDokumenPerluDisetujui = ({ item, nip, token, device }) => {
                   padding: 5,
                 }}
               >
-                <Text style={{ fontSize: fontSizeResponsive("H3", device), color: COLORS.white }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    color: COLORS.white,
+                  }}
+                >
                   {item.tipe_dokumen}
                 </Text>
               </View>

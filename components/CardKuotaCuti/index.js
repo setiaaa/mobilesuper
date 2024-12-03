@@ -15,7 +15,6 @@ import {
 } from "react-native-responsive-screen";
 
 export const CardKuotaCuti = ({ item, device }) => {
-  console.log(item);
   return (
     <View
       style={{

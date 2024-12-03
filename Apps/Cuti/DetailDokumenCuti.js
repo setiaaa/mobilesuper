@@ -39,7 +39,7 @@ import {
 import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
 import { Loading } from "../../components/Loading";
-import { removePushNotif } from "../../service/session";
+import { getTokenValue, removePushNotif } from "../../service/session";
 import { setNotifIos } from "../../store/SuperApps";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
@@ -635,6 +635,14 @@ export const DetailDokumenCuti = ({ route }) => {
   const navigation = useNavigation();
   const BASE_URL = Config.base_url + "bridge";
 
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const selisih = () => {
     let tanggalMulaiStr = moment(
       arsipDetail.detail_dokumen?.dokumen?.mulai_cuti,
@@ -697,7 +705,7 @@ export const DetailDokumenCuti = ({ route }) => {
       passphrase: passphrase,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postApproval(data));
@@ -710,8 +718,6 @@ export const DetailDokumenCuti = ({ route }) => {
   }, [arsipDetail, loading]);
 
   const { device } = useSelector((state) => state.apps);
-
-  console.log(arsipDetail);
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}

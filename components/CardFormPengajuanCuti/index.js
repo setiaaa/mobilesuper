@@ -10,11 +10,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export const CardFormPengajuanCuti = ({ item, profile, device }) => {
+export const CardFormPengajuanCuti = ({ item, profile, device, token }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const formCuti = (id) => {
-    const params = { nip: profile.nip, id: id };
+    const params = { token: token, id: id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getFormCuti(params));
   };

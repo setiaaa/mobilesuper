@@ -58,6 +58,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { Loading } from "../../components/Loading";
+import { getTokenValue } from "../../service/session";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -411,6 +412,15 @@ export const TambahCutiTahunan = ({ route }) => {
     nip: "",
     toggle: false,
   });
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const { profile } = useSelector((state) => state.superApps);
   const {
     form,
@@ -427,33 +437,33 @@ export const TambahCutiTahunan = ({ route }) => {
   useEffect(() => {
     if (tipe === "draft") {
       if (arsipDetail?.detail_dokumen?.jenis_cuti?.nama === "Cuti Tahunan") {
-        const params = { nip: profile.nip, id: 1 };
+        const params = { token: token, id: 1 };
         dispatch(getFormCuti(params));
       } else if (
         arsipDetail?.detail_dokumen?.jenis_cuti?.nama === "Cuti Besar"
       ) {
-        const params = { nip: profile.nip, id: 2 };
+        const params = { token: token, id: 2 };
         dispatch(getFormCuti(params));
       } else if (
         arsipDetail?.detail_dokumen?.jenis_cuti?.nama === "Cuti Alasan Penting"
       ) {
-        const params = { nip: profile.nip, id: 3 };
+        const params = { token: token, id: 3 };
         dispatch(getFormCuti(params));
       } else if (
         arsipDetail?.detail_dokumen?.jenis_cuti?.nama === "Cuti Sakit"
       ) {
-        const params = { nip: profile.nip, id: 4 };
+        const params = { token: token, id: 4 };
         dispatch(getFormCuti(params));
       } else if (
         arsipDetail?.detail_dokumen?.jenis_cuti?.nama === "Cuti Melahirkan"
       ) {
-        const params = { nip: profile.nip, id: 5 };
+        const params = { token: token, id: 5 };
         dispatch(getFormCuti(params));
       } else if (
         arsipDetail?.detail_dokumen?.jenis_cuti?.nama ===
         "Cuti Diluar Tanggungan Negara"
       ) {
-        const params = { nip: profile.nip, id: 6 };
+        const params = { token: token, id: 6 };
         dispatch(getFormCuti(params));
       }
     }
@@ -485,19 +495,19 @@ export const TambahCutiTahunan = ({ route }) => {
     setType([...type, tipe]);
 
     const data = {
-      // token: token,
-      result: result,
+      token: token,
+      result: result.assets[0],
     };
     dispatch(postAttachmentCuti(data));
   };
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
-      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
+    if (token !== "") {
+      dispatch(getPilihApproval({ token: token, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ token: token, type: "2" }));
     }
-  }, [profile.nip, atasan]);
+  }, [token, atasan]);
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
@@ -597,7 +607,7 @@ export const TambahCutiTahunan = ({ route }) => {
       attachment: attachment,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postPengajuanCuti(data));
@@ -633,7 +643,7 @@ export const TambahCutiTahunan = ({ route }) => {
       tanggal_akhir: TanggalSelesai,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postTanggalCuti(data));

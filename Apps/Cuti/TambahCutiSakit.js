@@ -56,6 +56,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { ResizeMode, Video } from "expo-av";
+import { getTokenValue } from "../../service/session";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -662,6 +663,14 @@ export const TambahCutiSakit = () => {
     (state) => state.cuti
   );
 
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const arsipDetail = arsip.detail;
 
   const [modalVisiblePicker, setModalVisiblePicker] = useState("");
@@ -725,19 +734,19 @@ export const TambahCutiSakit = () => {
     setType([...type, tipe]);
 
     const data = {
-      // token: token,
-      result: result,
+      token: token,
+      result: result.assets[0],
     };
     dispatch(postAttachmentCuti(data));
   };
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
-      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
+    if (token !== "") {
+      dispatch(getPilihApproval({ token: token, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ token: token, type: "2" }));
     }
-  }, [profile.nip, atasan]);
+  }, [token, atasan]);
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
@@ -806,7 +815,7 @@ export const TambahCutiSakit = () => {
       attachment: attachment,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postPembatalanCuti(data));

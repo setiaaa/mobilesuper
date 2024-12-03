@@ -31,6 +31,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { getTokenValue } from "../../service/session";
 
 export const PersetujanCuti = () => {
   const navigation = useNavigation();
@@ -38,11 +39,19 @@ export const PersetujanCuti = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
 
+  const [token, setToken] = useState("");
+
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getDokumenPersetujuan(profile?.nip));
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getDokumenPersetujuan(token));
     }
-  }, [profile?.nip]);
+  }, [token]);
 
   const { persetujuan, loading } = useSelector((state) => state.cuti);
 
@@ -93,8 +102,8 @@ export const PersetujanCuti = () => {
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (profile.nip !== "") {
-        dispatch(getDokumenPersetujuan(profile?.nip));
+      if (token !== "") {
+        dispatch(getDokumenPersetujuan(token));
       }
     } catch (error) {}
 
@@ -105,8 +114,6 @@ export const PersetujanCuti = () => {
   }, [profile?.nip]);
 
   const { device } = useSelector((state) => state.apps);
-
-  console.log(persetujuan.lists?.data);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -409,9 +416,9 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenDisetujui
                         item={item}
-                        nip={profile.nip}
                         variant={variant}
                         device={device}
+                        token={token}
                       />
                     </View>
                   )}
@@ -431,7 +438,7 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenTidakDisetujui
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
                         device={device}
                       />
@@ -454,7 +461,7 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenDikembalikan
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
                         device={device}
                       />
@@ -477,7 +484,7 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenPerluDisetujui
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
                         device={device}
                       />
