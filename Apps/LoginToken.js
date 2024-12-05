@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perubahan Tautan Pintas MyASN
+                      Perbaikan modul cuti
                     </Text>
                   </View>
 
