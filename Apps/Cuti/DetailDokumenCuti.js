@@ -718,6 +718,8 @@ export const DetailDokumenCuti = ({ route }) => {
   }, [arsipDetail, loading]);
 
   const { device } = useSelector((state) => state.apps);
+
+  console.log(arsipDetail);
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -1249,7 +1251,14 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H4", device),
@@ -1269,6 +1278,29 @@ export const DetailDokumenCuti = ({ route }) => {
                       }}
                     >
                       {arsipDetail.detail_dokumen?.dokumen?.alasan_cuti}
+                    </Text>
+                  </View>
+
+                  <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Kota
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {arsipDetail.detail_dokumen?.dokumen?.kota}
                     </Text>
                   </View>
                 </View>

@@ -20,6 +20,8 @@ export const CardListDokumenDisetujui = ({
     dispatch(getDetailArsipCuti(params));
   };
 
+  console.log(item);
+
   return (
     <>
       {item.status === "Completed" ? (
@@ -134,7 +136,7 @@ export const CardListDokumenDisetujui = ({
                 </View>
               </View>
 
-              {pembatalan === "pembatalan" ? (
+              {pembatalan === "pembatalan" && item?.bisa_dibatalkan === true ? (
                 <TouchableOpacity
                   style={{
                     backgroundColor: "red",

@@ -26,6 +26,7 @@ import { Portal } from "react-native-portalize";
 import { TopAddressBook } from "../utils/menutab";
 
 const CardListPilih = ({ item, addressbook, device, config }) => {
+  console.log(config.tipeAddress);
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;
@@ -212,7 +213,7 @@ export const AddressBook = ({ route }) => {
   useEffect(() => {
     if (token !== "") {
       // dispatch(getDivision(token))
-      dispatch(getEmployee(token));
+      dispatch(getEmployee({ token: token, search: "" }));
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
   }, [token]);

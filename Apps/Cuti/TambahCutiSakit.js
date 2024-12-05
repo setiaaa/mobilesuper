@@ -684,15 +684,18 @@ export const TambahCutiSakit = () => {
     arsipDetail.detail_dokumen?.dokumen?.nomor_telpon
   );
   const [atasan, setAtasan] = useState({
-    key: arsipDetail?.detail_dokumen?.approver[0]?.nip_approver,
+    key: arsipDetail?.detail_dokumen?.approver[0]?.id,
     value: arsipDetail?.detail_dokumen?.approver[0]?.nama_approver,
   });
   const [pejabat, setPejabat] = useState({
-    key: arsipDetail?.detail_dokumen?.approver[1]?.nip_approver,
+    key: arsipDetail?.detail_dokumen?.approver[1]?.id,
     value: arsipDetail?.detail_dokumen?.approver[1]?.nama_approver,
   });
   const [jenisCuti, setJenisCuti] = useState("");
-  const [alasanCuti, setAlasanCuti] = useState("");
+  const [alasanCuti, setAlasanCuti] = useState(
+    arsipDetail?.detail_dokumen?.dokumen?.alasan_cuti
+  );
+  const [kota, setKota] = useState(arsipDetail?.detail_dokumen?.dokumen?.kota);
   const [mulaiCuti, setMulaiCuti] = useState(
     moment(
       arsipDetail.detail_dokumen?.dokumen?.mulai_cuti,
@@ -806,8 +809,8 @@ export const TambahCutiSakit = () => {
 
   const handleSubmit = () => {
     const payload = {
-      nip_pengaju: profile?.nip,
-      id_dokumen: arsipDetail.detail_dokumen?.dokumen?.id,
+      // nip_pengaju: profile?.nip,
+      id_dokumen: arsipDetail.detail_dokumen?.dokumen?.id.toString(),
       alasan_pembatalan: alasanCuti,
       nip_approval1: atasan.key,
       nip_approval2: pejabat.key,
@@ -1613,6 +1616,37 @@ export const TambahCutiSakit = () => {
                       placeholder="Ketikan Sesuatu"
                       onChangeText={setAlasanCuti}
                       allowFontScaling={false}
+                      value={alasanCuti}
+                    />
+                  </View>
+                </View>
+
+                <View style={{ gap: 8 }}>
+                  <View>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Kota
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 8,
+                      borderColor: "#F8F8F8",
+                      borderWidth: 1,
+                    }}
+                  >
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={2}
+                      maxLength={50}
+                      placeholder="Ketikan Sesuatu"
+                      onChangeText={setKota}
+                      allowFontScaling={false}
+                      value={kota}
                     />
                   </View>
                 </View>

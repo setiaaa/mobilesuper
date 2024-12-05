@@ -10,6 +10,7 @@ import {
   FlatList,
   Platform,
   useWindowDimensions,
+  Alert,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -479,7 +480,12 @@ export const TambahCutiTahunan = ({ route }) => {
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState({});
   const [alasanCuti, setAlasanCuti] = useState("");
+  const [kota, setKota] = useState("");
   const [tanggalLibur, setTanggalLibur] = useState();
+  const [periodeTahunCuti, setPeriodeTahunCuti] = useState({
+    key: 2024,
+    value: 2024,
+  });
 
   const [document, setDocument] = useState([]);
   const [type, setType] = useState([]);
@@ -547,13 +553,14 @@ export const TambahCutiTahunan = ({ route }) => {
           : arsipDetail?.detail_dokumen?.attachment
       );
       setAtasan({
-        key: arsipDetail?.detail_dokumen?.approver[0]?.nip_approver,
+        key: arsipDetail?.detail_dokumen?.approver[0]?.id,
         value: arsipDetail?.detail_dokumen?.approver[0]?.nama_approver,
       });
       setPejabat({
-        key: arsipDetail?.detail_dokumen?.approver[1]?.nip_approver,
+        key: arsipDetail?.detail_dokumen?.approver[1]?.id,
         value: arsipDetail?.detail_dokumen?.approver[1]?.nama_approver,
       });
+      setKota(arsipDetail?.detail_dokumen?.dokumen?.kota);
     }
   }, [arsipDetail]);
 
@@ -593,10 +600,11 @@ export const TambahCutiTahunan = ({ route }) => {
 
   const handleSubmit = () => {
     const payload = {
-      nip_pengaju: profile?.nip,
-      id_dokumen: "",
-      id_jenis_cuti: form.data_jenis_cuti?.id,
-      id_sub_jenis_cuti: "",
+      // nip_pengaju: profile?.nip,
+      id_dokumen:
+        tipe === "draft" ? arsipDetail?.detail_dokumen?.dokumen?.id : "",
+      id_jenis_cuti: form?.data_jenis_cuti?.id,
+      id_sub_jenis_cuti: jenisCuti?.key === undefined ? "" : jenisCuti.key,
       mulai_cuti: TanggalMulai,
       akhir_cuti: TanggalSelesai,
       alasan_cuti: alasanCuti,
@@ -605,6 +613,7 @@ export const TambahCutiTahunan = ({ route }) => {
       nip_approval1: atasan.key,
       nip_approval2: pejabat !== "" ? pejabat.key : atasan.key,
       attachment: attachment,
+      kota: kota,
     };
     const data = {
       token: token,
@@ -615,21 +624,22 @@ export const TambahCutiTahunan = ({ route }) => {
 
   const handleSubmitDraft = () => {
     const payload = {
-      nip_pengaju: profile?.nip,
+      // nip_pengaju: profile?.nip,
       id_dokumen: "",
       id_jenis_cuti: form.data_jenis_cuti?.id,
-      id_sub_jenis_cuti: "",
+      id_sub_jenis_cuti: jenisCuti?.key === undefined ? "" : jenisCuti.key,
       mulai_cuti: TanggalMulai,
       akhir_cuti: TanggalSelesai,
       alasan_cuti: alasanCuti,
-      alamat_cuti: alasanCuti,
+      alamat_cuti: alamat,
       nomor_telpon: telepon,
       nip_approval1: atasan.key,
       nip_approval2: pejabat.key,
       attachment: attachment,
+      kota: kota,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postPengajuanCutiDraft(data));
@@ -649,23 +659,73 @@ export const TambahCutiTahunan = ({ route }) => {
     dispatch(postTanggalCuti(data));
   };
 
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+  const nextYear = new Date().getFullYear() + 1;
+
+  const getDatesForAdjacentYears = (year) => {
+    const dates = [];
+
+    // Fungsi untuk mendapatkan semua tanggal dalam satu tahun
+    const getAllDatesInYear = (year) => {
+      const yearDates = [];
+      const startDate = new Date(Date.UTC(year, 0, 1)); // 1 Januari
+      const endDate = new Date(Date.UTC(year, 11, 31)); // 31 Desember
+
+      let currentDate = startDate;
+      while (currentDate <= endDate) {
+        yearDates.push(new Date(currentDate)); // Tambahkan tanggal ke array
+        currentDate.setUTCDate(currentDate.getUTCDate() + 1); // Tambah satu hari
+      }
+
+      return yearDates;
+    };
+
+    // Dapatkan tanggal untuk tahun sebelumnya dan berikutnya
+    dates.push(...getAllDatesInYear(year - 1)); // Tahun sebelumnya
+    dates.push(...getAllDatesInYear(year + 1)); // Tahun berikutnya
+
+    return dates;
+  };
+
+  // Gunakan fungsi dengan input 2024
+  const adjacentDates = getDatesForAdjacentYears(periodeTahunCuti.value);
+
   useEffect(() => {
     setAlamat(form?.data_user?.alamat);
     setTelepon(form?.data_user?.no_telpon);
-    if (form.data_kalender?.tanggal_sppd.length === 0) {
-      setTanggalLibur([
-        ...form.data_kalender?.tanggal_pernah_dipakai,
-        ...form.data_kalender?.tanggal_libur,
-      ]);
-    } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
-      setTanggalLibur([
-        ...form.data_kalender?.tanggal_libur,
-        ...form.data_kalender?.tanggal_sppd,
-      ]);
+
+    if (currentMonth !== 12) {
+      if (form.data_kalender?.tanggal_sppd.length === 0) {
+        setTanggalLibur([
+          ...form.data_kalender?.tanggal_pernah_dipakai,
+          ...form.data_kalender?.tanggal_libur,
+        ]);
+      } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
+        setTanggalLibur([
+          ...form.data_kalender?.tanggal_libur,
+          ...form.data_kalender?.tanggal_sppd,
+        ]);
+      } else {
+        setTanggalLibur([]);
+      }
     } else {
-      setTanggalLibur([]);
+      if (form.data_kalender?.tanggal_sppd.length === 0) {
+        setTanggalLibur([
+          ...form.data_kalender?.tanggal_pernah_dipakai,
+          ...form.data_kalender?.tanggal_libur,
+          ...adjacentDates,
+        ]);
+      } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
+        setTanggalLibur([
+          ...form.data_kalender?.tanggal_libur,
+          ...form.data_kalender?.tanggal_sppd,
+          ...adjacentDates,
+        ]);
+      }
+      // setTanggalLibur(adjacentDates);
     }
-  }, [form]);
+  }, [form, periodeTahunCuti]);
 
   //styling kalender
   const customDayHeaderStyles = ({ dayOfWeek }) => {
@@ -727,11 +787,41 @@ export const TambahCutiTahunan = ({ route }) => {
   };
   const { device } = useSelector((state) => state.apps);
 
-  const currentMonth = new Date().getMonth() + 1;
-
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   let orientation = getOrientation(screenWidth, screenHeight);
+
+  useEffect(() => {
+    if (jumlahCuti?.jumlah_cuti > form.data_kuota_cuti?.kuota_sisa_n) {
+      Alert.alert("Peringatan!", "Durasi cuti melebihi kuota cuti");
+      setTanggalMulai("");
+      setTanggalSelsai("");
+      dispatch(setJumlahCuti({}));
+    }
+  }, [jumlahCuti]);
+
+  const periodeTahun = [
+    { key: currentYear, value: currentYear },
+    { key: nextYear, value: nextYear },
+  ];
+
+  useEffect(() => {
+    if (periodeTahunCuti.value <= currentYear) {
+      if (jumlahCuti?.jumlah_cuti > form.data_kuota_cuti?.kuota_sisa_n) {
+        Alert.alert("Peringatan!", "Durasi cuti melebihi kuota cuti");
+        setTanggalMulai("");
+        setTanggalSelsai("");
+        dispatch(setJumlahCuti({}));
+      }
+    } else if (periodeTahun > currentYear) {
+      if (jumlahCuti?.jumlah_cuti > form.data_kuota_cuti?.kuota_sisa_np1) {
+        Alert.alert("Peringatan!", "Durasi cuti melebihi kuota cuti");
+        setTanggalMulai("");
+        setTanggalSelsai("");
+        dispatch(setJumlahCuti({}));
+      }
+    }
+  }, [jumlahCuti]);
 
   return (
     <GestureHandlerRootView>
@@ -1162,6 +1252,28 @@ export const TambahCutiTahunan = ({ route }) => {
                       gap: 20,
                     }}
                   >
+                    {currentMonth === 12 && form?.data_jenis_cuti?.id === 1 ? (
+                      <>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Periode Tahun Cuti
+                        </Text>
+
+                        <Dropdown
+                          data={periodeTahun}
+                          setSelected={setPeriodeTahunCuti}
+                          selected={periodeTahunCuti}
+                          borderWidth={1}
+                          borderwidthDrop={1}
+                          borderWidthValue={1}
+                          borderColor={COLORS.ExtraDivinder}
+                          borderColorDrop={COLORS.ExtraDivinder}
+                          borderColorValue={COLORS.ExtraDivinder}
+                        />
+                      </>
+                    ) : null}
+
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
@@ -1678,6 +1790,37 @@ export const TambahCutiTahunan = ({ route }) => {
                           placeholder="Ketikan Sesuatu"
                           onChangeText={setAlasanCuti}
                           value={alasanCuti}
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                          allowFontScaling={false}
+                        />
+                      </View>
+                    </View>
+
+                    <View style={{ gap: 8 }}>
+                      <View>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Kota
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          padding: 10,
+                          width: "100%",
+                          borderRadius: 8,
+                          borderColor: "#F8F8F8",
+                          borderWidth: 1,
+                        }}
+                      >
+                        <TextInput
+                          editable
+                          multiline
+                          numberOfLines={2}
+                          maxLength={50}
+                          placeholder="Kota di Surat Cuti"
+                          onChangeText={setKota}
+                          value={kota}
                           style={{ fontSize: fontSizeResponsive("H4", device) }}
                           allowFontScaling={false}
                         />

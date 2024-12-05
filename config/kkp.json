@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "Dev SuperApps KKP",
   "slug": "devsuperapps",
-  "version": "0.0.1",
+  "version": "0.2.6",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {

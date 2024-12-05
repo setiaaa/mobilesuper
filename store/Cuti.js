@@ -214,6 +214,7 @@ const CutiSlice = createSlice({
       })
       .addCase(postPembatalanCuti.fulfilled, (state, action) => {
         state.status = "berhasil";
+        console.log(action.payload);
         state.loading = false;
       })
       .addCase(postPembatalanCuti.pending, (state, action) => {
@@ -223,6 +224,7 @@ const CutiSlice = createSlice({
       .addCase(postPembatalanCuti.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        console.log(action.error);
         Sentry.captureException(action.payload);
       })
       .addCase(postTanggalCuti.fulfilled, (state, action) => {
@@ -234,11 +236,12 @@ const CutiSlice = createSlice({
       })
       .addCase(postTanggalCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postPengajuanCutiDraft.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        console.log(action.payload);
       })
       .addCase(postPengajuanCutiDraft.pending, (state, action) => {
         state.status = "";
@@ -247,7 +250,8 @@ const CutiSlice = createSlice({
       .addCase(postPengajuanCutiDraft.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        console.log(action.error);
+        Sentry.captureException(action.error);
       });
   },
 });

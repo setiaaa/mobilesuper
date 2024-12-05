@@ -64,7 +64,7 @@ export const PersetujanCuti = () => {
 
   useEffect(() => {
     setFilterData(persetujuan.lists.data);
-  }, [persetujuan]);
+  }, [persetujuan, token]);
 
   useEffect(() => {
     if (search !== "") {
@@ -111,7 +111,7 @@ export const PersetujanCuti = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [profile?.nip]);
+  }, [token]);
 
   const { device } = useSelector((state) => state.apps);
 
