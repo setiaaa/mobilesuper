@@ -127,6 +127,7 @@ import { RekapKepegawaian } from "../Apps/Dashboard/RekapKepegawaian";
 import { KalenderSatker } from "../Apps/KalenderSatker/KalenderSatker";
 import MyTabBarKalSatker from "../Apps/KalenderSatker/BottomTabsKalSatker";
 import MyTabBarGrupKal from "../Apps/Kalender/BottomTabsKalGrupPersonal";
+import { Tinjauan } from "../Apps/Repository/Tinjauan";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -229,6 +230,11 @@ export const BottomTabsRepo = () => {
           <Tab.Screen
             name="Dibagikan"
             component={Dibagikan}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Tinjauan"
+            component={Tinjauan}
             options={{ headerShown: false }}
           />
           <Tab.Screen

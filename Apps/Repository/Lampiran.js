@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions
+  useWindowDimensions,
 } from "react-native";
 import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -549,7 +549,7 @@ export const Lampiran = () => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDownloadLampiran(params));
   };
-  
+
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   let orientation = getOrientation(screenWidth, screenHeight);
@@ -636,10 +636,29 @@ export const Lampiran = () => {
             // numColumns={numColumns}
             keyExtractor={(item) => "#" + item.id}
           /> */}
-          <View style={{ paddingHorizontal: 20, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <View style={{ paddingHorizontal: device === 'tablet' && orientation === 'potrait' ? 60 : 0, flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 16, justifyContent: device === 'tablet' ? 'flex-start' : 'center' }}>
-            {detail.attachments.map((item, index) =>
-              <DataLampiran
+          <View
+            style={{
+              paddingHorizontal: 20,
+              flex: 1,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                paddingHorizontal:
+                  device === "tablet" && orientation === "potrait" ? 60 : 0,
+                flex: 1,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: 16,
+                justifyContent: device === "tablet" ? "flex-start" : "center",
+              }}
+            >
+              {detail.attachments.map((item, index) => (
+                <DataLampiran
                   lampiran={item.files}
                   nama={item.name}
                   size={item.file_size}
@@ -648,11 +667,11 @@ export const Lampiran = () => {
                     setFile(item.files);
                     setJenis(getFileExtension(item.name));
                     setFileDetail(item);
-                }}
-                bottomSheetAttach={bottomSheetAttach}
-                device={device}
-            />
-            )}
+                  }}
+                  bottomSheetAttach={bottomSheetAttach}
+                  device={device}
+                />
+              ))}
             </View>
           </View>
           {lampiranById !== null ? (
@@ -847,9 +866,14 @@ export const Lampiran = () => {
                       jenis === "pptx" ? (
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("FileViewerRepo", {
-                            lampiran: file,
-                            type: jenis,
+                          // navigation.navigate("FileViewerRepo", {
+                          //   lampiran: file,
+                          //   type: jenis,
+                          // });
+
+                          navigation.navigate("ViewerAnnotation", {
+                            data: file,
+                            type: "preshare",
                           });
                           bottomSheetAttachClose();
                         }}

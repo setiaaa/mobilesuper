@@ -61,7 +61,7 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H5", device),
                   }}
                 >
                   Dokumen
@@ -83,7 +83,7 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H5", device),
                   }}
                 >
                   Dokumen
@@ -132,7 +132,7 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H5", device),
                   }}
                 >
                   Dibagikan
@@ -154,10 +154,81 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H5", device),
                   }}
                 >
                   Dibagikan
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={4}
+            onPress={() => {
+              setTabItemIndex(4);
+              navigation.navigate("Tinjauan", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+            style={{ flex: 1 }}
+          >
+            {tabItemIndex === 4 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="documents-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H5", device),
+                  }}
+                >
+                  Tinjauan
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="documents-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H5", device),
+                  }}
+                >
+                  Tinjauan
                 </Text>
               </View>
             )}
@@ -203,7 +274,7 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H6", device),
                   }}
                 >
                   Dokumen Template
@@ -225,7 +296,7 @@ function MyTabBarRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H4", device),
+                    fontSize: fontSizeResponsive("H6", device),
                   }}
                 >
                   Dokumen Template
