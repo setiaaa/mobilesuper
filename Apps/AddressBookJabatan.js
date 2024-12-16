@@ -151,6 +151,31 @@ export const AddressBookJabatan = ({ route }) => {
 
   // }
 
+  const deleteItem = (id, state) => {
+    let data;
+    if (state === "jabatan") {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => {
+          let code = data.code;
+          return code !== id;
+        });
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data?.officer?.official.split("/")[1];
+          return nip !== id;
+        });
+      }
+      dispatch(setAddressbookSelected(data));
+    } else {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
+      dispatch(setAddressbookSelected(data));
+    }
+  };
+
   const { device } = useSelector((state) => state.apps);
   const renderItem = ({ item, index }) => (
     <View style={{ marginBottom: 10 }}>
@@ -176,7 +201,18 @@ export const AddressBookJabatan = ({ route }) => {
             (data) => data.id === item.id
           );
           if (checkNode.length > 0) {
-            Alert.alert("Peringatan", "Data tidak boleh sama");
+            if (config.tipeAddress == "korespondensi") {
+              checkNode.map((item) => {
+                deleteItem(item.code, "jabatan");
+              });
+            } else {
+              checkNode.map((item) => {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              });
+            }
           } else {
             if (config.multiselect) {
               dispatch(setAddressbookSelected([...addressbook.selected, item]));
@@ -220,6 +256,7 @@ export const AddressBookJabatan = ({ route }) => {
       return false;
     }
   };
+
   return (
     <View
       style={{
@@ -343,7 +380,18 @@ export const AddressBookJabatan = ({ route }) => {
                       (item) => item.code === node.code
                     );
                     if (checkNode.length > 0) {
-                      Alert.alert("Peringatan", "Data tidak boleh sama");
+                      if (config.tipeAddress == "korespondensi") {
+                        checkNode.map((item) => {
+                          deleteItem(item.code, "jabatan");
+                        });
+                      } else {
+                        checkNode.map((item) => {
+                          deleteItem(
+                            item.nip || item.officer.official.split("/")[1],
+                            "jabatan"
+                          );
+                        });
+                      }
                     } else {
                       if (config.multiselect) {
                         dispatch(

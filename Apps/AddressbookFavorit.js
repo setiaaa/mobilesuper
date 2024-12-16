@@ -28,6 +28,32 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
     }
   };
 
+  const deleteItem = (id, state) => {
+    let data;
+    if (state === "jabatan") {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => {
+          let code = data.code;
+          console.log(code, id);
+          return code !== id;
+        });
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data?.officer?.official.split("/")[1];
+          return nip !== id;
+        });
+      }
+      dispatch(setAddressbookSelected(data));
+    } else {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
+      dispatch(setAddressbookSelected(data));
+    }
+  };
+
   return (
     <View style={{ marginBottom: 10 }}>
       <TouchableOpacity
@@ -54,7 +80,18 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
               item.nik === data.code
           );
           if (checkNode.length > 0) {
-            alert("Data tidak boleh sama");
+            if (config.tipeAddress == "korespondensi") {
+              checkNode.map((item) => {
+                deleteItem(item.code, "jabatan");
+              });
+            } else {
+              checkNode.map((item) => {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              });
+            }
           } else {
             if (config.multiselect) {
               dispatch(setAddressbookSelected([...addressbook.selected, data]));
@@ -70,7 +107,7 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
           ) : (
             <Ionicons name="ellipse-outline" size={24} />
           )}
-          <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: "column", width: "90%" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
               {data.person ? data.person : data.name}
             </Text>

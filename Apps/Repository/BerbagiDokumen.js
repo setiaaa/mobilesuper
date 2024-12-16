@@ -395,7 +395,7 @@ export const BerbagiDokumen = ({ route }) => {
                     },
                     multiselect: true,
                     payload: pilihanAnggotaGrup,
-                    tipeAddress: "korespondensi",
+                    // tipeAddress: "korespondensi",
                   };
                   setStateConfig(config);
                   navigation.navigate("AddressBook", { config: config });
