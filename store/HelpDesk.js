@@ -33,7 +33,7 @@ const HelpDeskSlice = createSlice({
       })
       .addCase(getTicket.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getParts.fulfilled, (state, action) => {
         state.parts = action.payload;
@@ -41,7 +41,7 @@ const HelpDeskSlice = createSlice({
       })
       .addCase(postTicket.rejected, (state, action) => {
         state.status = "error";
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postTicket.fulfilled, (state, action) => {
         state.status = "berhasil";

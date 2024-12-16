@@ -34,7 +34,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFilterAksiPerubahan.fulfilled, (state, action) => {
         state.filter = action.payload;
@@ -45,7 +45,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getFilterAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailAksiPerubahan.fulfilled, (state, action) => {
         state.detail = action.payload;
@@ -56,7 +56,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getDetailAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getLaporanAksiPerubahan.fulfilled, (state, action) => {
         state.laporan = action.payload;
@@ -68,7 +68,7 @@ const AksiPerubahan = createSlice({
       .addCase(getLaporanAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDivisionFilter.fulfilled, (state, action) => {
         state.filterSatkerUnker.unker = action.payload;

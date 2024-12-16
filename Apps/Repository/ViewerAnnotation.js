@@ -17,13 +17,16 @@ import Pdf from "react-native-pdf";
 import WebView from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import PdfRendererView from "react-native-pdf-renderer";
+import { getTokenValue } from "../../service/session";
 
 const ViewerAnnotation = ({ route }) => {
-  const { data, type } = route.params;
+  const { data, type, id } = route.params;
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
   const pdfResource = { uri: data.link, chace: true };
   const [pdfLink, setPdfLink] = useState(data?.link);
+
+  const [token, setToken] = useState("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -35,146 +38,69 @@ const ViewerAnnotation = ({ route }) => {
     }, [])
   );
 
-  console.log(data);
-
-  const inject = `
-      (async function () {
-          var { pdfjsLib } = globalThis;
-          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
-  
-          var pdfDoc = null,
-              pageNum = 1,
-              pageRendering = false,
-              pageNumPending = null,
-              scale = 0.8,
-              canvas = document.getElementById('the-canvas'),
-              ctx = canvas.getContext('2d');
-  
-          /**
-      * Get page info from document, resize canvas accordingly, and render page.
-      * @param num Page number.
-      */
-          function renderPage(num) {
-              pageRendering = true;
-              // Using promise to fetch the page
-              pdfDoc.getPage(num).then(function (page) {
-                  var viewport = page.getViewport({ scale: scale });
-                  canvas.height = viewport.height;
-                  canvas.width = viewport.width;
-  
-                  // Render PDF page into canvas context
-                  var renderContext = {
-                      canvasContext: ctx,
-                      viewport: viewport
-                  };
-                  var renderTask = page.render(renderContext);
-  
-                  if (num <= pdfDoc.numPages) {
-                        canvas = document.createElement("canvas");
-                        ctx = canvas.getContext('2d');
-  
-                        document.body.appendChild(canvas);
-  
-                        // onNextPage()
-                  }
-  
-                  // Wait for rendering to finish
-                  renderTask.promise.then(function () {
-                      pageRendering = false;
-                      if(num <= pdfDoc.numPages){
-                        num++;
-                        renderPage(num);
-                      }
-                  });
-              });
-  
-              // Update page counters
-              document.getElementById('page_num').textContent = num;
-          }
-  
-          /**
-           * If another page rendering in progress, waits until the rendering is
-           * finised. Otherwise, executes rendering immediately.
-           */
-          function queueRenderPage(num) {
-              if (pageRendering) {
-                  pageNumPending = num;
-              } else {
-                  renderPage(num);
-              }
-          }
-  
-          /**
-           * Displays next page.
-           */
-          function onNextPage() {
-            if (pageNum >= pdfDoc.numPages) {
-              return;
-            }else{
-                pageNum++;
-              queueRenderPage(pageNum);
-            }
-          }
-  
-          try {
-          alert('${data}')
-              const response = await fetch('${data}');
-              const blob = await response.blob();
-  
-              pdfjsLib.getDocument(URL.createObjectURL(blob)).promise.then(function (pdfDoc_) {
-                  pdfDoc = pdfDoc_;
-  
-                  // Initial/first page rendering
-                  renderPage(pageNum)
-              });
-  
-          } catch (error) {
-           alert(error)
-              console.error('Error loading PDF:', error);
-              window.ReactNativeWebView.postMessage('Error loading PDF: ' + error.message);
-          }
-      })();
-    `;
-  let pdfUrl = data; // Your PDF URL
-  let url = `./web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
-
-  const injectJavaScript = `
-          setTimeout(function () {
-       const iframe = document.getElementById("iframe");
-            if (iframe) {
-              iframe.src = "${url}";
-              iframe.onload = function () {
-                if (iframe.contentWindow && iframe.contentWindow.PDFViewerApplication) {
-                  iframe.contentWindow.PDFViewerApplication.open('${pdfUrl}');
-                  } else {
-                   window.ReactNativeWebView.postMessage('kosong');
-                    console.log('PDFViewerApplication is not available.');
-                    }
-                  };
-              }
-    }, 2000);
-    `;
-
-  const injectedJavaScriptBeforeContentLoaded = `setTimeout(function () {
-       const iframe = document.getElementById("iframe");
-            if (iframe) {
-              iframe.src = "${url}";
-              iframe.onload = function () {
-                if (iframe.contentWindow && iframe.contentWindow.PDFViewerApplication) {
-                  iframe.contentWindow.PDFViewerApplication.open('${pdfUrl}');
-                  } else {
-                   window.ReactNativeWebView.postMessage('kosong');
-                    console.log('PDFViewerApplication is not available.');
-                    }
-                  };
-              }
-    }, 500)`;
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
 
   const [key, setKey] = useState(0);
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1); // Update key to force re-render
   }, [data?.link]);
+
+  const injectJavaScript = `
+(function () {
+            const iframe = document.getElementById("iframe");
+
+            if (iframe) {
+                iframe.src = url;
+            }
+
+            window.addEventListener("message", (event) => {
+                if (event.data.type === "PDF_BLOB") {
+                    const file = event.data.blob;
+                    const temp = new File([file], "sampe_pdf.pdf_copy", { type: "application/pdf", path: "sampe_pdf.pdf_copy" });
+                    const formData = new FormData();
+
+
+                    // Pastikan 'temp' adalah objek File yang valid
+                    if (temp instanceof File) {
+                        formData.append('files', temp);
+
+                        fetch('https://apigw.kubekkp.coofis.com/repository/attachment/${id}/update/', {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': '${token}',
+                            },
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    // Jika response status bukan 2xx, buang error
+                                    throw new Error('Network response was not ok.');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    window.ReactNativeWebView.postMessage(JSON.stringify({ type: "berhasil" }));
+                                } else {
+                                    window.ReactNativeWebView.postMessage(JSON.stringify({ type: "gagal", error: data.message }));
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                window.ReactNativeWebView.postMessage(JSON.stringify({ type: "gagal", error: error.message }));
+                            });
+                    } else {
+                        console.error('Error: temp is not a valid File object');
+                    }
+                }
+            });
+        })();
+`;
 
   return (
     <>
@@ -215,7 +141,9 @@ const ViewerAnnotation = ({ route }) => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: "http://192.168.0.243:5500/index.html",
+              uri: `http://192.168.0.243:5500/index.html?file=${encodeURIComponent(
+                data
+              )}`,
             }}
             style={{ flex: 1 }}
             allowFileAccess={true}
@@ -229,9 +157,11 @@ const ViewerAnnotation = ({ route }) => {
             onMessage={(event) => {
               try {
                 const data = JSON.parse(event.nativeEvent.data);
-                console.log(data);
-                if (data.type === "PDF_BLOB") {
-                  Alert.alert("PDF URL", data.url);
+                if (data.type === "berhasil") {
+                  Alert.alert("PERHATIAN!", "Data berhasil diubah");
+                  navigation.navigate("DetailTinjauan");
+                } else {
+                  Alert.alert("PERHATIAN!", "Data gagal diubah");
                 }
               } catch (error) {
                 console.error("Error parsing message:", error);

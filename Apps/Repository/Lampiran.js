@@ -50,7 +50,10 @@ const DataLampiran = ({
 }) => {
   const navigation = useNavigation();
 
-  const getDetail = () => {};
+  // Check if the name contains "copy"
+  if (nama.toLowerCase().includes("copy")) {
+    return null; // Do not render anything if "copy" is found in the name
+  }
 
   return (
     <>
@@ -59,7 +62,6 @@ const DataLampiran = ({
           onPress={() => {
             bottomSheetAttach();
             onClick();
-            getDetail();
           }}
         >
           <Image
@@ -72,7 +74,6 @@ const DataLampiran = ({
           onPress={() => {
             bottomSheetAttach();
             onClick();
-            getDetail();
           }}
           style={{
             width: 150,
@@ -100,14 +101,7 @@ const DataLampiran = ({
           onPress={() => {
             bottomSheetAttach();
             onClick();
-            getDetail();
           }}
-          // onPress={() =>
-          //   navigation.navigate("FileViewer", {
-          //     lampiran: lampiran,
-          //     type: type,
-          //   })
-          // }
           style={{
             width: 150,
             height: 150,
@@ -177,237 +171,6 @@ const DataLampiran = ({
       ) : null}
     </>
   );
-  //   return type === "png" || type === "jpg" || type === "jpeg" ? (
-  //     <TouchableOpacity onPress={onClick}>
-  //       <Image
-  //         source={{ uri: lampiran }}
-  //         style={{ width: 150, height: 150, borderRadius: 6, marginTop: 10 }}
-  //       />
-  //     </TouchableOpacity>
-  //   ) : type === "mp4" ? (
-  //     <TouchableOpacity
-  //       onPress={onClick}
-  //       style={{
-  //         width: 150,
-  //         height: 150,
-  //         borderRadius: 6,
-  //         marginTop: 10,
-  //         backgroundColor: COLORS.secondaryLighter,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("../../assets/superApp/mp4.png")}
-  //         style={{ width: 70, height: 70 }}
-  //       />
-  //     </TouchableOpacity>
-  //   ) : type === "doc" || type === "docx" ? (
-  //     <TouchableOpacity
-  //       onPress={() =>
-  //         navigation.navigate("FileViewer", {
-  //           lampiran: lampiran,
-  //           type: type,
-  //         })
-  //       }
-  //       style={{
-  //         width: 150,
-  //         height: 150,
-  //         borderRadius: 6,
-  //         marginTop: 10,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         backgroundColor: COLORS.white,
-  //         shadowOffset: { width: 0, height: 0 },
-  //         shadowOpacity: 0.2,
-  //         shadowRadius: 5,
-  //         elevation: 5,
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("../../assets/superApp/word.png")}
-  //         style={{ width: 70, height: 70 }}
-  //       />
-  //       <View
-  //         style={{
-  //           marginTop: 10,
-  //           rowGap: 10,
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <Text
-  //           style={{
-  //             fontWeight: FONTWEIGHT.bold,
-  //             maxWidth: 130,
-  //             overflow: "hidden",
-  //             textOverflow: "ellipsis",
-  //             whiteSpace: "nowrap",
-  //           }}
-  //           numberOfLines={1}
-  //         >
-  //           {nama}
-  //         </Text>
-  //         <Text style={{ color: COLORS.lighter }}>
-  //           {Math.floor(size / 1024)} MB
-  //         </Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   ) : type === "xls" || type === "xlsx" ? (
-  //     <TouchableOpacity
-  //       onPress={() =>
-  //         navigation.navigate("FileViewer", {
-  //           lampiran: lampiran,
-  //           type: type,
-  //         })
-  //       }
-  //       style={{
-  //         width: 150,
-  //         height: 150,
-  //         borderRadius: 6,
-  //         marginTop: 10,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         backgroundColor: COLORS.white,
-  //         shadowOffset: { width: 0, height: 0 },
-  //         shadowOpacity: 0.2,
-  //         shadowRadius: 5,
-  //         elevation: 5,
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("../../assets/superApp/excel.png")}
-  //         style={{ width: 70, height: 70 }}
-  //       />
-  //       <View
-  //         style={{
-  //           marginTop: 10,
-  //           rowGap: 10,
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <Text
-  //           style={{
-  //             fontWeight: FONTWEIGHT.bold,
-  //             maxWidth: 130,
-  //             overflow: "hidden",
-  //             textOverflow: "ellipsis",
-  //             whiteSpace: "nowrap",
-  //           }}
-  //           numberOfLines={1}
-  //         >
-  //           {nama}
-  //         </Text>
-  //         <Text style={{ color: COLORS.lighter }}>
-  //           {Math.floor(size / 1024)} MB
-  //         </Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   ) : type === "pdf" ? (
-  //     <TouchableOpacity
-  //       onPress={() =>
-  //         navigation.navigate("FileViewer", {
-  //           lampiran: lampiran,
-  //           type: type,
-  //         })
-  //       }
-  //       style={{
-  //         width: 150,
-  //         height: 150,
-  //         borderRadius: 6,
-  //         marginTop: 10,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         shadowColor: "black",
-  //         backgroundColor: COLORS.white,
-  //         shadowOffset: { width: 0, height: 0 },
-  //         shadowOpacity: 0.2,
-  //         shadowRadius: 5,
-  //         elevation: 5,
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("../../assets/superApp/pdf.png")}
-  //         style={{ width: 70, height: 70 }}
-  //       />
-  //       <View
-  //         style={{
-  //           marginTop: 10,
-  //           rowGap: 10,
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <Text
-  //           style={{
-  //             fontWeight: FONTWEIGHT.bold,
-  //             maxWidth: 130,
-  //             overflow: "hidden",
-  //             textOverflow: "ellipsis",
-  //             whiteSpace: "nowrap",
-  //           }}
-  //           numberOfLines={1}
-  //         >
-  //           {nama}
-  //         </Text>
-  //         <Text style={{ color: COLORS.lighter }}>
-  //           {Math.floor(size / 1024)} MB
-  //         </Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   ) : type === "ppt" || type === "pptx" ? (
-  //     <TouchableOpacity
-  //       onPress={() =>
-  //         navigation.navigate("FileViewer", {
-  //           lampiran: lampiran,
-  //           type: type,
-  //         })
-  //       }
-  //       style={{
-  //         width: 150,
-  //         height: 150,
-  //         borderRadius: 6,
-  //         marginTop: 10,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         backgroundColor: COLORS.white,
-  //         shadowOffset: { width: 0, height: 0 },
-  //         shadowOpacity: 0.2,
-  //         shadowRadius: 5,
-  //         elevation: 5,
-  //       }}
-  //     >
-  //       <Image
-  //         source={require("../../assets/superApp/ppt.png")}
-  //         style={{ width: 70, height: 70 }}
-  //       />
-  //       <View
-  //         style={{
-  //           marginTop: 10,
-  //           rowGap: 10,
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <Text
-  //           style={{
-  //             fontWeight: FONTWEIGHT.bold,
-  //             maxWidth: 130,
-  //             overflow: "hidden",
-  //             textOverflow: "ellipsis",
-  //             whiteSpace: "nowrap",
-  //           }}
-  //           numberOfLines={1}
-  //         >
-  //           {nama}
-  //         </Text>
-  //         <Text style={{ color: COLORS.lighter }}>
-  //           {Math.floor(size / 1024)} MB
-  //         </Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   ) : null;
 };
 
 export const Lampiran = () => {
@@ -662,7 +425,7 @@ export const Lampiran = () => {
                   lampiran={item.files}
                   nama={item.name}
                   size={item.file_size}
-                  type={getFileExtension(item.name)}
+                  type={getFileExtension(item.files)}
                   onClick={() => {
                     setFile(item.files);
                     setJenis(getFileExtension(item.name));
@@ -866,14 +629,9 @@ export const Lampiran = () => {
                       jenis === "pptx" ? (
                       <TouchableOpacity
                         onPress={() => {
-                          // navigation.navigate("FileViewerRepo", {
-                          //   lampiran: file,
-                          //   type: jenis,
-                          // });
-
-                          navigation.navigate("ViewerAnnotation", {
-                            data: file,
-                            type: "preshare",
+                          navigation.navigate("FileViewerRepo", {
+                            lampiran: file,
+                            type: jenis,
                           });
                           bottomSheetAttachClose();
                         }}

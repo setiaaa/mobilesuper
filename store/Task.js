@@ -221,7 +221,7 @@ const TaskSlice = createSlice({
       .addCase(postCategoryTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(editCategoryTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -234,7 +234,7 @@ const TaskSlice = createSlice({
       .addCase(editCategoryTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailProjectTM.fulfilled, (state, action) => {
         const data = action.payload.data;
@@ -273,7 +273,7 @@ const TaskSlice = createSlice({
       .addCase(postTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(editTaskTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -286,7 +286,7 @@ const TaskSlice = createSlice({
       .addCase(editTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(updateStatusTaskTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -299,7 +299,7 @@ const TaskSlice = createSlice({
       .addCase(updateStatusTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getChoiceListTM.fulfilled, (state, action) => {
         state.choice = action.payload;
@@ -310,7 +310,7 @@ const TaskSlice = createSlice({
       })
       .addCase(getChoiceListTM.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getCompleteTM.fulfilled, (state, action) => {
         state.complete.list = action.payload;
@@ -321,7 +321,7 @@ const TaskSlice = createSlice({
       })
       .addCase(getCompleteTM.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -333,7 +333,7 @@ const TaskSlice = createSlice({
       .addCase(deleteTask.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(deleteTaskProject.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -345,7 +345,7 @@ const TaskSlice = createSlice({
       .addCase(deleteTaskProject.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(deleteListTask.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -357,7 +357,7 @@ const TaskSlice = createSlice({
       .addCase(deleteListTask.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

@@ -27,7 +27,7 @@ const KalenderPersonalSlice = createSlice({
       })
       .addCase(getlistKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailKalenderPersonal.fulfilled, (state, action) => {
         state.personal.detail = action.payload;
@@ -38,7 +38,7 @@ const KalenderPersonalSlice = createSlice({
       })
       .addCase(getDetailKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

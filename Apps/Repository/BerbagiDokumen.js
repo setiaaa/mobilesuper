@@ -39,6 +39,207 @@ import { ModalSubmit } from "../../components/ModalSubmit";
 import { setAttachments, setStatus } from "../../store/Repository";
 import { CardListPreshareAddressbook } from "../../components/CardListPreshareAddressbook";
 
+const CardListPeserta = ({
+  item,
+  addressbook,
+  persetaSubAgenda = false,
+  setPilihanPeserta,
+}) => {
+  const dispatch = useDispatch();
+  const deleteItem = (id, state) => {
+    let data;
+    let datas = persetaSubAgenda ? addressbook : addressbook.selected;
+    if (state === "jabatan") {
+      data = datas.filter((data) => {
+        let nip = data.nip || data.officer.official?.split("/")[1];
+        return nip !== id;
+      });
+      if (persetaSubAgenda) {
+        setPilihanPeserta(data);
+      } else {
+        dispatch(setAddressbookSelected(data));
+      }
+    } else {
+      data = datas.filter((data) => data.nip !== id);
+      if (persetaSubAgenda) {
+        setPilihanPeserta(data);
+      } else {
+        dispatch(setAddressbookSelected(data));
+      }
+    }
+  };
+  return (
+    <View key={item.nip || item.id}>
+      {item.code !== undefined ||
+      (item.title !== undefined && item.title.name !== "") ? (
+        <View
+          style={{
+            flexDirection: "row",
+            display: "flex",
+            alignItems: "center",
+            marginTop: 10,
+            marginHorizontal: "5%",
+            gap: 10,
+          }}
+        >
+          <Text>-</Text>
+          <Text style={{ width: "80%" }}>
+            {item.title.name !== undefined ? item.title.name : item.title}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              deleteItem(
+                item.nip || item.officer.official?.split("/")[1],
+                "jabatan"
+              );
+            }}
+          >
+            <Ionicons name="trash-outline" size={24} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View
+          style={{
+            flexDirection: "row",
+            display: "flex",
+            alignItems: "center",
+            marginTop: 10,
+            marginHorizontal: "5%",
+            gap: 10,
+          }}
+        >
+          <Text>-</Text>
+          <Text style={{ width: "80%" }}>{item.nama || item.fullname}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              deleteItem(item.nip, "pegawai");
+            }}
+          >
+            <Ionicons name="trash-outline" size={24} />
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+};
+
+const DataList = ({ item, device }) => {
+  let tipe = item.name.split(".");
+
+  const size = (item.file_size / (1024 * 1024)).toFixed(2);
+
+  const navigation = useNavigation();
+
+  if (item.name.toLowerCase().includes("copy")) {
+    return (
+      <TouchableOpacity
+        style={{
+          shadowColor: "black",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.2,
+          shadowRadius: 3,
+          elevation: 3,
+          padding: 10,
+          backgroundColor: COLORS.white,
+          borderRadius: 8,
+          marginTop: 2,
+          marginHorizontal: 20,
+        }}
+        onPress={() => {
+          navigation.navigate("PdfViewer", {
+            data: item?.files,
+            type: "DokumenLain",
+          });
+        }}
+      >
+        <View style={{ flexDirection: "row", gap: 5, width: 200 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: FONTWEIGHT.normal,
+              color: COLORS.lighter,
+              width: 80,
+            }}
+          >
+            Nama File
+          </Text>
+          <Text>:</Text>
+          <Text>{tipe[0]}</Text>
+        </View>
+
+        <View
+          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: FONTWEIGHT.normal,
+              color: COLORS.lighter,
+              width: 80,
+            }}
+          >
+            Size
+          </Text>
+          <Text>:</Text>
+          <Text>{size} MB</Text>
+        </View>
+
+        <View
+          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: FONTWEIGHT.normal,
+              color: COLORS.lighter,
+              width: 80,
+            }}
+          >
+            Ekstensi
+          </Text>
+          <Text>:</Text>
+          <Text>{tipe[1]}</Text>
+        </View>
+
+        <View
+          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: FONTWEIGHT.normal,
+              color: COLORS.lighter,
+              width: 80,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text>:</Text>
+          <Text>{item.views_count}</Text>
+        </View>
+
+        <View
+          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: FONTWEIGHT.normal,
+              color: COLORS.lighter,
+              width: 80,
+            }}
+          >
+            Diunduh
+          </Text>
+          <Text>:</Text>
+          <Text>{item.download_count}</Text>
+        </View>
+      </TouchableOpacity>
+    ); // Do not render anything if "copy" is found in the name
+  }
+  return null;
+};
+
 export const BerbagiDokumen = ({ route }) => {
   const { device } = useSelector((state) => state.apps);
   const item = route.params;
@@ -47,6 +248,7 @@ export const BerbagiDokumen = ({ route }) => {
   const [token, setToken] = useState("");
   const [judulKegiatan, setJudulKegiatan] = useState("");
   const [pilihanAnggotaGrup, setPilihanAnggotaGrup] = useState([]);
+  const [pilihanPeninjauGrup, setPilihanPeninjauGrup] = useState([]);
   const [tempatAcara, setTempatAcara] = useState("");
   const [catatan, setCatatan] = useState("");
   const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
@@ -75,6 +277,7 @@ export const BerbagiDokumen = ({ route }) => {
       );
       setTempatAcara(item?.data?.attributes?.tempat);
       setCatatan(item?.data?.attributes?.deskripsi);
+
       const pilihanAnggotaGrup = item?.data?.objid_members.map(
         (member, index) => ({
           id: item?.data?.attributes?.id_addressbook?.[index],
@@ -87,9 +290,24 @@ export const BerbagiDokumen = ({ route }) => {
           },
         })
       );
-
       setPilihanAnggotaGrup(pilihanAnggotaGrup);
 
+      // const pilihanPeninjauGrup = item?.data?.reviewers.map(
+      //   (member, index) => ({
+      //     id: item?.data?.attributes?.id_addressbook?.[index],
+      //     code: member?.objidposisi,
+      //     title: member?.title,
+      //     name: member?.name,
+      //     objidposisi: member?.objidposisi,
+      //     officer: {
+      //       official: member?.name,
+      //     },
+      //   })
+      // );
+
+      setPilihanPeninjauGrup(item?.data?.reviewers);
+    }
+    if (item?.type === "draft") {
       let typeDoc = [];
       item?.data?.attachments.map((item) => {
         let tipe = item?.files.split("/");
@@ -104,9 +322,13 @@ export const BerbagiDokumen = ({ route }) => {
     }
   }, [item]);
 
+  console.log(item);
+
   useEffect(() => {
     if (stateConfig.title === "Peserta Grup") {
       setPilihanAnggotaGrup(addressbook.selected);
+    } else if (stateConfig.title === "Peninjau") {
+      setPilihanPeninjauGrup(addressbook.selected);
     }
   }, [addressbook]);
 
@@ -159,6 +381,16 @@ export const BerbagiDokumen = ({ route }) => {
       id_addressbook.push(item.id);
     });
 
+    let nipReviewer = [];
+    pilihanPeninjauGrup.map((item) => {
+      nipReviewer.push(item?.officer?.official.split("/")[1]);
+    });
+
+    let nipReviewerEdit = [];
+    pilihanPeninjauGrup.map((item) => {
+      nipReviewerEdit.push(item.nip);
+    });
+
     const result = {
       title: judulKegiatan,
       objid_members: objid_member,
@@ -170,6 +402,8 @@ export const BerbagiDokumen = ({ route }) => {
         send_notification: isSelected,
         id_addressbook: id_addressbook,
       },
+      reviewers_ids: item.type === "edit" ? nipReviewerEdit : nipReviewer,
+      action: action === "publish" ? "submit" : "draft",
       published: action === "publish" ? true : false,
       public: false,
       base_url: "-",
@@ -188,6 +422,7 @@ export const BerbagiDokumen = ({ route }) => {
 
     if (item?.type === "edit") {
       dispatch(putBerbagiDokumen(data));
+      console.log(data);
     } else {
       dispatch(postBerbagiDokumen(datas));
     }
@@ -395,7 +630,7 @@ export const BerbagiDokumen = ({ route }) => {
                     },
                     multiselect: true,
                     payload: pilihanAnggotaGrup,
-                    tipeAddress: "korespondensi",
+                    // tipeAddress: "korespondensi",
                   };
                   setStateConfig(config);
                   navigation.navigate("AddressBook", { config: config });
@@ -423,9 +658,11 @@ export const BerbagiDokumen = ({ route }) => {
             <FlatList
               data={pilihanAnggotaGrup}
               renderItem={({ item }) => (
-                <CardListPesertaAddresbook
+                <CardListPeserta
                   item={item}
-                  addressbook={addressbook}
+                  addressbook={pilihanAnggotaGrup}
+                  persetaSubAgenda={true}
+                  setPilihanPeserta={setPilihanAnggotaGrup}
                 />
               )}
               scrollEnabled={false}
@@ -450,6 +687,87 @@ export const BerbagiDokumen = ({ route }) => {
               <Text>Kirim Notifikasi</Text>
             </View>
           ) : null}
+
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              marginLeft: 17,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Peninjau
+            </Text>
+            <Text style={{ color: COLORS.danger }}>*</Text>
+          </View>
+
+          <View
+            style={{
+              borderWidth: 1,
+              width: "90%",
+              marginLeft: 17,
+              borderRadius: 4,
+              borderColor: COLORS.ExtraDivinder,
+              flexDirection: "row",
+            }}
+          >
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Pilih member"
+              style={{ padding: 10 }}
+              allowFontScaling={false}
+            />
+            <View
+              style={{
+                alignItems: "flex-end",
+                flex: 1,
+                marginRight: 10,
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  const config = {
+                    title: "Peninjau",
+                    tabs: {
+                      jabatan: true,
+                      pegawai: false,
+                    },
+                    multiselect: true,
+                    payload: pilihanPeninjauGrup,
+                    // tipeAddress: "korespondensi",
+                  };
+                  setStateConfig(config);
+                  navigation.navigate("AddressBook", { config: config });
+                }}
+              >
+                <Ionicons name="people-outline" size={24} color={COLORS.grey} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <FlatList
+            data={pilihanPeninjauGrup}
+            renderItem={({ item }) => (
+              <CardListPeserta
+                item={item}
+                addressbook={pilihanPeninjauGrup}
+                persetaSubAgenda={true}
+                setPilihanPeserta={setPilihanPeninjauGrup}
+              />
+            )}
+            scrollEnabled={false}
+            keyExtractor={(index) => index}
+          />
 
           <View
             style={{
@@ -718,6 +1036,40 @@ export const BerbagiDokumen = ({ route }) => {
             />
           </View>
 
+          {item.type === "edit" ? (
+            <>
+              <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 10,
+                  marginLeft: 17,
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Revisi Lampiran
+                </Text>
+                <Text style={{ color: COLORS.danger }}>*</Text>
+              </View>
+
+              <FlatList
+                data={item?.data?.attachments}
+                renderItem={({ item }) => (
+                  <>
+                    <DataList item={item} device={device} />
+                  </>
+                )}
+                style={{ height: 150 }}
+                keyExtractor={(item) => item.id}
+              />
+            </>
+          ) : null}
+
           <View
             style={{
               marginTop: 10,
@@ -745,7 +1097,7 @@ export const BerbagiDokumen = ({ route }) => {
                 marginLeft: 17,
                 borderRadius: 4,
                 borderColor: COLORS.ExtraDivinder,
-                height: 250,
+                height: 100,
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 5,

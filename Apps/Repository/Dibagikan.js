@@ -144,7 +144,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     width: device === "tablet" ? 200 : 100,
                   }}
                 >
-                  Perubahan
+                  Dibuat
                 </Text>
                 <Text
                   style={{
@@ -153,7 +153,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
+                  {moment(item.created_at).locale("id").format("DD MMMM yyyy")}
                 </Text>
               </View>
 
@@ -223,7 +223,6 @@ export const Dibagikan = () => {
   const [dataM, setDataM] = useState([]);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
-  const [general, setGeneral] = useState("");
 
   const dispatch = useDispatch();
 
@@ -236,7 +235,11 @@ export const Dibagikan = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(
-        getDocumentDibagikan({ token: token, page: page, general: general })
+        getDocumentDibagikan({
+          token: token,
+          page: page,
+          tipe: "done",
+        })
       );
     }
   }, [token, page]);
@@ -277,7 +280,11 @@ export const Dibagikan = () => {
     try {
       if (token !== "") {
         dispatch(
-          getDocumentDibagikan({ token: token, page: page, general: general })
+          getDocumentDibagikan({
+            token: token,
+            page: page,
+            tipe: "done",
+          })
         );
       }
     } catch (error) {}
@@ -331,7 +338,7 @@ export const Dibagikan = () => {
                   color: "white",
                 }}
               >
-                Preparing dan Sharing
+                Dibagikan
               </Text>
             </View>
           </View>
@@ -339,11 +346,7 @@ export const Dibagikan = () => {
           <View
             style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
           >
-            <Search
-              placeholder={"Cari"}
-              iconColor={COLORS.primary}
-              // onSearch={setGeneral}
-            />
+            <Search placeholder={"Cari"} iconColor={COLORS.primary} />
           </View>
 
           {/* <View style={{ width: '90%', marginHorizontal: 20 }}>

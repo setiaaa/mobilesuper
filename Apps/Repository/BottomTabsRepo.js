@@ -57,11 +57,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="list"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dokumen
@@ -79,11 +80,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="list"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dokumen
@@ -128,11 +130,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dibagikan
@@ -150,11 +153,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dibagikan
@@ -199,11 +203,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Tinjauan
@@ -221,11 +226,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H5", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Tinjauan
@@ -270,11 +276,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H6", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dokumen Template
@@ -292,11 +299,12 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    fontSize: fontSizeResponsive("H6", device),
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dokumen Template
