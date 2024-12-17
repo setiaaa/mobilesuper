@@ -117,7 +117,7 @@ export const Config = {
     titlebydivisionid: "crsbe/addressbook/title/tree/{$id}/",
     parabydivisionid: "crsbe/addressbook/para/{$id}/",
     titleSearch: "crsbe/addressbook/title/tree/{$id}/?query={$word}",
-    divisionList: "crsbe/addressbook/organizations/division/1/",
+    divisionList: "crsbe/addressbook/divisions/1/",
     personallist: "crsbe/addressbook/personals/",
     personaladd: "crsbe/addressbook/personals/add/",
     personaldel: "crsbe/addressbook/personals/del/",

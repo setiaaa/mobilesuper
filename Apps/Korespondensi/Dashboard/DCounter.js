@@ -66,7 +66,7 @@ function DCounter() {
       navName: "DispositionUnread",
     },
   ]);
-  let [isCounterMenu, setIsCounterMenu] = useState([
+  let [isCounterMenuDefault, setIsCounterMenuDefault] = useState([
     {
       count: 1,
       type: "agenda_in",
@@ -124,9 +124,75 @@ function DCounter() {
       navName: "SubmittedList",
     },
   ]);
+  let [isCounterMenu, setIsCounterMenu] = useState([
+    {
+      count: 1,
+      type: "agenda_in",
+      value: "-",
+      icon: "inbox-arrow-down",
+      navName: "IncomingList",
+    },
+    {
+      count: 2,
+      type: "agenda_in_dispo",
+      value: "-",
+      icon: "inbox-arrow-down-outline",
+      navName: "IncomingList",
+    },
+    {
+      count: 3,
+      type: "agenda_in_eselon1",
+      value: "-",
+      icon: "mail-outline",
+      navName: "IncomingList",
+    },
+    {
+      count: 4,
+      type: "internal",
+      value: "-",
+      icon: "inbox",
+      navName: "InternalSatkerList",
+    },
+    {
+      count: 5,
+      type: "agenda_disposition",
+      value: "-",
+      icon: "email-send-outline",
+      navName: "DispositionList",
+    },
+    {
+      count: 6,
+      type: "onprogress",
+      value: "-",
+      icon: "email-edit-outline",
+      navName: "NeedFollowUpList",
+    },
+    {
+      count: 7,
+      type: "sign",
+      value: "-",
+      icon: "email-edit",
+      navName: "NeedSignList",
+    },
+    {
+      count: 8,
+      type: "tracking",
+      value: "-",
+      icon: "email-search-outline",
+      navName: "TrackingList",
+    },
+    {
+      count: 9,
+      type: "submitted",
+      value: "-",
+      icon: "email-check-outline",
+      navName: "SubmittedList",
+    },
+  ]);
+  let role_menu = ["88888", "197208122001121002"];
   let [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const { selectedAttr } = useSelector((state) => state.profile);
+  const { selectedAttr, profile } = useSelector((state) => state.profile);
   const token = useSelector((state) => state.auth.token);
   async function getTypeLetter() {
     try {
@@ -306,6 +372,31 @@ function DCounter() {
   const renderItem = ({ item }) => (
     <CardDCounter data={item} navigation={navigation} />
   );
+
+  const [divisionList, setDivisionList] = useState([]);
+  useEffect(() => {
+    getDivisionList();
+  }, []);
+  async function getDivisionList() {
+    try {
+      let response = await getHTTP(nde_api.divisionList);
+      let gabung = divisionList.concat(response.data);
+      setDivisionList(gabung);
+    } catch (error) {
+      console.log(nde_api.divisionList);
+      console.log(error);
+      if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
+        dispatch(logout());
+      } else {
+        handlerError(
+          error,
+          "Peringatan!",
+          "Daftar Surat Eselon I tidak berfungsi"
+        );
+      }
+    }
+  }
   return (
     <ScrollView nestedScrollEnabled>
       <View style={{ flex: 1, padding: PADDING.Page }}>
@@ -328,9 +419,24 @@ function DCounter() {
             </View>
             <View style={styles.container}>
               <Text style={styles.title}>MENU</Text>
-              {isCounterMenu?.map((item, index) => (
-                <CardDMenu key={index} data={item} navigation={navigation} />
-              ))}
+              {!role_menu.includes(profile?.nik) &&
+                isCounterMenuDefault?.map((item, index) => (
+                  <CardDMenu
+                    key={index}
+                    data={item}
+                    navigation={navigation}
+                    divisionList={divisionList}
+                  />
+                ))}
+              {role_menu.includes(profile?.nik) &&
+                isCounterMenu?.map((item, index) => (
+                  <CardDMenu
+                    key={index}
+                    data={item}
+                    navigation={navigation}
+                    divisionList={divisionList}
+                  />
+                ))}
             </View>
           </>
         )}
