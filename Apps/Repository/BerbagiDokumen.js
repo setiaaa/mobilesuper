@@ -322,7 +322,7 @@ export const BerbagiDokumen = ({ route }) => {
     }
   }, [item]);
 
-  console.log(item);
+  console.log(item.type);
 
   useEffect(() => {
     if (stateConfig.title === "Peserta Grup") {

@@ -97,9 +97,166 @@ const ViewerAnnotation = ({ route }) => {
                     } else {
                         console.error('Error: temp is not a valid File object');
                     }
+                } else {
+                 window.ReactNativeWebView.postMessage(JSON.stringify({ type: "kosong", error: 'kosong' }));
                 }
             });
         })();
+`;
+
+  const htmlContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF.js Viewer with Annotations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        background-color: #f0f0f0;
+      }
+      #pdfContainer {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      canvas {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        display: block;
+        cursor: crosshair;
+      }
+      .annotation {
+        position: absolute;
+        background-color: rgba(255, 255, 0, 0.7);
+        color: black;
+        font-size: 12px;
+        padding: 2px 4px;
+        border: 1px solid #000;
+        border-radius: 3px;
+      }
+      .controls {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+        background-color: #333;
+        color: white;
+      }
+      .controls input[type="color"] {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <input type="color" id="colorPicker" value="#ff0000">
+      <button id="clearAnnotations">Clear Annotations</button>
+    </div>
+    <div id="pdfContainer"></div>
+    <script>
+      const url = "${data}";
+      const container = document.getElementById("pdfContainer");
+      const colorPicker = document.getElementById("colorPicker");
+      const clearAnnotationsBtn = document.getElementById("clearAnnotations");
+      const annotations = [];
+
+      // Fungsi untuk membuat anotasi coret-coret
+      const startAnnotation = (event) => {
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        canvas.width = 0;
+        canvas.height = 0;
+        canvas.style.position = "absolute";
+        canvas.style.left = (x) + 'px';  // Menggunakan concatenation
+        canvas.style.top = (y) + 'px';    // Menggunakan concatenation
+        container.appendChild(canvas);
+
+        let drawing = false;
+
+        const onMouseMove = (e) => {
+          if (!drawing) return;
+
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          context.lineTo(x, y);
+          context.stroke();
+        };
+
+        const onMouseUp = () => {
+          drawing = false;
+          canvas.removeEventListener("mousemove", onMouseMove);
+          canvas.removeEventListener("mouseup", onMouseUp);
+          annotations.push({ canvas, color: context.strokeStyle });
+        };
+
+        drawing = true;
+        context.lineWidth = 2;
+        context.strokeStyle = colorPicker.value;
+        context.lineCap = "round";
+
+        canvas.addEventListener("mousemove", onMouseMove);
+        canvas.addEventListener("mouseup", onMouseUp);
+      };
+
+      pdfjsLib.getDocument(url).promise.then((pdf) => {
+        const totalPages = pdf.numPages;
+
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+          pdf.getPage(pageNum).then((page) => {
+            const scale = 1.5;
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            container.appendChild(canvas);
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport,
+            };
+
+            page.render(renderContext);
+
+            // Menambahkan event untuk coret-coret
+            canvas.addEventListener("mousedown", startAnnotation);
+          });
+        }
+      }).catch(error => {
+        console.error("Error loading PDF:", error);
+      });
+
+      // Clear all annotations
+      clearAnnotationsBtn.addEventListener("click", () => {
+        container.querySelectorAll('canvas').forEach(canvas => {
+          canvas.remove();
+        });
+        annotations.length = 0;
+      });
+
+      // Change annotation color
+      colorPicker.addEventListener("input", (event) => {
+        annotations.forEach(annotation => {
+          annotation.canvas.getContext('2d').strokeStyle = event.target.value;
+        });
+      });
+    </script>
+  </body>
+</html>
 `;
 
   return (
@@ -141,10 +298,11 @@ const ViewerAnnotation = ({ route }) => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: `http://192.168.0.243:5500/index.html?file=${encodeURIComponent(
+              uri: `https://portal.kubekkp.coofis.com/assets/mobileStylus/index.html?file=${encodeURIComponent(
                 data
               )}`,
             }}
+            // source={{ html: htmlContent }}
             style={{ flex: 1 }}
             allowFileAccess={true}
             androidLayerType={"software"}
@@ -155,13 +313,16 @@ const ViewerAnnotation = ({ route }) => {
             javaScriptEnabled={true}
             domStorageEnabled={true}
             onMessage={(event) => {
+              console.log(event);
               try {
                 const data = JSON.parse(event.nativeEvent.data);
                 if (data.type === "berhasil") {
                   Alert.alert("PERHATIAN!", "Data berhasil diubah");
                   navigation.navigate("DetailTinjauan");
-                } else {
+                } else if (data.type === "gagal") {
                   Alert.alert("PERHATIAN!", "Data gagal diubah");
+                } else {
+                  Alert.alert("PERHATIAN!", "Tidak boleh kosong");
                 }
               } catch (error) {
                 console.error("Error parsing message:", error);

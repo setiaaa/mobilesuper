@@ -221,6 +221,7 @@ const RepositorySlice = createSlice({
       .addCase(postDokumenTamplate.rejected, (state, action) => {
         state.loading = false;
         state.status = "gagal";
+        console.log(action.error);
       })
       .addCase(putDokumenTamplate.fulfilled, (state, action) => {
         state.loading = false;
