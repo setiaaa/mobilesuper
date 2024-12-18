@@ -298,7 +298,7 @@ const ViewerAnnotation = ({ route }) => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: `https://portal.kubekkp.coofis.com/assets/mobileStylus/index.html?file=${encodeURIComponent(
+              uri: `https://portal.kkp.go.id/assets/mobileStylus/index.html?file=${encodeURIComponent(
                 data
               )}`,
             }}
