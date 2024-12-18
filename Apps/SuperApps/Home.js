@@ -1915,7 +1915,7 @@ export const Home = () => {
 
                   <TouchableOpacity
                     onPress={() => {
-                      Linking.openURL("https://siasn.bkn.go.id/");
+                      Linking.openURL("https://siasn-instansi.bkn.go.id/");
                     }}
                   >
                     <View

@@ -144,7 +144,7 @@ export const CardAppsB = ({
                   size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />
-              ) : item.title === "Preparing dan Sharing" ? (
+              ) : item.title === "KKP Drive" ? (
                 <Entypo
                   name="folder"
                   size={device === "tablet" ? 60 : 30}

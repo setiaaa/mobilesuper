@@ -54,11 +54,11 @@ export const ListAplikasiKepegawaian = ({ route }) => {
       {
         title: "e-Learning",
         navigation: "e-Learning",
-      },
-      {
-        title: "Info",
-        navigation: "Info",
       }
+      // {
+      //   title: "Info",
+      //   navigation: "Info",
+      // }
     );
     if (isRoleLaporan) {
       tmpMenu.splice(3, 0, {

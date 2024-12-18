@@ -450,7 +450,7 @@ export const Profile = () => {
     );
     if (isRolePreShare) {
       tmpMenu.splice(2, 0, {
-        title: "Preparing dan Sharing",
+        title: "KKP Drive",
         navigation: "MainRepo",
         image: require("../../assets/superApp/repositori.png"),
         imagestyle: {
@@ -557,9 +557,20 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push({
-      description: "Perbaikan modul cuti",
-    });
+    tmpLog.push(
+      {
+        description: "Perbaikan KKP Drive",
+      },
+      {
+        description: "Perbaikan tautan pintas",
+      },
+      {
+        description: "Penambahan menu surat korespondensi",
+      },
+      {
+        description: "Perbaikan addressbook",
+      }
+    );
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);

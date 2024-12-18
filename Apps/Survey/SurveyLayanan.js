@@ -62,7 +62,7 @@ export const SurveyLayanan = () => {
     "Korespondensi",
     "E-mail",
     "Kebijakan",
-    "Preparing dan Sharing",
+    "KKP Drive",
     "Pengetahuan",
     "Digital Sign",
     "Layanan Mandiri -> Cuti",

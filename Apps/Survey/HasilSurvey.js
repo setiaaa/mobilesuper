@@ -81,7 +81,7 @@ export const HasilSurvey = () => {
     { Korespondensi: 0 },
     { "E-mail": 0 },
     { Kebijakan: 0 },
-    { "Preparing dan Sharing": 0 },
+    { "KKP Drive": 0 },
     { Pengetahuan: 0 },
     { "Digital Sign": 0 },
     { "Layanan Mandiri -> Cuti": 0 },

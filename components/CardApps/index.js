@@ -305,7 +305,7 @@ export const CardApps = ({
     );
     if (isRolePreShare) {
       tmpMenu.splice(2, 0, {
-        title: "Preparing dan Sharing",
+        title: "KKP Drive",
         navigation: "MainRepo",
         image: require("../../assets/superApp/repositori.png"),
         imagestyle: {
@@ -578,7 +578,7 @@ export const CardApps = ({
                               size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Preparing dan Sharing" ? (
+                          ) : item.title === "KKP Drive" ? (
                             <Entypo
                               name="folder"
                               size={device === "tablet" ? 60 : 30}
