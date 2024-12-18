@@ -218,7 +218,7 @@ export const TambahDokumenTamplate = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "97%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -230,7 +230,10 @@ export const TambahDokumenTamplate = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Masukan Nama Template"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
               onChangeText={setNamaTemplate}
               value={namaTemplate}
               allowFontScaling={false}
@@ -259,7 +262,7 @@ export const TambahDokumenTamplate = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "97%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -271,7 +274,11 @@ export const TambahDokumenTamplate = ({ route }) => {
               multiline
               numberOfLines={4}
               placeholder="Masukan Deskripsi"
-              style={{ padding: 10, height: 100 }}
+              style={{
+                padding: 10,
+                height: 100,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
               onChangeText={setDeskripsi}
               value={deskripsi}
               allowFontScaling={false}
@@ -303,7 +310,7 @@ export const TambahDokumenTamplate = ({ route }) => {
                 <View
                   style={{
                     borderWidth: 1,
-                    width: "90%",
+                    width: device === "tablet" ? "97%" : "90%",
                     marginLeft: 17,
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
@@ -316,11 +323,18 @@ export const TambahDokumenTamplate = ({ route }) => {
                   <View>
                     <Ionicons
                       name="cloud-upload-outline"
-                      size={30}
+                      size={device == "tablet" ? 40 : 30}
                       color={"#66656C"}
                     />
                   </View>
-                  <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+                  <Text
+                    style={{
+                      color: "#66656C",
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Klik Untuk Unggah
+                  </Text>
                 </View>
               </Pressable>
 
@@ -331,7 +345,12 @@ export const TambahDokumenTamplate = ({ route }) => {
                   marginBottom: document.length == 0 ? 20 : 0,
                 }}
               >
-                <Text style={{ color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   *) Hanya ppt, pptx yang akan diterima dan ukuran file maks 10
                   MB
                 </Text>
@@ -409,7 +428,14 @@ export const TambahDokumenTamplate = ({ route }) => {
             handleSubmit("publish");
           }}
         >
-          <Text style={{ color: COLORS.white }}>Kirim</Text>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Kirim
+          </Text>
         </TouchableOpacity>
 
         <ModalSubmit

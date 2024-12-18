@@ -4,12 +4,14 @@ import { View } from "react-native";
 import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
+import { fontSizeResponsive } from "../../config/SuperAppps";
 
 export const CardListPreshareAddressbook = ({
   item,
   addressbook,
   pilihanAnggotaGrup,
   setStateConfig,
+  device,
 }) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
@@ -45,8 +47,15 @@ export const CardListPreshareAddressbook = ({
             gap: 10,
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>{item.title}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H5", device) }}>-</Text>
+          <Text
+            style={{
+              width: device === "tablet" ? "90%" : "80%",
+              fontSize: fontSizeResponsive("H5", device),
+            }}
+          >
+            {item.title}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               deleteItem(item.id, "jabatan");
@@ -67,8 +76,15 @@ export const CardListPreshareAddressbook = ({
             gap: 10,
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>{item.fullname}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H5", device) }}>-</Text>
+          <Text
+            style={{
+              width: device === "tablet" ? "90%" : "80%",
+              fontSize: fontSizeResponsive("H5", device),
+            }}
+          >
+            {item.fullname}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               deleteItem(item.nip, "pegawai");

@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 function CardDMenu({ data, divisionList, navigation }) {
   const { device } = useSelector((state) => state.apps);
   const [collapse, setCollapse] = useState(false);
+  console.log(data.icon);
   return (
     <View>
       {data?.type !== "agenda_in_eselon1" && (
@@ -126,10 +127,7 @@ function CardDMenu({ data, divisionList, navigation }) {
                       gap: 16,
                     }}
                   >
-                    <Ionicons
-                      name={data?.icon}
-                      size={device === "tablet" ? 40 : 22}
-                    />
+                    <Ionicons name={data?.icon} size={22} />
                     <Text
                       style={[
                         {
@@ -146,15 +144,9 @@ function CardDMenu({ data, divisionList, navigation }) {
                     }}
                   >
                     {collapse === true ? (
-                      <Ionicons
-                        name="chevron-up-outline"
-                        size={device === "tablet" ? 40 : 18}
-                      />
+                      <Ionicons name="chevron-up-outline" size={18} />
                     ) : (
-                      <Ionicons
-                        name="chevron-down-outline"
-                        size={device === "tablet" ? 40 : 18}
-                      />
+                      <Ionicons name="chevron-down-outline" size={18} />
                     )}
                   </View>
                 </View>

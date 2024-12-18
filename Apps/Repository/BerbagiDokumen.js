@@ -44,6 +44,7 @@ const CardListPeserta = ({
   addressbook,
   persetaSubAgenda = false,
   setPilihanPeserta,
+  device,
 }) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
@@ -82,8 +83,13 @@ const CardListPeserta = ({
             gap: 10,
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>
+          <Text style={{ fontSize: fontSizeResponsive("H5", device) }}>-</Text>
+          <Text
+            style={{
+              width: device === "tablet" ? "90%" : "80%",
+              fontSize: fontSizeResponsive("H5", device),
+            }}
+          >
             {item.title.name !== undefined ? item.title.name : item.title}
           </Text>
           <TouchableOpacity
@@ -108,8 +114,15 @@ const CardListPeserta = ({
             gap: 10,
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>{item.nama || item.fullname}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H5", device) }}>-</Text>
+          <Text
+            style={{
+              width: device === "tablet" ? "90%" : "80%",
+              fontSize: fontSizeResponsive("H5", device),
+            }}
+          >
+            {item.nama || item.fullname}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               deleteItem(item.nip, "pegawai");
@@ -152,87 +165,123 @@ const DataList = ({ item, device }) => {
           });
         }}
       >
-        <View style={{ flexDirection: "row", gap: 5, width: 200 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+          }}
+        >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Nama File
           </Text>
-          <Text>:</Text>
-          <Text>{tipe[0]}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {tipe[0]}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Size
           </Text>
-          <Text>:</Text>
-          <Text>{size} MB</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {size} MB
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Ekstensi
           </Text>
-          <Text>:</Text>
-          <Text>{tipe[1]}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {tipe[1]}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Dilihat
           </Text>
-          <Text>:</Text>
-          <Text>{item.views_count}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {item.views_count}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Diunduh
           </Text>
-          <Text>:</Text>
-          <Text>{item.download_count}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {item.download_count}
+          </Text>
         </View>
       </TouchableOpacity>
     ); // Do not render anything if "copy" is found in the name
@@ -555,7 +604,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -567,7 +616,10 @@ export const BerbagiDokumen = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Masukan Judul Kegiatan"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
               onChangeText={setJudulKegiatan}
               value={judulKegiatan}
               allowFontScaling={false}
@@ -596,7 +648,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -609,7 +661,10 @@ export const BerbagiDokumen = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Pilih member"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
               allowFontScaling={false}
             />
             <View
@@ -636,7 +691,11 @@ export const BerbagiDokumen = ({ route }) => {
                   navigation.navigate("AddressBook", { config: config });
                 }}
               >
-                <Ionicons name="people-outline" size={24} color={COLORS.grey} />
+                <Ionicons
+                  name="people-outline"
+                  size={device === "tablet" ? 30 : 24}
+                  color={COLORS.grey}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -649,6 +708,7 @@ export const BerbagiDokumen = ({ route }) => {
                   addressbook={transformedData}
                   pilihanAnggotaGrup={pilihanAnggotaGrup}
                   setStateConfig={setStateConfig}
+                  device={device}
                 />
               )}
               scrollEnabled={false}
@@ -663,6 +723,7 @@ export const BerbagiDokumen = ({ route }) => {
                   addressbook={pilihanAnggotaGrup}
                   persetaSubAgenda={true}
                   setPilihanPeserta={setPilihanAnggotaGrup}
+                  device={device}
                 />
               )}
               scrollEnabled={false}
@@ -673,7 +734,7 @@ export const BerbagiDokumen = ({ route }) => {
             <View
               style={{
                 flexDirection: "row",
-                gap: 5,
+                gap: device === "tablet" ? 10 : 5,
                 marginHorizontal: 18,
                 marginTop: 10,
                 alignItems: "center",
@@ -684,7 +745,9 @@ export const BerbagiDokumen = ({ route }) => {
                 onValueChange={setSelection}
                 color={isSelected === true ? COLORS.primary : null}
               />
-              <Text>Kirim Notifikasi</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H5", device) }}>
+                Kirim Notifikasi
+              </Text>
             </View>
           ) : null}
 
@@ -710,7 +773,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -723,7 +786,10 @@ export const BerbagiDokumen = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Pilih member"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H5", device),
+              }}
               allowFontScaling={false}
             />
             <View
@@ -750,7 +816,11 @@ export const BerbagiDokumen = ({ route }) => {
                   navigation.navigate("AddressBook", { config: config });
                 }}
               >
-                <Ionicons name="people-outline" size={24} color={COLORS.grey} />
+                <Ionicons
+                  name="people-outline"
+                  size={device === "tablet" ? 30 : 24}
+                  color={COLORS.grey}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -763,6 +833,7 @@ export const BerbagiDokumen = ({ route }) => {
                 addressbook={pilihanPeninjauGrup}
                 persetaSubAgenda={true}
                 setPilihanPeserta={setPilihanPeninjauGrup}
+                device={device}
               />
             )}
             scrollEnabled={false}
@@ -791,7 +862,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -804,7 +875,10 @@ export const BerbagiDokumen = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Pilih Tanggal"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H5", device),
+              }}
               allowFontScaling={false}
               value={tanggal}
             />
@@ -823,7 +897,7 @@ export const BerbagiDokumen = ({ route }) => {
               >
                 <Ionicons
                   name="calendar-outline"
-                  size={24}
+                  size={device === "tablet" ? 30 : 24}
                   color={COLORS.grey}
                 />
               </TouchableOpacity>
@@ -977,7 +1051,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -989,7 +1063,10 @@ export const BerbagiDokumen = ({ route }) => {
               numberOfLines={4}
               maxLength={40}
               placeholder="Masukan Tempat"
-              style={{ padding: 10 }}
+              style={{
+                padding: 10,
+                fontSize: fontSizeResponsive("H5", device),
+              }}
               onChangeText={setTempatAcara}
               value={tempatAcara}
               allowFontScaling={false}
@@ -1018,7 +1095,7 @@ export const BerbagiDokumen = ({ route }) => {
           <View
             style={{
               borderWidth: 1,
-              width: "90%",
+              width: device === "tablet" ? "95%" : "90%",
               marginLeft: 17,
               borderRadius: 4,
               borderColor: COLORS.ExtraDivinder,
@@ -1029,7 +1106,11 @@ export const BerbagiDokumen = ({ route }) => {
               multiline
               numberOfLines={4}
               placeholder="Masukan Catatan"
-              style={{ padding: 10, height: 100 }}
+              style={{
+                padding: 10,
+                height: 100,
+                fontSize: fontSizeResponsive("H5", device),
+              }}
               onChangeText={setCatatan}
               value={catatan}
               allowFontScaling={false}
@@ -1093,7 +1174,7 @@ export const BerbagiDokumen = ({ route }) => {
             <View
               style={{
                 borderWidth: 1,
-                width: "90%",
+                width: device === "tablet" ? "95%" : "90%",
                 marginLeft: 17,
                 borderRadius: 4,
                 borderColor: COLORS.ExtraDivinder,
@@ -1106,11 +1187,18 @@ export const BerbagiDokumen = ({ route }) => {
               <View>
                 <Ionicons
                   name="cloud-upload-outline"
-                  size={30}
+                  size={device === "tablet" ? 40 : 30}
                   color={"#66656C"}
                 />
               </View>
-              <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+              <Text
+                style={{
+                  color: "#66656C",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Klik Untuk Unggah
+              </Text>
             </View>
           </Pressable>
 
@@ -1121,7 +1209,12 @@ export const BerbagiDokumen = ({ route }) => {
               marginBottom: document.length == 0 ? 20 : 0,
             }}
           >
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls, xlsx yang
               akan diterima dan ukuran file maks 100 MB
             </Text>
@@ -1248,7 +1341,14 @@ export const BerbagiDokumen = ({ route }) => {
               handleSubmit("draft");
             }}
           >
-            <Text style={{ color: COLORS.white }}>Draft</Text>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Draft
+            </Text>
           </TouchableOpacity>
         ) : null}
 
@@ -1266,7 +1366,14 @@ export const BerbagiDokumen = ({ route }) => {
             handleSubmit("publish");
           }}
         >
-          <Text style={{ color: COLORS.white }}>Kirim</Text>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Kirim
+          </Text>
         </TouchableOpacity>
 
         <ModalSubmit

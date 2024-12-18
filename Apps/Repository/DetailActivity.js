@@ -187,6 +187,7 @@ export const DetailActivity = () => {
                 shadowOpacity: 0.2,
                 shadowRadius: 10,
                 elevation: 10,
+                marginBottom: edit === "Edit" ? 10 : "10%",
               }}
             >
               <View
@@ -452,7 +453,7 @@ export const DetailActivity = () => {
                     borderRadius: 8,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginHorizontal: 18,
+                    marginHorizontal: "5%",
                     marginTop: 10,
                   }}
                   onPress={() => {
@@ -462,7 +463,14 @@ export const DetailActivity = () => {
                     });
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -472,7 +480,7 @@ export const DetailActivity = () => {
                     borderRadius: 8,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginHorizontal: 18,
+                    marginHorizontal: "5%",
                     marginTop: 10,
                     marginBottom: "30%",
                   }}
@@ -480,7 +488,14 @@ export const DetailActivity = () => {
                     handelDelete();
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
               </>
             ) : edit === "EditTamplate" ? (

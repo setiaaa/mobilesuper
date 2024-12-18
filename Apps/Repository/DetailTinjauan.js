@@ -75,87 +75,123 @@ const DataList = ({ item, device }) => {
           });
         }}
       >
-        <View style={{ flexDirection: "row", gap: 5, width: 200 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+          }}
+        >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Nama File
           </Text>
-          <Text>:</Text>
-          <Text>{tipe[0]}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {tipe[0]}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Size
           </Text>
-          <Text>:</Text>
-          <Text>{size} MB</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {size} MB
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Ekstensi
           </Text>
-          <Text>:</Text>
-          <Text>{tipe[1]}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {tipe[1]}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Dilihat
           </Text>
-          <Text>:</Text>
-          <Text>{item.views_count}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {item.views_count}
+          </Text>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 5, width: 200, marginTop: 5 }}
+          style={{
+            flexDirection: "row",
+            gap: 5,
+            width: device === "tablet" ? 400 : 200,
+            marginTop: 5,
+          }}
         >
           <Text
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: FONTWEIGHT.normal,
               color: COLORS.lighter,
-              width: 80,
+              width: device === "tablet" ? 160 : 80,
             }}
           >
             Diunduh
           </Text>
-          <Text>:</Text>
-          <Text>{item.download_count}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>:</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H2", device) }}>
+            {item.download_count}
+          </Text>
         </View>
       </TouchableOpacity>
     ); // Do not render anything if "copy" is found in the name
@@ -276,6 +312,7 @@ export const DetailTinjauan = () => {
                 shadowOpacity: 0.2,
                 shadowRadius: 10,
                 elevation: 10,
+                marginBottom: "20%",
               }}
             >
               <View
@@ -536,7 +573,14 @@ export const DetailTinjauan = () => {
                     handleSubmit("return");
                   }}
                 >
-                  <Text style={{ color: COLORS.primary }}>Revisi</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Revisi
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -552,7 +596,14 @@ export const DetailTinjauan = () => {
                     handleSubmit("approve");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Setuju</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Setuju
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
