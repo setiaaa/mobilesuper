@@ -113,6 +113,8 @@ export const TambahDokumenTamplate = ({ route }) => {
         tempat: "-",
       },
       title: namaTemplate,
+      reviewers_ids: [],
+      action: "submit",
       published: action === "publish" ? true : false,
       public: true,
     };

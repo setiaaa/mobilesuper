@@ -29,7 +29,7 @@ const KalenderSatkerSlice = createSlice({
       })
       .addCase(getlistKalenderSatker.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailKalenderSatker.fulfilled, (state, action) => {
         state.satker.detail = action.payload;
@@ -40,7 +40,7 @@ const KalenderSatkerSlice = createSlice({
       })
       .addCase(getDetailKalenderSatker.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

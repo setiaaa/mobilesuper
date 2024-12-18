@@ -47,7 +47,7 @@ import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach, device }) => {
+const DataList = ({ token, item, bottomSheetAttach, device, tipe }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -92,10 +92,16 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
               <TouchableOpacity
                 onPress={() => {
                   // bottomSheetAttach(item);
-                  navigation.navigate("MainDetailRepo");
-                  getDetailRepo(item.id);
-                  dispatch(setRating(true));
-                  dispatch(setEdit("Edit"));
+
+                  if (tipe === "revision") {
+                    dispatch(setEdit("Edit"));
+                    navigation.navigate("DetailActivity");
+                    getDetailRepo(item.id);
+                    // dispatch(setRating(true));
+                  } else {
+                    navigation.navigate("MainDetailRepo");
+                    getDetailRepo(item.id);
+                  }
                 }}
               >
                 <Text
@@ -155,7 +161,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       width: device === "tablet" ? 200 : 100,
                     }}
                   >
-                    Perubahan
+                    Dibuat
                   </Text>
                   <Text
                     style={{
@@ -164,7 +170,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at)
+                    {moment(item.created_at)
                       .locale("id")
                       .format("DD MMMM yyyy")}
                   </Text>
@@ -267,7 +273,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       width: device === "tablet" ? 200 : 100,
                     }}
                   >
-                    Perubahan
+                    Dibuat
                   </Text>
                   <Text
                     style={{
@@ -276,7 +282,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at)
+                    {moment(item.created_at)
                       .locale("id")
                       .format("DD MMMM yyyy")}
                   </Text>
@@ -356,8 +362,16 @@ export const Dokumen = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDocument({ token: token, page: page, type: type.key }));
+      dispatch(
+        getDocument({
+          token: token,
+          page: page,
+          type: type.key,
+          tipe: type.value,
+        })
+      );
     }
+    dispatch(setEdit(""));
   }, [token, page, type]);
 
   const bottomSheetModalRef = useRef(null);
@@ -467,7 +481,7 @@ export const Dokumen = () => {
                   color: "white",
                 }}
               >
-                Preparing dan Sharing
+                Dokumen
               </Text>
             </View>
           </View>
@@ -562,6 +576,70 @@ export const Dokumen = () => {
                 Published
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "revision" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "revision" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "true",
+                  value: "revision",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "revision"
+                      ? COLORS.white
+                      : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Revisi
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "review" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "review" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "true",
+                  value: "review",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "review" ? COLORS.white : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Sedang Ditinjau
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={{ flex: 1 }}>
@@ -574,6 +652,7 @@ export const Dokumen = () => {
                   item={item}
                   token={token}
                   device={device}
+                  tipe={type.value}
                 />
               )}
               ListFooterComponent={() =>

@@ -37,7 +37,7 @@ const SurveySlice = createSlice({
         state.status = "error";
         console.log("gagal");
         state.loading = true;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSurveyReport.fulfilled, (state, action) => {
         state.report = action.payload;
@@ -48,7 +48,7 @@ const SurveySlice = createSlice({
       })
       .addCase(getSurveyReport.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSurveyCount.fulfilled, (state, action) => {
         state.count = action.payload;
@@ -59,7 +59,7 @@ const SurveySlice = createSlice({
       })
       .addCase(getSurveyCount.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSurveyDetail.fulfilled, (state, action) => {
         state.detail = action.payload;
@@ -71,7 +71,7 @@ const SurveySlice = createSlice({
       .addCase(getSurveyDetail.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSurveyExport.fulfilled, (state, action) => {
         state.exportFile = action.payload;
@@ -83,7 +83,7 @@ const SurveySlice = createSlice({
       .addCase(getSurveyExport.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

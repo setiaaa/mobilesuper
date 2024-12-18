@@ -799,14 +799,24 @@ export const getDivisionTree = createAsyncThunk(
 // repository
 export const getDocument = createAsyncThunk(
   "repository/getDocument",
-  async ({ token, page, type }) => {
-    const respon = await axiosInstance.get(
-      `${repository}my-documents/?limit=${page}&published=${type}&public=false`,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    return respon?.data.result;
+  async ({ token, page, type, tipe }) => {
+    if (tipe === "revision" || tipe === "review") {
+      const respon = await axiosInstance.get(
+        `${repository}my-documents/?limit=${page}&published=${type}&public=false&tipe=${tipe}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      return respon?.data.result;
+    } else {
+      const respon = await axiosInstance.get(
+        `${repository}my-documents/?limit=${page}&published=${type}&public=false`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      return respon?.data.result;
+    }
   }
 );
 
@@ -838,9 +848,9 @@ export const getSubDivisionFilter = createAsyncThunk(
 
 export const getDocumentDibagikan = createAsyncThunk(
   "repository/getDocumentDibagikan",
-  async ({ token, page, general }) => {
+  async ({ token, page, tipe }) => {
     const respon = await axiosInstance.get(
-      `${repository}shared-documents/?limit=${page}`,
+      `${repository}shared-documents/?limit=${page}&tipe=${tipe}`,
       {
         headers: { Authorization: token },
       }
@@ -903,7 +913,6 @@ export const getDownloadLampiran = createAsyncThunk(
 export const postRating = createAsyncThunk(
   "repository/postRating",
   async (data) => {
-    console.log(data);
     const respon = await axiosInstance.put(
       `${repository}${data.id}/rate/`,
       data.payload,
@@ -965,6 +974,20 @@ export const putBerbagiDokumen = createAsyncThunk(
     const respon = await axiosInstance.put(
       `${repository}${data.id}/document-edit/`,
       data.result,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const putUpdateState = createAsyncThunk(
+  "repository/putUpdateState",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${repository}${data.id}/update-state/`,
+      data.payload,
       {
         headers: { Authorization: data.token },
       }

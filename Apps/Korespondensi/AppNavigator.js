@@ -226,6 +226,8 @@ import { DetailKalenderSatker } from "../KalenderSatker/DetailKalenderSatker";
 import { MainGrupKalender } from "../Kalender/MainGrupKalender";
 import { BerbagiDokumen } from "../Repository/BerbagiDokumen";
 import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
+import ViewerAnnotation from "../Repository/ViewerAnnotation";
+import { DetailTinjauan } from "../Repository/DetailTinjauan";
 
 const Stack = createNativeStackNavigator();
 
@@ -772,6 +774,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="FileViewerRepo"
             component={FileViewerRepo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ViewerAnnotation"
+            component={ViewerAnnotation}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailTinjauan"
+            component={DetailTinjauan}
             options={{
               headerShown: false,
             }}

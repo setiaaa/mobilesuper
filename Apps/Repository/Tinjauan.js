@@ -1,3 +1,16 @@
+import React, { useRef, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Search } from "../../components/Search";
+import { FlatList } from "react-native";
+import { Divider } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -6,46 +19,43 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Text } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useMemo } from "react";
 import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import { Ionicons } from "@expo/vector-icons";
-import { Search } from "../../components/Search";
-import { useNavigation } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
-import { Divider } from "react-native-paper";
-import { FlatList } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  setDokumentlists,
+  setEdit,
+  setLoadMore,
+  setRating,
+} from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {} from "react-native-safe-area-context";
+import { Portal } from "react-native-portalize";
 import ListEmpty from "../../components/ListEmpty";
-import { Dropdown } from "../../components/DropDown";
-import { getDetailDocument, getDocumentDibagikan } from "../../service/api";
 import { getTokenValue } from "../../service/session";
+import { getDocument, getDocumentDibagikan } from "../../service/api";
+import { getDetailDocument } from "../../service/api";
 import moment from "moment/min/moment-with-locales";
+import { ActivityIndicator } from "react-native";
+import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { setEdit, setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const getDetailRepo = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-
   return (
     <BottomSheetModalProvider>
       <View
@@ -55,7 +65,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: "5%",
-          backgroundColor: "white",
+          backgroundColor: COLORS.white,
           borderRadius: 8,
           shadowColor: "black",
           shadowOffset: { width: 0, height: 0 },
@@ -81,10 +91,8 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
             <TouchableOpacity
               onPress={() => {
                 // bottomSheetAttach(item);
-                navigation.navigate("MainDetailRepo");
+                navigation.navigate("DetailTinjauan", item.id);
                 getDetailRepo(item.id);
-                dispatch(setRating(true));
-                dispatch(setEdit(""));
               }}
             >
               <Text
@@ -186,20 +194,6 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {/* <View
-              style={{
-                justifyContent: "center",
-                alignItems: "flex-end",
-                flex: 1,
-                marginRight: 20,
-              }}
-            >
-              <Ionicons
-                name="ellipsis-vertical-outline"
-                size={24}
-                color={COLORS.grey}
-              />
-            </View> */}
           </View>
         </View>
       </View>
@@ -207,24 +201,21 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
   );
 };
 
-const dropdownFilter = [
-  {
-    key: "false",
-    value: "Draft",
-  },
-  {
-    key: "true",
-    value: "Published",
-  },
-];
-
-export const Dibagikan = () => {
+export const Tinjauan = () => {
   const [variant, setVariant] = useState("list");
   const [dataM, setDataM] = useState([]);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
-
+  const [type, setType] = useState({
+    key: "false",
+    value: "Draft",
+  });
   const dispatch = useDispatch();
+
+  const handleVariant = (cekVariant) => {
+    setVariant(cekVariant);
+  };
+  const navigation = useNavigation();
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -238,16 +229,11 @@ export const Dibagikan = () => {
         getDocumentDibagikan({
           token: token,
           page: page,
-          tipe: "done",
+          tipe: "review",
         })
       );
     }
-  }, [token, page]);
-
-  const handleVariant = (cekVariant) => {
-    setVariant(cekVariant);
-  };
-  const navigation = useNavigation();
+  }, [token, page, type]);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -264,7 +250,33 @@ export const Dibagikan = () => {
     setDataM(item);
   };
 
+  const bottomSheetAttachClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  };
+
   const { dibagikan, loading, load } = useSelector((state) => state.repository);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(dibagikan.lists);
+  }, [dibagikan]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = dibagikan.lists.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(dibagikan.lists);
+    }
+  }, [search]);
 
   const loadMore = () => {
     if (dibagikan.length !== 0) {
@@ -273,7 +285,6 @@ export const Dibagikan = () => {
       }
     }
   };
-
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -283,7 +294,7 @@ export const Dibagikan = () => {
           getDocumentDibagikan({
             token: token,
             page: page,
-            tipe: "done",
+            tipe: "review",
           })
         );
       }
@@ -293,22 +304,21 @@ export const Dibagikan = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, page]);
+  }, [token, page, type]);
 
   const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {loading === true && dibagikan.lists.length === 0 ? <Loading /> : null}
-      <BottomSheetModalProvider>
-        <View style={{ flex: 1 }}>
+      {loading === true ? <Loading /> : null}
+      <>
+        <View style={{ marginBottom: 20, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               backgroundColor: COLORS.primary,
               height: 80,
-              alignItems: "center",
             }}
           >
             <View
@@ -338,201 +348,71 @@ export const Dibagikan = () => {
                   color: "white",
                 }}
               >
-                Dibagikan
+                Tinjauan
               </Text>
             </View>
           </View>
-
           <View
             style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
           >
-            <Search placeholder={"Cari"} iconColor={COLORS.primary} />
-          </View>
-
-          {/* <View style={{ width: '90%', marginHorizontal: 20 }}>
+            <Search
+              placeholder={"Cari"}
+              onSearch={filter}
+              iconColor={COLORS.primary}
+            />
+            {/* <View style={{ marginTop: 20 }}>
               <Dropdown
                 data={dropdownFilter}
-                placeHolder={'Filter'}
+                placeHolder={"Filter"}
                 backgroundColor={COLORS.white}
                 selected={type}
                 setSelected={setType}
               />
             </View> */}
+          </View>
 
-          <FlatList
-            key={"_"}
-            data={dibagikan.lists}
-            renderItem={({ item }) => (
-              <DataList
-                bottomSheetAttach={bottomSheetAttach}
-                item={item}
-                token={token}
-                device={device}
-              />
-            )}
-            ListFooterComponent={() =>
-              load && (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
-                  }}
-                >
-                  <ActivityIndicator size="large" color={COLORS.primary} />
-                </View>
-              )
-            }
-            keyExtractor={(item) => "_" + item.id}
-            style={{ height: device === "tablet" ? "79%" : "67%" }}
-            ListEmptyComponent={() => <ListEmpty />}
-            onEndReached={() => {
-              if (dibagikan.lists.length !== 0) {
-                loadMore();
-              }
-            }}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          />
-        </View>
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          snapPoints={animatedSnapPoints}
-          handleHeight={animatedHandleHeight}
-          contentHeight={animatedContentHeight}
-          index={0}
-          style={{ borderRadius: 50 }}
-          keyboardBlurBehavior="restore"
-          android_keyboardInputMode="adjust"
-          backdropComponent={({ style }) => (
-            <View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]} />
-          )}
-        >
-          <BottomSheetView onLayout={handleContentLayout}>
-            <View style={{ marginVertical: 20 }}>
-              <View
-                style={{
-                  marginLeft: 30,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                <Ionicons
-                  name="document-outline"
-                  size={32}
-                  color={COLORS.primary}
+          <View style={{ flex: 1 }}>
+            <FlatList
+              key={"_"}
+              data={filterData}
+              renderItem={({ item }) => (
+                <DataList
+                  bottomSheetAttach={bottomSheetAttach}
+                  item={item}
+                  token={token}
+                  device={device}
                 />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: FONTWEIGHT.normal,
-                    width: 300,
-                  }}
-                >
-                  {dataM.title}
-                </Text>
-              </View>
-              <View style={{ marginTop: 20 }}>
-                <Divider bold />
-              </View>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    marginLeft: 30,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10,
-                    marginTop: 20,
-                  }}
-                >
-                  <Ionicons
-                    name="download-outline"
-                    size={32}
-                    color={"#6B7280"}
-                  />
-                  <Text
+              )}
+              ListFooterComponent={() =>
+                load === true ? (
+                  <View
                     style={{
-                      fontSize: fontSizeResponsive("H2", device),
-                      fontWeight: FONTWEIGHT.normal,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
                     }}
                   >
-                    Download
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("MainDetailRepo")}
-              >
-                <View
-                  style={{
-                    marginLeft: 30,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10,
-                    marginTop: 20,
-                  }}
-                >
-                  <Ionicons
-                    name="information-circle-outline"
-                    size={32}
-                    color={"#6B7280"}
-                  />
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H2", device),
-                      fontWeight: FONTWEIGHT.normal,
-                    }}
-                  >
-                    Details & activity
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </BottomSheetModalProvider>
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                ) : null
+              }
+              keyExtractor={(item) => "_" + item.id}
+              style={{
+                height: device === "tablet" ? "79%" : "67%",
+              }}
+              ListEmptyComponent={() => <ListEmpty />}
+              onEndReached={() => {
+                if (dibagikan.lists.length !== 0) {
+                  search === "" ? loadMore() : null;
+                }
+              }}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
+        </View>
+      </>
     </GestureHandlerRootView>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "white",
-    flexDirection: "column",
-    width: "90%",
-    marginLeft: 20,
-    borderRadius: 16,
-  },
-  profile: {
-    color: "black",
-    fontSize: 15,
-    fontWeight: "600",
-    marginTop: 8,
-    left: 16,
-  },
-  cardApps: {
-    width: 50,
-    height: 50,
-    borderRadius: 8,
-  },
-  cardNo: {
-    width: 48,
-    height: 48,
-    borderRadius: 8,
-    backgroundColor: "#F0F0F0",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 30,
-    marginBottom: 10,
-  },
-  circleList: {
-    width: 35,
-    height: 35,
-    backgroundColor: "#F0F0F0",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

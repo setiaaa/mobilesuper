@@ -34,7 +34,7 @@ const LoginAuthSlice = createSlice({
         state.error = false;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
         state.loading = false;
       });
   },

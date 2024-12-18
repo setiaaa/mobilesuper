@@ -30,7 +30,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getPegawai.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailPegawai.fulfilled, (state, action) => {
         state.pegawai.detail = action.payload;
@@ -41,7 +41,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getDetailPegawai.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

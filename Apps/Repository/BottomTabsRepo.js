@@ -57,6 +57,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="list"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
@@ -79,6 +80,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="list"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
@@ -128,6 +130,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
@@ -150,6 +153,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
@@ -158,6 +162,79 @@ function MyTabBarRepo({ props, navigation }) {
                   }}
                 >
                   Dibagikan
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={4}
+            onPress={() => {
+              setTabItemIndex(4);
+              navigation.navigate("Tinjauan", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+            style={{ flex: 1 }}
+          >
+            {tabItemIndex === 4 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="documents-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Tinjauan
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="documents-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Tinjauan
                 </Text>
               </View>
             )}
@@ -199,6 +276,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
@@ -221,6 +299,7 @@ function MyTabBarRepo({ props, navigation }) {
                   name="documents-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
