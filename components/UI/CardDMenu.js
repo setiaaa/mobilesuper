@@ -13,7 +13,6 @@ import { Ionicons } from "@expo/vector-icons";
 function CardDMenu({ data, divisionList, navigation }) {
   const { device } = useSelector((state) => state.apps);
   const [collapse, setCollapse] = useState(false);
-  console.log(data.icon);
   return (
     <View>
       {data?.type !== "agenda_in_eselon1" && (

@@ -163,6 +163,25 @@ function CardList({ data, tipe, onPress }) {
                 // labelStyle={styles.labelCheckbox}
               />
             )}
+            {tipe == "agendaout" && (
+              <Checkbox.Item
+                mode="android"
+                status={
+                  selected?.findIndex((item) => item == data.id) != -1
+                    ? "checked"
+                    : "unchecked"
+                }
+                color={GlobalStyles.colors.blue}
+                onPress={() => {
+                  if (!data?.progress) {
+                    dispatch(setSelectedList(data));
+                  }
+                }}
+                position="leading"
+                disabled={data?.onprogress}
+                // labelStyle={styles.labelCheckbox}
+              />
+            )}
           </View>
 
           <TouchableOpacity onPress={onPress} disabled={data?.progress}>
