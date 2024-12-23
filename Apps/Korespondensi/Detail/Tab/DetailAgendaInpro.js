@@ -61,6 +61,7 @@ function DetailAgendaInpro({
   const [openTembusan, setOpenTembusan] = useState(false);
   const [view, setView] = useState("");
   const [showButtons, setShowButtons] = useState(false);
+  const { device } = useSelector((state) => state.apps);
 
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
@@ -1436,6 +1437,38 @@ function DetailAgendaInpro({
                 )}
               </Fragment>
             ))}
+          {/* edit surat */}
+          {data?.attachments?.length == 0 && device == "tablet" && (
+            <View style={{ width: "100%" }}>
+              <Button
+                mode="contained"
+                style={[
+                  {
+                    width: "100%",
+                    backgroundColor: GlobalStyles.colors.primary,
+                    marginBottom: 16,
+                  },
+                ]}
+                onPress={() => {
+                  navigation.navigate("ViewAttachment", {
+                    id: data?.id,
+                    title: "Edit Surat",
+                    tipe: tipe,
+                  });
+                  dispatch(setFAB(false));
+                }}
+                icon={() => (
+                  <Ionicons
+                    name="pencil-outline"
+                    size={20}
+                    color={COLORS.white}
+                  />
+                )}
+              >
+                Edit Surat
+              </Button>
+            </View>
+          )}
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (
