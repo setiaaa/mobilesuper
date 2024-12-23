@@ -1454,6 +1454,7 @@ function DetailAgendaInpro({
                     id: data?.id,
                     title: "Edit Surat",
                     tipe: tipe,
+                    token: data?.w_token,
                   });
                   dispatch(setFAB(false));
                 }}
