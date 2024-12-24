@@ -84,14 +84,11 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
           if (checkNode.length > 0) {
             if (config.tipeAddress == "korespondensi") {
               checkNode.map((item) => {
-                deleteItem(item.code, "jabatan");
+                deleteItem(item.nik, "pegawai");
               });
             } else {
               checkNode.map((item) => {
-                deleteItem(
-                  item.nip || item.officer.official.split("/")[1],
-                  "jabatan"
-                );
+                deleteItem(item.nip, "pegawai");
               });
             }
           } else {

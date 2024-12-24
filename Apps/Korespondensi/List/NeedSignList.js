@@ -302,6 +302,7 @@ function NeedSignList({ route }) {
             key={data.id}
             data={data}
             tipe="needfollowup"
+            is_pass={profile.is_pass}
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,

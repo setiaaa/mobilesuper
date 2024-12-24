@@ -119,10 +119,10 @@ function SubmittedList({ route }) {
     filter(1);
     dispatch(removeAllSelectedList());
     if (
-      profile.profile.title &&
-      !profile.profile.title[profile.profile.title.length - 1].type.startsWith(
-        "K"
-      )
+      profile?.profile?.title?.length > 0 &&
+      !profile?.profile?.title[
+        profile?.profile?.title.length - 1
+      ]?.type?.startsWith("K")
     ) {
       setTypeBulkDelete(true);
     }
@@ -134,6 +134,8 @@ function SubmittedList({ route }) {
     selectedTypeLetter,
     profile,
   ]);
+
+  console.log(profile?.profile.title);
 
   async function getAgendaOut(page) {
     setIsLoading(true);
@@ -285,6 +287,7 @@ function SubmittedList({ route }) {
             key={data.id}
             data={data}
             tipe="agendaout"
+            typeBulkDelete={typeBulkDelete}
             onPress={() => {
               navigation.navigate("SubmittedDetail", {
                 id: data.id,
@@ -589,7 +592,7 @@ function SubmittedList({ route }) {
                   onPress={() => {
                     Alert.alert(
                       "Peringatan !", // Judul dialog
-                      "Apakah anda yakin untuk menghapus surat-surat yang telah dipilih ? \n\nSurat yang dihapus akan hilang dan tidak bisa ditampilkan kembali", // Pesan dialog
+                      "Surat yang dihapus akan hilang dan tidak bisa ditampilkan kembali. Apakah anda yakin untuk menghapusnya?", // Pesan dialog
                       [
                         {
                           text: "Tidak",
