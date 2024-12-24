@@ -53,8 +53,8 @@ import SignatureScreen from "react-native-signature-canvas";
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
-  const [senderAttr, setSenderAttr] = useState({ code: "", name: "" });
+  const { profile, selectedAttr } = useSelector((state) => state.profile);
+  const [senderAttr, setSenderAttr] = useState(selectedAttr);
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
   // const addressbook = useSelector((state) => state.addressbook.selected);
   const [stateConfig, setStateConfig] = useState({});
@@ -173,9 +173,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   async function getTindakan() {
     setIsLoading(true);
     try {
-      const response = await getHTTP(
-        nde_api.dispoaction + "?attr=" + senderAttr?.code
-      );
+      const response = await getHTTP(nde_api.dispoaction);
       setTindakanList(response.data.action);
       dispatch(
         setUnker({
@@ -303,9 +301,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         const response = await postHTTP(
           nde_api.postDisposition
             .replace("{$type}", tipes)
-            .replace("{$id}", ids) +
-            "?attr=" +
-            senderAttr?.code,
+            .replace("{$id}", ids),
           payload
         );
         // alert response
@@ -394,37 +390,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     <IconButton icon="close" onPress={() => delDispo(index)} />
                   </View>
                 )}
-                <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Disposisi Sebagai</Text>
-                </View>
-                <View>
-                  <Dropdown
-                    style={[
-                      styles.dropdown,
-                      isFocusAttr && {
-                        borderColor: GlobalStyles.colors.tertiery50,
-                      },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    // inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={profile.title}
-                    // search
-                    maxHeight={300}
-                    labelField="name"
-                    valueField="code"
-                    placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
-                    // searchPlaceholder="Search..."
-                    value={senderAttr}
-                    onFocus={() => setIsFocusAttr(true)}
-                    onBlur={() => setIsFocusAttr(false)}
-                    onChange={(item) => {
-                      setSenderAttr(item);
-                      setIsFocusAttr(false);
-                    }}
-                  />
-                </View>
                 <View style={styles.containerTitle}>
                   <Text style={styles.title}>Disposisi Kepada</Text>
                   {pilihanKepada != undefined && pilihanKepada.length != 0 && (

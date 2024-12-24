@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +13,11 @@ import CardDCounter from "../../../components/UI/CardDCounter";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrganization, setProfile } from "../../../store/profile";
+import {
+  setOrganization,
+  setProfile,
+  setSelectedAttr,
+} from "../../../store/profile";
 import { setProfile as setProfileBridge } from "../../../store/SuperApps";
 import { removeTokenValue } from "../../../service/session";
 import { setLogout } from "../../../store/LoginAuth";
@@ -20,10 +25,20 @@ import * as Sentry from "@sentry/react-native";
 import { setTypeLetter } from "../../../store/listBulk";
 import CardDMenu from "../../../components/UI/CardDMenu";
 import { PADDING } from "../../../config/SuperAppps";
+import { Menu } from "react-native-paper";
+import { GlobalStyles } from "../../../constants/styles";
+import {
+  GestureHandlerRootView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
 function DCounter() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const [visible, setVisible] = useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  const { device } = useSelector((state) => state.apps);
   let [isCounter, setIsCounter] = useState([
     {
       count: 1,
@@ -232,9 +247,7 @@ function DCounter() {
     setIsLoading(true);
     try {
       //get isCounter
-      const response = await getHTTP(
-        nde_api.dashboard + "?attr=" + selectedAttr?.code
-      );
+      const response = await getHTTP(nde_api.dashboard);
       if (response?.data?.length != 0) {
         const updatedCounter = isCounter?.map((dashItem) => {
           const responseItem = response?.data?.find(
@@ -383,7 +396,6 @@ function DCounter() {
       let gabung = divisionList.concat(response.data);
       setDivisionList(gabung);
     } catch (error) {
-      console.log(nde_api.divisionList);
       console.log(error);
       if (error?.response?.status == 401 || error?.status == 401) {
         Sentry.captureEvent(error?.response);
@@ -399,54 +411,142 @@ function DCounter() {
   }
   return (
     <ScrollView nestedScrollEnabled>
-      <View style={{ flex: 1, padding: PADDING.Page }}>
-        {isCounter?.length != 0 && (
-          <>
+      <GestureHandlerRootView>
+        <View style={{ flex: 1, padding: PADDING.Page }}>
+          {profile?.title?.length != 0 && (
             <View style={styles.container}>
-              <Text style={styles.title}>SURAT BELUM DIBUKA</Text>
-              <FlatList
-                keyExtractor={(item) => item.count}
-                data={isCounter}
-                renderItem={renderItem}
-                numColumns={2}
-                columnWrapperStyle={{
-                  justifyContent: "space-between",
-                  margin: 5,
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  alignItems: "center",
                 }}
-                refreshing={isLoading}
-                onRefresh={getisCounter}
-              />
+              >
+                <Menu
+                  visible={visible}
+                  onDismiss={closeMenu}
+                  anchor={
+                    <TouchableOpacity onPress={openMenu}>
+                      <Image
+                        style={{
+                          width: 35,
+                          height: 35,
+                        }}
+                        source={require("../../../assets/superApp/userChange.png")}
+                      />
+                    </TouchableOpacity>
+                  }
+                  contentStyle={{
+                    width: device == "tablet" ? 400 : 300,
+                    borderRadius: 12,
+                  }}
+                >
+                  {profile?.attr?.map((data) => (
+                    <Menu.Item
+                      onPress={() => {
+                        data.code == profile?.nik
+                          ? dispatch(
+                              setSelectedAttr({ code: "", name: data?.name })
+                            )
+                          : dispatch(setSelectedAttr(data));
+                        closeMenu();
+                      }}
+                      title={<Text minimumFontScale={0.1}>{data.name}</Text>}
+                      titleStyle={{ fontSize: 10 }}
+                    />
+                  ))}
+                </Menu>
+                {selectedAttr?.code?.length == 0 && (
+                  <View style={{ width: "85%" }}>
+                    <Text
+                      style={[
+                        { fontSize: 13, fontWeight: 400, fontWeight: "bold" },
+                      ]}
+                    >
+                      SEMUA
+                    </Text>
+                    {profile?.attr?.map((data, index) => (
+                      <Text
+                        key={index}
+                        style={[{ fontSize: 13, fontWeight: 400 }]}
+                      >
+                        {data?.name}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+                {selectedAttr?.code?.length != 0 && (
+                  <View style={{ width: "85%" }}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {selectedAttr?.name}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
-            <View style={styles.container}>
-              <Text style={styles.title}>MENU</Text>
-              {!role_menu.includes(profile?.nik) &&
-                isCounterMenuDefault?.map((item, index) => (
-                  <CardDMenu
-                    key={index}
-                    data={item}
-                    navigation={navigation}
-                    divisionList={divisionList}
-                  />
-                ))}
-              {role_menu.includes(profile?.nik) &&
-                isCounterMenu?.map((item, index) => (
-                  <CardDMenu
-                    key={index}
-                    data={item}
-                    navigation={navigation}
-                    divisionList={divisionList}
-                  />
-                ))}
-            </View>
-          </>
-        )}
-      </View>
+          )}
+          {isCounter?.length != 0 && (
+            <>
+              <View style={styles.container}>
+                <Text style={styles.title}>SURAT BELUM DIBUKA</Text>
+                <FlatList
+                  keyExtractor={(item) => item.count}
+                  data={isCounter}
+                  renderItem={renderItem}
+                  numColumns={2}
+                  columnWrapperStyle={{
+                    justifyContent: "space-between",
+                    margin: 5,
+                  }}
+                  refreshing={isLoading}
+                  onRefresh={getisCounter}
+                />
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.title}>MENU</Text>
+                {!role_menu.includes(profile?.nik) &&
+                  isCounterMenuDefault?.map((item, index) => (
+                    <CardDMenu
+                      key={index}
+                      data={item}
+                      navigation={navigation}
+                      divisionList={divisionList}
+                    />
+                  ))}
+                {role_menu.includes(profile?.nik) &&
+                  isCounterMenu?.map((item, index) => (
+                    <CardDMenu
+                      key={index}
+                      data={item}
+                      navigation={navigation}
+                      divisionList={divisionList}
+                    />
+                  ))}
+              </View>
+            </>
+          )}
+        </View>
+      </GestureHandlerRootView>
     </ScrollView>
   );
 }
 
 export default DCounter;
 const styles = StyleSheet.create({
+  selectedAttr: {
+    borderRadius: 10,
+    backgroundColor: GlobalStyles.colors.textWhite,
+    width: "98%",
+    padding: 12,
+    alignSelf: "center",
+    marginBottom: 8,
+  },
   container: {
     padding: 10,
     marginBottom: 10,

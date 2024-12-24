@@ -144,9 +144,7 @@ export const AddressbookFavorit = ({ route }) => {
     if (token !== "") {
       if (config.tipeAddress === "korespondensi" && search.length == 0) {
         (async () => {
-          let response = await getHTTP(
-            nde_api.personallist + "?attr=" + config.senderCode
-          );
+          let response = await getHTTP(nde_api.personallist);
           dispatch(setAddressbookFavorit(response.data));
         })();
       }
@@ -173,11 +171,7 @@ export const AddressbookFavorit = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.personallist +
-              "?query=" +
-              search +
-              "&attr=" +
-              config.senderCode
+            nde_api.personallist + "?query=" + search
           );
           data = response.data;
           setFilterData(data);
@@ -186,9 +180,7 @@ export const AddressbookFavorit = ({ route }) => {
     } else {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
-          let response = await getHTTP(
-            nde_api.personallist + "?attr=" + config.senderCode
-          );
+          let response = await getHTTP(nde_api.personallist);
           data = response.data;
           setFilterData(data);
         })();

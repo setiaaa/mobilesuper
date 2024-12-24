@@ -97,9 +97,7 @@ function DLetter() {
     setIsLoading(true);
     try {
       //get isCounter
-      const response = await getHTTP(
-        nde_api.dashboard + "?attr=" + selectedAttr.code
-      );
+      const response = await getHTTP(nde_api.dashboard);
       setIsLetter([
         { count: 1, type: "incoming", value: response.data[1].value },
         {
