@@ -125,6 +125,7 @@ export const Config = {
     attachmentshow: "crsbe/attachment/{$id}/preview/",
     listArchiveIn: "crsbe/agenda/in/archive/",
     listArchiveOut: "crsbe/agenda/out/archive/",
+    letterbulkdelete: "crsbe/agenda/out/delete/",
     listArchiveCanceled: "crsbe/agenda/canceled/archive/",
     listArchiveDisposition: "crsbe/agenda/disposition/archive/",
     listArchiveMyDisposition: "crsbe/agenda/disposition/mydisposisi/archive/",

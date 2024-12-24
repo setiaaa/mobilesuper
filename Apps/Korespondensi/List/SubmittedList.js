@@ -13,13 +13,14 @@ import {
   Image,
   Modal,
   useWindowDimensions,
+  Alert,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
-import { getHTTP, handlerError } from "../../../utils/http";
+import { getHTTP, handlerError, postHTTP } from "../../../utils/http";
 import { initData } from "../../../utils/list";
 import {
   BottomSheetModal,
@@ -47,6 +48,13 @@ import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import Checkbox from "expo-checkbox";
+import {
+  removeAllSelectedList,
+  setSelectedAll,
+  initListAll,
+  initList,
+} from "../../../store/listBulk";
 
 function SubmittedList({ route }) {
   const [list, setList] = useState([]);
@@ -67,7 +75,11 @@ function SubmittedList({ route }) {
     name: "Semua Jenis Surat",
   });
   const typeLetter = useSelector((state) => state.listbulk.typeLetter);
+  const { selectedAll, listAll } = useSelector((state) => state.listbulk);
+  const selectedId = useSelector((state) => state.listbulk.list);
+  const profile = useSelector((state) => state.profile);
   const [isFocus, setIsFocus] = useState();
+  const [typeBulkDelete, setTypeBulkDelete] = useState(false);
   // ref
   const bottomSheetModalRef = useRef(null);
 
@@ -98,13 +110,30 @@ function SubmittedList({ route }) {
   useFocusEffect(
     useCallback(() => {
       setList([]);
+      dispatch(removeAllSelectedList());
       refresh();
     }, [])
   );
 
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedTypeLetter]);
+    dispatch(removeAllSelectedList());
+    if (
+      profile.profile.title &&
+      !profile.profile.title[profile.profile.title.length - 1].type.startsWith(
+        "K"
+      )
+    ) {
+      setTypeBulkDelete(true);
+    }
+  }, [
+    startDate,
+    endDate,
+    isSearchQuery,
+    isSearchFilter,
+    selectedTypeLetter,
+    profile,
+  ]);
 
   async function getAgendaOut(page) {
     setIsLoading(true);
@@ -113,6 +142,7 @@ function SubmittedList({ route }) {
       response = await getHTTP(nde_api.agendaout.replace("{$page}", page));
       let data = initData(list, response.data);
       setList(data);
+      selectedAllList(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -193,6 +223,7 @@ function SubmittedList({ route }) {
           setIsSearchFilter(true);
           let data = initData(list, response.data);
           setList(data);
+          selectedAllList(data);
           bottomSheetModalRef.current?.dismiss();
         }
       }
@@ -370,6 +401,44 @@ function SubmittedList({ route }) {
     hideEndDate();
   };
 
+  function selectedAllList(data) {
+    const temp = [];
+    if (data?.count == 0) {
+      dispatch(initListAll([]));
+    } else {
+      data?.results?.map((x) =>
+        x?.children?.map((y) => {
+          if (!y.progress) {
+            temp.push(y.id);
+          }
+        })
+      );
+      dispatch(initListAll(temp));
+    }
+  }
+
+  async function bulkDelete() {
+    try {
+      setIsLoading(true);
+      let payload = { ids: selectedId };
+      let response = await postHTTP(nde_api.agendaoutdelete, payload);
+      if (response?.data?.status == "Error") {
+        Alert.alert("Gagal!", response?.data?.msg);
+      } else {
+        Alert.alert("Berhasil!", response?.data?.msg, [
+          {
+            text: "Ok",
+            onPress: () => refresh(),
+          },
+        ]);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      handlerError(error, "Peringatan!", "Hapus surat tidak berfungsi!");
+      setIsLoading(false);
+    }
+  }
+
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -483,6 +552,66 @@ function SubmittedList({ route }) {
                 </View>
               </View>
             )}
+          {typeBulkDelete ? (
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: COLORS.white,
+                padding: 10,
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Checkbox
+                  value={selectedAll}
+                  onValueChange={(item) => {
+                    dispatch(setSelectedAll(item));
+                    if (item) {
+                      dispatch(initList(listAll));
+                    } else {
+                      dispatch(removeAllSelectedList());
+                    }
+                  }}
+                  color={selectedAll === true ? GlobalStyles.colors.blue : null}
+                  style={{ marginRight: 10 }}
+                  disabled={list.count == 0 || listAll.length == 0}
+                />
+                <Text>Pilih Semua</Text>
+              </View>
+              {selectedId.length != 0 && (
+                <Button
+                  style={[styles.button]}
+                  labelStyle={{ fontSize: 13 }}
+                  mode="contained"
+                  compact
+                  onPress={() => {
+                    Alert.alert(
+                      "Peringatan !", // Judul dialog
+                      "Apakah anda yakin untuk menghapus surat-surat yang telah dipilih ? \n\nSurat yang dihapus akan hilang dan tidak bisa ditampilkan kembali", // Pesan dialog
+                      [
+                        {
+                          text: "Tidak",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "YA",
+                          onPress: () => {
+                            bulkDelete();
+                          },
+                        },
+                      ],
+                      { cancelable: true } // Menutup dialog dengan tap di luar (opsional)
+                    );
+                  }}
+                >
+                  Hapus Surat
+                </Button>
+              )}
+            </View>
+          ) : null}
           <FlatList
             keyExtractor={(item) => item.date}
             data={list?.results}
@@ -878,9 +1007,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   button: {
-    backgroundColor: GlobalStyles.colors.approve,
-    marginBottom: 16,
-    borderTopWidth: 1,
+    backgroundColor: COLORS.infoDanger,
   },
   buttonText: {
     fontSize: GlobalStyles.font.lg,

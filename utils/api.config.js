@@ -52,6 +52,7 @@ export const nde_api = {
   agendaoutsearch: Config.base_url + Config.api.agendaoutsearch,
   agendaoutbyid: Config.base_url + Config.api.agendaoutbyid,
   agendaoutlog: Config.base_url + Config.api.agendaoutlog,
+  agendaoutdelete: Config.base_url + Config.api.letterbulkdelete,
 
   //TODO
   todooverdue: Config.base_url + Config.api.todooverdue,
