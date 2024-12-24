@@ -49,12 +49,15 @@ import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import SignatureScreen from "react-native-signature-canvas";
+import { setAddressbookSelected } from "../../../store/AddressbookKKP";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.profile);
-  const [senderAttr, setSenderAttr] = useState({ code: "", name: "" });
+  const [senderAttr, setSenderAttr] = useState(
+    profile?.attr?.length == 0 ? { code: "", name: "" } : profile?.attr[0]
+  );
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
   // const addressbook = useSelector((state) => state.addressbook.selected);
   const [stateConfig, setStateConfig] = useState({});
@@ -174,7 +177,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     setIsLoading(true);
     try {
       const response = await getHTTP(
-        nde_api.dispoaction + "?attr=" + senderAttr?.code
+        senderAttr?.code == profile?.nik
+          ? nde_api.dispoaction
+          : nde_api.dispoaction + "?attr=" + senderAttr?.code
       );
       setTindakanList(response.data.action);
       dispatch(
@@ -301,11 +306,15 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         };
         // post api dispo
         const response = await postHTTP(
-          nde_api.postDisposition
-            .replace("{$type}", tipes)
-            .replace("{$id}", ids) +
-            "?attr=" +
-            senderAttr?.code,
+          senderAttr?.code == profile?.nik
+            ? nde_api.postDisposition
+                .replace("{$type}", tipes)
+                .replace("{$id}", ids)
+            : nde_api.postDisposition
+                .replace("{$type}", tipes)
+                .replace("{$id}", ids) +
+                "?attr=" +
+                senderAttr?.code,
           payload
         );
         // alert response
@@ -394,37 +403,43 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     <IconButton icon="close" onPress={() => delDispo(index)} />
                   </View>
                 )}
-                <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Disposisi Sebagai</Text>
-                </View>
-                <View>
-                  <Dropdown
-                    style={[
-                      styles.dropdown,
-                      isFocusAttr && {
-                        borderColor: GlobalStyles.colors.tertiery50,
-                      },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    // inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={profile.title}
-                    // search
-                    maxHeight={300}
-                    labelField="name"
-                    valueField="code"
-                    placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
-                    // searchPlaceholder="Search..."
-                    value={senderAttr}
-                    onFocus={() => setIsFocusAttr(true)}
-                    onBlur={() => setIsFocusAttr(false)}
-                    onChange={(item) => {
-                      setSenderAttr(item);
-                      setIsFocusAttr(false);
-                    }}
-                  />
-                </View>
+                {profile?.title?.length > 0 && (
+                  <>
+                    <View style={styles.containerTitle}>
+                      <Text style={styles.title}>Disposisi Sebagai</Text>
+                    </View>
+                    <View>
+                      <Dropdown
+                        style={[
+                          styles.dropdown,
+                          isFocusAttr && {
+                            borderColor: GlobalStyles.colors.tertiery50,
+                          },
+                        ]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        // inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={profile?.attr}
+                        // search
+                        maxHeight={300}
+                        labelField="name"
+                        valueField="code"
+                        placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
+                        // searchPlaceholder="Search..."
+                        value={senderAttr}
+                        onFocus={() => setIsFocusAttr(true)}
+                        onBlur={() => setIsFocusAttr(false)}
+                        onChange={(item) => {
+                          setSenderAttr(item);
+                          setSelectedTindakan([]);
+                          dispatch(setAddressbookSelected([]));
+                          setIsFocusAttr(false);
+                        }}
+                      />
+                    </View>
+                  </>
+                )}
                 <View style={styles.containerTitle}>
                   <Text style={styles.title}>Disposisi Kepada</Text>
                   {pilihanKepada != undefined && pilihanKepada.length != 0 && (
@@ -442,13 +457,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         const config = {
                           title: "Addressbook\nDisposition",
                           tipeAddress: "korespondensi",
-                          tabs: {
-                            jabatan: true,
-                            pegawai: true,
-                            favorit: true,
-                            para: true,
-                            senderCode: senderAttr.code,
-                          },
+                          tabs:
+                            profile?.title?.length > 0
+                              ? {
+                                  jabatan: true,
+                                  pegawai: true,
+                                  favorit: true,
+                                  para: true,
+                                  senderCode: senderAttr.code,
+                                }
+                              : { pegawai: true },
                           multiselect: true,
                           payload: pilihanKepada,
                         };
@@ -495,12 +513,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             const config = {
                               title: "Addressbook\nDisposition",
                               tipeAddress: "korespondensi",
-                              tabs: {
-                                jabatan: true,
-                                pegawai: true,
-                                favorit: true,
-                                para: true,
-                              },
+                              tabs:
+                                profile?.title?.length > 0
+                                  ? {
+                                      jabatan: true,
+                                      pegawai: true,
+                                      favorit: true,
+                                      para: true,
+                                      senderCode: senderAttr.code,
+                                    }
+                                  : { pegawai: true },
                               multiselect: true,
                               payload: pilihanKepada,
                               senderCode: senderAttr.code,
@@ -542,15 +564,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             size={24}
                             icon="menu-down"
                             onPress={() => {
-                              if (senderAttr.code.length == 0) {
-                                Alert.alert(
-                                  "Peringatan!",
-                                  "Silakan pilih jabatan pada Disposisi Sebagai"
-                                );
-                              } else {
-                                dispatch(switchTindakan(index));
-                                bottomSheetRefNotaTindakan?.current?.present();
-                              }
+                              dispatch(switchTindakan(index));
+                              bottomSheetRefNotaTindakan?.current?.present();
                             }}
                           />
                         }
