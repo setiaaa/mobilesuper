@@ -36,6 +36,7 @@ import {
   setMenu,
 } from "../../service/session";
 import { setTypeMenu } from "../../store/SuperApps";
+import { setSelectedAttr } from "../../store/profile";
 
 export const CardApps = ({
   handlePressModal,
@@ -47,6 +48,7 @@ export const CardApps = ({
   const [listMenu, setListMenu] = useState([]);
   const isFocused = useIsFocused();
   const { profile, typeMenu } = useSelector((state) => state.superApps);
+  const { profile: profileKores = {} } = useSelector((state) => state.profile);
   const { device } = useSelector((state) => state.apps);
   const [limitCard, setLimitCard] = useState(0);
   const { width, height } = useWindowDimensions();
@@ -537,6 +539,14 @@ export const CardApps = ({
                           } else if (item.title === "Kepegawaian") {
                             navigation.navigate(item.navigation, item.title);
                           } else {
+                            if (item.title == "Korespondensi") {
+                              dispatch(
+                                setSelectedAttr({
+                                  code: "",
+                                  name: profileKores?.fullname?.split("/")[0],
+                                })
+                              );
+                            }
                             navigation.navigate(item.navigation);
                           }
                         }}
