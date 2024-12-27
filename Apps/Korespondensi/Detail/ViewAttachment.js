@@ -42,7 +42,7 @@ function ViewAttachment({ route }) {
   return (
     <>
       {isLoading && <Loading />}
-      {header && (
+      {header && token && (
         <>
           <View style={{ flex: 1 }}>
             {stylus && (
@@ -113,8 +113,7 @@ function ViewAttachment({ route }) {
                     nde_api.baseurl_kores +
                       "editor-mobile/" +
                       id +
-                      "?editorToken=" +
-                      token || undefined,
+                      "?editorToken=-" || undefined,
                   headers: header,
                 }}
                 style={{
@@ -128,6 +127,9 @@ function ViewAttachment({ route }) {
                 onLoadEnd={() => {
                   setisLoading(false);
                 }}
+                injectedJavaScriptBeforeContentLoaded={`
+                  localStorage.setItem("token",'${token}')
+                  `}
                 incognito={true}
                 allowFileAccess={true}
                 androidLayerType={"software"}

@@ -1290,7 +1290,7 @@ function DetailAgendaInpro({
                 )}
             </>
           )}
-          {data?.attachments?.length == 1 && (
+          {data?.is_editable != "1" && data?.attachments?.length == 1 && (
             <View
               style={{
                 flexDirection: "column",
@@ -1365,7 +1365,8 @@ function DetailAgendaInpro({
               </View>
             </View>
           )}
-          {data?.attachments?.length > 1 &&
+          {data?.is_editable != "1" &&
+            data?.attachments?.length > 1 &&
             data?.attachments?.map((item, index) => (
               <Fragment key={index}>
                 {item?.description == "editor-generated" && (
@@ -1438,7 +1439,7 @@ function DetailAgendaInpro({
               </Fragment>
             ))}
           {/* edit surat */}
-          {data?.attachments?.length == 0 && device == "tablet" && (
+          {data?.is_editable == "1" && device !== "tablet" && (
             <View style={{ width: "100%" }}>
               <Button
                 mode="contained"
