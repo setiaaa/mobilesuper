@@ -413,7 +413,7 @@ function DCounter() {
     <ScrollView nestedScrollEnabled>
       <GestureHandlerRootView>
         <View style={{ flex: 1, padding: PADDING.Page }}>
-          {profile?.title?.length != 0 && (
+          {profile?.title?.length > 1 && (
             <View style={styles.container}>
               <View
                 style={{
@@ -441,8 +441,9 @@ function DCounter() {
                     borderRadius: 12,
                   }}
                 >
-                  {profile?.attr?.map((data) => (
+                  {profile?.attr?.map((data, i) => (
                     <Menu.Item
+                      key={i}
                       onPress={() => {
                         data.code == profile?.nik
                           ? dispatch(
