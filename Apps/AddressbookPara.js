@@ -21,7 +21,9 @@ import { TextInput } from "react-native";
 
 export const AddressbookPara = ({ route }) => {
   const [token, setToken] = useState("");
-  const { profile, unker } = useSelector((state) => state.profile);
+  const { profile, unker, selectedAttr } = useSelector(
+    (state) => state.profile
+  );
   const [inputValue, setinputValue] = useState("");
   const [searchQuery, setsearchQuery] = useState("");
   const [searchList, setsearchList] = useState([]);
@@ -73,26 +75,45 @@ export const AddressbookPara = ({ route }) => {
     // setIsLoading(true);
     try {
       if (id != undefined) {
-        let response = await getHTTP(
-          nde_api.parabydivisionid.replace("{$id}", id)
-        );
-        dispatch(setAddressbookListsDivisionPara(response?.data));
+        if (selectedAttr?.code === "") {
+          let response = await getHTTP(
+            nde_api.parabydivisionid + profile.nik + "/"
+          );
+          // nde_api.parabydivisionid.replace("{$id}", id)
+          dispatch(setAddressbookListsDivisionPara(response?.data));
+        } else {
+          let response = await getHTTP(
+            nde_api.parabydivisionid + selectedAttr?.code + "/"
+          );
+          // nde_api.parabydivisionid.replace("{$id}", id)
+          dispatch(setAddressbookListsDivisionPara(response?.data));
+        }
       }
       // setIsLoading(false);
     } catch (error) {
       // setIsLoading(false);
     }
   }
+  console.log(selectedAttr.code);
 
   async function getParaSearch() {
     try {
-      setsearchQuery(inputValue);
-      let response = await getHTTP(
-        nde_api.parabydivisionid.replace("{$id}", selectedDivision) +
-          "?query=" +
-          inputValue
-      );
-      setsearchList(response.data);
+      if (selectedAttr?.code === "") {
+        setsearchQuery(inputValue);
+        let response = await getHTTP(
+          nde_api.parabydivisionid + profile.nik + "/?query=" + inputValue
+        );
+        setsearchList(response.data);
+      } else {
+        setsearchQuery(inputValue);
+        let response = await getHTTP(
+          nde_api.parabydivisionid +
+            selectedAttr?.code +
+            "/?query=" +
+            inputValue
+        );
+        setsearchList(response.data);
+      }
     } catch (error) {
       handlerError(error, "Peringatan!", "Pencarian Para tidak berfungsi");
     }
