@@ -94,7 +94,6 @@ export const AddressbookPara = ({ route }) => {
       // setIsLoading(false);
     }
   }
-  console.log(selectedAttr.code);
 
   async function getParaSearch() {
     try {
@@ -132,11 +131,9 @@ export const AddressbookPara = ({ route }) => {
     let data;
     if (state === "jabatan") {
       if (config.tipeAddress == "korespondensi") {
-        data = addressbook.selected.filter((data) => {
-          let code = data.code;
-          console.log(code, id);
-          return code !== id;
-        });
+        data = addressbook.selected.filter(
+          (item) => !id.some((dataItem) => dataItem.code === item.code)
+        );
       } else {
         data = addressbook.selected.filter((data) => {
           let nip = data.nip || data?.officer?.official.split("/")[1];
@@ -175,14 +172,19 @@ export const AddressbookPara = ({ route }) => {
           justifyContent: "space-between",
         }}
         onPress={() => {
-          const checkNode = addressbook.selected.filter(
-            (data) => data.id === item.id
+          const temp = item.code.startsWith("G")
+            ? item.officer.officials.map((title, index) => ({
+                title,
+                code: item.officer.officials_id[index],
+                id: item.officer.officials_id[index],
+              }))
+            : [];
+          const checkNode = addressbook.selected.filter((data) =>
+            temp.some((tempItem) => tempItem.id === data.id)
           );
-          if (checkNode.length > 0) {
+          if (checkNode.length > item.officer.officials_id?.length) {
             if (config.tipeAddress == "korespondensi") {
-              checkNode.map((item) => {
-                deleteItem(item.code, "jabatan");
-              });
+              deleteItem(checkNode, "jabatan");
             } else {
               checkNode.map((item) => {
                 deleteItem(
@@ -193,20 +195,30 @@ export const AddressbookPara = ({ route }) => {
             }
           } else {
             if (config.multiselect) {
-              dispatch(setAddressbookSelected([...addressbook.selected, item]));
+              dispatch(
+                setAddressbookSelected([
+                  ...addressbook.selected,
+                  ...temp.filter(
+                    (item) =>
+                      !addressbook.selected.some(
+                        (sel) => sel.code === item.code
+                      )
+                  ),
+                ])
+              );
             } else {
-              dispatch(setAddressbookSelected([item]));
+              dispatch(setAddressbookSelected([temp]));
             }
           }
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          {checkedNodeRadio(item) ? (
+          {/* {checkedNodeRadio(item) ? (
             <Ionicons name="ellipse" size={24} color={COLORS.primary} />
           ) : (
             <Ionicons name="ellipse-outline" size={24} />
-          )}
-          <View style={{ flexDirection: "column", width: "90%" }}>
+          )} */}
+          <View style={{ flexDirection: "column", width: "100%" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
               {item.title}
             </Text>
@@ -223,7 +235,6 @@ export const AddressbookPara = ({ route }) => {
       </TouchableOpacity>
     </View>
   );
-
   const checkedNodeRadio = (node) => {
     const checkNode = addressbook.selected.filter(
       (item) => item.id === node.id
