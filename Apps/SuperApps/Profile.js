@@ -557,17 +557,9 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push(
-      {
-        description: "Penambahan delete surat terkirim",
-      },
-      {
-        description: "Perbaikan disposisi di eselon 4",
-      },
-      {
-        description: "Perbaikan addressbook pegawai",
-      }
-    );
+    tmpLog.push({
+      description: "Perbaikan addressbook para",
+    });
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);

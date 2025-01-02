@@ -1,8 +1,8 @@
 {
   "scheme": "kkp",
-  "name": "Dev SuperApps KKP",
-  "slug": "devsuperapps",
-  "version": "0.2.6",
+  "name": "SuperApps KKP",
+  "slug": "kkpsuperapps",
+  "version": "0.4.1",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
@@ -15,9 +15,9 @@
   },
   "assetBundlePatterns": ["/*"],
   "ios": {
-    "buildNumber": "0.1.2",
+    "buildNumber": "7.6.6",
     "supportsTablet": true,
-    "bundleIdentifier": "go.id.kkp.portal.dev",
+    "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library",
       "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 2,
+    "versionCode": 766,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -43,7 +43,7 @@
       "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.kkp.portal.dev",
+    "package": "go.id.kkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -112,10 +112,10 @@
     ]
   ],
   "extra": {
-    "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+    "sentry_dsn":"https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "ee29c3ba-c4c6-402e-b2ce-f519736eb454"
+      "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
     },
     "id": "kkp",
     "loginSSO": false,
@@ -145,8 +145,8 @@
       "error50": "#fcc4e4",
       "error500": "#cb012a",
       "red": "#cb012a",
-      "gray400": "#827c8f",
       "gray500": "#39324a",
+      "gray700": "#221c30",
       "backgroundInput": "#ffffff",
       "green": "#00883E",
       "greenlight": "#C6E5B4",
