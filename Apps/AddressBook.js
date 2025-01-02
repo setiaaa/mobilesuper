@@ -26,7 +26,6 @@ import { Portal } from "react-native-portalize";
 import { TopAddressBook } from "../utils/menutab";
 
 const CardListPilih = ({ item, addressbook, device, config }) => {
-  console.log(config.tipeAddress);
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;

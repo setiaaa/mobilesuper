@@ -61,6 +61,7 @@ function DetailAgendaInpro({
   const [openTembusan, setOpenTembusan] = useState(false);
   const [view, setView] = useState("");
   const [showButtons, setShowButtons] = useState(false);
+  const { device } = useSelector((state) => state.apps);
 
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
@@ -1289,7 +1290,7 @@ function DetailAgendaInpro({
                 )}
             </>
           )}
-          {data?.attachments?.length == 1 && (
+          {data?.is_editable != "1" && data?.attachments?.length == 1 && (
             <View
               style={{
                 flexDirection: "column",
@@ -1364,7 +1365,8 @@ function DetailAgendaInpro({
               </View>
             </View>
           )}
-          {data?.attachments?.length > 1 &&
+          {data?.is_editable != "1" &&
+            data?.attachments?.length > 1 &&
             data?.attachments?.map((item, index) => (
               <Fragment key={index}>
                 {item?.description == "editor-generated" && (
@@ -1436,6 +1438,39 @@ function DetailAgendaInpro({
                 )}
               </Fragment>
             ))}
+          {/* edit surat */}
+          {/* {data?.is_editable == "1" && device == "tablet" && (
+            <View style={{ width: "100%" }}>
+              <Button
+                mode="contained"
+                style={[
+                  {
+                    width: "100%",
+                    backgroundColor: GlobalStyles.colors.primary,
+                    marginBottom: 16,
+                  },
+                ]}
+                onPress={() => {
+                  navigation.navigate("ViewAttachment", {
+                    id: data?.id,
+                    title: "Edit Surat",
+                    tipe: tipe,
+                    token: data?.w_token,
+                  });
+                  dispatch(setFAB(false));
+                }}
+                icon={() => (
+                  <Ionicons
+                    name="pencil-outline"
+                    size={20}
+                    color={COLORS.white}
+                  />
+                )}
+              >
+                Edit Surat
+              </Button>
+            </View>
+          )} */}
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (

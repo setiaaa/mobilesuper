@@ -240,6 +240,16 @@ function CardList({ data, tipe, onPress }) {
                     Unit Kerja: {data?.unker}
                   </Text>
                 )}
+                {tipe == "tracking" && data.position && (
+                  <Text
+                    style={{
+                      color: GlobalStyles.colors.tertiery70,
+                      fontSize: 12,
+                    }}
+                  >
+                    {data.position}
+                  </Text>
+                )}
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   {data?.subject}
                 </Text>

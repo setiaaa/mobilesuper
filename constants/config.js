@@ -115,7 +115,7 @@ export const Config = {
     unit: "crsbe/addressbook/units/",
     divisionbyunitid: "crsbe/addressbook/divisions/{$id}/",
     titlebydivisionid: "crsbe/addressbook/title/tree/{$id}/",
-    parabydivisionid: "crsbe/addressbook/para/{$id}/",
+    parabydivisionid: "crsbe/addressbook/group/",
     titleSearch: "crsbe/addressbook/title/tree/{$id}/?query={$word}",
     divisionList: "crsbe/addressbook/divisions/1/",
     personallist: "crsbe/addressbook/personals/",
