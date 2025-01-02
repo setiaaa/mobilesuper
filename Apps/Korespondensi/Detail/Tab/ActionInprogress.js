@@ -902,52 +902,57 @@ function ActionInprogress({ id, data, page }) {
             <Ionicons name="checkmark-sharp" size={20} color={COLORS.white} />
           </TouchableOpacity>
         )}
-        {data?.state != "rns" &&
-          data?.state != "finish" &&
-          page != "edit" &&
-          data?.is_editable == "0" && (
-            <>
-              <TouchableOpacity
-                onPress={() => {
-                  showComment("Setujui", page);
-                }}
-                style={{
-                  backgroundColor:
-                    data?.attachments[0]?.annotations?.length == 0
-                      ? COLORS.success
-                      : GlobalStyles.colors.disabled,
-                  width: 35,
-                  height: 35,
-                  borderRadius: 25,
-                  marginTop: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                disabled={data?.attachments[0]?.annotations?.length != 0}
-              >
-                <Ionicons name="send-outline" size={20} color={COLORS.white} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  showComment("Revisi", page);
-                }}
-                style={{
-                  backgroundColor:
-                    data?.attachments[0]?.annotations?.length == 0
-                      ? GlobalStyles.colors.yellow
-                      : GlobalStyles.colors.disabled,
-                  width: 35,
-                  height: 35,
-                  borderRadius: 25,
-                  marginTop: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                disabled={data?.attachments[0]?.annotations?.length != 0}
-              >
-                <Ionicons name="arrow-back" size={20} color={COLORS.white} />
-              </TouchableOpacity>
-              {/* <TouchableOpacity
+        {data?.state != "rns" && data?.state != "finish" && page != "edit" && (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Setujui", page);
+              }}
+              style={{
+                backgroundColor:
+                  data?.attachments[0]?.annotations?.length == 0 &&
+                  data?.is_editable == "0"
+                    ? COLORS.success
+                    : GlobalStyles.colors.disabled,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              disabled={
+                data?.attachments[0]?.annotations?.length != 0 &&
+                data?.is_editable == "0"
+              }
+            >
+              <Ionicons name="send-outline" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Revisi", page);
+              }}
+              style={{
+                backgroundColor:
+                  data?.attachments[0]?.annotations?.length == 0 &&
+                  data?.is_editable == "0"
+                    ? GlobalStyles.colors.yellow
+                    : GlobalStyles.colors.disabled,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              disabled={
+                data?.attachments[0]?.annotations?.length != 0 &&
+                data?.is_editable == "0"
+              }
+            >
+              <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            {/* <TouchableOpacity
               onPress={() => {
                 showComment("Batalkan", page);
               }}
@@ -963,9 +968,9 @@ function ActionInprogress({ id, data, page }) {
             >
               <Ionicons name="close" size={20} color={COLORS.white} />
             </TouchableOpacity> */}
-            </>
-          )}
-        {data?.state != "rns" &&
+          </>
+        )}
+        {/* {data?.state != "rns" &&
           data?.state != "finish" &&
           page != "edit" &&
           data?.is_editable == "1" && (
@@ -1011,7 +1016,7 @@ function ActionInprogress({ id, data, page }) {
                 <Ionicons name="arrow-back" size={20} color={COLORS.white} />
               </TouchableOpacity>
             </>
-          )}
+          )} */}
       </View>
 
       <BottomSheetModalProvider>
