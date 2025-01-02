@@ -923,7 +923,7 @@ function ActionInprogress({ id, data, page }) {
               }}
               disabled={
                 data?.attachments[0]?.annotations?.length != 0 &&
-                data?.is_editable == "0"
+                data?.is_editable == "1"
               }
             >
               <Ionicons name="send-outline" size={20} color={COLORS.white} />
@@ -947,7 +947,7 @@ function ActionInprogress({ id, data, page }) {
               }}
               disabled={
                 data?.attachments[0]?.annotations?.length != 0 &&
-                data?.is_editable == "0"
+                data?.is_editable == "1"
               }
             >
               <Ionicons name="arrow-back" size={20} color={COLORS.white} />

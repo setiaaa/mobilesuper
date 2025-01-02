@@ -156,7 +156,7 @@ export const AddressbookPara = ({ route }) => {
     <View style={{ marginBottom: 10 }} key={item.id}>
       <TouchableOpacity
         style={{
-          marginHorizontal: 15,
+          // marginHorizontal: 15,
           paddingVertical: 10,
           paddingHorizontal: 10,
           borderRadius: 8,
@@ -345,7 +345,7 @@ export const AddressbookPara = ({ route }) => {
             <FlatList
               data={listTree}
               renderItem={renderItem}
-              style={{ marginBottom: 40 }}
+              style={{ marginBottom: 40, width: "90%" }}
               keyExtractor={(item) => item.code}
             />
           ) : null}
