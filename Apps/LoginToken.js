@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan KKP Drive
+                      Penambahan delete surat terkirim
                     </Text>
                   </View>
 
@@ -496,7 +496,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan tautan pintas
+                      Perbaikan disposisi di eselon 4
                     </Text>
                   </View>
 
@@ -522,33 +522,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan menu surat korespondensi
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginBottom: 20,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Perbaikan addressbook
+                      Perbaikan addressbook pegawai
                     </Text>
                   </View>
 

@@ -559,16 +559,13 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Perbaikan KKP Drive",
+        description: "Penambahan delete surat terkirim",
       },
       {
-        description: "Perbaikan tautan pintas",
+        description: "Perbaikan disposisi di eselon 4",
       },
       {
-        description: "Penambahan menu surat korespondensi",
-      },
-      {
-        description: "Perbaikan addressbook",
+        description: "Perbaikan addressbook pegawai",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));

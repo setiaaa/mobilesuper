@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedList } from "../../store/listBulk";
 import moment from "moment";
 
-function CardList({ data, tipe, onPress }) {
+function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
   const navigation = useNavigation();
   const [title, setTitle] = useState();
   const [errorAvatar, setErrorAvatar] = useState(false);
@@ -55,6 +55,7 @@ function CardList({ data, tipe, onPress }) {
       });
     }
   }
+
   return (
     <>
       <View
@@ -144,7 +145,7 @@ function CardList({ data, tipe, onPress }) {
                 style={styles.button}
               />
             )}
-            {tipe == "needfollowup" && profile.is_pass == "true" && (
+            {tipe == "needfollowup" && is_pass == "true" && (
               <Checkbox.Item
                 mode="android"
                 status={
@@ -163,7 +164,7 @@ function CardList({ data, tipe, onPress }) {
                 // labelStyle={styles.labelCheckbox}
               />
             )}
-            {tipe == "agendaout" && (
+            {tipe == "agendaout" && typeBulkDelete == true && (
               <Checkbox.Item
                 mode="android"
                 status={

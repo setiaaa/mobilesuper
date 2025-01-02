@@ -354,7 +354,9 @@ export const BerbagiDokumen = ({ route }) => {
       //   })
       // );
 
-      setPilihanPeninjauGrup(item?.data?.reviewers);
+      setPilihanPeninjauGrup(
+        item?.data?.reviewers === null ? [] : item?.data?.reviewers
+      );
     }
     if (item?.type === "draft") {
       let typeDoc = [];
@@ -370,8 +372,6 @@ export const BerbagiDokumen = ({ route }) => {
       setPayloadDocument(item?.data.attachments);
     }
   }, [item]);
-
-  console.log(item.type);
 
   useEffect(() => {
     if (stateConfig.title === "Peserta Grup") {
@@ -410,12 +410,12 @@ export const BerbagiDokumen = ({ route }) => {
   const handleSubmit = (action) => {
     let attachments = [];
     attachment.map((item) => {
-      attachments.push(item.id);
+      attachments?.push(item.id);
     });
 
     let document = [];
     payloaDocument.map((item) => {
-      document.push(item.id);
+      document?.push(item.id);
     });
 
     const combinedIds = [...new Set([...attachments, ...document])];
@@ -443,7 +443,10 @@ export const BerbagiDokumen = ({ route }) => {
     const result = {
       title: judulKegiatan,
       objid_members: objid_member,
-      attachments: item.type === "edit" ? combinedIds : attachments,
+      attachments:
+        item?.type === "edit" || item?.type === "draft"
+          ? combinedIds
+          : attachments,
       attributes: {
         tanggal: moment(tanggal),
         tempat: tempatAcara,
@@ -451,7 +454,10 @@ export const BerbagiDokumen = ({ route }) => {
         send_notification: isSelected,
         id_addressbook: id_addressbook,
       },
-      reviewers_ids: item.type === "edit" ? nipReviewerEdit : nipReviewer,
+      reviewers_ids:
+        item.type === "edit" || item.type === "draft"
+          ? nipReviewerEdit
+          : nipReviewer,
       action: action === "publish" ? "submit" : "draft",
       published: action === "publish" ? true : false,
       public: false,
@@ -469,7 +475,7 @@ export const BerbagiDokumen = ({ route }) => {
       result: result,
     };
 
-    if (item?.type === "edit") {
+    if (item?.type === "edit" || item?.type === "draft") {
       dispatch(putBerbagiDokumen(data));
       console.log(data);
     } else {

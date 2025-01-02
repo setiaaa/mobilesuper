@@ -72,7 +72,10 @@ function DispositionDetail({ route }) {
       // { key: "attachment", title: "Attachment", icon: "attachment" },
     ];
   } else {
-    if (profile?.title?.length > 0) {
+    if (
+      profile?.is_secretary != "true" &&
+      (profile?.title?.length > 0 || profile?.is_user_eselon_4 == "true")
+    ) {
       routes = [
         { key: "info", title: "Info", icon: "alert-circle-outline" },
         { key: "log", title: "Aktivitas Disposisi", icon: "clipboard-text" },
