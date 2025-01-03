@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { COLORS, fontSizeResponsive, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Divider } from "react-native-paper";
 import { setResetDetailLinimasa } from "../../store/Pengetahuan";
-
 
 export const CardLiniMasaSatker = ({
   image,
@@ -18,7 +21,7 @@ export const CardLiniMasaSatker = ({
   token,
   device,
 }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
@@ -26,7 +29,7 @@ export const CardLiniMasaSatker = ({
     dispatch(getViewLinimasa(params));
   };
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View
@@ -66,6 +69,7 @@ export const CardLiniMasaSatker = ({
               style={{
                 fontSize: fontSizeResponsive("H4", device),
                 color: COLORS.lighter,
+                width: "90%",
               }}
             >
               {item.creator.name}
@@ -78,9 +82,9 @@ export const CardLiniMasaSatker = ({
                 flexDirection: "row",
                 gap: 5,
                 backgroundColor:
-                  item.category === "Video / Jurnal"
+                  item?.category?.toLowerCase() === "video / jurnal"
                     ? COLORS.successLight
-                    : item.category === "Infografis"
+                    : item?.category?.toLowerCase() === "infografis"
                     ? COLORS.warningLight
                     : COLORS.infoLight,
                 borderRadius: 30,
@@ -90,14 +94,14 @@ export const CardLiniMasaSatker = ({
                 alignItems: "center",
               }}
             >
-              {item.category === "Infografis" ? (
+              {item?.category?.toLowerCase() === "infografis" ? (
                 <Ionicons
                   name="document-outline"
                   color={"#F6AD1D"}
                   size={device === "tablet" ? 30 : 24}
                   style={{ marginTop: 2 }}
                 />
-              ) : item.category === "Kegiatan" ? (
+              ) : item?.category?.toLowerCase() === "kegiatan" ? (
                 <Ionicons
                   name="analytics-outline"
                   size={device === "tablet" ? 30 : 24}
@@ -115,9 +119,9 @@ export const CardLiniMasaSatker = ({
               <Text
                 style={{
                   color:
-                    item.category === "Infografis"
+                    item.category.toLowerCase() === "infografis"
                       ? COLORS.warning
-                      : item.category === "Kegiatan"
+                      : item.category.toLowerCase() === "kegiatan"
                       ? COLORS.info
                       : COLORS.success,
                   fontSize: fontSizeResponsive("H4", device),

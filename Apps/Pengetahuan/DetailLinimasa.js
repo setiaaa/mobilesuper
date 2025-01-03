@@ -987,9 +987,9 @@ export const DetailLinimasa = ({ route }) => {
                       <View
                         style={{
                           backgroundColor:
-                            detail.category === "Video / Jurnal"
+                            detail.category.toLowerCase() === "video / jurnal"
                               ? COLORS.successLight
-                              : detail.category === "Infografis"
+                              : detail.category.toLowerCase() === "infografis"
                               ? COLORS.warningLight
                               : COLORS.infoLight,
                           borderRadius: 30,
@@ -1001,14 +1001,14 @@ export const DetailLinimasa = ({ route }) => {
                           gap: 5,
                         }}
                       >
-                        {detail.category === "Infografis" ? (
+                        {detail.category.toLowerCase() === "infografis" ? (
                           <Ionicons
                             name="document-outline"
                             color={"#F6AD1D"}
                             size={device === "tablet" ? 20 : 16}
                             style={{ marginTop: 2 }}
                           />
-                        ) : detail.category === "Kegiatan" ? (
+                        ) : detail.category.toLowerCase() === "kegiatan" ? (
                           <Ionicons
                             name="analytics-outline"
                             color={"#1868AB"}
@@ -1026,9 +1026,9 @@ export const DetailLinimasa = ({ route }) => {
                         <Text
                           style={{
                             color:
-                              detail.category === "Infografis"
+                              detail.category.toLowerCase() === "infografis"
                                 ? COLORS.warning
-                                : detail.category === "Kegiatan"
+                                : detail.category.toLowerCase() === "kegiatan"
                                 ? COLORS.info
                                 : COLORS.success,
                             fontSize: fontSizeResponsive("H4", device),

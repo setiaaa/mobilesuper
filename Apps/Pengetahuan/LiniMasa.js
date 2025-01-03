@@ -484,9 +484,9 @@ const CardLiniMasa = ({ item, token, device }) => {
                 <View
                   style={{
                     backgroundColor:
-                      item.category === "video / jurnal"
+                      item.category.toLowerCase() === "video / jurnal"
                         ? COLORS.successLight
-                        : item.category === "infografis"
+                        : item.category.toLowerCase() === "infografis"
                         ? COLORS.warningLight
                         : COLORS.infoLight,
                     borderRadius: 30,
@@ -498,14 +498,14 @@ const CardLiniMasa = ({ item, token, device }) => {
                     gap: 5,
                   }}
                 >
-                  {item.category === "infografis" ? (
+                  {item.category.toLowerCase() === "infografis" ? (
                     <Ionicons
                       name="document-outline"
                       color={"#F6AD1D"}
                       size={device === "tablet" ? 20 : 16}
                       style={{ marginTop: 2 }}
                     />
-                  ) : item.category === "kegiatan" ? (
+                  ) : item.category.toLowerCase() === "kegiatan" ? (
                     <Ionicons
                       name="analytics-outline"
                       color={"#1868AB"}
@@ -523,9 +523,9 @@ const CardLiniMasa = ({ item, token, device }) => {
                   <Text
                     style={{
                       color:
-                        item.category === "infografis"
+                        item.category.toLowerCase() === "infografis"
                           ? COLORS.warning
-                          : item.category === "kegiatan"
+                          : item.category.toLowerCase() === "kegiatan"
                           ? COLORS.info
                           : COLORS.success,
                       fontSize: fontSizeResponsive("H4", device),

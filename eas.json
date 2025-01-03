@@ -25,7 +25,7 @@
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
-        "buildType": "app-bundle",
+        "buildType": "apk",
         "image": "latest"
       },
       "ios": {
