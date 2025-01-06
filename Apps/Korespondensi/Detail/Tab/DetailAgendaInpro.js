@@ -1439,7 +1439,7 @@ function DetailAgendaInpro({
               </Fragment>
             ))}
           {/* edit surat */}
-          {/* {data?.is_editable == "1" && device == "tablet" && (
+          {data?.is_editable == "1" && device == "tablet" && (
             <View style={{ width: "100%" }}>
               <Button
                 mode="contained"
@@ -1470,7 +1470,7 @@ function DetailAgendaInpro({
                 Edit Surat
               </Button>
             </View>
-          )} */}
+          )}
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (
