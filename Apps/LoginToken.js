@@ -470,7 +470,58 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan addressbook para
+                      Takedown dashboard budidaya dan penangkapan
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan editor
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginVertical: 20,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan update password
                     </Text>
                   </View>
 

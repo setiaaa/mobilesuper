@@ -592,9 +592,17 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push({
-      description: "Perbaikan addressbook para",
-    });
+    tmpLog.push(
+      {
+        description: "Takedown dashboard budidaya dan penangkapan",
+      },
+      {
+        description: "Penambahan editor",
+      },
+      {
+        description: "Penambahan update password",
+      }
+    );
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);
@@ -851,7 +859,7 @@ export const Profile = () => {
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                  Ganti Password
+                  Update Password
                 </Text>
               </View>
               <Ionicons
@@ -1971,7 +1979,7 @@ export const Profile = () => {
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Ganti Password
+                      Update Password
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
