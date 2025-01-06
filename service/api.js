@@ -107,6 +107,21 @@ export const Login = createAsyncThunk(
   }
 );
 
+//Reset Password
+export const putResetPassword = createAsyncThunk(
+  "profile/putResetPassword",
+  async ({ token, payload }) => {
+    const respon = await axiosInstance.put(
+      `${profile}me/reset-personal/`,
+      payload,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
 // kebijakan
 export const getCategory = createAsyncThunk(
   "kebijakan/getCategory",

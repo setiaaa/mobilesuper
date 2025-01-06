@@ -7,6 +7,7 @@ import {
   getDetailBerita,
   getLastLogAttendence,
   postAttendence,
+  putResetPassword,
 } from "../service/api";
 import { removeTokenValue } from "../service/session";
 import { useNavigation } from "@react-navigation/native";
@@ -41,6 +42,7 @@ const SuperAppsSlice = createSlice({
     post: false,
     typeMenu: null,
     iosNotif: false,
+    responReset: {},
   },
   reducers: {
     setProfile: (state, action) => {
@@ -96,6 +98,9 @@ const SuperAppsSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setResponReset: (state, action) => {
+      state.responReset = action.payload;
     },
   },
   extraReducers(builder) {
@@ -195,6 +200,20 @@ const SuperAppsSlice = createSlice({
         state.status = "error";
         state.post = false;
         Sentry.captureException(action.error);
+      })
+      .addCase(putResetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.responReset = { status: "200" };
+      })
+      .addCase(putResetPassword.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(putResetPassword.rejected, (state, action) => {
+        const array = action.error.message.split(" ");
+        const statusCode = array[array.length - 1];
+
+        state.loading = false;
+        state.responReset = { status: statusCode, ...action.error };
       });
   },
 });
@@ -217,6 +236,7 @@ export const {
   setTypeMenu,
   setNotifIos,
   setLoading,
+  setResponReset,
 } = SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

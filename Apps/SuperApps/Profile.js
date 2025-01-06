@@ -8,6 +8,10 @@ import {
   Platform,
   Switch,
   FlatList,
+  TextInput,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -22,7 +26,7 @@ import {
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse } from "accordion-collapse-react-native";
 import { CollapseCardBiodata } from "../../components/CollapseCardBiodata";
@@ -31,6 +35,7 @@ import { CollapseCardLinimasa } from "../../components/CollapseCardLinimasa";
 import {
   getMenuLite,
   getMenuType,
+  getTokenValue,
   removeMenuLite,
   removePushNotif,
   removeTokenValue,
@@ -40,7 +45,12 @@ import {
 import { setLogout } from "../../store/LoginAuth";
 import { Loading } from "../../components/Loading";
 import { Alert } from "react-native";
-import { setNotifIos, setProfile, setTypeMenu } from "../../store/SuperApps";
+import {
+  setNotifIos,
+  setProfile,
+  setResponReset,
+  setTypeMenu,
+} from "../../store/SuperApps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -76,6 +86,7 @@ import { CollapseCardOrangTua } from "../../components/CollapseCardOrangTua";
 import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
 import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
 import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
+import { putResetPassword } from "../../service/api";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -83,12 +94,27 @@ export const Profile = () => {
   const [modalLog, setModalLog] = useState(false);
   const [listMenu, setListMenu] = useState([]);
   const [listLog, setListLog] = useState([]);
-  const { profile, linimasa, loading } = useSelector(
+  const [password, setPassword] = useState("");
+  const [show, setShow] = useState(true);
+  const [passwordBaru, setPasswordBaru] = useState("");
+  const [showBaru, setShowBaru] = useState(true);
+  const [passwordKonfirmasi, setPasswordKonfirmasi] = useState("");
+  const [showKonfirmasi, setShowKonfirmasi] = useState(true);
+  const { profile, linimasa, loading, responReset } = useSelector(
     (state) => state.superApps
   );
   const { device } = useSelector((state) => state.apps);
   const BASE_URL = Config.base_url + "bridge";
   const [isEnabled, setIsEnabled] = useState(false);
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const toggleSwitch = (val) => {
     setIsEnabled(val);
     setMenuType(JSON.stringify(val));
@@ -107,8 +133,9 @@ export const Profile = () => {
   }, []);
 
   const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalResetRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["99%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -122,6 +149,14 @@ export const Profile = () => {
 
   const closeBottomSheet = () => {
     bottomSheetModalRef.current.close();
+  };
+
+  function handlePressModalReset() {
+    bottomSheetModalResetRef.current?.present();
+  }
+
+  const closeBottomSheetReset = () => {
+    bottomSheetModalResetRef.current.close();
   };
 
   const roleEvent = ["EVENT.USER"];
@@ -642,6 +677,39 @@ export const Profile = () => {
     setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
+  const handleResetPassword = () => {
+    const payload = {
+      confirm_password: passwordKonfirmasi,
+      new_password: passwordBaru,
+      old_password: password,
+    };
+    dispatch(putResetPassword({ token: token, payload: payload }));
+  };
+
+  useEffect(() => {
+    if (responReset?.status === "200") {
+      Alert.alert("Password berhasil diubah", "Harap login kembali", [
+        {
+          text: "OK",
+          onPress: () => {
+            removePushNotif();
+            setNotifIos(false);
+            removeTokenValue();
+            dispatch(setLogout());
+            dispatch(setProfile({}));
+            OneSignal.User.addTag("user_type", "");
+            dispatch(setResponReset(""));
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "LoginToken" }],
+            });
+          },
+        },
+      ]);
+    }
+    console.log(responReset);
+  }, [responReset]);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -752,6 +820,46 @@ export const Profile = () => {
               {profile.unit_kerja}
             </Text>
           </View>
+
+          <TouchableOpacity
+            style={[
+              {
+                padding: spacing.default,
+                rowGap: spacing.medium,
+                backgroundColor: COLORS.white,
+                marginTop: 10,
+                borderRadius: 8,
+              },
+              shadow.cardShadow,
+            ]}
+            onPress={() => {
+              handlePressModalReset();
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              >
+                <MaterialIcons
+                  name="key"
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Ganti Password
+                </Text>
+              </View>
+              <Ionicons
+                name="chevron-forward"
+                size={device === "tablet" ? 40 : 24}
+              />
+            </View>
+          </TouchableOpacity>
 
           <View
             style={[
@@ -1824,6 +1932,342 @@ export const Profile = () => {
                 </View>
               </View>
             </View>
+          </BottomSheetModal>
+        </Portal>
+
+        <Portal>
+          <BottomSheetModal
+            ref={bottomSheetModalResetRef}
+            snapPoints={animatedSnapPoints}
+            handleHeight={animatedHandleHeight}
+            contentHeight={animatedContentHeight}
+            index={0}
+            style={{ borderRadius: 50 }}
+            keyboardBlurBehavior="restore"
+            android_keyboardInputMode="adjust"
+            backdropComponent={({ style }) => (
+              <View
+                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+              />
+            )}
+          >
+            <KeyboardAvoidingView behavior={"height"}>
+              <View
+                onLayout={handleContentLayout}
+                style={{
+                  paddingHorizontal: spacing.default,
+                  marginHorizontal: spacing.medium,
+                }}
+              >
+                <View style={{ marginBottom: spacing.default }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Ganti Password
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        closeBottomSheetReset();
+                        setPassword("");
+                        setPasswordBaru("");
+                        setPasswordKonfirmasi("");
+                      }}
+                      style={{ justifyContent: "center" }}
+                    >
+                      <Ionicons
+                        name="close-outline"
+                        size={device === "tablet" ? 40 : 24}
+                        color={COLORS.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Divider />
+                  <View style={{ marginTop: spacing.medium }}>
+                    {/* Other TextInput and UI elements */}
+                    <View style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Password Lama
+                      </Text>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: 4,
+                          borderColor: COLORS.ExtraDivinder,
+                          flexDirection: "row",
+                          height: 40,
+                          marginTop: 5,
+                        }}
+                      >
+                        <TextInput
+                          style={{ padding: 10, width: "70%" }}
+                          onChangeText={(e) => {
+                            setPassword(e);
+                          }}
+                          value={password}
+                          secureTextEntry={show}
+                          allowFontScaling={false}
+                        />
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            flex: 1,
+                            marginRight: 10,
+                            justifyContent: "center",
+                          }}
+                        >
+                          {show == false ? (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShow(true);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-off-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShow(false);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Password Baru
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.grey,
+                          marginVertical: 5,
+                        }}
+                      >
+                        Password harus mengandung minimal 8 karakter, 1 huruf
+                        besar, dan spesial karakter
+                      </Text>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: 4,
+                          borderColor: COLORS.ExtraDivinder,
+                          flexDirection: "row",
+                          height: 40,
+                          marginTop: 5,
+                        }}
+                      >
+                        <TextInput
+                          style={{ padding: 10, width: "70%" }}
+                          onChangeText={(e) => {
+                            setPasswordBaru(e);
+                          }}
+                          value={passwordBaru}
+                          secureTextEntry={showBaru}
+                          allowFontScaling={false}
+                        />
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            flex: 1,
+                            marginRight: 10,
+                            justifyContent: "center",
+                          }}
+                        >
+                          {showBaru == false ? (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShowBaru(true);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-off-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShowBaru(false);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      </View>
+                      {responReset?.status === "400" ? (
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                            color: COLORS.infoDanger,
+                            marginVertical: 5,
+                          }}
+                        >
+                          {`Update password gagal. Pastikan beberapa poin berikut :
+- This password is too short. It must contain at least 8 characters.
+- This password is too common.
+- Password must contain at least 1 number.
+- Password must contain at least 1 uppercase character.
+- Password must contain at least 1 special character ( !"#$%&'()*+,-./:;<=>?@[\]^_{|}~)`}
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Konfirmasi Password Baru
+                      </Text>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: 4,
+                          borderColor: COLORS.ExtraDivinder,
+                          flexDirection: "row",
+                          height: 40,
+                          marginTop: 5,
+                        }}
+                      >
+                        <TextInput
+                          style={{ padding: 10, width: "70%" }}
+                          onChangeText={(e) => {
+                            setPasswordKonfirmasi(e);
+                          }}
+                          value={passwordKonfirmasi}
+                          secureTextEntry={showKonfirmasi}
+                          allowFontScaling={false}
+                        />
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            flex: 1,
+                            marginRight: 10,
+                            justifyContent: "center",
+                          }}
+                        >
+                          {showKonfirmasi == false ? (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShowKonfirmasi(true);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-off-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShowKonfirmasi(false);
+                              }}
+                            >
+                              <Ionicons
+                                name="eye-sharp"
+                                size={device === "tablet" ? 30 : 24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      </View>
+                      {passwordBaru !== passwordKonfirmasi ? (
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                            color: COLORS.infoDanger,
+                            marginVertical: 5,
+                          }}
+                        >
+                          Password Baru dan Password Konfirmasi Tidak Sama!
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor:
+                          password === "" ||
+                          passwordBaru === "" ||
+                          passwordKonfirmasi === "" ||
+                          passwordBaru !== passwordKonfirmasi
+                            ? COLORS.grey
+                            : COLORS.primary,
+                        height: 50,
+                        borderRadius: 8,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: spacing.default,
+                      }}
+                      onPress={() => {
+                        // closeBottomSheetReset();
+                        // setPassword("");
+                        // setPasswordBaru("");
+                        // setPasswordKonfirmasi("");
+                        handleResetPassword();
+                      }}
+                      disabled={
+                        password === "" ||
+                        passwordBaru === "" ||
+                        passwordKonfirmasi === "" ||
+                        passwordBaru !== passwordKonfirmasi
+                      }
+                    >
+                      <Text
+                        style={[
+                          {
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          },
+                        ]}
+                      >
+                        Simpan
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
           </BottomSheetModal>
         </Portal>
 
