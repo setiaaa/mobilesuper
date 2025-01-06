@@ -305,114 +305,114 @@ export const MenuDashboard = () => {
         </View>
       );
     }
-    if (isRoleBudidaya) {
-      menuDash.push(
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "flex-start",
-            flex: 1,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ProduksiBudidaya");
-              // setVisibleModal(false);
-            }}
-          >
-            <View
-              style={[
-                device === "tablet" ? styles.cardApps : styles.cardAppsHP,
-                {
-                  backgroundColor: "#38B2AC",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 50 : 24,
-                  height: device === "tablet" ? 50 : 24,
-                }}
-                source={require("../../assets/superApp/ikon-budidaya.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              width: device === "tablet" ? 200 : 100,
-              textAlign: "center",
-            }}
-          >
-            Produksi Budidaya
-          </Text>
-        </View>
-      );
-    }
-    if (isRolePenangkapan) {
-      menuDash.push(
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "flex-start",
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: 100,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Penangkapan");
-                // setVisibleModal(false);
-              }}
-            >
-              <View
-                style={[
-                  device === "tablet" ? styles.cardApps : styles.cardAppsHP,
-                  {
-                    backgroundColor: "#1868AB",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    display: "flex",
-                  },
-                ]}
-              >
-                <Image
-                  style={{
-                    width: device === "tablet" ? 60 : 24,
-                    height: device === "tablet" ? 40 : 18,
-                  }}
-                  source={require("../../assets/superApp/ikon-penangkapan.png")}
-                />
-              </View>
-            </TouchableOpacity>
-            <Text
-              style={{
-                marginTop: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: fontSizeResponsive("H4", device),
-                width: device === "tablet" ? 200 : 100,
-                textAlign: "center",
-              }}
-            >
-              Produksi Penangkapan
-            </Text>
-          </View>
-        </View>
-      );
-    }
+    // if (isRoleBudidaya) {
+    //   menuDash.push(
+    //     <View
+    //       style={{
+    //         alignItems: "center",
+    //         justifyContent: "flex-start",
+    //         flex: 1,
+    //       }}
+    //     >
+    //       <TouchableOpacity
+    //         onPress={() => {
+    //           navigation.navigate("ProduksiBudidaya");
+    //           // setVisibleModal(false);
+    //         }}
+    //       >
+    //         <View
+    //           style={[
+    //             device === "tablet" ? styles.cardApps : styles.cardAppsHP,
+    //             {
+    //               backgroundColor: "#38B2AC",
+    //               justifyContent: "center",
+    //               alignItems: "center",
+    //               display: "flex",
+    //             },
+    //           ]}
+    //         >
+    //           <Image
+    //             style={{
+    //               width: device === "tablet" ? 50 : 24,
+    //               height: device === "tablet" ? 50 : 24,
+    //             }}
+    //             source={require("../../assets/superApp/ikon-budidaya.png")}
+    //           />
+    //         </View>
+    //       </TouchableOpacity>
+    //       <Text
+    //         style={{
+    //           marginTop: 10,
+    //           justifyContent: "center",
+    //           alignItems: "center",
+    //           fontSize: fontSizeResponsive("H4", device),
+    //           width: device === "tablet" ? 200 : 100,
+    //           textAlign: "center",
+    //         }}
+    //       >
+    //         Produksi Budidaya
+    //       </Text>
+    //     </View>
+    //   );
+    // }
+    // if (isRolePenangkapan) {
+    //   menuDash.push(
+    //     <View
+    //       style={{
+    //         alignItems: "center",
+    //         justifyContent: "flex-start",
+    //         flex: 1,
+    //       }}
+    //     >
+    //       <View
+    //         style={{
+    //           justifyContent: "center",
+    //           alignItems: "center",
+    //           width: 100,
+    //         }}
+    //       >
+    //         <TouchableOpacity
+    //           onPress={() => {
+    //             navigation.navigate("Penangkapan");
+    //             // setVisibleModal(false);
+    //           }}
+    //         >
+    //           <View
+    //             style={[
+    //               device === "tablet" ? styles.cardApps : styles.cardAppsHP,
+    //               {
+    //                 backgroundColor: "#1868AB",
+    //                 justifyContent: "center",
+    //                 alignItems: "center",
+    //                 display: "flex",
+    //               },
+    //             ]}
+    //           >
+    //             <Image
+    //               style={{
+    //                 width: device === "tablet" ? 60 : 24,
+    //                 height: device === "tablet" ? 40 : 18,
+    //               }}
+    //               source={require("../../assets/superApp/ikon-penangkapan.png")}
+    //             />
+    //           </View>
+    //         </TouchableOpacity>
+    //         <Text
+    //           style={{
+    //             marginTop: 10,
+    //             justifyContent: "center",
+    //             alignItems: "center",
+    //             fontSize: fontSizeResponsive("H4", device),
+    //             width: device === "tablet" ? 200 : 100,
+    //             textAlign: "center",
+    //           }}
+    //         >
+    //           Produksi Penangkapan
+    //         </Text>
+    //       </View>
+    //     </View>
+    //   );
+    // }
 
     setListMenu(menuDash);
   }, [profile]);
