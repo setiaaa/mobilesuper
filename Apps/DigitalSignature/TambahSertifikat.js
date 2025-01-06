@@ -226,6 +226,7 @@ export const TambahSertifikat = () => {
                 style={{ padding: 10 }}
                 onChangeText={setSubject}
                 value={Subject}
+                allowFontScaling={false}
               />
             </View>
 
@@ -264,6 +265,7 @@ export const TambahSertifikat = () => {
                 style={{ padding: 10 }}
                 onChangeText={setNoSertif}
                 value={Nosertif}
+                allowFontScaling={false}
               />
             </View>
 
@@ -416,6 +418,7 @@ export const TambahSertifikat = () => {
                   style={{ padding: 10, height: 150 }}
                   onChangeText={setKeterangan}
                   value={Keterangan}
+                  allowFontScaling={false}
                 />
               </KeyboardAvoidingView>
             </View>

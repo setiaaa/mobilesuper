@@ -16,6 +16,7 @@ export function initAgenda(data) {
   data.from_city = "";
   data.notes = "";
   data.kegiatan = [];
+  data.agenda = "";
   data.start_date = "";
   data.end_date = "";
   data.start_time = "";
@@ -83,6 +84,12 @@ export function initAgenda(data) {
       }
     }
     if (data.jenis_surat == "Surat Undangan") {
+      //agenda
+      if (e.key == "agenda") {
+        if (e.value != "") {
+          data.agenda = e.value;
+        }
+      }
       //start_date
       if (e.key == "start_date") {
         if (e.value != "") {

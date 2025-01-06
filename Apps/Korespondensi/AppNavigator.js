@@ -221,6 +221,13 @@ import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { MainIPASN } from "../Kepegawaian/MainIPASN";
 import { DataPribadi } from "../Kepegawaian/DataPribadi";
 import { ListBanner } from "../SuperApps/ListBanner";
+import { MainKalenderSatker } from "../KalenderSatker/MainKalenderSatker";
+import { DetailKalenderSatker } from "../KalenderSatker/DetailKalenderSatker";
+import { MainGrupKalender } from "../Kalender/MainGrupKalender";
+import { BerbagiDokumen } from "../Repository/BerbagiDokumen";
+import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
+import ViewerAnnotation from "../Repository/ViewerAnnotation";
+import { DetailTinjauan } from "../Repository/DetailTinjauan";
 
 const Stack = createNativeStackNavigator();
 
@@ -256,6 +263,29 @@ function AuthenticatedStack({ route }) {
     });
     deviceRoot();
     //cek version di sini
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive||background/) &&
+        nextAppState === "active"
+      ) {
+        // checkversion
+        if (Platform.OS === "android") {
+          checkVersionAndroid();
+        } else if (Platform.OS === "ios") {
+          checkVersionIos();
+        }
+        appState.current = nextAppState;
+      }
+    });
+    // checkversion
+    if (Platform.OS === "android") {
+      checkVersionAndroid();
+    } else if (Platform.OS === "ios") {
+      checkVersionIos();
+    }
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const isEmulator = () => {
@@ -320,7 +350,7 @@ function AuthenticatedStack({ route }) {
     }
   }
   function cekValidVersion(server_version) {
-    if (server_version != app_version) {
+    if (server_version > app_version) {
       // Alert.alert(
       //   "Peringatan!",
       //   "Anda menggunakan versi lama " +
@@ -536,8 +566,31 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
+            name="DetailKalenderSatker"
+            component={DetailKalenderSatker}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainKalender"
             component={MainKalender}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainGrupKalender"
+            component={MainGrupKalender}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainKalenderSatker"
+            component={MainKalenderSatker}
             options={{
               headerShown: false,
               gestureEnabled: false,
@@ -721,6 +774,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="FileViewerRepo"
             component={FileViewerRepo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ViewerAnnotation"
+            component={ViewerAnnotation}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailTinjauan"
+            component={DetailTinjauan}
             options={{
               headerShown: false,
             }}
@@ -1552,6 +1619,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="LPMUKP"
             component={LPMUKP}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="BerbagiDokumen"
+            component={BerbagiDokumen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahDokumenTamplate"
+            component={TambahDokumenTamplate}
             options={{
               headerShown: false,
             }}

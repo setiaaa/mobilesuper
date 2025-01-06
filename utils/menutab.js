@@ -122,6 +122,12 @@ import { MenuDashboard } from "../Apps/SuperApps/MenuDashboard";
 import { DetailAPBN } from "../Apps/Dashboard/DetailAPBN";
 import { IPASN } from "../Apps/Kepegawaian/IPASN";
 import MyTabIPASN from "../Apps/Kepegawaian/BottomTabsIPASN";
+import { AddressbookFavorit } from "../Apps/AddressbookFavorit";
+import { RekapKepegawaian } from "../Apps/Dashboard/RekapKepegawaian";
+import { KalenderSatker } from "../Apps/KalenderSatker/KalenderSatker";
+import MyTabBarKalSatker from "../Apps/KalenderSatker/BottomTabsKalSatker";
+import MyTabBarGrupKal from "../Apps/Kalender/BottomTabsKalGrupPersonal";
+import { Tinjauan } from "../Apps/Repository/Tinjauan";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -224,6 +230,11 @@ export const BottomTabsRepo = () => {
           <Tab.Screen
             name="Dibagikan"
             component={Dibagikan}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Tinjauan"
+            component={Tinjauan}
             options={{ headerShown: false }}
           />
           <Tab.Screen
@@ -334,6 +345,55 @@ export const BottomTabsKalender = () => {
         <Tab.Screen
           name="KalenderPersonal"
           component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderSatker"
+          component={KalenderSatker}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsGrupKalender = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarGrupKal {...props} />}
+        initialRouteName="GrupKalender"
+      >
+        <Tab.Screen
+          name="GrupKalender"
+          component={GrupKalender}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderPersonal"
+          component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsKalenderSatker = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarKalSatker {...props} />}
+        initialRouteName="KalenderPersonal"
+      >
+        <Tab.Screen
+          name="KalenderPersonal"
+          component={KalenderPersonal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="KalenderSatker"
+          component={KalenderSatker}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
@@ -940,6 +1000,7 @@ export const TopsPencarianKorespondensi = (data) => {
 
 export const TopsDash = () => {
   const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
 
   return (
     <BottomSheetModalProvider>
@@ -1007,6 +1068,15 @@ export const TopsDash = () => {
             title: "ROPEG IP ASN",
           }}
         />
+        {profile.nip === "197208122001121002" ? (
+          <Top.Screen
+            name="RekapKepegawaian"
+            component={RekapKepegawaian}
+            options={{
+              title: "Rekap Kepegawaian",
+            }}
+          />
+        ) : null}
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1185,7 +1255,45 @@ export const TopAddressBook = ({ config, device }) => {
             },
           }}
         >
-          {config.tabs.jabatan && config.tabs.pegawai && config.tabs.para ? (
+          {config.tabs.jabatan &&
+          config.tabs.pegawai &&
+          config.tabs.para &&
+          config.tabs.favorit ? (
+            <>
+              <Top.Screen
+                name="AddressBookJabatan"
+                component={AddressBookJabatan}
+                options={{
+                  title: "Jabatan",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPegawai"
+                component={AddressBookPegawai}
+                options={{
+                  title: "Pegawai",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookFavorit"
+                component={AddressbookFavorit}
+                options={{
+                  title: "Favorit",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPara"
+                component={AddressbookPara}
+                options={{
+                  title: "Para",
+                }}
+                initialParams={{ config: config }}
+              />
+            </>
+          ) : config.tabs.jabatan && config.tabs.pegawai && config.tabs.para ? (
             <>
               <Top.Screen
                 name="AddressBookJabatan"

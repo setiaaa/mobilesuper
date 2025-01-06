@@ -53,8 +53,8 @@ import SignatureScreen from "react-native-signature-canvas";
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
-  const [senderAttr, setSenderAttr] = useState({ code: "", name: "" });
+  const { profile, selectedAttr } = useSelector((state) => state.profile);
+  const [senderAttr, setSenderAttr] = useState(selectedAttr);
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
   // const addressbook = useSelector((state) => state.addressbook.selected);
   const [stateConfig, setStateConfig] = useState({});
@@ -173,9 +173,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   async function getTindakan() {
     setIsLoading(true);
     try {
-      const response = await getHTTP(
-        nde_api.dispoaction + "?attr=" + senderAttr?.code
-      );
+      const response = await getHTTP(nde_api.dispoaction);
       setTindakanList(response.data.action);
       dispatch(
         setUnker({
@@ -263,7 +261,13 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           let temp = [];
           let temp_ids = [];
           pilihanKepada.map((item, j) => {
-            temp.push(item.fullname ? item.fullname : item.title);
+            temp.push(
+              item.fullname
+                ? item.fullname
+                : item.title
+                ? item.title
+                : item.person
+            );
             temp_ids.push(item.nik ? item.nik : item.code);
           });
           request[i].kepada = temp.join("\n");
@@ -297,9 +301,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         const response = await postHTTP(
           nde_api.postDisposition
             .replace("{$type}", tipes)
-            .replace("{$id}", ids) +
-            "?attr=" +
-            senderAttr?.code,
+            .replace("{$id}", ids),
           payload
         );
         // alert response
@@ -389,37 +391,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   </View>
                 )}
                 <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Disposisi Sebagai</Text>
-                </View>
-                <View>
-                  <Dropdown
-                    style={[
-                      styles.dropdown,
-                      isFocusAttr && {
-                        borderColor: GlobalStyles.colors.tertiery50,
-                      },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    // inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={profile.title}
-                    // search
-                    maxHeight={300}
-                    labelField="name"
-                    valueField="code"
-                    placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
-                    // searchPlaceholder="Search..."
-                    value={senderAttr}
-                    onFocus={() => setIsFocusAttr(true)}
-                    onBlur={() => setIsFocusAttr(false)}
-                    onChange={(item) => {
-                      setSenderAttr(item);
-                      setIsFocusAttr(false);
-                    }}
-                  />
-                </View>
-                <View style={styles.containerTitle}>
                   <Text style={styles.title}>Disposisi Kepada</Text>
                   {pilihanKepada != undefined && pilihanKepada.length != 0 && (
                     <IconButton
@@ -439,6 +410,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                           tabs: {
                             jabatan: true,
                             pegawai: true,
+                            favorit: true,
                             para: true,
                             senderCode: senderAttr.code,
                           },
@@ -457,7 +429,11 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                       <Fragment key={index}>
                         <Text style={styles.titleLabel}>
                           {index + 1}.{" "}
-                          {items.fullname ? items.fullname : items.title}
+                          {items.fullname
+                            ? items.fullname
+                            : items.title
+                            ? items.title
+                            : items.person}
                         </Text>
                       </Fragment>
                     ))}
@@ -487,6 +463,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               tabs: {
                                 jabatan: true,
                                 pegawai: true,
+                                favorit: true,
                                 para: true,
                               },
                               multiselect: true,
@@ -502,6 +479,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                       }
                       editable={false}
                       style={styles.titleLabel}
+                      allowFontScaling={false}
                     />
                   )}
                 </View>
@@ -543,6 +521,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         }
                         editable={false}
                         style={styles.titleLabel}
+                        allowFontScaling={false}
                       />
                     )}
                     {selectedTindakan.length != 0 &&
@@ -570,6 +549,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     );
                   }}
                   style={[styles.titleLabel, { paddingVertical: 12 }]}
+                  allowFontScaling={false}
                 />
 
                 <View
@@ -590,19 +570,28 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     autoClear={false}
                     imageType="image/svg+xml"
                     descriptionText=" "
-                    webStyle=".m-signature-pad {
-                    position: absolute;
-                    font-size: 10px;
-                    width: 100%;
-                    height: 89%;
-                    top: 0;
-                    left: 0;
-                    margin-left: 0;
-                    margin-top: 0;
-                    border: 1px solid #e8e8e8;
-                    background-color: #ffff;
-                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
-                    }"
+                    webStyle={`
+                      .m-signature-pad {
+                        position: absolute;
+                        width: 100%;
+                        height: 89%;
+                        top: 0;
+                        left: 0;
+                        margin-left: 0;
+                        margin-top: 0;
+                        border: 1px solid #e8e8e8;
+                        background-color: #ffff;
+                        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+                      }
+                     .m-signature-pad button {
+                        font-size: 10px !important; /* Ukuran font untuk button */
+                        line-height: normal !important;
+                        padding: 10px 20px; /* Sesuaikan padding */
+                        display: inline-block; /* Memastikan button tidak terpotong */
+                        text-size-adjust: none !important;
+                      }
+                        
+                    `}
                     clearText="Hapus"
                     confirmText="Simpan"
                   />

@@ -25,6 +25,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ListEmpty from "../../components/ListEmpty";
+import { getTokenValue } from "../../service/session";
 
 export const Libur = () => {
   const navigation = useNavigation();
@@ -35,12 +36,20 @@ export const Libur = () => {
   const [collapseKhusus, setCollapseKhusus] = useState({ toggle: false });
   const { profile } = useSelector((state) => state.superApps);
 
+  const [token, setToken] = useState("");
+
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getTanggalLibur(profile?.nip));
-      dispatch(getLiburKhusus(profile?.nip));
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getTanggalLibur(token));
+      dispatch(getLiburKhusus(token));
     }
-  }, [profile?.nip]);
+  }, [token]);
 
   const { liburKhusus, libur, loading } = useSelector((state) => state.cuti);
 

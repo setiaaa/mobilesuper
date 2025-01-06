@@ -30,6 +30,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import {
   getDetailLinimasa,
+  getDetailPenilaian,
   getViewLinimasa,
   postKomentarDetailPenilaian,
   putAddApprove,
@@ -39,7 +40,9 @@ import {
 import { getTokenValue } from "../../service/session";
 import { color } from "react-native-reanimated";
 import { ResizeMode, Video } from "expo-av";
-import { setResetDetailLinimasa } from "../../store/Pengetahuan";
+import { setComments, setResetDetailLinimasa } from "../../store/Pengetahuan";
+import { CommentPenilaian } from "../../components/CommentPenilaian";
+import { Loading } from "../../components/Loading";
 
 const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
   const navigation = useNavigation();
@@ -180,18 +183,13 @@ export const DetailPenilaian = () => {
     return jenis;
   };
 
-  // const nilai = [
-  //     { key: 'q', value: '0.0 (Tidak Sesuai)' },
-  //     { key: 'w', value: '0.5 (Kegitan)' },
-  //     { key: 'w', value: '1.0 (infografis)' },
-  //     { key: 'w', value: '3.0 (video)' },
-  // ]
-
   const [Nilai, setNilai] = useState("");
   const [tanggal, setTanggal] = useState("");
   var year = new Date().getFullYear();
 
-  const { penilaian, nilai, error } = useSelector((state) => state.pengetahuan);
+  const { penilaian, nilai, error, comments, loading } = useSelector(
+    (state) => state.pengetahuan
+  );
   const { profile } = useSelector((state) => state.superApps);
   const data = penilaian.detail !== null ? penilaian.detail : null;
 
@@ -242,24 +240,34 @@ export const DetailPenilaian = () => {
 
   const [token, setToken] = useState("");
 
+  const { device } = useSelector((state) => state.apps);
+  const video = useRef(null);
+  const [status, setStatus] = useState({});
+  const [komen, setKomen] = useState("");
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
   }, []);
 
-  const getDetail = (id) => {
-    const params = { token, id };
-    // const data = event.listsprogress.find(item => item.id === id)
-    // console.log(id);
-    dispatch(getDetailLinimasa(params));
-    // dispatch(getViewLinimasa(params));
-  };
+  useEffect(() => {
+    if (comments === true) {
+      dispatch(getDetailPenilaian({ token: token, id: data.id }));
+      dispatch(setComments(false));
+      setKomen("");
+    }
+  }, [comments]);
 
-  const { device } = useSelector((state) => state.apps);
-  const video = useRef(null);
-  const [status, setStatus] = useState({});
-  const [komen, setKomen] = useState("");
+  console.log(comments);
+
+  const flatListRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToEnd({ animated: true });
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -267,6 +275,7 @@ export const DetailPenilaian = () => {
       keyboardVerticalOffset={80}
       style={{ flex: 1 }}
     >
+      {loading ? <Loading /> : null}
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
@@ -426,7 +435,7 @@ export const DetailPenilaian = () => {
               </Text>
               <Text
                 style={{
-                  width: "70%",
+                  width: "65%",
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
@@ -529,9 +538,7 @@ export const DetailPenilaian = () => {
                     source={source}
                     contentWidth={width}
                     enableExperimentalMarginCollapsing={true}
-                    tagsStyles={{
-                      p: { fontSize: fontSizeResponsive("H4", device) },
-                    }}
+                    defaultTextProps={{ allowFontScaling: false }}
                   />
                 )}
                 {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
@@ -751,21 +758,45 @@ export const DetailPenilaian = () => {
               </Text>
             </View>
 
-            <View style={{ flexDirection: "row", gap: 5 }}>
+            <FlatList
+              ref={flatListRef}
+              data={data?.comments_penilai}
+              renderItem={({ item }) => (
+                <CommentPenilaian item={item} device={device} />
+              )}
+              style={{
+                height: 250,
+                borderWidth: 1,
+                borderRadius: 8,
+                borderColor: COLORS.ExtraDivinder,
+              }}
+              keyExtractor={(item) => (item.nip ? item.nip : item.code)}
+              scrollEnabled={true}
+              nestedScrollEnabled={true}
+              onContentSizeChange={scrollToBottom}
+              // inverted
+            />
+
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
+            >
               <Image
                 source={{ uri: data?.logged_in_user_avatar }}
-                style={{ width: 50, height: 50, borderRadius: 50 }}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 50,
+                }}
               />
 
               <View
                 style={{
                   borderWidth: 1,
                   width: "80%",
-                  marginLeft: 17,
                   borderRadius: 16,
-                  borderColor: COLORS.ExtraDivinder,
-                  backgroundColor: COLORS.ExtraDivinder,
-                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderColor: COLORS.grey,
                 }}
               >
                 <TextInput
@@ -779,7 +810,25 @@ export const DetailPenilaian = () => {
                   onChangeText={setKomen}
                   defaultValue={komen}
                   placeholderTextColor={COLORS.grey}
+                  allowFontScaling={false}
                 />
+                <TouchableOpacity
+                  onPress={() => {
+                    const dataPayload = {
+                      token: token,
+                      payload: {
+                        article_id: data.id,
+                        parent_id: "",
+                        message: komen,
+                      },
+                    };
+                    if (komen !== "") {
+                      dispatch(postKomentarDetailPenilaian(dataPayload));
+                    }
+                  }}
+                >
+                  <Ionicons name="send-outline" size={24} color={COLORS.grey} />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -807,17 +856,6 @@ export const DetailPenilaian = () => {
                   body: { category_id: Nilai.key },
                 })
               );
-              const dataPayload = {
-                token: token,
-                payload: {
-                  article_id: data.id,
-                  parent_id: "",
-                  message: komen,
-                },
-              };
-              if (komen !== "") {
-                dispatch(postKomentarDetailPenilaian(dataPayload));
-              }
               navigation.navigate("PenilaianPenggetahaun");
             }}
           >
@@ -925,7 +963,11 @@ export const DetailPenilaian = () => {
             ]}
           />
           <View
-            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+            }}
           >
             <View
               style={{

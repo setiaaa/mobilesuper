@@ -67,6 +67,13 @@ export const PegawaiIPASN = () => {
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
+  const { profile } = useSelector((state) => state.superApps);
+
+  const roleOperator = ["OP_KEPEGAWAIAN"];
+  const isRoleOperator = profile?.roles_access?.some((item) =>
+    roleOperator.includes(item)
+  );
+
   return (
     <View>
       {loading ? <Loading /> : null}
@@ -156,6 +163,7 @@ export const PegawaiIPASN = () => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filterSearch}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
 
@@ -187,7 +195,12 @@ export const PegawaiIPASN = () => {
         keyExtractor={(item) => item?.id}
         renderItem={({ item }) => (
           <View key={item.id}>
-            <CardListDataIPASN item={item} token={token} device={device} />
+            <CardListDataIPASN
+              item={item}
+              token={token}
+              device={device}
+              isRoleOperator={isRoleOperator}
+            />
           </View>
         )}
         ListEmptyComponent={() => <ListEmpty />}

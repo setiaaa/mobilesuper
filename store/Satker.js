@@ -43,7 +43,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getBennerSatker.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getGallerySatker.fulfilled, (state, action) => {
         state.gallery = action.payload;
@@ -54,7 +54,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getGallerySatker.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSatkerNews.fulfilled, (state, action) => {
         // state.berita.lists = action.payload;
@@ -70,7 +70,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getSatkerNews.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailSatkerNews.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
@@ -81,7 +81,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getDetailSatkerNews.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getPesan.fulfilled, (state, action) => {
         state.pesan = action.payload;
@@ -92,7 +92,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getPesan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getUltah.fulfilled, (state, action) => {
         state.ultah = action.payload;
@@ -103,7 +103,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getUltah.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getSatkerLinimasa.fulfilled, (state, action) => {
         state.linimasa = action.payload;
@@ -114,7 +114,7 @@ const SatkerSlice = createSlice({
       })
       .addCase(getSatkerLinimasa.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

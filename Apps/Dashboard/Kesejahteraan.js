@@ -450,7 +450,7 @@ export const Kesejahteraan = () => {
               marginTop: 20,
               borderRadius: 8,
               flex: 1,
-              marginBottom: '50%'
+              marginBottom: "50%",
             }}
           >
             <Text
@@ -492,6 +492,7 @@ export const Kesejahteraan = () => {
             <RenderHTML
               source={{ html: detailContent.content }}
               contentWidth={width}
+              defaultTextProps={{ allowFontScaling: false }}
             />
           </View>
         </ScrollView>

@@ -109,6 +109,7 @@ function DetailLog({ route, data, id, tipe }) {
                 <RenderHTML
                   source={{ html: item?.message }}
                   contentWidth={width}
+                  defaultTextProps={{ allowFontScaling: false }}
                 />
               </View>
               <View style={styles.row}>

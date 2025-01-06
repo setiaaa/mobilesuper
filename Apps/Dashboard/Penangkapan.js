@@ -31,7 +31,7 @@ export const Penangkapan = () => {
 
   const injectedJavaScriptBeforeContentLoadedIpadPotrait11 = `setTimeout(function () {
     var met = document.createElement('meta');
-    met.content = 'width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5';
+    met.content = 'width=device-width, initial-scale=0.6, maximum-scale=0.6, minimum-scale=0.6';
     met.charset = 'UTF-8';
     met.name = 'viewport';
     var head = document.getElementsByTagName("head")[0];
@@ -40,7 +40,7 @@ export const Penangkapan = () => {
 
   const injectedJavaScriptBeforeContentLoadedIpadLandscape11 = `setTimeout(function () {
     var met = document.createElement('meta');
-    met.content = 'width=device-width, initial-scale=0.7, maximum-scale=0.7, minimum-scale=0.7';
+    met.content = 'width=device-width, initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9';
     met.charset = 'UTF-8';
     met.name = 'viewport';
     var head = document.getElementsByTagName("head")[0];
@@ -76,13 +76,14 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -100,13 +101,14 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -125,13 +127,14 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -148,13 +151,14 @@ export const Penangkapan = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -171,13 +175,14 @@ export const Penangkapan = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkapMobile.html",
           }}
           style={{
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
+          textZoom={100}
+          androidLayerType={"hardware"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={true}

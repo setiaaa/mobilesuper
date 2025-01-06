@@ -218,6 +218,7 @@ export const NominatifList = ({ route }) => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filterSearch}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
 

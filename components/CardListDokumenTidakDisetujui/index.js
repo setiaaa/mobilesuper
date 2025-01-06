@@ -6,11 +6,11 @@ import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
+export const CardListDokumenTidakDisetujui = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
-    const params = { nip, id };
+    const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailArsipCuti(params));
   };
@@ -71,7 +71,13 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                 </Text>
               </View>
             </View>
-            <View style={{ justifyContent: "space-between" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
               <View
                 style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
               >
@@ -82,14 +88,14 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                 />
                 <Text
                   style={{
-                    fontSize: fontSizeResponsive("H3", device),
+                    fontSize: fontSizeResponsive("H5", device),
                     color: COLORS.lighter,
                   }}
                 >
                   Mulai:{" "}
                   {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
                     .locale("id")
-                    .format(DATETIME.LONG_DATETIME)}
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
               </View>
               <View
@@ -97,7 +103,6 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                   flexDirection: "row",
                   gap: 4,
                   alignItems: "center",
-                  marginTop: 10,
                 }}
               >
                 <Ionicons
@@ -107,14 +112,14 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                 />
                 <Text
                   style={{
-                    fontSize: fontSizeResponsive("H3", device),
+                    fontSize: fontSizeResponsive("H5", device),
                     color: COLORS.lighter,
                   }}
                 >
-                  Mulai:{" "}
+                  Akhir:{" "}
                   {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
                     .locale("id")
-                    .format(DATETIME.LONG_DATETIME)}
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
               </View>
             </View>

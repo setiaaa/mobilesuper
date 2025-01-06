@@ -25,17 +25,27 @@ import { CardListDokumenOnProgress } from "../../components/CardListDokumenOnPro
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { CardListDokumenDraft } from "../../components/CardListDokumenDraft";
+import { getTokenValue } from "../../service/session";
 
 export const DokumenCuti = () => {
   const navigation = useNavigation();
   const [variant, SetVariant] = useState("Draft");
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
+
+  const [token, setToken] = useState("");
+
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getArsipCuti(profile?.nip));
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getArsipCuti(token));
     }
-  }, [profile?.nip]);
+  }, [token]);
   const { arsip, loading } = useSelector((state) => state.cuti);
   const arsipLists = arsip.lists.data;
 
@@ -65,16 +75,16 @@ export const DokumenCuti = () => {
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (profile.nip !== "") {
-        dispatch(getArsipCuti(profile?.nip));
+      if (token !== "") {
+        dispatch(getArsipCuti(token));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [profile?.nip]);
+  }, [token]);
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -162,7 +172,13 @@ export const DokumenCuti = () => {
           </View>
         </View>
 
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
+        <View
+          style={{
+            paddingVertical: PADDING.Page,
+            marginHorizontal: "5%",
+            flex: 1,
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -170,7 +186,7 @@ export const DokumenCuti = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: device === 'tablet' ? "90%" : "85%" }}>
+            <View style={{ width: device === "tablet" ? "90%" : "85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -180,8 +196,8 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: device === 'tablet' ? 50 : 40,
-                  height: device === 'tablet' ? 50 : 40,
+                  width: device === "tablet" ? 50 : 40,
+                  height: device === "tablet" ? 50 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -597,7 +613,7 @@ export const DokumenCuti = () => {
                       <CardListDokumenDraft
                         item={item}
                         variant={variant}
-                        nip={profile.nip}
+                        token={token}
                         device={device}
                       />
                     </View>
@@ -622,7 +638,7 @@ export const DokumenCuti = () => {
                       <CardListDokumenOnProgress
                         item={item}
                         variant={variant}
-                        nip={profile.nip}
+                        token={token}
                         device={device}
                       />
                     </View>
@@ -645,7 +661,7 @@ export const DokumenCuti = () => {
                       <CardListDokumenDisetujui
                         item={item}
                         variant={variant}
-                        nip={profile.nip}
+                        token={token}
                         pembatalan={"pembatalan"}
                         device={device}
                       />

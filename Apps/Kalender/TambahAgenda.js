@@ -286,6 +286,7 @@ export const TambahAgenda = () => {
                     style={{ padding: 10 }}
                     onChangeText={setJudulAcara}
                     value={judulAcara}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -327,6 +328,7 @@ export const TambahAgenda = () => {
                     value={moment(TanggalMulai, "HH:mm:ss")
                       .locale("id")
                       .format(DATETIME.SHORT_DATETIME)}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -386,6 +388,7 @@ export const TambahAgenda = () => {
                     value={moment(TanggalSelesai, "HH:mm:ss")
                       .locale("id")
                       .format(DATETIME.SHORT_DATETIME)}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -606,6 +609,7 @@ export const TambahAgenda = () => {
                     multiline
                     placeholder="Pilih Anggota"
                     style={{ padding: 10 }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -843,6 +847,7 @@ export const TambahAgenda = () => {
                     style={{ padding: 10 }}
                     onChangeText={setKetentuan}
                     value={ketentuan}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -883,6 +888,7 @@ export const TambahAgenda = () => {
                     style={{ padding: 10 }}
                     onChangeText={setLokasi}
                     value={lokasi}
+                    allowFontScaling={false}
                   />
                 </View>
                 <View
@@ -923,6 +929,7 @@ export const TambahAgenda = () => {
                       style={{ padding: 10, height: 200 }}
                       onChangeText={setCatatan}
                       value={catatan}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1007,7 +1014,7 @@ export const TambahAgenda = () => {
                                 </View>
                             </BottomSheetView>
                         </BottomSheetModal> */}
-            <ModalSubmit />
+
             {/* <Modal
                             animationType="fade"
                             transparent={true}

@@ -80,7 +80,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getKesejahteraan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getPerencanaan.fulfilled, (state, action) => {
         // state.perencanaan.lists = action.payload;
@@ -100,7 +100,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getPerencanaan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getTeknologi.fulfilled, (state, action) => {
         state.teknologi.lists = action.payload;
@@ -111,7 +111,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getTeknologi.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });
@@ -121,6 +121,7 @@ export const {
   setPengumuman,
   setTeknologiList,
   setKesejahteraanEmpty,
+  setPerencanaanEmpty,
 } = DashboardSlice.actions;
 
 export default DashboardSlice.reducer;

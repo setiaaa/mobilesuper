@@ -66,7 +66,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getCutiPersonal.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getKuotaCuti.fulfilled, (state, action) => {
         state.kuota = action.payload;
@@ -77,7 +77,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getKuotaCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getTanggalLibur.fulfilled, (state, action) => {
         state.libur = action.payload;
@@ -88,7 +88,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getTanggalLibur.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getLiburKhusus.fulfilled, (state, action) => {
         state.liburKhusus = action.payload;
@@ -99,7 +99,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getLiburKhusus.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getArsipCuti.fulfilled, (state, action) => {
         state.arsip.lists = action.payload;
@@ -110,7 +110,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getArsipCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailArsipCuti.fulfilled, (state, action) => {
         state.arsip.detail = action.payload;
@@ -121,7 +121,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getDetailArsipCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFormCuti.fulfilled, (state, action) => {
         state.form = action.payload;
@@ -132,7 +132,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getFormCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getPilihApproval.fulfilled, (state, action) => {
         state.pilih = action.payload;
@@ -149,17 +149,18 @@ const CutiSlice = createSlice({
       })
       .addCase(getDokumenPersetujuan.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postPengajuanCuti.fulfilled, (state, action) => {
         if (action.payload.success === false) {
           state.status = "error";
           console.log(action.payload);
+          state.loading = false;
         } else {
           state.status = "berhasil";
           state.loading = false;
           console.log(action.payload);
-          Sentry.captureException(action.payload);
+          Sentry.captureException(action.error);
         }
       })
       .addCase(postPengajuanCuti.pending, (state, action) => {
@@ -169,7 +170,7 @@ const CutiSlice = createSlice({
       .addCase(postPengajuanCuti.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postApproval.fulfilled, (state, action) => {
         let data = action.payload;
@@ -181,7 +182,7 @@ const CutiSlice = createSlice({
           state.status = "error";
           state.loading = false;
           state.message = data.message;
-          Sentry.captureException(action.payload);
+          Sentry.captureException(action.error);
         }
       })
       .addCase(postApproval.pending, (state, action) => {
@@ -196,7 +197,7 @@ const CutiSlice = createSlice({
         state.loading = false;
         state.message = data.message;
         console.log("gagal");
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
         // let id_attachment = [];
@@ -209,10 +210,11 @@ const CutiSlice = createSlice({
       })
       .addCase(postAttachmentCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postPembatalanCuti.fulfilled, (state, action) => {
         state.status = "berhasil";
+        console.log(action.payload);
         state.loading = false;
       })
       .addCase(postPembatalanCuti.pending, (state, action) => {
@@ -222,7 +224,8 @@ const CutiSlice = createSlice({
       .addCase(postPembatalanCuti.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        console.log(action.error);
+        Sentry.captureException(action.error);
       })
       .addCase(postTanggalCuti.fulfilled, (state, action) => {
         state.jumlahCuti = action.payload;
@@ -233,11 +236,12 @@ const CutiSlice = createSlice({
       })
       .addCase(postTanggalCuti.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postPengajuanCutiDraft.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        console.log(action.payload);
       })
       .addCase(postPengajuanCutiDraft.pending, (state, action) => {
         state.status = "";
@@ -246,7 +250,8 @@ const CutiSlice = createSlice({
       .addCase(postPengajuanCutiDraft.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        Sentry.captureException(action.payload);
+        console.log(action.error);
+        Sentry.captureException(action.error);
       });
   },
 });

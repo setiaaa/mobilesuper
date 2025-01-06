@@ -462,6 +462,7 @@ export const TambahEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={setJudul}
                     value={Judul}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -507,6 +508,7 @@ export const TambahEvent = () => {
                         placeholder="Mulai"
                         style={{ padding: 10 }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -564,6 +566,7 @@ export const TambahEvent = () => {
                         placeholder="Selesai"
                         style={{ padding: 10 }}
                         value={TanggalSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -754,6 +757,7 @@ export const TambahEvent = () => {
                     style={{ padding: 10 }}
                     onChangeText={setTempat}
                     value={Tempat}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -792,6 +796,7 @@ export const TambahEvent = () => {
                     placeholder="Pilih member"
                     style={{ padding: 10, width: "80%" }}
                     value={pilihanPimpinanEvent[0]?.title}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -914,6 +919,7 @@ export const TambahEvent = () => {
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
                     value={pilihanPesertaEvent}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -990,6 +996,7 @@ export const TambahEvent = () => {
                     maxLength={40}
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1066,6 +1073,7 @@ export const TambahEvent = () => {
                     maxLength={40}
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1156,6 +1164,7 @@ export const TambahEvent = () => {
                       style={{ padding: 10, height: 150 }}
                       onChangeText={setNote}
                       value={Note}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1211,6 +1220,7 @@ export const TambahEvent = () => {
                       style={{ padding: 10 }}
                       onChangeText={onChangeValue}
                       value={value}
+                      allowFontScaling={false}
                     />
                   </View>
                   <TouchableOpacity
@@ -1325,6 +1335,7 @@ export const TambahEvent = () => {
                             style={{ padding: 10 }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
 
@@ -1347,6 +1358,7 @@ export const TambahEvent = () => {
                             style={{ padding: 10 }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>

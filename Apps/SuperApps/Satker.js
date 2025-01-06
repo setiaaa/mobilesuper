@@ -93,6 +93,8 @@ export const Satker = () => {
 
   const dispatch = useDispatch();
 
+  const { width } = useWindowDimensions();
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -205,7 +207,9 @@ export const Satker = () => {
     },
   };
 
-  const baseStyles = {};
+  const baseStyles = {
+    fontSize: 16, // Set font size sesuai kebutuhan
+  };
 
   useEffect(() => {
     const dataBerita = berita?.lists?.map((item) => ({
@@ -297,7 +301,7 @@ export const Satker = () => {
               padding: 20,
             }}
           >
-            <View>
+            <View style={{ width: 300 }}>
               <Text
                 style={{
                   color: COLORS.white,
@@ -356,19 +360,24 @@ export const Satker = () => {
           </View>
         </View>
 
-        <View style={[styles.containerr, { marginVertical: 20 }]}>
-          <Carousel
-            ref={carouselRefHome}
-            sliderWidth={screenWidth}
-            sliderHeight={screenWidth}
-            itemWidth={getWidthCarousel()}
-            data={benner}
-            renderItem={({ item }, parallaxProps) => (
-              <BannerKegiatanSatker parallaxProps={parallaxProps} item={item} />
-            )}
-            hasParallaxImages={true}
-          />
-        </View>
+        {benner.length === 0 ? null : (
+          <View style={[styles.containerr, { marginVertical: 20 }]}>
+            <Carousel
+              ref={carouselRefHome}
+              sliderWidth={screenWidth}
+              sliderHeight={screenWidth}
+              itemWidth={getWidthCarousel()}
+              data={benner}
+              renderItem={({ item }, parallaxProps) => (
+                <BannerKegiatanSatker
+                  parallaxProps={parallaxProps}
+                  item={item}
+                />
+              )}
+              hasParallaxImages={true}
+            />
+          </View>
+        )}
 
         {/* <View style={[styles.containerr, { marginTop: 20 }]}>
           <View style={{ marginLeft: 30 }}>
@@ -439,51 +448,58 @@ export const Satker = () => {
           </View>
         </View> */}
 
-        <View style={{ marginLeft: 30, flexDirection: "row", marginTop: 10 }}>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: fontSizeResponsive("H2", device),
-            }}
-          >
-            Berita Terkini
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ListBeritaSatker")}
-            style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
-          >
-            <Text
-              style={{
-                fontWeight: FONTWEIGHT.bold,
-                fontSize: fontSizeResponsive("H3", device),
-                flex: 1,
-                color: "#1868AB",
-              }}
+        {combineBanner.length === 0 ? null : (
+          <>
+            <View
+              style={{ marginLeft: 30, flexDirection: "row", marginTop: 10 }}
             >
-              Selengkapnya
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: fontSizeResponsive("H2", device),
+                }}
+              >
+                Berita Terkini
+              </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ListBeritaSatker")}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H3", device),
+                    flex: 1,
+                    color: "#1868AB",
+                  }}
+                >
+                  Selengkapnya
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-        <View>
-          <View style={[styles.containerr, { marginVertical: 20 }]}>
-            <Carousel
-              ref={carouselRefBerita}
-              sliderWidth={screenWidth}
-              sliderHeight={screenWidth}
-              itemWidth={getWidthCarousel()}
-              data={combineBanner.slice(0, 5)}
-              renderItem={({ item }, parallaxProps) => (
-                <BannerBeritaSatker
-                  parallaxProps={parallaxProps}
-                  item={item}
-                  token={token}
+            <View>
+              <View style={[styles.containerr, { marginVertical: 20 }]}>
+                <Carousel
+                  ref={carouselRefBerita}
+                  sliderWidth={screenWidth}
+                  sliderHeight={screenWidth}
+                  itemWidth={getWidthCarousel()}
+                  data={combineBanner.slice(0, 5)}
+                  renderItem={({ item }, parallaxProps) => (
+                    <BannerBeritaSatker
+                      parallaxProps={parallaxProps}
+                      item={item}
+                      token={token}
+                      tanggal={item?.time}
+                    />
+                  )}
+                  hasParallaxImages={true}
                 />
-              )}
-              hasParallaxImages={true}
-            />
-          </View>
-        </View>
+              </View>
+            </View>
+          </>
+        )}
 
         <View
           style={[
@@ -561,9 +577,10 @@ export const Satker = () => {
               </Text>
               <RenderHTML
                 source={{ html: pesan[pesan.length - 1]?.content }}
+                contentWidth={width}
                 tagsStyles={tagsStyles}
                 classesStyles={classesStyles}
-                baseStyle={baseStyles}
+                defaultTextProps={{ allowFontScaling: false }}
               />
             </ScrollView>
           </View>

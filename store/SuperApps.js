@@ -7,6 +7,7 @@ import {
   getDetailBerita,
   getLastLogAttendence,
   postAttendence,
+  putResetPassword,
 } from "../service/api";
 import { removeTokenValue } from "../service/session";
 import { useNavigation } from "@react-navigation/native";
@@ -41,6 +42,7 @@ const SuperAppsSlice = createSlice({
     post: false,
     typeMenu: null,
     iosNotif: false,
+    responReset: {},
   },
   reducers: {
     setProfile: (state, action) => {
@@ -97,6 +99,9 @@ const SuperAppsSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setResponReset: (state, action) => {
+      state.responReset = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -117,7 +122,7 @@ const SuperAppsSlice = createSlice({
       .addCase(getProfileMe.rejected, (state, action) => {
         state.loading = false;
         state.handleError = true;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;
@@ -128,7 +133,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBanner.rejected, (state, action) => {
         // state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         // state.galeri.lists = action.payload;
@@ -144,7 +149,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getGaleri.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getBerita.fulfilled, (state, action) => {
         let dataPrev = state.berita.lists;
@@ -159,7 +164,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBerita.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
@@ -170,7 +175,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getLastLogAttendence.fulfilled, (state, action) => {
         state.lastLog = action.payload;
@@ -182,7 +187,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getLastLogAttendence.rejected, (state, action) => {
         // state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(postAttendence.fulfilled, (state, action) => {
         state.post = true;
@@ -194,7 +199,21 @@ const SuperAppsSlice = createSlice({
       .addCase(postAttendence.rejected, (state, action) => {
         state.status = "error";
         state.post = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putResetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.responReset = { status: "200" };
+      })
+      .addCase(putResetPassword.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(putResetPassword.rejected, (state, action) => {
+        const array = action.error.message.split(" ");
+        const statusCode = array[array.length - 1];
+
+        state.loading = false;
+        state.responReset = { status: statusCode, ...action.error };
       });
   },
 });
@@ -217,6 +236,7 @@ export const {
   setTypeMenu,
   setNotifIos,
   setLoading,
+  setResponReset,
 } = SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

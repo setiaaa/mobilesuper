@@ -6,11 +6,11 @@ import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenDraft = ({ item, nip, device }) => {
+export const CardListDokumenDraft = ({ item, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
-    const params = { nip, id };
+    const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailArsipCuti(params));
   };

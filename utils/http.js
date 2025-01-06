@@ -1,11 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Alert, Linking } from "react-native";
-import { useDispatch } from "react-redux";
 import { Config } from "../constants/config";
-import { logout, setFirstLogin } from "../store/auth";
 import { nde_api } from "./api.config";
 import * as Sentry from "@sentry/react-native";
+import { store } from "../store/store";
 
 export async function headerToken() {
   let token;
@@ -19,13 +18,28 @@ export async function postAuth(data) {
   return await axios.post(nde_api.auth, data);
 }
 export async function postHTTP(url, data) {
+  const state = store.getState(); // Akses seluruh state
+  const selectedAttr = state.profile.selectedAttr; // Ambil selectedAttr dari profile
   let header = await headerToken();
-  return await axios.post(url, data, { headers: header });
+  const temp = url.includes("?")
+    ? url + "&attr=" + selectedAttr?.code
+    : url + "?attr=" + selectedAttr?.code;
+  console.log(temp);
+  return await axios.post(temp, data, { headers: header });
 }
 
 export async function getHTTP(url) {
+  const state = store.getState(); // Akses seluruh state
+  const selectedAttr = state.profile.selectedAttr; // Ambil selectedAttr dari profile
   let header = await headerToken();
-  return await axios.get(url, { headers: header });
+  const temp =
+    selectedAttr?.code?.length == 0
+      ? url
+      : url.includes("?")
+      ? url + "&attr=" + selectedAttr?.code
+      : url + "?attr=" + selectedAttr?.code;
+  console.log(temp);
+  return await axios.get(temp, { headers: header });
 }
 
 export const handlerError = (error, title, msg) => {

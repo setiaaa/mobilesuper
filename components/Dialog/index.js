@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { Linking, Platform, ScrollView, View } from "react-native";
 import { Modal, TouchableOpacity } from "react-native";
 import {
   COLORS,
@@ -109,7 +109,16 @@ export const Dialog = ({ title, content, buttonTitle }) => {
                 padding: 10,
               }}
               onPress={() => {
-                handleUpgradeLink();
+                // handleUpgradeLink();
+                if (Platform.OS === "android") {
+                  Linking.openURL(
+                    "https://play.google.com/store/apps/details?id=go.id.kkp.portal"
+                  );
+                } else if (Platform.OS === "ios") {
+                  Linking.openURL(
+                    "https://apps.apple.com/app/superapps-kkp/id6478191000"
+                  );
+                }
               }}
             >
               <Text

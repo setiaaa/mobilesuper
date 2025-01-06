@@ -43,7 +43,7 @@ function DetailDispo({ data, noAgenda, preview, title }) {
   const [extensionPdf, setExtensionPdf] = useState(false);
   const [selectedAttach, setSelectedAttach] = useState();
   const [selectedIconAttach, setSelectedIconAttach] = useState();
-
+  const [checkScroll, setCheckScroll] = useState(true);
   const [downloadProgress, setDownloadProgress] = useState();
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
@@ -163,7 +163,7 @@ function DetailDispo({ data, noAgenda, preview, title }) {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView scrollEnabled={checkScroll}>
         {loadingOverlay}
         <View style={styles.screen}>
           <View style={{ marginBottom: 8 }}>
@@ -209,7 +209,16 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                       // showBottommSheet(item, getExtensionIcon(item));
                     }}
                   >
-                    <View>
+                    <View
+                      style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderRadius: 12,
+                        overflow: "hidden", // Ensure the WebView respects the border radius
+                        height: device === "tablet" ? 300 : 200,
+                        width: "100%",
+                      }}
+                    >
                       {/* <Text>{item?.truncate_name}</Text> */}
                       {/* <Text>{item?.size}</Text>
                         <Text>{item.file}</Text> */}
@@ -221,10 +230,6 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                         }}
                         style={{
                           flex: 1,
-                          borderWidth: 1,
-                          borderRadius: 12,
-                          height: device === "tablet" ? 300 : 100,
-                          width: "100%",
                         }}
                         allowFileAccess={true}
                         androidLayerType={"software"}
@@ -232,6 +237,13 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                         allowUniversalAccessFromFileURLs={true}
                         setDisplayZoomControls={true}
                         scalesPageToFit={false}
+                        scrollEnabled={true}
+                        onTouchStart={() => {
+                          setCheckScroll(false);
+                        }}
+                        onTouchEnd={() => {
+                          setCheckScroll(true);
+                        }}
                       />
                     </View>
                   </View>

@@ -137,6 +137,8 @@ export default function Dashboard(params) {
     value: item.label,
   }));
 
+  console.log(selectedList);
+
   // useEffect(() => {
   //   if (lists.count > 5) {
   //     let mdl = parseInt(lists.count / 5);
@@ -425,6 +427,7 @@ export default function Dashboard(params) {
                         onChangeText={(text) => setInputValue(text)}
                         onEndEditing={filterData}
                         clearButtonMode="always"
+                        allowFontScaling={false}
                       />
                     </View>
                   </View>
@@ -580,10 +583,12 @@ export default function Dashboard(params) {
                     }
                     ListEmptyComponent={<ListEmpty />}
                     refreshControl={
-                      <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                      />
+                      selectedList.value !== "" ? (
+                        <RefreshControl
+                          refreshing={refreshing}
+                          onRefresh={onRefresh}
+                        />
+                      ) : null
                     }
                   />
                 ) : (
@@ -621,10 +626,12 @@ export default function Dashboard(params) {
                     onEndReached={dokumenList?.length === 0 ? null : loadMore}
                     ListEmptyComponent={<ListEmpty />}
                     refreshControl={
-                      <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                      />
+                      selectedList.value !== "" ? (
+                        <RefreshControl
+                          refreshing={refreshing}
+                          onRefresh={onRefresh}
+                        />
+                      ) : null
                     }
                   />
                 )

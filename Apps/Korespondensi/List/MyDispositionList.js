@@ -134,10 +134,10 @@ function MyDispositionList() {
         {isLoading
           ? "Loading..."
           : isSearchFilter
-            ? "My Disposition Letter not found"
-            : list?.count == 0
-              ? "You don't have My Disposition Letter"
-              : "Loading..."}
+          ? "My Disposition Letter not found"
+          : list?.count == 0
+          ? "You don't have My Disposition Letter"
+          : "Loading..."}
       </Text>
     </View>
   );
@@ -322,7 +322,7 @@ function MyDispositionList() {
       </View>
 
       <BottomSheetModalProvider>
-        < >
+        <>
           <View>
             <BottomSheetModal
               name="filter"
@@ -348,6 +348,7 @@ function MyDispositionList() {
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     style={styles.bottomsheetInput}
+                    allowFontScaling={false}
                   />
                 </View>
                 <View style={styles.bottomsheetContent}>
@@ -421,7 +422,7 @@ function MyDispositionList() {
               </View>
             </BottomSheetModal>
           </View>
-        </ >
+        </>
       </BottomSheetModalProvider>
     </>
   );

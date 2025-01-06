@@ -39,7 +39,7 @@ import {
 import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
 import { Loading } from "../../components/Loading";
-import { removePushNotif } from "../../service/session";
+import { getTokenValue, removePushNotif } from "../../service/session";
 import { setNotifIos } from "../../store/SuperApps";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
@@ -635,6 +635,14 @@ export const DetailDokumenCuti = ({ route }) => {
   const navigation = useNavigation();
   const BASE_URL = Config.base_url + "bridge";
 
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const selisih = () => {
     let tanggalMulaiStr = moment(
       arsipDetail.detail_dokumen?.dokumen?.mulai_cuti,
@@ -697,7 +705,7 @@ export const DetailDokumenCuti = ({ route }) => {
       passphrase: passphrase,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postApproval(data));
@@ -1243,7 +1251,14 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H4", device),
@@ -1263,6 +1278,29 @@ export const DetailDokumenCuti = ({ route }) => {
                       }}
                     >
                       {arsipDetail.detail_dokumen?.dokumen?.alasan_cuti}
+                    </Text>
+                  </View>
+
+                  <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Kota
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {arsipDetail.detail_dokumen?.dokumen?.kota}
                     </Text>
                   </View>
                 </View>
@@ -1720,6 +1758,7 @@ export const DetailDokumenCuti = ({ route }) => {
                       placeholder="Masukan Komentar"
                       onChangeText={setKomentarApproval}
                       style={{ padding: 10, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
 
@@ -1748,6 +1787,7 @@ export const DetailDokumenCuti = ({ route }) => {
                       placeholder="Masukan Passphrase"
                       onChangeText={setPassphrase}
                       style={{ padding: 10, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -1773,7 +1813,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="checkmark-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1804,7 +1844,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="arrow-undo-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1835,7 +1875,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="alert-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1866,7 +1906,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={device === "tablet" ? 40 : 18}
+                        size={device === "tablet" ? 30 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
@@ -1889,6 +1929,7 @@ export const DetailDokumenCuti = ({ route }) => {
             status={status}
             setStatus={setStatus}
             message={message}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"MainCuti"}
           />
 

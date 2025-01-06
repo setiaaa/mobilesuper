@@ -31,6 +31,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { getTokenValue } from "../../service/session";
 
 export const PersetujanCuti = () => {
   const navigation = useNavigation();
@@ -38,11 +39,19 @@ export const PersetujanCuti = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
 
+  const [token, setToken] = useState("");
+
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getDokumenPersetujuan(profile?.nip));
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getDokumenPersetujuan(token));
     }
-  }, [profile?.nip]);
+  }, [token]);
 
   const { persetujuan, loading } = useSelector((state) => state.cuti);
 
@@ -55,7 +64,7 @@ export const PersetujanCuti = () => {
 
   useEffect(() => {
     setFilterData(persetujuan.lists.data);
-  }, [persetujuan]);
+  }, [persetujuan, token]);
 
   useEffect(() => {
     if (search !== "") {
@@ -93,16 +102,16 @@ export const PersetujanCuti = () => {
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (profile.nip !== "") {
-        dispatch(getDokumenPersetujuan(profile?.nip));
+      if (token !== "") {
+        dispatch(getDokumenPersetujuan(token));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [profile?.nip]);
+  }, [token]);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -168,7 +177,13 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%", flex: 1 }}>
+        <View
+          style={{
+            paddingVertical: PADDING.Page,
+            marginHorizontal: "5%",
+            flex: 1,
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -176,7 +191,7 @@ export const PersetujanCuti = () => {
               alignItems: "center",
             }}
           >
-            <View style={{ width: device === 'tablet' ? "90%" : "85%" }}>
+            <View style={{ width: device === "tablet" ? "90%" : "85%" }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
@@ -186,8 +201,8 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: device === 'tablet' ? 50 : 40,
-                  height: device === 'tablet' ? 50 : 40,
+                  width: device === "tablet" ? 50 : 40,
+                  height: device === "tablet" ? 50 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -394,7 +409,6 @@ export const PersetujanCuti = () => {
             </View>
             {/* </View> */}
             <View style={{ flex: 1 }}>
-
               {variant === "Completed" ? (
                 <FlatList
                   data={filterData}
@@ -402,9 +416,9 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenDisetujui
                         item={item}
-                        nip={profile.nip}
                         variant={variant}
                         device={device}
+                        token={token}
                       />
                     </View>
                   )}
@@ -424,7 +438,7 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenTidakDisetujui
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
                         device={device}
                       />
@@ -447,8 +461,9 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenDikembalikan
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
+                        device={device}
                       />
                     </View>
                   )}
@@ -469,8 +484,9 @@ export const PersetujanCuti = () => {
                     <View key={item.id}>
                       <CardListDokumenPerluDisetujui
                         item={item}
-                        nip={profile.nip}
+                        token={token}
                         variant={variant}
+                        device={device}
                       />
                     </View>
                   )}
@@ -486,7 +502,6 @@ export const PersetujanCuti = () => {
                 />
               ) : null}
             </View>
-
           </View>
         </View>
       </View>

@@ -36,6 +36,7 @@ import {
   setMenu,
 } from "../../service/session";
 import { setTypeMenu } from "../../store/SuperApps";
+import { setSelectedAttr } from "../../store/profile";
 
 export const CardApps = ({
   handlePressModal,
@@ -47,12 +48,14 @@ export const CardApps = ({
   const [listMenu, setListMenu] = useState([]);
   const isFocused = useIsFocused();
   const { profile, typeMenu } = useSelector((state) => state.superApps);
+  const { profile: profileKores = {} } = useSelector((state) => state.profile);
   const { device } = useSelector((state) => state.apps);
   const [limitCard, setLimitCard] = useState(0);
   const { width, height } = useWindowDimensions();
 
   const roleEvent = ["EVENT.USER"];
   const roleKalender = ["CALENDAR.USER"];
+  const roleKalenderSatker = ["CALENDAR_SATKER"];
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
@@ -65,6 +68,11 @@ export const CardApps = ({
   const isRoleKalender = profile.roles_access?.some((item) =>
     roleKalender.includes(item)
   );
+
+  const isRoleKalenderSatker = profile.roles_access?.some((item) =>
+    roleKalenderSatker.includes(item)
+  );
+
   const isRolePreShare = profile.roles_access?.some((item) =>
     rolePreShare.includes(item)
   );
@@ -299,7 +307,7 @@ export const CardApps = ({
     );
     if (isRolePreShare) {
       tmpMenu.splice(2, 0, {
-        title: "Preparing dan Sharing",
+        title: "KKP Drive",
         navigation: "MainRepo",
         image: require("../../assets/superApp/repositori.png"),
         imagestyle: {
@@ -317,7 +325,7 @@ export const CardApps = ({
         },
       });
     }
-    if (isRoleKalender) {
+    if (isRoleKalender && isRoleKalenderSatker) {
       tmpMenu.splice(6, 0, {
         title: "Kalender",
         navigation: "MainKalender",
@@ -343,6 +351,44 @@ export const CardApps = ({
         //     title: "Kalender Personal",
         //   },
         // ],
+      });
+    } else if (isRoleKalender) {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "MainGrupKalender",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      });
+    } else if (isRoleKalenderSatker) {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "MainKalenderSatker",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
       });
     } else {
       tmpMenu.splice(7, 0, {
@@ -461,7 +507,7 @@ export const CardApps = ({
           <View
             style={{
               flexDirection: "row",
-              gap: device === "tablet" ? 24 : width <= 375 ? 0 : 2,
+              gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
               alignItems: "flex-start",
               flex: 1,
@@ -493,6 +539,14 @@ export const CardApps = ({
                           } else if (item.title === "Kepegawaian") {
                             navigation.navigate(item.navigation, item.title);
                           } else {
+                            if (item.title == "Korespondensi") {
+                              dispatch(
+                                setSelectedAttr({
+                                  code: "",
+                                  name: profileKores?.fullname?.split("/")[0],
+                                })
+                              );
+                            }
                             navigation.navigate(item.navigation);
                           }
                         }}
@@ -534,7 +588,7 @@ export const CardApps = ({
                               size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />
-                          ) : item.title === "Preparing dan Sharing" ? (
+                          ) : item.title === "KKP Drive" ? (
                             <Entypo
                               name="folder"
                               size={device === "tablet" ? 60 : 30}

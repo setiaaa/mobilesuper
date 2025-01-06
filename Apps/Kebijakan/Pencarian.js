@@ -227,6 +227,7 @@ export const Pencarian = () => {
                       onChangeText={(text) => setInputValue(text)}
                       onEndEditing={filter}
                       clearButtonMode="always"
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>

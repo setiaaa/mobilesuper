@@ -150,6 +150,7 @@ export const AddCategory = () => {
                   style={{ padding: 10 }}
                   onChangeText={(e) => handleInputKategori("namaProject", e)}
                   value={dataKategori.namaProject}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -177,6 +178,7 @@ export const AddCategory = () => {
                   style={{ padding: 10, minHeight: 150 }}
                   onChangeText={(e) => handleInputKategori("deskripsi", e)}
                   value={dataKategori.deskripsi}
+                  allowFontScaling={false}
                 />
               </View>
             </View>
@@ -218,6 +220,7 @@ export const AddCategory = () => {
                   multiline
                   placeholder="Pilih PIC"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -282,6 +285,7 @@ export const AddCategory = () => {
                   multiline
                   placeholder="Pilih Member"
                   style={{ padding: 10 }}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{

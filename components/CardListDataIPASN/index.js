@@ -10,7 +10,7 @@ import { getDataDetailIPASN } from "../../service/api";
 import { useNavigation } from "@react-navigation/native";
 import { setDataDetailIPASN } from "../../store/Kepegawain";
 
-export const CardListDataIPASN = ({ item, token, device }) => {
+export const CardListDataIPASN = ({ item, token, device, isRoleOperator }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   // const getDetail = (id) => {
@@ -18,6 +18,7 @@ export const CardListDataIPASN = ({ item, token, device }) => {
   // };
   return (
     <TouchableOpacity
+      disabled={isRoleOperator === true ? false : true}
       style={{
         backgroundColor: COLORS.white,
         padding: 10,
@@ -77,7 +78,7 @@ export const CardListDataIPASN = ({ item, token, device }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          kOMPETENSI
+          KOMPETENSI
         </Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
         <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>

@@ -276,6 +276,86 @@ function MyTabBarKal({ props, navigation }) {
             </View>
           )}
         </TouchableOpacity>
+
+        <TouchableOpacity
+          key={3}
+          onPress={() => {
+            setTabItemIndex(3);
+            navigation.navigate("KalenderSatker", { unread: false });
+            // navigation.navigate("Agenda", { unread: false });
+            // props.navigation.navigate('Home', { unread: false })
+          }}
+          style={{ alignItems: "center" }}
+        >
+          {tabItemIndex === 3 ? (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 200 : 120,
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: 3,
+                  backgroundColor: COLORS.primary,
+                  position: "absolute",
+                  top: 0,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 5 },
+                  shadowColor: COLORS.primary,
+                  shadowOpacity: 0.4,
+                  //shadow android
+                  elevation: 2,
+                }}
+              />
+              <Ionicons
+                name="calendar-clear-outline"
+                color={COLORS.primary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.primary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Kalender Satker
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 200 : 120,
+              }}
+            >
+              <Ionicons
+                name="calendar-clear-outline"
+                color={COLORS.tertiary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.tertiary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Kalender Satker
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
     </BottomSheetModalProvider>
   );

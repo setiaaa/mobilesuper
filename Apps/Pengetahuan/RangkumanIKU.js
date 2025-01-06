@@ -231,7 +231,7 @@ export const RangkumanIKU = () => {
       token: token,
       page: page,
       year: year.value,
-      quarter: quarter?.key,
+      quarter: `q${quarter?.key}`,
       unitKerja: selectedUnitKerja.value,
     };
     if (token !== "") {
@@ -246,7 +246,7 @@ export const RangkumanIKU = () => {
       token: token,
       page: page,
       year: year.value,
-      quarter: quarter?.key,
+      quarter: `q${quarter?.key}`,
       unitKerja: selectedUnitKerja.value,
     };
     if (token !== "") {
@@ -264,18 +264,6 @@ export const RangkumanIKU = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const param = {
-      token: token,
-      year: year.value,
-      quarter: quarter?.key,
-      unitKerja: selectedUnitKerja.value,
-    };
-    if (token !== "") {
-      dispatch(getListPegawaiExport(param));
-    }
-  }, [token, year, quarter, selectedUnitKerja, download]);
 
   const { pegawai, refresh, loading } = useSelector(
     (state) => state.pengetahuan
@@ -370,7 +358,7 @@ export const RangkumanIKU = () => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) { }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -405,7 +393,7 @@ export const RangkumanIKU = () => {
       } catch (e) {
         throw new Error(e);
       }
-    } catch (err) { }
+    } catch (err) {}
   };
   const saveIosFile = async (fileUri) => {
     try {
@@ -426,13 +414,13 @@ export const RangkumanIKU = () => {
         token: token,
         page: page,
         year: year.value,
-        quarter: quarter?.key,
+        quarter: `q${quarter?.key}`,
         unitKerja: selectedUnitKerja.value,
       };
       if (token !== "") {
         dispatch(getListPegawai(param));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -477,7 +465,17 @@ export const RangkumanIKU = () => {
     setListYear(thn);
   }, []);
 
-  // console.log(year);
+  useEffect(() => {
+    const param = {
+      token: token,
+      year: year.value,
+      quarter: `q${quarter?.key}`,
+      unitKerja: selectedUnitKerja.value,
+    };
+    if (token !== "") {
+      dispatch(getListPegawaiExport(param));
+    }
+  }, [token, year, quarter, selectedUnitKerja, download]);
 
   return (
     <>
@@ -601,7 +599,7 @@ export const RangkumanIKU = () => {
           {switchView ? (
             <View
               style={{
-                height: device === 'tablet' ? '85%' : '80%',
+                height: device === "tablet" ? "85%" : "80%",
                 width: "100%",
               }}
             >
@@ -613,7 +611,8 @@ export const RangkumanIKU = () => {
                 }}
                 style={{ flex: 1, borderRadius: 8 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={false}
@@ -634,7 +633,7 @@ export const RangkumanIKU = () => {
                     bottomSheetAttachSelect();
                     // setFilterData([]);
                   }}
-                // style={{ width: "46%" }}
+                  // style={{ width: "46%" }}
                 >
                   <View
                     style={{
@@ -809,8 +808,8 @@ export const RangkumanIKU = () => {
                       </View>
 
                       {choiceTipe.key === "3" ||
-                        choiceTipe.key === "4" ||
-                        choiceTipe.key === "5" ? (
+                      choiceTipe.key === "4" ||
+                      choiceTipe.key === "5" ? (
                         <></>
                       ) : null}
 
@@ -985,9 +984,7 @@ export const RangkumanIKU = () => {
                 </View>
               </View>
 
-              <View
-                style={{ marginVertical: 10, gap: 2 }}
-              >
+              <View style={{ marginVertical: 10, gap: 2 }}>
                 <Text
                   style={{
                     fontSize: fontSizeResponsive("H4", device),

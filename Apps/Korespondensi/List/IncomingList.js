@@ -63,12 +63,19 @@ function IncomingList({ route }) {
   const [divisionList, setDivisionList] = useState([
     { id: "", name: "SEMUA UNIT KERJA" },
   ]);
+  const [selectedTypeLetter, setSelectedTypeLetter] = useState({
+    id: "",
+    name: "Semua Jenis Surat",
+  });
+  const typeLetter = useSelector((state) => state.listbulk.typeLetter);
   const [selectedDivisi, setSelectedDivisi] = useState({});
   const [isFocus, setIsFocus] = useState();
   const { width: screenWidth } = Dimensions.get("window");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const unread = route.params.unread;
+  const tipe = route.params.tipe;
+  const idDivision = route.params.division;
   const animation = useRef(null);
   // ref
   const bottomSheetModalRef = useRef(null);
@@ -105,13 +112,20 @@ function IncomingList({ route }) {
   );
 
   useEffect(() => {
-    if (divisionList.length == 1) {
+    if (divisionList.length == 1 && idDivision == undefined) {
       getDivisionList();
     }
   }, [divisionList]);
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedDivisi]);
+  }, [
+    startDate,
+    endDate,
+    isSearchQuery,
+    isSearchFilter,
+    selectedDivisi,
+    selectedTypeLetter,
+  ]);
 
   async function getDivisionList() {
     try {
@@ -139,10 +153,24 @@ function IncomingList({ route }) {
       let response;
       if (unread) {
         response = await getHTTP(
-          nde_api.agendainunread.replace("{$page}", page)
+          nde_api.agendainunread.replace("{$page}", page) + "&dispo=0"
         );
       } else {
-        response = await getHTTP(nde_api.agendain.replace("{$page}", page));
+        if (tipe == "agenda_in_dispo") {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=1"
+          );
+        } else if (tipe == "agenda_in_eselon1") {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) +
+              "&division=" +
+              idDivision
+          );
+        } else {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=0"
+          );
+        }
       }
       let data = initData(list, response.data);
       setList(data);
@@ -165,7 +193,8 @@ function IncomingList({ route }) {
         startDate == null &&
         endDate == null &&
         searchQuery.length == 0 &&
-        selectedDivisi.id == undefined
+        selectedDivisi.id == undefined &&
+        selectedTypeLetter.name == "Semua Jenis Surat"
       ) {
         getAgendaIn(1);
       } else if (
@@ -173,54 +202,60 @@ function IncomingList({ route }) {
         (startDate != null ||
           endDate != null ||
           searchQuery.length != 0 ||
-          selectedDivisi.id != undefined)
+          selectedDivisi.id != undefined ||
+          selectedTypeLetter.name != "Semua Jenis Surat")
       ) {
       } else {
         let start;
         let end;
         let word;
         let division = "";
+        let typeletter = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
-          start = moment(startDate).format("DD/MM/YYYY");
+          start = "&start_date=" + moment(startDate).format("DD/MM/YYYY");
         }
         if (endDate == undefined || endDate == null) {
           if (startDate == undefined || startDate == null) {
             end = "";
           } else {
-            end = moment(new Date()).format("DD/MM/YYYY");
+            end = "&end_date=" + moment(new Date()).format("DD/MM/YYYY");
             setEndDate(new Date());
           }
         } else {
-          end = moment(endDate).format("DD/MM/YYYY");
+          end = "&end_date=" + moment(endDate).format("DD/MM/YYYY");
         }
         if (isSearchQuery.length == 0) {
           word = "";
         } else {
-          word = isSearchQuery;
+          word = "&query=" + isSearchQuery;
         }
-        if (selectedDivisi.id == undefined) {
+        if (selectedDivisi.id == undefined && idDivision == undefined) {
           division = "";
         } else {
-          division = selectedDivisi.id;
+          let temp = selectedDivisi.id ? selectedDivisi.id : idDivision;
+          division = "&division=" + temp;
+        }
+        if (selectedTypeLetter.name == "Semua Jenis Surat") {
+          typeletter = "";
+        } else {
+          typeletter = "&type_letter=" + selectedTypeLetter.name;
         }
         let url;
         if (unread) {
-          url = nde_api.agendainunread;
+          url = nde_api.agendainunread + "&dispo=0";
         } else {
-          url = nde_api.agendain;
+          if (tipe == "agenda_in_dispo") {
+            url = nde_api.agendain + "&dispo=1";
+          } else if (tipe == "agenda_in_eselon1") {
+            url = nde_api.agendain;
+          } else {
+            url = nde_api.agendain + "&dispo=0";
+          }
         }
-        url =
-          url +
-          "&start_date=" +
-          start +
-          "&end_date=" +
-          end +
-          "&query=" +
-          word +
-          "&division=" +
-          division;
+        url = url + start + end + word + division + typeletter;
+
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -329,6 +364,10 @@ function IncomingList({ route }) {
     setEndDate();
     setSearchQuery("");
     setSelectedDivisi({});
+    setSelectedTypeLetter({
+      id: "",
+      name: "Semua Jenis Surat",
+    });
     setIsSearchFilter(false);
     if (!isSearchFilter) {
       getAgendaIn(1);
@@ -349,7 +388,11 @@ function IncomingList({ route }) {
           onPress={() => {
             setSearchQuery("");
             setIsSearchQuery("");
-            if (selectedDivisi.id == undefined && startDate == null) {
+            if (
+              selectedTypeLetter.name == "Semua Jenis Surat" &&
+              selectedDivisi.id == undefined &&
+              startDate == null
+            ) {
               setIsSearchFilter(false);
             } else {
               setIsSearchFilter(true);
@@ -418,105 +461,140 @@ function IncomingList({ route }) {
             }}
           />
 
-          {divisionList && profile?.is_pass == "true" && (
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                marginBottom: isSearchFilter && startDate != null ? 0 : 16,
-              }}
-            >
-              <Dropdown
-                style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                iconStyle={styles.iconStyle}
-                itemTextStyle={{ fontSize: 13 }}
-                data={divisionList}
-                maxHeight={300}
-                labelField="name"
-                valueField="id"
-                placeholder={!isFocus ? "Pilih Unit Kerja" : "..."}
-                value={divisionList[0]}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                onChange={(item) => {
-                  setSelectedDivisi(item);
-                  setIsFocus(false);
-                  setList([]);
-                  setIsSearchFilter(true);
+          {tipe !== "agenda_in_eselon1" &&
+            divisionList &&
+            profile?.is_pass == "true" && (
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  marginBottom:
+                    isSearchFilter &&
+                    (startDate != null ||
+                      selectedTypeLetter.name != "Semua Jenis Surat")
+                      ? 0
+                      : 16,
                 }}
-              />
-            </View>
-          )}
-          {isSearchFilter && startDate != null && (
-            <View
-              style={{
-                flexDirection: "row",
-                backgroundColor: GlobalStyles.colors.tertiery10,
-              }}
-            >
-              <Text
-                style={[
-                  styles.headerList,
-                  {
-                    backgroundColor: GlobalStyles.colors.textWhite,
-                    color: GlobalStyles.colors.textBlack,
-                    marginBottom: 8,
-                  },
-                ]}
               >
-                {isSearchQuery.length != 0 &&
-                startDate == null &&
-                selectedDivisi.id == undefined
-                  ? "Cari: "
-                  : "Saring : "}
-              </Text>
-              <View style={styles.filter}>
-                {startDate && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setStartDate(null);
-                      setEndDate(null);
-                      if (
-                        searchQuery.length == 0 &&
-                        selectedDivisi.id == undefined
-                      ) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {moment(startDate).format("DD/MM/YYYY")} -{" "}
-                    {moment(endDate).format("DD/MM/YYYY")}
-                  </Chip>
-                )}
-                {isSearchQuery && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setSearchQuery("");
-                      setIsSearchQuery("");
-                      if (
-                        startDate == null &&
-                        endDate == null &&
-                        selectedDivisi.id == undefined
-                      ) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {isSearchQuery}
-                  </Chip>
-                )}
+                <Dropdown
+                  style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  iconStyle={styles.iconStyle}
+                  itemTextStyle={{ fontSize: 13 }}
+                  data={divisionList}
+                  maxHeight={300}
+                  labelField="name"
+                  valueField="id"
+                  placeholder={!isFocus ? "Pilih Unit Kerja" : "..."}
+                  value={divisionList[0]}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(item) => {
+                    setSelectedDivisi(item);
+                    setIsFocus(false);
+                    setList([]);
+                    setIsSearchFilter(true);
+                  }}
+                />
               </View>
-            </View>
-          )}
+            )}
+          {isSearchFilter &&
+            (startDate != null ||
+              selectedTypeLetter.name != "Semua Jenis Surat") && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: GlobalStyles.colors.tertiery10,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.headerList,
+                    {
+                      backgroundColor: GlobalStyles.colors.textWhite,
+                      color: GlobalStyles.colors.textBlack,
+                      marginBottom: 8,
+                    },
+                  ]}
+                >
+                  {isSearchQuery.length != 0 &&
+                  startDate == null &&
+                  selectedDivisi.id == undefined &&
+                  selectedTypeLetter.name == "Semua Jenis Surat"
+                    ? "Cari: "
+                    : "Saring : "}
+                </Text>
+                <View style={styles.filter}>
+                  {startDate && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setStartDate(null);
+                        setEndDate(null);
+                        if (
+                          searchQuery.length == 0 &&
+                          selectedDivisi.id == undefined &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {moment(startDate).format("DD/MM/YYYY")} -{" "}
+                      {moment(endDate).format("DD/MM/YYYY")}
+                    </Chip>
+                  )}
+                  {selectedTypeLetter.name != "Semua Jenis Surat" && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSelectedTypeLetter({
+                          id: "",
+                          name: "Semua Jenis Surat",
+                        });
+                        if (
+                          searchQuery.length == 0 &&
+                          selectedDivisi.id == undefined &&
+                          startDate == null
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {selectedTypeLetter.name}
+                    </Chip>
+                  )}
+                  {isSearchQuery && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSearchQuery("");
+                        setIsSearchQuery("");
+                        if (
+                          startDate == null &&
+                          endDate == null &&
+                          selectedDivisi.id == undefined &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {isSearchQuery}
+                    </Chip>
+                  )}
+                </View>
+              </View>
+            )}
           <FlatList
             keyExtractor={(item) => item.date}
             data={list?.results}
@@ -607,7 +685,7 @@ function IncomingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -625,6 +703,7 @@ function IncomingList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -655,7 +734,7 @@ function IncomingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -673,6 +752,7 @@ function IncomingList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -750,6 +830,46 @@ function IncomingList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
+                      }}
+                    >
+                      Jenis Surat
+                    </Text>
+                    <Dropdown
+                      style={[
+                        styles.dropdown2,
+                        isFocus && { borderColor: "blue" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      iconStyle={styles.iconStyle}
+                      itemTextStyle={{ fontSize: 13 }}
+                      data={typeLetter}
+                      maxHeight={300}
+                      labelField="name"
+                      valueField="name"
+                      placeholder={!isFocus ? "Pilih Jenis Surat" : "..."}
+                      value={selectedTypeLetter.name}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={(item) => {
+                        setSelectedTypeLetter(item);
+                      }}
                     />
                   </View>
                   <View style={{ flexDirection: "column" }}>
@@ -887,6 +1007,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  filter: { alignItems: "flex-start" },
   badge: { marginBottom: 5 },
   dropdown: {
     margin: 10,
@@ -894,6 +1015,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     minHeight: 40,
     width: "95%",
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
+  },
+  dropdown2: {
+    marginTop: 0,
+    borderWidth: 1,
+    minHeight: 40,
     padding: 5,
     borderRadius: 6,
     borderColor: "#D0D5DD",

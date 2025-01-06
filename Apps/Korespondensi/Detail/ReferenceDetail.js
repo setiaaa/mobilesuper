@@ -22,10 +22,10 @@ function ReferenceDetail({ route }) {
       if (id != undefined) {
         let response = await getHTTP(
           nde_api.lettersbyid.replace("{$id}", id) +
-          "?obj=" +
-          prevAgenda.id +
-          "&tipe=" +
-          prevAgenda.tipe
+            "?obj=" +
+            prevAgenda.id +
+            "&tipe=" +
+            prevAgenda.tipe
         );
         if (response?.data?.status == "Error") {
           Alert.alert("Info", response.data.msg, [
@@ -43,11 +43,11 @@ function ReferenceDetail({ route }) {
           setDetail(response?.data);
         }
       } else {
-        Alert.alert("Info", "Reference detail not working");
+        Alert.alert("Info", "Detail Referensi tidak berfungsi");
         navigation.goBack();
       }
     } catch (error) {
-      handlerError(error, "Warning", "Reference detail not working");
+      handlerError(error, "Warning", "Detail Referensi tidak berfungsi");
       navigation.goBack();
     }
     setisLoading(false);

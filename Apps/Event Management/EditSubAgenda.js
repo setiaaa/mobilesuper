@@ -36,7 +36,7 @@ import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
 import moment from "moment/min/moment-with-locales";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,7 +88,7 @@ const CardListPeserta = ({
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-        (item.title !== undefined && item.title.name !== "") ? (
+      (item.title !== undefined && item.title.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -301,7 +301,7 @@ export const EditSubAgenda = () => {
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -489,12 +489,13 @@ export const EditSubAgenda = () => {
                     }}
                     onChangeText={setJudul}
                     value={Judul}
+                    allowFontScaling={false}
                   />
                 </View>
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -535,7 +536,7 @@ export const EditSubAgenda = () => {
                   <View>
                     <View
                       style={{
-                        marginTop: device === 'tablet' ? 20 : 10,
+                        marginTop: device === "tablet" ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -576,6 +577,7 @@ export const EditSubAgenda = () => {
                           fontSize: fontSizeResponsive("H3", device),
                         }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -609,7 +611,7 @@ export const EditSubAgenda = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: device === 'tablet' ? 20 : 10,
+                        marginTop: device === "tablet" ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -652,6 +654,7 @@ export const EditSubAgenda = () => {
                           width: "49%",
                         }}
                         value={waktuMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -677,7 +680,7 @@ export const EditSubAgenda = () => {
                   <View style={{ width: "49%" }}>
                     <View
                       style={{
-                        marginTop: device === 'tablet' ? 20 : 10,
+                        marginTop: device === "tablet" ? 20 : 10,
                         marginBottom: 10,
                         flexDirection: "row",
                       }}
@@ -719,6 +722,7 @@ export const EditSubAgenda = () => {
                           width: "49%",
                         }}
                         value={waktuSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -748,7 +752,7 @@ export const EditSubAgenda = () => {
                   transparent={true}
                   visible={
                     modalVisibleTimePicker === "mulai" ||
-                      modalVisibleTimePicker === "selesai"
+                    modalVisibleTimePicker === "selesai"
                       ? true
                       : false
                   }
@@ -779,7 +783,7 @@ export const EditSubAgenda = () => {
                         borderRadius: 10,
                       }}
                     >
-                      <View style={{ marginVertical: 20, width: '100%' }}>
+                      <View style={{ marginVertical: 20, width: "100%" }}>
                         <TouchableOpacity
                           onPress={() => setModalVisibleTimePicker("")}
                         >
@@ -801,7 +805,14 @@ export const EditSubAgenda = () => {
                           </View>
                         </TouchableOpacity>
                       </View>
-                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <View
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -813,7 +824,10 @@ export const EditSubAgenda = () => {
                             borderColor: "rgba(122, 146, 165, 0.1)",
                           }}
                           mode="time"
-                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
+                          style={{
+                            borderRadius: 10,
+                            width: device === "tablet" ? 600 : 300,
+                          }}
                           minuteInterval={3}
                           onTimeChange={(selectedTime) => {
                             if (modalVisibleTimePicker === "mulai") {
@@ -862,10 +876,10 @@ export const EditSubAgenda = () => {
                         justifyContent: "center",
                         width: "90%",
                         borderRadius: 10,
-                        flex: 1
+                        flex: 1,
                       }}
                     >
-                      <View style={{ marginVertical: 20, width: '100%' }}>
+                      <View style={{ marginVertical: 20, width: "100%" }}>
                         <TouchableOpacity
                           onPress={() => setModalVisiblePicker("")}
                         >
@@ -887,7 +901,14 @@ export const EditSubAgenda = () => {
                           </View>
                         </TouchableOpacity>
                       </View>
-                      <View style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <View
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <DatePicker
                           options={{
                             backgroundColor: COLORS.white,
@@ -907,7 +928,10 @@ export const EditSubAgenda = () => {
                           current={event.detailEvent?.start_date.split("T")[0]}
                           mode="calendar"
                           minuteInterval={30}
-                          style={{ borderRadius: 10, width: device === 'tablet' ? 600 : 300 }}
+                          style={{
+                            borderRadius: 10,
+                            width: device === "tablet" ? 600 : 300,
+                          }}
                           onSelectedChange={(date) => {
                             const [year, month, day] = date
                               .split("/")
@@ -959,7 +983,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1002,6 +1026,7 @@ export const EditSubAgenda = () => {
                       padding: 10,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1168,7 +1193,7 @@ export const EditSubAgenda = () => {
                                     onValueChange={() =>
                                       handleChangeChecked(item, index)
                                     }
-                                  // color={isChecked ? '#4630EB' : undefined}
+                                    // color={isChecked ? '#4630EB' : undefined}
                                   />
                                 </View>
                                 {/* custom divider */}
@@ -1242,7 +1267,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1286,6 +1311,7 @@ export const EditSubAgenda = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                     value={pilihanPesertaTambahanInternal}
+                    allowFontScaling={false}
                   />
                   <View
                     style={{
@@ -1334,7 +1360,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1386,6 +1412,7 @@ export const EditSubAgenda = () => {
                       }}
                       onChangeText={onChangeValue}
                       value={value}
+                      allowFontScaling={false}
                     />
                   </View>
                   <TouchableOpacity
@@ -1460,7 +1487,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1505,12 +1532,13 @@ export const EditSubAgenda = () => {
                     }}
                     onChangeText={setTempat}
                     value={Tempat}
+                    allowFontScaling={false}
                   />
                 </View>
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",
@@ -1561,6 +1589,7 @@ export const EditSubAgenda = () => {
                       }}
                       onChangeText={setNote}
                       value={Note}
+                      allowFontScaling={false}
                     />
                   </KeyboardAvoidingView>
                 </View>
@@ -1622,6 +1651,7 @@ export const EditSubAgenda = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
 
@@ -1647,6 +1677,7 @@ export const EditSubAgenda = () => {
                             }}
                             onChangeText={onChangeValue}
                             value={value}
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>
@@ -1656,7 +1687,7 @@ export const EditSubAgenda = () => {
 
                 <View
                   style={{
-                    marginTop: device === 'tablet' ? 20 : 10,
+                    marginTop: device === "tablet" ? 20 : 10,
                     marginBottom: 10,
                     marginHorizontal: "5%",
                     flexDirection: "row",

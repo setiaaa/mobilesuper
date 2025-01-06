@@ -66,13 +66,14 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -90,13 +91,14 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -115,13 +117,14 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -138,13 +141,14 @@ export const IKU = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -161,13 +165,14 @@ export const IKU = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKU.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DPerencanaan/IKUMobile.html",
           }}
           style={{
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
+          textZoom={100}
+          androidLayerType={"hardware"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={true}

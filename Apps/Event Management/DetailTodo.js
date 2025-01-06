@@ -871,6 +871,7 @@ export const DetailTodo = () => {
                       onChangeText={(e) => {
                         setMessage(e);
                       }}
+                      allowFontScaling={false}
                     />
 
                     <TouchableOpacity

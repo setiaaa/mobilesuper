@@ -26,6 +26,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { RefreshControl } from "react-native";
+import { setPerencanaanEmpty, setPerencanaanList } from "../../store/Dashboard";
 
 const CardLists = ({
   item,
@@ -208,6 +209,7 @@ export const Perencanaan = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
+    dispatch(setPerencanaanEmpty());
     try {
       getTokenValue().then((val) => {
         setToken(val);
@@ -374,6 +376,7 @@ export const Perencanaan = () => {
             <RenderHTML
               source={{ html: detailContent.content }}
               contentWidth={width}
+              defaultTextProps={{ allowFontScaling: false }}
             />
           </View>
         </ScrollView>

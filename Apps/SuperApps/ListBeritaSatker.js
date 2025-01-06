@@ -212,7 +212,7 @@ export const ListBeritaSatker = () => {
                 color: COLORS.white,
               }}
             >
-              Berita
+              Berita Terkini
             </Text>
           </View>
         </View>

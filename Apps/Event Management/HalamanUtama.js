@@ -256,12 +256,12 @@ const CardEventFilter = ({ item, token, device }) => {
                   {data.user_role.is_member
                     ? "Peserta"
                     : data.user_role.is_notulensi
-                      ? "Notulen"
-                      : data.user_role.is_pic
-                        ? "PIC"
-                        : data.user_role.is_presensi
-                          ? "Presensi"
-                          : "Pembuat"}
+                    ? "Notulen"
+                    : data.user_role.is_pic
+                    ? "PIC"
+                    : data.user_role.is_presensi
+                    ? "Presensi"
+                    : "Pembuat"}
                 </Text>
 
                 <View
@@ -462,7 +462,7 @@ export const HalamanUtama = () => {
           dispatch(getEventProgress(token));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -543,8 +543,8 @@ export const HalamanUtama = () => {
                   device === "tablet" && orientation === "landscape"
                     ? "95%"
                     : device === "tablet" && orientation === "potrait"
-                      ? "92%"
-                      : "85%",
+                    ? "92%"
+                    : "85%",
               }}
             >
               {variant === "hariini" ? (
@@ -635,6 +635,7 @@ export const HalamanUtama = () => {
                             onChangeText={(text) => setInputValue(text)}
                             onEndEditing={handleSearchFilter}
                             clearButtonMode="always"
+                            allowFontScaling={false}
                           />
                         </View>
                       </View>
@@ -868,7 +869,11 @@ export const HalamanUtama = () => {
                 <FlatList
                   data={filterDataHariIni}
                   renderItem={({ item }) => (
-                    <CardListEvent token={token} item={item} loading={loading} />
+                    <CardListEvent
+                      token={token}
+                      item={item}
+                      loading={loading}
+                    />
                   )}
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}

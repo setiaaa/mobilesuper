@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import React, { useRef } from "react";
+import { ScrollView, useWindowDimensions } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, getOrientation, PADDING } from "../../config/SuperAppps";
@@ -13,6 +7,7 @@ import { useSelector } from "react-redux";
 
 export const APBN = () => {
   const { device } = useSelector((state) => state.apps);
+  const webViewRef = useRef(null);
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
@@ -61,30 +56,6 @@ export const APBN = () => {
     head.append(met);
   }, 500)`;
 
-  // console.log('width', screenWidth)
-  // let injected = null
-  // if (device === 'tablet') {
-  //   if (getOrientation(screenWidth, screenHeight) === 'landscape') {
-  //     if (screenWidth <= 1194) {
-  //       console.log('landscape 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape11
-  //     } else {
-  //       console.log('landscape 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadLandscape12
-  //     }
-  //   } else {
-  //     if (screenWidth <= 834) {
-  //       console.log('potrait 11')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait11
-  //     } else {
-  //       console.log('potrait 12')
-  //       injected = injectedJavaScriptBeforeContentLoadedIpadPotrait12
-  //     }
-  //   }
-  // } else {
-  //   injected = injectedJavaScriptBeforeContentLoadedMobile
-  // }
-
   const renderWebView = () => {
     if (device === "tablet") {
       if (getOrientation(screenWidth, screenHeight) === "landscape") {
@@ -96,13 +67,14 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -120,13 +92,14 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -145,13 +118,14 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -168,13 +142,14 @@ export const APBN = () => {
               <WebView
                 originWhitelist={["*"]}
                 source={{
-                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+                  uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
                 }}
                 style={{
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -189,21 +164,26 @@ export const APBN = () => {
     } else {
       return (
         <WebView
+          ref={webViewRef}
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeuMobile.html",
           }}
           style={{
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
-          scalesPageToFit={true}
+          scalesPageToFit={false}
           injectedJavaScriptBeforeContentLoaded={
             injectedJavaScriptBeforeContentLoadedMobile
           }
+          thirdPartyCookiesEnabled={true}
+          sharedCookiesEnabled={true}
+          domStorageEnabled={true}
+          textZoom={100}
+          androidLayerType={"hardware"}
         />
       );
     }

@@ -20,12 +20,39 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
 
   const checkedNodeRadio = () => {
     const checkNode = addressbook.selected.filter(
-      (item) => item.nip === data.nip && item.nik === data.nik
+      (item) =>
+        (item.nip === data.nip && item.nik === data.nik) ||
+        item.code === data.nik
     );
     if (checkNode.length > 0) {
       return true;
     } else {
       return false;
+    }
+  };
+
+  const deleteItem = (id, state) => {
+    let data;
+    if (state === "jabatan") {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => {
+          let code = data.code;
+          return code !== id;
+        });
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data?.officer?.official.split("/")[1];
+          return nip !== id;
+        });
+      }
+      dispatch(setAddressbookSelected(data));
+    } else {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
+      dispatch(setAddressbookSelected(data));
     }
   };
 
@@ -50,10 +77,20 @@ const CardPegawai = ({ data, addressbook, config, device }) => {
         }}
         onPress={() => {
           const checkNode = addressbook.selected.filter(
-            (item) => item.nip === data.nip && item.nik === data.nik
+            (item) =>
+              (item.nip === data.nip && item.nik === data.nik) ||
+              item.code === data.nik
           );
           if (checkNode.length > 0) {
-            alert("Data tidak boleh sama");
+            if (config.tipeAddress == "korespondensi") {
+              checkNode.map((item) => {
+                deleteItem(item.nik, "pegawai");
+              });
+            } else {
+              checkNode.map((item) => {
+                deleteItem(item.nip, "pegawai");
+              });
+            }
           } else {
             if (config.multiselect) {
               dispatch(setAddressbookSelected([...addressbook.selected, data]));
@@ -114,9 +151,7 @@ export const AddressBookPegawai = ({ route }) => {
     if (token !== "") {
       if (config.tipeAddress === "korespondensi" && search.length == 0) {
         (async () => {
-          let response = await getHTTP(
-            nde_api.employee + "?attr=" + config.senderCode
-          );
+          let response = await getHTTP(nde_api.employee);
           dispatch(setAddressbookEmployee(response.data));
         })();
       } else {
@@ -146,9 +181,7 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.employeeSearch.replace("{$word}", search) +
-              "&attr=" +
-              config.senderCode
+            nde_api.employeeSearch.replace("{$word}", search)
           );
           data = response.data;
           setFilterData(data);
@@ -162,9 +195,7 @@ export const AddressBookPegawai = ({ route }) => {
     } else {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
-          let response = await getHTTP(
-            nde_api.employee + "?attr=" + config.senderCode
-          );
+          let response = await getHTTP(nde_api.employee);
           data = response.data;
           setFilterData(data);
         })();
@@ -212,6 +243,7 @@ export const AddressBookPegawai = ({ route }) => {
             onChangeText={(text) => setInputValue(text)}
             onEndEditing={filter}
             clearButtonMode="always"
+            allowFontScaling={false}
           />
         </View>
       </View>

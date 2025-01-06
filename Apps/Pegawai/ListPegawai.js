@@ -241,6 +241,7 @@ export const ListPegawai = () => {
                   onChangeText={(text) => setInputValue(text)}
                   onEndEditing={filter}
                   clearButtonMode="always"
+                  allowFontScaling={false}
                 />
               </View>
             </View>

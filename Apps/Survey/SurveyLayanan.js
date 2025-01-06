@@ -62,7 +62,7 @@ export const SurveyLayanan = () => {
     "Korespondensi",
     "E-mail",
     "Kebijakan",
-    "Preparing dan Sharing",
+    "KKP Drive",
     "Pengetahuan",
     "Digital Sign",
     "Layanan Mandiri -> Cuti",
@@ -376,7 +376,7 @@ export const SurveyLayanan = () => {
         </TouchableOpacity>
       ) : null}
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           width: "90%",
           backgroundColor: COLORS.danger,
@@ -426,8 +426,13 @@ export const SurveyLayanan = () => {
         >
           Submit
         </Text>
-      </TouchableOpacity>
-      <ModalSubmit status={status} setStatus={setStatus} navigate={"Main"} />
+      </TouchableOpacity> */}
+      <ModalSubmit
+        status={status}
+        setStatus={setStatus}
+        navigate={"Main"}
+        messageSuccess={"Data Ditambahkan"}
+      />
     </ScrollView>
   );
 };

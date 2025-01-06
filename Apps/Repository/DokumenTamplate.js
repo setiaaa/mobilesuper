@@ -42,7 +42,7 @@ import { Divider } from "react-native-paper";
 import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { setRating } from "../../store/Repository";
+import { setEdit, setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
@@ -92,6 +92,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 // bottomSheetAttach(item);
                 // getDetailRepo(item.id);
                 dispatch(setRating(false));
+                dispatch(setEdit("EditTamplate"));
               }}
             >
               <Text
@@ -376,7 +377,7 @@ export const DokumenTamplate = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("H1", device),
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 600,
                   color: "white",
                 }}
@@ -713,6 +714,26 @@ export const DokumenTamplate = () => {
             </Portal>
           </View>
         </View>
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            width: 50,
+            height: 50,
+            position: "absolute",
+            bottom: 30,
+            right: 20,
+            flex: 1,
+          }}
+          onPress={() => {
+            navigation.navigate("TambahDokumenTamplate");
+          }}
+        >
+          <Ionicons name="add" size={24} color={COLORS.white} />
+        </TouchableOpacity>
       </>
     </GestureHandlerRootView>
   );

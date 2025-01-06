@@ -329,6 +329,7 @@ export const AksiPerubahan = () => {
               onChangeText={(text) => setInputValue(text)}
               onEndEditing={filterSearch}
               clearButtonMode="always"
+              allowFontScaling={false}
             />
           </View>
 

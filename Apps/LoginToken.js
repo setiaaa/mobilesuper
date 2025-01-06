@@ -105,9 +105,7 @@ export const LoginToken = () => {
     >
       {loginAuth.loading ? <Loading /> : null}
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "height" : "height"}
-        >
+        <KeyboardAvoidingView behavior={"height"}>
           <View
             style={{
               backgroundColor: COLORS.white,
@@ -144,7 +142,7 @@ export const LoginToken = () => {
               <TextInput
                 style={{
                   borderWidth: 1,
-                  borderRadius: 5,
+                  borderRadius: 4,
                   height: 40,
                   marginTop: 5,
                   borderColor: COLORS.ExtraDivinder,
@@ -154,6 +152,7 @@ export const LoginToken = () => {
                   setUserName(e);
                 }}
                 value={username}
+                allowFontScaling={false}
               />
             </View>
             <View style={{ width: "90%", marginTop: 5 }}>
@@ -177,6 +176,7 @@ export const LoginToken = () => {
                   }}
                   value={password}
                   secureTextEntry={show}
+                  allowFontScaling={false}
                 />
                 <View
                   style={{
@@ -470,33 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Handle payload stylus disposisi
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginBottom: 20,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Handle data SIASN
+                      Perbaikan addressbook para
                     </Text>
                   </View>
 
@@ -526,39 +500,22 @@ export const LoginToken = () => {
 const styles = StyleSheet.create({
   Card: {
     backgroundColor: COLORS.white,
-    width: "90%",
-    marginVertical: 20,
-    marginLeft: 20,
-    borderRadius: 16,
+    width: "90%", // Adjust the width as needed, e.g., "90%" or a fixed value like 300
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // Adds shadow for Android
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
   iOSBackdrop: {
-    backgroundColor: "#000000",
-    opacity: 0.3,
+    backgroundColor: "#000",
+    opacity: 0.5,
   },
   androidBackdrop: {
-    backgroundColor: "#232f34",
-    opacity: 0.32,
+    backgroundColor: "#000",
+    opacity: 0.7,
   },
   backdrop: {
     position: "absolute",
@@ -566,5 +523,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

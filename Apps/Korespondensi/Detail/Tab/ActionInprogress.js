@@ -70,6 +70,7 @@ function ActionInprogress({ id, data, page }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+  const { device } = useSelector((state) => state.apps);
   function showComment(action, page) {
     //validasi data payload
     let valid = 1;
@@ -901,41 +902,52 @@ function ActionInprogress({ id, data, page }) {
             <Ionicons name="checkmark-sharp" size={20} color={COLORS.white} />
           </TouchableOpacity>
         )}
-        {data?.state != "rns" && data?.state != "finish" && page != "edit" && (
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                showComment("Setujui", page);
-              }}
-              style={{
-                backgroundColor: COLORS.success,
-                width: 35,
-                height: 35,
-                borderRadius: 25,
-                marginTop: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="send-outline" size={20} color={COLORS.white} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                showComment("Revisi", page);
-              }}
-              style={{
-                backgroundColor: GlobalStyles.colors.yellow,
-                width: 35,
-                height: 35,
-                borderRadius: 25,
-                marginTop: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="arrow-back" size={20} color={COLORS.white} />
-            </TouchableOpacity>
-            {/* <TouchableOpacity
+        {data?.state != "rns" &&
+          data?.state != "finish" &&
+          page != "edit" &&
+          data?.is_editable == "0" && (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  showComment("Setujui", page);
+                }}
+                style={{
+                  backgroundColor:
+                    data?.attachments[0]?.annotations?.length == 0
+                      ? COLORS.success
+                      : GlobalStyles.colors.disabled,
+                  width: 35,
+                  height: 35,
+                  borderRadius: 25,
+                  marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                disabled={data?.attachments[0]?.annotations?.length != 0}
+              >
+                <Ionicons name="send-outline" size={20} color={COLORS.white} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  showComment("Revisi", page);
+                }}
+                style={{
+                  backgroundColor:
+                    data?.attachments[0]?.annotations?.length == 0
+                      ? GlobalStyles.colors.yellow
+                      : GlobalStyles.colors.disabled,
+                  width: 35,
+                  height: 35,
+                  borderRadius: 25,
+                  marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                disabled={data?.attachments[0]?.annotations?.length != 0}
+              >
+                <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+              </TouchableOpacity>
+              {/* <TouchableOpacity
               onPress={() => {
                 showComment("Batalkan", page);
               }}
@@ -951,8 +963,55 @@ function ActionInprogress({ id, data, page }) {
             >
               <Ionicons name="close" size={20} color={COLORS.white} />
             </TouchableOpacity> */}
-          </>
-        )}
+            </>
+          )}
+        {data?.state != "rns" &&
+          data?.state != "finish" &&
+          page != "edit" &&
+          data?.is_editable == "1" && (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  showComment("Setujui", page);
+                }}
+                style={{
+                  backgroundColor:
+                    device == "tablet"
+                      ? COLORS.success
+                      : GlobalStyles.colors.disabled,
+                  width: 35,
+                  height: 35,
+                  borderRadius: 25,
+                  marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                disabled={device == "tablet" ? false : true}
+              >
+                <Ionicons name="send-outline" size={20} color={COLORS.white} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  showComment("Revisi", page);
+                }}
+                style={{
+                  backgroundColor:
+                    device == "tablet"
+                      ? GlobalStyles.colors.yellow
+                      : GlobalStyles.colors.disabled,
+                  width: 35,
+                  height: 35,
+                  borderRadius: 25,
+                  marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                disabled={device == "tablet" ? false : true}
+              >
+                <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+              </TouchableOpacity>
+            </>
+          )}
       </View>
 
       <BottomSheetModalProvider>
@@ -1007,6 +1066,7 @@ function ActionInprogress({ id, data, page }) {
                     style={styles.input}
                     multiline={true}
                     autoFocus
+                    allowFontScaling={false}
                   />
 
                   {tipe == "Setujui" &&
@@ -1023,6 +1083,7 @@ function ActionInprogress({ id, data, page }) {
                             onChangeText={(text) => setPassphrase(text)}
                             style={{ paddingHorizontal: 10, width: "70%" }}
                             secureTextEntry={showPassphrase}
+                            allowFontScaling={false}
                           />
                           <View
                             style={{

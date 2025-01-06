@@ -13,13 +13,14 @@ import {
   Image,
   Modal,
   useWindowDimensions,
+  Alert,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
-import { getHTTP, handlerError } from "../../../utils/http";
+import { getHTTP, handlerError, postHTTP } from "../../../utils/http";
 import { initData } from "../../../utils/list";
 import {
   BottomSheetModal,
@@ -46,6 +47,14 @@ import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import Checkbox from "expo-checkbox";
+import {
+  removeAllSelectedList,
+  setSelectedAll,
+  initListAll,
+  initList,
+} from "../../../store/listBulk";
 
 function SubmittedList({ route }) {
   const [list, setList] = useState([]);
@@ -61,6 +70,16 @@ function SubmittedList({ route }) {
   const dispatch = useDispatch();
   const unread = route.params.unread;
   const animation = useRef(null);
+  const [selectedTypeLetter, setSelectedTypeLetter] = useState({
+    id: "",
+    name: "Semua Jenis Surat",
+  });
+  const typeLetter = useSelector((state) => state.listbulk.typeLetter);
+  const { selectedAll, listAll } = useSelector((state) => state.listbulk);
+  const selectedId = useSelector((state) => state.listbulk.list);
+  const profile = useSelector((state) => state.profile);
+  const [isFocus, setIsFocus] = useState();
+  const [typeBulkDelete, setTypeBulkDelete] = useState(false);
   // ref
   const bottomSheetModalRef = useRef(null);
 
@@ -91,13 +110,32 @@ function SubmittedList({ route }) {
   useFocusEffect(
     useCallback(() => {
       setList([]);
+      dispatch(removeAllSelectedList());
       refresh();
     }, [])
   );
 
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter]);
+    dispatch(removeAllSelectedList());
+    if (
+      profile?.profile?.title?.length > 0 &&
+      !profile?.profile?.title[
+        profile?.profile?.title.length - 1
+      ]?.type?.startsWith("K")
+    ) {
+      setTypeBulkDelete(true);
+    }
+  }, [
+    startDate,
+    endDate,
+    isSearchQuery,
+    isSearchFilter,
+    selectedTypeLetter,
+    profile,
+  ]);
+
+  console.log(profile?.profile.title);
 
   async function getAgendaOut(page) {
     setIsLoading(true);
@@ -106,6 +144,7 @@ function SubmittedList({ route }) {
       response = await getHTTP(nde_api.agendaout.replace("{$page}", page));
       let data = initData(list, response.data);
       setList(data);
+      selectedAllList(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -125,16 +164,25 @@ function SubmittedList({ route }) {
   const filter = async (page) => {
     setIsLoading(true);
     try {
-      if (startDate == null && endDate == null && searchQuery.length == 0) {
+      if (
+        startDate == null &&
+        endDate == null &&
+        searchQuery.length == 0 &&
+        selectedTypeLetter.name == "Semua Jenis Surat"
+      ) {
         getAgendaOut(1);
       } else if (
         !isSearchFilter &&
-        (startDate != null || endDate != null || searchQuery.length != 0)
+        (startDate != null ||
+          endDate != null ||
+          searchQuery.length != 0 ||
+          selectedTypeLetter.name != "Semua Jenis Surat")
       ) {
       } else {
         let start;
         let end;
         let word;
+        let typeletter = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
@@ -155,15 +203,29 @@ function SubmittedList({ route }) {
         } else {
           word = isSearchQuery;
         }
+        if (selectedTypeLetter.name == "Semua Jenis Surat") {
+          typeletter = "";
+        } else {
+          typeletter = selectedTypeLetter.name;
+        }
         let url;
         url = nde_api.agendaout;
         url =
-          url + "&start_date=" + start + "&end_date=" + end + "&query=" + word;
+          url +
+          "&start_date=" +
+          start +
+          "&end_date=" +
+          end +
+          "&query=" +
+          word +
+          "&type_letter=" +
+          typeletter;
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
           let data = initData(list, response.data);
           setList(data);
+          selectedAllList(data);
           bottomSheetModalRef.current?.dismiss();
         }
       }
@@ -225,6 +287,7 @@ function SubmittedList({ route }) {
             key={data.id}
             data={data}
             tipe="agendaout"
+            typeBulkDelete={typeBulkDelete}
             onPress={() => {
               navigation.navigate("SubmittedDetail", {
                 id: data.id,
@@ -280,6 +343,10 @@ function SubmittedList({ route }) {
     setEndDate();
     setSearchQuery("");
     setIsSearchFilter(false);
+    setSelectedTypeLetter({
+      id: "",
+      name: "Semua Jenis Surat",
+    });
     if (!isSearchFilter) {
       getAgendaOut(1);
     }
@@ -300,7 +367,11 @@ function SubmittedList({ route }) {
             setSearchQuery("");
             setIsSearchQuery("");
             setIsSearchFilter(false);
-            if (startDate == null && endDate == null) {
+            if (
+              selectedTypeLetter.name == "Semua Jenis Surat" &&
+              startDate == null &&
+              endDate == null
+            ) {
               setList([]);
             }
           }}
@@ -333,6 +404,44 @@ function SubmittedList({ route }) {
     hideEndDate();
   };
 
+  function selectedAllList(data) {
+    const temp = [];
+    if (data?.count == 0) {
+      dispatch(initListAll([]));
+    } else {
+      data?.results?.map((x) =>
+        x?.children?.map((y) => {
+          if (!y.progress) {
+            temp.push(y.id);
+          }
+        })
+      );
+      dispatch(initListAll(temp));
+    }
+  }
+
+  async function bulkDelete() {
+    try {
+      setIsLoading(true);
+      let payload = { ids: selectedId };
+      let response = await postHTTP(nde_api.agendaoutdelete, payload);
+      if (response?.data?.status == "Error") {
+        Alert.alert("Gagal!", response?.data?.msg);
+      } else {
+        Alert.alert("Berhasil!", response?.data?.msg, [
+          {
+            text: "Ok",
+            onPress: () => refresh(),
+          },
+        ]);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      handlerError(error, "Peringatan!", "Hapus surat tidak berfungsi!");
+      setIsLoading(false);
+    }
+  }
+
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -356,66 +465,156 @@ function SubmittedList({ route }) {
               setIsSearchFilter(true);
             }}
           />
-          {isSearchFilter && (
+          {isSearchFilter &&
+            (startDate != null ||
+              selectedTypeLetter.name != "Semua Jenis Surat") && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: GlobalStyles.colors.tertiery10,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.headerList,
+                    {
+                      backgroundColor: GlobalStyles.colors.textWhite,
+                      color: GlobalStyles.colors.textBlack,
+                      marginBottom: 8,
+                    },
+                  ]}
+                >
+                  {isSearchQuery.length != 0 &&
+                  startDate == null &&
+                  selectedTypeLetter.name == "Semua Jenis Surat"
+                    ? "Cari: "
+                    : "Saring : "}
+                </Text>
+                <View style={styles.filter}>
+                  {startDate && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setStartDate(null);
+                        setEndDate(null);
+                        if (
+                          searchQuery.length == 0 &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {moment(startDate).format("DD/MM/YYYY")} -{" "}
+                      {moment(endDate).format("DD/MM/YYYY")}
+                    </Chip>
+                  )}
+                  {isSearchQuery && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSearchQuery("");
+                        setIsSearchQuery("");
+                        if (
+                          startDate == null &&
+                          endDate == null &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {isSearchQuery}
+                    </Chip>
+                  )}
+                  {selectedTypeLetter.name != "Semua Jenis Surat" && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSelectedTypeLetter({
+                          id: "",
+                          name: "Semua Jenis Surat",
+                        });
+                        if (searchQuery.length == 0 && startDate == null) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {selectedTypeLetter.name}
+                    </Chip>
+                  )}
+                </View>
+              </View>
+            )}
+          {typeBulkDelete ? (
             <View
               style={{
                 flexDirection: "row",
-                backgroundColor: GlobalStyles.colors.tertiery10,
+                gap: 10,
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: COLORS.white,
+                padding: 10,
               }}
             >
-              <Text
-                style={[
-                  styles.headerList,
-                  {
-                    backgroundColor: GlobalStyles.colors.textWhite,
-                    color: GlobalStyles.colors.textBlack,
-                    marginBottom: 8,
-                  },
-                ]}
-              >
-                {isSearchQuery.length != 0 && startDate == null
-                  ? "Cari: "
-                  : "Saring : "}
-              </Text>
-              <View style={styles.filter}>
-                {startDate && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setStartDate(null);
-                      setEndDate(null);
-                      if (searchQuery.length == 0) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {moment(startDate).format("DD/MM/YYYY")} -{" "}
-                    {moment(endDate).format("DD/MM/YYYY")}
-                  </Chip>
-                )}
-                {isSearchQuery && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setSearchQuery("");
-                      setIsSearchQuery("");
-                      if (startDate == null && endDate == null) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {isSearchQuery}
-                  </Chip>
-                )}
+              <View style={{ flexDirection: "row" }}>
+                <Checkbox
+                  value={selectedAll}
+                  onValueChange={(item) => {
+                    dispatch(setSelectedAll(item));
+                    if (item) {
+                      dispatch(initList(listAll));
+                    } else {
+                      dispatch(removeAllSelectedList());
+                    }
+                  }}
+                  color={selectedAll === true ? GlobalStyles.colors.blue : null}
+                  style={{ marginRight: 10 }}
+                  disabled={list.count == 0 || listAll.length == 0}
+                />
+                <Text>Pilih Semua</Text>
               </View>
+              {selectedId.length != 0 && (
+                <Button
+                  style={[styles.button]}
+                  labelStyle={{ fontSize: 13 }}
+                  mode="contained"
+                  compact
+                  onPress={() => {
+                    Alert.alert(
+                      "Peringatan !", // Judul dialog
+                      "Surat yang dihapus akan hilang dan tidak bisa ditampilkan kembali. Apakah anda yakin untuk menghapusnya?", // Pesan dialog
+                      [
+                        {
+                          text: "Tidak",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "YA",
+                          onPress: () => {
+                            bulkDelete();
+                          },
+                        },
+                      ],
+                      { cancelable: true } // Menutup dialog dengan tap di luar (opsional)
+                    );
+                  }}
+                >
+                  Hapus Surat
+                </Button>
+              )}
             </View>
-          )}
+          ) : null}
           <FlatList
             keyExtractor={(item) => item.date}
             data={list?.results}
@@ -509,7 +708,7 @@ function SubmittedList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -527,6 +726,7 @@ function SubmittedList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -557,7 +757,7 @@ function SubmittedList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -575,6 +775,7 @@ function SubmittedList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -652,6 +853,46 @@ function SubmittedList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
+                      }}
+                    >
+                      Jenis Surat
+                    </Text>
+                    <Dropdown
+                      style={[
+                        styles.dropdown,
+                        isFocus && { borderColor: "blue" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      iconStyle={styles.iconStyle}
+                      itemTextStyle={{ fontSize: 13 }}
+                      data={typeLetter}
+                      maxHeight={300}
+                      labelField="name"
+                      valueField="name"
+                      placeholder={!isFocus ? "Pilih Jenis Surat" : "..."}
+                      value={selectedTypeLetter.name}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={(item) => {
+                        setSelectedTypeLetter(item);
+                      }}
                     />
                   </View>
                   <View style={{ flexDirection: "column" }}>
@@ -769,9 +1010,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   button: {
-    backgroundColor: GlobalStyles.colors.approve,
-    marginBottom: 16,
-    borderTopWidth: 1,
+    backgroundColor: COLORS.infoDanger,
   },
   buttonText: {
     fontSize: GlobalStyles.font.lg,
@@ -788,5 +1027,25 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+  },
+  badge: { marginBottom: 5 },
+  filter: { alignItems: "flex-start" },
+  dropdown: {
+    marginTop: 0,
+    borderWidth: 1,
+    minHeight: 40,
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
+  },
+  placeholderStyle: {
+    fontSize: 13,
+  },
+  selectedTextStyle: {
+    fontSize: 13,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
   },
 });

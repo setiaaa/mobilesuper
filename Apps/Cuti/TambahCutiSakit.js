@@ -56,6 +56,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { ResizeMode, Video } from "expo-av";
+import { getTokenValue } from "../../service/session";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -662,6 +663,14 @@ export const TambahCutiSakit = () => {
     (state) => state.cuti
   );
 
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const arsipDetail = arsip.detail;
 
   const [modalVisiblePicker, setModalVisiblePicker] = useState("");
@@ -675,15 +684,18 @@ export const TambahCutiSakit = () => {
     arsipDetail.detail_dokumen?.dokumen?.nomor_telpon
   );
   const [atasan, setAtasan] = useState({
-    key: arsipDetail?.detail_dokumen?.approver[0]?.nip_approver,
+    key: arsipDetail?.detail_dokumen?.approver[0]?.id,
     value: arsipDetail?.detail_dokumen?.approver[0]?.nama_approver,
   });
   const [pejabat, setPejabat] = useState({
-    key: arsipDetail?.detail_dokumen?.approver[1]?.nip_approver,
+    key: arsipDetail?.detail_dokumen?.approver[1]?.id,
     value: arsipDetail?.detail_dokumen?.approver[1]?.nama_approver,
   });
   const [jenisCuti, setJenisCuti] = useState("");
-  const [alasanCuti, setAlasanCuti] = useState("");
+  const [alasanCuti, setAlasanCuti] = useState(
+    arsipDetail?.detail_dokumen?.dokumen?.alasan_cuti
+  );
+  const [kota, setKota] = useState(arsipDetail?.detail_dokumen?.dokumen?.kota);
   const [mulaiCuti, setMulaiCuti] = useState(
     moment(
       arsipDetail.detail_dokumen?.dokumen?.mulai_cuti,
@@ -717,7 +729,7 @@ export const TambahCutiSakit = () => {
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -725,19 +737,19 @@ export const TambahCutiSakit = () => {
     setType([...type, tipe]);
 
     const data = {
-      // token: token,
-      result: result,
+      token: token,
+      result: result.assets[0],
     };
     dispatch(postAttachmentCuti(data));
   };
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
-      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
+    if (token !== "") {
+      dispatch(getPilihApproval({ token: token, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ token: token, type: "2" }));
     }
-  }, [profile.nip, atasan]);
+  }, [token, atasan]);
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
@@ -797,8 +809,8 @@ export const TambahCutiSakit = () => {
 
   const handleSubmit = () => {
     const payload = {
-      nip_pengaju: profile?.nip,
-      id_dokumen: arsipDetail.detail_dokumen?.dokumen?.id,
+      // nip_pengaju: profile?.nip,
+      id_dokumen: arsipDetail.detail_dokumen?.dokumen?.id.toString(),
       alasan_pembatalan: alasanCuti,
       nip_approval1: atasan.key,
       nip_approval2: pejabat.key,
@@ -806,7 +818,7 @@ export const TambahCutiSakit = () => {
       attachment: attachment,
     };
     const data = {
-      // token: token,
+      token: token,
       payload: payload,
     };
     dispatch(postPembatalanCuti(data));
@@ -1603,6 +1615,38 @@ export const TambahCutiSakit = () => {
                       maxLength={50}
                       placeholder="Ketikan Sesuatu"
                       onChangeText={setAlasanCuti}
+                      allowFontScaling={false}
+                      value={alasanCuti}
+                    />
+                  </View>
+                </View>
+
+                <View style={{ gap: 8 }}>
+                  <View>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Kota
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 8,
+                      borderColor: "#F8F8F8",
+                      borderWidth: 1,
+                    }}
+                  >
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={2}
+                      maxLength={50}
+                      placeholder="Ketikan Sesuatu"
+                      onChangeText={setKota}
+                      allowFontScaling={false}
+                      value={kota}
                     />
                   </View>
                 </View>
@@ -2188,6 +2232,7 @@ export const TambahCutiSakit = () => {
                     placeholder="Masukan Komentar"
                     onChangeText={setKomentarPembatan}
                     style={{ padding: 10, height: 40 }}
+                    allowFontScaling={false}
                   />
                 </View>
               </View>
@@ -2301,6 +2346,7 @@ export const TambahCutiSakit = () => {
       <ModalSubmit
         status={status}
         setStatus={setStatus}
+        messageSuccess={"Data Ditambahkan"}
         navigate={"MainCuti"}
       />
     </GestureHandlerRootView>

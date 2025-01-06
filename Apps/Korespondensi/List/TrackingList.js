@@ -45,6 +45,7 @@ import { logout } from "../../../store/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 function TrackingList({ route }) {
   const [list, setList] = useState([]);
@@ -56,6 +57,12 @@ function TrackingList({ route }) {
   const [isSearchFilter, setIsSearchFilter] = useState(false);
   const [isSearchQuery, setIsSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTypeLetter, setSelectedTypeLetter] = useState({
+    id: "",
+    name: "Semua Jenis Surat",
+  });
+  const typeLetter = useSelector((state) => state.listbulk.typeLetter);
+  const [isFocus, setIsFocus] = useState();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const unread = route.params.unread;
@@ -86,7 +93,7 @@ function TrackingList({ route }) {
 
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter]);
+  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedTypeLetter]);
 
   async function getTracking(page) {
     setIsLoading(true);
@@ -115,16 +122,25 @@ function TrackingList({ route }) {
   const filter = async (page) => {
     setIsLoading(true);
     try {
-      if (startDate == null && endDate == null && searchQuery.length == 0) {
+      if (
+        startDate == null &&
+        endDate == null &&
+        searchQuery.length == 0 &&
+        selectedTypeLetter.name == "Semua Jenis Surat"
+      ) {
         getTracking(1);
       } else if (
         !isSearchFilter &&
-        (startDate != null || endDate != null || searchQuery.length != 0)
+        (startDate != null ||
+          endDate != null ||
+          searchQuery.length != 0 ||
+          selectedTypeLetter.name != "Semua Jenis Surat")
       ) {
       } else {
         let start;
         let end;
         let word;
+        let typeletter = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
@@ -145,9 +161,22 @@ function TrackingList({ route }) {
         } else {
           word = isSearchQuery;
         }
+        if (selectedTypeLetter.name == "Semua Jenis Surat") {
+          typeletter = "";
+        } else {
+          typeletter = selectedTypeLetter.name;
+        }
         let url = nde_api.tracking;
         url =
-          url + "&start_date=" + start + "&end_date=" + end + "&search=" + word;
+          url +
+          "&start_date=" +
+          start +
+          "&end_date=" +
+          end +
+          "&search=" +
+          word +
+          "&type_letter=" +
+          typeletter;
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -257,6 +286,10 @@ function TrackingList({ route }) {
     setStartDate();
     setEndDate();
     setSearchQuery("");
+    setSelectedTypeLetter({
+      id: "",
+      name: "Semua Jenis Surat",
+    });
     setIsSearchFilter(false);
     if (!isSearchFilter) {
       getTracking(1);
@@ -278,7 +311,11 @@ function TrackingList({ route }) {
             setSearchQuery("");
             setIsSearchQuery("");
             setIsSearchFilter(false);
-            if (startDate == null && endDate == null) {
+            if (
+              startDate == null &&
+              endDate == null &&
+              selectedTypeLetter.name == "Semua Jenis Surat"
+            ) {
               setList([]);
             }
           }}
@@ -341,66 +378,96 @@ function TrackingList({ route }) {
               setIsSearchFilter(true);
             }}
           />
-          {isSearchFilter && (
-            <View
-              style={{
-                flexDirection: "row",
-                backgroundColor: GlobalStyles.colors.tertiery10,
-              }}
-            >
-              <Text
-                style={[
-                  styles.headerList,
-                  {
-                    backgroundColor: GlobalStyles.colors.textWhite,
-                    color: GlobalStyles.colors.textBlack,
-                    marginBottom: 8,
-                  },
-                ]}
+          {isSearchFilter &&
+            (startDate != null ||
+              selectedTypeLetter.name != "Semua Jenis Surat") && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: GlobalStyles.colors.tertiery10,
+                }}
               >
-                {isSearchQuery.length != 0 && startDate == null
-                  ? "Cari: "
-                  : "Saring : "}
-              </Text>
-              <View style={styles.filter}>
-                {startDate && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setStartDate(null);
-                      setEndDate(null);
-                      if (searchQuery.length == 0) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {moment(startDate).format("DD/MM/YYYY")} -{" "}
-                    {moment(endDate).format("DD/MM/YYYY")}
-                  </Chip>
-                )}
-                {isSearchQuery && (
-                  <Chip
-                    style={styles.badge}
-                    onClose={() => {
-                      setSearchQuery("");
-                      setIsSearchQuery("");
-                      if (startDate == null && endDate == null) {
-                        setIsSearchFilter(false);
-                        setIsLoading(true);
-                      }
-                      setList([]);
-                    }}
-                    closeIcon="close"
-                  >
-                    {isSearchQuery}
-                  </Chip>
-                )}
+                <Text
+                  style={[
+                    styles.headerList,
+                    {
+                      backgroundColor: GlobalStyles.colors.textWhite,
+                      color: GlobalStyles.colors.textBlack,
+                      marginBottom: 8,
+                    },
+                  ]}
+                >
+                  {isSearchQuery.length != 0 &&
+                  startDate == null &&
+                  selectedTypeLetter.name != "Semua Jenis Surat"
+                    ? "Cari: "
+                    : "Saring : "}
+                </Text>
+                <View style={styles.filter}>
+                  {startDate && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setStartDate(null);
+                        setEndDate(null);
+                        if (
+                          searchQuery.length == 0 &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {moment(startDate).format("DD/MM/YYYY")} -{" "}
+                      {moment(endDate).format("DD/MM/YYYY")}
+                    </Chip>
+                  )}
+                  {isSearchQuery && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSearchQuery("");
+                        setIsSearchQuery("");
+                        if (
+                          startDate == null &&
+                          endDate == null &&
+                          selectedTypeLetter.name == "Semua Jenis Surat"
+                        ) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {isSearchQuery}
+                    </Chip>
+                  )}
+                  {selectedTypeLetter.name != "Semua Jenis Surat" && (
+                    <Chip
+                      style={styles.badge}
+                      onClose={() => {
+                        setSelectedTypeLetter({
+                          id: "",
+                          name: "Semua Jenis Surat",
+                        });
+                        if (searchQuery.length == 0 && startDate == null) {
+                          setIsSearchFilter(false);
+                          setIsLoading(true);
+                        }
+                        setList([]);
+                      }}
+                      closeIcon="close"
+                    >
+                      {selectedTypeLetter.name}
+                    </Chip>
+                  )}
+                </View>
               </View>
-            </View>
-          )}
+            )}
           <FlatList
             keyExtractor={(item) => item.date}
             data={list?.results}
@@ -494,7 +561,7 @@ function TrackingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -512,6 +579,7 @@ function TrackingList({ route }) {
                                 : "Mulai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -542,7 +610,7 @@ function TrackingList({ route }) {
                                 : device === "tablet" &&
                                   orientation === "potrait"
                                 ? 330
-                                : 155,
+                                : 150,
                             borderRadius: 4,
                             borderColor: COLORS.ExtraDivinder,
                             flexDirection: "row",
@@ -560,6 +628,7 @@ function TrackingList({ route }) {
                                 : "Selesai"
                             }
                             disabled
+                            allowFontScaling={false}
                           />
                           <View
                             style={{
@@ -637,6 +706,46 @@ function TrackingList({ route }) {
                       }}
                       value={searchQuery}
                       onChangeText={setSearchQuery}
+                      allowFontScaling={false}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
+                      }}
+                    >
+                      Jenis Surat
+                    </Text>
+                    <Dropdown
+                      style={[
+                        styles.dropdown2,
+                        isFocus && { borderColor: "blue" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      iconStyle={styles.iconStyle}
+                      itemTextStyle={{ fontSize: 13 }}
+                      data={typeLetter}
+                      maxHeight={300}
+                      labelField="name"
+                      valueField="name"
+                      placeholder={!isFocus ? "Pilih Jenis Surat" : "..."}
+                      value={selectedTypeLetter.name}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={(item) => {
+                        setSelectedTypeLetter(item);
+                      }}
                     />
                   </View>
                   <View style={{ flexDirection: "column" }}>
@@ -773,5 +882,25 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+  },
+  badge: { marginBottom: 5 },
+  filter: { alignItems: "flex-start" },
+  dropdown2: {
+    marginTop: 0,
+    borderWidth: 1,
+    minHeight: 40,
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
+  },
+  placeholderStyle: {
+    fontSize: 13,
+  },
+  selectedTextStyle: {
+    fontSize: 13,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
   },
 });

@@ -876,7 +876,7 @@ export const Home = () => {
                 padding: 20,
               }}
             >
-              <View>
+              <View style={{ width: 300 }}>
                 <Text
                   style={{
                     color: COLORS.white,
@@ -952,7 +952,7 @@ export const Home = () => {
                       <ScrollView
                         nestedScrollEnabled={true}
                         style={{
-                          height: useWindowDimensions().height - 150,
+                          height: useWindowDimensions().height - 80,
                         }}
                       >
                         <View
@@ -1159,6 +1159,7 @@ export const Home = () => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             message={"Silahkan Coba Kembali"}
             navigate={"Home"}
           />
@@ -1914,7 +1915,7 @@ export const Home = () => {
 
                   <TouchableOpacity
                     onPress={() => {
-                      Linking.openURL("https://siasn.bkn.go.id/");
+                      Linking.openURL("https://siasn-instansi.bkn.go.id/");
                     }}
                   >
                     <View
@@ -1945,12 +1946,12 @@ export const Home = () => {
 
                   <TouchableOpacity
                     onPress={() => {
-                      Linking.openURL("https://mysapk.bkn.go.id/");
+                      Linking.openURL("https://myasn.bkn.go.id/");
                     }}
                   >
                     <View>
                       <Image
-                        source={require("../../assets/superApp/mysapk.png")}
+                        source={require("../../assets/superApp/myasn.png")}
                         style={{
                           width: device === "tablet" ? 100 : 48,
                           height: device === "tablet" ? 100 : 48,
@@ -1965,7 +1966,7 @@ export const Home = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        My SAPK
+                        MyASN
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -2081,6 +2082,7 @@ export const Home = () => {
                   item={item}
                   token={token}
                   setModalVisibleVideo={setModalVisibleVideo}
+                  tanggal={item?.time}
                 />
               )}
               hasParallaxImages={true}

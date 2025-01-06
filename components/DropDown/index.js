@@ -175,11 +175,12 @@ export const Dropdown = ({
                 width: "100%",
                 borderRadius: 8,
                 marginTop: 10,
-                paddingVertical: 10,
                 borderWidth: data.length > 0 ? borderWidthValue : 0,
                 borderColor: data.length > 0 ? borderColorValue : null,
                 height: heightValue ? heightValue : "auto",
               }}
+              scrollEnabled={true}
+              nestedScrollEnabled={true}
             >
               {filterData.length > 0 ? (
                 filterData.map((kategori) => {

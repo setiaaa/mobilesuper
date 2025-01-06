@@ -29,6 +29,7 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   setDokumentlists,
+  setEdit,
   setLoadMore,
   setRating,
 } from "../../store/Repository";
@@ -46,7 +47,7 @@ import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach, device }) => {
+const DataList = ({ token, item, bottomSheetAttach, device, tipe }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -64,8 +65,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: "5%",
-          backgroundColor:
-            item.published === true ? COLORS.white : COLORS.ExtraDivinder,
+          backgroundColor: COLORS.white,
           borderRadius: 8,
           shadowColor: "black",
           shadowOffset: { width: 0, height: 0 },
@@ -92,9 +92,16 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
               <TouchableOpacity
                 onPress={() => {
                   // bottomSheetAttach(item);
-                  navigation.navigate("MainDetailRepo");
-                  getDetailRepo(item.id);
-                  dispatch(setRating(true));
+
+                  if (tipe === "revision") {
+                    dispatch(setEdit("Edit"));
+                    navigation.navigate("DetailActivity");
+                    getDetailRepo(item.id);
+                    // dispatch(setRating(true));
+                  } else {
+                    navigation.navigate("MainDetailRepo");
+                    getDetailRepo(item.id);
+                  }
                 }}
               >
                 <Text
@@ -154,7 +161,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       width: device === "tablet" ? 200 : 100,
                     }}
                   >
-                    Perubahan
+                    Dibuat
                   </Text>
                   <Text
                     style={{
@@ -163,7 +170,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at)
+                    {moment(item.created_at)
                       .locale("id")
                       .format("DD MMMM yyyy")}
                   </Text>
@@ -201,7 +208,14 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 </View>
               </TouchableOpacity>
             ) : (
-              <View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("BerbagiDokumen", {
+                    data: item,
+                    type: "draft",
+                  });
+                }}
+              >
                 <Text
                   style={{
                     fontSize: fontSizeResponsive("H3", device),
@@ -259,7 +273,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       width: device === "tablet" ? 200 : 100,
                     }}
                   >
-                    Perubahan
+                    Dibuat
                   </Text>
                   <Text
                     style={{
@@ -268,7 +282,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at)
+                    {moment(item.created_at)
                       .locale("id")
                       .format("DD MMMM yyyy")}
                   </Text>
@@ -304,7 +318,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       .format("DD MMMM yyyy")}
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -348,8 +362,16 @@ export const Dokumen = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDocument({ token: token, page: page, type: type.key }));
+      dispatch(
+        getDocument({
+          token: token,
+          page: page,
+          type: type.key,
+          tipe: type.value,
+        })
+      );
     }
+    dispatch(setEdit(""));
   }, [token, page, type]);
 
   const bottomSheetModalRef = useRef(null);
@@ -421,7 +443,7 @@ export const Dokumen = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {loading === true && dokumen.lists.length === 0 ? <Loading /> : null}
+      {loading === true ? <Loading /> : null}
       <>
         <View style={{ marginBottom: 20, flex: 1 }}>
           <View
@@ -454,12 +476,12 @@ export const Dokumen = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("Judul", device),
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 600,
                   color: "white",
                 }}
               >
-                Preparing dan Sharing
+                Dokumen
               </Text>
             </View>
           </View>
@@ -554,6 +576,70 @@ export const Dokumen = () => {
                 Published
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "revision" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "revision" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "true",
+                  value: "revision",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "revision"
+                      ? COLORS.white
+                      : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Revisi
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: device === "tablet" ? "19%" : null,
+                paddingHorizontal: 6,
+                paddingVertical: 6,
+                borderWidth: 1,
+                backgroundColor:
+                  type.value === "review" ? COLORS.primary : COLORS.input,
+                borderRadius: 30,
+                borderColor:
+                  type.value === "review" ? null : COLORS.ExtraDivinder,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() =>
+                setType({
+                  key: "true",
+                  value: "review",
+                })
+              }
+            >
+              <Text
+                style={{
+                  color:
+                    type.value === "review" ? COLORS.white : COLORS.foundation,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Sedang Ditinjau
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={{ flex: 1 }}>
@@ -566,6 +652,7 @@ export const Dokumen = () => {
                   item={item}
                   token={token}
                   device={device}
+                  tipe={type.value}
                 />
               )}
               ListFooterComponent={() =>
@@ -704,6 +791,30 @@ export const Dokumen = () => {
             </Portal> */}
           </View>
         </View>
+
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            width: 50,
+            height: 50,
+            position: "absolute",
+            bottom: 30,
+            right: 20,
+            flex: 1,
+          }}
+          onPress={() => {
+            navigation.navigate("BerbagiDokumen", {
+              data: null,
+              type: "tambah",
+            });
+          }}
+        >
+          <Ionicons name="add" size={24} color={COLORS.white} />
+        </TouchableOpacity>
       </>
     </GestureHandlerRootView>
   );

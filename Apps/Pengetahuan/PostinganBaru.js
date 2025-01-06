@@ -108,7 +108,7 @@ export const PostinganBaru = () => {
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -226,6 +226,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Masukan Judul"
                       style={{ padding: 5, width: 315, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -254,6 +255,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Masukan Anggota Agenda"
                       style={{ padding: 5, width: 315, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                   <Text
@@ -291,6 +293,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Masukan lokasi"
                       style={{ padding: 5, width: 315, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -336,6 +339,7 @@ export const PostinganBaru = () => {
                         placeholder="Mulai"
                         style={{ padding: 10, height: 40 }}
                         value={TanggalMulai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -393,6 +397,7 @@ export const PostinganBaru = () => {
                         placeholder="Selesai"
                         style={{ padding: 10, height: 40 }}
                         value={TanggalSelesai}
+                        allowFontScaling={false}
                       />
                       <View
                         style={{
@@ -609,6 +614,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Masukan Tagar #"
                       style={{ padding: 5, width: 315, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                   <Text
@@ -646,6 +652,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Masukan Ringkasan Disini"
                       style={{ padding: 5, width: 315, height: 40 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -674,6 +681,7 @@ export const PostinganBaru = () => {
                       maxLength={50}
                       placeholder="Tulis Pesan"
                       style={{ padding: 5, width: 315, height: 150 }}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>

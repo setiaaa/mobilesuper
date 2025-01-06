@@ -8,11 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Config } from "../../constants/config";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
-import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+import { COLORS, DATETIME } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedList } from "../../store/listBulk";
+import moment from "moment";
 
-function CardList({ data, tipe, onPress }) {
+function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
   const navigation = useNavigation();
   const [title, setTitle] = useState();
   const [errorAvatar, setErrorAvatar] = useState(false);
@@ -20,7 +21,6 @@ function CardList({ data, tipe, onPress }) {
   const selected = useSelector((state) => state.listbulk.list);
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.apps);
-
   let header = {};
   useEffect(() => {
     if (tipe == "agendain") {
@@ -55,6 +55,7 @@ function CardList({ data, tipe, onPress }) {
       });
     }
   }
+
   return (
     <>
       <View
@@ -73,6 +74,26 @@ function CardList({ data, tipe, onPress }) {
           { padding: 15 },
         ]}
       >
+        {tipe == "agendadispo" && (
+          <View style={{ marginBottom: 5 }}>
+            <Text
+              style={[
+                { fontSize: 14 },
+                data?.unread ? { fontWeight: "bold" } : {},
+              ]}
+            >
+              {data.asal_surat.title ? data.asal_surat.title : ""}
+              {data.asal_surat.title == null ? data.asal_surat : ""}
+            </Text>
+            <Text style={{ fontSize: 12 }}>
+              {data?.nomor_surat} | (
+              {moment(data?.tanggal_surat, DATETIME.SHORT_DATE).format(
+                DATETIME.SHORT_DATE2
+              )}
+              )
+            </Text>
+          </View>
+        )}
         <View style={{ flexDirection: "row" }}>
           <View
             style={{
@@ -124,7 +145,26 @@ function CardList({ data, tipe, onPress }) {
                 style={styles.button}
               />
             )}
-            {tipe == "needfollowup" && profile.is_pass == "true" && (
+            {tipe == "needfollowup" && is_pass == "true" && (
+              <Checkbox.Item
+                mode="android"
+                status={
+                  selected?.findIndex((item) => item == data.id) != -1
+                    ? "checked"
+                    : "unchecked"
+                }
+                color={GlobalStyles.colors.blue}
+                onPress={() => {
+                  if (!data?.progress) {
+                    dispatch(setSelectedList(data));
+                  }
+                }}
+                position="leading"
+                disabled={data?.onprogress}
+                // labelStyle={styles.labelCheckbox}
+              />
+            )}
+            {tipe == "agendaout" && typeBulkDelete == true && (
               <Checkbox.Item
                 mode="android"
                 status={
@@ -165,22 +205,50 @@ function CardList({ data, tipe, onPress }) {
                       }}
                     />
                   )}
-                  <Text style={{ fontSize: 14 }}>
-                    {data.sender.title && (
-                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                        {data.sender.title}
-                      </Text>
-                    )}
-                    {data.sender.title == null && (
-                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                        {data.sender}
-                      </Text>
-                    )}
-                  </Text>
+                  {tipe !== "agendadispo" && (
+                    <Text style={{ fontSize: 14 }}>
+                      {data.sender.title && (
+                        <Text
+                          style={data?.unread ? { fontWeight: "bold" } : {}}
+                        >
+                          {data.sender.title}
+                        </Text>
+                      )}
+                      {data.sender.title == null && (
+                        <Text
+                          style={data?.unread ? { fontWeight: "bold" } : {}}
+                        >
+                          {data.sender}
+                        </Text>
+                      )}
+                    </Text>
+                  )}
+                  {tipe == "agendadispo" && (
+                    <Text
+                      style={[
+                        { fontSize: 14, color: GlobalStyles.colors.gray400 },
+                        data?.unread ? { fontWeight: "bold" } : {},
+                      ]}
+                    >
+                      PENGIRIM DISPO:{" "}
+                      {data.sender.title ? data.sender.title : ""}
+                      {data.sender.title == null ? data.sender : ""}
+                    </Text>
+                  )}
                 </View>
                 {(tipe == "agendain" || tipe == "needfollowup") && (
                   <Text style={{ fontSize: 12, color: COLORS.infoDanger }}>
                     Unit Kerja: {data?.unker}
+                  </Text>
+                )}
+                {tipe == "tracking" && data.position && (
+                  <Text
+                    style={{
+                      color: GlobalStyles.colors.tertiery70,
+                      fontSize: 12,
+                    }}
+                  >
+                    {data.position}
                   </Text>
                 )}
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
@@ -200,7 +268,8 @@ function CardList({ data, tipe, onPress }) {
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   {data.time.substr(0, 5)}
                 </Text>
-                {data.disposisi && tipe != "agendamydispo" && (
+                {((data.logs_tag && tipe == "agendain") ||
+                  (data.disposisi && tipe == "agendadispo")) && (
                   <View style={styles.containerButton}>
                     <IconButton
                       icon="email-send-outline"

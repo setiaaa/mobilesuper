@@ -60,7 +60,7 @@ const FaqSlice = createSlice({
       })
       .addCase(getFaq.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFaqCategory.fulfilled, (state, action) => {
         state.faqCategory.lists = action.payload;
@@ -71,7 +71,7 @@ const FaqSlice = createSlice({
       })
       .addCase(getFaqCategory.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFaqByCategory.fulfilled, (state, action) => {
         if (action.payload.id == state.faqCategory.lists[0].id) {
@@ -92,7 +92,7 @@ const FaqSlice = createSlice({
       })
       .addCase(getFaqByCategory.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFaqGroup.fulfilled, (state, action) => {
         state.faqGroup.lists = action.payload;
@@ -103,7 +103,7 @@ const FaqSlice = createSlice({
       })
       .addCase(getFaqGroup.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       })
       .addCase(getFaqByGroup.fulfilled, (state, action) => {
         state.faqByGroup.lists = action.payload;
@@ -114,7 +114,7 @@ const FaqSlice = createSlice({
       })
       .addCase(getFaqByGroup.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

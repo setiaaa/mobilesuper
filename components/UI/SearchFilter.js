@@ -29,6 +29,7 @@ function SearchFilter({
           onSubmitEditing={getSearch}
           clearIcon={clearSearch}
           elevation={2}
+          allowFontScaling={false}
         />
       </View>
       {tipe != "searchGlobal" && (

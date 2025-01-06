@@ -149,12 +149,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah ==
-                    null ||
-                  profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah
-                    ?.length == 0
+                  {profile[0]?.dataPernikahan?.aktaMenikah == null ||
+                  profile[0]?.dataPernikahan?.aktaMenikah?.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.dataPernikahan?.aktaMenikah}
+                    : profile[0]?.dataPernikahan?.aktaMenikah}
                 </Text>
               </View>
               <View
@@ -190,12 +188,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah ==
-                    null ||
-                  profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah
-                    ?.length == 0
+                  {profile[0]?.dataPernikahan?.tgglMenikah == null ||
+                  profile[0]?.dataPernikahan?.tgglMenikah?.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.dataPernikahan?.tgglMenikah}
+                    : profile[0]?.dataPernikahan?.tgglMenikah}
                 </Text>
               </View>
               <View
@@ -231,10 +227,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.orang?.nama == null ||
-                  profile?.listPasangan[0]?.orang?.nama?.length == 0
+                  {profile[0]?.orang?.nama == null ||
+                  profile[0]?.orang?.nama?.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.orang?.nama}
+                    : profile[0]?.orang?.nama}
                 </Text>
               </View>
               <View
@@ -270,10 +266,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.orang?.jenisKelamin == null ||
-                  profile?.listPasangan[0]?.orang?.jenisKelamin.length == 0
+                  {profile[0]?.orang?.jenisKelamin == null ||
+                  profile[0]?.orang?.jenisKelamin.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.orang?.jenisKelamin == "M"
+                    : profile[0]?.orang?.jenisKelamin == "M"
                     ? "Laki-laki"
                     : "Perempuan"}
                 </Text>
@@ -311,10 +307,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.orang?.tglLahir == null ||
-                  profile?.listPasangan[0]?.orang?.tglLahir?.length == 0
+                  {profile[0]?.orang?.tglLahir == null ||
+                  profile[0]?.orang?.tglLahir?.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.orang?.tglLahir}
+                    : profile[0]?.orang?.tglLahir}
                 </Text>
               </View>
               <View
@@ -350,10 +346,10 @@ export const CollapseCardPasangan = ({ profile, device, data }) => {
                     },
                   ]}
                 >
-                  {profile?.listPasangan[0]?.orang?.tempatLahir == null ||
-                  profile?.listPasangan[0]?.orang?.tempatLahir?.length == 0
+                  {profile[0]?.orang?.tempatLahir == null ||
+                  profile[0]?.orang?.tempatLahir?.length == 0
                     ? "-"
-                    : profile?.listPasangan[0]?.orang?.tempatLahir}
+                    : profile[0]?.orang?.tempatLahir}
                 </Text>
               </View>
             </View>

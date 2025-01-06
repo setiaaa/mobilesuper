@@ -7,14 +7,15 @@ import { nde_api } from "../../../utils/api.config";
 import Pdf from "react-native-pdf";
 import WebView from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
+import { Loading } from "../../../components/Loading";
 
 function ViewAttachment({ route }) {
-  //   const [isLoading, setisLoading] = useState(true);
-  const [data, setData] = useState(route?.params.selected);
+  const [isLoading, setisLoading] = useState(true);
   const [header, setHeader] = useState();
   const [stylus, setStylus] = useState(route?.params?.stylus);
   const [token, setToken] = useState(route?.params?.token);
   const [id, setId] = useState(route?.params?.id);
+  const [title, setTitle] = useState(route?.params?.title);
   const navigation = useNavigation();
   useEffect(() => {
     if (header == undefined) {
@@ -25,13 +26,6 @@ function ViewAttachment({ route }) {
     let response = await headerToken();
     setHeader(response);
   }
-  const urlPdf =
-    nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length);
-  const pdfResource = {
-    uri: nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length),
-    header: header,
-    chace: true,
-  };
 
   const backAction = () => {
     if (stylus) {
@@ -47,7 +41,8 @@ function ViewAttachment({ route }) {
   }, []);
   return (
     <>
-      {header && (
+      {isLoading && <Loading />}
+      {header && token && (
         <>
           <View style={{ flex: 1 }}>
             {stylus && (
@@ -66,6 +61,12 @@ function ViewAttachment({ route }) {
                   width: "100%",
                   height: "100%",
                 }}
+                onLoadStart={() => {
+                  setisLoading(true);
+                }}
+                onLoadEnd={() => {
+                  setisLoading(false);
+                }}
                 incognito={true}
                 allowFileAccess={true}
                 androidLayerType={"software"}
@@ -74,7 +75,7 @@ function ViewAttachment({ route }) {
                 scalesPageToFit={false}
               />
             )}
-            {!stylus && (
+            {!stylus && title != "Edit Surat" && (
               <WebView
                 source={{
                   uri:
@@ -91,6 +92,12 @@ function ViewAttachment({ route }) {
                   width: "100%",
                   height: "100%",
                 }}
+                onLoadStart={() => {
+                  setisLoading(true);
+                }}
+                onLoadEnd={() => {
+                  setisLoading(false);
+                }}
                 incognito={true}
                 allowFileAccess={true}
                 androidLayerType={"software"}
@@ -98,21 +105,38 @@ function ViewAttachment({ route }) {
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={false}
               />
-              // <Pdf
-              //   trustAllCerts={false}
-              //   source={{
-              //     uri:
-              //       nde_api.baseurl +
-              //         "crsbe/" +
-              //         data?.file.slice(5, data?.file.length) || undefined,
-              //     headers: header,
-              //   }}
-              //   style={{
-              //     flex: 1,
-              //     width: Dimensions.get("window").width,
-              //     height: Dimensions.get("window").height,
-              //   }}
-              // />
+            )}
+            {!stylus && title == "Edit Surat" && (
+              <WebView
+                source={{
+                  uri:
+                    nde_api.baseurl_kores +
+                      "editor-mobile/" +
+                      id +
+                      "?editorToken=-" || undefined,
+                  headers: header,
+                }}
+                style={{
+                  flex: 1,
+                  width: "100%",
+                  height: "100%",
+                }}
+                onLoadStart={() => {
+                  setisLoading(true);
+                }}
+                onLoadEnd={() => {
+                  setisLoading(false);
+                }}
+                injectedJavaScriptBeforeContentLoaded={`
+                  localStorage.setItem("token",'${token}')
+                  `}
+                incognito={true}
+                allowFileAccess={true}
+                androidLayerType={"software"}
+                mixedContentMode={"always"}
+                allowUniversalAccessFromFileURLs={true}
+                scalesPageToFit={false}
+              />
             )}
           </View>
         </>

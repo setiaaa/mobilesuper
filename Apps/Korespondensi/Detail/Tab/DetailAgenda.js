@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -22,7 +22,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, DATETIME } from "../../../../config/SuperAppps";
 import { Image } from "react-native";
 import { setPrevAgenda } from "../../../../store/referensi";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import { getExtensionIcon, initDownload } from "../../../../utils/agenda";
@@ -41,9 +41,20 @@ function DetailAgenda({ id, data, style, tipe, title }) {
     }, 3000);
   }, []);
   const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (tipe == "in/internal" || tipe == "ReferenceDetail") {
+        dispatch(setFAB(false));
+      } else {
+        dispatch(setFAB(true));
+      }
+    }, [])
+  );
+
   useEffect(() => {
     dispatch(setDataNotif({}));
-    if (tipe == "in/internal") {
+    if (tipe == "in/internal" || tipe == "ReferenceDetail") {
       dispatch(setFAB(false));
     } else {
       dispatch(setFAB(true));
@@ -276,7 +287,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                   paddingRight: 20,
                 }}
               >
-                Nomor Agenda
+                No Agenda
               </Text>
               <Text
                 style={{
@@ -365,7 +376,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 paddingRight: 20,
               }}
             >
-              Jenis Surat
+              Kode Derajat
             </Text>
             <Text
               style={{
@@ -375,7 +386,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 paddingRight: 20,
               }}
             >
-              {data?.jenis_surat}
+              {data?.type ? data?.type : "-"}
             </Text>
           </View>
 
@@ -431,50 +442,56 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 -
               </Text>
             )}
-            {data?.references?.length != 0 &&
-              data?.references?.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 400,
-                    width: "60%",
-                    paddingRight: 20,
-                  }}
-                  onPress={() => {
-                    if (item.new_url?.split("/")[3] == "0") {
-                      Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
-                    } else {
-                      if (tipe == "in") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
-                      } else if (tipe == "disposition") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "d" }));
-                      } else if (tipe == "out") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "k" }));
-                      } else if (tipe == "scanlog") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
-                      } else if (
-                        tipe == "TrackingDetail" ||
-                        tipe == "NeedFollowUpDetail" ||
-                        tipe == "ReferenceDetail"
-                      ) {
-                        dispatch(
-                          setPrevAgenda({ id: item?.notadinas, tipe: "s" })
-                        );
+            <View>
+              {data?.references?.length != 0 &&
+                data?.references?.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 400,
+                      width: "80%",
+                      paddingRight: 20,
+                    }}
+                    onPress={() => {
+                      if (item.new_url?.split("/")[3] == "0") {
+                        Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
+                      } else {
+                        if (tipe == "in") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
+                        } else if (tipe == "disposition") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "d" }));
+                        } else if (tipe == "out") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "k" }));
+                        } else if (tipe == "scanlog") {
+                          dispatch(setPrevAgenda({ id: data?.id, tipe: "m" }));
+                        } else if (
+                          tipe == "TrackingDetail" ||
+                          tipe == "NeedFollowUpDetail" ||
+                          tipe == "ReferenceDetail"
+                        ) {
+                          dispatch(
+                            setPrevAgenda({ id: item?.notadinas, tipe: "s" })
+                          );
+                        }
+                        dispatch(setFAB(false));
+                        navigation.navigate("ReferenceDetail", {
+                          id: item?.new_url?.split("/")[3],
+                          title: "Detail\nReferensi",
+                        });
                       }
-                      navigation.navigate("ReferenceDetail", {
-                        id: item?.new_url?.split("/")[3],
-                        title: "Reference\nDetail",
-                      });
-                    }
-                  }}
-                >
-                  <View>
-                    <Text style={[styles.textContent]}>{item.subject}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            {/* </Text> */}
+                    }}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Text>
+                        {data?.references.length > 1 ? index + 1 + ". " : ""}
+                      </Text>
+                      <Text style={[styles.textContent]}>{item.subject}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              {/* </Text> */}
+            </View>
           </View>
         </View>
 
@@ -532,7 +549,13 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                     </Text>
                   </View>
                   {data && data?.receivers_display?.length == 1 && (
-                    <Text>{data?.receivers_display[0]}</Text>
+                    <View>
+                      <RenderHTML
+                        contentWidth={width}
+                        source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
+                      />
+                    </View>
                   )}
 
                   {data && data?.receivers_display?.length > 1 && (
@@ -540,6 +563,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       <RenderHTML
                         contentWidth={width}
                         source={{ html: data?.receivers_display }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     </View>
                   )}
@@ -587,6 +611,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display[0] }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                   {data && data.copytos_display?.length > 1 && (
@@ -594,11 +619,35 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display.join("\n") }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                 </>
               )}
             </View>
+            {data?.jenis_surat == "Memorandum" && (
+              <>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                    Internal Satker
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
+                  }}
+                >
+                  {data && data.internal_satker?.length == 0 && (
+                    <Text style={{ fontSize: 13 }}>-</Text>
+                  )}
+                  {data && data.internal_satker?.length !== 0 && (
+                    <Text style={{ fontSize: 13 }}>{data.internal_satker}</Text>
+                  )}
+                </View>
+              </>
+            )}
           </>
         )}
         {data?.template?.name == "nota_external" && (
@@ -670,6 +719,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data &&
@@ -717,6 +767,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                             style={{ fontSize: 13 }}
                             contentWidth={width}
                             source={{ html: data?.receivers[0] }}
+                            defaultTextProps={{ allowFontScaling: false }}
                           />
                         )}
                       </>
@@ -748,6 +799,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers_display[0] }}
+                        defaultTextProps={{ allowFontScaling: false }}
                       />
                     )}
                     {data &&
@@ -810,6 +862,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display[0] }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                   {data && data.copytos_display?.length > 1 && (
@@ -817,6 +870,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       style={{ fontSize: 13 }}
                       contentWidth={width}
                       source={{ html: data?.copytos_display.join("\n") }}
+                      defaultTextProps={{ allowFontScaling: false }}
                     />
                   )}
                 </>
@@ -894,6 +948,35 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
+                      Agenda Kegiatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.agenda?.length == 0 ? "-" : data?.agenda}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
                       Tanggal Kegiatan
                     </Text>
                     <Text
@@ -939,7 +1022,10 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
-                      {data?.start_time} - {data?.end_time} {data?.timezone}
+                      {data?.start_time}{" "}
+                      {data?.end_time == "Selesai" ? data?.timezone : null} -{" "}
+                      {data?.end_time}{" "}
+                      {data?.end_time != "Selesai" ? data?.timezone : null}
                     </Text>
                   </View>
 
@@ -959,7 +1045,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         paddingRight: 20,
                       }}
                     >
-                      Lokasi Kegiatan
+                      Tempat Kegiatan
                     </Text>
                     <Text
                       style={{

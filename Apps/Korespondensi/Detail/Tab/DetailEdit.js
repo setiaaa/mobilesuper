@@ -301,6 +301,7 @@ function DetailEdit({ route, data, tipe }) {
                 roundness: 12,
               }}
               style={styles.inputContainer}
+              allowFontScaling={false}
             />
           </View>
         </View>
@@ -591,6 +592,7 @@ function DetailEdit({ route, data, tipe }) {
                 roundness: 12,
               }}
               style={styles.inputContainer}
+              allowFontScaling={false}
             />
           </View>
         </View>
@@ -778,6 +780,7 @@ function DetailEdit({ route, data, tipe }) {
                           roundness: 12,
                         }}
                         style={styles.inputContainer}
+                        allowFontScaling={false}
                       />
                     </View>
                   </View>
@@ -941,6 +944,7 @@ function DetailEdit({ route, data, tipe }) {
                         roundness: 12,
                       }}
                       style={styles.inputContainer}
+                      allowFontScaling={false}
                     />
                   </View>
                 </View>
@@ -957,6 +961,7 @@ function DetailEdit({ route, data, tipe }) {
                       roundness: 12,
                     }}
                     style={styles.inputContainer}
+                    allowFontScaling={false}
                   />
                 </View>
 

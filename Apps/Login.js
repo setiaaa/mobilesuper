@@ -384,6 +384,7 @@ function Login() {
           left={
             <TextInput.Icon icon="at" color={GlobalStyles.colors.textBlack} />
           }
+          allowFontScaling={false}
         />
         <TextInput
           style={[styles.inputContainerStyle, styles.fontSize]}
@@ -403,6 +404,7 @@ function Login() {
                   : setIsPasswordSecure(true)
               }
               forceTextInputFocus={false}
+              allowFontScaling={false}
             />
           }
         />

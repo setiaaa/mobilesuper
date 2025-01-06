@@ -254,6 +254,7 @@ export const TambahDokumenLain = () => {
                 style={{ padding: 10 }}
                 onChangeText={setSubject}
                 value={Subject}
+                allowFontScaling={false}
               />
             </View>
 
@@ -292,6 +293,7 @@ export const TambahDokumenLain = () => {
                 style={{ padding: 10 }}
                 onChangeText={setNoDokumen}
                 value={Nodokumen}
+                allowFontScaling={false}
               />
             </View>
 
@@ -328,6 +330,7 @@ export const TambahDokumenLain = () => {
                 placeholder="Pilih member"
                 style={{ padding: 10, width: "80%" }}
                 value={pilihanPenandatangan[0]?.title}
+                allowFontScaling={false}
               />
               <View
                 style={{
@@ -509,6 +512,7 @@ export const TambahDokumenLain = () => {
                   style={{ padding: 10, height: 150 }}
                   onChangeText={setKeterangan}
                   value={Keterangan}
+                  allowFontScaling={false}
                 />
               </KeyboardAvoidingView>
             </View>

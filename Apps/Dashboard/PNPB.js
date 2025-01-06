@@ -72,7 +72,8 @@ export const PNBP = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -96,7 +97,8 @@ export const PNBP = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -121,7 +123,8 @@ export const PNBP = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -144,7 +147,8 @@ export const PNBP = () => {
                   flex: 1,
                 }}
                 allowFileAccess={true}
-                androidLayerType={"software"}
+                textZoom={100}
+                androidLayerType={"hardware"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
                 scalesPageToFit={true}
@@ -161,13 +165,14 @@ export const PNBP = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/PNBP.html",
+            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/PNBPMobile.html",
           }}
           style={{
             flex: 1,
           }}
           allowFileAccess={true}
-          androidLayerType={"software"}
+          textZoom={100}
+          androidLayerType={"hardware"}
           mixedContentMode={"always"}
           allowUniversalAccessFromFileURLs={true}
           scalesPageToFit={true}

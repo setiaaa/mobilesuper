@@ -35,7 +35,7 @@ import { getTokenValue } from "../../service/session";
 import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { setRating } from "../../store/Repository";
+import { setEdit, setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
@@ -84,6 +84,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                 navigation.navigate("MainDetailRepo");
                 getDetailRepo(item.id);
                 dispatch(setRating(true));
+                dispatch(setEdit(""));
               }}
             >
               <Text
@@ -143,7 +144,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     width: device === "tablet" ? 200 : 100,
                   }}
                 >
-                  Perubahan
+                  Dibuat
                 </Text>
                 <Text
                   style={{
@@ -152,7 +153,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
+                  {moment(item.created_at).locale("id").format("DD MMMM yyyy")}
                 </Text>
               </View>
 
@@ -222,7 +223,6 @@ export const Dibagikan = () => {
   const [dataM, setDataM] = useState([]);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
-  const [general, setGeneral] = useState("");
 
   const dispatch = useDispatch();
 
@@ -235,7 +235,11 @@ export const Dibagikan = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(
-        getDocumentDibagikan({ token: token, page: page, general: general })
+        getDocumentDibagikan({
+          token: token,
+          page: page,
+          tipe: "done",
+        })
       );
     }
   }, [token, page]);
@@ -276,7 +280,11 @@ export const Dibagikan = () => {
     try {
       if (token !== "") {
         dispatch(
-          getDocumentDibagikan({ token: token, page: page, general: general })
+          getDocumentDibagikan({
+            token: token,
+            page: page,
+            tipe: "done",
+          })
         );
       }
     } catch (error) {}
@@ -325,12 +333,12 @@ export const Dibagikan = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: fontSizeResponsive("H1", device),
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 600,
                   color: "white",
                 }}
               >
-                Preparing dan Sharing
+                Dibagikan
               </Text>
             </View>
           </View>
@@ -338,11 +346,7 @@ export const Dibagikan = () => {
           <View
             style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
           >
-            <Search
-              placeholder={"Cari"}
-              iconColor={COLORS.primary}
-              // onSearch={setGeneral}
-            />
+            <Search placeholder={"Cari"} iconColor={COLORS.primary} />
           </View>
 
           {/* <View style={{ width: '90%', marginHorizontal: 20 }}>

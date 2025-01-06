@@ -39,6 +39,8 @@ export const DetailKalenderPersonal = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(detail.disposisi);
+
   return (
     <ScrollView>
       <View
@@ -76,7 +78,7 @@ export const DetailKalenderPersonal = () => {
               color: COLORS.white,
             }}
           >
-            Detail Kalender Personal
+            Detail Kalender Satker
           </Text>
         </View>
       </View>
@@ -198,8 +200,8 @@ export const DetailKalenderPersonal = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    {detail.extra_attributes?.start_time}{" "}
-                    {detail.extra_attributes?.timezone} -{" "}
+                    {detail.extra_attributes?.start_time}
+                    {detail.extra_attributes?.timezone}-{" "}
                     {detail.extra_attributes?.end_time}{" "}
                     {detail.extra_attributes?.end_time === "Selesai"
                       ? ""
@@ -253,7 +255,9 @@ export const DetailKalenderPersonal = () => {
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
-                      {detail?.location === "" ? "-" : detail?.location}
+                      {detail?.location === "" || detail.location === null
+                        ? "-"
+                        : detail?.location}
                     </Text>
                   </View>
                 )}
@@ -296,7 +300,8 @@ export const DetailKalenderPersonal = () => {
                   />
                 ) : (
                   <View style={{ justifyContent: "center", width: 180 }}>
-                    {detail?.extra_attributes?.kepada?.length !== 0 ? (
+                    {detail?.extra_attributes?.kepada?.length !== 0 &&
+                    detail?.extra_attributes?.kepada !== undefined ? (
                       detail?.extra_attributes?.kepada?.map((item, index) => {
                         return (
                           <View
@@ -336,6 +341,97 @@ export const DetailKalenderPersonal = () => {
                           </View>
                         );
                       })
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tembusan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 180 }}>
+                    {detail?.extra_attributes?.list_tembusan?.length !== 0 &&
+                    detail?.extra_attributes?.list_tembusan !== null ? (
+                      detail?.extra_attributes?.list_tembusan?.map(
+                        (item, index) => {
+                          return (
+                            <View
+                              key={index}
+                              style={{
+                                flexDirection: "row",
+                                gap: 10,
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {index + 1}.{" "}
+                              </Text>
+                              {/* <Image
+                              source={{ uri: item.avatar_url }}
+                              style={{
+                                marginLeft: -8,
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: 30,
+                                height: 30,
+                              }}
+                            /> */}
+                              <Text
+                                style={{
+                                  width: device === "tablet" ? 300 : 100,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item}
+                              </Text>
+                            </View>
+                          );
+                        }
+                      )
                     ) : (
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
@@ -414,7 +510,13 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 250 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 250
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -423,6 +525,99 @@ export const DetailKalenderPersonal = () => {
                         </View>
                       );
                     })}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Disposisi
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 150 }}>
+                    {detail?.disposisi?.length === 0 ? ( // Cek panjang array
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text> // Tampilkan "-"
+                    ) : (
+                      detail?.disposisi?.map((item, index) => (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {index + 1}.{" "}
+                          </Text>
+                          <Image
+                            source={{ uri: item.avatar_url }}
+                            style={{
+                              marginLeft: -8,
+                              borderWidth: 2,
+                              borderRadius: 50,
+                              borderColor: COLORS.white,
+                              width: device === "tablet" ? 50 : 30,
+                              height: device === "tablet" ? 50 : 30,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              width:
+                                device === "tablet" &&
+                                orientation === "portrait"
+                                  ? 250
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
+                        </View>
+                      ))
+                    )}
                   </View>
                 )}
               </View>
@@ -813,7 +1008,12 @@ export const DetailKalenderPersonal = () => {
                   <Text
                     style={{
                       justifyContent: "center",
-                      width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 400: 150,
+                      width:
+                        device === "tablet" && orientation === "potrait"
+                          ? 300
+                          : device === "tablet" && orientation === "landscape"
+                          ? 400
+                          : 150,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
@@ -1151,6 +1351,87 @@ export const DetailKalenderPersonal = () => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
+                    Tembusan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.list_tembusan?.length !== 0 &&
+                    detail?.extra_attributes?.list_tembusan !== null ? (
+                      detail?.extra_attributes?.list_tembusan?.map(
+                        (item, index) => {
+                          return (
+                            <View
+                              key={index}
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 10,
+                                marginTop: 5,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {index + 1}.{" "}
+                              </Text>
+                              <Text
+                                style={{
+                                  width: device === "tablet" ? 300 : 120,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item}
+                              </Text>
+                            </View>
+                          );
+                        }
+                      )
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
                     Member
                   </Text>
                 </View>
@@ -1192,7 +1473,13 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 300: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 200
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 300
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -1204,6 +1491,100 @@ export const DetailKalenderPersonal = () => {
                   </View>
                 )}
               </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.3,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+
+              <View>
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ width: "50%" }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: FONTWEIGHT.bold,
+                      }}
+                    >
+                      Disposisi
+                    </Text>
+                  </View>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{ borderRadius: 4 }}
+                      width={100}
+                      height={20}
+                    />
+                  ) : (
+                    <View style={{ justifyContent: "center", width: 150 }}>
+                      {detail?.disposisi?.length === 0 ? ( // Cek panjang array
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          -
+                        </Text> // Tampilkan "-"
+                      ) : (
+                        detail?.disposisi?.map((item, index) => (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {index + 1}.{" "}
+                            </Text>
+                            <Image
+                              source={{ uri: item.avatar_url }}
+                              style={{
+                                marginLeft: -8,
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: device === "tablet" ? 50 : 30,
+                                height: device === "tablet" ? 50 : 30,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                width:
+                                  device === "tablet" &&
+                                  orientation === "portrait"
+                                    ? 250
+                                    : device === "tablet" &&
+                                      orientation === "landscape"
+                                    ? 300
+                                    : 100,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {item.nama}
+                            </Text>
+                          </View>
+                        ))
+                      )}
+                    </View>
+                  )}
+                </View>
+              </View>
+
               <View
                 style={{
                   height: 1,
@@ -1507,7 +1888,14 @@ export const DetailKalenderPersonal = () => {
                             </Text>
                             <Text
                               style={{
-                                width: device === "tablet"  && orientation === 'potrait'? 300 :device === "tablet"  && orientation === 'landscape'? 350: 120,
+                                width:
+                                  device === "tablet" &&
+                                  orientation === "potrait"
+                                    ? 300
+                                    : device === "tablet" &&
+                                      orientation === "landscape"
+                                    ? 350
+                                    : 120,
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
@@ -1516,6 +1904,90 @@ export const DetailKalenderPersonal = () => {
                           </View>
                         );
                       })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tembusan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.list_tembusan?.length !== 0 &&
+                    detail?.extra_attributes?.list_tembusan !== null ? (
+                      detail?.extra_attributes?.list_tembusan?.map(
+                        (item, index) => {
+                          return (
+                            <View
+                              key={index}
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 10,
+                                marginTop: 5,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {index + 1}.{" "}
+                              </Text>
+                              <Text
+                                style={{
+                                  width:
+                                    device === "tablet" &&
+                                    orientation === "potrait"
+                                      ? 300
+                                      : device === "tablet" &&
+                                        orientation === "landscape"
+                                      ? 350
+                                      : 120,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {item}
+                              </Text>
+                            </View>
+                          );
+                        }
+                      )
                     ) : (
                       <Text>-</Text>
                     )}
@@ -1590,7 +2062,13 @@ export const DetailKalenderPersonal = () => {
                           />
                           <Text
                             style={{
-                              width: device === "tablet"  && orientation === 'potrait'? 200 :device === "tablet"  && orientation === 'landscape'? 350: 100,
+                              width:
+                                device === "tablet" && orientation === "potrait"
+                                  ? 200
+                                  : device === "tablet" &&
+                                    orientation === "landscape"
+                                  ? 350
+                                  : 100,
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
@@ -1602,6 +2080,100 @@ export const DetailKalenderPersonal = () => {
                   </View>
                 )}
               </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.5,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+
+              <View>
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ width: "50%" }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: FONTWEIGHT.bold,
+                      }}
+                    >
+                      Disposisi
+                    </Text>
+                  </View>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{ borderRadius: 4 }}
+                      width={100}
+                      height={20}
+                    />
+                  ) : (
+                    <View style={{ justifyContent: "center", width: 150 }}>
+                      {detail?.disposisi?.length === 0 ? ( // Cek panjang array
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          -
+                        </Text> // Tampilkan "-"
+                      ) : (
+                        detail?.disposisi?.map((item, index) => (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {index + 1}.{" "}
+                            </Text>
+                            <Image
+                              source={{ uri: item.avatar_url }}
+                              style={{
+                                marginLeft: -8,
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: device === "tablet" ? 50 : 30,
+                                height: device === "tablet" ? 50 : 30,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                width:
+                                  device === "tablet" &&
+                                  orientation === "portrait"
+                                    ? 250
+                                    : device === "tablet" &&
+                                      orientation === "landscape"
+                                    ? 300
+                                    : 100,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {item.nama}
+                            </Text>
+                          </View>
+                        ))
+                      )}
+                    </View>
+                  )}
+                </View>
+              </View>
+
               <View
                 style={{
                   height: 1,

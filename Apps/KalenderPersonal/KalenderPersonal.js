@@ -36,6 +36,8 @@ export const KalenderPersonal = () => {
   const [modal, setModal] = useState(false);
   const [datalist, setDataList] = useState([]);
 
+  const { profile } = useSelector((state) => state.superApps);
+
   const dispatch = useDispatch();
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -195,7 +197,10 @@ export const KalenderPersonal = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("Home")}
+          >
             <Ionicons
               name="chevron-back-outline"
               size={device === "tablet" ? 40 : 24}

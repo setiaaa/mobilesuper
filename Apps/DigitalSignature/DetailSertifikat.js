@@ -5,6 +5,7 @@ import { ScrollView } from "react-native";
 import { Text } from "react-native";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -21,7 +22,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useDispatch, useSelector } from "react-redux";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
@@ -33,7 +34,6 @@ import { setStatus } from "../../store/DigitalSign";
 
 export const DetailSertifikat = ({ route }) => {
   const data = route.params;
-  console.log(data);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const [paraphrase, setParaphrase] = useState("");
@@ -90,30 +90,20 @@ export const DetailSertifikat = ({ route }) => {
 
     if (nipApprover.includes(profile.nip)) setIsApprover(true);
     else setIsApprover(false);
-  }, []);
+  }, [data, item]);
 
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+
+  const currentDate = new Date();
 
   const handleSubmit = () => {
     const payload = {
       passphrase: paraphrase,
       id_documents: [item.id],
-      array_of_sign: [
-        {
-          kanan_atas_y: "163.0982523076924",
-          kanan_atas_x: "781.2408256615383",
-          kiri_bawah_x: "522.1515948923077",
-          kiri_bawah_y: "100.91683692307703",
-          halaman: "1",
-        },
-        {
-          kanan_atas_y: "163.0982523076924",
-          kanan_atas_x: "781.2408256615383",
-          kiri_bawah_x: "522.1515948923077",
-          kiri_bawah_y: "100.91683692307703",
-          halaman: "2",
-        },
-      ],
+      signature_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
+      komentar: "",
     };
     const data = {
       token: token,
@@ -124,10 +114,8 @@ export const DetailSertifikat = ({ route }) => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(item);
-
   return (
-    <View style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <ScrollView>
           <View
@@ -1032,6 +1020,7 @@ export const DetailSertifikat = ({ route }) => {
                       borderColor: "#D0D5DD",
                     }}
                     onChangeText={setParaphrase}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -1096,10 +1085,11 @@ export const DetailSertifikat = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"MainDigitalSign"}
           />
         </ScrollView>
       </BottomSheetModalProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 };

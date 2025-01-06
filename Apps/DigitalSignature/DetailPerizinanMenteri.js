@@ -6,6 +6,7 @@ import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -86,10 +87,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
   const { device } = useSelector((state) => state.apps);
   const dispatch = useDispatch();
 
+  const currentDate = new Date();
+
   const handleSubmit = () => {
     const payload = {
       passphrase: "",
       id_documents: [item.id],
+      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
       comment: "Dokumen sudah di tanda tangan",
     };
     const data = {
@@ -519,7 +525,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                     style={{
                                       color: COLORS.success,
                                       fontSize: fontSizeResponsive(
-                                        "H2",
+                                        "H4",
                                         device
                                       ),
                                     }}
@@ -562,7 +568,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                     style={{
                                       color: COLORS.infoDanger,
                                       fontSize: fontSizeResponsive(
-                                        "H2",
+                                        "H4",
                                         device
                                       ),
                                     }}
@@ -681,7 +687,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                  */}
           <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
             {(profile?.nip === "196212301990031006" ||
-              profile?.nip === "190001" ||
+              profile?.nip === "69030175" ||
               profile?.nip === "88888") && (
               <TouchableOpacity
                 onPress={() => handleShowAttachment("undangan")}
@@ -706,7 +712,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
               </TouchableOpacity>
             )}
 
-            {(profile?.nip === "190001" || profile?.nip === "88888") && (
+            {(profile?.nip === "69030175" || profile?.nip === "88888") && (
               <TouchableOpacity
                 onPress={() => handleShowAttachment("memo")}
                 style={{
@@ -849,6 +855,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -876,6 +883,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    allowFontScaling={false}
                   />
                 </View>
 
@@ -910,6 +918,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
             navigate={"PerizinanMenteri"}
           />
         </ScrollView>

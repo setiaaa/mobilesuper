@@ -50,6 +50,15 @@ export const HasilSurvey = () => {
   const [dataset, setDataSet] = useState([]);
   const [datasetdone, setDataSetDone] = useState([]);
   const [datasetuse, setDataSetUse] = useState([]);
+  const [dataUnitKerja, setDataUnitKerja] = useState([]);
+  const [aktualNameUnker, setAktualNameUnker] = useState([]);
+  const [labelUnker, setLabelUnker] = useState([]);
+  const [dataJenisKelamin, setJenisKelamin] = useState([]);
+  const [dataJenisPegawai, setJenisPegawai] = useState([]);
+  const [dataUsia, setDataUsia] = useState([]);
+  const [dataPendidikan, setDataPendidikan] = useState([]);
+  const [aktualNamePendidikan, setAktualNamePendidikan] = useState([]);
+  const [labelPendidikan, setLabelPendidikan] = useState([]);
   const [labelPie, setLabelPie] = useState([]);
   const [dataPenilainSatu, setDataPenilaianSatu] = useState([]);
   const [dataPenilainDua, setDataPenilaianDua] = useState([]);
@@ -72,7 +81,7 @@ export const HasilSurvey = () => {
     { Korespondensi: 0 },
     { "E-mail": 0 },
     { Kebijakan: 0 },
-    { "Preparing dan Sharing": 0 },
+    { "KKP Drive": 0 },
     { Pengetahuan: 0 },
     { "Digital Sign": 0 },
     { "Layanan Mandiri -> Cuti": 0 },
@@ -137,32 +146,38 @@ export const HasilSurvey = () => {
           id: String.fromCharCode(charA),
           name: Object.keys(item)[0],
         });
-        let check = count["Modul yang paling disukai"]?.hasOwnProperty(
-          Object.keys(item)[0]
-        );
-        let checkDone = count["Modul yang sudah digunakan"]?.hasOwnProperty(
-          Object.keys(item)[0]
-        );
-        let checkUse = count[
+        let check = count["answer_counts"]?.[
+          "Modul yang paling disukai"
+        ]?.hasOwnProperty(Object.keys(item)[0]);
+        let checkDone = count["answer_counts"]?.[
+          "Modul yang sudah digunakan"
+        ]?.hasOwnProperty(Object.keys(item)[0]);
+        let checkUse = count["answer_counts"]?.[
           "Modul yang paling sering digunakan"
         ]?.hasOwnProperty(Object.keys(item)[0]);
         if (check) {
           dataset.push(
-            count["Modul yang paling disukai"][Object.keys(item)[0]]
+            count["answer_counts"]?.["Modul yang paling disukai"][
+              Object.keys(item)[0]
+            ]
           );
         } else {
           dataset.push(0);
         }
         if (checkDone) {
           datasetdone.push(
-            count["Modul yang sudah digunakan"][Object.keys(item)[0]]
+            count["answer_counts"]?.["Modul yang sudah digunakan"][
+              Object.keys(item)[0]
+            ]
           );
         } else {
           datasetdone.push(0);
         }
         if (checkUse) {
           datasetuse.push(
-            count["Modul yang paling sering digunakan"][Object.keys(item)[0]]
+            count["answer_counts"]?.["Modul yang paling sering digunakan"][
+              Object.keys(item)[0]
+            ]
           );
         } else {
           datasetuse.push(0);
@@ -172,31 +187,31 @@ export const HasilSurvey = () => {
 
       penilaian.map((item) => {
         labelPie.push(item.name);
-        let checksatu = count[
+        let checksatu = count["answer_counts"]?.[
           "Portal Collaboration Office dapat diakses setiap hari"
         ]?.hasOwnProperty(item.id);
 
-        let checkdua = count[
+        let checkdua = count["answer_counts"]?.[
           "Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
         ]?.hasOwnProperty(item.id);
 
-        let checktiga = count[
+        let checktiga = count["answer_counts"]?.[
           "Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
         ]?.hasOwnProperty(item.id);
 
-        let checktempat = count[
+        let checktempat = count["answer_counts"]?.[
           "Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
         ]?.hasOwnProperty(item.id);
 
-        let checklima = count[
+        let checklima = count["answer_counts"]?.[
           "Portal Collaboration Office mudah digunakan"
         ]?.hasOwnProperty(item.id);
 
         if (checksatu) {
           dataPenilainSatu.push(
-            count["Portal Collaboration Office dapat diakses setiap hari"][
-              item.id
-            ]
+            count["answer_counts"]?.[
+              "Portal Collaboration Office dapat diakses setiap hari"
+            ][item.id]
           );
         } else {
           dataPenilainSatu.push(0);
@@ -204,7 +219,7 @@ export const HasilSurvey = () => {
 
         if (checkdua) {
           dataPenilainDua.push(
-            count[
+            count["answer_counts"]?.[
               "Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
             ][item.id]
           );
@@ -214,7 +229,7 @@ export const HasilSurvey = () => {
 
         if (checktiga) {
           dataPenilainTiga.push(
-            count[
+            count["answer_counts"]?.[
               "Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
             ][item.id]
           );
@@ -224,7 +239,7 @@ export const HasilSurvey = () => {
 
         if (checktempat) {
           dataPenilainEmpat.push(
-            count[
+            count["answer_counts"]?.[
               "Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
             ][item.id]
           );
@@ -234,7 +249,9 @@ export const HasilSurvey = () => {
 
         if (checklima) {
           dataPenilainLima.push(
-            count["Portal Collaboration Office mudah digunakan"][item.id]
+            count["answer_counts"]?.[
+              "Portal Collaboration Office mudah digunakan"
+            ][item.id]
           );
         } else {
           dataPenilainLima.push(0);
@@ -253,17 +270,19 @@ export const HasilSurvey = () => {
       // }
       if (count.length !== 0) {
         dataRataSatu.push(
-          (((count["average Portal Collaboration Office mudah digunakan"] +
-            count[
+          (((count["answer_counts"]?.[
+            "average Portal Collaboration Office mudah digunakan"
+          ] +
+            count["answer_counts"]?.[
               "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
             ] +
-            count[
+            count["answer_counts"]?.[
               "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
             ] +
-            count[
+            count["answer_counts"]?.[
               "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
             ] +
-            count[
+            count["answer_counts"]?.[
               "average Portal Collaboration Office dapat diakses setiap hari"
             ]) /
             5) *
@@ -273,35 +292,99 @@ export const HasilSurvey = () => {
       }
 
       dataRataDua.push(
-        count[
+        count["answer_counts"]?.[
           "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
         ],
         5 -
-          count[
+          count["answer_counts"]?.[
             "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
           ]
       );
 
       dataRataTiga.push(
-        count["average Portal Collaboration Office dapat diakses setiap hari"],
+        count["answer_counts"]?.[
+          "average Portal Collaboration Office dapat diakses setiap hari"
+        ],
         5 -
-          count["average Portal Collaboration Office dapat diakses setiap hari"]
+          count["answer_counts"]?.[
+            "average Portal Collaboration Office dapat diakses setiap hari"
+          ]
       );
 
       dataRataEmpat.push(
-        count["average Portal Collaboration Office mudah digunakan"],
-        5 - count["average Portal Collaboration Office mudah digunakan"]
+        count["answer_counts"]?.[
+          "average Portal Collaboration Office mudah digunakan"
+        ],
+        5 -
+          count["answer_counts"]?.[
+            "average Portal Collaboration Office mudah digunakan"
+          ]
       );
 
       dataRataLima.push(
-        count[
+        count["answer_counts"]?.[
           "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
         ],
         5 -
-          count[
+          count["answer_counts"]?.[
             "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
           ]
       );
+
+      const dataUnker = Object.values(count["division_counts"]).filter(
+        (value) => value !== 0
+      );
+
+      const aktualNameUnker = Object.keys(count["division_counts"])
+        .filter((key) => count["division_counts"][key] !== 0)
+        .map((key, index) => ({
+          id: String.fromCharCode(65 + index), // Convert index to letter (A, B, C, ...)
+          name: key,
+        }));
+
+      const labelUnker = Object.keys(count["division_counts"])
+        .filter((key) => count["division_counts"][key] !== 0) // Menghilangkan elemen dengan nilai 0
+        .map((key, index) => String.fromCharCode(65 + index)); // Menghasilkan huruf sesuai urutan
+
+      const dataJenisKelamin = Object.values(
+        count["jenis_kelamin_counts"]
+      ).filter((value) => value !== 0);
+
+      const dataJenisPegawai = Object.values(
+        count["jenis_pegawai_counts"]
+      ).filter((value) => value !== 0);
+
+      const dataUsia = [
+        // Usia 21 - 30
+        Object.keys(count["age_counts"])
+          .filter((age) => +age >= 21 && +age <= 30) // Memfilter usia antara 21 dan 30
+          .reduce((sum, age) => sum + count["age_counts"][age], 0), // Menjumlahkan jumlah orang dalam rentang ini
+
+        // Usia 31 - 40
+        Object.keys(count["age_counts"])
+          .filter((age) => +age >= 31 && +age <= 40) // Memfilter usia antara 31 dan 40
+          .reduce((sum, age) => sum + count["age_counts"][age], 0), // Menjumlahkan jumlah orang dalam rentang ini
+
+        // Usia 41 ke atas
+        Object.keys(count["age_counts"])
+          .filter((age) => +age >= 41) // Memfilter usia 41 dan seterusnya
+          .reduce((sum, age) => sum + count["age_counts"][age], 0), // Menjumlahkan jumlah orang dalam rentang ini
+      ];
+
+      const dataPendidikan = Object.values(count["pendidikan_counts"]).filter(
+        (value) => value !== 0
+      );
+
+      const aktualNamePendidikan = Object.keys(count["pendidikan_counts"])
+        .filter((key) => count["pendidikan_counts"][key] !== 0)
+        .map((key, index) => ({
+          id: String.fromCharCode(65 + index), // Convert index to letter (A, B, C, ...)
+          name: key,
+        }));
+
+      const labelPendidikan = Object.keys(count["pendidikan_counts"])
+        .filter((key) => count["pendidikan_counts"][key] !== 0) // Menghilangkan elemen dengan nilai 0
+        .map((key, index) => String.fromCharCode(65 + index)); // Menghasilkan huruf sesuai urutan
 
       setLabel(label);
       setAktualName(aktualName);
@@ -321,10 +404,17 @@ export const HasilSurvey = () => {
       setDataRataLima(dataRataLima);
       setAktualNameRata(aktualNameRata);
       setLabelRata(labelRata);
+      setDataUnitKerja(dataUnker);
+      setAktualNameUnker(aktualNameUnker);
+      setLabelUnker(labelUnker);
+      setJenisKelamin(dataJenisKelamin);
+      setJenisPegawai(dataJenisPegawai);
+      setDataUsia(dataUsia);
+      setDataPendidikan(dataPendidikan);
+      setAktualNamePendidikan(aktualNamePendidikan);
+      setLabelPendidikan(labelPendidikan);
     }
   }, [count]);
-
-  console.log(dataRataSatu);
 
   const sliceColor = [
     COLORS.infoDanger,
@@ -333,6 +423,12 @@ export const HasilSurvey = () => {
     COLORS.info,
     COLORS.success,
   ];
+
+  const sliceColorJenisKelamin = [COLORS.orange, COLORS.warning];
+
+  const sliceColorJenisPegawai = [COLORS.orange, COLORS.warning, COLORS.grey];
+
+  const sliceColorJenisUsia = [COLORS.orange, COLORS.warning, COLORS.grey];
 
   const colorAveragefirst = [COLORS.success, COLORS.ExtraDivinder];
   const colorAverageSecond = [COLORS.warning, COLORS.ExtraDivinder];
@@ -542,7 +638,7 @@ export const HasilSurvey = () => {
             <View style={{ flexDirection: "row", gap: 10 }}>
               <Text style={{ width: 10 }}>{item.id}</Text>
               <Text>=</Text>
-              <Text>{item.name}</Text>
+              <Text style={{ width: 260 }}>{item.name}</Text>
             </View>
           );
         })}
@@ -651,7 +747,7 @@ export const HasilSurvey = () => {
             <View style={{ flexDirection: "row", gap: 10 }}>
               <Text style={{ width: 10 }}>{item.id}</Text>
               <Text>=</Text>
-              <Text>{item.name}</Text>
+              <Text style={{ width: 260 }}>{item.name}</Text>
             </View>
           );
         })}
@@ -760,7 +856,7 @@ export const HasilSurvey = () => {
             <View style={{ flexDirection: "row", gap: 10 }}>
               <Text style={{ width: 10 }}>{item.id}</Text>
               <Text>=</Text>
-              <Text>{item.name}</Text>
+              <Text style={{ width: 260 }}>{item.name}</Text>
             </View>
           );
         })}
@@ -802,7 +898,7 @@ export const HasilSurvey = () => {
           Rata-rata{" "}
           {count === null
             ? "-"
-            : count[
+            : count["answer_counts"]?.[
                 "average Portal Collaboration Office dapat diakses setiap hari"
               ]}
         </Text>
@@ -1056,7 +1152,7 @@ export const HasilSurvey = () => {
           Rata-rata{" "}
           {count === null
             ? "-"
-            : count[
+            : count["answer_counts"]?.[
                 "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
               ]}
         </Text>
@@ -1309,7 +1405,7 @@ export const HasilSurvey = () => {
           Rata-rata{" "}
           {count === null
             ? "-"
-            : count[
+            : count["answer_counts"]?.[
                 "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
               ]}
         </Text>
@@ -1563,7 +1659,7 @@ export const HasilSurvey = () => {
           Rata-rata{" "}
           {count === null
             ? "-"
-            : count[
+            : count["answer_counts"]?.[
                 "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
               ]}
         </Text>
@@ -1816,7 +1912,9 @@ export const HasilSurvey = () => {
           Rata-rata{" "}
           {count === null
             ? "-"
-            : count["average Portal Collaboration Office mudah digunakan"]}
+            : count["answer_counts"]?.[
+                "average Portal Collaboration Office mudah digunakan"
+              ]}
         </Text>
         {dataPenilainLima.length !== 0 ? (
           <PieChart
@@ -2324,6 +2422,681 @@ export const HasilSurvey = () => {
             style={{ alignSelf: "center", marginVertical: 20 }}
           />
         ) : null} */}
+      </View>
+      {/*grafik data unit kerja*/}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginBottom: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Grafik data Unit Kerja
+        </Text>
+        <View
+          style={{
+            justifyContent: device === "tablet" ? "center" : "flex-start",
+            alignItems: device === "tablet" ? "center" : "flex-start",
+          }}
+        >
+          <BarChart
+            data={{
+              labels: labelUnker,
+              datasets: [
+                {
+                  data: dataUnitKerja,
+                },
+              ],
+            }}
+            hide
+            legend
+            width={wp(85)}
+            height={300}
+            chartConfig={{
+              backgroundGradientFrom: COLORS.white,
+              backgroundGradientFromOpacity: 0,
+              backgroundGradientTo: COLORS.white,
+              backgroundGradientToOpacity: 1,
+              color: () => COLORS.lighter,
+              propsForBackgroundLines: {
+                x1: 60,
+              },
+              decimalPlaces: 1,
+              fillShadowGradientFromOffset: 1,
+              fillShadowGradientFrom: "#b844fc",
+              fillShadowGradientFromOpacity: 1,
+              barPercentage: 0.2,
+            }}
+            style={{ marginHorizontal: -35, marginTop: 20 }}
+            withInnerLines={false}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            marginHorizontal: 10,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: "#b844fc",
+              }}
+            />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 400,
+              }}
+            >
+              Jumlah Pegawai
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: 2,
+            backgroundColor: COLORS.grey,
+            marginVertical: 20,
+          }}
+        />
+        {aktualNameUnker.map((item) => {
+          return (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Text style={{ width: 10 }}>{item.id}</Text>
+              <Text>=</Text>
+              <Text style={{ width: 260 }}>{item.name}</Text>
+            </View>
+          );
+        })}
+      </View>
+
+      {/* jenis kelamin */}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginVertical: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Grafik Data Jenis Kelamin
+        </Text>
+
+        {dataJenisKelamin.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataJenisKelamin}
+            sliceColor={sliceColorJenisKelamin}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            // backgroundColor: "brown",
+            borderRadius: 16,
+            padding: 20,
+            borderWidth: 1,
+            borderColor: COLORS.grey,
+          }}
+        >
+          <View
+            style={{
+              gap: 10,
+              alignItems: "flex-start",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.orange,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Laki-Laki
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataJenisKelamin[0]}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.warning,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Perempuan
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataJenisKelamin[1]}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/* jenis pegawai */}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginVertical: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Grafik Data Jenis Pegawai
+        </Text>
+
+        {dataJenisPegawai.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataJenisPegawai}
+            sliceColor={sliceColorJenisPegawai}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            // backgroundColor: "brown",
+            borderRadius: 16,
+            padding: 20,
+            borderWidth: 1,
+            borderColor: COLORS.grey,
+          }}
+        >
+          <View
+            style={{
+              gap: 10,
+              alignItems: "flex-start",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.orange,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                PPPK
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataJenisPegawai[0]}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.warning,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Kontrak
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataJenisPegawai[1]}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.grey,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                PNS
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataJenisPegawai[2]}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/* data usia */}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginVertical: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Grafik Data Usia
+        </Text>
+
+        {dataUsia.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataUsia}
+            sliceColor={sliceColorJenisUsia}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            // backgroundColor: "brown",
+            borderRadius: 16,
+            padding: 20,
+            borderWidth: 1,
+            borderColor: COLORS.grey,
+          }}
+        >
+          <View
+            style={{
+              gap: 10,
+              alignItems: "flex-start",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.orange,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Usia 21 - 30
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataUsia[0]}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.warning,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Usia 31 - 40
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataUsia[1]}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.grey,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Usia 41 - Keatas
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                {dataUsia[2]}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/*grafik data pendidikan*/}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginBottom: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Grafik data Pendidikan
+        </Text>
+        <View
+          style={{
+            justifyContent: device === "tablet" ? "center" : "flex-start",
+            alignItems: device === "tablet" ? "center" : "flex-start",
+          }}
+        >
+          <BarChart
+            data={{
+              labels: labelPendidikan,
+              datasets: [
+                {
+                  data: dataPendidikan,
+                },
+              ],
+            }}
+            hide
+            legend
+            width={wp(85)}
+            height={300}
+            chartConfig={{
+              backgroundGradientFrom: COLORS.white,
+              backgroundGradientFromOpacity: 0,
+              backgroundGradientTo: COLORS.white,
+              backgroundGradientToOpacity: 1,
+              color: () => COLORS.lighter,
+              propsForBackgroundLines: {
+                x1: 60,
+              },
+              decimalPlaces: 1,
+              fillShadowGradientFromOffset: 1,
+              fillShadowGradientFrom: "#17dacc",
+              fillShadowGradientFromOpacity: 1,
+              barPercentage: 0.2,
+            }}
+            style={{ marginHorizontal: -35, marginTop: 20 }}
+            withInnerLines={false}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            marginHorizontal: 10,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: "#17dacc",
+              }}
+            />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 400,
+              }}
+            >
+              Jumlah Pegawai
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: 2,
+            backgroundColor: COLORS.grey,
+            marginVertical: 20,
+          }}
+        />
+        {aktualNamePendidikan.map((item) => {
+          return (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Text style={{ width: 10 }}>{item.id}</Text>
+              <Text>=</Text>
+              <Text style={{ width: 260 }}>{item.name}</Text>
+            </View>
+          );
+        })}
       </View>
 
       <View

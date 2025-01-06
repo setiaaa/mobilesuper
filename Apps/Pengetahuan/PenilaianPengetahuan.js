@@ -106,7 +106,10 @@ const CardPenilaian = ({ item, token, device }) => {
             style={{
               fontWeight: FONTWEIGHT.bold,
               fontSize: fontSizeResponsive("H4", device),
-              width: device === 'tablet'&& orientation=== 'potrait'? '70%': '90%' 
+              width:
+                device === "tablet" && orientation === "potrait"
+                  ? "70%"
+                  : "90%",
             }}
           >
             {item.title}
@@ -535,6 +538,7 @@ export const PenilaianPenggetahaun = () => {
                 onChangeText={(text) => setInputValue(text)}
                 onEndEditing={filter}
                 clearButtonMode="always"
+                allowFontScaling={false}
               />
             </View>
           </View>

@@ -21,7 +21,9 @@ import { TextInput } from "react-native";
 
 export const AddressbookPara = ({ route }) => {
   const [token, setToken] = useState("");
-  const { profile, unker } = useSelector((state) => state.profile);
+  const { profile, unker, selectedAttr } = useSelector(
+    (state) => state.profile
+  );
   const [inputValue, setinputValue] = useState("");
   const [searchQuery, setsearchQuery] = useState("");
   const [searchList, setsearchList] = useState([]);
@@ -73,10 +75,19 @@ export const AddressbookPara = ({ route }) => {
     // setIsLoading(true);
     try {
       if (id != undefined) {
-        let response = await getHTTP(
-          nde_api.parabydivisionid.replace("{$id}", id)
-        );
-        dispatch(setAddressbookListsDivisionPara(response?.data));
+        if (selectedAttr?.code === "") {
+          let response = await getHTTP(
+            nde_api.parabydivisionid + profile.nik + "/"
+          );
+          // nde_api.parabydivisionid.replace("{$id}", id)
+          dispatch(setAddressbookListsDivisionPara(response?.data));
+        } else {
+          let response = await getHTTP(
+            nde_api.parabydivisionid + selectedAttr?.code + "/"
+          );
+          // nde_api.parabydivisionid.replace("{$id}", id)
+          dispatch(setAddressbookListsDivisionPara(response?.data));
+        }
       }
       // setIsLoading(false);
     } catch (error) {
@@ -86,13 +97,22 @@ export const AddressbookPara = ({ route }) => {
 
   async function getParaSearch() {
     try {
-      setsearchQuery(inputValue);
-      let response = await getHTTP(
-        nde_api.parabydivisionid.replace("{$id}", selectedDivision) +
-          "?query=" +
-          inputValue
-      );
-      setsearchList(response.data);
+      if (selectedAttr?.code === "") {
+        setsearchQuery(inputValue);
+        let response = await getHTTP(
+          nde_api.parabydivisionid + profile.nik + "/?query=" + inputValue
+        );
+        setsearchList(response.data);
+      } else {
+        setsearchQuery(inputValue);
+        let response = await getHTTP(
+          nde_api.parabydivisionid +
+            selectedAttr?.code +
+            "/?query=" +
+            inputValue
+        );
+        setsearchList(response.data);
+      }
     } catch (error) {
       handlerError(error, "Peringatan!", "Pencarian Para tidak berfungsi");
     }
@@ -107,12 +127,36 @@ export const AddressbookPara = ({ route }) => {
     setListTree(addressbook.listsDivisionPara);
   }, [addressbook.listsDivisionPara]);
 
+  const deleteItem = (id, state) => {
+    let data;
+    if (state === "jabatan") {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter(
+          (item) => !id.some((dataItem) => dataItem.code === item.code)
+        );
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data?.officer?.official.split("/")[1];
+          return nip !== id;
+        });
+      }
+      dispatch(setAddressbookSelected(data));
+    } else {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
+      dispatch(setAddressbookSelected(data));
+    }
+  };
+
   const { device } = useSelector((state) => state.apps);
   const renderItem = ({ item, index }) => (
     <View style={{ marginBottom: 10 }} key={item.id}>
       <TouchableOpacity
         style={{
-          marginHorizontal: 15,
+          // marginHorizontal: 15,
           paddingVertical: 10,
           paddingHorizontal: 10,
           borderRadius: 8,
@@ -128,27 +172,53 @@ export const AddressbookPara = ({ route }) => {
           justifyContent: "space-between",
         }}
         onPress={() => {
-          const checkNode = addressbook.selected.filter(
-            (data) => data.id === item.id
+          const temp = item.code.startsWith("G")
+            ? item.officer.officials.map((title, index) => ({
+                title,
+                code: item.officer.officials_id[index],
+                id: item.officer.officials_id[index],
+              }))
+            : [];
+          const checkNode = addressbook.selected.filter((data) =>
+            temp.some((tempItem) => tempItem.id === data.id)
           );
-          if (checkNode.length > 0) {
-            Alert.alert("Peringatan", "Data tidak boleh sama");
+          if (checkNode.length > item.officer.officials_id?.length) {
+            if (config.tipeAddress == "korespondensi") {
+              deleteItem(checkNode, "jabatan");
+            } else {
+              checkNode.map((item) => {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              });
+            }
           } else {
             if (config.multiselect) {
-              dispatch(setAddressbookSelected([...addressbook.selected, item]));
+              dispatch(
+                setAddressbookSelected([
+                  ...addressbook.selected,
+                  ...temp.filter(
+                    (item) =>
+                      !addressbook.selected.some(
+                        (sel) => sel.code === item.code
+                      )
+                  ),
+                ])
+              );
             } else {
-              dispatch(setAddressbookSelected([item]));
+              dispatch(setAddressbookSelected([temp]));
             }
           }
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          {checkedNodeRadio(item) ? (
+          {/* {checkedNodeRadio(item) ? (
             <Ionicons name="ellipse" size={24} color={COLORS.primary} />
           ) : (
             <Ionicons name="ellipse-outline" size={24} />
-          )}
-          <View style={{ flexDirection: "column", width: "90%" }}>
+          )} */}
+          <View style={{ flexDirection: "column", width: "100%" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
               {item.title}
             </Text>
@@ -165,7 +235,6 @@ export const AddressbookPara = ({ route }) => {
       </TouchableOpacity>
     </View>
   );
-
   const checkedNodeRadio = (node) => {
     const checkNode = addressbook.selected.filter(
       (item) => item.id === node.id
@@ -211,6 +280,7 @@ export const AddressbookPara = ({ route }) => {
                 onChangeText={(text) => setinputValue(text)}
                 onEndEditing={getParaSearch}
                 clearButtonMode="always"
+                allowFontScaling={false}
               />
             </View>
           </View>
@@ -275,7 +345,7 @@ export const AddressbookPara = ({ route }) => {
             <FlatList
               data={listTree}
               renderItem={renderItem}
-              style={{ marginBottom: 40 }}
+              style={{ marginBottom: 40, width: "90%" }}
               keyExtractor={(item) => item.code}
             />
           ) : null}

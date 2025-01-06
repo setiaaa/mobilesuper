@@ -20,7 +20,7 @@ const AttendenceSlice = createSlice({
       })
       .addCase(getLastLogAttendence.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.payload);
+        Sentry.captureException(action.error);
       });
   },
 });

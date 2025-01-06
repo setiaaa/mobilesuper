@@ -34,9 +34,11 @@ import {} from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
-import { postRating } from "../../service/api";
+import { deleteBerbagiDokumen, postRating } from "../../service/api";
 import { Rating } from "react-native-ratings";
 import { getTokenValue } from "../../service/session";
+import { setStatus } from "../../store/Repository";
+import { ModalSubmit } from "../../components/ModalSubmit";
 
 // const item = {
 //     judul: 'Business Agility with Scrum',
@@ -88,26 +90,41 @@ export const DetailActivity = () => {
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
   };
-  const { dokumen, loading, rating } = useSelector((state) => state.repository);
-  const detail = dokumen.detail;
+  const { dokumen, loading, rating, edit, status } = useSelector(
+    (state) => state.repository
+  );
   const comment = dokumen.comments;
+  const detail = dokumen.detail;
   const [token, setToken] = useState("");
+  const [ratings, setRatings] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
   }, []);
-  const ratingCompleted = (rating) => {
+
+  useEffect(() => {
     const payload = {
-      rating: rating,
+      rating: ratings,
     };
     const data = {
       id: detail.id,
       token: token,
       payload: payload,
     };
-    dispatch(postRating(data));
+
+    if (ratings !== undefined) {
+      dispatch(postRating(data));
+    }
+  }, [dokumen, ratings]);
+
+  const handelDelete = () => {
+    const data = {
+      token: token,
+      id: detail.id,
+    };
+    dispatch(deleteBerbagiDokumen(data));
   };
 
   const { device } = useSelector((state) => state.apps);
@@ -170,6 +187,7 @@ export const DetailActivity = () => {
                 shadowOpacity: 0.2,
                 shadowRadius: 10,
                 elevation: 10,
+                marginBottom: edit === "Edit" ? 10 : "10%",
               }}
             >
               <View
@@ -318,7 +336,7 @@ export const DetailActivity = () => {
                   {detail.logged_in_user_avatar === detail.creator_avatar ? (
                     <Rating
                       key={token}
-                      onFinishRating={(value) => ratingCompleted(value)}
+                      onFinishRating={(value) => setRatings(value)}
                       fractions={2}
                       startingValue={detail.my_rating}
                       readonly
@@ -326,7 +344,7 @@ export const DetailActivity = () => {
                   ) : (
                     <Rating
                       key={token}
-                      onFinishRating={(value) => ratingCompleted(value)}
+                      onFinishRating={(value) => setRatings(value)}
                       fractions={2}
                       startingValue={detail.my_rating}
                     />
@@ -425,6 +443,108 @@ export const DetailActivity = () => {
                 </TouchableOpacity>
               </View>
             </View>
+
+            {edit === "Edit" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    backgroundColor: COLORS.lightBrown,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                    marginTop: 10,
+                  }}
+                  onPress={() => {
+                    navigation.navigate("BerbagiDokumen", {
+                      data: detail,
+                      type: "edit",
+                    });
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                    marginTop: 10,
+                    marginBottom: "30%",
+                  }}
+                  onPress={() => {
+                    handelDelete();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : edit === "EditTamplate" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    backgroundColor: COLORS.lightBrown,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 18,
+                    marginTop: 10,
+                  }}
+                  onPress={() => {
+                    navigation.navigate("TambahDokumenTamplate", {
+                      data: detail,
+                      type: "edit",
+                    });
+                  }}
+                >
+                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 18,
+                    marginTop: 10,
+                    marginBottom: "30%",
+                  }}
+                  onPress={() => {
+                    handelDelete();
+                  }}
+                >
+                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+            <ModalSubmit
+              status={status}
+              setStatus={setStatus}
+              messageSuccess={"Data Dihapus"}
+              navigate={"MainRepo"}
+            />
           </ScrollView>
           <Portal>
             <BottomSheetModalProvider>

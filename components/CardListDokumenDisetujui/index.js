@@ -6,14 +6,21 @@ import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
+export const CardListDokumenDisetujui = ({
+  item,
+  token,
+  pembatalan,
+  device,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
-    const params = { nip, id };
+    const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailArsipCuti(params));
   };
+
+  console.log(item);
 
   return (
     <>
@@ -93,7 +100,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                   />
                   <Text
                     style={{
-                      fontSize: fontSizeResponsive("H3", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       color: COLORS.lighter,
                     }}
                   >
@@ -117,7 +124,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                   />
                   <Text
                     style={{
-                      fontSize: fontSizeResponsive("H3", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       color: COLORS.lighter,
                     }}
                   >
@@ -129,7 +136,7 @@ export const CardListDokumenDisetujui = ({ item, nip, pembatalan, device }) => {
                 </View>
               </View>
 
-              {pembatalan === "pembatalan" ? (
+              {pembatalan === "pembatalan" && item?.bisa_dibatalkan === true ? (
                 <TouchableOpacity
                   style={{
                     backgroundColor: "red",

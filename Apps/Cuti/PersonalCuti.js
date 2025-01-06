@@ -31,7 +31,7 @@ import { CardArsipCuti } from "../../components/CardArsipCuti";
 import { RefreshControl } from "react-native";
 import { CardFormPengajuanCuti } from "../../components/CardFormPengajuanCuti";
 import { Config } from "../../constants/config";
-import { removePushNotif } from "../../service/session";
+import { getTokenValue, removePushNotif } from "../../service/session";
 
 export const PersonalCuti = () => {
   const dispatch = useDispatch();
@@ -40,13 +40,22 @@ export const PersonalCuti = () => {
     nip: "",
     toggle: false,
   });
+
+  const [token, setToken] = useState("");
+
   useEffect(() => {
-    if (profile.nip !== "") {
-      dispatch(getCutiPersonal(profile?.nip));
-      dispatch(getKuotaCuti(profile?.nip));
-      dispatch(getArsipCuti(profile?.nip));
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getCutiPersonal(token));
+      dispatch(getKuotaCuti(token));
+      dispatch(getArsipCuti(token));
     }
-  }, [profile?.nip]);
+  }, [token]);
 
   const navigation = useNavigation();
   const BASE_URL = Config.base_url + "bridge";
@@ -69,10 +78,10 @@ export const PersonalCuti = () => {
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (profile.nip !== "") {
-        dispatch(getCutiPersonal(profile?.nip));
-        dispatch(getKuotaCuti(profile?.nip));
-        dispatch(getArsipCuti(profile?.nip));
+      if (token !== "") {
+        dispatch(getCutiPersonal(token));
+        dispatch(getKuotaCuti(token));
+        dispatch(getArsipCuti(token));
       }
     } catch (error) {}
 
@@ -80,7 +89,7 @@ export const PersonalCuti = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [profile?.nip]);
+  }, [token]);
 
   useEffect(() => {
     if (arsipLists) {
@@ -432,6 +441,7 @@ export const PersonalCuti = () => {
                       item={item}
                       profile={profile}
                       device={device}
+                      token={token}
                     />
                   </View>
                 )}
