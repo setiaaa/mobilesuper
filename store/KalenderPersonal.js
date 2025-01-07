@@ -28,6 +28,7 @@ const KalenderPersonalSlice = createSlice({
       .addCase(getlistKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.error);
+        console.log(action.error);
       })
       .addCase(getDetailKalenderPersonal.fulfilled, (state, action) => {
         state.personal.detail = action.payload;

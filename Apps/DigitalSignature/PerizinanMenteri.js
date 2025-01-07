@@ -337,7 +337,7 @@ export const PerizinanMenteri = () => {
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Dokumen Perizinan Menteri
             </Text>
-            <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
+            <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
               <TouchableOpacity
                 style={{
                   backgroundColor:
@@ -345,7 +345,7 @@ export const PerizinanMenteri = () => {
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "48%",
+                  width: "49%",
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -353,8 +353,7 @@ export const PerizinanMenteri = () => {
                   //shadow android
                   elevation: 2,
                   justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
+                  padding: 5,
                 }}
                 onPress={() => filterHandlerInProgress()}
               >
@@ -395,24 +394,24 @@ export const PerizinanMenteri = () => {
                       style={{
                         fontWeight: FONTWEIGHT.bold,
                         // fontSize: fontSizeResponsive("H1", device),
-                        fontSize: 30,
+                        fontSize: 40,
                       }}
                     >
                       {counter?.data?.need_sign}
                     </Text>
-
-                    <Text
-                      style={{
-                        // marginTop: 10,
-                        fontSize: fontSizeResponsive("H6", device),
-                        color: COLORS.grey,
-                        fontWeight: FONTWEIGHT.bold,
-                      }}
-                    >
-                      Dokumen Belum Ditandatangani
-                    </Text>
                   </View>
                 </View>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontSize: fontSizeResponsive("H5", device),
+                    color: COLORS.grey,
+                    fontWeight: FONTWEIGHT.bold,
+                    letterSpacing: -1, // Sesuaikan nilai
+                  }}
+                >
+                  Dokumen Belum Ditandatangani
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -422,7 +421,7 @@ export const PerizinanMenteri = () => {
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "48%",
+                  width: "49%",
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -430,8 +429,7 @@ export const PerizinanMenteri = () => {
                   //shadow android
                   elevation: 2,
                   justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
+                  padding: 5,
                 }}
                 onPress={() => filterHandlerSigned()}
               >
@@ -472,23 +470,24 @@ export const PerizinanMenteri = () => {
                       style={{
                         fontWeight: FONTWEIGHT.bold,
                         // fontSize: fontSizeResponsive("H1", device),
-                        fontSize: 30,
+                        fontSize: 40,
                       }}
                     >
                       {counter?.data?.done}
                     </Text>
-                    <Text
-                      style={{
-                        // marginTop: 10,
-                        fontSize: fontSizeResponsive("H6", device),
-                        color: COLORS.grey,
-                        fontWeight: FONTWEIGHT.bold,
-                      }}
-                    >
-                      Dokumen Sudah Ditandatangani
-                    </Text>
                   </View>
                 </View>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontSize: fontSizeResponsive("H5", device),
+                    color: COLORS.grey,
+                    fontWeight: FONTWEIGHT.bold,
+                    letterSpacing: -1, // Sesuaikan nilai
+                  }}
+                >
+                  Dokumen Sudah Ditandatangani
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
