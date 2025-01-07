@@ -35,6 +35,7 @@ import {
   getListSignedDigiSign,
   tandaTanganMentri,
   getListRetry,
+  getCounterPerizinanMenteri,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -72,12 +73,15 @@ export const PerizinanMenteri = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(getCounterPerizinanMenteri({ token: token }));
     dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
   }, [token, tipe]);
 
-  const { dokumenlain, loading, status } = useSelector(
+  const { dokumenlain, loading, status, counter } = useSelector(
     (state) => state.digitalsign
   );
+
+  console.log(counter);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -319,6 +323,149 @@ export const PerizinanMenteri = () => {
 
           <View
             style={{
+              padding: 10,
+              borderRadius: 8,
+              backgroundColor: COLORS.white,
+              marginTop: 10,
+              width: "90%",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              Dokumen Perizinan Menteri
+            </Text>
+            <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor:
+                    variant === "inprogress"
+                      ? COLORS.secondaryLighter
+                      : COLORS.bgLightGrey,
+                  borderRadius: 8,
+                  width: "48%",
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 10,
+                }}
+                onPress={() => filterHandlerInProgress()}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 10,
+                      backgroundColor: COLORS.warningLight,
+                      borderRadius: 8,
+                    }}
+                  >
+                    <Ionicons
+                      name={"document-attach-outline"}
+                      size={device === "tablet" ? 40 : 40}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: 40,
+                      }}
+                    >
+                      {counter?.data?.need_sign}
+                    </Text>
+                    <Text
+                      style={{
+                        // marginTop: 10,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        color: COLORS.grey,
+                        fontWeight: FONTWEIGHT.bold,
+                      }}
+                    >
+                      Need Sign
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor:
+                    variant === "signed"
+                      ? COLORS.secondaryLighter
+                      : COLORS.bgLightGrey,
+                  borderRadius: 8,
+                  width: "48%",
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 10,
+                }}
+                onPress={() => filterHandlerSigned()}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 10,
+                      backgroundColor: COLORS.successLight,
+                      borderRadius: 8,
+                    }}
+                  >
+                    <Ionicons
+                      name={"document-text-outline"}
+                      size={device === "tablet" ? 40 : 40}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: 40,
+                      }}
+                    >
+                      {counter?.data?.done}
+                    </Text>
+                    <Text
+                      style={{
+                        // marginTop: 10,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        color: COLORS.grey,
+                        fontWeight: FONTWEIGHT.bold,
+                      }}
+                    >
+                      Signed
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
               flexDirection: "row",
               justifyContent: "space-between",
               backgroundColor: "white",
@@ -327,6 +474,7 @@ export const PerizinanMenteri = () => {
               padding: 16,
               marginTop: 10,
               alignItems: "center",
+              borderRadius: 8,
             }}
           >
             {variant === "inprogress" &&
