@@ -2289,6 +2289,18 @@ export const tandaTanganMentri = createAsyncThunk(
   }
 );
 
+export const getCounterPerizinanMenteri = createAsyncThunk(
+  "digitalsign/CounterPerizinanMenteri",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(`${digitalSign}perizinan-count/`, {
+      headers: { Authorization: token },
+    });
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",
