@@ -16,7 +16,11 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Search } from "../../components/Search";
@@ -80,8 +84,6 @@ export const PerizinanMenteri = () => {
   const { dokumenlain, loading, status, counter } = useSelector(
     (state) => state.digitalsign
   );
-
-  console.log(counter);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -356,23 +358,36 @@ export const PerizinanMenteri = () => {
                 }}
                 onPress={() => filterHandlerInProgress()}
               >
+                <Text
+                  style={{
+                    // marginTop: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    width: "100%",
+                    textAlign: "left",
+                  }}
+                >
+                  Need Sign
+                </Text>
                 <View
                   style={{
                     flexDirection: "row",
                     gap: 10,
                     alignItems: "center",
+                    marginTop: 10,
                   }}
                 >
                   <View
                     style={{
-                      padding: 10,
-                      backgroundColor: COLORS.warningLight,
-                      borderRadius: 8,
+                      padding: 5,
+                      backgroundColor: COLORS.infoDangerLight,
+                      borderRadius: 50,
                     }}
                   >
-                    <Ionicons
-                      name={"document-attach-outline"}
-                      size={device === "tablet" ? 40 : 40}
+                    <MaterialCommunityIcons
+                      name={"file-alert-outline"}
+                      size={device === "tablet" ? 40 : 30}
+                      color={COLORS.infoDanger}
                     />
                   </View>
                   <View>
@@ -380,20 +395,21 @@ export const PerizinanMenteri = () => {
                       style={{
                         fontWeight: FONTWEIGHT.bold,
                         // fontSize: fontSizeResponsive("H1", device),
-                        fontSize: 40,
+                        fontSize: 30,
                       }}
                     >
                       {counter?.data?.need_sign}
                     </Text>
+
                     <Text
                       style={{
                         // marginTop: 10,
-                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: fontSizeResponsive("H6", device),
                         color: COLORS.grey,
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
-                      Need Sign
+                      Dokumen Belum Ditandatangani
                     </Text>
                   </View>
                 </View>
@@ -419,23 +435,36 @@ export const PerizinanMenteri = () => {
                 }}
                 onPress={() => filterHandlerSigned()}
               >
+                <Text
+                  style={{
+                    // marginTop: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    width: "100%",
+                    textAlign: "left",
+                  }}
+                >
+                  Signed
+                </Text>
                 <View
                   style={{
                     flexDirection: "row",
                     gap: 10,
                     alignItems: "center",
+                    marginTop: 10,
                   }}
                 >
                   <View
                     style={{
-                      padding: 10,
+                      padding: 5,
                       backgroundColor: COLORS.successLight,
-                      borderRadius: 8,
+                      borderRadius: 50,
                     }}
                   >
-                    <Ionicons
-                      name={"document-text-outline"}
-                      size={device === "tablet" ? 40 : 40}
+                    <MaterialCommunityIcons
+                      name={"file-check-outline"}
+                      size={device === "tablet" ? 40 : 30}
+                      color={COLORS.success}
                     />
                   </View>
                   <View>
@@ -443,7 +472,7 @@ export const PerizinanMenteri = () => {
                       style={{
                         fontWeight: FONTWEIGHT.bold,
                         // fontSize: fontSizeResponsive("H1", device),
-                        fontSize: 40,
+                        fontSize: 30,
                       }}
                     >
                       {counter?.data?.done}
@@ -451,12 +480,12 @@ export const PerizinanMenteri = () => {
                     <Text
                       style={{
                         // marginTop: 10,
-                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: fontSizeResponsive("H6", device),
                         color: COLORS.grey,
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
-                      Signed
+                      Dokumen Sudah Ditandatangani
                     </Text>
                   </View>
                 </View>
