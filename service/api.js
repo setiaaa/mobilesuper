@@ -568,9 +568,23 @@ export const getlistKalender = createAsyncThunk(
 //KalenderPersonal
 export const getlistKalenderPersonal = createAsyncThunk(
   "calendar/getlistKalenderPersonal",
-  async (token) => {
+  async ({ token }) => {
     const respon = await axiosInstance.get(
       `${kalender}calendar/event/korespondensi/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+//KalenderPersonalMirror
+export const getlistKalenderPersonalMirror = createAsyncThunk(
+  "calendar/getlistKalenderPersonalMirror",
+  async ({ token, mirror }) => {
+    const respon = await axiosInstance.get(
+      `${kalender}calendar/event/korespondensi/?mirror=${mirror}`,
       {
         headers: { Authorization: token },
       }
@@ -2285,6 +2299,18 @@ export const tandaTanganMentri = createAsyncThunk(
     );
     return {
       data: respon?.data,
+    };
+  }
+);
+
+export const getCounterPerizinanMenteri = createAsyncThunk(
+  "digitalsign/CounterPerizinanMenteri",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(`${digitalSign}perizinan-count/`, {
+      headers: { Authorization: token },
+    });
+    return {
+      data: respon?.data.result,
     };
   }
 );

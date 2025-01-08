@@ -594,13 +594,22 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Takedown dashboard budidaya dan penangkapan",
+        description: "Penambahan editor surat perlu diproses",
       },
       {
-        description: "Penambahan editor",
+        description: "Takedown dashboard budidaya & penangkapan",
       },
       {
         description: "Penambahan update password",
+      },
+      {
+        description: "Penambahan counter",
+      },
+      {
+        description: "Perbaikan detail kalender personal",
+      },
+      {
+        description: "Mirror kalender personal",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
@@ -858,7 +867,12 @@ export const Profile = () => {
                   name="key"
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Update Password
                 </Text>
               </View>

@@ -975,10 +975,7 @@ function ActionInprogress({ id, data, page }) {
                   showComment("Setujui", page);
                 }}
                 style={{
-                  backgroundColor:
-                    device == "tablet"
-                      ? COLORS.success
-                      : GlobalStyles.colors.disabled,
+                  backgroundColor: COLORS.success,
                   width: 35,
                   height: 35,
                   borderRadius: 25,
@@ -986,7 +983,6 @@ function ActionInprogress({ id, data, page }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" ? false : true}
               >
                 <Ionicons name="send-outline" size={20} color={COLORS.white} />
               </TouchableOpacity>
@@ -995,10 +991,7 @@ function ActionInprogress({ id, data, page }) {
                   showComment("Revisi", page);
                 }}
                 style={{
-                  backgroundColor:
-                    device == "tablet"
-                      ? GlobalStyles.colors.yellow
-                      : GlobalStyles.colors.disabled,
+                  backgroundColor: GlobalStyles.colors.yellow,
                   width: 35,
                   height: 35,
                   borderRadius: 25,
@@ -1006,7 +999,6 @@ function ActionInprogress({ id, data, page }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" ? false : true}
               >
                 <Ionicons name="arrow-back" size={20} color={COLORS.white} />
               </TouchableOpacity>
