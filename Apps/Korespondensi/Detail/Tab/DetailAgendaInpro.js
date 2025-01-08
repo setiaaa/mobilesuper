@@ -53,6 +53,7 @@ function DetailAgendaInpro({
   tipe,
   showBody,
   preview,
+  sign,
 }) {
   const profile = useSelector((state) => state.profile.profile);
   const { width } = useWindowDimensions();
@@ -1439,38 +1440,40 @@ function DetailAgendaInpro({
               </Fragment>
             ))}
           {/* edit surat */}
-          {data?.is_editable == "1" && device == "tablet" && (
-            <View style={{ width: "100%" }}>
-              <Button
-                mode="contained"
-                style={[
-                  {
-                    width: "100%",
-                    backgroundColor: GlobalStyles.colors.primary,
-                    marginBottom: 16,
-                  },
-                ]}
-                onPress={() => {
-                  navigation.navigate("ViewAttachment", {
-                    id: data?.id,
-                    title: "Edit Surat",
-                    tipe: tipe,
-                    token: data?.w_token,
-                  });
-                  dispatch(setFAB(false));
-                }}
-                icon={() => (
-                  <Ionicons
-                    name="pencil-outline"
-                    size={20}
-                    color={COLORS.white}
-                  />
-                )}
-              >
-                Edit Surat
-              </Button>
-            </View>
-          )}
+          {tipe !== "TrackingDetail" &&
+            data?.is_editable == "1" &&
+            !sign && (
+              <View style={{ width: "100%" }}>
+                <Button
+                  mode="contained"
+                  style={[
+                    {
+                      width: "100%",
+                      backgroundColor: GlobalStyles.colors.primary,
+                      marginBottom: 16,
+                    },
+                  ]}
+                  onPress={() => {
+                    navigation.navigate("ViewAttachment", {
+                      id: data?.id,
+                      title: "Edit Surat",
+                      tipe: tipe,
+                      token: data?.w_token,
+                    });
+                    dispatch(setFAB(false));
+                  }}
+                  icon={() => (
+                    <Ionicons
+                      name="pencil-outline"
+                      size={20}
+                      color={COLORS.white}
+                    />
+                  )}
+                >
+                  Edit Surat
+                </Button>
+              </View>
+            )}
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (

@@ -45,6 +45,7 @@ function TabViewBg({
   multiple,
   indexDispo,
   log,
+  sign
 }) {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -87,6 +88,7 @@ function TabViewBg({
               data={data}
               preview={preview}
               tipe={tipe}
+              sign={sign}
             />
           );
         } else {

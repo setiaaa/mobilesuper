@@ -47,6 +47,7 @@ function ViewAttachment({ route }) {
           <View style={{ flex: 1 }}>
             {stylus && (
               <WebView
+                originWhitelist={["*"]}
                 source={{
                   uri:
                     nde_api.baseurl_kores +
@@ -77,6 +78,7 @@ function ViewAttachment({ route }) {
             )}
             {!stylus && title != "Edit Surat" && (
               <WebView
+                originWhitelist={["*"]}
                 source={{
                   uri:
                     nde_api.baseurl_kores +
@@ -108,6 +110,7 @@ function ViewAttachment({ route }) {
             )}
             {!stylus && title == "Edit Surat" && (
               <WebView
+                originWhitelist={["*"]}
                 source={{
                   uri:
                     nde_api.baseurl_kores +
@@ -135,7 +138,7 @@ function ViewAttachment({ route }) {
                 androidLayerType={"software"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
-                scalesPageToFit={false}
+                scalesPageToFit={true}
               />
             )}
           </View>

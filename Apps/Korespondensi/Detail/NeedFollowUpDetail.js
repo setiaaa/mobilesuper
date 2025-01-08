@@ -38,11 +38,11 @@ import { removePushNotif } from "../../../service/session";
 
 function NeedFollowUpDetail({ route }) {
   let id = route.params.id;
+  let sign = route?.params?.sign;
   const [isLoading, setisLoading] = useState(true);
   const [detail, setDetail] = useState();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  console.log(id);
 
   const getLettersDetail = async () => {
     setisLoading(true);
@@ -208,6 +208,7 @@ function NeedFollowUpDetail({ route }) {
       <TabViewBg
         data={detail}
         id={id}
+        sign={sign}
         preview={detail?.preview}
         tipe="NeedFollowUpDetail"
         position="bottom"
