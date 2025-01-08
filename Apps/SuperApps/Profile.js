@@ -850,8 +850,13 @@ export const Profile = () => {
                   name="key"
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                  Ganti Password
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Update Password
                 </Text>
               </View>
               <Ionicons
@@ -1971,7 +1976,7 @@ export const Profile = () => {
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Ganti Password
+                      Update Password
                     </Text>
                     <TouchableOpacity
                       onPress={() => {

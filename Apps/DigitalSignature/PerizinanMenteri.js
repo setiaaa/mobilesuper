@@ -334,7 +334,12 @@ export const PerizinanMenteri = () => {
               alignSelf: "center",
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Dokumen Perizinan Menteri
             </Text>
             <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
