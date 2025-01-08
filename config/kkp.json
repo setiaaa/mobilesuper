@@ -1,7 +1,7 @@
 {
   "scheme": "kkp",
   "name": "Dev SuperApps KKP",
-  "slug": "devsuperapps",
+  "slug": "superapps-kkp",
   "version": "0.2.6",
   "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
@@ -115,7 +115,7 @@
     "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "ee29c3ba-c4c6-402e-b2ce-f519736eb454"
+      "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "kkp",
     "loginSSO": false,
