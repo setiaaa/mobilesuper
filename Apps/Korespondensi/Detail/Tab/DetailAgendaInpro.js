@@ -1478,7 +1478,7 @@ function DetailAgendaInpro({
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (
-              <ActionInprogress id={data?.id} data={data} sign={sign} />
+              <ActionInprogress id={data?.id} data={data} />
             )}
         </View>
       </ScrollView>

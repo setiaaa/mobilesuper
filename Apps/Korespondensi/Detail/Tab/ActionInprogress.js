@@ -21,7 +21,7 @@ import { TouchableOpacity } from "react-native";
 import { COLORS } from "../../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 
-function ActionInprogress({ id, data, page, sign }) {
+function ActionInprogress({ id, data, page }) {
   const platform = Platform;
   const [isLoading, setisLoading] = useState();
   const [tipe, setTipe] = useState();
@@ -975,10 +975,7 @@ function ActionInprogress({ id, data, page, sign }) {
                   showComment("Setujui", page);
                 }}
                 style={{
-                  backgroundColor:
-                    device == "tablet" || sign
-                      ? COLORS.success
-                      : GlobalStyles.colors.disabled,
+                  backgroundColor: COLORS.success,
                   width: 35,
                   height: 35,
                   borderRadius: 25,
@@ -986,7 +983,6 @@ function ActionInprogress({ id, data, page, sign }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" || sign ? false : true}
               >
                 <Ionicons name="send-outline" size={20} color={COLORS.white} />
               </TouchableOpacity>
@@ -995,10 +991,7 @@ function ActionInprogress({ id, data, page, sign }) {
                   showComment("Revisi", page);
                 }}
                 style={{
-                  backgroundColor:
-                    device == "tablet" || sign
-                      ? GlobalStyles.colors.yellow
-                      : GlobalStyles.colors.disabled,
+                  backgroundColor: GlobalStyles.colors.yellow,
                   width: 35,
                   height: 35,
                   borderRadius: 25,
@@ -1006,7 +999,6 @@ function ActionInprogress({ id, data, page, sign }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" || sign ? false : true}
               >
                 <Ionicons name="arrow-back" size={20} color={COLORS.white} />
               </TouchableOpacity>
