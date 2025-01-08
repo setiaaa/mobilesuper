@@ -41,8 +41,6 @@ export const DetailKalenderPersonal = () => {
 
   // console.log(JSON.stringify(detail));
 
-  console.log(detail);
-
   return (
     <ScrollView>
       <View
