@@ -41,6 +41,8 @@ export const DetailKalenderPersonal = () => {
 
   // console.log(JSON.stringify(detail));
 
+  console.log(detail);
+
   return (
     <ScrollView>
       <View
@@ -78,7 +80,7 @@ export const DetailKalenderPersonal = () => {
               color: COLORS.white,
             }}
           >
-            Detail Kalender Satker
+            Detail Kalender Personal
           </Text>
         </View>
       </View>

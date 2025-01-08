@@ -592,9 +592,26 @@ export const Profile = () => {
     }
 
     // Log Perbaikan
-    tmpLog.push({
-      description: "Perbaikan addressbook para",
-    });
+    tmpLog.push(
+      {
+        description: "Penambahan editor surat perlu diproses",
+      },
+      {
+        description: "Takedown dashboard budidaya & penangkapan",
+      },
+      {
+        description: "Penambahan update password",
+      },
+      {
+        description: "Penambahan counter",
+      },
+      {
+        description: "Perbaikan detail kalender personal",
+      },
+      {
+        description: "Mirror kalender personal",
+      }
+    );
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);
