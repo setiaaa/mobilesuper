@@ -1442,7 +1442,6 @@ function DetailAgendaInpro({
           {/* edit surat */}
           {tipe !== "TrackingDetail" &&
             data?.is_editable == "1" &&
-            device == "tablet" &&
             !sign && (
               <View style={{ width: "100%" }}>
                 <Button
