@@ -21,7 +21,7 @@ import { TouchableOpacity } from "react-native";
 import { COLORS } from "../../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 
-function ActionInprogress({ id, data, page }) {
+function ActionInprogress({ id, data, page, sign }) {
   const platform = Platform;
   const [isLoading, setisLoading] = useState();
   const [tipe, setTipe] = useState();
@@ -976,7 +976,7 @@ function ActionInprogress({ id, data, page }) {
                 }}
                 style={{
                   backgroundColor:
-                    device == "tablet"
+                    device == "tablet" || sign
                       ? COLORS.success
                       : GlobalStyles.colors.disabled,
                   width: 35,
@@ -986,7 +986,7 @@ function ActionInprogress({ id, data, page }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" ? false : true}
+                disabled={device == "tablet" || sign ? false : true}
               >
                 <Ionicons name="send-outline" size={20} color={COLORS.white} />
               </TouchableOpacity>
@@ -996,7 +996,7 @@ function ActionInprogress({ id, data, page }) {
                 }}
                 style={{
                   backgroundColor:
-                    device == "tablet"
+                    device == "tablet" || sign
                       ? GlobalStyles.colors.yellow
                       : GlobalStyles.colors.disabled,
                   width: 35,
@@ -1006,7 +1006,7 @@ function ActionInprogress({ id, data, page }) {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                disabled={device == "tablet" ? false : true}
+                disabled={device == "tablet" || sign ? false : true}
               >
                 <Ionicons name="arrow-back" size={20} color={COLORS.white} />
               </TouchableOpacity>
