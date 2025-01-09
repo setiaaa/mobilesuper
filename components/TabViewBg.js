@@ -33,6 +33,7 @@ import { removeAll } from "../store/addressbook";
 import { removeAllDispoMulti } from "../store/dispoMulti";
 import { COLORS, fontSizeResponsive } from "../config/SuperAppps";
 import DetailAgendaInpro from "../Apps/Korespondensi/Detail/Tab/DetailAgendaInpro";
+import DispositionLembar from "../Apps/Korespondensi/Form/DispositionLembar";
 
 const project = Constants.expoConfig.extra.id;
 function TabViewBg({
@@ -45,7 +46,7 @@ function TabViewBg({
   multiple,
   indexDispo,
   log,
-  sign
+  sign,
 }) {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -70,14 +71,14 @@ function TabViewBg({
     let detail;
     switch (route.key) {
       case "info":
-        if (tipe == "disposition") {
+        if (tipe == "disposition" || tipe == "dispomenwamen") {
           detail = (
             <DetailDispo
               id={id}
               noAgenda={data?.agenda_number}
               data={data}
               preview={preview}
-              tipe={tipe}
+              tipe="disposition"
             />
           );
         } else if (tipe == "NeedFollowUpDetail" || tipe == "TrackingDetail") {
@@ -128,6 +129,16 @@ function TabViewBg({
               noAgenda={data?.agenda_number}
               data={data?.obj}
               tipe={tipe}
+              title="Detail Disposisi"
+            />
+          );
+        } else if (tipe == "dispomenwamen") {
+          detail = (
+            <DispositionLembar
+              id={id}
+              noAgenda={data?.agenda_number}
+              data={data?.obj}
+              tipe="disposition"
               title="Detail Disposisi"
             />
           );

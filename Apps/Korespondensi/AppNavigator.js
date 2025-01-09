@@ -228,6 +228,7 @@ import { BerbagiDokumen } from "../Repository/BerbagiDokumen";
 import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
 import ViewerAnnotation from "../Repository/ViewerAnnotation";
 import { DetailTinjauan } from "../Repository/DetailTinjauan";
+import DispositionLembar from "./Form/DispositionLembar";
 
 const Stack = createNativeStackNavigator();
 
@@ -725,6 +726,11 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="DispositionForm"
             component={DispositionForm}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionLembar"
+            component={DispositionLembar}
             options={{ header: toolbarBack }}
           />
           <Stack.Screen

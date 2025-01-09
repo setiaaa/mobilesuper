@@ -9,6 +9,7 @@ import { removeAllDispoMulti } from "../store/dispoMulti";
 import { handlerError, postHTTP } from "../utils/http";
 import { Alert } from "react-native";
 import { nde_api } from "../utils/api.config";
+import { setAddressbookSelected } from "../store/AddressbookKKP";
 
 function FABactions({ id, data, noAgenda, tipe, hideForward }) {
   const profile = useSelector((state) => state.profile.profile);
@@ -95,13 +96,24 @@ function FABactions({ id, data, noAgenda, tipe, hideForward }) {
           style: { borderRadius: 50, backgroundColor: COLORS.primary },
           label: "Disposisi",
           onPress: () => {
-            navigation.navigate("DispositionForm", {
-              title: "Lembar Disposisi",
-              id: id,
-              data: data,
-              noAgenda: noAgenda,
-              tipe: tipe,
-            });
+            dispatch(setAddressbookSelected([]));
+            if (profile?.nik == "88888" || profile?.nik == "99999") {
+              navigation.navigate("DispositionLembar", {
+                title: "Lembar Disposisi",
+                id: id,
+                data: data,
+                noAgenda: noAgenda,
+                tipe: tipe,
+              });
+            } else {
+              navigation.navigate("DispositionForm", {
+                title: "Lembar Disposisi",
+                id: id,
+                data: data,
+                noAgenda: noAgenda,
+                tipe: tipe,
+              });
+            }
             setVisible(false);
           },
         },
@@ -126,6 +138,7 @@ function FABactions({ id, data, noAgenda, tipe, hideForward }) {
         },
       ]);
     } else if (profile?.title?.length != 0) {
+      dispatch(setAddressbookSelected([]));
       setAction([
         {
           icon: "share",
@@ -133,13 +146,23 @@ function FABactions({ id, data, noAgenda, tipe, hideForward }) {
           style: { borderRadius: 50, backgroundColor: COLORS.primary },
           label: "Disposisi",
           onPress: () => {
-            navigation.navigate("DispositionForm", {
-              title: "Lembar Disposisi",
-              id: id,
-              data: data,
-              noAgenda: noAgenda,
-              tipe: tipe,
-            });
+            if (profile?.nik == "88888" || profile?.nik == "99999") {
+              navigation.navigate("DispositionLembar", {
+                title: "Lembar Disposisi",
+                id: id,
+                data: data,
+                noAgenda: noAgenda,
+                tipe: tipe,
+              });
+            } else {
+              navigation.navigate("DispositionForm", {
+                title: "Lembar Disposisi",
+                id: id,
+                data: data,
+                noAgenda: noAgenda,
+                tipe: tipe,
+              });
+            }
             setVisible(false);
           },
         },

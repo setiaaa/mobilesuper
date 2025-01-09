@@ -37,6 +37,7 @@ export const nde_api = {
   agendainlog: Config.base_url + Config.api.agendainlog,
 
   // DISPOSISITION
+  disporeceivers: Config.base_url + Config.api.disporeceivers,
   agendadispo: Config.base_url + Config.api.agendadispo,
   agendadisposearch: Config.base_url + Config.api.agendadisposearch,
   agendadispounread: Config.base_url + Config.api.agendadispounread,

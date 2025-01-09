@@ -109,7 +109,11 @@ function DispositionDetail({ route }) {
         data={detail}
         preview={preview}
         log={log}
-        tipe="disposition"
+        tipe={
+          profile?.nik == "88888" || profile?.nik === "99999"
+            ? "dispomenwamen"
+            : "disposition"
+        }
         position="bottom"
         routes={routes}
       />
