@@ -568,9 +568,23 @@ export const getlistKalender = createAsyncThunk(
 //KalenderPersonal
 export const getlistKalenderPersonal = createAsyncThunk(
   "calendar/getlistKalenderPersonal",
-  async (token) => {
+  async ({ token }) => {
     const respon = await axiosInstance.get(
       `${kalender}calendar/event/korespondensi/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+//KalenderPersonalMirror
+export const getlistKalenderPersonalMirror = createAsyncThunk(
+  "calendar/getlistKalenderPersonalMirror",
+  async ({ token, mirror }) => {
+    const respon = await axiosInstance.get(
+      `${kalender}calendar/event/korespondensi/?mirror=${mirror}`,
       {
         headers: { Authorization: token },
       }
