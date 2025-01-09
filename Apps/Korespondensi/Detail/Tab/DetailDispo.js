@@ -160,6 +160,76 @@ function DetailDispo({ data, noAgenda, preview, title }) {
   let newUrlNote = urlNote.replace("/api/", "/");
 
   const { device } = useSelector((state) => state.apps);
+  const transformData = (data) => {
+    return data?.map((section) => {
+      const result = [];
+      let currentHead = null;
+      section.child.forEach((item) => {
+        if (item.isHead) {
+          // Jika item adalah head, tambahkan ke result sebagai parent baru
+          currentHead = { ...item, children: [] };
+          result.push(currentHead);
+        } else if (currentHead) {
+          // Jika item bukan head, tambahkan ke children dari head yang sedang aktif
+          currentHead.children.push(item);
+        }
+      });
+      return {
+        ...section,
+        child: result?.length == 0 ? section.child : result,
+      };
+    });
+  };
+  const [receiverDispo, setreceiverDispo] = useState([]);
+  const [actionDispo, setactionDispo] = useState([]);
+
+  const findMatchReceivers = (x, receivers_ids) => {
+    let matches = [];
+
+    data?.receivers_config?.yth_dispo?.forEach((child) => {
+      console.log(child.code);
+      if (receivers_ids.includes(child.code)) {
+        matches.push({
+          code: child.code,
+          name: child.display_label,
+        });
+      }
+    });
+    const searchInChildren = (children) => {
+      children.forEach((child) => {
+        if (receivers_ids.includes(child.code)) {
+          matches.push({
+            code: child.code,
+            name: child.display_label + " (" + child?.name + ")",
+          });
+        }
+        if (child.children) {
+          searchInChildren(child.children);
+        }
+      });
+    };
+    x?.forEach((section) => {
+      searchInChildren(section.child);
+    });
+
+    return matches;
+  };
+
+  useEffect(() => {
+    //set matching receivers
+    let temp = [];
+    data?.receivers_config?.kepada_dispo?.map((item) => {
+      temp = temp.concat(transformData(item));
+    });
+    const matchingCodes = findMatchReceivers(temp, data?.receivers_ids);
+    setreceiverDispo(matchingCodes);
+    //set matching action
+    const actionArray = data?.action.split("\n").map((item) => item.trim());
+    const matches = data?.sender?.actions?.filter((actionItem) =>
+      actionArray?.some((sender) => sender === actionItem.name)
+    );
+    setactionDispo(matches);
+  }, [data]);
 
   return (
     <>
@@ -177,10 +247,17 @@ function DetailDispo({ data, noAgenda, preview, title }) {
           </View>
           <Card style={styles.containerCard}>
             <View style={styles.containerColumn}>
-              {data?.receivers.length > 0 &&
+              {receiverDispo?.length == 0 &&
+                data?.receivers.length > 0 &&
                 data?.receivers.map((item, index) => (
                   <Text key={index} style={styles.title}>
                     {item}
+                  </Text>
+                ))}
+              {receiverDispo?.length != 0 &&
+                receiverDispo.map((item, index) => (
+                  <Text key={index} style={styles.title}>
+                    {item.name}
                   </Text>
                 ))}
             </View>
@@ -188,7 +265,11 @@ function DetailDispo({ data, noAgenda, preview, title }) {
               <Text style={styles.title}>Aksi Disposisi</Text>
             </View>
             <View>
-              <Text>{data?.action ? data?.action : "-"}</Text>
+              <Text>
+                {actionDispo?.length == 0 && data?.action
+                  ? data?.action
+                  : actionDispo?.map((item) => item.name).join("\n")}
+              </Text>
             </View>
             <View>
               <Text style={styles.title}>Catatan Disposisi</Text>

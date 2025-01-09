@@ -64,7 +64,7 @@ function DispositionLembar({ route, id, data, tipe }) {
   const [isLoading, setIsLoading] = useState();
   const [scrollEnabled, setScrollEnabled] = useState();
   const [stylusFile, setStylusFile] = useState("");
-  const [receiversDispo, setReceiversDispo] = useState("");
+  const [receiversDispo, setReceiversDispo] = useState({});
   const [collapse, setCollapse] = useState({
     addressbook: true,
     petunjuk: true,
