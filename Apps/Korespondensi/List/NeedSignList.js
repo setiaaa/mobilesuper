@@ -306,6 +306,7 @@ function NeedSignList({ route }) {
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,
+                sign: true,
                 title:
                   device === "tablet"
                     ? "Detail Surat Keluar Perlu TTD Elektronik"

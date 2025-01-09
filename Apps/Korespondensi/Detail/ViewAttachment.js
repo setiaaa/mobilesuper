@@ -138,7 +138,7 @@ function ViewAttachment({ route }) {
                 androidLayerType={"software"}
                 mixedContentMode={"always"}
                 allowUniversalAccessFromFileURLs={true}
-                scalesPageToFit={false}
+                scalesPageToFit={true}
               />
             )}
           </View>

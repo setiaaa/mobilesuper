@@ -164,7 +164,7 @@ const ListBankom = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                width: 200,
+                width: device === "tablet" ? 200 : 170,
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.normal,
               }}
@@ -199,7 +199,7 @@ const ListBankom = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                width: 200,
+                width: device === "tablet" ? 200 : 170,
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.normal,
               }}
@@ -231,7 +231,12 @@ const ListBankom = ({
             >
               :
             </Text>
-            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: device === "tablet" ? 200 : 170,
+              }}
+            >
               {moment(item?.extra_attributes?.tanggalMulaiSertif).format(
                 "DD/MM/YYYY"
               )}
@@ -296,7 +301,12 @@ const ListBankom = ({
             >
               :
             </Text>
-            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: device === "tablet" ? 200 : 170,
+              }}
+            >
               {moment(item?.extra_attributes?.tanggalSelesaiSertif).format(
                 "DD/MM/YYYY"
               )}
@@ -327,7 +337,7 @@ const ListBankom = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                width: 200,
+                width: device === "tablet" ? 200 : 170,
                 textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
                 width: "55%",
@@ -363,7 +373,7 @@ const ListBankom = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                width: 200,
+                width: device === "tablet" ? 200 : 170,
                 textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
                 width: "55%",

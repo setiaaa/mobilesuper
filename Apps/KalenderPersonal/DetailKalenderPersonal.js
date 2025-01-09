@@ -78,7 +78,7 @@ export const DetailKalenderPersonal = () => {
               color: COLORS.white,
             }}
           >
-            Detail Kalender Satker
+            Detail Kalender Personal
           </Text>
         </View>
       </View>

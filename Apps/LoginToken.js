@@ -451,7 +451,7 @@ export const LoginToken = () => {
                   <View
                     style={{
                       flexDirection: "row",
-                      marginVertical: 20,
+                      marginTop: 10,
                       alignItems: "center",
                       marginHorizontal: 40,
                     }}
@@ -470,7 +470,137 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan addressbook para
+                      Penambahan editor surat perlu diproses
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Takedown dashboard budidaya & penangkapan
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan update password
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan counter
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Perbaikan detail kalender personal
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginVertical: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Mirror kalender personal
                     </Text>
                   </View>
 

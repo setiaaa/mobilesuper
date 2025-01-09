@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -16,7 +16,7 @@ import {
   FONTWEIGHT,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { Calendar, modeToNum } from "react-native-big-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -24,10 +24,12 @@ import { getTokenValue } from "../../service/session";
 import {
   getDetailKalenderPersonal,
   getlistKalenderPersonal,
+  getlistKalenderPersonalMirror,
 } from "../../service/api";
 import dayjs from "dayjs";
 import ListEmpty from "../../components/ListEmpty";
 import { CardListKalenderPersonal } from "../../components/CardListKalenderPersonal";
+import { Loading } from "../../components/Loading";
 
 export const KalenderPersonal = () => {
   const navigation = useNavigation();
@@ -35,8 +37,14 @@ export const KalenderPersonal = () => {
   const [events, setEvents] = useState([]);
   const [modal, setModal] = useState(false);
   const [datalist, setDataList] = useState([]);
+  const [mirror, setMirror] = useState(false);
 
   const { profile } = useSelector((state) => state.superApps);
+
+  const dataRoleMirror = ["MIRROR.CALENDAR"];
+  const isMirror = profile.roles_access?.some((item) =>
+    dataRoleMirror.includes(item)
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -44,13 +52,24 @@ export const KalenderPersonal = () => {
       setToken(val);
     });
   }, []);
+
   useEffect(() => {
     if (token !== "") {
-      dispatch(getlistKalenderPersonal(token));
+      dispatch(getlistKalenderPersonal({ token: token }));
     }
   }, [token]);
 
-  const { personal } = useSelector((state) => state.kalenderPersonal);
+  const { personal, loading, mirrorSuccess } = useSelector(
+    (state) => state.kalenderPersonal
+  );
+
+  const handleMirror = () => {
+    if (mirrorSuccess) {
+      dispatch(getlistKalenderPersonal({ token: token }));
+    } else {
+      dispatch(getlistKalenderPersonalMirror({ token: token, mirror: true }));
+    }
+  };
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -178,6 +197,7 @@ export const KalenderPersonal = () => {
 
   return (
     <ScrollView>
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -261,11 +281,6 @@ export const KalenderPersonal = () => {
               _onToday();
             }}
           >
-            {/* <Ionicons
-                      name="calendar"
-                      size={24}
-                      color={COLORS.primary}
-                    /> */}
             <View
               style={{
                 backgroundColor: COLORS.primary,
@@ -284,6 +299,27 @@ export const KalenderPersonal = () => {
           >
             <Ionicons name="chevron-forward" size={24} color={COLORS.primary} />
           </TouchableOpacity>
+
+          {isMirror ? (
+            <TouchableOpacity
+              style={{
+                marginRight: 10,
+                padding: 10,
+                backgroundColor:
+                  mirrorSuccess === false ? COLORS.white : COLORS.primary,
+                borderRadius: 50,
+              }}
+              onPress={() => {
+                handleMirror();
+              }}
+            >
+              <FontAwesome6
+                name="arrow-right-arrow-left"
+                size={15}
+                color={mirrorSuccess === false ? COLORS.primary : COLORS.white}
+              />
+            </TouchableOpacity>
+          ) : null}
         </View>
         <Calendar
           events={events}

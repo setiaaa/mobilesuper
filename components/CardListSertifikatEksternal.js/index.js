@@ -81,7 +81,7 @@ export const CardListSertifikatEksternal = ({ device, item, token }) => {
         <Text
           style={{
             fontSize: fontSizeResponsive("H3", device),
-            width: 180,
+            width: device === "tablet" ? 200 : 170,
             textAlign: "justify",
             fontWeight: FONTWEIGHT.normal,
           }}
@@ -110,7 +110,7 @@ export const CardListSertifikatEksternal = ({ device, item, token }) => {
         <Text
           style={{
             fontSize: fontSizeResponsive("H3", device),
-            width: 200,
+            width: device === "tablet" ? 200 : 170,
             textAlign: "justify",
             fontWeight: FONTWEIGHT.normal,
           }}
@@ -139,7 +139,7 @@ export const CardListSertifikatEksternal = ({ device, item, token }) => {
         <Text
           style={{
             fontSize: fontSizeResponsive("H3", device),
-            width: 200,
+            width: device === "tablet" ? 200 : 170,
             textAlign: "justify",
             fontWeight: FONTWEIGHT.normal,
           }}
@@ -168,7 +168,7 @@ export const CardListSertifikatEksternal = ({ device, item, token }) => {
         <Text
           style={{
             fontSize: fontSizeResponsive("H3", device),
-            width: 200,
+            width: device === "tablet" ? 200 : 170,
             textAlign: "justify",
             fontWeight: FONTWEIGHT.normal,
           }}
