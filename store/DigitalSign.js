@@ -69,6 +69,7 @@ const DigitalSignSlice = createSlice({
           state.digitalsign.lists = action.payload.data;
         } else {
           state.dokumenlain.lists = action.payload.data;
+          console.log("masuk");
         }
       })
       .addCase(getListComposer.pending, (state, action) => {
@@ -76,6 +77,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListComposer.rejected, (state, action) => {
         state.loading = false;
+        console.log(action.error);
       })
       .addCase(getListInProgress.fulfilled, (state, action) => {
         state.loading = false;

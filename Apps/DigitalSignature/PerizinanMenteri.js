@@ -22,7 +22,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,6 +63,9 @@ import * as LocalAuthentication from "expo-local-authentication";
 export const PerizinanMenteri = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const currentTab = useNavigationState(
+    (state) => state.routes[state.index].name
+  );
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [tipe, setTipe] = useState("perizinan-mentri");
@@ -78,8 +81,10 @@ export const PerizinanMenteri = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getCounterPerizinanMenteri({ token: token }));
-    dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
+    if (currentTab === "PerizinanMenteri") {
+      dispatch(getCounterPerizinanMenteri({ token: token }));
+      dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
+    }
   }, [token, tipe]);
 
   const { dokumenlain, loading, status, counter } = useSelector(
@@ -90,7 +95,7 @@ export const PerizinanMenteri = () => {
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (token !== "") {
+      if (token !== "" && currentTab === "PerizinanMenteri") {
         dispatch(getCounterPerizinanMenteri({ token: token }));
         if (variant === "inprogress") {
           dispatch(
@@ -117,7 +122,7 @@ export const PerizinanMenteri = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe]);
+  }, [token, tipe, currentTab]);
 
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["25%"], []);
@@ -231,7 +236,7 @@ export const PerizinanMenteri = () => {
   };
 
   useEffect(() => {
-    if (variant === "inprogress") {
+    if (variant === "inprogress" && currentTab === "PerizinanMenteri") {
       dispatch(
         getListInProgress({
           token: token,
@@ -240,7 +245,7 @@ export const PerizinanMenteri = () => {
           search: search,
         })
       );
-    } else if (variant === "signed") {
+    } else if (variant === "signed" && currentTab === "PerizinanMenteri") {
       dispatch(
         getListSignedDigiSign({
           token: token,
@@ -249,13 +254,12 @@ export const PerizinanMenteri = () => {
           search: search,
         })
       );
-    } else if (variant === "retry") {
+    } else if (variant === "retry" && currentTab === "PerizinanMenteri") {
       dispatch(
         getListRetry({ token: token, tipe: tipe, page: page, search: search })
       );
     }
-  }, [page, token, tipe, search]);
-
+  }, [page, token, tipe, search, currentTab]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
