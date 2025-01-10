@@ -1,0 +1,197 @@
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {} from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+
+export const MyTabPerizinanMenteri = () => {
+  const [tabItemIndex, setTabItemIndex] = useState(1);
+  const { profile } = useSelector((state) => state.superApps);
+  const { device } = useSelector((state) => state.apps);
+
+  const navigation = useNavigation();
+
+  return (
+    <>
+      <BottomSheetModalProvider>
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: COLORS.white,
+            justifyContent: "space-around",
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          }}
+        >
+          <TouchableOpacity
+            key={1}
+            onPress={() => {
+              setTabItemIndex(1);
+              navigation.navigate("PerizinanMenteri", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 1 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 150 : 95,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="attach-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    textAlign: "center",
+                    position: "absolute",
+                    fontSize: fontSizeResponsive("H3", device),
+                    bottom: 40,
+                  }}
+                >
+                  E-Sea
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 150 : 95,
+                }}
+              >
+                <Ionicons
+                  name="attach-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    textAlign: "center",
+                    position: "absolute",
+                    fontSize: fontSizeResponsive("H3", device),
+                    bottom: 40,
+                  }}
+                >
+                  E-Sea
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? ( */}
+          <TouchableOpacity
+            key={3}
+            onPress={() => {
+              setTabItemIndex(3);
+              navigation.navigate("PKRL");
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 3 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  PKRL
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  PKRL
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModalProvider>
+    </>
+  );
+};

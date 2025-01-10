@@ -433,7 +433,7 @@ export const CardApps = ({
     if (isRoleMenteri) {
       tmpMenu.splice(11, 0, {
         title: "Perizinan Menteri",
-        navigation: "PerizinanMenteri",
+        navigation: "MainPerizinanMenteri",
         image: require("../../assets/superApp/Bankomicon.png"),
         imagestyle: {
           width: {

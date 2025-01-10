@@ -229,6 +229,7 @@ import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
 import ViewerAnnotation from "../Repository/ViewerAnnotation";
 import { DetailTinjauan } from "../Repository/DetailTinjauan";
 import DispositionLembar from "./Form/DispositionLembar";
+import { MainPerizinanMenteri } from "../DigitalSignature/MainPerizinanMenteri";
 
 const Stack = createNativeStackNavigator();
 
@@ -1601,7 +1602,7 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="PerizinanMenteri"
             component={PerizinanMenteri}
             options={{
@@ -1611,6 +1612,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="DetailPerizinanMenteri"
             component={DetailPerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          /> */}
+          <Stack.Screen
+            name="MainPerizinanMenteri"
+            component={MainPerizinanMenteri}
             options={{
               headerShown: false,
             }}
