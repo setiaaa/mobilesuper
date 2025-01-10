@@ -58,6 +58,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import moment from "moment";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export const PerizinanMenteri = () => {
   const [token, setToken] = useState("");
@@ -90,6 +91,7 @@ export const PerizinanMenteri = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
+        dispatch(getCounterPerizinanMenteri({ token: token }));
         if (variant === "inprogress") {
           dispatch(
             getListInProgress({ token: token, tipe: tipe, search: search })
@@ -135,6 +137,36 @@ export const PerizinanMenteri = () => {
   };
 
   const currentDate = new Date();
+
+  const handleBiometricAuth = async () => {
+    // Check if hardware supports biometrics
+    const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
+
+    // Fallback to default authentication method (password) if Fingerprint is not available
+    if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
+
+    // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
+    let supportedBiometrics;
+    if (isBiometricAvailable)
+      supportedBiometrics =
+        await LocalAuthentication.supportedAuthenticationTypesAsync();
+
+    // Check Biometrics are saved locally in user's device
+    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+    if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
+
+    // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
+
+    const biometricAuth = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Login with Biometrics",
+      cancelLabel: "Cancel",
+      disableDeviceFallback: false,
+    });
+    // Log the user in on success
+    if (biometricAuth.success) {
+      handleSubmit();
+    }
+  };
 
   const handleSubmit = () => {
     const payload = {
@@ -706,7 +738,8 @@ export const PerizinanMenteri = () => {
                       bottomSheetAttachClose();
                       {
                         setTimeout(() => {
-                          handleSubmit();
+                          // handleSubmit();
+                          handleBiometricAuth();
                         }, 2000);
                       }
                       setSelection([]);

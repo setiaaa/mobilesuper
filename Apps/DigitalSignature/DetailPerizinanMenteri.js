@@ -104,6 +104,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
       payload: payload,
     };
     dispatch(tandaTanganMentri(data));
+    console.log(data.payload);
   };
 
   //FINGERPRINT
