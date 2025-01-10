@@ -37,7 +37,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading, status } = useSelector(
+  const { digitalsign, status, loading } = useSelector(
     (state) => state.digitalsign
   );
   const item = digitalsign.detail;
@@ -103,7 +103,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
       token: variant.token,
       payload: payload,
     };
-    dispatch(tandaTanganMentri(data));
+    // dispatch(tandaTanganMentri(data));
     console.log(data.payload);
   };
 
@@ -418,7 +418,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
                   </Text>
-                  <View>
+                  <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
                         style={{ borderRadius: 4, width: "100%" }}
@@ -445,24 +445,26 @@ export const DetailPerizinanMenteri = ({ route }) => {
                     Keterangan
                   </Text>
                   <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4, width: "100%" }}
-                      height={20}
-                    />
-                  ) : (
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H2", device),
-                        width: 150,
-                      }}
-                    >
-                      {item.extra_attributes?.keterangan === undefined ||
-                      item.extra_attributes?.keterangan === ""
-                        ? "-"
-                        : item.extra_attributes?.keterangan}
-                    </Text>
-                  )}
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H2", device),
+                          width: 150,
+                        }}
+                      >
+                        {item.extra_attributes?.keterangan === undefined ||
+                        item.extra_attributes?.keterangan === ""
+                          ? "-"
+                          : item.extra_attributes?.keterangan}
+                      </Text>
+                    )}
+                  </View>
                 </View>
               </View>
               {item.approvers.map((data, index) => {
@@ -629,11 +631,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                               {data?.officer ? (
                                 <View style={{ width: "95%" }}>
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={330}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
@@ -650,11 +656,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                     </Text>
                                   )}
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={165}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
@@ -678,11 +688,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                               ) : (
                                 <View style={{ width: "95%" }}>
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={330}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
