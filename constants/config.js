@@ -45,6 +45,7 @@ export const Config = {
     agendainbyid: "crsbe/agenda/in/{$id}/",
     agendainread: "crsbe/agenda/in/{$id}/read/",
     agendainlog: "crsbe/agenda/in/{$id}/log/",
+    disporeceivers: "crsbe/dispositionconfig/receivers/{$receivers_dispo_key}/",
     dispoaction: "crsbe/agenda/disposition/header/",
     agendadispo: "crsbe/agenda/disposition/?page={$page}",
     agendadisposearch: "crsbe/agenda/disposition/?query={$word}",

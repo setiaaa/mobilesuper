@@ -47,6 +47,7 @@ import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import { setAddressbookSelected } from "../../../store/AddressbookKKP";
 
 function DispositionList({ route }) {
   const [list, setList] = useState([]);
@@ -249,7 +250,8 @@ function DispositionList({ route }) {
             key={data.id}
             data={data}
             tipe="agendadispo"
-            onPress={() => {
+            onPress={() => {              
+              dispatch(setAddressbookSelected([]));
               navigation.navigate("DispositionDetail", {
                 id: data.id,
                 title: "Detail Disposisi",
