@@ -15,11 +15,15 @@ import { nde_api } from "../../../../utils/api.config";
 import { getHTTP } from "../../../../utils/http";
 import RenderHTML from "react-native-render-html";
 
-function DetailLog({ route, data, id, tipe }) {
+function DetailLog({ route, data, id, tipe, subject }) {
   const [log, setLog] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { width } = useWindowDimensions();
+  const [perihal, setPerihal] = useState("");
   useEffect(() => {
+    if (subject?.length == 0 || subject == undefined) {
+      setPerihal(route?.params?.subject);
+    }
     getLogDispo();
   }, [data, route]);
 
@@ -66,8 +70,19 @@ function DetailLog({ route, data, id, tipe }) {
     <ScrollView>
       {loadingOverlay}
       <View style={styles.screen}>
-        <View style={{ marginBottom: 6 }}>
-          <Text>Aktivitas Disposisi</Text>
+        <View
+          style={{
+            marginBottom: 12,
+            padding: 12,
+            borderRadius: 12,
+            backgroundColor: GlobalStyles.colors.grey,
+          }}
+        >
+          <Text style={{ color: GlobalStyles.colors.textWhite }}>
+            {perihal?.length != 0
+              ? perihal?.replace("\\/", "/")
+              : "My Disposisi"}
+          </Text>
         </View>
         {log &&
           log.map((item, index) => (

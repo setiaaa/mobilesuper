@@ -157,6 +157,7 @@ function CardDMenu({ data, divisionList, navigation }) {
             <View style={[styles.cardCollapse]}>
               {divisionList.map((item, i) => (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => {
                     navigation.navigate(data?.navName, {
                       unread:
@@ -172,7 +173,6 @@ function CardDMenu({ data, divisionList, navigation }) {
                   }}
                 >
                   <List.Item
-                    key={i}
                     title={item.short_name}
                     titleStyle={{ fontSize: fontSizeResponsive("H4", device) }}
                     right={() => <List.Icon icon="chevron-right" />}
