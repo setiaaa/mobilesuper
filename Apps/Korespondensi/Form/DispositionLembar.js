@@ -148,10 +148,7 @@ function DispositionLembar({ route, id, data, tipe }) {
             : "unchecked"
         }
         label={item.name}
-        labelStyle={[
-          styles.labelCheckbox,
-          { fontSize: fontSizeResponsive("H4", device) },
-        ]}
+        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
         onPress={() => {
           dispatch(
             setNotaTindakan({
@@ -190,10 +187,7 @@ function DispositionLembar({ route, id, data, tipe }) {
             ? item.display_label + "(" + item?.name + ")"
             : item.display_label
         }
-        labelStyle={[
-          styles.labelCheckbox,
-          { fontSize: fontSizeResponsive("H4", device) },
-        ]}
+        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
         onPress={() => {
           const checkNode = addressbook.selected.filter(
             (data) => data.code === item.code
@@ -466,7 +460,7 @@ function DispositionLembar({ route, id, data, tipe }) {
           }
           labelStyle={[
             styles.labelCheckbox,
-            { fontSize: fontSizeResponsive("H4", device) },
+            { fontSize: GlobalStyles.font.sm },
           ]}
           onPress={() => {
             const checkNode = addressbook.selected.filter(
@@ -938,7 +932,7 @@ function DispositionLembar({ route, id, data, tipe }) {
                                 borderRadius: 6,
                               }}
                               labelStyle={{
-                                fontSize: fontSizeResponsive("H4", device),
+                                fontSize: GlobalStyles.font.sm,
                               }}
                               mode="outlined"
                               textColor="black"
@@ -984,7 +978,7 @@ function DispositionLembar({ route, id, data, tipe }) {
                                 },
                               ]}
                               itemTextStyle={{
-                                fontSize: fontSizeResponsive("H4", device),
+                                fontSize: GlobalStyles.font.sm,
                               }}
                               placeholderStyle={styles.placeholderStyle}
                               selectedTextStyle={styles.selectedTextStyle}
