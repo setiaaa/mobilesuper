@@ -305,6 +305,7 @@ const EventSlice = createSlice({
         state.todo.detail = newDetailTodo;
       })
       .addCase(postAttachment.fulfilled, (state, action) => {
+        console.log('store', action.payload)
         state.attachment = [...state.attachment, action.payload];
       })
       .addCase(postAttachment.rejected, (state, action) => {})

@@ -481,6 +481,24 @@ export const PKRL = () => {
             />
           </View>
         </View>
+
+        <TouchableOpacity
+          style={{ position: "absolute", right: 10, top: 500 }}
+          onPress={() => navigation.navigate("TambahDokumenPerizinan")}
+        >
+          <View
+            style={{
+              backgroundColor: COLORS.infoDanger,
+              borderRadius: 50,
+              width: 44,
+              height: 44,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Ionicons name="add" size={24} color={COLORS.white} />
+          </View>
+        </TouchableOpacity>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
