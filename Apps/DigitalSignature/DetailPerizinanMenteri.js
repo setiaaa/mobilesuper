@@ -32,6 +32,7 @@ import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/DigitalSign";
 import { tandaTanganMentri } from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const DetailPerizinanMenteri = ({ route }) => {
   const variant = route.params;
@@ -103,8 +104,8 @@ export const DetailPerizinanMenteri = ({ route }) => {
       token: variant.token,
       payload: payload,
     };
-    // dispatch(tandaTanganMentri(data));
-    console.log(data.payload);
+    dispatch(tandaTanganMentri(data));
+    // console.log(data.payload);
   };
 
   //FINGERPRINT
@@ -114,7 +115,9 @@ export const DetailPerizinanMenteri = ({ route }) => {
     const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
 
     // Fallback to default authentication method (password) if Fingerprint is not available
-    if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
+    if (!isBiometricAvailable) {
+      handleSubmit();
+    }
 
     // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
     let supportedBiometrics;
@@ -124,7 +127,9 @@ export const DetailPerizinanMenteri = ({ route }) => {
 
     // Check Biometrics are saved locally in user's device
     const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
-    if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
+    if (!savedBiometrics) {
+      handleSubmit();
+    }
 
     // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
 
@@ -166,7 +171,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <ScrollView>
           <View
@@ -972,6 +977,6 @@ export const DetailPerizinanMenteri = ({ route }) => {
           />
         </ScrollView>
       </BottomSheetModalProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 };

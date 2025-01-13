@@ -148,7 +148,9 @@ export const PerizinanMenteri = () => {
     const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
 
     // Fallback to default authentication method (password) if Fingerprint is not available
-    if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
+    if (!isBiometricAvailable) {
+      handleSubmit();
+    }
 
     // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
     let supportedBiometrics;
@@ -158,7 +160,9 @@ export const PerizinanMenteri = () => {
 
     // Check Biometrics are saved locally in user's device
     const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
-    if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
+    if (!savedBiometrics) {
+      handleSubmit();
+    }
 
     // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
 

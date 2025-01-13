@@ -1608,14 +1608,14 @@ function AuthenticatedStack({ route }) {
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="DetailPerizinanMenteri"
             component={DetailPerizinanMenteri}
             options={{
               headerShown: false,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="MainPerizinanMenteri"
             component={MainPerizinanMenteri}
