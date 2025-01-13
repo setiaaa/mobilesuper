@@ -1,5 +1,12 @@
 import React, { useMemo, useRef } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import {
+  FlatList,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Text, Image } from "react-native";
 import {
   COLORS,
@@ -50,6 +57,7 @@ export const CardListPKRL = ({
     // const data = event.listsprogress.find(item => item.id === id)
     // dispatch(getDetailDigisign(params));
   };
+  const [modal, setModal] = useState(false);
   return (
     <View
       key={item.id}
@@ -131,6 +139,50 @@ export const CardListPKRL = ({
               width: "90%",
             }}
           />
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              flex: 1,
+              gap: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                textAlign: "auto",
+                fontWeight: FONTWEIGHT.normal,
+                fontWeight: FONTWEIGHT.bold,
+                width: "38%",
+              }}
+            >
+              Nomor Dokumen
+            </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                textAlign: "auto",
+                fontWeight: FONTWEIGHT.normal,
+                fontWeight: FONTWEIGHT.bold,
+              }}
+            >
+              :
+            </Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.normal,
+                width: "60%",
+                textAlign: "auto",
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              {item?.extra_attributes.no_perizinan !== undefined
+                ? item?.extra_attributes.no_perizinan
+                : "-"}
+              {/* iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiooiooioioiooiooioi */}
+            </Text>
+          </View>
+
           <View style={{ width: "100%" }}>
             <View style={{}}>
               <Text
@@ -159,6 +211,7 @@ export const CardListPKRL = ({
                   source={{ uri: item.composer.avatar_url }}
                   height={30}
                   width={30}
+                  borderRadius={50}
                 />
                 <Text
                   style={{
@@ -168,54 +221,260 @@ export const CardListPKRL = ({
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  {item?.composer.display_title !== undefined
-                    ? item?.composer.display_title
+                  {item?.composer.nama !== undefined
+                    ? item?.composer.nama
                     : "-"}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View style={{ gap: 5, width: "100%" }}>
-            <View>
-              {/* <Text
+          <TouchableOpacity
+            style={{ gap: 5, width: "100%" }}
+            onPress={() => {
+              setModal(true);
+            }}
+          >
+            <View
+              style={{
+                marginTop: 15,
+                backgroundColor: COLORS.primary,
+                padding: 10,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 8,
+                width: "100%",
+              }}
+            >
+              <Text
                 style={{
-                  fontSize: fontSizeResponsive("H3", device),
-                  textAlign: "auto",
                   fontWeight: FONTWEIGHT.normal,
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                  color: COLORS.white,
                   fontWeight: FONTWEIGHT.bold,
-                  marginTop: 5,
                 }}
               >
-                Paraf
-              </Text> */}
+                Lihat Paraf
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modal}
+            onRequestClose={() => {
+              setModal(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
               <View
                 style={{
-                  marginTop: 15,
-                  backgroundColor: COLORS.primary,
-                  padding: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 8,
-                  width: "100%",
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontWeight: FONTWEIGHT.normal,
-                    textAlign: "auto",
-                    fontSize: fontSizeResponsive("H3", device),
-                    color: COLORS.white,
-                    fontWeight: FONTWEIGHT.bold,
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
                   }}
                 >
-                  Lihat Paraf
-                </Text>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    List Paraf
+                  </Text>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => {
+                      setModal(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {item.approvers.map((data, index) => {
+                  if (index > 0) {
+                    return (
+                      <View style={{ marginHorizontal: 20, marginVertical: 5 }}>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: 5,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Image
+                            source={{ uri: data.avatar_url }}
+                            height={30}
+                            width={30}
+                            borderRadius={30}
+                          />
+                          <Text style={{ width: "90%" }}>{data.nama}</Text>
+                        </View>
+                        {item.sequence <= index ? (
+                          <>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                width: "60%",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                gap: 5,
+                                marginTop: 5,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.infoDanger,
+                                  borderRadius: 50,
+                                  height: 20,
+                                  width: 20,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Ionicons name="close" color={COLORS.white} />
+                              </View>
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.infoDangerLight,
+                                  paddingVertical: 5,
+                                  borderRadius: 20,
+                                  paddingHorizontal: 15,
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    color: COLORS.infoDanger,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  Belum Ditandatangani
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={{
+                                width: "100%",
+                                height: 2,
+                                backgroundColor: COLORS.ExtraDivinder,
+                                marginTop: 5,
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                width: "60%",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                gap: 5,
+                                marginTop: 5,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.success,
+                                  borderRadius: 50,
+                                  height: 20,
+                                  width: 20,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Ionicons
+                                  name="checkmark-outline"
+                                  color={COLORS.white}
+                                />
+                              </View>
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.successLight,
+                                  paddingVertical: 5,
+                                  borderRadius: 20,
+                                  paddingHorizontal: 15,
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    color: COLORS.success,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  Ditandatangani
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={{
+                                width: "100%",
+                                height: 2,
+                                backgroundColor: COLORS.ExtraDivinder,
+                                marginTop: 5,
+                              }}
+                            />
+                          </>
+                        )}
+                      </View>
+                    );
+                  }
+                })}
               </View>
             </View>
-          </View>
+          </Modal>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  iOSBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.5,
+  },
+  androidBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.7,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

@@ -96,7 +96,6 @@ export const PKRL = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "" && currentTab === "PKRL") {
-        dispatch(getCounterPerizinanMenteri({ token: token }));
         if (variant === "inprogress") {
           dispatch(
             getListInProgress({ token: token, tipe: tipe, search: search })
@@ -108,6 +107,15 @@ export const PKRL = () => {
         } else if (variant === "composer") {
           dispatch(
             getListComposer({
+              token: token,
+              tipe: tipe,
+              page: page,
+              search: search,
+            })
+          );
+        } else if (variant === "rejected") {
+          dispatch(
+            getListRejected({
               token: token,
               tipe: tipe,
               page: page,
@@ -216,6 +224,11 @@ export const PKRL = () => {
     );
   };
 
+  const filterHandlerRejected = () => {
+    SetVariant("rejected");
+    dispatch(getListRejected({ token: token, tipe: tipe, search: search }));
+  };
+
   const filterHandlerRetry = () => {
     SetVariant("composer");
     dispatch(
@@ -257,6 +270,15 @@ export const PKRL = () => {
     } else if (variant === "composer" && currentTab === "PKRL") {
       dispatch(
         getListComposer({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (variant === "rejected" && currentTab === "PKRL") {
+      dispatch(
+        getListRejected({
           token: token,
           tipe: tipe,
           page: page,
@@ -425,6 +447,31 @@ export const PKRL = () => {
                   }}
                 >
                   Need Sign
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "rejected" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "rejected" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerRejected()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "rejected" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Rejected
                 </Text>
               </TouchableOpacity>
 
