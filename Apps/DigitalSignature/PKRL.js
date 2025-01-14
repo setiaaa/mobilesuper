@@ -289,8 +289,6 @@ export const PKRL = () => {
     }
   }, [page, token, tipe, search, currentTab]);
 
-  console.log(dokumenlain.lists, "cek");
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -532,12 +530,12 @@ export const PKRL = () => {
         </View>
 
         <TouchableOpacity
-          style={{ position: "absolute", right: 10, top: 500 }}
+          style={{ position: "absolute", right: 10, top: "85%" }}
           onPress={() => navigation.navigate("TambahDokumenPerizinan")}
         >
           <View
             style={{
-              backgroundColor: COLORS.infoDanger,
+              backgroundColor: COLORS.primary,
               borderRadius: 50,
               width: 44,
               height: 44,

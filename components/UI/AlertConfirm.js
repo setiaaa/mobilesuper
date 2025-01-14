@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 
-export const AlertConfirm = (title, message, onPress) => {
+export const AlertConfirm = (title, message, onPress, labelButton = 'Ok') => {
     return Alert.alert(
     title,
     message,
@@ -12,7 +12,7 @@ export const AlertConfirm = (title, message, onPress) => {
       },
       // The "Yes" button
       {
-        text: "Ok",
+        text: labelButton,
         onPress: onPress
       },
     ]

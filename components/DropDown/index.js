@@ -25,14 +25,17 @@ export const Dropdown = ({
   backgroundColor,
   textColor,
   search,
+  editable = true,
 }) => {
   const [press, setPress] = useState(0);
   const handlePress = () => {
-    if (press === 0) {
+    if (!editable) return;
+    else if (press === 0 && editable) {
       setPress(1);
-    } else {
+    } else if (press == 1 && editable) {
       setPress(0);
     }
+
   };
   const [pressData, setPressData] = useState("");
   const [displayData, setDisplayData] = useState("");
@@ -100,9 +103,9 @@ export const Dropdown = ({
               >
                 <Text
                   style={{
-                    color: textColor,
                     width: "70%",
                     fontSize: fontSizeResponsive("H4", device),
+                    color: displayData !== '' ? textColor : COLORS.grey,
                   }}
                 >
                   {displayData !== "" ? displayData : placeHolder}

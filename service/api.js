@@ -2154,6 +2154,16 @@ export const revisiPerizinan = createAsyncThunk(
     return respon?.data;
   }
 );
+export const getNomorPerizinanMenteri = createAsyncThunk(
+  "digitalsign/getNomorPerizinanMenteri",
+  async ({ token, param }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}perizinan-penomoran/?jenis_dokumen=${param.jenisDokumen}&tanggal=${param.tanggal}`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data;
+  }
+);
 
 export const addDocumentDigiSign = createAsyncThunk(
   "digitalsign/addDocumentDigiSign",
@@ -2196,12 +2206,28 @@ export const putDocumentDigiSign = createAsyncThunk(
 export const addAttachmentDigiSign = createAsyncThunk(
   "digitalsign/addAttachmentDigiSign",
   async (data) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: data.file.uri, // Path ke file
+      type: data.file.mimeType, // MIME type dari file
+      name: data.file.name, // Nama file (dengan ekstensi)
+    });
+    formData.append("name", data.name);
+
     const respon = await axiosInstance.post(
       `${digitalSign}attachment/create/`,
-      data.payload,
-      { headers: { Authorization: data.token } }
+      formData,
+      {
+        headers: {
+          Authorization: data.token,
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    return respon?.data;
+    return {
+      data: respon?.data,
+      tipe: data.name.startsWith("perizinan") ? "perizinan" : "lampiran",
+    };
   }
 );
 

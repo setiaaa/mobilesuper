@@ -20,57 +20,79 @@ export const kategoriPerizinan = [
     {
         key: 1,
         value: 'SIPJI (Surat Izin Pemanfaatan Jenis Ikan)',
-        group: 1
+        group: 1,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }, { key: 'non-berusaha', value: 'Non Berusaha' }],
+        alias: 'SIPJI'
     },
     {
         key: 2,
         value: 'SIUPKK (Surat Izin Usaha Pemanfaatan Kawasan Konservasi)',
-        group: 1
+        group: 1,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'SIUPKK'
     },
     {
         key: 3,
         value: 'Izin Pelaksanaan Reklamasi',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }, { key: 'pemerintah', value: 'Pemerintah' }],
+        alias: 'IPR'
     },
     {
         key: 4,
         value: 'Izin Pemanfaatan Air Laut',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }, { key: 'pemerintah', value: 'Pemerintah' }],
+        alias: 'IPPL'
     },
     {
         key: 5,
         value: 'Izin Produk Garam',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'PRG'
     },
     {
         key: 6,
         value: 'Izin Pemanfaatan Air Laut Selain Energi',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'ALSE'
     },
     {
         key: 7,
         value: 'Izin Wisata Bahari',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'WISBAR'
     },
     {
         key: 8,
         value: 'Biofarmakologi dan Bioteknologi',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'BIO'
     },
     {
         key: 9,
         value: 'Pengangkatan Benda Muatan Kapal Tenggelam',
-        group: 2
+        group: 2,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'BMKT'
     },
     {
         key: 10,
         value: 'Rekomendasi Pemanfaatan Pulau Pulau Kecil Kurang Dari 100km2',
-        group: 3
+        group: 3,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }, { key: 'pemerintah', value: 'Pemerintah' }],
+        alias: 'REKOMPPK'
     },
     {
         key: 11,
         value: 'Rekomendasi Pemanfaatan Pulau Pulau Kecil Dalam Penanaman Modal Operasi',
-        group: 3
+        group: 3,
+        jenisPermohonan: [{ key: 'berusaha', value: 'Berusaha' }],
+        alias: 'PPKPMA'
     },
 ]
 
@@ -80,7 +102,7 @@ export const jenisPermohonan = [
         value: 'Berusaha'
     },
     {
-        key: 'non-berusaha',
+        key: { key: 'non-berusaha', value: 'Non Berusaha' },
         value: 'Non Berusaha'
     }
 ]
