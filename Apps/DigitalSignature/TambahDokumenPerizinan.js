@@ -20,24 +20,27 @@ import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { postAttachment } from "../../service/api";
+import { COLORS, FONTSIZE, fontSizeResponsive, FONTWEIGHT } from "../../config/SuperAppps";
+import { addAttachmentDigiSign, addDocumentDigiSign, getNomorPerizinanMenteri, postAttachment } from "../../service/api";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
 import { jenisPerizinan, kategoriPerizinan, jenisPermohonan, listParaf } from "./dataDokPerizinan";
+import AlertConfirm from "../../components/UI/AlertConfirm";
+import moment from "moment";
+import { resetNomorDokPerizinan, setStatus } from "../../store/DigitalSign";
 
 export default TambahDokumenPerizinan = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
+    const { device } = useSelector((state) => state.apps);
     const { profile } = useSelector((state) => state.superApps);
-    const { attachment } = useSelector((state) => state.event);
-    const { status } = useSelector((state) => state.digitalsign);
     const { addressbook } = useSelector((state) => state.addressBookKKP);
+    const { status, attachmentDokPerizinan, attachmentLampiran, nomorDokPerizinan } = useSelector((state) => state.digitalsign);
 
-    const [type, setType] = useState([]);
     const [token, setToken] = useState("");
     const [stateConfig, setStateConfig] = useState({});
-    const [data, setData] = useState({
+    const [jenisPermohonanOption, setJenisPermohonanOption] = useState([]);
+    const [dataForm, setDataForm] = useState({
         jenisPerizinan: {
             key: '',
             value: '',
@@ -53,104 +56,152 @@ export default TambahDokumenPerizinan = () => {
         perihal: '',
         nomorPerizinan: '',
         paraf: [],
+        dokumenPerizinan: [],
         lampiran: [],
     })
 
     const handleSetData = (name, value) => {
         if (name === 'jenisPerizinan') {
-            setData({
-                ...data,
+            setDataForm({
+                ...dataForm,
                 [name]: value,
                 kategoriPerizinan: { key: '', value: '' }
             })
         }
         if (name === 'kategoriPerizinan') {
-            setData({
-                ...data,
+            setJenisPermohonanOption(value.jenisPermohonan)
+            setDataForm({
+                ...dataForm,
                 [name]: value,
-                paraf: listParaf
+                paraf: listParaf,
             })
         } else {
-            setData({
-                ...data,
+            setDataForm({
+                ...dataForm,
                 [name]: value
             })
         }
+    };
+
+    const handleCheckButtonAmbilNomor = () => {
+        if (dataForm.jenisPerizinan.key === '' || dataForm.kategoriPerizinan.key === '' || dataForm?.jenisPermohonan.key === '') {
+            return true
+        } else return false
+    };
+
+    const handleGetNomorDokumen = () => {
+        const tgl = moment(new Date).format('YYYY-MM-DD')
+        const jp = dataForm.jenisPermohonan.key;
+        const jd = jp === 'pemerintah' ? '-P' : jp === 'non-berusaha' ? '-NB' : '';
+        let payload = {
+            tanggal: tgl,
+            jenisDokumen: dataForm.kategoriPerizinan.alias + jd,
+        }
+        let data = {
+            token: token,
+            param: payload
+        }
+        dispatch(getNomorPerizinanMenteri(data))
+    };
+
+    const isDisableAfterGetNomor = () => {
+        if (dataForm.nomorPerizinan !== '') {
+            return true
+        } else {
+            return false
+        }
+
+    };
+
+    const isDisabledButtonKirim = () => {
+        if (dataForm.jenisPerizinan.key === '' || dataForm.kategoriPerizinan.key === '' || dataForm.jenisPermohonan.key === '' || dataForm.nomorPerizinan === '' || dataForm.perihal === '' || dataForm.paraf.length == 0 || attachmentDokPerizinan.length == 0 || attachmentLampiran.length == 0) {
+            return true;
+        } else return false;
     }
 
     const pickDocument = async () => {
-        let doc = [...data.lampiran]
         let result = await DocumentPicker.getDocumentAsync({});
 
-        // Sementara masih tes di android
-        // let tipe = result.uri.split("/");
-        // tipe = tipe[tipe.length - 1];
-        // tipe = tipe.split(".");
-        // tipe = tipe[tipe.length - 1];
-        // doc.push(result)
-        let tipe = result.assets[0].uri.split('/');
-        tipe = tipe[tipe.length - 1];
-        tipe = tipe.split('.');
-        tipe = tipe[tipe.length - 1];
-        doc.push(result.assets[0])
-
-        const dataPayload = {
+        const data = {
             token: token,
-            result: result.assets[0],
+            file: result.assets[0],
+            name: 'perizinan_' + result.assets[0].name
         };
 
-        setType([...type, tipe]);
-        dispatch(postAttachment(dataPayload));
-        handleSetData('lampiran', doc)
+        dispatch(addAttachmentDigiSign(data));
+    };
+
+    const pickDocumentLampiran = async () => {
+        let result = await DocumentPicker.getDocumentAsync({});
+
+        const data = {
+            token: token,
+            file: result.assets[0],
+            name: 'lampiran_' + result.assets[0].name
+        };
+        dispatch(addAttachmentDigiSign(data));
+    };
+
+    const handleGetKategoriPerizinan = () => {
+        if (dataForm.jenisPerizinan.key !== '') {
+            return kategoriPerizinan.filter(x => x.group === dataForm.jenisPerizinan?.group)
+        }
+        return []
     };
 
     const handleSubmit = () => {
         const idAtt = [];
         const approvers = [];
 
-        data.paraf?.map((item) => {
+        dataForm.paraf?.map((item) => {
             approvers.push(item.nip);
         });
-        attachment?.map((item) => {
+        attachmentDokPerizinan?.map((item) => {
+            idAtt.push(item.id);
+        });
+        attachmentLampiran?.map((item) => {
             idAtt.push(item.id);
         });
 
         const payload = {
-            subject: data.perihal,
+            subject: dataForm.perihal,
             senders: [profile.nip],
             approvers: approvers,
             action: 'submit',
             id_attachments: idAtt,
             extra_attributes: {
-                jenis_perizinan: data.jenisPerizinan.value,
-                kategori_perizinan: data.kategoriPerizinan.value,
-                jenis_permohonan: data.jenisPermohonan.value,
-                no_perizinan: data.nomorPerizinan,
+                jenis_perizinan: dataForm.jenisPerizinan.value,
+                kategori_perizinan: dataForm.kategoriPerizinan.value,
+                jenis_permohonan: dataForm.jenisPermohonan.value,
+                no_perizinan: dataForm.nomorPerizinan,
             },
             comment: 'comment',
             tipe_dokumen: 'dokumen_pkrl',
         };
 
-        const dataPayload = {
+        const data = {
             token: token,
             payload: payload,
         };
 
-        console.log(dataPayload)
+        dispatch(addDocumentDigiSign(data))
     };
 
-    const handleGetKategoriPerizinan = () => {
-        if (data.jenisPerizinan.key !== '') {
-            return kategoriPerizinan.filter(x => x.group === data.jenisPerizinan?.group)
-        }
-        return []
-    }
-
     useEffect(() => {
+        dispatch(resetNomorDokPerizinan())
         getTokenValue().then((val) => {
             setToken(val);
         });
     }, []);
+
+    useEffect(() => {
+        if (nomorDokPerizinan !== '') {
+            setDataForm(prev => ({
+                ...prev,
+                nomorPerizinan: nomorDokPerizinan
+            }))
+        }
+    }, [nomorDokPerizinan])
 
     useEffect(() => {
         if (stateConfig.title === "Paraf") {
@@ -218,7 +269,7 @@ export default TambahDokumenPerizinan = () => {
                             <Text
                                 style={{
                                     fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
+                                    fontSize: fontSizeResponsive("H3", device),
                                 }}
                             >
                                 Jenis Perizinan
@@ -250,7 +301,7 @@ export default TambahDokumenPerizinan = () => {
                             <Text
                                 style={{
                                     fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
+                                    fontSize: fontSizeResponsive("H3", device),
                                 }}
                             >
                                 Kategori Perizinan
@@ -282,7 +333,7 @@ export default TambahDokumenPerizinan = () => {
                             <Text
                                 style={{
                                     fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
+                                    fontSize: fontSizeResponsive("H3", device),
                                 }}
                             >
                                 Jenis Permohonan
@@ -291,14 +342,83 @@ export default TambahDokumenPerizinan = () => {
                         </View>
                         <View style={{ marginHorizontal: 17 }}>
                             <Dropdown
-                                data={jenisPermohonan}
                                 borderWidth={1}
                                 borderwidthDrop={1}
                                 borderWidthValue={1}
+                                data={jenisPermohonanOption}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 borderColorValue={COLORS.ExtraDivinder}
                                 setSelected={(item) => handleSetData('jenisPermohonan', item)}
+                            />
+                        </View>
+
+                        {/* Nomor Perizinan */}
+                        <View
+                            style={{
+                                marginTop: 10,
+                                marginBottom: 10,
+                                marginLeft: 17,
+                                flexDirection: "row",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H3", device),
+                                }}
+                            >
+                                Nomor Perizinan
+                            </Text>
+                            <Text style={{ color: COLORS.danger }}>*</Text>
+                        </View>
+                        {/* Button Ambil Nomor */}
+                        <TouchableOpacity
+                            style={{
+                                padding: 10,
+                                borderRadius: 8,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginHorizontal: 18,
+                                marginBottom: 10,
+                                backgroundColor: handleCheckButtonAmbilNomor() ? COLORS.grey : COLORS.infoDanger,
+                            }}
+                            disabled={handleCheckButtonAmbilNomor()}
+                            onPress={() => AlertConfirm(
+                                'Ambil Nomor',
+                                'Mohon Cek Kembali Kelengkapan Dokumen Perizinan, Apakah Anda Yakin Akan Mengambil Penomoran?',
+                                handleGetNomorDokumen,
+                                'Ya',
+                            )}
+                        >
+                            <Text
+                                style={{
+                                    color: COLORS.white,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                }}
+                            >
+                                Ambil Nomor
+                            </Text>
+                        </TouchableOpacity>
+                        <View
+                            style={{
+                                borderWidth: 1,
+                                width: "90%",
+                                marginLeft: 17,
+                                borderRadius: 4,
+                                borderColor: COLORS.ExtraDivinder,
+                            }}
+                        >
+                            <TextInput
+                                editable
+                                multiline
+                                maxLength={40}
+                                numberOfLines={4}
+                                style={{ padding: 10 }}
+                                allowFontScaling={false}
+                                value={dataForm.nomorPerizinan}
+                                placeholder="Masukan Nomor Perizinan"
+                                onChangeText={(value) => handleSetData('nomorPerizinan', value)}
                             />
                         </View>
 
@@ -314,7 +434,7 @@ export default TambahDokumenPerizinan = () => {
                             <Text
                                 style={{
                                     fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
+                                    fontSize: fontSizeResponsive("H3", device),
                                 }}
                             >
                                 Perihal Perizinan
@@ -335,52 +455,11 @@ export default TambahDokumenPerizinan = () => {
                                 multiline
                                 maxLength={100}
                                 numberOfLines={4}
-                                value={data.perihal}
+                                value={dataForm.perihal}
                                 style={{ padding: 10 }}
                                 allowFontScaling={false}
                                 placeholder="Masukan Perihal Perizinan"
                                 onChangeText={(value) => handleSetData('perihal', value)}
-                            />
-                        </View>
-
-                        {/* Nomor Perizinan */}
-                        <View
-                            style={{
-                                marginTop: 10,
-                                marginBottom: 10,
-                                marginLeft: 17,
-                                flexDirection: "row",
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
-                                }}
-                            >
-                                Nomor Perizinan
-                            </Text>
-                            <Text style={{ color: COLORS.danger }}>*</Text>
-                        </View>
-                        <View
-                            style={{
-                                borderWidth: 1,
-                                width: "90%",
-                                marginLeft: 17,
-                                borderRadius: 4,
-                                borderColor: COLORS.ExtraDivinder,
-                            }}
-                        >
-                            <TextInput
-                                editable
-                                multiline
-                                maxLength={40}
-                                numberOfLines={4}
-                                style={{ padding: 10 }}
-                                allowFontScaling={false}
-                                value={data.nomorPerizinan}
-                                placeholder="Masukan Nomor Perizinan"
-                                onChangeText={(value) => handleSetData('nomorPerizinan', value)}
                             />
                         </View>
 
@@ -396,7 +475,7 @@ export default TambahDokumenPerizinan = () => {
                             <Text
                                 style={{
                                     fontWeight: FONTWEIGHT.bold,
-                                    fontSize: FONTSIZE.H3,
+                                    fontSize: fontSizeResponsive("H3", device),
                                 }}
                             >
                                 Paraf
@@ -419,7 +498,7 @@ export default TambahDokumenPerizinan = () => {
                                 maxLength={40}
                                 placeholder="Pilih dari Addressbook"
                                 style={{ padding: 10, width: "80%" }}
-                                value={data.paraf}
+                                value={dataForm.paraf}
                                 allowFontScaling={false}
                             />
                             <View
@@ -439,7 +518,7 @@ export default TambahDokumenPerizinan = () => {
                                                 pegawai: false,
                                             },
                                             multiselect: true,
-                                            payload: data.paraf,
+                                            payload: dataForm.paraf,
                                         };
                                         setStateConfig(config);
                                         navigation.navigate("AddressBook", { config: config });
@@ -454,9 +533,8 @@ export default TambahDokumenPerizinan = () => {
                             </View>
                         </View>
                         {/* List Paraf */}
-                        {data.paraf.length > 0 && <Text>Adaa</Text>}
                         <FlatList
-                            data={data.paraf}
+                            data={dataForm.paraf}
                             renderItem={({ item }) => (
                                 <CardListPeserta item={item} addressbook={addressbook} />
                             )}
@@ -464,7 +542,7 @@ export default TambahDokumenPerizinan = () => {
                             keyExtractor={(index) => index}
                         />
 
-                        {/* Lampiran */}
+                        {/* Dokumen Perizinan */}
                         <View
                             style={{
                                 marginTop: 10,
@@ -479,8 +557,9 @@ export default TambahDokumenPerizinan = () => {
                                     fontSize: FONTSIZE.H3,
                                 }}
                             >
-                                Lampiran
+                                Dokumen Perizinan
                             </Text>
+                            <Text style={{ color: COLORS.danger }}>*</Text>
                         </View>
                         <Pressable onPress={pickDocument}>
                             <View
@@ -499,15 +578,15 @@ export default TambahDokumenPerizinan = () => {
                             >
                                 <View style={{ marginBottom: 10 }}>
                                     <Ionicons
-                                        name="md-cloud-upload-outline"
-                                        size={30}
+                                        name="cloud-upload-outline"
+                                        size={device == "tablet" ? 40 : 30}
                                         color={"#66656C"}
                                     />
                                 </View>
                                 <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
                             </View>
                         </Pressable>
-                        {data.lampiran.length < 1 ? null : (
+                        {attachmentDokPerizinan.length < 1 ? null : (
                             <View
                                 style={{
                                     flexDirection: "row",
@@ -517,116 +596,155 @@ export default TambahDokumenPerizinan = () => {
                                     gap: 10,
                                 }}
                             >
-                                {data?.lampiran?.map((doc, i) => (
-                                    <>
-                                        {type[i] === "doc" || type[i] === "docx" ? (
-                                            <View
-                                                style={{
-                                                    width: 97,
-                                                    height: 97,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    borderWidth: 1,
-                                                    borderRadius: 8,
-                                                    borderColor: COLORS.ExtraDivinder,
-                                                }}
-                                            >
-                                                <Image
-                                                    source={require("../../assets/superApp/word.png")}
-                                                />
-                                            </View>
-                                        ) : type[i] === "pdf" ? (
-                                            <View
-                                                style={{
-                                                    width: 97,
-                                                    height: 97,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    borderWidth: 1,
-                                                    borderRadius: 8,
-                                                    borderColor: COLORS.ExtraDivinder,
-                                                }}
-                                            >
-                                                <Image
-                                                    source={require("../../assets/superApp/pdf.png")}
-                                                />
-                                            </View>
-                                        ) : type[i] === "ppt" || type[i] === "pptx" ? (
-                                            <View
-                                                style={{
-                                                    width: 97,
-                                                    height: 97,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    borderWidth: 1,
-                                                    borderRadius: 8,
-                                                    borderColor: COLORS.ExtraDivinder,
-                                                }}
-                                            >
-                                                <Image
-                                                    source={require("../../assets/superApp/ppt.png")}
-                                                />
-                                            </View>
-                                        ) : type[i] === "xls" || type[i] === "xlsx" ? (
-                                            <View
-                                                style={{
-                                                    width: 97,
-                                                    height: 97,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    borderWidth: 1,
-                                                    borderRadius: 8,
-                                                    borderColor: COLORS.ExtraDivinder,
-                                                }}
-                                            >
-                                                <Image
-                                                    source={require("../../assets/superApp/excel.png")}
-                                                />
-                                            </View>
-                                        ) : (
-                                            <Image
-                                                key={doc.uri}
-                                                source={{ uri: doc.uri }}
-                                                style={{ width: 97, height: 97, borderRadius: 8 }}
-                                            />
-                                        )}
-                                    </>
+                                {attachmentDokPerizinan?.map((doc, i) => (
+                                    <View
+                                        key={i}
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                            alignItems: "center",
+                                            flexDirection: 'row',
+                                            justifyContent: "flex-start",
+                                            borderWidth: 1,
+                                            borderRadius: 8,
+                                            paddingVertical: 20,
+                                            paddingHorizontal: 10,
+                                            borderColor: COLORS.ExtraDivinder,
+                                        }}
+                                    >
+                                        <Image
+                                            style={{ marginRight: 5 }}
+                                            source={require("../../assets/superApp/pdf.png")}
+                                        />
+                                        <View style={{ width: '85%' }}>
+                                            <Text>{doc?.name}</Text>
+                                            <Text>{(doc.file_size / 1024).toFixed(2)} KB</Text>
+                                        </View>
+                                    </View>
                                 ))}
                             </View>
                         )}
                         <View style={{ marginVertical: 10, marginHorizontal: 17 }}>
                             <Text style={{ color: COLORS.lighter }}>
-                                *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls,
-                                xlsx yang akan diterima dan ukuran file maks 100 MB
+                                *) Hanya pdf yang akan diterima dan ukuran file maks 50 MB
+                            </Text>
+                        </View>
+
+                        {/* Dokumen Lampiran Pendukung */}
+                        <View
+                            style={{
+                                marginTop: 10,
+                                marginBottom: 10,
+                                marginLeft: 17,
+                                flexDirection: "row",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H3", device),
+                                }}
+                            >
+                                Dokumen Lampiran Pendukung
+                            </Text>
+                            <Text style={{ color: COLORS.danger }}>*</Text>
+                        </View>
+                        <Pressable onPress={pickDocumentLampiran}>
+                            <View
+                                style={{
+                                    borderWidth: 1,
+                                    width: "90%",
+                                    marginLeft: 17,
+                                    borderRadius: 4,
+                                    borderColor: COLORS.ExtraDivinder,
+                                    height: 250,
+                                    marginBottom: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    gap: 5,
+                                }}
+                            >
+                                <View style={{ marginBottom: 10 }}>
+                                    <Ionicons
+                                        name="cloud-upload-outline"
+                                        size={device == "tablet" ? 40 : 30}
+                                        color={"#66656C"}
+                                    />
+                                </View>
+                                <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+                            </View>
+                        </Pressable>
+                        {attachmentLampiran.length < 1 ? null : (
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    marginHorizontal: 20,
+                                    marginVertical: 10,
+                                    flexWrap: "wrap",
+                                    gap: 10,
+                                }}
+                            >
+                                {attachmentLampiran?.map((doc, i) => (
+                                    <View
+                                        key={1}
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                            alignItems: "center",
+                                            flexDirection: 'row',
+                                            justifyContent: "flex-start",
+                                            borderWidth: 1,
+                                            borderRadius: 8,
+                                            paddingVertical: 20,
+                                            paddingHorizontal: 10,
+                                            borderColor: COLORS.ExtraDivinder,
+                                        }}
+                                    >
+                                        <Image
+                                            style={{ marginRight: 5 }}
+                                            source={require("../../assets/superApp/pdf.png")}
+                                        />
+                                        <View style={{ width: '85%' }}>
+                                            <Text>{doc?.name}</Text>
+                                            <Text>{(doc.file_size / 1024).toFixed(2)} KB</Text>
+                                        </View>
+                                    </View>
+                                ))}
+                            </View>
+                        )}
+                        <View style={{ marginVertical: 10, marginHorizontal: 17 }}>
+                            <Text style={{ color: COLORS.lighter }}>
+                                *) Hanya pdf yang akan diterima dan ukuran file maks 50 MB
                             </Text>
                         </View>
                     </View>
-                </ScrollView>
 
-                {/* FAB */}
-                <TouchableOpacity
-                    style={{ position: "absolute", right: 20, bottom: 100 }}
-                    onPress={() => {
-                        handleSubmit();
-                    }}
-                >
-                    <View
+                    {/* Button Kirim */}
+                    <TouchableOpacity
                         style={{
-                            backgroundColor: COLORS.infoDanger,
-                            borderRadius: 50,
-                            width: 44,
-                            height: 44,
+                            padding: 10,
+                            borderRadius: 8,
                             justifyContent: "center",
                             alignItems: "center",
+                            marginHorizontal: 18,
+                            marginBottom: 10,
+                            backgroundColor: isDisabledButtonKirim() ? COLORS.grey : COLORS.primary,
+                        }}
+                        disabled={isDisabledButtonKirim()}
+                        onPress={() => {
+                            handleSubmit();
                         }}
                     >
-                        <Ionicons
-                            name="checkmark-outline"
-                            size={24}
-                            color={COLORS.white}
-                        />
-                    </View>
-                </TouchableOpacity>
+                        <Text
+                            style={{
+                                color: COLORS.white,
+                                fontSize: fontSizeResponsive("H4", device),
+                            }}
+                        >
+                            Kirim
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
 
                 <Modal
                     animationType="fade"
@@ -684,7 +802,7 @@ export default TambahDokumenPerizinan = () => {
                                         <TouchableOpacity
                                             onPress={() => {
                                                 dispatch(setStatus(""));
-                                                navigation.navigate("HalamanUtama");
+                                                navigation.navigate("MainPerizinanMenteri");
                                             }}
                                             style={{
                                                 marginTop: 20,

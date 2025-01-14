@@ -666,11 +666,11 @@ export const getPegawai = createAsyncThunk(
     const respon =
       search === ""
         ? await axiosInstance.get(`${pegawai}profile/all/?limit=${offset}`, {
-            headers: { Authorization: token },
-          })
+          headers: { Authorization: token },
+        })
         : await axiosInstance.get(`${pegawai}profile/all/?search=${search}`, {
-            headers: { Authorization: token },
-          });
+          headers: { Authorization: token },
+        });
     return respon?.data.results;
   }
 );
@@ -2116,6 +2116,17 @@ export const getListDraft = createAsyncThunk(
   }
 );
 
+export const getNomorPerizinanMenteri = createAsyncThunk(
+  "digitalsign/getNomorPerizinanMenteri",
+  async ({ token, param }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}perizinan-penomoran/?jenis_dokumen=${param.jenisDokumen}&tanggal=${param.tanggal}`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data;
+  }
+)
+
 export const addDocumentDigiSign = createAsyncThunk(
   "digitalsign/addDocumentDigiSign",
   async (data) => {
@@ -2157,12 +2168,28 @@ export const putDocumentDigiSign = createAsyncThunk(
 export const addAttachmentDigiSign = createAsyncThunk(
   "digitalsign/addAttachmentDigiSign",
   async (data) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: data.file.uri, // Path ke file
+      type: data.file.mimeType, // MIME type dari file
+      name: data.file.name, // Nama file (dengan ekstensi)
+    });
+    formData.append("name", data.name);
+
     const respon = await axiosInstance.post(
       `${digitalSign}attachment/create/`,
-      data.payload,
-      { headers: { Authorization: data.token } }
+      formData,
+      {
+        headers: {
+          Authorization: data.token,
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    return respon?.data;
+    return {
+      data: respon?.data,
+      tipe: data.name.startsWith('perizinan') ? 'perizinan' : 'lampiran',
+    }
   }
 );
 
@@ -2699,8 +2726,8 @@ export const getAksiPerubahan = createAsyncThunk(
     const url =
       new_title.length !== 0
         ? `${BASE_URL}bridge/transform/?query=${search}&page=${page}&batch=[${angkatan}]&year=[${tahun}]&new_title=${JSON.stringify(
-            new_title
-          )}`
+          new_title
+        )}`
         : `${BASE_URL}bridge/transform/?query=${search}&page=${page}`;
     const respon = await axiosInstance.get(url, {
       headers: { Authorization: token },
@@ -2801,8 +2828,7 @@ export const getDataPribadi = createAsyncThunk(
     console.log(unker, "unker");
     console.log(satker, "satker");
     const respon = await axiosInstance.get(
-      `${DataPribadi}?limit=${page}&offset=0&search=${search}&unker${
-        satker !== "" ? "" : unker
+      `${DataPribadi}?limit=${page}&offset=0&search=${search}&unker${satker !== "" ? "" : unker
       }&satker=${satker}`,
       {
         headers: { Authorization: token },
@@ -2848,20 +2874,13 @@ export const getNominatif = createAsyncThunk(
     search,
   }) => {
     const respon = await axiosInstance.get(
-      `${Nominatif}?unker=${
-        filterUnitKerja.value === undefined ? "" : filterUnitKerja.value
-      }&status_pegawai=${
-        statusPegawai.key === undefined ? "" : statusPegawai.key
-      }&nama=${search}&echelon_start=${
-        firstEselon.key === undefined ? "" : firstEselon.key
-      }&echelon_end=${
-        secondEselon.key === undefined ? "" : secondEselon.key
-      }&golongan_start=${
-        firstGolongan.key === undefined ? "" : firstGolongan.key
-      }&golongan_end=${
-        secondGolongan.key === undefined ? "" : secondGolongan.key
-      }&tahun_tmt=${
-        tahunTMT.key === undefined ? "" : tahunTMT.key ? tahunTMT?.key : ""
+      `${Nominatif}?unker=${filterUnitKerja.value === undefined ? "" : filterUnitKerja.value
+      }&status_pegawai=${statusPegawai.key === undefined ? "" : statusPegawai.key
+      }&nama=${search}&echelon_start=${firstEselon.key === undefined ? "" : firstEselon.key
+      }&echelon_end=${secondEselon.key === undefined ? "" : secondEselon.key
+      }&golongan_start=${firstGolongan.key === undefined ? "" : firstGolongan.key
+      }&golongan_end=${secondGolongan.key === undefined ? "" : secondGolongan.key
+      }&tahun_tmt=${tahunTMT.key === undefined ? "" : tahunTMT.key ? tahunTMT?.key : ""
       }&page=${page}`,
       {
         headers: { Authorization: token },
@@ -2885,12 +2904,9 @@ export const getNominatifReport = createAsyncThunk(
     page,
   }) => {
     const respon = await axiosInstance.get(
-      `${NominatifReport}?unker=${filterUnitKerja?.value}&status_pegawai=${
-        statusPegawai?.key
-      }&nama=&echelon_start=${firstEselon?.key}&echelon_end=${
-        secondEselon?.key
-      }&golongan_start=${firstGolongan?.key}&golongan_end=${
-        secondGolongan?.key
+      `${NominatifReport}?unker=${filterUnitKerja?.value}&status_pegawai=${statusPegawai?.key
+      }&nama=&echelon_start=${firstEselon?.key}&echelon_end=${secondEselon?.key
+      }&golongan_start=${firstGolongan?.key}&golongan_end=${secondGolongan?.key
       }&tahun_tmt=${tahunTMT?.key ? tahunTMT.key : ""}&page=${page}`,
       {
         headers: { Authorization: token },
