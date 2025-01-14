@@ -72,7 +72,6 @@ export const PKRL = () => {
   const [search, setSearch] = useState("");
   const [tipe, setTipe] = useState("dokumen_pkrl");
   const [variant, SetVariant] = useState("composer");
-  const [filterData, setFilterData] = useState([]);
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
 
@@ -88,7 +87,7 @@ export const PKRL = () => {
     }
   }, [token, tipe, currentTab]);
 
-  const { dokumenlain, loading, status, counter } = useSelector(
+  const { dokumenlain, loading } = useSelector(
     (state) => state.digitalsign
   );
 
@@ -144,73 +143,6 @@ export const PKRL = () => {
 
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
-  };
-
-  const bottomSheetAttachClose = () => {
-    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
-  };
-
-  const currentDate = new Date();
-
-  const handleBiometricAuth = async () => {
-    // Check if hardware supports biometrics
-    const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
-
-    // Fallback to default authentication method (password) if Fingerprint is not available
-    if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
-
-    // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
-    let supportedBiometrics;
-    if (isBiometricAvailable)
-      supportedBiometrics =
-        await LocalAuthentication.supportedAuthenticationTypesAsync();
-
-    // Check Biometrics are saved locally in user's device
-    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
-    if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
-
-    // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
-
-    const biometricAuth = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Login with Biometrics",
-      cancelLabel: "Cancel",
-      disableDeviceFallback: false,
-    });
-    // Log the user in on success
-    if (biometricAuth.success) {
-      handleSubmit();
-    }
-  };
-
-  const handleSubmit = () => {
-    const payload = {
-      passphrase: "",
-      id_documents: isSelected,
-      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
-        DATETIME.LONG_DATE
-      ),
-      comment: "Dokumen sudah di tanda tangan",
-    };
-    const data = {
-      token: token,
-      payload: payload,
-    };
-    dispatch(tandaTanganMentri(data));
-  };
-
-  const checkAll = () => {
-    // Check If isSelected already exists (length !== 0)
-    if (isSelected.length === dokumenlain.lists.length) {
-      setSelection([]);
-    }
-    // If isSelected still empty or all data hasn't checked
-    else {
-      let tmp = [];
-      dokumenlain.lists.map((item) => {
-        tmp.push(item?.id);
-      });
-      setSelection(tmp);
-    }
   };
 
   const filterHandlerInProgress = () => {

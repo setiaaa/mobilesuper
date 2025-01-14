@@ -24,8 +24,10 @@ import {
   revisiPerizinan,
   getNomorPerizinanMenteri,
   addAttachmentDigiSign,
+  putDocumentPerizinan,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
+import { act } from "react";
 
 const DigitalSignSlice = createSlice({
   name: "DigitalSign",
@@ -67,6 +69,14 @@ const DigitalSignSlice = createSlice({
     },
     setLaporanList: (state, action) => {
       state.summary.lists = action.payload;
+    },
+    setAttachmentDokPerizinan: (state, action) => {
+      console.log('setDokPerizinan', action.payload)
+      state.attachmentDokPerizinan = [action.payload]
+    },
+    setAttachmentLampiran: (state, action) => {
+      console.log('lampiran', action.payload)
+      state.attachmentLampiran = [action.payload]
     },
     resetNomorDokPerizinan: (state) => {
       state.nomorDokPerizinan = "";
@@ -228,6 +238,19 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(addDocumentDigiSign.pending, (state, action) => {
         state.loading = true;
+      }) 
+      .addCase(putDocumentPerizinan.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(putDocumentPerizinan.rejected, (state, action) => {
+        state.status = "gagal";
+        state.loading = false;
+        console.log(action.payload)
+        Sentry.captureException(action.error);
+      })
+      .addCase(putDocumentPerizinan.fulfilled, (state) => {
+        state.loading = false;
+        state.status = 'berhasil'
       })
       .addCase(getSummaryCount.fulfilled, (state, action) => {
         state.summary.count = action.payload;
@@ -391,6 +414,8 @@ export const {
   setDigitalSignLists,
   setDigitalSignCourseList,
   setStatus,
+  setAttachmentDokPerizinan,
+  setAttachmentLampiran,
   setLaporanList,
   resetNomorDokPerizinan,
   resetAttachment,
