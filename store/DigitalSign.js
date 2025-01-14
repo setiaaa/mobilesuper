@@ -67,7 +67,11 @@ const DigitalSignSlice = createSlice({
     },
     resetNomorDokPerizinan: (state) => {
       state.nomorDokPerizinan = '';
-    }
+    },
+    resetAttachment: (state) => {
+      state.attachmentLampiran = [];
+      state.attachmentDokPerizinan = [];
+    },
   },
   extraReducers(builder) {
     builder
@@ -203,7 +207,6 @@ const DigitalSignSlice = createSlice({
       .addCase(addDocumentDigiSign.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
-        console.log('berhasil', action.payload)
       })
       .addCase(addDocumentDigiSign.pending, (state, action) => {
         state.status = "";
@@ -350,7 +353,8 @@ export const {
   setDigitalSignCourseList,
   setStatus,
   setLaporanList,
-  resetNomorDokPerizinan
+  resetNomorDokPerizinan,
+  resetAttachment,
 } = DigitalSignSlice.actions;
 
 export default DigitalSignSlice.reducer;

@@ -26,7 +26,7 @@ import { setAddressbookSelected } from "../../store/AddressbookKKP";
 import { jenisPerizinan, kategoriPerizinan, jenisPermohonan, listParaf } from "./dataDokPerizinan";
 import AlertConfirm from "../../components/UI/AlertConfirm";
 import moment from "moment";
-import { resetNomorDokPerizinan, setStatus } from "../../store/DigitalSign";
+import { resetNomorDokPerizinan, setStatus, resetAttachment } from "../../store/DigitalSign";
 
 export default TambahDokumenPerizinan = () => {
     const dispatch = useDispatch();
@@ -104,20 +104,11 @@ export default TambahDokumenPerizinan = () => {
         dispatch(getNomorPerizinanMenteri(data))
     };
 
-    const isDisableAfterGetNomor = () => {
-        if (dataForm.nomorPerizinan !== '') {
-            return true
-        } else {
-            return false
-        }
-
-    };
-
     const isDisabledButtonKirim = () => {
         if (dataForm.jenisPerizinan.key === '' || dataForm.kategoriPerizinan.key === '' || dataForm.jenisPermohonan.key === '' || dataForm.nomorPerizinan === '' || dataForm.perihal === '' || dataForm.paraf.length == 0 || attachmentDokPerizinan.length == 0 || attachmentLampiran.length == 0) {
             return true;
         } else return false;
-    }
+    };
 
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
@@ -187,8 +178,33 @@ export default TambahDokumenPerizinan = () => {
         dispatch(addDocumentDigiSign(data))
     };
 
+    const resetState = () => {
+        setDataForm({
+            jenisPerizinan: {
+                key: '',
+                value: '',
+            },
+            kategoriPerizinan: {
+                key: '',
+                value: '',
+            },
+            jenisPermohonan: {
+                key: '',
+                value: '',
+            },
+            perihal: '',
+            nomorPerizinan: '',
+            paraf: [],
+            dokumenPerizinan: [],
+            lampiran: [],
+        })
+    };
+
     useEffect(() => {
+        resetState()
+        dispatch(resetAttachment())
         dispatch(resetNomorDokPerizinan())
+        
         getTokenValue().then((val) => {
             setToken(val);
         });
@@ -283,8 +299,10 @@ export default TambahDokumenPerizinan = () => {
                                 borderwidthDrop={1}
                                 borderWidthValue={1}
                                 borderColor={COLORS.ExtraDivinder}
+                                placeHolder={'Pilih Jenis Perizinan'}
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 borderColorValue={COLORS.ExtraDivinder}
+                                editable={dataForm.nomorPerizinan === ''}
                                 setSelected={(item) => handleSetData('jenisPerizinan', item)}
                             />
                         </View>
@@ -317,6 +335,8 @@ export default TambahDokumenPerizinan = () => {
                                 borderColor={COLORS.ExtraDivinder}
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 borderColorValue={COLORS.ExtraDivinder}
+                                placeHolder={'Pilih Kategori Perizinan'}
+                                editable={dataForm.nomorPerizinan === ''}
                                 setSelected={(item) => handleSetData('kategoriPerizinan', item)}
                             />
                         </View>
@@ -348,7 +368,9 @@ export default TambahDokumenPerizinan = () => {
                                 data={jenisPermohonanOption}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderColorDrop={COLORS.ExtraDivinder}
+                                placeHolder={'Pilih Jenis Permohonan'}
                                 borderColorValue={COLORS.ExtraDivinder}
+                                editable={dataForm.nomorPerizinan === ''}
                                 setSelected={(item) => handleSetData('jenisPermohonan', item)}
                             />
                         </View>
