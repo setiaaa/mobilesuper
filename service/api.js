@@ -2102,6 +2102,21 @@ export const getListRejected = createAsyncThunk(
     };
   }
 );
+
+export const getListTrack = createAsyncThunk(
+  "digitalsign/getListTrack",
+  async ({ token, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/track/?limit=${page}&general=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.results,
+    };
+  }
+);
 export const getListDraft = createAsyncThunk(
   "digitalsign/getListDraft",
   async ({ token, tipe }) => {
@@ -2113,6 +2128,30 @@ export const getListDraft = createAsyncThunk(
       data: respon?.data.results,
       tipe: tipe,
     };
+  }
+);
+
+export const parafPerizinan = createAsyncThunk(
+  "digitalsign/parafPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/paraf/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const revisiPerizinan = createAsyncThunk(
+  "digitalsign/revisiPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/reject/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
   }
 );
 

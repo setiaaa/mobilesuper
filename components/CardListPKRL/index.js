@@ -55,7 +55,7 @@ export const CardListPKRL = ({
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
-    // dispatch(getDetailDigisign(params));
+    dispatch(getDetailDigisign(params));
   };
   const [modal, setModal] = useState(false);
   return (
@@ -85,34 +85,12 @@ export const CardListPKRL = ({
         }}
         onPress={() => {
           getDetail(item.id);
-          //   navigation.navigate("DetailPerizinanMenteri", {
-          //     variant: variant,
-          //     token: token,
-          //   });
+          navigation.navigate("DetailPKRL", {
+            variant: variant,
+            token: token,
+          });
         }}
       >
-        {/* {variant === "inprogress" ? (
-            <Checkbox
-              value={isSelected}
-              onValueChange={setSelection}
-              color={isSelected === true ? COLORS.lighter : null}
-            />
-          ) : null} */}
-        {/* {variant === "inprogress" && nip !== "197208122001121002" ? (
-          <Checkbox
-            value={isSelected.includes(item?.id) ? true : false}
-            onValueChange={() => {
-              if (isSelected.includes(item?.id)) {
-                const ids = [...isSelected];
-                const newIds = ids.filter((id) => id !== item?.id);
-                setSelection(newIds);
-              } else {
-                setSelection((prev) => [...prev, item?.id]);
-              }
-            }}
-            color={isSelected === true ? COLORS.lighter : null}
-          />
-        ) : null} */}
         <View
           style={{
             flexDirection: "column",
@@ -179,55 +157,103 @@ export const CardListPKRL = ({
               {item?.extra_attributes.no_perizinan !== undefined
                 ? item?.extra_attributes.no_perizinan
                 : "-"}
-              {/* iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiooiooioioiooiooioi */}
             </Text>
           </View>
-
-          <View style={{ width: "100%" }}>
-            <View style={{}}>
+          {variant === "inprogress" || variant === "track" ? null : (
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                flex: 1,
+                gap: 5,
+                marginTop: 5,
+              }}
+            >
               <Text
                 style={{
                   fontSize: fontSizeResponsive("H3", device),
-                  width: 120,
                   textAlign: "auto",
-                  paddingRight: 12,
                   fontWeight: FONTWEIGHT.normal,
-                  width: "90%",
                   fontWeight: FONTWEIGHT.bold,
-                  marginTop: 5,
+                  width: "38%",
                 }}
               >
-                Konseptor
+                Status
               </Text>
-              <View
+              <Text
                 style={{
-                  flexDirection: "row",
-                  gap: 5,
-                  alignItems: "center",
-                  marginTop: 5,
+                  fontSize: fontSizeResponsive("H3", device),
+                  textAlign: "auto",
+                  fontWeight: FONTWEIGHT.normal,
+                  fontWeight: FONTWEIGHT.bold,
                 }}
               >
-                <Image
-                  source={{ uri: item.composer.avatar_url }}
-                  height={30}
-                  width={30}
-                  borderRadius={50}
-                />
+                :
+              </Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "60%",
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                {item.state === "done"
+                  ? "done"
+                  : item.state === "in_progress"
+                  ? "in progress"
+                  : item.state}
+              </Text>
+            </View>
+          )}
+
+          {variant === "inprogress" ? (
+            <View style={{ width: "100%" }}>
+              <View style={{}}>
                 <Text
                   style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    width: 120,
+                    textAlign: "auto",
+                    paddingRight: 12,
                     fontWeight: FONTWEIGHT.normal,
                     width: "90%",
-                    textAlign: "auto",
-                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    marginTop: 5,
                   }}
                 >
-                  {item?.composer.nama !== undefined
-                    ? item?.composer.nama
-                    : "-"}
+                  Konseptor
                 </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 5,
+                    alignItems: "center",
+                    marginTop: 5,
+                  }}
+                >
+                  <Image
+                    source={{ uri: item.composer.avatar_url }}
+                    height={30}
+                    width={30}
+                    borderRadius={50}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.normal,
+                      width: "90%",
+                      textAlign: "auto",
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {item.composer.is_title
+                      ? item.composer.officer.nama
+                      : item.composer.nama}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
+          ) : null}
 
           <TouchableOpacity
             style={{ gap: 5, width: "100%" }}

@@ -40,6 +40,7 @@ import {
   tandaTanganMentri,
   getListRetry,
   getCounterPerizinanMenteri,
+  getListTrack,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -113,9 +114,9 @@ export const PKRL = () => {
               search: search,
             })
           );
-        } else if (variant === "rejected") {
+        } else if (variant === "track") {
           dispatch(
-            getListRejected({
+            getListTrack({
               token: token,
               tipe: tipe,
               page: page,
@@ -224,9 +225,9 @@ export const PKRL = () => {
     );
   };
 
-  const filterHandlerRejected = () => {
-    SetVariant("rejected");
-    dispatch(getListRejected({ token: token, tipe: tipe, search: search }));
+  const filterHandlerTrack = () => {
+    SetVariant("track");
+    dispatch(getListTrack({ token: token, tipe: tipe, search: search }));
   };
 
   const filterHandlerRetry = () => {
@@ -276,9 +277,9 @@ export const PKRL = () => {
           search: search,
         })
       );
-    } else if (variant === "rejected" && currentTab === "PKRL") {
+    } else if (variant === "track" && currentTab === "PKRL") {
       dispatch(
-        getListRejected({
+        getListTrack({
           token: token,
           tipe: tipe,
           page: page,
@@ -289,6 +290,7 @@ export const PKRL = () => {
   }, [page, token, tipe, search, currentTab]);
 
   console.log(dokumenlain.lists, "cek");
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -428,6 +430,31 @@ export const PKRL = () => {
                   padding: 5,
                   borderWidth: 1,
                   backgroundColor:
+                    variant === "track" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "track" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerTrack()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "track" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  In Progress
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 5,
+                  borderWidth: 1,
+                  backgroundColor:
                     variant === "inprogress" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
                   borderColor:
@@ -447,31 +474,6 @@ export const PKRL = () => {
                   }}
                 >
                   Need Sign
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "rejected" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "rejected" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerRejected()}
-              >
-                <Text
-                  style={{
-                    color:
-                      variant === "rejected" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Rejected
                 </Text>
               </TouchableOpacity>
 

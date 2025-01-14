@@ -231,6 +231,7 @@ import { DetailTinjauan } from "../Repository/DetailTinjauan";
 import DispositionLembar from "./Form/DispositionLembar";
 import { MainPerizinanMenteri } from "../DigitalSignature/MainPerizinanMenteri";
 import TambahDokumenPerizinan from "../DigitalSignature/TambahDokumenPerizinan";
+import { DetailPKRL } from "../DigitalSignature/DetailPKRL";
 
 const Stack = createNativeStackNavigator();
 
@@ -1618,13 +1619,20 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
+            name="DetailPKRL"
+            component={DetailPKRL}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainPerizinanMenteri"
             component={MainPerizinanMenteri}
             options={{
               headerShown: false,
             }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="TambahDokumenPerizinan"
             component={TambahDokumenPerizinan}
             options={{

@@ -19,6 +19,9 @@ import {
   tandaTanganMentri,
   getSubjectList,
   getCounterPerizinanMenteri,
+  getListTrack,
+  parafPerizinan,
+  revisiPerizinan,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -109,6 +112,21 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
         Sentry.captureException(action.error);
       })
+      .addCase(getListTrack.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListTrack.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListTrack.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
       .addCase(getListRetry.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.tipe === "bankom") {
@@ -196,7 +214,6 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
       })
       .addCase(addDocumentDigiSign.pending, (state, action) => {
-        state.status = "berhasil";
         state.loading = true;
       })
       .addCase(getSummaryCount.fulfilled, (state, action) => {
@@ -302,6 +319,28 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
         // console.log(action.error);
         Sentry.captureException(action.error);
+      })
+      .addCase(parafPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(parafPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(parafPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
+      .addCase(revisiPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(revisiPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(revisiPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
       });
   },
 });
