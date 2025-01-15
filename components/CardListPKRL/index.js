@@ -348,7 +348,7 @@ export const CardListPKRL = ({
                   </TouchableOpacity>
                 </View>
                 {item.approvers.map((data, index) => {
-                  if (index > 0) {
+                  if (index > 0 && index < item?.approvers.length - 1) {
                     return (
                       <View style={{ marginHorizontal: 20, marginVertical: 5 }}>
                         <View

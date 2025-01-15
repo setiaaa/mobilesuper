@@ -82,6 +82,7 @@ export const PerizinanMenteri = () => {
 
   useEffect(() => {
     if (currentTab === "PerizinanMenteri") {
+      SetVariant("inprogress");
       dispatch(getCounterPerizinanMenteri({ token: token }));
       dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
     }
@@ -122,7 +123,7 @@ export const PerizinanMenteri = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, variant]);
 
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["25%"], []);

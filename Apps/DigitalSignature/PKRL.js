@@ -22,7 +22,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useNavigationState,
+} from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +48,11 @@ import {
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
-import { setDigitalSignLists, setStatus } from "../../store/DigitalSign";
+import {
+  resetList,
+  setDigitalSignLists,
+  setStatus,
+} from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
@@ -75,6 +83,7 @@ export const PKRL = () => {
   const [filterData, setFilterData] = useState([]);
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
+  const isFocus = useIsFocused();
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -84,6 +93,7 @@ export const PKRL = () => {
 
   useEffect(() => {
     if (currentTab === "PKRL") {
+      SetVariant("composer");
       dispatch(getListComposer({ token: token, tipe: tipe, search: search }));
     }
   }, [token, tipe, currentTab]);
@@ -131,7 +141,7 @@ export const PKRL = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, variant]);
 
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["25%"], []);
@@ -287,7 +297,7 @@ export const PKRL = () => {
         })
       );
     }
-  }, [page, token, tipe, search, currentTab]);
+  }, [page, token, tipe, search, currentTab, isFocus]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

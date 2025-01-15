@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
+  Modal,
   Platform,
+  StyleSheet,
   TextInput,
   View,
 } from "react-native";
@@ -19,7 +21,7 @@ import {
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -43,6 +45,7 @@ import {
 } from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Timeline from "react-native-timeline-flatlist";
 
 export const DetailPKRL = ({ route }) => {
   const variant = route.params;
@@ -53,6 +56,7 @@ export const DetailPKRL = ({ route }) => {
   );
 
   const [revisi, setRevisi] = useState("");
+  const [modalLog, setModalLog] = useState(false);
   const item = digitalsign.detail;
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -71,32 +75,6 @@ export const DetailPKRL = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  // const [file, setFile] = useState();
-  // const [fileMemo, setFileMemo] = useState();
-  // useEffect(() => {
-  //   // if (item && item?.attachments?.length === 2) {
-  //   if (file === undefined) {
-  //     item.attachments?.map((item, index) => {
-  //       if (index === 0) {
-  //         setFile(item.file);
-  //       } else {
-  //         setFileMemo(item.file);
-  //       }
-  //     });
-  //   }
-  //   //   if (fileMemo === undefined) {
-  //   //     item.attachments[1]?.map((item) => {
-  //   //       setFileMemo({ link: item.file });
-  //   //     });
-  //   //   }
-  //   // } else {
-  //   //   if (file === undefined) {
-  //   //     item.attachments[0]?.map((item) => {
-  //   //       setFileMemo({ link: item.file });
-  //   //     });
-  //   //   }
-  //   // }
-  // }, [item, file]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
   const dispatch = useDispatch();
@@ -120,7 +98,71 @@ export const DetailPKRL = ({ route }) => {
     // console.log(data.payload);
   };
 
-  //FINGERPRINT
+  const { profile } = useSelector((state) => state.superApps);
+
+  const handleShowAttachment = (type) => {
+    let idxAtt = -1;
+
+    let attachments = item?.attachments;
+
+    if (attachments?.length !== 0) {
+      attachments.map((item, i) => {
+        let name = item.name.toLowerCase();
+        if (name.includes(type)) {
+          idxAtt = i;
+        }
+      });
+    }
+
+    if (attachments?.length !== 0 && attachments[idxAtt] !== undefined) {
+      navigation.navigate("PdfViewer", {
+        data: attachments[idxAtt].file,
+        type: "DokumenLain",
+      });
+    } else {
+      Alert.alert("File Tidak Ada");
+    }
+  };
+
+  const isMenkp = () => {
+    if (item !== null) {
+      if (
+        item?.sequence ===
+          item?.approvers[item?.approvers?.length - 1]?.sequence &&
+        profile.nip === item?.approvers[item?.approvers?.length - 1]?.nip
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const handleParaf = () => {
+    let payload = {
+      id_documents: [item.id],
+    };
+
+    const data = {
+      token: variant.token,
+      payload: payload,
+    };
+
+    dispatch(parafPerizinan(data));
+  };
+
+  const handleRevisi = () => {
+    let payload = {
+      id_documents: [item.id],
+      comment: revisi,
+    };
+    const data = {
+      token: variant.token,
+      payload: payload,
+    };
+
+    dispatch(revisiPerizinan(data));
+  };
 
   const handleBiometricAuth = async () => {
     // Check if hardware supports biometrics
@@ -156,71 +198,75 @@ export const DetailPKRL = ({ route }) => {
     }
   };
 
-  const { profile } = useSelector((state) => state.superApps);
-
-  const handleShowAttachment = (type) => {
-    let idxAtt = -1;
-
-    let attachments = item?.attachments;
-
-    if (attachments.length !== 0) {
-      attachments.map((item, i) => {
-        let name = item.name.toLowerCase();
-        if (name.includes(type)) {
-          idxAtt = i;
-        }
-      });
-    }
-
-    if (attachments.length !== 0 && attachments[idxAtt] !== undefined) {
-      navigation.navigate("PdfViewer", {
-        data: attachments[idxAtt].file,
-        type: "DokumenLain",
-      });
-    } else {
-      Alert.alert("File Tidak Ada");
-    }
-  };
-
-  const isMenkp = () => {
-    if (item !== null) {
-      if (
-        item?.sequence ===
-          item?.approvers[item?.approvers.length - 1]?.sequence &&
-        profile.nip === item?.approvers[item?.approvers.length - 1]?.nip
-      ) {
-        return true;
+  const handleGetFileLampiran = (tipe) => {
+    if (item.attachments?.length !== 0) {
+      const data = [...item?.attachments];
+      const datas = data.filter((x) => x.name.includes(tipe))[0];
+      if (datas) {
+        navigation.navigate("PdfViewer", {
+          data: datas.file,
+          type: "DokumenLain",
+        });
       }
     }
-
-    return false;
   };
 
-  const handleParaf = () => {
-    let payload = {
-      id_documents: [item.id],
-    };
+  const timelineData = item?.logs?.map((log) => ({
+    time: moment(log.created_at, "YYYY-MM-DD HH:mm:ss").format(
+      DATETIME.LONG_DATETIME
+    ),
+    title: log.user,
+    description: log.message ? log.message : "No message",
+    action: log.action,
+    icon:
+      log.action === "submit" ? (
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.infoLight,
+            borderRadius: 20,
+          }}
+        >
+          <Feather name="send" size={20} color={COLORS.info} />
+        </View>
+      ) : log.action === "paraf" ? (
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.successLight,
+            borderRadius: 20,
+          }}
+        >
+          <MaterialIcons name="gesture" size={20} color={COLORS.success} />
+        </View>
+      ) : log.action === "revisi" ? (
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.infoDangerLight,
+            borderRadius: 20,
+          }}
+        >
+          <MaterialIcons
+            name="content-paste-off"
+            size={20}
+            color={COLORS.infoDanger}
+          />
+        </View>
+      ) : log.action === "approve" ? (
+        <View
+          style={{
+            padding: 5,
+            backgroundColor: "#efbbff",
+            borderRadius: 20,
+          }}
+        >
+          <MaterialIcons name="check" size={20} color={"#be29ec"} />
+        </View>
+      ) : null,
+  }));
 
-    const data = {
-      token: variant.token,
-      payload: payload,
-    };
-
-    dispatch(parafPerizinan(data));
-  };
-
-  const handleRevisi = () => {
-    let payload = {
-      id_documents: [item.id],
-      comment: revisi,
-    };
-    const data = {
-      token: variant.token,
-      payload: payload,
-    };
-
-    dispatch(revisiPerizinan(data));
-  };
+  console.log(item.logs);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -267,7 +313,7 @@ export const DetailPKRL = ({ route }) => {
             </View>
           </View>
 
-          {Object.keys(item).length !== 0 ? (
+          {Object.keys(item)?.length !== 0 ? (
             <View
               style={{
                 width: "90%",
@@ -505,80 +551,135 @@ export const DetailPKRL = ({ route }) => {
                   </View>
                 </View>
 
-                <View style={{ marginTop: 10 }}>
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    backgroundColor: COLORS.info,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                  onPress={() => {
+                    setModalLog(true);
+                  }}
+                >
                   <Text
                     style={{
-                      fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.white,
                     }}
                   >
-                    Lampiran
+                    Riwayat aktivitas
                   </Text>
-                  <View style={{ width: "100%" }}>
-                    {loading ? (
-                      <ShimmerPlaceHolder
-                        style={{ borderRadius: 4, width: "100%" }}
-                        height={20}
-                      />
-                    ) : (
-                      <View
-                        style={{
-                          flexDirection: "row", // Tetap dalam baris
-                          flexWrap: "wrap", // Membungkus item ke bawah jika melebihi lebar
-                          gap: 10, // Jarak antar item
-                          justifyContent: "flex-start", // Mulai dari kiri
-                        }}
-                      >
-                        {item.attachments.map((data, index) => (
-                          <TouchableOpacity
-                            key={index} // Tambahkan key untuk setiap item
-                            style={{
-                              marginTop: 10,
-                              padding: 10,
-                              backgroundColor: COLORS.bgLightGrey,
-                              borderRadius: 8,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "48%", // Kontrol lebar agar responsif
-                            }}
-                            onPress={() => {
-                              navigation.navigate("PdfViewer", {
-                                data: data.file,
-                                type: "DokumenLain",
-                              });
-                            }}
-                          >
-                            <Image
-                              source={require("../../assets/superApp/pdf.png")}
-                              style={{ height: 50, width: 50 }} // Ukuran gambar
-                            />
-                            <Text
+                </TouchableOpacity>
+
+                {isMenkp() || item?.state === "done" ? (
+                  <TouchableOpacity
+                    style={{
+                      padding: 10,
+                      backgroundColor: COLORS.danger,
+                      borderRadius: 8,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                    onPress={() => {
+                      //   navigation.navigate("PdfViewer", {
+                      //     // data: data.file,
+                      //     type: "DokumenLain",
+                      //   });
+
+                      handleGetFileLampiran("perizinan");
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: FONTWEIGHT.bold,
+                        color: COLORS.white,
+                      }}
+                    >
+                      Lihat Dokumen
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <View style={{ marginTop: 10 }}>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H2", device),
+                      }}
+                    >
+                      Lampiran
+                    </Text>
+                    <View style={{ width: "100%" }}>
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{ borderRadius: 4, width: "100%" }}
+                          height={20}
+                        />
+                      ) : (
+                        <View
+                          style={{
+                            flexDirection: "row", // Tetap dalam baris
+                            flexWrap: "wrap", // Membungkus item ke bawah jika melebihi lebar
+                            gap: 10, // Jarak antar item
+                            justifyContent: "flex-start", // Mulai dari kiri
+                          }}
+                        >
+                          {item.attachments.map((data, index) => (
+                            <TouchableOpacity
+                              key={index} // Tambahkan key untuk setiap item
                               style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                                textAlign: "center",
-                                marginTop: 5,
+                                marginTop: 10,
+                                padding: 10,
+                                backgroundColor: COLORS.bgLightGrey,
+                                borderRadius: 8,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "48%", // Kontrol lebar agar responsif
+                              }}
+                              onPress={() => {
+                                navigation.navigate("PdfViewer", {
+                                  data: data.file,
+                                  type: "DokumenLain",
+                                });
                               }}
                             >
-                              {data.name}
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                                textAlign: "center",
-                                marginTop: 5,
-                              }}
-                            >
-                              {(data.file_size / 1024).toFixed(2)} KB
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
-                      </View>
-                    )}
+                              <Image
+                                source={require("../../assets/superApp/pdf.png")}
+                                style={{ height: 50, width: 50 }} // Ukuran gambar
+                              />
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                  textAlign: "center",
+                                  marginTop: 5,
+                                }}
+                              >
+                                {data.name}
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                  textAlign: "center",
+                                  marginTop: 5,
+                                }}
+                              >
+                                {(data.file_size / 1024).toFixed(2)} KB
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
+                )}
               </View>
               {item.approvers.map((data, index) => {
-                if (index !== 0 && index < item?.approvers.length - 1) {
+                if (index !== 0 && index < item?.approvers?.length - 1) {
                   return (
                     <View
                       style={{
@@ -838,7 +939,8 @@ export const DetailPKRL = ({ route }) => {
                       </View>
 
                       {item?.sequence === data?.sequence &&
-                      profile.nip === data.nip ? (
+                      profile.nip === data.nip &&
+                      variant.variant === "inprogress" ? (
                         <View
                           style={{
                             flexDirection: "row",
@@ -917,115 +1019,35 @@ export const DetailPKRL = ({ route }) => {
             ""
           )}
 
-          {/* {profile?.nip === "88888" ? (
-                
-                ) : null}
-                 */}
-          {/* <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
-            {(profile?.nip === "196212301990031006" ||
-              profile?.nip === "69030175" ||
-              profile?.nip === "88888") && (
-              <TouchableOpacity
-                onPress={() => handleShowAttachment("undangan")}
+          {variant.variant === "inprogress" &&
+          isMenkp() &&
+          item?.state !== "done" ? (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: COLORS.primary,
+                borderRadius: 8,
+                marginTop: 20,
+                marginBottom: 40,
+                marginHorizontal: 18,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                handleBiometricAuth();
+              }}
+            >
+              <Text
                 style={{
-                  width: "90%",
-                  backgroundColor: "#2296f4",
-                  borderRadius: 6,
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  marginHorizontal: "5%",
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.white,
                 }}
               >
-                <Text
-                  style={{
-                    color: COLORS.white,
-                    marginVertical: 15,
-                    fontSize: fontSizeResponsive("H2", device),
-                  }}
-                >
-                  Lihat Dokumen Undangan
-                </Text>
-              </TouchableOpacity>
-            )}
-
-            {(profile?.nip === "69030175" || profile?.nip === "88888") && (
-              <TouchableOpacity
-                onPress={() => handleShowAttachment("memo")}
-                style={{
-                  width: "90%",
-                  backgroundColor: "rgb(245, 127, 23)",
-                  borderRadius: 6,
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  marginHorizontal: "5%",
-                }}
-              >
-                <Text
-                  style={{
-                    color: COLORS.white,
-                    marginVertical: 15,
-                    fontSize: fontSizeResponsive("H2", device),
-                  }}
-                >
-                  Lihat Dokumen Memo
-                </Text>
-              </TouchableOpacity>
-            )}
-
-            {profile?.nip === "88888" && (
-              <TouchableOpacity
-                onPress={() => handleShowAttachment("persetujuan")}
-                style={{
-                  width: "90%",
-                  backgroundColor: COLORS.info,
-                  borderRadius: 6,
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  marginHorizontal: "5%",
-                }}
-              >
-                <Text
-                  style={{
-                    color: COLORS.white,
-                    marginVertical: 15,
-                    fontSize: fontSizeResponsive("H2", device),
-                  }}
-                >
-                  Lihat Dokumen Perizinan
-                </Text>
-              </TouchableOpacity>
-            )}
-
-            {variant.variant === "inprogress" &&
-            profile.nip !== "197208122001121002" ? (
-              <>
-                <TouchableOpacity
-                  style={{
-                    width: "90%",
-                    backgroundColor: COLORS.infoDanger,
-                    borderRadius: 6,
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    marginHorizontal: "5%",
-                  }}
-                  onPress={() => {
-                    handleBiometricAuth();
-                    // handleSubmit();
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: COLORS.white,
-                      marginVertical: 15,
-                      fontSize: fontSizeResponsive("H2", device),
-                    }}
-                  >
-                    Sign
-                  </Text>
-                </TouchableOpacity>
-              </>
-            ) : null}
-          </View> */}
+                Proses Tanda Tangan
+              </Text>
+            </TouchableOpacity>
+          ) : null}
 
           <BottomSheetModal
             ref={bottomSheetModalRef}
@@ -1122,9 +1144,9 @@ export const DetailPKRL = ({ route }) => {
                 >
                   <Text
                     style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: FONTWEIGHT.bold,
                       color: COLORS.white,
-                      fontSize: FONTSIZE.H1,
-                      fontWeight: 500,
                     }}
                   >
                     Revisi
@@ -1139,8 +1161,135 @@ export const DetailPKRL = ({ route }) => {
             messageSuccess={"Data Ditambahkan"}
             navigate={"MainPerizinanMenteri"}
           />
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalLog}
+            onRequestClose={() => {
+              setModalLog(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                  height: "60%",
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 10,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Riwayat Aktivitas
+                  </Text>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => {
+                      setModalLog(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <Timeline
+                  style={{
+                    flex: 1,
+                    marginTop: 10,
+                    marginHorizontal: 20,
+                  }}
+                  data={timelineData}
+                  circleSize={30}
+                  circleColor="white"
+                  lineColor="gray"
+                  timeStyle={{
+                    textAlign: "center",
+                    padding: 5,
+                    borderRadius: 13,
+                    minWidth: 10, // Add minWidth to maintain consistent size for timeß
+                  }}
+                  descriptionStyle={{ color: "grey" }}
+                  innerCircle={"icon"}
+                  showTime={false}
+                  renderDetail={(rowData) => (
+                    <View style={{ marginTop: -10 }}>
+                      <Text style={{ fontWeight: "bold" }}>
+                        {rowData.title}
+                      </Text>
+                      <Text>{rowData.time}</Text>
+                      <Text>{rowData.description}</Text>
+                    </View>
+                  )}
+                />
+              </View>
+            </View>
+          </Modal>
         </ScrollView>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  Card: {
+    backgroundColor: COLORS.white,
+    width: "90%", // Adjust the width as needed, e.g., "90%" or a fixed value like 300
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // Adds shadow for Android
+  },
+  iOSBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.5,
+  },
+  androidBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.7,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

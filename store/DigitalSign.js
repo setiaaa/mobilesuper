@@ -26,6 +26,7 @@ import {
   addAttachmentDigiSign,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
+import { actions } from "react-native-pell-rich-editor";
 
 const DigitalSignSlice = createSlice({
   name: "DigitalSign",
@@ -74,6 +75,9 @@ const DigitalSignSlice = createSlice({
     resetAttachment: (state) => {
       state.attachmentLampiran = [];
       state.attachmentDokPerizinan = [];
+    },
+    resetList: (state, action) => {
+      state.dokumenlain.lists = action.payload;
     },
   },
   extraReducers(builder) {
@@ -394,6 +398,7 @@ export const {
   setLaporanList,
   resetNomorDokPerizinan,
   resetAttachment,
+  resetList,
 } = DigitalSignSlice.actions;
 
 export default DigitalSignSlice.reducer;
