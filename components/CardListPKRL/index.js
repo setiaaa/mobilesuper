@@ -58,6 +58,21 @@ export const CardListPKRL = ({
     dispatch(getDetailDigisign(params));
   };
   const [modal, setModal] = useState(false);
+
+  const handleNavigate = (item) => {
+    getDetail(item.id);
+    if (item.state === 'in_progress' || item.state === 'done') {
+      navigation.navigate("DetailPKRL", {
+        variant: variant,
+        token: token,
+      });
+    } else {
+      navigation.navigate("TambahDokumenPerizinan", {
+        itemId: item.id,
+      });
+    }
+  }
+
   return (
     <View
       key={item.id}
@@ -83,13 +98,7 @@ export const CardListPKRL = ({
           alignItems: "center",
           gap: 16,
         }}
-        onPress={() => {
-          getDetail(item.id);
-          navigation.navigate("DetailPKRL", {
-            variant: variant,
-            token: token,
-          });
-        }}
+        onPress={() => handleNavigate(item)}
       >
         <View
           style={{
@@ -201,8 +210,8 @@ export const CardListPKRL = ({
                 {item.state === "done"
                   ? "done"
                   : item.state === "in_progress"
-                  ? "in progress"
-                  : item.state}
+                    ? "in progress"
+                    : item.state}
               </Text>
             </View>
           )}

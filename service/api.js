@@ -2177,6 +2177,18 @@ export const addDocumentDigiSign = createAsyncThunk(
   }
 );
 
+export const putDocumentPerizinan = createAsyncThunk(
+  "digitalsign/putDocumentPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/${data.id}`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    )
+    return respon?.data;
+  }
+);
+
 export const getListSignedDigiSign = createAsyncThunk(
   "digitalsign/getListSignedDigiSign",
   async ({ token, tipe, page, search }) => {

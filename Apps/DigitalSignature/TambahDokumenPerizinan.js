@@ -21,22 +21,24 @@ import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { COLORS, FONTSIZE, fontSizeResponsive, FONTWEIGHT } from "../../config/SuperAppps";
-import { addAttachmentDigiSign, addDocumentDigiSign, getNomorPerizinanMenteri, postAttachment } from "../../service/api";
+import { addAttachmentDigiSign, addDocumentDigiSign, getNomorPerizinanMenteri, putDocumentPerizinan } from "../../service/api";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
-import { jenisPerizinan, kategoriPerizinan, jenisPermohonan, listParaf } from "./dataDokPerizinan";
+import { jenisPerizinan, kategoriPerizinan, listParaf } from "./dataDokPerizinan";
 import AlertConfirm from "../../components/UI/AlertConfirm";
 import moment from "moment";
-import { resetNomorDokPerizinan, setStatus, resetAttachment } from "../../store/DigitalSign";
+import { resetNomorDokPerizinan, setStatus, resetAttachment, setAttachmentDokPerizinan, setAttachmentLampiran } from "../../store/DigitalSign";
 
-export default TambahDokumenPerizinan = () => {
+export default TambahDokumenPerizinan = ({ route }) => {
     const dispatch = useDispatch();
+    const { itemId } = route.params;
     const navigation = useNavigation();
 
     const { device } = useSelector((state) => state.apps);
     const { profile } = useSelector((state) => state.superApps);
     const { addressbook } = useSelector((state) => state.addressBookKKP);
-    const { status, attachmentDokPerizinan, attachmentLampiran, nomorDokPerizinan } = useSelector((state) => state.digitalsign);
+    const { status, digitalsign, attachmentDokPerizinan, attachmentLampiran, nomorDokPerizinan } = useSelector((state) => state.digitalsign);
 
+    const detail = digitalsign.detail;
     const [token, setToken] = useState("");
     const [stateConfig, setStateConfig] = useState({});
     const [jenisPermohonanOption, setJenisPermohonanOption] = useState([]);
@@ -84,7 +86,7 @@ export default TambahDokumenPerizinan = () => {
     };
 
     const handleCheckButtonAmbilNomor = () => {
-        if (dataForm.jenisPerizinan.key === '' || dataForm.kategoriPerizinan.key === '' || dataForm?.jenisPermohonan.key === '') {
+        if (dataForm.jenisPerizinan.key === '' || dataForm.kategoriPerizinan.key === '' || dataForm?.jenisPermohonan.key === '' || dataForm.nomorPerizinan !== '') {
             return true
         } else return false
     };
@@ -157,7 +159,7 @@ export default TambahDokumenPerizinan = () => {
         const payload = {
             subject: dataForm.perihal,
             senders: [profile.nip],
-            approvers: approvers,
+            approvers: [...approvers, '99999', '88888'],
             action: 'submit',
             id_attachments: idAtt,
             extra_attributes: {
@@ -175,7 +177,12 @@ export default TambahDokumenPerizinan = () => {
             payload: payload,
         };
 
-        dispatch(addDocumentDigiSign(data))
+        if (itemId) {
+            data['id'] = itemId;
+            dispatch(putDocumentPerizinan(data));
+        } else {
+            dispatch(addDocumentDigiSign(data))
+        }
     };
 
     const resetState = () => {
@@ -204,11 +211,58 @@ export default TambahDokumenPerizinan = () => {
         resetState()
         dispatch(resetAttachment())
         dispatch(resetNomorDokPerizinan())
-        
+
         getTokenValue().then((val) => {
             setToken(val);
         });
     }, []);
+
+    useEffect(() => {
+        if (itemId && detail) {
+            let approvers = []
+
+            detail?.attachments?.map((item) => {
+                if (item.name.startsWith('lampiran')) {
+                    dispatch(setAttachmentLampiran(item));
+                } else if (item.name.startsWith('perizinan')) {
+                    dispatch(setAttachmentDokPerizinan(item));
+                }
+            })
+
+            detail?.approvers?.map((item, index) => {
+                if (index > 0 && index < detail.approvers.length - 2) {
+                    approvers.push({
+                        key: item.is_title ? item.objidposisi : item.nip,
+                        code: item.is_title ? item.objidposisi : item.nip,
+                        text: item.is_title ? item.display_title : item.nama,
+                        nip: item.is_title ? item.officer.nip : item.nip,
+                        title: item.is_title ? item.display_title : item.nama,
+                        name: item.is_title ? item.officer.nama : item.nama,
+                    })
+                }
+            })
+
+            setDataForm({
+                jenisPerizinan: {
+                    key: detail.extra_attributes?.jenis_perizinan,
+                    value: detail.extra_attributes?.jenis_perizinan,
+                },
+                kategoriPerizinan: {
+                    key: detail.extra_attributes?.kategori_perizinan,
+                    value: detail.extra_attributes?.kategori_perizinan,
+                },
+                jenisPermohonan: {
+                    key: detail?.extra_attributes?.jenis_permohonan,
+                    value: detail?.extra_attributes?.jenis_permohonan,
+                },
+                perihal: detail?.subject,
+                nomorPerizinan: detail?.extra_attributes?.no_perizinan,
+                paraf: approvers,
+                dokumenPerizinan: [],
+                lampiran: [],
+            })
+        }
+    }, [itemId, detail])
 
     useEffect(() => {
         if (nomorDokPerizinan !== '') {
@@ -267,7 +321,7 @@ export default TambahDokumenPerizinan = () => {
                                     color: COLORS.white,
                                 }}
                             >
-                                Tambah Data Perizinan
+                                {itemId ? 'Edit Data Perizinan' : 'Tambah Data Perizinan'}
                             </Text>
                         </View>
                     </View>
@@ -298,6 +352,7 @@ export default TambahDokumenPerizinan = () => {
                                 borderWidth={1}
                                 borderwidthDrop={1}
                                 borderWidthValue={1}
+                                selected={dataForm.jenisPerizinan}
                                 borderColor={COLORS.ExtraDivinder}
                                 placeHolder={'Pilih Jenis Perizinan'}
                                 borderColorDrop={COLORS.ExtraDivinder}
@@ -328,11 +383,12 @@ export default TambahDokumenPerizinan = () => {
                         </View>
                         <View style={{ marginHorizontal: 17 }}>
                             <Dropdown
-                                data={handleGetKategoriPerizinan()}
                                 borderWidth={1}
                                 borderwidthDrop={1}
                                 borderWidthValue={1}
                                 borderColor={COLORS.ExtraDivinder}
+                                selected={dataForm.kategoriPerizinan}
+                                data={handleGetKategoriPerizinan()}
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 borderColorValue={COLORS.ExtraDivinder}
                                 placeHolder={'Pilih Kategori Perizinan'}
@@ -367,6 +423,7 @@ export default TambahDokumenPerizinan = () => {
                                 borderWidthValue={1}
                                 data={jenisPermohonanOption}
                                 borderColor={COLORS.ExtraDivinder}
+                                selected={dataForm.jenisPermohonan}
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 placeHolder={'Pilih Jenis Permohonan'}
                                 borderColorValue={COLORS.ExtraDivinder}
@@ -432,9 +489,9 @@ export default TambahDokumenPerizinan = () => {
                             }}
                         >
                             <TextInput
-                                editable
                                 multiline
                                 maxLength={40}
+                                editable={false}
                                 numberOfLines={4}
                                 style={{ padding: 10 }}
                                 allowFontScaling={false}

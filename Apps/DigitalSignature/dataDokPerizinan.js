@@ -273,15 +273,24 @@ export const listParafDev = [
         name: 'TORNANDA SYAIFULLAH',
         group: [2, 1, 10, 11],
     },
-    {
-        key: '88888',
-        code: '209400000000000',
-        text: 'MENTERI KELAUTAN DAN PERIKANAN',
-        nip: '88888',
-        title: 'MENTERI KELAUTAN DAN PERIKANAN',
-        name: 'SAKTI WAHYU TRENGGONO',
-        group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    },
+    // {
+    //     key: '99999',
+    //     code: '99999',
+    //     text: 'WAKIL MENTERI KELAUTAN DAN PERIKANAN',
+    //     nip: '99999',
+    //     title: 'WAKIL MENTERI KELAUTAN DAN PERIKANAN',
+    //     name: 'Didit HERDIAWAN ASHAF',
+    //     group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    // },
+    // {
+    //     key: '88888',
+    //     code: '209400000000000',
+    //     text: 'MENTERI KELAUTAN DAN PERIKANAN',
+    //     nip: '88888',
+    //     title: 'MENTERI KELAUTAN DAN PERIKANAN',
+    //     name: 'SAKTI WAHYU TRENGGONO',
+    //     group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    // },
 ]
 
 // export const listParaf = isProd === '1' ? listParafProd : listParafDev
