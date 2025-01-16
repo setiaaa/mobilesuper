@@ -6,6 +6,7 @@ import {
   Platform,
   StyleSheet,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { Image } from "react-native";
@@ -18,10 +19,16 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -160,8 +167,10 @@ export const DetailPKRL = ({ route }) => {
       token: variant.token,
       payload: payload,
     };
-
-    dispatch(revisiPerizinan(data));
+    bottomSheetAttachClose(); // Tutup Bottom Sheet terlebih dahulu
+    setTimeout(() => {
+      dispatch(revisiPerizinan(data)); // Dispatch setelah Bottom Sheet selesai ditutup
+    }, 300);
   };
 
   const handleBiometricAuth = async () => {
@@ -199,21 +208,30 @@ export const DetailPKRL = ({ route }) => {
   };
 
   const handleGetFileLampiran = (tipe) => {
-    if (item.attachments?.length !== 0) {
-      const data = [...item?.attachments];
-      const datas = data.filter((x) => x.name.includes(tipe))[0];
-      if (datas) {
-        navigation.navigate("PdfViewer", {
-          data: datas.file,
-          type: "DokumenLain",
-        });
+    const data = [...item?.attachments];
+    // console.log("masuk else");
+    let temp = "";
+    if (tipe === "perizinan") {
+      if (isMenkp() || variant.variant === "signed") {
+        temp = "perizinan";
+      } else {
+        temp = "draft-perizinan";
       }
+    } else {
+      temp = tipe;
     }
+
+    const index = data.findIndex((x) => x.name.split("_")[0] === temp);
+    // console.log(index, "file index");
+    if (index > -1) {
+      return index;
+    }
+    return -1;
   };
 
   const timelineData = item?.logs?.map((log) => ({
     time: moment(log.created_at, "YYYY-MM-DD HH:mm:ss").format(
-      DATETIME.LONG_DATETIME
+      "DD MMMM YYYY | HH:mm:ss"
     ),
     title: log.user,
     description: log.message ? log.message : "No message",
@@ -227,7 +245,11 @@ export const DetailPKRL = ({ route }) => {
             borderRadius: 20,
           }}
         >
-          <Feather name="send" size={20} color={COLORS.info} />
+          <MaterialCommunityIcons
+            name="send"
+            size={device === "tablet" ? 30 : 20}
+            color={COLORS.info}
+          />
         </View>
       ) : log.action === "paraf" ? (
         <View
@@ -237,7 +259,11 @@ export const DetailPKRL = ({ route }) => {
             borderRadius: 20,
           }}
         >
-          <MaterialIcons name="gesture" size={20} color={COLORS.success} />
+          <MaterialIcons
+            name="gesture"
+            size={device === "tablet" ? 30 : 20}
+            color={COLORS.success}
+          />
         </View>
       ) : log.action === "revisi" ? (
         <View
@@ -249,7 +275,7 @@ export const DetailPKRL = ({ route }) => {
         >
           <MaterialIcons
             name="content-paste-off"
-            size={20}
+            size={device === "tablet" ? 30 : 20}
             color={COLORS.infoDanger}
           />
         </View>
@@ -261,12 +287,31 @@ export const DetailPKRL = ({ route }) => {
             borderRadius: 20,
           }}
         >
-          <MaterialIcons name="check" size={20} color={"#be29ec"} />
+          <MaterialIcons
+            name="check"
+            size={device === "tablet" ? 30 : 20}
+            color={"#be29ec"}
+          />
         </View>
       ) : null,
   }));
 
-  console.log(item.logs);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
+  const handleGetTimeParaf = (user) => {
+    const data = [...item.logs];
+    let logs = null;
+
+    const check = data?.findIndex((x) => x.user === user);
+
+    if (check > -1 && data[check].action === "paraf") {
+      logs = data[check];
+    }
+
+    return logs;
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -327,7 +372,6 @@ export const DetailPKRL = ({ route }) => {
                 style={{
                   marginHorizontal: 20,
                   marginVertical: 20,
-                  width: "89%",
                 }}
               >
                 {loading ? (
@@ -401,9 +445,9 @@ export const DetailPKRL = ({ route }) => {
                       >
                         <Image
                           source={{ uri: item.composer.avatar_url }}
-                          height={30}
-                          width={30}
-                          borderRadius={30}
+                          height={device === "tablet" ? 50 : 30}
+                          width={device === "tablet" ? 50 : 30}
+                          borderRadius={device === "tablet" ? 50 : 30}
                         />
                         <Text
                           style={{
@@ -575,7 +619,7 @@ export const DetailPKRL = ({ route }) => {
                   </Text>
                 </TouchableOpacity>
 
-                {isMenkp() || item?.state === "done" ? (
+                {/* {isMenkp() || item?.state === "done" ? (
                   <TouchableOpacity
                     style={{
                       padding: 10,
@@ -604,416 +648,638 @@ export const DetailPKRL = ({ route }) => {
                       Lihat Dokumen
                     </Text>
                   </TouchableOpacity>
-                ) : (
-                  <View style={{ marginTop: 10 }}>
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H2", device),
-                      }}
-                    >
-                      Lampiran
-                    </Text>
-                    <View style={{ width: "100%" }}>
-                      {loading ? (
-                        <ShimmerPlaceHolder
-                          style={{ borderRadius: 4, width: "100%" }}
-                          height={20}
-                        />
-                      ) : (
-                        <View
-                          style={{
-                            flexDirection: "row", // Tetap dalam baris
-                            flexWrap: "wrap", // Membungkus item ke bawah jika melebihi lebar
-                            gap: 10, // Jarak antar item
-                            justifyContent: "flex-start", // Mulai dari kiri
-                          }}
-                        >
-                          {item.attachments.map((data, index) => (
-                            <TouchableOpacity
-                              key={index} // Tambahkan key untuk setiap item
-                              style={{
-                                marginTop: 10,
-                                padding: 10,
-                                backgroundColor: COLORS.bgLightGrey,
-                                borderRadius: 8,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                width: "48%", // Kontrol lebar agar responsif
-                              }}
-                              onPress={() => {
-                                navigation.navigate("PdfViewer", {
-                                  data: data.file,
-                                  type: "DokumenLain",
-                                });
-                              }}
-                            >
-                              <Image
-                                source={require("../../assets/superApp/pdf.png")}
-                                style={{ height: 50, width: 50 }} // Ukuran gambar
-                              />
-                              <Text
-                                style={{
-                                  fontSize: fontSizeResponsive("H4", device),
-                                  textAlign: "center",
-                                  marginTop: 5,
-                                }}
-                              >
-                                {data.name}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: fontSizeResponsive("H4", device),
-                                  textAlign: "center",
-                                  marginTop: 5,
-                                }}
-                              >
-                                {(data.file_size / 1024).toFixed(2)} KB
-                              </Text>
-                            </TouchableOpacity>
-                          ))}
-                        </View>
-                      )}
-                    </View>
-                  </View>
-                )}
-              </View>
-              {item.approvers.map((data, index) => {
-                if (index !== 0 && index < item?.approvers?.length - 1) {
-                  return (
-                    <View
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 4,
-                        width: "95%",
-                        marginHorizontal: 10,
-                        marginBottom: 20,
-                        borderColor: "#DBDADE",
-                        paddingBottom: 10,
-                      }}
-                    >
+                ) : ( */}
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Lampiran
+                  </Text>
+                  <View style={{ width: "100%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
                       <View
                         style={{
-                          backgroundColor: COLORS.primary,
-                          alignItems: "center",
-                          height: 30,
-                          justifyContent: "center",
+                          flexDirection: "row", // Tetap dalam baris
+                          flexWrap: "wrap", // Membungkus item ke bawah jika melebihi lebar
+                          gap: device === "tablet" ? 12 : 10, // Jarak antar item
+                          justifyContent: "flex-start", // Mulai dari kiri
                         }}
                       >
-                        <Text
-                          style={{
-                            color: COLORS.white,
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Paraf
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          gap: 10,
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <View style={{ width: "98%" }}>
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              marginTop: 10,
-                              alignItems: "center",
-                              marginLeft: 5,
-                              gap: 20,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontWeight: FONTWEIGHT.bold,
-                                fontSize: fontSizeResponsive("H2", device),
-                              }}
-                            >
-                              Paraf {index}
-                            </Text>
-                            {item.sequence > index ? (
-                              <View
-                                style={{
-                                  flexDirection: "row",
-                                  width: "60%",
-                                  gap: 5,
-                                  alignItems: "center",
-                                }}
-                              >
-                                <View
+                        {/* {item.attachments.map((data, index) => {
+                            if (data.name.split("_")[0] === "draft_perizinan" || data.name.st) {
+                              return (
+                                <TouchableOpacity
+                                  key={index} // Tambahkan key untuk setiap item
                                   style={{
-                                    backgroundColor: COLORS.success,
-                                    borderRadius: 50,
-                                    height: 20,
-                                    width: 20,
+                                    marginTop: 10,
+                                    padding: 10,
+                                    backgroundColor: COLORS.bgLightGrey,
+                                    borderRadius: 8,
                                     justifyContent: "center",
                                     alignItems: "center",
+                                    width: device === "tablet" ? "49%" : "48%", // Kontrol lebar agar responsif
+                                  }}
+                                  onPress={() => {
+                                    navigation.navigate("PdfViewer", {
+                                      data: data.file,
+                                      type: "DokumenLain",
+                                    });
                                   }}
                                 >
-                                  <Ionicons
-                                    name="checkmark-outline"
-                                    color={COLORS.white}
+                                  <Image
+                                    source={require("../../assets/superApp/pdf.png")}
+                                    style={{ height: 50, width: 50 }} // Ukuran gambar
                                   />
-                                </View>
-                                <View
-                                  style={{
-                                    backgroundColor: COLORS.successLight,
-                                    paddingVertical: 5,
-                                    borderRadius: 20,
-                                    paddingHorizontal: 15,
-                                  }}
-                                >
                                   <Text
                                     style={{
-                                      color: COLORS.success,
                                       fontSize: fontSizeResponsive(
                                         "H4",
                                         device
                                       ),
+                                      textAlign: "center",
+                                      marginTop: 5,
                                     }}
                                   >
-                                    Sudah Paraf
+                                    {data.name}
                                   </Text>
-                                </View>
-                              </View>
-                            ) : item.sequence <= index ? (
-                              <View
-                                style={{
-                                  flexDirection: "row",
-                                  alignItems: "center",
-                                  gap: 5,
-                                }}
-                              >
-                                <View
-                                  style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    borderRadius: 50,
-                                    height: 20,
-                                    width: 20,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <Ionicons name="close" color={COLORS.white} />
-                                </View>
-                                <View
-                                  style={{
-                                    backgroundColor: COLORS.infoDangerLight,
-                                    paddingVertical: 5,
-                                    borderRadius: 20,
-                                    paddingHorizontal: 15,
-                                  }}
-                                >
                                   <Text
                                     style={{
-                                      color: COLORS.infoDanger,
                                       fontSize: fontSizeResponsive(
                                         "H4",
                                         device
                                       ),
+                                      textAlign: "center",
+                                      marginTop: 5,
                                     }}
                                   >
-                                    Belum Paraf
+                                    {(data.file_size / 1024).toFixed(2)} KB
                                   </Text>
-                                </View>
-                              </View>
-                            ) : null}
-                          </View>
-                          <View
+                                </TouchableOpacity>
+                              );
+                            } else {
+                              return (
+                                <Text
+                                  style={{
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  -
+                                </Text>
+                              );
+                            }
+                          })} */}
+                        {handleGetFileLampiran("perizinan") !== -1 &&
+                        variant.variant === "signed" ? (
+                          <TouchableOpacity
                             style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: 10,
                               marginTop: 10,
+                              padding: 10,
+                              backgroundColor: COLORS.bgLightGrey,
+                              borderRadius: 8,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: device === "tablet" ? "49%" : "48%", // Kontrol lebar agar responsif
+                            }}
+                            onPress={() => {
+                              navigation.navigate("PdfViewer", {
+                                data: item.attachments[
+                                  handleGetFileLampiran("perizinan")
+                                ]?.file,
+                                type: "DokumenLain",
+                              });
                             }}
                           >
                             <Image
-                              source={{ uri: data.avatar_url }}
-                              style={{
-                                width: device === "tablet" ? 80 : 50,
-                                height: device === "tablet" ? 80 : 50,
-                                borderRadius: device === "tablet" ? 80 : 50,
-                                marginHorizontal: 10,
-                                marginLeft: 5,
-                              }}
+                              source={require("../../assets/superApp/pdf.png")}
+                              style={{ height: 50, width: 50 }} // Ukuran gambar
                             />
-                            <View>
-                              {data?.officer ? (
-                                <View style={{ width: 240 }}>
-                                  {loading ? (
-                                    <View style={{ width: "45%" }}>
-                                      <ShimmerPlaceHolder
-                                        style={{
-                                          borderRadius: 4,
-                                          marginTop: 5,
-                                        }}
-                                        height={20}
-                                      />
-                                    </View>
-                                  ) : (
-                                    <Text
-                                      style={{
-                                        marginTop: 10,
-                                        color: COLORS.info,
-                                        fontWeight: FONTWEIGHT.bold,
-                                        fontSize: fontSizeResponsive(
-                                          "H4",
-                                          device
-                                        ),
-                                      }}
-                                    >
-                                      {data.display_title}
-                                    </Text>
-                                  )}
-                                  {loading ? (
-                                    <View style={{ width: "45%" }}>
-                                      <ShimmerPlaceHolder
-                                        style={{
-                                          borderRadius: 4,
-                                          marginTop: 5,
-                                        }}
-                                        height={20}
-                                      />
-                                    </View>
-                                  ) : (
-                                    <Text
-                                      style={{
-                                        color: COLORS.lighter,
-                                        fontWeight: FONTWEIGHT.bold,
-                                        fontSize: fontSizeResponsive(
-                                          "H4",
-                                          device
-                                        ),
-                                      }}
-                                    >
-                                      {data?.officer?.nama != undefined
-                                        ? data?.officer?.nama
-                                        : "-" || data?.nama !== undefined
-                                        ? data?.nama
-                                        : "-"}
-                                    </Text>
-                                  )}
-                                </View>
-                              ) : (
-                                <View
-                                  style={{
-                                    width: 240,
-                                  }}
-                                >
-                                  {loading ? (
-                                    <View style={{ width: "45%" }}>
-                                      <ShimmerPlaceHolder
-                                        style={{
-                                          borderRadius: 4,
-                                          marginTop: 5,
-                                        }}
-                                        height={20}
-                                      />
-                                    </View>
-                                  ) : (
-                                    <Text
-                                      style={{
-                                        color: COLORS.lighter,
-                                        fontWeight: FONTWEIGHT.bold,
-                                        fontSize: fontSizeResponsive(
-                                          "H4",
-                                          device
-                                        ),
-                                      }}
-                                    >
-                                      {data?.nama !== undefined
-                                        ? data?.nama
-                                        : "-"}
-                                    </Text>
-                                  )}
-                                </View>
-                              )}
-                            </View>
-                          </View>
-                        </View>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {
+                                item.attachments[
+                                  handleGetFileLampiran("perizinan")
+                                ]?.name
+                              }
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {(
+                                item.attachments[
+                                  handleGetFileLampiran("perizinan")
+                                ]?.file_size / 1024
+                              ).toFixed(2)}{" "}
+                              KB
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null}
+                        {handleGetFileLampiran("draft-perizinan") !== -1 &&
+                        variant.variant !== "signed" ? (
+                          <TouchableOpacity
+                            style={{
+                              marginTop: 10,
+                              padding: 10,
+                              backgroundColor: COLORS.bgLightGrey,
+                              borderRadius: 8,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: device === "tablet" ? "49%" : "48%", // Kontrol lebar agar responsif
+                            }}
+                            onPress={() => {
+                              navigation.navigate("PdfViewer", {
+                                data: item.attachments[
+                                  handleGetFileLampiran("draft-perizinan")
+                                ]?.file,
+                                type: "DokumenLain",
+                              });
+                            }}
+                          >
+                            <Image
+                              source={require("../../assets/superApp/pdf.png")}
+                              style={{ height: 50, width: 50 }} // Ukuran gambar
+                            />
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {
+                                item.attachments[
+                                  handleGetFileLampiran("draft-perizinan")
+                                ]?.name
+                              }
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {(
+                                item.attachments[
+                                  handleGetFileLampiran("draft-perizinan")
+                                ]?.file_size / 1024
+                              ).toFixed(2)}{" "}
+                              KB
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null}
+                        {handleGetFileLampiran("lampiran") !== -1 ? (
+                          <TouchableOpacity
+                            style={{
+                              marginTop: 10,
+                              padding: 10,
+                              backgroundColor: COLORS.bgLightGrey,
+                              borderRadius: 8,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: device === "tablet" ? "49%" : "48%", // Kontrol lebar agar responsif
+                            }}
+                            onPress={() => {
+                              navigation.navigate("PdfViewer", {
+                                data: item.attachments[
+                                  handleGetFileLampiran("lampiran")
+                                ]?.file,
+                                type: "DokumenLain",
+                              });
+                            }}
+                          >
+                            <Image
+                              source={require("../../assets/superApp/pdf.png")}
+                              style={{ height: 50, width: 50 }} // Ukuran gambar
+                            />
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {
+                                item.attachments[
+                                  handleGetFileLampiran("lampiran")
+                                ]?.name
+                              }
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {(
+                                item.attachments[
+                                  handleGetFileLampiran("lampiran")
+                                ]?.file_size / 1024
+                              ).toFixed(2)}{" "}
+                              KB
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null}
                       </View>
-
-                      {item?.sequence === data?.sequence &&
-                      profile.nip === data.nip &&
-                      variant.variant === "inprogress" ? (
+                    )}
+                  </View>
+                </View>
+                {/* )} */}
+              </View>
+              <View
+                style={{
+                  flexDirection: device === "tablet" ? "row" : "column", // Tetap dalam baris
+                  flexWrap: "wrap", // Membungkus item ke bawah jika melebihi lebar
+                  gap: device === "tablet" ? 0 : 10, // Jarak antar item
+                  justifyContent: "flex-start", // Mulai dari kiri
+                }}
+              >
+                {item.approvers.map((data, index) => {
+                  if (index !== 0 && index < item?.approvers?.length - 1) {
+                    return (
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          width: device === "tablet" ? "47%" : "94%",
+                          marginBottom: 10,
+                          borderColor: "#DBDADE",
+                          marginHorizontal:
+                            device === "tablet" && orientation === "landscape"
+                              ? 15
+                              : device === "tablet" && orientation === "potrait"
+                              ? 10
+                              : 10,
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            alignItems: "center",
+                            height: 30,
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Paraf
+                          </Text>
+                        </View>
                         <View
                           style={{
                             flexDirection: "row",
-                            marginTop: 10,
-                            marginLeft: 5,
-                            gap: 8,
+                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
-                          <TouchableOpacity
-                            style={{
-                              flexDirection: "row",
-                              gap: 5,
-                              backgroundColor: COLORS.successLight,
-                              padding: 5,
-                              borderRadius: 8,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "48%",
-                            }}
-                            onPress={() => {
-                              handleParaf();
-                            }}
-                          >
-                            <MaterialIcons
-                              name="gesture"
-                              size={24}
-                              color={COLORS.success}
-                            />
-                            <Text
+                          <View style={{ width: "100%" }}>
+                            <View
                               style={{
-                                color: COLORS.success,
-                                fontSize: fontSizeResponsive("H4", device),
+                                flexDirection: "row",
+                                marginTop: 10,
+                                alignItems: "center",
+                                marginLeft: 5,
+                                gap: 20,
                               }}
                             >
-                              Paraf
-                            </Text>
-                          </TouchableOpacity>
-
-                          <TouchableOpacity
-                            style={{
-                              flexDirection: "row",
-                              gap: 5,
-                              backgroundColor: COLORS.infoDangerLight,
-                              padding: 5,
-                              borderRadius: 8,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "48%",
-                            }}
-                            onPress={() => {
-                              bottomSheetAttach();
-                            }}
-                          >
-                            <MaterialIcons
-                              name="border-color"
-                              size={24}
-                              color={COLORS.infoDanger}
-                            />
-                            <Text
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  fontSize: fontSizeResponsive("H2", device),
+                                }}
+                              >
+                                Paraf {index}
+                              </Text>
+                              {item.sequence > index ? (
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    width: "60%",
+                                    gap: 5,
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.success,
+                                      borderRadius: 50,
+                                      padding: 5,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Ionicons
+                                      name="checkmark-outline"
+                                      color={COLORS.white}
+                                      size={device === "tablet" ? 25 : 15}
+                                    />
+                                  </View>
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.successLight,
+                                      paddingVertical: 5,
+                                      borderRadius: 20,
+                                      paddingHorizontal: 15,
+                                    }}
+                                  >
+                                    <Text
+                                      style={{
+                                        color: COLORS.success,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      Sudah Paraf
+                                    </Text>
+                                  </View>
+                                </View>
+                              ) : item.sequence <= index ? (
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    gap: 5,
+                                  }}
+                                >
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.infoDanger,
+                                      borderRadius: 50,
+                                      padding: 5,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Ionicons
+                                      name="close"
+                                      color={COLORS.white}
+                                      size={device === "tablet" ? 25 : 15}
+                                    />
+                                  </View>
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.infoDangerLight,
+                                      paddingVertical: 5,
+                                      borderRadius: 20,
+                                      paddingHorizontal: 15,
+                                    }}
+                                  >
+                                    <Text
+                                      style={{
+                                        color: COLORS.infoDanger,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      Belum Paraf
+                                    </Text>
+                                  </View>
+                                </View>
+                              ) : null}
+                            </View>
+                            {handleGetTimeParaf(data.nama) !== null &&
+                              item?.sequence > index && (
+                                <Text
+                                  style={{
+                                    fontSize: fontSizeResponsive("H4", device),
+                                    marginTop: 10,
+                                    color: COLORS.grey,
+                                    marginHorizontal: 5,
+                                  }}
+                                >
+                                  Diparaf :{" "}
+                                  {moment(
+                                    handleGetTimeParaf(data?.nama)?.created_at,
+                                    "YYYY-MM-DD HH:mm:ss"
+                                  ).format("DD MMMM YYYY | HH:mm:ss")}
+                                </Text>
+                              )}
+                            <View
                               style={{
-                                color: COLORS.infoDanger,
-                                fontSize: fontSizeResponsive("H4", device),
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 10,
+                                marginVertical: 10,
                               }}
                             >
-                              Revisi
-                            </Text>
-                          </TouchableOpacity>
+                              <Image
+                                source={{ uri: data.avatar_url }}
+                                style={{
+                                  width: device === "tablet" ? 80 : 50,
+                                  height: device === "tablet" ? 80 : 50,
+                                  borderRadius: device === "tablet" ? 80 : 50,
+                                  marginHorizontal: 10,
+                                  marginLeft: 5,
+                                }}
+                              />
+                              <View>
+                                {data?.officer ? (
+                                  <View style={{ width: 240 }}>
+                                    {loading ? (
+                                      <View style={{ width: "45%" }}>
+                                        <ShimmerPlaceHolder
+                                          style={{
+                                            borderRadius: 4,
+                                            marginTop: 5,
+                                          }}
+                                          height={20}
+                                        />
+                                      </View>
+                                    ) : (
+                                      <>
+                                        <Text
+                                          style={{
+                                            marginTop: 10,
+                                            color: COLORS.info,
+                                            fontWeight: FONTWEIGHT.bold,
+                                            fontSize: fontSizeResponsive(
+                                              "H4",
+                                              device
+                                            ),
+                                          }}
+                                        >
+                                          {data.display_title}
+                                        </Text>
+                                      </>
+                                    )}
+                                    {loading ? (
+                                      <View style={{ width: "45%" }}>
+                                        <ShimmerPlaceHolder
+                                          style={{
+                                            borderRadius: 4,
+                                            marginTop: 5,
+                                          }}
+                                          height={20}
+                                        />
+                                      </View>
+                                    ) : (
+                                      <>
+                                        <Text
+                                          style={{
+                                            color: COLORS.lighter,
+                                            fontWeight: FONTWEIGHT.bold,
+                                            fontSize: fontSizeResponsive(
+                                              "H4",
+                                              device
+                                            ),
+                                          }}
+                                        >
+                                          {data?.officer?.nama != undefined
+                                            ? data?.officer?.nama
+                                            : "-" || data?.nama !== undefined
+                                            ? data?.nama
+                                            : "-"}
+                                        </Text>
+                                      </>
+                                    )}
+                                  </View>
+                                ) : (
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "landscape"
+                                          ? 400
+                                          : 240,
+                                    }}
+                                  >
+                                    {loading ? (
+                                      <View style={{ width: "45%" }}>
+                                        <ShimmerPlaceHolder
+                                          style={{
+                                            borderRadius: 4,
+                                            marginTop: 5,
+                                          }}
+                                          height={20}
+                                        />
+                                      </View>
+                                    ) : (
+                                      <>
+                                        <Text
+                                          style={{
+                                            color: COLORS.lighter,
+                                            fontWeight: FONTWEIGHT.bold,
+                                            fontSize: fontSizeResponsive(
+                                              "H4",
+                                              device
+                                            ),
+                                          }}
+                                        >
+                                          {data?.nama !== undefined
+                                            ? data?.nama
+                                            : "-"}
+                                        </Text>
+                                      </>
+                                    )}
+                                  </View>
+                                )}
+                              </View>
+                            </View>
+                          </View>
                         </View>
-                      ) : null}
-                    </View>
-                  );
-                }
-              })}
+
+                        {item?.sequence === data?.sequence &&
+                        profile.nip === data.nip &&
+                        variant.variant === "inprogress" ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginBottom: 10,
+                              marginLeft: 5,
+                              gap: 8,
+                            }}
+                          >
+                            <TouchableOpacity
+                              style={{
+                                flexDirection: "row",
+                                gap: 5,
+                                backgroundColor: COLORS.successLight,
+                                padding: 5,
+                                borderRadius: 8,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "48%",
+                              }}
+                              onPress={() => {
+                                handleParaf();
+                              }}
+                            >
+                              <MaterialIcons
+                                name="gesture"
+                                size={24}
+                                color={COLORS.success}
+                              />
+                              <Text
+                                style={{
+                                  color: COLORS.success,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Paraf
+                              </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                              style={{
+                                flexDirection: "row",
+                                gap: 5,
+                                backgroundColor: COLORS.infoDangerLight,
+                                padding: 5,
+                                borderRadius: 8,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "48%",
+                              }}
+                              onPress={() => {
+                                bottomSheetAttach();
+                              }}
+                            >
+                              <MaterialIcons
+                                name="border-color"
+                                size={24}
+                                color={COLORS.infoDanger}
+                              />
+                              <Text
+                                style={{
+                                  color: COLORS.infoDanger,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Revisi
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        ) : null}
+                      </View>
+                    );
+                  }
+                })}
+              </View>
             </View>
           ) : (
             ""
@@ -1075,7 +1341,10 @@ export const DetailPKRL = ({ route }) => {
                   }}
                 >
                   <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                    <Ionicons name="chevron-back-outline" size={24} />
+                    <Ionicons
+                      name="chevron-back-outline"
+                      size={device === "tablet" ? 30 : 24}
+                    />
                   </TouchableOpacity>
                   <View
                     style={{
@@ -1138,7 +1407,6 @@ export const DetailPKRL = ({ route }) => {
                     justifyContent: "center",
                   }}
                   onPress={() => {
-                    bottomSheetAttachClose();
                     handleRevisi();
                   }}
                 >
@@ -1207,6 +1475,7 @@ export const DetailPKRL = ({ route }) => {
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
                     Riwayat Aktivitas
@@ -1219,7 +1488,7 @@ export const DetailPKRL = ({ route }) => {
                   >
                     <Ionicons
                       name="close-outline"
-                      size={24}
+                      size={device === "tablet" ? 30 : 24}
                       color={COLORS.lighter}
                     />
                   </TouchableOpacity>
@@ -1232,7 +1501,8 @@ export const DetailPKRL = ({ route }) => {
                     marginHorizontal: 20,
                   }}
                   data={timelineData}
-                  circleSize={30}
+                  circleSize={device === "tablet" ? 60 : 30}
+                  iconStyle={{ marginRight: device === "tablet" ? 20 : 0 }}
                   circleColor="white"
                   lineColor="gray"
                   timeStyle={{
@@ -1245,12 +1515,30 @@ export const DetailPKRL = ({ route }) => {
                   innerCircle={"icon"}
                   showTime={false}
                   renderDetail={(rowData) => (
-                    <View style={{ marginTop: -10 }}>
-                      <Text style={{ fontWeight: "bold" }}>
+                    <View
+                      style={{
+                        marginTop: -10,
+                        marginLeft: device === "tablet" ? 20 : 0,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {rowData.title}
                       </Text>
-                      <Text>{rowData.time}</Text>
-                      <Text>{rowData.description}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {rowData.time}
+                      </Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {rowData.description}
+                      </Text>
                     </View>
                   )}
                 />

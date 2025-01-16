@@ -97,9 +97,7 @@ export const PKRL = () => {
     }
   }, [token, tipe, currentTab]);
 
-  const { dokumenlain, loading } = useSelector(
-    (state) => state.digitalsign
-  );
+  const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -473,19 +471,26 @@ export const PKRL = () => {
 
         <TouchableOpacity
           style={{ position: "absolute", right: 10, top: "85%" }}
-          onPress={() => navigation.navigate("TambahDokumenPerizinan")}
+          onPress={() => {
+            navigation.navigate("TambahDokumenPerizinan", {
+              itemId: "",
+            });
+          }}
         >
           <View
             style={{
               backgroundColor: COLORS.primary,
               borderRadius: 50,
-              width: 44,
-              height: 44,
+              padding: device === "tablet" ? 20 : 10,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Ionicons name="add" size={24} color={COLORS.white} />
+            <Ionicons
+              name="add"
+              size={device === "tablet" ? 35 : 24}
+              color={COLORS.white}
+            />
           </View>
         </TouchableOpacity>
       </BottomSheetModalProvider>

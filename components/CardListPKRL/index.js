@@ -59,9 +59,16 @@ export const CardListPKRL = ({
   };
   const [modal, setModal] = useState(false);
 
+  console.log(variant);
+
   const handleNavigate = (item) => {
+    console.log(item.state);
     getDetail(item.id);
-    if (item.state === 'in_progress' || item.state === 'done') {
+    if (
+      variant === "track" ||
+      item.state === "in_progress" ||
+      item.state === "done"
+    ) {
       navigation.navigate("DetailPKRL", {
         variant: variant,
         token: token,
@@ -71,7 +78,7 @@ export const CardListPKRL = ({
         itemId: item.id,
       });
     }
-  }
+  };
 
   return (
     <View
@@ -210,8 +217,8 @@ export const CardListPKRL = ({
                 {item.state === "done"
                   ? "done"
                   : item.state === "in_progress"
-                    ? "in progress"
-                    : item.state}
+                  ? "in progress"
+                  : item.state}
               </Text>
             </View>
           )}
@@ -243,9 +250,9 @@ export const CardListPKRL = ({
                 >
                   <Image
                     source={{ uri: item.composer.avatar_url }}
-                    height={30}
-                    width={30}
-                    borderRadius={50}
+                    height={device === "tablet" ? 50 : 30}
+                    width={device === "tablet" ? 50 : 30}
+                    borderRadius={device === "tablet" ? 50 : 30}
                   />
                   <Text
                     style={{
@@ -285,7 +292,7 @@ export const CardListPKRL = ({
                 style={{
                   fontWeight: FONTWEIGHT.normal,
                   textAlign: "auto",
-                  fontSize: fontSizeResponsive("H3", device),
+                  fontSize: fontSizeResponsive("H4", device),
                   color: COLORS.white,
                   fontWeight: FONTWEIGHT.bold,
                 }}
@@ -339,6 +346,7 @@ export const CardListPKRL = ({
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
                     List Paraf
@@ -351,7 +359,7 @@ export const CardListPKRL = ({
                   >
                     <Ionicons
                       name="close-outline"
-                      size={24}
+                      size={device === "tablet" ? 30 : 24}
                       color={COLORS.lighter}
                     />
                   </TouchableOpacity>
@@ -369,11 +377,18 @@ export const CardListPKRL = ({
                         >
                           <Image
                             source={{ uri: data.avatar_url }}
-                            height={30}
-                            width={30}
-                            borderRadius={30}
+                            height={device === "tablet" ? 50 : 30}
+                            width={device === "tablet" ? 50 : 30}
+                            borderRadius={device === "tablet" ? 50 : 30}
                           />
-                          <Text style={{ width: "90%" }}>{data.nama}</Text>
+                          <Text
+                            style={{
+                              width: "90%",
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {data.nama}
+                          </Text>
                         </View>
                         {item.sequence <= index ? (
                           <>
@@ -391,13 +406,16 @@ export const CardListPKRL = ({
                                 style={{
                                   backgroundColor: COLORS.infoDanger,
                                   borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
+                                  padding: 5,
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
                               >
-                                <Ionicons name="close" color={COLORS.white} />
+                                <Ionicons
+                                  name="close"
+                                  color={COLORS.white}
+                                  size={device === "tablet" ? 25 : 15}
+                                />
                               </View>
                               <View
                                 style={{
@@ -413,7 +431,7 @@ export const CardListPKRL = ({
                                     fontSize: fontSizeResponsive("H4", device),
                                   }}
                                 >
-                                  Belum Ditandatangani
+                                  Belum Paraf
                                 </Text>
                               </View>
                             </View>
@@ -442,8 +460,7 @@ export const CardListPKRL = ({
                                 style={{
                                   backgroundColor: COLORS.success,
                                   borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
+                                  padding: 5,
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
@@ -451,6 +468,7 @@ export const CardListPKRL = ({
                                 <Ionicons
                                   name="checkmark-outline"
                                   color={COLORS.white}
+                                  size={device === "tablet" ? 25 : 15}
                                 />
                               </View>
                               <View
@@ -467,7 +485,7 @@ export const CardListPKRL = ({
                                     fontSize: fontSizeResponsive("H4", device),
                                   }}
                                 >
-                                  Ditandatangani
+                                  Sudah Paraf
                                 </Text>
                               </View>
                             </View>

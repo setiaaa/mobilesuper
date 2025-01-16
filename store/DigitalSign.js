@@ -77,8 +77,8 @@ const DigitalSignSlice = createSlice({
       console.log("lampiran", action.payload);
       state.attachmentLampiran = [action.payload];
     },
-    resetNomorDokPerizinan: (state) => {
-      state.nomorDokPerizinan = "";
+    resetNomorDokPerizinan: (state, action) => {
+      state.nomorDokPerizinan = action.payload;
     },
     resetAttachment: (state) => {
       state.attachmentLampiran = [];
