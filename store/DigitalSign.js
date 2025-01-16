@@ -25,6 +25,9 @@ import {
   getNomorPerizinanMenteri,
   addAttachmentDigiSign,
   putDocumentPerizinan,
+  getListInbox,
+  getListNeedSignSK,
+  getListNeedApproveSK,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -179,6 +182,54 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListCompleted.rejected, (state, action) => {
         state.loading = false;
+      })
+      .addCase(getListInbox.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListInbox.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListInbox.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
+      })
+      .addCase(getListNeedSignSK.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListNeedSignSK.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListNeedSignSK.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
+      })
+      .addCase(getListNeedApproveSK.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListNeedApproveSK.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListNeedApproveSK.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
       })
       .addCase(getListDraft.fulfilled, (state, action) => {
         state.loading = false;

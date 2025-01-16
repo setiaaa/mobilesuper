@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
@@ -275,6 +275,84 @@ function MyTabDigitalSign({ props, navigation }) {
             </TouchableOpacity>
           ) : null} */}
 
+          <TouchableOpacity
+            key={4}
+            onPress={() => {
+              setTabItemIndex(4);
+              navigation.navigate("DokumenSK");
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 4 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 120,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <FontAwesome6
+                  name="file-signature"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Dokumen SK
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <FontAwesome6
+                  name="file-signature"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Dokumen SK
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
           {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? ( */}
           <TouchableOpacity
             key={3}
@@ -353,6 +431,7 @@ function MyTabDigitalSign({ props, navigation }) {
               </View>
             )}
           </TouchableOpacity>
+
           {/* ) : null} */}
         </View>
       </BottomSheetModalProvider>

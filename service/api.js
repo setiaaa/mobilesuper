@@ -2088,6 +2088,48 @@ export const getListCompleted = createAsyncThunk(
   }
 );
 
+export const getListInbox = createAsyncThunk(
+  "digitalsign/getListInbox",
+  async ({ token, tipe, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/sk-completed/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+
+export const getListNeedSignSK = createAsyncThunk(
+  "digitalsign/getListNeedSignSK",
+  async ({ token, tipe, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/sk-need-sign/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+
+export const getListNeedApproveSK = createAsyncThunk(
+  "digitalsign/getListNeedApproveSK",
+  async ({ token, tipe, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/sk-need-approval/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+
 export const getListRejected = createAsyncThunk(
   "digitalsign/getListRejected",
   async ({ token, page, search }) => {
@@ -2184,7 +2226,7 @@ export const putDocumentPerizinan = createAsyncThunk(
       `${digitalSign}document/${data.id}`,
       data.payload,
       { headers: { Authorization: data.token } }
-    )
+    );
     return respon?.data;
   }
 );
