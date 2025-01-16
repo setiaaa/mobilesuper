@@ -45,6 +45,10 @@ import {
   CollapseBody,
   CollapseHeader,
 } from "accordion-collapse-react-native";
+import { detailEselonII } from "../../../components/detailDispo/eselon2";
+import { detailMenteri } from "../../../components/detailDispo/menteri";
+import { detailEselonI } from "../../../components/detailDispo/eselon1";
+import { detailMenteriDef } from "../../../components/DetailDispo/menteriDef";
 
 function DispositionLembar({ route, id, data, tipe }) {
   const navigation = useNavigation();
@@ -64,6 +68,9 @@ function DispositionLembar({ route, id, data, tipe }) {
   const [isLoading, setIsLoading] = useState();
   const [scrollEnabled, setScrollEnabled] = useState();
   const [stylusFile, setStylusFile] = useState("");
+
+  let urlNote = nde_api.baseurl + "crsbe" + data?.attachments[0]?.file;
+  let newUrlNote = urlNote.replace("/api/", "/");
   const [receiversDispo, setReceiversDispo] = useState({});
   const [collapse, setCollapse] = useState({
     addressbook: true,
@@ -119,16 +126,73 @@ function DispositionLembar({ route, id, data, tipe }) {
     if (data == undefined) {
       setDetail(route?.params?.data);
     } else {
-      setDetail(data);
+      if (data?.obj) {
+        setDetail(data?.obj);
+      } else {
+        setDetail(data);
+      }
     }
     getHeader();
     if (profile.title.length == 1) {
       setSenderAttr(profile.title[0]);
     }
-    getReceiversDispo();
+    if (
+      tipes == "disposition" &&
+      (profile?.nik === "88888" || profile?.nik === "99999")
+    ) {
+      getReceiversDispo();
+    } else if (tipes == "detail" && data?.obj) {
+      setReceiversDispo(data?.receivers_config);
+
+      //set matching receivers
+      let temp = [];
+      data?.receivers_config?.kepada_dispo?.map((item) => {
+        temp = temp.concat(transformData(item));
+      });
+      const matchingCodes = findMatchReceivers(temp, data?.receivers_ids);
+      setreceiverDispo(matchingCodes);
+      //set matching action
+      const actionArray = data?.action?.split("\n").map((item) => item.trim());
+      const matches = data?.sender?.actions?.filter((actionItem) =>
+        actionArray?.some((sender) => sender === actionItem.name)
+      );
+      setactionDispo(matches);
+    }
     return refresh;
   }, [data]);
+  const [receiverDispo, setreceiverDispo] = useState([]);
+  const [actionDispo, setactionDispo] = useState([]);
 
+  const findMatchReceivers = (x, receivers_ids) => {
+    let matches = [];
+
+    data?.receivers_config?.yth_dispo?.forEach((child) => {
+      if (receivers_ids.includes(child.code)) {
+        matches.push({
+          code: child.code,
+          name: child.display_label,
+        });
+      }
+    });
+    const searchInChildren = (children) => {
+      children.forEach((child) => {
+        if (receivers_ids.includes(child.code)) {
+          matches.push({
+            code: child.code,
+            name: child.display_label + " (" + child?.name + ")",
+          });
+        }
+        if (child.children) {
+          searchInChildren(child.children);
+        }
+      });
+    };
+    x?.forEach((section) => {
+      searchInChildren(section.child);
+    });
+
+    return matches;
+  };
   useEffect(() => {
     getTindakan();
   }, [senderAttr]);
@@ -351,7 +415,6 @@ function DispositionLembar({ route, id, data, tipe }) {
             request[i].send_priority_todo = items.send_priority_todo1.value;
           }
         });
-        // console.log(request);
         let payload = {
           attachments:
             stylusFile === ""
@@ -369,11 +432,6 @@ function DispositionLembar({ route, id, data, tipe }) {
           copy_log: "1",
         };
         // post api dispo
-        console.log(
-          nde_api.postDisposition
-            .replace("{$type}", tipes)
-            .replace("{$id}", ids)
-        );
         const response = await postHTTP(
           nde_api.postDisposition
             .replace("{$type}", tipes)
@@ -578,314 +636,372 @@ function DispositionLembar({ route, id, data, tipe }) {
     });
     settransformReceiver(temp);
   }, [receiversDispo]);
-
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <ScrollView scrollEnabled={scrollEnabled} nestedScrollEnabled={true}>
-          {loadingOverlay}
-          <View style={styles.screen}>
-            <View style={styles.containerLabel}>
-              <Text style={styles.title}>LEMBAR DISPOSISI</Text>
-            </View>
-            <View style={styles.containerLabel}>
-              <Text style={styles.title}>MENTERI KELAUTAN DAN PERIKANAN</Text>
-            </View>
-            <View style={{ marginBottom: 16 }}>
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 20,
-                  borderRadius: 16,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "#DBDADE",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Sifat Surat
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {detail?.priority ? detail?.priority : detail?.prio}
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "#DBDADE",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Nomor Surat
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {detail?.ref_number}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "#DBDADE",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Tanggal Diterima
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {moment(new Date()).format("D MMMM YYYY")}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "#DBDADE",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Tanggal Surat
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {detail?.letter_date}
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "#DBDADE",
-                    paddingVertical: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Asal Surat
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {detail && detail?.senders[0].title
-                      ? detail?.senders[0].title
-                      : detail?.senders[0].name}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: "row", paddingVertical: 10 }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      width: "40%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    Hal
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 400,
-                      width: "60%",
-                      paddingRight: 20,
-                    }}
-                  >
-                    {detail?.subject}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {dispoMulti.map((item, index) => (
-              <Card key={index} style={styles.containerCard}>
-                {item.btnDel && (
-                  <View style={styles.headerCard}>
-                    <IconButton icon="close" onPress={() => delDispo(index)} />
+        {tipes == "detail" &&
+          data?.sender?.type == "m" &&
+          data?.form_version == "def" &&
+          detailMenteriDef(data, {
+            receiverDispo: receiverDispo,
+            actionDispo: actionDispo,
+          })}
+        {tipes == "detail" &&
+          data?.sender?.type == "m" &&
+          data?.form_version != "def" &&
+          detailMenteri(data, {
+            receiverDispo: receiverDispo,
+            actionDispo: actionDispo,
+          })}
+        {tipes == "detail" &&
+          (data?.sender?.type == "1" || data?.sender?.type == "a") &&
+          detailEselonI(data, {
+            receiverDispo: receiverDispo,
+            actionDispo: actionDispo,
+          })}
+        {tipes == "detail" &&
+          (data?.sender?.type == "b" ||
+            data?.sender?.type == "c" ||
+            data?.sender?.type == "2" ||
+            data?.sender?.type == "3" ||
+            data?.sender?.type == "4") &&
+          detailEselonII(data, {
+            receiverDispo: receiverDispo,
+            actionDispo: actionDispo,
+          })}
+        {tipes != "detail" && (
+          <ScrollView scrollEnabled={scrollEnabled} nestedScrollEnabled={true}>
+            {loadingOverlay}
+            <View style={styles.screen}>
+              {tipes && tipes != "detail" && (
+                <>
+                  {profile?.nik != "88888" && profile?.nik != "99999" && (
+                    <>
+                      <View style={styles.containerLabel}>
+                        <Text style={styles.title}>
+                          {data?.sender?.organization}
+                        </Text>
+                      </View>
+                      <View style={styles.containerLabel}>
+                        <Text style={styles.title}>
+                          {data?.sender?.satker != data?.sender?.organization
+                            ? data?.satker
+                            : ""}
+                        </Text>
+                      </View>
+                    </>
+                  )}
+                  <View style={styles.containerLabel}>
+                    <Text style={styles.title}>LEMBAR DISPOSISI</Text>
                   </View>
-                )}
-                <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Kepada Yth.</Text>
-                </View>
-                <View>
-                  <FlatList
-                    data={receiversDispo.yth_dispo}
-                    renderItem={renderItemReceivers}
-                    keyExtractor={(item) => item.code}
-                    nestedScrollEnabled
-                    keyboardShouldPersistTaps="handled"
-                  />
-                </View>
+                  <View style={styles.containerLabel}>
+                    <Text style={styles.title}>
+                      {profile?.nik === "88888"
+                        ? "MENTERI KELAUTAN DAN PERIKANAN"
+                        : profile?.nik === "99999"
+                        ? "WAKIL MENTERI KELAUTAN DAN PERIKANAN"
+                        : null}
+                    </Text>
+                  </View>
+                </>
+              )}
+              <View style={{ marginBottom: 16 }}>
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: 5,
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
                   }}
                 >
                   <View
                     style={{
-                      height: 1,
-                      backgroundColor: "black",
-                      flex: 1,
-                      marginVertical: 10,
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingBottom: 10,
                     }}
-                  />
-                  <Text onPress={() => toggleCollapse("addressbook")}>
-                    {collapse["addressbook"] ? (
-                      <Ionicons
-                        name="remove-circle-outline"
-                        size={24}
-                        onPress={toggleCollapse[item.header]}
-                      />
-                    ) : (
-                      <Ionicons name="add-circle-outline" size={24} />
-                    )}
-                  </Text>
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Sifat Surat
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {detail?.priority ? detail?.priority : detail?.prio}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Nomor Surat
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {detail?.ref_number}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Tanggal Diterima
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {moment(new Date()).format("D MMMM YYYY")}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Tanggal Surat
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {detail?.letter_date}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Asal Surat
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {detail && detail?.senders[0].title
+                        ? detail?.senders[0].title
+                        : detail?.senders[0].name}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Hal
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {detail?.subject}
+                    </Text>
+                  </View>
                 </View>
-                {collapse["addressbook"] && (
-                  <View>{renderReceiverDispo()}</View>
-                )}
-                <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Petunjuk</Text>
-                  <Text onPress={() => toggleCollapse("petunjuk")}>
-                    {collapse["petunjuk"] ? (
-                      <Ionicons
-                        name="remove-circle-outline"
-                        size={24}
-                        onPress={toggleCollapse[item.header]}
+              </View>
+              {dispoMulti.map((item, index) => (
+                <Card key={index} style={styles.containerCard}>
+                  {item.btnDel && (
+                    <View style={styles.headerCard}>
+                      <IconButton
+                        icon="close"
+                        onPress={() => delDispo(index)}
                       />
-                    ) : (
-                      <Ionicons name="add-circle-outline" size={24} />
-                    )}
-                  </Text>
-                </View>
-                {collapse["petunjuk"] && (
+                    </View>
+                  )}
+                  <View style={[styles.containerTitle, { paddingTop: 0 }]}>
+                    <Text style={styles.title}>Kepada Yth.</Text>
+                  </View>
                   <View>
                     <FlatList
-                      data={tindakanList}
-                      renderItem={renderItemTindakan}
+                      data={receiversDispo.yth_dispo}
+                      renderItem={renderItemReceivers}
                       keyExtractor={(item) => item.code}
                       nestedScrollEnabled
+                      keyboardShouldPersistTaps="handled"
                     />
                   </View>
-                )}
-                <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Catatan Disposisi</Text>
-                </View>
-                <TextInput
-                  value={item.nota_tindakan_free1}
-                  mode="outlined"
-                  multiline={true}
-                  theme={{ roundness: 6 }}
-                  placeholder="Masukkan catatan..."
-                  onChangeText={(text) => {
-                    dispatch(
-                      setNotaTindakanFree({
-                        index: index,
-                        nota_tindakan_free1: text,
-                      })
-                    );
-                  }}
-                  style={[styles.titleLabel, { paddingVertical: 12 }]}
-                  allowFontScaling={false}
-                />
-
-                <View
-                  style={{
-                    height: 600,
-                    width: "100%",
-                    marginTop: 10,
-                  }}
-                >
-                  <SignatureScreen
-                    ref={ref}
-                    onBegin={() => setScrollEnabled(false)}
-                    onEnd={handleEnd}
-                    onOK={handleOK}
-                    onEmpty={handleEmpty}
-                    onClear={handleClear}
-                    onGetData={handleData}
-                    autoClear={false}
-                    imageType="image/svg+xml"
-                    descriptionText=" "
-                    webStyle={`
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: 1,
+                        backgroundColor: "black",
+                        flex: 1,
+                        marginVertical: 10,
+                      }}
+                    />
+                    <Text onPress={() => toggleCollapse("addressbook")}>
+                      {collapse["addressbook"] ? (
+                        <Ionicons
+                          name="remove-circle-outline"
+                          size={24}
+                          onPress={toggleCollapse[item.header]}
+                        />
+                      ) : (
+                        <Ionicons name="add-circle-outline" size={24} />
+                      )}
+                    </Text>
+                  </View>
+                  {collapse["addressbook"] && (
+                    <View>{renderReceiverDispo()}</View>
+                  )}
+                  <View style={styles.containerTitle}>
+                    <Text style={styles.title}>Petunjuk</Text>
+                    <Text onPress={() => toggleCollapse("petunjuk")}>
+                      {collapse["petunjuk"] ? (
+                        <Ionicons
+                          name="remove-circle-outline"
+                          size={24}
+                          onPress={toggleCollapse[item.header]}
+                        />
+                      ) : (
+                        <Ionicons name="add-circle-outline" size={24} />
+                      )}
+                    </Text>
+                  </View>
+                  {collapse["petunjuk"] && (
+                    <View>
+                      <FlatList
+                        data={tindakanList}
+                        renderItem={renderItemTindakan}
+                        keyExtractor={(item) => item.code}
+                        nestedScrollEnabled
+                      />
+                    </View>
+                  )}
+                  <View style={styles.containerTitle}>
+                    <Text style={styles.title}>Catatan</Text>
+                  </View>
+                  <TextInput
+                    value={item.nota_tindakan_free1}
+                    mode="outlined"
+                    multiline={true}
+                    theme={{ roundness: 6 }}
+                    placeholder="Masukkan catatan..."
+                    onChangeText={(text) => {
+                      dispatch(
+                        setNotaTindakanFree({
+                          index: index,
+                          nota_tindakan_free1: text,
+                        })
+                      );
+                    }}
+                    style={[styles.titleLabel, { paddingVertical: 12 }]}
+                    allowFontScaling={false}
+                  />
+                  <View
+                    style={{
+                      height: 600,
+                      width: "100%",
+                      marginTop: 10,
+                    }}
+                  >
+                    <SignatureScreen
+                      ref={ref}
+                      onBegin={() => setScrollEnabled(false)}
+                      onEnd={handleEnd}
+                      onOK={handleOK}
+                      onEmpty={handleEmpty}
+                      onClear={handleClear}
+                      onGetData={handleData}
+                      autoClear={false}
+                      imageType="image/svg+xml"
+                      descriptionText=" "
+                      webStyle={`
                       .m-signature-pad {
                         position: absolute;
                         width: 100%;
@@ -907,140 +1023,145 @@ function DispositionLembar({ route, id, data, tipe }) {
                       }
 
                     `}
-                    clearText="Hapus"
-                    confirmText="Simpan"
-                  />
-                </View>
-                {Config.todo && (
-                  <>
-                    <View style={styles.containerTitleLeft}>
-                      <Switch
-                        value={item.create_todo1}
-                        onValueChange={() => dispatch(switchTodo(index))}
-                      />
-                      <Text style={[styles.titleTodo, styles.switchLabel]}>
-                        Aktifkan {Config.labelTodo}
-                      </Text>
-                    </View>
+                      clearText="Hapus"
+                      confirmText="Simpan"
+                    />
+                  </View>
+                  {Config.todo && (
+                    <>
+                      <View style={styles.containerTitleLeft}>
+                        <Switch
+                          value={item.create_todo1}
+                          onValueChange={() => dispatch(switchTodo(index))}
+                        />
+                        <Text style={[styles.titleTodo, styles.switchLabel]}>
+                          Aktifkan {Config.labelTodo}
+                        </Text>
+                      </View>
 
-                    {item.create_todo1 && (
-                      <>
-                        <View style={styles.containerTanggalPrioritas}>
-                          <View style={{ width: "45%" }}>
-                            <Text style={styles.titleLabelTodo}>Tanggal</Text>
-                            <Button
-                              style={{
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                height: 55,
-                                borderColor: GlobalStyles.colors.black,
-                                borderRadius: 6,
-                              }}
-                              labelStyle={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                              mode="outlined"
-                              textColor="black"
-                              onPress={() => {
-                                setvisibleDatePicker(!visibleDatePicker);
-                              }}
-                            >
-                              {item.duedate_todo1 != ""
-                                ? moment(new Date(item.duedate_todo1)).format(
-                                    "DD/MM/YYYY"
-                                  )
-                                : "Tgl Duedate"}
-                            </Button>
-                            <DateTimePickerModal
-                              isVisible={visibleDatePicker}
-                              mode="date"
-                              display={
-                                Platform.OS == "android" ? "inline" : "spinner"
-                              }
-                              style={{ width: "100%", height: 300 }}
-                              onConfirm={(date) => {
-                                dispatch(
-                                  setTodoDuedate({
-                                    index: index,
-                                    duedate_todo1: date.toDateString(),
-                                  })
-                                );
-                                setvisibleDatePicker(false);
-                              }}
-                              onCancel={() => {
-                                setvisibleDatePicker(false);
-                              }}
-                              minimumDate={new Date()}
-                            />
+                      {item.create_todo1 && (
+                        <>
+                          <View style={styles.containerTanggalPrioritas}>
+                            <View style={{ width: "45%" }}>
+                              <Text style={styles.titleLabelTodo}>Tanggal</Text>
+                              <Button
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  height: 55,
+                                  borderColor: GlobalStyles.colors.black,
+                                  borderRadius: 6,
+                                }}
+                                labelStyle={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                                mode="outlined"
+                                textColor="black"
+                                onPress={() => {
+                                  setvisibleDatePicker(!visibleDatePicker);
+                                }}
+                              >
+                                {item.duedate_todo1 != ""
+                                  ? moment(new Date(item.duedate_todo1)).format(
+                                      "DD/MM/YYYY"
+                                    )
+                                  : "Tgl Duedate"}
+                              </Button>
+                              <DateTimePickerModal
+                                isVisible={visibleDatePicker}
+                                mode="date"
+                                display={
+                                  Platform.OS == "android"
+                                    ? "inline"
+                                    : "spinner"
+                                }
+                                style={{ width: "100%", height: 300 }}
+                                onConfirm={(date) => {
+                                  dispatch(
+                                    setTodoDuedate({
+                                      index: index,
+                                      duedate_todo1: date.toDateString(),
+                                    })
+                                  );
+                                  setvisibleDatePicker(false);
+                                }}
+                                onCancel={() => {
+                                  setvisibleDatePicker(false);
+                                }}
+                                minimumDate={new Date()}
+                              />
+                            </View>
+                            <View style={{ width: "47%" }}>
+                              <Text style={styles.titleLabelTodo}>
+                                Prioritas
+                              </Text>
+                              <Dropdown
+                                style={[
+                                  styles.dropdown,
+                                  isFocusPrio && {
+                                    borderColor: GlobalStyles.colors.tertiery50,
+                                  },
+                                ]}
+                                itemTextStyle={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                // inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                data={priority}
+                                // search
+                                maxHeight={300}
+                                labelField="view"
+                                valueField="value"
+                                placeholder={
+                                  !isFocusPrio ? "Pilih Prioritas" : "..."
+                                }
+                                // searchPlaceholder="Search..."
+                                value={item.send_priority_todo1}
+                                onFocus={() => setIsFocusPrio(true)}
+                                onBlur={() => setIsFocusPrio(false)}
+                                onChange={(item) => {
+                                  dispatch(
+                                    setTodoPriority({
+                                      index: index,
+                                      send_priority_todo1: item,
+                                    })
+                                  );
+                                  setIsFocusPrio(false);
+                                }}
+                              />
+                            </View>
                           </View>
-                          <View style={{ width: "47%" }}>
-                            <Text style={styles.titleLabelTodo}>Prioritas</Text>
-                            <Dropdown
-                              style={[
-                                styles.dropdown,
-                                isFocusPrio && {
-                                  borderColor: GlobalStyles.colors.tertiery50,
-                                },
-                              ]}
-                              itemTextStyle={{
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                              placeholderStyle={styles.placeholderStyle}
-                              selectedTextStyle={styles.selectedTextStyle}
-                              // inputSearchStyle={styles.inputSearchStyle}
-                              iconStyle={styles.iconStyle}
-                              data={priority}
-                              // search
-                              maxHeight={300}
-                              labelField="view"
-                              valueField="value"
-                              placeholder={
-                                !isFocusPrio ? "Pilih Prioritas" : "..."
-                              }
-                              // searchPlaceholder="Search..."
-                              value={item.send_priority_todo1}
-                              onFocus={() => setIsFocusPrio(true)}
-                              onBlur={() => setIsFocusPrio(false)}
-                              onChange={(item) => {
-                                dispatch(
-                                  setTodoPriority({
-                                    index: index,
-                                    send_priority_todo1: item,
-                                  })
-                                );
-                                setIsFocusPrio(false);
-                              }}
-                            />
-                          </View>
-                        </View>
-                      </>
-                    )}
-                  </>
-                )}
-              </Card>
-            ))}
-            {btnAdd && (
+                        </>
+                      )}
+                    </>
+                  )}
+                </Card>
+              ))}
+              {btnAdd && (
+                <Button
+                  onPress={addDispo}
+                  mode="contained"
+                  style={{
+                    marginBottom: 16,
+                    backgroundColor: GlobalStyles.colors.tertiery,
+                  }}
+                >
+                  Add Disposition
+                </Button>
+              )}
               <Button
-                onPress={addDispo}
                 mode="contained"
-                style={{
-                  marginBottom: 16,
-                  backgroundColor: GlobalStyles.colors.tertiery,
-                }}
+                style={{ backgroundColor: GlobalStyles.colors.tertiery }}
+                onPress={postDisposition}
               >
-                Add Disposition
+                Kirim
               </Button>
-            )}
-            <Button
-              mode="contained"
-              style={{ backgroundColor: GlobalStyles.colors.tertiery }}
-              onPress={postDisposition}
-            >
-              Kirim
-            </Button>
-          </View>
-        </ScrollView>
+            </View>
+          </ScrollView>
+        )}
       </GestureHandlerRootView>
     </>
   );
@@ -1054,7 +1175,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.tertiery20,
   },
   containerCard: {
-    paddingHorizontal: 12,
+    padding: 12,
     marginBottom: 16,
     borderRadius: 6,
     backgroundColor: GlobalStyles.colors.tertiery10,
