@@ -137,11 +137,13 @@ function DispositionLembar({ route, id, data, tipe }) {
       setSenderAttr(profile.title[0]);
     }
     if (
-      (tipes == "disposition" || tipes == "in") &&
+      (route?.params?.tipe == "disposition" ||
+        route?.params?.tipe == "in" ||
+        tipe == "disposition") &&
       (profile?.nik === "88888" || profile?.nik === "99999")
     ) {
       getReceiversDispo();
-    } else if (tipes == "detail" && data?.obj) {
+    } else if (route?.params?.tipe == "detail" && data?.obj) {
       setReceiversDispo(data?.receivers_config);
 
       //set matching receivers
