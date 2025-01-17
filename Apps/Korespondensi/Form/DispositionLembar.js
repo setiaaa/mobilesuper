@@ -143,7 +143,10 @@ function DispositionLembar({ route, id, data, tipe }) {
       (profile?.nik === "88888" || profile?.nik === "99999")
     ) {
       getReceiversDispo();
-    } else if (route?.params?.tipe == "detail" && data?.obj) {
+    } else if (
+      (route?.params?.tipe == "detail" || tipe == "detail") &&
+      data?.obj
+    ) {
       setReceiversDispo(data?.receivers_config);
 
       //set matching receivers
