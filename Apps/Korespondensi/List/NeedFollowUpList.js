@@ -183,47 +183,35 @@ function NeedFollowUpList({ route }) {
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
-          start = moment(startDate).format("DD/MM/YYYY");
+          start = "&start_date=" + moment(startDate).format("DD/MM/YYYY");
         }
         if (endDate == undefined || endDate == null) {
           if (startDate == undefined || startDate == null) {
             end = "";
           } else {
-            end = moment(new Date()).format("DD/MM/YYYY");
+            end = "&end_date=" + moment(new Date()).format("DD/MM/YYYY");
             setEndDate(new Date());
           }
         } else {
-          end = moment(endDate).format("DD/MM/YYYY");
+          end = "&end_date=" + moment(endDate).format("DD/MM/YYYY");
         }
         if (isSearchQuery.length == 0) {
           word = "";
         } else {
-          word = isSearchQuery;
+          word = "&search=" + isSearchQuery;
         }
         if (selectedDivisi.id == undefined) {
           division = "";
         } else {
-          division = selectedDivisi.id;
+          division = "&division=" + selectedDivisi.id;
         }
         if (selectedTypeLetter.name == "Semua Jenis Surat") {
           typeletter = "";
         } else {
-          typeletter = selectedTypeLetter.name;
+          typeletter = "&type_letter=" + selectedTypeLetter.name;
         }
         let url = nde_api.needfollowup;
-        url =
-          url +
-          "&start_date=" +
-          start +
-          "&end_date=" +
-          end +
-          "&search=" +
-          word +
-          "&division=" +
-          division +
-          "&type_letter=" +
-          typeletter +
-          "&sign=0";
+        url = url + start + end + word + division + typeletter + "&sign=0";
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -407,6 +395,13 @@ function NeedFollowUpList({ route }) {
   };
 
   const handleConfirmEnd = (date) => {
+    if (
+      startDate == null &&
+      moment(date).format("DD/MM/YYYY") ==
+        moment(new Date()).format("DD/MM/YYYY")
+    ) {
+      setStartDate(date);
+    }
     setEndDate(date);
     hideEndDate();
   };
@@ -763,6 +758,13 @@ function NeedFollowUpList({ route }) {
                           ? hideEndDate()
                           : {};
                       }}
+                      minimumDate={
+                        isEndDateVisible && startDate
+                          ? startDate
+                          : isEndDateVisible
+                          ? new Date()
+                          : null
+                      }
                       maximumDate={new Date()}
                     />
                   </View>
