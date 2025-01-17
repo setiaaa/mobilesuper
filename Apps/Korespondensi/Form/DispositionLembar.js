@@ -45,9 +45,9 @@ import {
   CollapseBody,
   CollapseHeader,
 } from "accordion-collapse-react-native";
-import { detailEselonII } from "../../../components/detailDispo/eselon2";
-import { detailMenteri } from "../../../components/detailDispo/menteri";
-import { detailEselonI } from "../../../components/detailDispo/eselon1";
+import { detailEselonII } from "../../../components/DetailDispo/eselon2";
+import { detailMenteri } from "../../../components/DetailDispo/menteri";
+import { detailEselonI } from "../../../components/DetailDispo/eselon1";
 import { detailMenteriDef } from "../../../components/DetailDispo/menteriDef";
 
 function DispositionLembar({ route, id, data, tipe }) {
