@@ -426,6 +426,13 @@ function IncomingList({ route }) {
   };
 
   const handleConfirmEnd = (date) => {
+    if (
+      startDate == null &&
+      moment(date).format("DD/MM/YYYY") ==
+        moment(new Date()).format("DD/MM/YYYY")
+    ) {
+      setStartDate(date);
+    }
     setEndDate(date);
     hideEndDate();
   };
@@ -793,6 +800,13 @@ function IncomingList({ route }) {
                           ? hideEndDate()
                           : {};
                       }}
+                      minimumDate={
+                        isEndDateVisible && startDate
+                          ? startDate
+                          : isEndDateVisible
+                          ? new Date()
+                          : null
+                      }
                       maximumDate={new Date()}
                     />
                   </View>
