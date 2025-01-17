@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Perbaikan form disposisi
+                      Penambahan alamat disposisi
                     </Text>
                   </View>
 
@@ -497,7 +497,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan face recognition
+                      Penambahan log disposisi
                     </Text>
                   </View>
 

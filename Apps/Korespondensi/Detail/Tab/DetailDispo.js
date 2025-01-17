@@ -236,7 +236,7 @@ function DetailDispo({ data, noAgenda, preview, title }) {
       <ScrollView scrollEnabled={checkScroll}>
         {loadingOverlay}
         <View style={styles.screen}>
-          <View style={{ marginBottom: 8 }}>
+          {/* <View style={{ marginBottom: 8 }}>
             <Text>Diteruskan Dari</Text>
           </View>
           <Card style={styles.containerCard}>
@@ -300,9 +300,6 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                         width: "100%",
                       }}
                     >
-                      {/* <Text>{item?.truncate_name}</Text> */}
-                      {/* <Text>{item?.size}</Text>
-                        <Text>{item.file}</Text> */}
                       <WebView
                         originWhitelist={["*"]}
                         source={{
@@ -330,7 +327,7 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                   </View>
                 ))}
             </View>
-          </Card>
+          </Card> */}
           <View style={{ marginBottom: 8 }}>
             <Text>Informasi Surat</Text>
           </View>

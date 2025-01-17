@@ -77,6 +77,11 @@ function DispositionDetail({ route }) {
       (profile?.title?.length > 0 || profile?.is_user_eselon_4 == "true")
     ) {
       routes = [
+        {
+          key: "alamat",
+          title: "Alamat Disposisi",
+          icon: "clipboard-arrow-down-outline",
+        },
         { key: "info", title: "Info", icon: "alert-circle-outline" },
         { key: "log", title: "Aktivitas Disposisi", icon: "clipboard-text" },
         // { key: "attachment", title: "Attachment", icon: "attachment" },

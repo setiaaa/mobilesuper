@@ -218,7 +218,7 @@ function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
                         <Text
                           style={data?.unread ? { fontWeight: "bold" } : {}}
                         >
-                          {data.sender}
+                          {data.sender?.replace("\\/", "/")}
                         </Text>
                       )}
                     </Text>
@@ -252,7 +252,7 @@ function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
                   </Text>
                 )}
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                  {data?.subject}
+                  {data?.subject?.replace("\\/", "/")}
                 </Text>
               </View>
               <View
@@ -281,12 +281,13 @@ function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
                           id: data.id,
                           tipe: tipe,
                           title: title,
+                          subject: data?.subject,
                         });
                       }}
                     />
                   </View>
                 )}
-                {data.tracking && tipe == "agendamydispo" && (
+                {data.tracking && (
                   <View style={styles.containerButton}>
                     <IconButton
                       icon="forum-outline"
@@ -297,7 +298,7 @@ function CardList({ data, tipe, onPress, typeBulkDelete, is_pass }) {
                         navigation.navigate("TrackingLogDetail", {
                           id: data.id,
                           tipe: tipe,
-                          title: title,
+                          title: "Log Disposisi",
                           trackinglog: data.tracking,
                         });
                       }}

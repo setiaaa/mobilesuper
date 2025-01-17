@@ -186,40 +186,31 @@ function SubmittedList({ route }) {
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
-          start = moment(startDate).format("DD/MM/YYYY");
+          start = "&start_date=" + moment(startDate).format("DD/MM/YYYY");
         }
         if (endDate == undefined || endDate == null) {
           if (startDate == undefined || startDate == null) {
             end = "";
           } else {
-            end = moment(new Date()).format("DD/MM/YYYY");
+            end = "&end_date=" + moment(new Date()).format("DD/MM/YYYY");
             setEndDate(new Date());
           }
         } else {
-          end = moment(endDate).format("DD/MM/YYYY");
+          end = "&end_date=" + moment(endDate).format("DD/MM/YYYY");
         }
         if (isSearchQuery.length == 0) {
           word = "";
         } else {
-          word = isSearchQuery;
+          word = "&query=" + isSearchQuery;
         }
         if (selectedTypeLetter.name == "Semua Jenis Surat") {
           typeletter = "";
         } else {
-          typeletter = selectedTypeLetter.name;
+          typeletter = "&type_letter=" + selectedTypeLetter.name;
         }
         let url;
         url = nde_api.agendaout;
-        url =
-          url +
-          "&start_date=" +
-          start +
-          "&end_date=" +
-          end +
-          "&query=" +
-          word +
-          "&type_letter=" +
-          typeletter;
+        url = url + start + end + word + typeletter;
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -400,6 +391,13 @@ function SubmittedList({ route }) {
   };
 
   const handleConfirmEnd = (date) => {
+    if (
+      startDate == null &&
+      moment(date).format("DD/MM/YYYY") ==
+        moment(new Date()).format("DD/MM/YYYY")
+    ) {
+      setStartDate(date);
+    }
     setEndDate(date);
     hideEndDate();
   };
@@ -816,6 +814,13 @@ function SubmittedList({ route }) {
                           ? hideEndDate()
                           : {};
                       }}
+                      minimumDate={
+                        isEndDateVisible && startDate
+                          ? startDate
+                          : isEndDateVisible
+                          ? new Date()
+                          : null
+                      }
                       maximumDate={new Date()}
                     />
                   </View>

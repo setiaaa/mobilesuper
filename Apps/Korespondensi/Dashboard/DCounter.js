@@ -521,9 +521,9 @@ function DCounter() {
                     />
                   ))}
                 {role_menu.includes(profile?.nik) &&
-                  isCounterMenu?.map((item, index) => (
+                  isCounterMenu?.map((item) => (
                     <CardDMenu
-                      key={index}
+                      key={item?.type}
                       data={item}
                       navigation={navigation}
                       divisionList={divisionList}

@@ -15,11 +15,15 @@ import { nde_api } from "../../../../utils/api.config";
 import { getHTTP } from "../../../../utils/http";
 import RenderHTML from "react-native-render-html";
 
-function DetailLog({ route, data, id, tipe }) {
+function DetailLog({ route, data, id, tipe, subject }) {
   const [log, setLog] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { width } = useWindowDimensions();
+  const [perihal, setPerihal] = useState("");
   useEffect(() => {
+    if (subject?.length == 0 || subject == undefined) {
+      setPerihal(route?.params?.subject);
+    }
     getLogDispo();
   }, [data, route]);
 
@@ -44,7 +48,7 @@ function DetailLog({ route, data, id, tipe }) {
       } else {
         if (tipe == "in") {
           response = await getHTTP(nde_api.agendainlog.replace("{$id}", id));
-        } else if (tipe == "disposition") {
+        } else if (tipe == "disposition" || tipe == "dispomenwamen") {
           response = await getHTTP(nde_api.agendadispolog.replace("{$id}", id));
         } else if (tipe == "out") {
           response = await getHTTP(nde_api.agendaoutlog.replace("{$id}", id));
@@ -66,9 +70,20 @@ function DetailLog({ route, data, id, tipe }) {
     <ScrollView>
       {loadingOverlay}
       <View style={styles.screen}>
-        <View style={{ marginBottom: 6 }}>
-          <Text>Aktivitas Disposisi</Text>
-        </View>
+        {perihal && perihal?.length != 0 ? (
+          <View
+            style={{
+              marginBottom: 12,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: GlobalStyles.colors.grey,
+            }}
+          >
+            <Text style={{ color: GlobalStyles.colors.textWhite }}>
+              {perihal?.replace("\\/", "/")}
+            </Text>
+          </View>
+        ) : null}
         {log &&
           log.map((item, index) => (
             <Card key={item?.id} style={styles.containerCard}>
@@ -80,7 +95,10 @@ function DetailLog({ route, data, id, tipe }) {
                       styles.badgeText,
                     ]}
                   >
-                    Aktivitas Disposisi {index + 1}
+                    {tipe == "disposition" || tipe == "dispomenwamen"
+                      ? "Aktivitas"
+                      : "My"}{" "}
+                    Disposisi {index + 1}
                   </Text>
                 </View>
                 <View style={styles.headerDate}>
@@ -92,19 +110,17 @@ function DetailLog({ route, data, id, tipe }) {
               <View style={[styles.row, { paddingTop: 16 }]}>
                 <Text style={styles.title}>Diteruskan Dari</Text>
               </View>
-              <Card.Title
-                style={[styles.containerCardTitle]}
-                title={<Text numberOfLines={3}>{item.creator_name}</Text>}
-                titleNumberOfLines={5}
-              />
+              <View style={[styles.containerCardTitle]}>
+                <Text numberOfLines={3}>{item.creator_name}</Text>
+              </View>
               <View style={styles.row}>
                 <Text style={styles.title}>Tindakan :</Text>
               </View>
-              <Card.Title
-                style={[styles.containerCardTitle]}
-                title={<Text>{item.notes.replace("\n", ", ")}</Text>}
-                titleNumberOfLines={100}
-              />
+              <View style={[styles.containerCardTitle]}>
+                <Text numberOfLines={100}>
+                  {item.notes.replace("\n", ", ")}
+                </Text>
+              </View>
               <View style={[styles.row, { marginBottom: 12 }]}>
                 <RenderHTML
                   source={{ html: item?.message }}
@@ -115,11 +131,11 @@ function DetailLog({ route, data, id, tipe }) {
               <View style={styles.row}>
                 <Text style={styles.title}>Diteruskan Kepada</Text>
               </View>
-              <Card.Title
-                style={[styles.containerCardTitle, { marginBottom: 12 }]}
-                title={<Text>{item.receivers.replace(/;/g, "\n")}</Text>}
-                titleNumberOfLines={100}
-              />
+              <View style={[styles.containerCardTitle, { marginBottom: 12 }]}>
+                <Text numberOfLines={100}>
+                  {item.receivers.replace(/;/g, "\n")}
+                </Text>
+              </View>
             </Card>
           ))}
 
@@ -160,7 +176,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   containerCardTitle: {
-    padding: 0,
+    paddingHorizontal: 16,
+    paddingBottom: 8,
     flexDirection: "row",
     alignItems: "center",
   },

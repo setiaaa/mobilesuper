@@ -1,16 +1,7 @@
-import moment from "moment";
 import { Fragment, useEffect, useState } from "react";
-import {
-  Alert,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
 import TreeView from "react-native-final-tree-view";
-import { Card, IconButton, Text } from "react-native-paper";
-import RenderHTML from "react-native-render-html";
+import { Icon, IconButton, Text } from "react-native-paper";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
@@ -20,7 +11,6 @@ function TrackingLogDetail({ route, data }) {
   const [id, setId] = useState();
   const [log, setLog] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const { width } = useWindowDimensions();
 
   useEffect(() => {
     //getlogapi
@@ -33,8 +23,15 @@ function TrackingLogDetail({ route, data }) {
     try {
       if (route?.params?.trackinglog) {
         let response;
-        response = await getHTTP(nde_api.baseurl + route?.params?.trackinglog);
-        setLog(response?.data);
+        response = await getHTTP(
+          nde_api.agendadispotree?.replace(
+            "{$id}",
+            route?.params?.trackinglog?.split("/")[
+              route?.params?.trackinglog?.split("/")?.length - 2
+            ]
+          )
+        );
+        setLog([response?.data]);
       }
       setIsLoading(false);
     } catch (error) {
@@ -60,18 +57,43 @@ function TrackingLogDetail({ route, data }) {
     <ScrollView>
       {loadingOverlay}
       <View style={styles.screen}>
-        <View style={{ marginBottom: 6 }}>
-          <Text>Log Disposition</Text>
+        <View style={styles.containerKet}>
+          <Text style={{ fontWeight: "bold" }}>Keterangan:</Text>
+          <View style={styles.ket}>
+            <Icon
+              source="square-rounded"
+              size={25}
+              color={GlobalStyles.colors.tertiery}
+            />
+            <Text>Puncak Pohon Disposisi</Text>
+          </View>
+          <View style={styles.ket}>
+            <Icon
+              source="square-rounded"
+              size={25}
+              color={GlobalStyles.colors.red}
+            />
+            <Text>Belum Semua Penerima Membaca</Text>
+          </View>
+          <View style={styles.ket}>
+            <Icon
+              source="square-rounded"
+              size={25}
+              color={GlobalStyles.colors.low}
+            />
+            <Text>Semua Penerima Sudah Membaca</Text>
+          </View>
         </View>
         {log && (
           <TreeView
             childrenKey="children"
             data={log} // defined above
+            initialExpanded
             renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
-              const marginTree = { marginLeft: 25 * level };
+              const marginTree = { marginLeft: 15 * level };
               return (
                 <Fragment key={node.type == "head" ? "head" : node.id}>
-                  {((level == 0 && node.type == "list") || level != 0) && (
+                  {(level == 0 || level != 0) && (
                     <View
                       style={[
                         { flexDirection: "row" },
@@ -83,83 +105,87 @@ function TrackingLogDetail({ route, data }) {
                       <IconButton
                         icon={getIndicator(isExpanded, hasChildrenNodes)}
                       />
-                      <Card style={styles.containerCard}>
-                        <View style={styles.headerCard}>
-                          <View style={[styles.header, styles.badge]}>
+                      <View
+                        style={[
+                          node.color == "root"
+                            ? {
+                                borderColor: GlobalStyles.colors.tertiery,
+                              }
+                            : node.color == "danger"
+                            ? {
+                                borderColor: GlobalStyles.colors.red,
+                              }
+                            : node.color == "info"
+                            ? {
+                                borderColor: GlobalStyles.colors.low,
+                              }
+                            : {},
+                          styles.containerCard,
+                          {
+                            backgroundColor: GlobalStyles.colors.textWhite,
+                            marginLeft: -10,
+                          },
+                        ]}
+                      >
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 5,
+                            }}
+                          >
+                            <Text style={{ fontSize: 14 }}>
+                              {node.name?.split("(")[0]}
+                            </Text>
+                          </View>
+                          <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                            {"("}
+                            {node.name?.split("(")[1]}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            alignItems: "flex-start",
+                            marginTop: 12,
+                          }}
+                        >
+                          <View
+                            style={[
+                              node.color == "root"
+                                ? {
+                                    backgroundColor:
+                                      GlobalStyles.colors.tertiery,
+                                  }
+                                : node.color == "danger"
+                                ? {
+                                    backgroundColor: GlobalStyles.colors.red,
+                                  }
+                                : node.color == "info"
+                                ? {
+                                    backgroundColor: GlobalStyles.colors.low,
+                                  }
+                                : {},
+                              styles.badgeTipeLetter,
+                            ]}
+                          >
                             <Text
-                              style={[
-                                { color: GlobalStyles.colors.textWhite },
-                                styles.badgeText,
-                              ]}
+                              style={{
+                                color: GlobalStyles.colors.textWhite,
+                                fontSize: 13,
+                              }}
                             >
-                              Log Disposition
-                            </Text>
-                          </View>
-                          <View style={styles.headerDate}>
-                            <Text style={styles.badgeText}>
-                              {moment(node.date).format("DD MMM YYYY HH:mm")}
+                              {node.title}
                             </Text>
                           </View>
                         </View>
-                        <View style={[styles.row, { marginTop: 16 }]}>
-                          <Text>Diteruskan Dari</Text>
-                        </View>
-                        <Card.Title
-                          style={styles.containerCardTitle}
-                          title={<Text numberOfLines={3}>{node.from}</Text>}
-                          titleNumberOfLines={5}
-                        />
-                        <View style={styles.row}>
-                          <Text>Diteruskan Kepada</Text>
-                        </View>
-                        <Card.Title
-                          style={styles.containerCardTitle}
-                          title={
-                            <>
-                              <Text>{node.receivers.replace(/;/g, "\n")}</Text>
-                            </>
-                          }
-                          titleNumberOfLines={100}
-                        />
-                        <View style={styles.container}>
-                          {/* <Text style={{ textAlign: "center" }}>
-                            {node?.message}
-                          </Text> */}
-                          <RenderHTML
-                            contentWidth={width}
-                            source={{ html: node?.message }}
-                            defaultTextProps={{ allowFontScaling: false }}
-                          />
-                        </View>
-                      </Card>
+                      </View>
                     </View>
                   )}
                 </Fragment>
               );
             }}
           />
-        )}
-
-        {log?.length == 0 && (
-          <Card style={styles.containerCard}>
-            <View style={styles.headerCard}>
-              <View style={[styles.header, styles.badge]}>
-                <Text
-                  style={[
-                    { color: GlobalStyles.colors.textWhite },
-                    styles.badgeText,
-                  ]}
-                >
-                  Log Disposition
-                </Text>
-              </View>
-              <View style={styles.headerDate}>
-                <Text style={styles.badgeText}>
-                  There is no log disposition
-                </Text>
-              </View>
-            </View>
-          </Card>
         )}
       </View>
     </ScrollView>
@@ -171,62 +197,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  containerKet: {
+    backgroundColor: GlobalStyles.colors.disabled,
+    borderRadius: 12,
+    marginBottom: 12,
+    padding: 12,
+  },
+  ket: { flexDirection: "row", alignItems: "center" },
   containerCard: {
-    width: Platform.OS == "android" ? "85%" : "90%",
+    width: Platform.OS == "android" ? "88%" : "93%",
+    padding: 8,
     marginBottom: 16,
     borderRadius: 12,
-    backgroundColor: GlobalStyles.colors.textWhite,
+    borderLeftWidth: 4,
   },
-  containerCardTitle: {
-    padding: 0,
+  badgeTipeLetter: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  headerCard: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: GlobalStyles.colors.grey,
+    borderRadius: 6,
     padding: 8,
-    width: "45%",
-  },
-  headerDate: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    padding: 8,
-    width: "55%",
-  },
-  badge: {
-    borderTopLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    alignItems: "center",
-    height: "100%",
-  },
-  badgeText: {
-    textAlign: "right",
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-  },
-  container: {
-    padding: 8,
-    marginHorizontal: 16,
-    marginBottom: 16,
-    borderRadius: 12,
-    backgroundColor: GlobalStyles.colors.greylight,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  inputContainerStyle: {
-    justifyContent: "flex-start",
-    // backgroundColor: GlobalStyles.colors.backgroundInput,
   },
 });

@@ -188,6 +188,16 @@ function TabViewBg({
             indexDispo={indexDispo}
           />
         );
+      case "alamat":
+        return (
+          <DispositionLembar
+            id={id}
+            noAgenda={data?.agenda_number}
+            data={data}
+            tipe="detail"
+            title="Detail Disposisi"
+          />
+        );
       default:
         return;
     }
@@ -224,6 +234,8 @@ function TabViewBg({
       labelStyle={{
         color: GlobalStyles.colors.textBlack,
         fontSize: fontSizeResponsive("H4", device),
+        textAlign: "center",
+        width: device === "tablet" ? 300 : "auto",
       }}
       activeColor={COLORS.primary}
       inactiveColor={GlobalStyles.colors.textBlack}
