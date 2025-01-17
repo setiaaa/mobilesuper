@@ -235,6 +235,7 @@ function TabViewBg({
         color: GlobalStyles.colors.textBlack,
         fontSize: fontSizeResponsive("H4", device),
         textAlign: "center",
+        width: device === "tablet" ? 300 : "auto",
       }}
       activeColor={COLORS.primary}
       inactiveColor={GlobalStyles.colors.textBlack}
