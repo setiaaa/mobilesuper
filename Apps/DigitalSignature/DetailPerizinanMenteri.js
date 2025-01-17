@@ -31,12 +31,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/DigitalSign";
 import { tandaTanganMentri } from "../../service/api";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export const DetailPerizinanMenteri = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading, status } = useSelector(
+  const { digitalsign, status, loading } = useSelector(
     (state) => state.digitalsign
   );
   const item = digitalsign.detail;
@@ -103,6 +104,40 @@ export const DetailPerizinanMenteri = ({ route }) => {
       payload: payload,
     };
     dispatch(tandaTanganMentri(data));
+  };
+
+  //FINGERPRINT
+
+  const handleBiometricAuth = async () => {
+    // Check if hardware supports biometrics
+    const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
+
+    // Fallback to default authentication method (password) if Fingerprint is not available
+    // if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
+    if (!isBiometricAvailable) return handleSubmit();
+
+    // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
+    let supportedBiometrics;
+    if (isBiometricAvailable)
+      supportedBiometrics =
+        await LocalAuthentication.supportedAuthenticationTypesAsync();
+
+    // Check Biometrics are saved locally in user's device
+    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+    // if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
+    if (!savedBiometrics) return handleSubmit();
+
+    // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
+
+    const biometricAuth = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Login with Biometrics",
+      cancelLabel: "Cancel",
+      disableDeviceFallback: false,
+    });
+    // Log the user in on success
+    if (biometricAuth.success) {
+      handleSubmit();
+    }
   };
 
   const { profile } = useSelector((state) => state.superApps);
@@ -384,7 +419,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
                   </Text>
-                  <View>
+                  <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
                         style={{ borderRadius: 4, width: "100%" }}
@@ -411,24 +446,26 @@ export const DetailPerizinanMenteri = ({ route }) => {
                     Keterangan
                   </Text>
                   <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4, width: "100%" }}
-                      height={20}
-                    />
-                  ) : (
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H2", device),
-                        width: 150,
-                      }}
-                    >
-                      {item.extra_attributes?.keterangan === undefined ||
-                      item.extra_attributes?.keterangan === ""
-                        ? "-"
-                        : item.extra_attributes?.keterangan}
-                    </Text>
-                  )}
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H2", device),
+                          width: 150,
+                        }}
+                      >
+                        {item.extra_attributes?.keterangan === undefined ||
+                        item.extra_attributes?.keterangan === ""
+                          ? "-"
+                          : item.extra_attributes?.keterangan}
+                      </Text>
+                    )}
+                  </View>
                 </View>
               </View>
               {item.approvers.map((data, index) => {
@@ -595,11 +632,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                               {data?.officer ? (
                                 <View style={{ width: "95%" }}>
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={330}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
@@ -616,11 +657,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                     </Text>
                                   )}
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={165}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
@@ -644,11 +689,15 @@ export const DetailPerizinanMenteri = ({ route }) => {
                               ) : (
                                 <View style={{ width: "95%" }}>
                                   {loading ? (
-                                    <ShimmerPlaceHolder
-                                      style={{ borderRadius: 4, marginTop: 5 }}
-                                      width={330}
-                                      height={20}
-                                    />
+                                    <View style={{ width: "45%" }}>
+                                      <ShimmerPlaceHolder
+                                        style={{
+                                          borderRadius: 4,
+                                          marginTop: 5,
+                                        }}
+                                        height={20}
+                                      />
+                                    </View>
                                   ) : (
                                     <Text
                                       style={{
@@ -773,7 +822,8 @@ export const DetailPerizinanMenteri = ({ route }) => {
                     marginHorizontal: "5%",
                   }}
                   onPress={() => {
-                    handleSubmit();
+                    handleBiometricAuth();
+                    // handleSubmit();
                   }}
                 >
                   <Text

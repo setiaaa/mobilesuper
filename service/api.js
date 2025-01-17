@@ -2191,7 +2191,7 @@ export const updateDocumentDigiSign = createAsyncThunk(
 export const putInProgressDigiSign = createAsyncThunk(
   "digitalsign/putInProgressDigiSign",
   async (data) => {
-    const respon = await axiosInstance.put(
+    const respon = await axios.put(
       `${digitalSign}document/approve/`,
       { status: data.status },
       { headers: { Authorization: data.token } }
@@ -2278,7 +2278,7 @@ export const getSubjectList = createAsyncThunk(
 export const putTandaTangan = createAsyncThunk(
   "digitalsign/putTandaTangan",
   async (data) => {
-    const respon = await axiosInstance.put(
+    const respon = await axios.put(
       `${digitalSign}document/approve/`,
       data.payload,
       { headers: { Authorization: data.token } }
@@ -2292,7 +2292,7 @@ export const putTandaTangan = createAsyncThunk(
 export const tandaTanganMentri = createAsyncThunk(
   "digitalsign/tandaTanganMentri",
   async (data) => {
-    const respon = await axiosInstance.put(
+    const respon = await axios.put(
       `${digitalSign}document/approve2/`,
       data.payload,
       { headers: { Authorization: data.token } }

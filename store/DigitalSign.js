@@ -230,6 +230,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putTandaTangan.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        console.log(action.error);
         Sentry.captureException(action.error);
       })
       .addCase(getListRejected.fulfilled, (state, action) => {
@@ -274,6 +275,7 @@ const DigitalSignSlice = createSlice({
       .addCase(tandaTanganMentri.rejected, (state, action) => {
         state.loading = false;
         state.status = "error";
+        console.log(action.error);
         Sentry.captureException(action.error);
       })
       .addCase(getSubjectList.fulfilled, (state, action) => {
@@ -296,7 +298,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getCounterPerizinanMenteri.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.error);
+        // console.log(action.error);
         Sentry.captureException(action.error);
       });
   },

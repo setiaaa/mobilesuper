@@ -54,6 +54,7 @@ import {
   initList,
 } from "../../../store/listBulk";
 import { useReducedMotion } from "react-native-reanimated";
+import * as LocalAuthentication from "expo-local-authentication";
 
 function NeedSignList({ route }) {
   const [list, setList] = useState([]);
@@ -475,6 +476,40 @@ function NeedSignList({ route }) {
     }
   }
 
+  //FINGERPRINT
+
+  const handleBiometricAuth = async () => {
+    // Check if hardware supports biometrics
+    const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
+
+    // Fallback to default authentication method (password) if Fingerprint is not available
+    // if (!isBiometricAvailable) return bottomSheetModalRef.current?.present();
+    if (!isBiometricAvailable) return bulkApprove();
+
+    // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
+    let supportedBiometrics;
+    if (isBiometricAvailable)
+      supportedBiometrics =
+        await LocalAuthentication.supportedAuthenticationTypesAsync();
+
+    // Check Biometrics are saved locally in user's device
+    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+    // if (!savedBiometrics) return bottomSheetModalRef?.current?.present();
+    if (!savedBiometrics) return bulkApprove();
+
+    // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
+
+    const biometricAuth = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Login with Biometrics",
+      cancelLabel: "Cancel",
+      disableDeviceFallback: false,
+    });
+    // Log the user in on success
+    if (biometricAuth.success) {
+      bulkApprove();
+    }
+  };
+
   const { width: screenWidthFilter, height: screenHeightFilter } =
     useWindowDimensions();
 
@@ -575,7 +610,7 @@ function NeedSignList({ route }) {
                     labelStyle={{ fontSize: 13 }}
                     mode="contained"
                     compact
-                    onPress={bulkApprove}
+                    onPress={handleBiometricAuth}
                   >
                     Tanda Tangan
                   </Button>
