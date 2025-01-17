@@ -137,7 +137,7 @@ function DispositionLembar({ route, id, data, tipe }) {
       setSenderAttr(profile.title[0]);
     }
     if (
-      tipes == "disposition" &&
+      (tipes == "disposition" || tipes == "in") &&
       (profile?.nik === "88888" || profile?.nik === "99999")
     ) {
       getReceiversDispo();
