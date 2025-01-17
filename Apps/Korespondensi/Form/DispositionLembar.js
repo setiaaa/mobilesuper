@@ -137,11 +137,13 @@ function DispositionLembar({ route, id, data, tipe }) {
       setSenderAttr(profile.title[0]);
     }
     if (
-      (tipes == "disposition" || tipes == "in") &&
+      (route?.params?.tipe == "disposition" ||
+        route?.params?.tipe == "in" ||
+        tipe == "disposition") &&
       (profile?.nik === "88888" || profile?.nik === "99999")
     ) {
       getReceiversDispo();
-    } else if (tipes == "detail" && data?.obj) {
+    } else if (route?.params?.tipe == "detail" && data?.obj) {
       setReceiversDispo(data?.receivers_config);
 
       //set matching receivers
@@ -248,7 +250,7 @@ function DispositionLembar({ route, id, data, tipe }) {
         status={checkedNodeRadio(item) ? "checked" : "unchecked"}
         label={
           item.name
-            ? item.display_label + "(" + item?.name + ")"
+            ? item.display_label + " (" + item?.name + ")"
             : item.display_label
         }
         labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
@@ -513,7 +515,7 @@ function DispositionLembar({ route, id, data, tipe }) {
           status={checkedNodeRadio(child) ? "checked" : "unchecked"}
           label={
             child.name
-              ? child.display_label + "(" + child?.name + ")"
+              ? child.display_label + " (" + child?.name + ")"
               : child.display_label
           }
           labelStyle={[
