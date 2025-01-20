@@ -69,6 +69,8 @@ import { ModalSubmit } from "../../components/ModalSubmit";
 import moment from "moment";
 import * as LocalAuthentication from "expo-local-authentication";
 import { CardListPKRL } from "../../components/CardListPKRL";
+import { CollapsePKRLSigned } from "../../components/CollapsePKRLSigned";
+import { CollapsePKRLSignIn } from "../../components/CollapsePKRLSignIn";
 
 export const PKRL = () => {
   const navigation = useNavigation();
@@ -317,6 +319,14 @@ export const PKRL = () => {
               clearButtonMode="always"
               allowFontScaling={false}
             />
+          </View>
+
+          <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
+            <CollapsePKRLSignIn device={device} />
+          </View>
+
+          <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
+            <CollapsePKRLSigned device={device} />
           </View>
 
           <View
