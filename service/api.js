@@ -2184,7 +2184,7 @@ export const putDocumentPerizinan = createAsyncThunk(
       `${digitalSign}document/${data.id}`,
       data.payload,
       { headers: { Authorization: data.token } }
-    )
+    );
     return respon?.data;
   }
 );
@@ -2386,6 +2386,21 @@ export const getCounterPerizinanMenteri = createAsyncThunk(
     const respon = await axiosInstance.get(`${digitalSign}perizinan-count/`, {
       headers: { Authorization: token },
     });
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
+export const getCounterPKRL = createAsyncThunk(
+  "digitalsign/getCounterPKRL",
+  async ({ token, dashboard }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}pkrl-count/?type=${dashboard}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return {
       data: respon?.data.result,
     };

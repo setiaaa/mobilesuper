@@ -45,6 +45,7 @@ import {
   getListRetry,
   getCounterPerizinanMenteri,
   getListTrack,
+  getCounterPKRL,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -81,6 +82,7 @@ export const PKRL = () => {
   const [token, setToken] = useState("");
   const [search, setSearch] = useState("");
   const [tipe, setTipe] = useState("dokumen_pkrl");
+  const [dashboard, setDashboard] = useState("dashboard");
   const [variant, SetVariant] = useState("composer");
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
@@ -95,17 +97,21 @@ export const PKRL = () => {
   useEffect(() => {
     if (currentTab === "PKRL") {
       SetVariant("composer");
+      dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
       dispatch(getListComposer({ token: token, tipe: tipe, search: search }));
     }
   }, [token, tipe, currentTab]);
 
-  const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
+  const { dokumenlain, loading, counterPKRL } = useSelector(
+    (state) => state.digitalsign
+  );
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "" && currentTab === "PKRL") {
+        dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
         if (variant === "inprogress") {
           dispatch(
             getListInProgress({ token: token, tipe: tipe, search: search })
@@ -322,11 +328,11 @@ export const PKRL = () => {
           </View>
 
           <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSignIn device={device} />
+            <CollapsePKRLSignIn device={device} counter={counterPKRL} />
           </View>
 
           <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSigned device={device} />
+            <CollapsePKRLSigned device={device} counter={counterPKRL} />
           </View>
 
           <View

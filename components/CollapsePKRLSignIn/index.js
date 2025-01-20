@@ -16,8 +16,38 @@ import {
 } from "accordion-collapse-react-native";
 import { useSelector } from "react-redux";
 
-export const CollapsePKRLSignIn = ({ profile, device }) => {
+export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [title, setTitle] = useState("Need Sign");
+
+  const getCountDashboard = (type) => {
+    let count = 0;
+
+    if (counter?.data !== undefined) {
+      Object.keys(counter?.data).forEach((element) => {
+        if (counter?.data[element][type] !== undefined) {
+          count = count + counter?.data[element][type];
+        }
+      });
+    }
+
+    return count;
+  };
+
+  const jenisPerizinan = [
+    {
+      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+      alias: "Direktorat KEBP",
+    },
+    {
+      label: "Direktorat Jaskel - Jasa Kelautan",
+      alias: "Direktorat Jaskel",
+    },
+    {
+      label: "Direktorat Pendayagunaan Pesisir dan Pulau Pulau Kecil",
+      alias: "Direktorat P4K",
+    },
+  ];
 
   return (
     <Collapse isExpanded={isOpen}>
@@ -76,7 +106,7 @@ export const CollapsePKRLSignIn = ({ profile, device }) => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    Signed
+                    Need Sign
                   </Text>
                   <Text
                     style={{
@@ -86,7 +116,7 @@ export const CollapsePKRLSignIn = ({ profile, device }) => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    Dokumen Sudah Ditandatangani
+                    Dokumen Belum Ditandatangani
                   </Text>
                 </View>
 
@@ -102,7 +132,7 @@ export const CollapsePKRLSignIn = ({ profile, device }) => {
                       fontSize: 40,
                     }}
                   >
-                    0
+                    {getCountDashboard("need_sign")}
                   </Text>
                   <Text
                     style={{
@@ -149,134 +179,58 @@ export const CollapsePKRLSignIn = ({ profile, device }) => {
             },
           ]}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H5", device),
-                width: "85%",
-              }}
-            >
-              Direktorat Konservasi Ekosistem dan Biota Perairan
-            </Text>
-            {/* Niai dan Badge */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
+          {jenisPerizinan?.map((item) => {
+            return (
               <View
                 style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.infoDanger,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: device === "tablet" ? 60 : 15,
-                  fontWeight: FONTWEIGHT.bold,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                12
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H5", device),
-                width: "85%",
-              }}
-            >
-              Direktorat Jasa Kelautan
-            </Text>
-            {/* Niai dan Badge */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <View
-                style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.infoDanger,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: device === "tablet" ? 60 : 15,
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                12
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H5", device),
-                width: "85%",
-              }}
-            >
-              Direktorat Pendayagunaan Pesisir dan Pulau Pulau Kecil
-            </Text>
-            {/* Niai dan Badge */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <View
-                style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.infoDanger,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: device === "tablet" ? 60 : 15,
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                12
-              </Text>
-            </View>
-          </View>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H5", device),
+                    width: "85%",
+                  }}
+                >
+                  {item?.label}
+                </Text>
+                {/* Niai dan Badge */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    gap: 5,
+                    flex: 1,
+                  }}
+                >
+                  <View
+                    style={{
+                      height: device === "tablet" ? 20 : 10,
+                      width: device === "tablet" ? 20 : 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.infoDanger,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: device === "tablet" ? 30 : 15,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {counter?.data !== undefined
+                      ? counter?.data[item?.label] === undefined
+                        ? 0
+                        : counter?.data[item?.label][
+                            title === "Need Sign" ? "need_sign" : "done"
+                          ]
+                      : 0}
+                  </Text>
+                </View>
+              </View>
+            );
+          })}
         </View>
       </CollapseBody>
     </Collapse>

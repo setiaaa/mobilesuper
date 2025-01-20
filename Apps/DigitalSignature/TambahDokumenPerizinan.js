@@ -358,6 +358,8 @@ export default TambahDokumenPerizinan = ({ route }) => {
     }
   }, [addressbook]);
 
+  console.log(attachmentDokPerizinan);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -785,7 +787,7 @@ export default TambahDokumenPerizinan = ({ route }) => {
                 }}
               >
                 {attachmentDokPerizinan?.map((doc, i) => (
-                  <View
+                  <TouchableOpacity
                     key={i}
                     style={{
                       width: "100%",
@@ -798,6 +800,12 @@ export default TambahDokumenPerizinan = ({ route }) => {
                       paddingVertical: 20,
                       paddingHorizontal: 10,
                       borderColor: COLORS.ExtraDivinder,
+                    }}
+                    onPress={() => {
+                      navigation.navigate("PdfViewer", {
+                        data: doc?.file,
+                        type: "DokumenLain",
+                      });
                     }}
                   >
                     <Image
@@ -813,10 +821,10 @@ export default TambahDokumenPerizinan = ({ route }) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {(doc.file_size / 1024).toFixed(2)} KB
+                        {(doc?.file_size / 1024).toFixed(2)} KB
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             )}
@@ -892,7 +900,7 @@ export default TambahDokumenPerizinan = ({ route }) => {
                 }}
               >
                 {attachmentLampiran?.map((doc, i) => (
-                  <View
+                  <TouchableOpacity
                     key={1}
                     style={{
                       width: "100%",
@@ -905,6 +913,12 @@ export default TambahDokumenPerizinan = ({ route }) => {
                       paddingVertical: 20,
                       paddingHorizontal: 10,
                       borderColor: COLORS.ExtraDivinder,
+                    }}
+                    onPress={() => {
+                      navigation.navigate("PdfViewer", {
+                        data: doc?.file,
+                        type: "DokumenLain",
+                      });
                     }}
                   >
                     <Image
@@ -923,7 +937,7 @@ export default TambahDokumenPerizinan = ({ route }) => {
                         {(doc.file_size / 1024).toFixed(2)} KB
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             )}

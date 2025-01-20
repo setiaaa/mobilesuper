@@ -206,20 +206,42 @@ export const CardListPKRL = ({
               >
                 :
               </Text>
-              <Text
+              <View
                 style={{
-                  fontWeight: FONTWEIGHT.normal,
-                  width: "60%",
-                  textAlign: "auto",
-                  fontSize: fontSizeResponsive("H3", device),
+                  backgroundColor:
+                    item.state === "done"
+                      ? COLORS.successLight
+                      : item.state === "in_progress"
+                      ? COLORS.warningLight
+                      : item.state === "revision"
+                      ? COLORS.infoDangerLight
+                      : COLORS.bgLightGrey,
+                  padding: 10,
+                  borderRadius: 15,
                 }}
               >
-                {item.state === "done"
-                  ? "done"
-                  : item.state === "in_progress"
-                  ? "in progress"
-                  : item.state}
-              </Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.normal,
+                    textAlign: "auto",
+                    fontSize: fontSizeResponsive("H3", device),
+                    color:
+                      item.state === "done"
+                        ? COLORS.success
+                        : item.state === "in_progress"
+                        ? COLORS.warning
+                        : item.state === "revision"
+                        ? COLORS.infoDanger
+                        : COLORS.grey,
+                  }}
+                >
+                  {item.state === "done"
+                    ? "done"
+                    : item.state === "in_progress"
+                    ? "in progress"
+                    : item.state}
+                </Text>
+              </View>
             </View>
           )}
 

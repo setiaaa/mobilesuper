@@ -123,7 +123,7 @@ export const DetailPKRL = ({ route }) => {
 
     if (attachments?.length !== 0 && attachments[idxAtt] !== undefined) {
       navigation.navigate("PdfViewer", {
-        data: attachments[idxAtt].file,
+        data: attachments[idxAtt]?.file,
         type: "DokumenLain",
       });
     } else {
@@ -132,16 +132,15 @@ export const DetailPKRL = ({ route }) => {
   };
 
   const isMenkp = () => {
-    if (item !== null) {
+    if (item?.approvers?.length) {
+      const lastApprover = item.approvers[item.approvers.length - 1];
       if (
-        item?.sequence ===
-          item?.approvers[item?.approvers?.length - 1]?.sequence &&
-        profile.nip === item?.approvers[item?.approvers?.length - 1]?.nip
+        item?.sequence === lastApprover?.sequence &&
+        profile?.nip === lastApprover?.nip
       ) {
         return true;
       }
     }
-
     return false;
   };
 

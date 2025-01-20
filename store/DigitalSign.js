@@ -25,6 +25,7 @@ import {
   getNomorPerizinanMenteri,
   addAttachmentDigiSign,
   putDocumentPerizinan,
+  getCounterPKRL,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -52,6 +53,7 @@ const DigitalSignSlice = createSlice({
     },
     subjectLists: [],
     counter: {},
+    counterPKRL: {},
     attachmentDokPerizinan: [],
     attachmentLampiran: [],
     nomorDokPerizinan: "",
@@ -354,6 +356,17 @@ const DigitalSignSlice = createSlice({
         state.loading = true;
       })
       .addCase(getCounterPerizinanMenteri.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
+      .addCase(getCounterPKRL.fulfilled, (state, action) => {
+        state.loading = false;
+        state.counterPKRL = action.payload;
+      })
+      .addCase(getCounterPKRL.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getCounterPKRL.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.error);
       })
