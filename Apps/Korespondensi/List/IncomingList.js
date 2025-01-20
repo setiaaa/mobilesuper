@@ -156,9 +156,23 @@ function IncomingList({ route }) {
           nde_api.agendainunread.replace("{$page}", page) + "&dispo=0"
         );
       } else {
-        if (tipe == "agenda_in_dispo") {
+        if (tipe == "agenda_in_dispo" && profile?.is_secretary != "true") {
           response = await getHTTP(
             nde_api.agendain.replace("{$page}", page) + "&dispo=1"
+          );
+        } else if (
+          tipe == "agenda_in_forward" &&
+          profile?.is_secretary == "true"
+        ) {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=2"
+          );
+        } else if (
+          tipe == "agenda_in_dispo" &&
+          profile?.is_secretary == "true"
+        ) {
+          response = await getHTTP(
+            nde_api.agendain.replace("{$page}", page) + "&dispo=3"
           );
         } else if (tipe == "agenda_in_eselon1") {
           response = await getHTTP(
@@ -246,8 +260,18 @@ function IncomingList({ route }) {
         if (unread) {
           url = nde_api.agendainunread + "&dispo=0";
         } else {
-          if (tipe == "agenda_in_dispo") {
+          if (tipe == "agenda_in_dispo" && profile?.is_secretary !== "true") {
             url = nde_api.agendain + "&dispo=1";
+          } else if (
+            tipe == "agenda_in_forward" &&
+            profile?.is_secretary == "true"
+          ) {
+            url = nde_api.agendain + "&dispo=2";
+          } else if (
+            tipe == "agenda_in_dispo" &&
+            profile?.is_secretary == "true"
+          ) {
+            url = nde_api.agendain + "&dispo=3";
           } else if (tipe == "agenda_in_eselon1") {
             url = nde_api.agendain;
           } else {
