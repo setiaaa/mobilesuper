@@ -44,7 +44,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={() => {
           getDetail(item.id);
-          navigation.navigate("DetailDokumenLain", { variant: variant });
+          navigation.navigate("DetailDokumenSK", { variant: variant });
         }}
       >
         {/* {variant === "inprogress" ? (

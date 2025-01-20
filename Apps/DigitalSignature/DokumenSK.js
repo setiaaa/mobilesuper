@@ -370,7 +370,7 @@ export const DokumenSK = () => {
               gap: 5,
               display: "flex",
               alignItems: "center",
-              marginLeft: 20,
+              marginHorizontal: 20,
             }}
           >
             <TouchableOpacity

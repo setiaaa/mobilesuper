@@ -1,0 +1,992 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { TextInput, View } from "react-native";
+import { Image } from "react-native";
+import { ScrollView } from "react-native";
+import { Text } from "react-native";
+import {} from "react-native-safe-area-context";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+  BottomSheetView,
+  BottomSheetTextInput,
+  useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import { useSelector } from "react-redux";
+import { FlatList } from "react-native";
+import ListEmpty from "../../components/ListEmpty";
+import moment from "moment/min/moment-with-locales";
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+
+export const DetailDokumenSK = ({ route }) => {
+  const variant = route.params;
+  const navigation = useNavigation();
+  const bottomSheetModalRef = useRef(null);
+  const { digitalsign, loading } = useSelector((state) => state.digitalsign);
+  const item = digitalsign.detail;
+
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const bottomSheetAttach = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  const bottomSheetAttachClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  };
+
+  // const [file, setFile] = useState();
+  // useEffect(() => {
+  //   if (file === undefined) {
+  //     item.attachments?.map((item) => {
+  //       setFile({ link: item.file });
+  //     });
+  //   }
+  // }, [file, item]);
+
+  // console.log(file);
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+  const { device } = useSelector((state) => state.apps);
+
+  const handleGetTimeTTD = (user) => {
+    const data = [...item.logs];
+    let logs = null;
+
+    const check = data?.findIndex((x) => x.user === user);
+
+    if (check > -1 && data[check].action === "approve") {
+      logs = data[check];
+    }
+
+    return logs;
+  };
+
+  console.log(item.logs);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "flex-end",
+              backgroundColor: COLORS.primary,
+              height: 80,
+              paddingBottom: 20,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
+                marginLeft: 20,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: FONTWEIGHT.bold,
+                }}
+              >
+                Detail Dokumen
+              </Text>
+            </View>
+          </View>
+
+          {Object.keys(item).length !== 0 ? (
+            <View
+              style={{
+                width: "90%",
+                backgroundColor: COLORS.white,
+                marginHorizontal: "5%",
+                borderRadius: 8,
+                marginTop: 20,
+              }}
+            >
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginVertical: 20,
+                  width: "89%",
+                }}
+              >
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4, width: "100%" }}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {item?.subject}
+                  </Text>
+                )}
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    No Dokumen
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
+                        {item.extra_attributes?.noDokumen}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ marginTop: 20 }}>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Operator
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                      width: "100%",
+                      marginTop: 10,
+                    }}
+                  >
+                    <View style={{ width: "100%" }}>
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{ borderRadius: 4, width: "100%" }}
+                          height={20}
+                        />
+                      ) : (
+                        <View>
+                          {item?.composer !== undefined ? (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                gap: 10,
+                                alignItems: "center",
+                              }}
+                            >
+                              <Image
+                                source={{ uri: item?.composer?.avatar_url }}
+                                height={50}
+                                width={50}
+                                borderRadius={50}
+                              />
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H2", device),
+                                  flexWrap: "wrap",
+                                  flex: 1,
+                                  color: COLORS.grey,
+                                }}
+                              >
+                                {item.composer?.nama}
+                              </Text>
+                            </View>
+                          ) : (
+                            <>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  color: COLORS.info,
+                                  width: "80%",
+                                  marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                -
+                              </Text>
+                            </>
+                          )}
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Tanggal Dibuat
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
+                        {moment(item.extra_attributes?.tanggalDokumen)
+                          .locale("id")
+                          .format("DD MMMM yyyy")}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Jenis Dokumen
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
+                        {item.extra_attributes?.jenisDokumen}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Keterangan
+                  </Text>
+                  <Text>:</Text>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{ borderRadius: 4, width: "100%" }}
+                      height={20}
+                    />
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        width: 150,
+                      }}
+                    >
+                      {item.extra_attributes?.keterangan === undefined ||
+                      item.extra_attributes?.keterangan === ""
+                        ? "-"
+                        : item.extra_attributes?.keterangan}
+                    </Text>
+                  )}
+                </View>
+              </View>
+              {item.approvers.map((data, index) => {
+                if (index > 0) {
+                  return (
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        width: "95%",
+                        marginHorizontal: 10,
+                        marginBottom: 20,
+                        borderColor: "#DBDADE",
+                        paddingBottom: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: COLORS.primary,
+                          alignItems: "center",
+                          height: 30,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Penanggung jawab
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 5,
+                              marginTop: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H2", device),
+                              }}
+                            >
+                              {item?.approvers?.length - 1 === index
+                                ? "Penandatangan"
+                                : "Persetujuan " + index}
+                            </Text>
+                            {item.sequence > index ? (
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  gap: 5,
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons
+                                    name="checkmark-outline"
+                                    color={COLORS.white}
+                                  />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.successLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: COLORS.success,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    Ditandatangani
+                                  </Text>
+                                </View>
+                              </View>
+                            ) : item.sequence <= index ? (
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  gap: 5,
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons name="close" color={COLORS.white} />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDangerLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: COLORS.infoDanger,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    Belum Ditandatangani
+                                  </Text>
+                                </View>
+                              </View>
+                            ) : null}
+                          </View>
+                          {handleGetTimeTTD(data.nama) !== null &&
+                            item?.sequence > index && (
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                  marginTop: 10,
+                                  color: COLORS.grey,
+                                  marginHorizontal: 5,
+                                }}
+                              >
+                                Disetujui:{" "}
+                                {moment(
+                                  handleGetTimeTTD(data?.nama)?.created_at,
+                                  "YYYY-MM-DD HH:mm:ss"
+                                ).format("DD MMMM YYYY | HH:mm:ss")}
+                              </Text>
+                            )}
+
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: data.avatar_url }}
+                              style={{
+                                width: device === "tablet" ? 80 : 50,
+                                height: device === "tablet" ? 80 : 50,
+                                borderRadius: device === "tablet" ? 80 : 50,
+                                marginVertical: 10,
+                                marginHorizontal: 10,
+                              }}
+                            />
+                            <View>
+                              {data?.officer ? (
+                                <View style={{}}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        color: COLORS.info,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data.display_title}
+                                    </Text>
+                                  )}
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 2,
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        fontSize: fontSizeResponsive(
+                                          "H2",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data?.officer?.nama != undefined
+                                        ? data?.officer?.nama
+                                        : "-" || data?.nama !== undefined
+                                        ? data?.nama
+                                        : "-"}
+                                    </Text>
+                                  )}
+                                </View>
+                              ) : (
+                                <View style={{}}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        fontSize: fontSizeResponsive(
+                                          "H2",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data?.nama !== undefined
+                                        ? data?.nama
+                                        : "-"}
+                                    </Text>
+                                  )}
+                                </View>
+                              )}
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  );
+                }
+              })}
+
+              <View style={{ marginHorizontal: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Penerima
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    width: "100%",
+                    marginTop: 10,
+                  }}
+                >
+                  <View style={{ width: "100%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      item?.receivers.map((data) => {
+                        return (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            {data.avatar_url !== undefined ? (
+                              <Image
+                                source={{ uri: data?.avatar_url }}
+                                height={50}
+                                width={50}
+                                borderRadius={50}
+                              />
+                            ) : (
+                              <View
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 50,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  backgroundColor: COLORS.grey,
+                                }}
+                              >
+                                <Ionicons
+                                  name="person"
+                                  size={24}
+                                  color={COLORS.white}
+                                />
+                              </View>
+                            )}
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                marginBottom: 5,
+                                fontSize: fontSizeResponsive("H2", device),
+                                flexWrap: "wrap",
+                                flex: 1,
+                              }}
+                            >
+                              {data?.nama}
+                            </Text>
+                          </View>
+                        );
+                      })
+                    )}
+                  </View>
+                </View>
+              </View>
+
+              <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Tembusan
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    width: "100%",
+                    marginTop: 10,
+                  }}
+                >
+                  <View style={{ width: "100%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      item?.tembusans?.map((data) => {
+                        return (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            {data.avatar_url !== undefined ? (
+                              <Image
+                                source={{ uri: data?.avatar_url }}
+                                height={50}
+                                width={50}
+                                borderRadius={50}
+                              />
+                            ) : (
+                              <View
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 50,
+                                  backgroundColor: COLORS.grey,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Ionicons
+                                  name="person"
+                                  size={24}
+                                  color={COLORS.white}
+                                />
+                              </View>
+                            )}
+                            <View>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H2", device),
+                                  flexWrap: "wrap",
+                                  flex: 1,
+                                }}
+                              >
+                                {data?.display_title}
+                              </Text>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  color: COLORS.grey,
+                                  marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H2", device),
+                                  flexWrap: "wrap",
+                                  flex: 1,
+                                }}
+                              >
+                                {data?.officer?.nama}
+                              </Text>
+                            </View>
+                          </View>
+                        );
+                      })
+                    )}
+                  </View>
+                </View>
+              </View>
+            </View>
+          ) : (
+            ""
+          )}
+
+          <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
+            {loading ? null : (
+              <TouchableOpacity
+                onPress={() => {
+                  if (
+                    item.attachments.length !== 0 &&
+                    item.attachments[0].file !== undefined
+                  ) {
+                    navigation.navigate("PdfViewer", {
+                      data: item?.attachments[0]?.file,
+                      type: "DokumenLain",
+                    });
+                  } else {
+                    alert("File Tidak Ada");
+                  }
+                }}
+                style={{
+                  width: "90%",
+                  backgroundColor: COLORS.info,
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: "5%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
+                  Lihat Dokumen
+                </Text>
+              </TouchableOpacity>
+            )}
+            {variant.variant === "inprogress" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() =>
+                    navigation.navigate("PdfPerisai", {
+                      item: item,
+                    })
+                  }
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Sign
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+          </View>
+
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            snapPoints={animatedSnapPoints}
+            handleHeight={animatedHandleHeight}
+            contentHeight={animatedContentHeight}
+            index={0}
+            style={{ borderRadius: 50 }}
+            keyboardBlurBehavior="restore"
+            android_keyboardInputMode="adjust"
+            backdropComponent={({ style }) => (
+              <View
+                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+              />
+            )}
+          >
+            <BottomSheetView onLayout={handleContentLayout}>
+              <View style={{ flex: 1 }}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                    <Ionicons name="chevron-back-outline" size={24} />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                      Tanda Tangan Sertifikat
+                    </Text>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    marginBottom: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: 1,
+                    marginTop: 20,
+                  }}
+                >
+                  <TextInput
+                    editable
+                    multiline
+                    numberOfLines={4}
+                    maxLength={40}
+                    placeholder="Masukan Passphrase"
+                    style={{
+                      borderWidth: 1,
+                      width: "90%",
+                      height: 40,
+                      paddingHorizontal: 10,
+                      paddingTop: 10,
+                      borderRadius: 6,
+                      borderColor: "#D0D5DD",
+                    }}
+                    allowFontScaling={false}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    marginBottom: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: 1,
+                    marginTop: 20,
+                  }}
+                >
+                  <TextInput
+                    editable
+                    multiline
+                    numberOfLines={4}
+                    maxLength={40}
+                    placeholder="Masukan Passphrase"
+                    style={{
+                      borderWidth: 1,
+                      width: "90%",
+                      height: 40,
+                      paddingHorizontal: 10,
+                      paddingTop: 10,
+                      borderRadius: 6,
+                      borderColor: "#D0D5DD",
+                    }}
+                    allowFontScaling={false}
+                  />
+                </View>
+
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.danger,
+                    height: 50,
+                    marginVertical: 40,
+                    borderRadius: 6,
+                    alignItems: "center",
+                    marginHorizontal: 20,
+                    justifyContent: "center",
+                  }}
+                  onPress={() => {
+                    bottomSheetAttachClose();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: FONTSIZE.H1,
+                      fontWeight: 500,
+                    }}
+                  >
+                    Tanda Tangan
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </BottomSheetView>
+          </BottomSheetModal>
+        </ScrollView>
+      </BottomSheetModalProvider>
+    </View>
+  );
+};
