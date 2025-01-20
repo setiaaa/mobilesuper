@@ -172,23 +172,39 @@ function FABactions({ id, data, noAgenda, tipe, hideForward }) {
   return (
     <Portal>
       {action != undefined && (
-        <FAB.Group
-          open={open}
-          visible={visible}
-          icon={open ? "plus" : "plus"}
-          actions={action}
-          onStateChange={onStateChange}
-          onPress={() => {
-            if (open) {
-              // do something if the speed dial is open
-            }
-          }}
-          fabStyle={{
-            borderRadius: 50,
-            backgroundColor: COLORS.primary,
-          }}
-          color={GlobalStyles.colors.textWhite}
-        />
+        // <FAB.Group
+        //   open={open}
+        //   visible={visible}
+        //   icon={open ? "plus" : "plus"}
+        //   actions={action}
+        //   onStateChange={onStateChange}
+        //   onPress={() => {
+        //     if (open) {
+        //       // do something if the speed dial is open
+        //     }
+        //   }}
+        //   fabStyle={{
+        //     borderRadius: 50,
+        //     backgroundColor: COLORS.primary,
+        //   }}
+        //   color={GlobalStyles.colors.textWhite}
+        // />
+        <>
+          <FAB
+            visible={visible}
+            icon={action[0]?.icon}
+            onPress={action[0]?.onPress}
+            style={{
+              position: "absolute",
+              margin: 16,
+              right: 0,
+              bottom: 0,
+              borderRadius: 50,
+              backgroundColor: COLORS.primary,
+            }}
+            color={GlobalStyles.colors.textWhite}
+          />
+        </>
       )}
     </Portal>
   );
