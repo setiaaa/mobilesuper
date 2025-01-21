@@ -78,8 +78,8 @@ export const DetailDokumenSK = ({ route }) => {
   const { device } = useSelector((state) => state.apps);
 
   const handleGetTimeTTD = (user) => {
-    const data = [...item.logs].sort(
-      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    const data = [...item?.logs].sort(
+      (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
     );
 
     const logs = data.find((x) => x.user === user && x.action === "approve");
@@ -139,9 +139,6 @@ export const DetailDokumenSK = ({ route }) => {
     dispatch(putBatalkanSK(data));
     console.log(data);
   };
-
-  console.log(item?.logs);
-  console.log(handleGetTimeTTD("RIZA TRIANZAH"));
 
   return (
     <View style={{ flex: 1 }}>
@@ -520,7 +517,9 @@ export const DetailDokumenSK = ({ route }) => {
                                       ),
                                     }}
                                   >
-                                    Ditandatangani
+                                    {item?.approvers?.length - 1 === index
+                                      ? "Ditandatangani"
+                                      : "Disetujui"}
                                   </Text>
                                 </View>
                               </View>
@@ -563,7 +562,9 @@ export const DetailDokumenSK = ({ route }) => {
                                       ),
                                     }}
                                   >
-                                    Belum Ditandatangani
+                                    {item?.approvers?.length - 1 === index
+                                      ? "Belum Ditandatangani"
+                                      : "Belum Disetujui"}
                                   </Text>
                                 </View>
                               </View>
@@ -937,6 +938,7 @@ export const DetailDokumenSK = ({ route }) => {
                   onPress={() =>
                     navigation.navigate("PdfPerisai", {
                       item: item,
+                      tipe: "sk",
                     })
                   }
                 >

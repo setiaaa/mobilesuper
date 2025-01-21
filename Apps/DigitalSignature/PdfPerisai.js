@@ -15,7 +15,7 @@ import { Config } from "../../constants/config";
 import moment from "moment";
 
 export const PdfPerisai = ({ route }) => {
-  const { item } = route.params;
+  const { item, tipe } = route.params;
   const webViewRef = useRef(null);
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -29,12 +29,9 @@ export const PdfPerisai = ({ route }) => {
     });
   }, []);
 
-  console.log(item.attachments[0]?.file);
-
   const currentDate = moment(new Date(), "YYYY-MM-DD HH:mm:ss").format(
     DATETIME.LONG_DATE
   );
-  console.log(currentDate);
 
   let myInjectedJs = `(function(){ 
     let attach = window.localStorage.getItem('attachment');
@@ -89,6 +86,7 @@ export const PdfPerisai = ({ route }) => {
   })
   `;
 
+  console.log(item);
   let inject = `
   (function(){ 
     let attach = window.localStorage.getItem('attachment');
@@ -135,9 +133,9 @@ $("#submit").click(function () {
       "passphrase": paraphrase,
       "id_documents": ["${item.id}"],
       "sign_date": "${currentDate}",
-  }
+    }
   $.ajax({
-    url: " ${Config.base_url}digitalsign/document/approve2/",
+    url: "${Config.base_url}digitalsign/document/approve2/",
     type: 'PUT',
     contentType: 'application/json; charset=utf-8',
     headers: {
@@ -201,46 +199,89 @@ $("#submit").click(function () {
           </Text>
         </View>
       </View>
-      <WebView
-        ref={webViewRef}
-        source={{
-          uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
-        }}
-        style={{ flex: 1 }}
-        injectedJavaScript={inject}
-        onMessage={(event) => {
-          const data = JSON.parse(event.nativeEvent.data);
-          if (data.state === "berhasil") {
-            Alert.alert(
-              "Peringatan!",
-              data.value,
-              [
+      {tipe === undefined ? (
+        <WebView
+          ref={webViewRef}
+          source={{
+            uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
+          }}
+          style={{ flex: 1 }}
+          injectedJavaScript={inject}
+          onMessage={(event) => {
+            const data = JSON.parse(event.nativeEvent.data);
+            if (data.state === "berhasil") {
+              Alert.alert(
+                "Peringatan!",
+                data.value,
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => navigation.navigate(data.key),
+                  },
+                ],
                 {
-                  text: "Ok",
-                  onPress: () => navigation.navigate(data.key),
-                },
-              ],
-              {
-                cancelable: true,
-              }
-            );
-          } else {
-            Alert.alert(
-              "Peringatan!",
-              data.value,
-              [
+                  cancelable: true,
+                }
+              );
+            } else {
+              Alert.alert(
+                "Peringatan!",
+                data.value,
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => navigation.navigate(data.key),
+                  },
+                ],
                 {
-                  text: "Ok",
-                  onPress: () => navigation.navigate(data.key),
-                },
-              ],
-              {
-                cancelable: true,
-              }
-            );
-          }
-        }}
-      />
+                  cancelable: true,
+                }
+              );
+            }
+          }}
+        />
+      ) : (
+        <WebView
+          ref={webViewRef}
+          source={{
+            uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/pdfViewerSK.html",
+          }}
+          style={{ flex: 1 }}
+          injectedJavaScript={inject}
+          onMessage={(event) => {
+            const data = JSON.parse(event.nativeEvent.data);
+            if (data.state === "berhasil") {
+              Alert.alert(
+                "Peringatan!",
+                data.value,
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => navigation.navigate(data.key),
+                  },
+                ],
+                {
+                  cancelable: true,
+                }
+              );
+            } else {
+              Alert.alert(
+                "Peringatan!",
+                data.value,
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => navigation.navigate(data.key),
+                  },
+                ],
+                {
+                  cancelable: true,
+                }
+              );
+            }
+          }}
+        />
+      )}
     </>
   );
 };

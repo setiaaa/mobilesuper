@@ -343,7 +343,9 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
-                              Belum Paraf
+                              {item?.approvers?.length - 1 === index
+                                ? "Belum Ditandatangani"
+                                : "Belum Disetujui"}
                             </Text>
                           </View>
                         </View>
@@ -397,7 +399,9 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
-                              Sudah Paraf
+                              {item?.approvers?.length - 1 === index
+                                ? "Ditandatangani"
+                                : "Disetujui"}
                             </Text>
                           </View>
                         </View>
