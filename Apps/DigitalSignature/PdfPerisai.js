@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import { useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
@@ -146,10 +146,9 @@ $("#submit").click(function () {
     data: JSON.stringify(data),
     success: function (data, textStatus, xhr) {
       if (data.success) {
-        alert("berhasil")
-        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign"}));
+        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Berhasil Ditandatangani", state: "berhasil"}));
       } else {
-        alert("gagal")
+        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Gagal Ditandatangani", state: "gagal"}));
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -211,7 +210,35 @@ $("#submit").click(function () {
         injectedJavaScript={inject}
         onMessage={(event) => {
           const data = JSON.parse(event.nativeEvent.data);
-          navigation.navigate(data.key);
+          if (data.state === "berhasil") {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          } else {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          }
         }}
       />
     </>

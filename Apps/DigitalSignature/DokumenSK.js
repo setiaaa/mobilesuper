@@ -216,7 +216,7 @@ export const DokumenSK = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, variant]);
 
   const loadMore = () => {
     if (dokumenlain?.lists?.length !== 0) {

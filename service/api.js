@@ -2134,7 +2134,7 @@ export const getListRejected = createAsyncThunk(
   "digitalsign/getListRejected",
   async ({ token, page, search }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}document/reject/?limit=${page}&general=${search}`,
+      `${digitalSign}document/rejected/?limit=${page}&general=${search}`,
       {
         headers: { Authorization: token },
       }
@@ -2391,6 +2391,62 @@ export const getSubjectList = createAsyncThunk(
       }
     );
     return respon?.data.result;
+  }
+);
+
+export const putReturnSK = createAsyncThunk(
+  "digitalsign/putReturnSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/return/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const putRevisionSK = createAsyncThunk(
+  "digitalsign/putRevisionSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/revision/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const putBatalkanSK = createAsyncThunk(
+  "digitalsign/putBatalkanSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/reject/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const putSetujiSK = createAsyncThunk(
+  "digitalsign/putSetujiSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve2/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
   }
 );
 

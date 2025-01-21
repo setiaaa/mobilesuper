@@ -28,6 +28,10 @@ import {
   getListInbox,
   getListNeedSignSK,
   getListNeedApproveSK,
+  putSetujiSK,
+  putReturnSK,
+  putRevisionSK,
+  putBatalkanSK,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -341,6 +345,62 @@ const DigitalSignSlice = createSlice({
         console.log(action.error);
         Sentry.captureException(action.error);
       })
+      .addCase(putSetujiSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putSetujiSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putSetujiSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putReturnSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putReturnSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putReturnSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putRevisionSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putRevisionSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putRevisionSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putBatalkanSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putBatalkanSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putBatalkanSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
       .addCase(getListRejected.fulfilled, (state, action) => {
         state.loading = false;
         state.dokumenlain.lists = action.payload.data;
@@ -350,6 +410,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListRejected.rejected, (state, action) => {
         state.loading = false;
+        console.log(action.error);
       })
       .addCase(getListSertifikatEksternal.fulfilled, (state, action) => {
         state.loading = false;

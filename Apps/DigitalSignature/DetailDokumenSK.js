@@ -6,6 +6,7 @@ import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -21,19 +22,41 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { getTokenValue } from "../../service/session";
+import { Loading } from "../../components/Loading";
+import {
+  putBatalkanSK,
+  putReturnSK,
+  putRevisionSK,
+  putSetujiSK,
+} from "../../service/api";
+import { setStatus } from "../../store/DigitalSign";
+import { ModalSubmit } from "../../components/ModalSubmit";
 
 export const DetailDokumenSK = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading } = useSelector((state) => state.digitalsign);
+  const { digitalsign, loading, status } = useSelector(
+    (state) => state.digitalsign
+  );
   const item = digitalsign.detail;
+
+  const dispatch = useDispatch();
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
@@ -51,37 +74,79 @@ export const DetailDokumenSK = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  // const [file, setFile] = useState();
-  // useEffect(() => {
-  //   if (file === undefined) {
-  //     item.attachments?.map((item) => {
-  //       setFile({ link: item.file });
-  //     });
-  //   }
-  // }, [file, item]);
-
-  // console.log(file);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
 
   const handleGetTimeTTD = (user) => {
-    const data = [...item.logs];
-    let logs = null;
+    const data = [...item.logs].sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
 
-    const check = data?.findIndex((x) => x.user === user);
+    const logs = data.find((x) => x.user === user && x.action === "approve");
 
-    if (check > -1 && data[check].action === "approve") {
-      logs = data[check];
-    }
-
-    return logs;
+    return logs || null;
   };
 
-  console.log(item.logs);
+  const currentDate = new Date();
+  const handleSetujui = () => {
+    let payload = {
+      passphrase: "approve",
+      id_documents: [item.id],
+      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
+    };
+    const data = {
+      payload: payload,
+      token: token,
+    };
+    dispatch(putSetujiSK(data));
+    console.log(data);
+  };
+
+  const handleReturn = () => {
+    let payload = {
+      id_documents: [item.id],
+    };
+    const data = {
+      payload: payload,
+      token: token,
+    };
+    dispatch(putReturnSK(data));
+    console.log(data);
+  };
+
+  const handleRevision = () => {
+    let payload = {
+      id_documents: [item.id],
+    };
+    const data = {
+      payload: payload,
+      token: token,
+    };
+    dispatch(putRevisionSK(data));
+    console.log(data);
+  };
+
+  const handleBatalkan = () => {
+    let payload = {
+      id_documents: [item.id],
+    };
+    const data = {
+      payload: payload,
+      token: token,
+    };
+    dispatch(putBatalkanSK(data));
+    console.log(data);
+  };
+
+  console.log(item?.logs);
+  console.log(handleGetTimeTTD("RIZA TRIANZAH"));
 
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
+        {loading ? <Loading /> : null}
         <ScrollView>
           <View
             style={{
@@ -160,7 +225,7 @@ export const DetailDokumenSK = ({ route }) => {
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
-                      width: "45%",
+                      width: "35%",
                       fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H2", device),
                     }}
@@ -263,7 +328,7 @@ export const DetailDokumenSK = ({ route }) => {
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
-                      width: "45%",
+                      width: "35%",
                       fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H2", device),
                     }}
@@ -294,7 +359,7 @@ export const DetailDokumenSK = ({ route }) => {
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
-                      width: "45%",
+                      width: "35%",
                       fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H2", device),
                     }}
@@ -312,7 +377,10 @@ export const DetailDokumenSK = ({ route }) => {
                       />
                     ) : (
                       <Text
-                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                        style={{
+                          fontSize: fontSizeResponsive("H2", device),
+                          width: "98%",
+                        }}
                       >
                         {item.extra_attributes?.jenisDokumen}
                       </Text>
@@ -323,7 +391,7 @@ export const DetailDokumenSK = ({ route }) => {
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
-                      width: "45%",
+                      width: "35%",
                       fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H2", device),
                     }}
@@ -340,7 +408,7 @@ export const DetailDokumenSK = ({ route }) => {
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H2", device),
-                        width: 150,
+                        width: 180,
                       }}
                     >
                       {item.extra_attributes?.keterangan === undefined ||
@@ -649,16 +717,19 @@ export const DetailDokumenSK = ({ route }) => {
                           <View
                             style={{
                               flexDirection: "row",
+                              alignItems: "center", // Memastikan sejajar vertikal
                               gap: 10,
-                              alignItems: "center",
+                              paddingVertical: 5, // Beri sedikit ruang vertikal untuk keseimbangan
                             }}
                           >
-                            {data.avatar_url !== undefined ? (
+                            {data.avatar_url ? (
                               <Image
                                 source={{ uri: data?.avatar_url }}
-                                height={50}
-                                width={50}
-                                borderRadius={50}
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 50,
+                                }}
                               />
                             ) : (
                               <View
@@ -666,9 +737,9 @@ export const DetailDokumenSK = ({ route }) => {
                                   height: 50,
                                   width: 50,
                                   borderRadius: 50,
+                                  backgroundColor: COLORS.grey,
                                   justifyContent: "center",
                                   alignItems: "center",
-                                  backgroundColor: COLORS.grey,
                                 }}
                               >
                                 <Ionicons
@@ -678,17 +749,34 @@ export const DetailDokumenSK = ({ route }) => {
                                 />
                               </View>
                             )}
-                            <Text
+
+                            <View
                               style={{
-                                fontWeight: FONTWEIGHT.bold,
-                                marginBottom: 5,
-                                fontSize: fontSizeResponsive("H2", device),
-                                flexWrap: "wrap",
-                                flex: 1,
+                                flex: 1, // Memastikan teks menyesuaikan ruang yang ada
+                                justifyContent: "center", // Membuat teks berada di tengah vertikal
                               }}
                             >
-                              {data?.nama}
-                            </Text>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  fontSize: fontSizeResponsive("H2", device),
+                                }}
+                              >
+                                {data?.display_title ?? data?.nama}
+                              </Text>
+
+                              {data?.officer?.nama && (
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.medium,
+                                    color: COLORS.grey,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {data?.officer?.nama}
+                                </Text>
+                              )}
+                            </View>
                           </View>
                         );
                       })
@@ -727,16 +815,19 @@ export const DetailDokumenSK = ({ route }) => {
                           <View
                             style={{
                               flexDirection: "row",
+                              alignItems: "center", // Memastikan sejajar vertikal
                               gap: 10,
-                              alignItems: "center",
+                              paddingVertical: 5, // Beri sedikit ruang vertikal untuk keseimbangan
                             }}
                           >
-                            {data.avatar_url !== undefined ? (
+                            {data.avatar_url ? (
                               <Image
                                 source={{ uri: data?.avatar_url }}
-                                height={50}
-                                width={50}
-                                borderRadius={50}
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 50,
+                                }}
                               />
                             ) : (
                               <View
@@ -756,30 +847,33 @@ export const DetailDokumenSK = ({ route }) => {
                                 />
                               </View>
                             )}
-                            <View>
+
+                            <View
+                              style={{
+                                flex: 1, // Memastikan teks menyesuaikan ruang yang ada
+                                justifyContent: "center", // Membuat teks berada di tengah vertikal
+                              }}
+                            >
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.bold,
-                                  marginBottom: 5,
                                   fontSize: fontSizeResponsive("H2", device),
-                                  flexWrap: "wrap",
-                                  flex: 1,
                                 }}
                               >
-                                {data?.display_title}
+                                {data?.display_title ?? data?.nama}
                               </Text>
-                              <Text
-                                style={{
-                                  fontWeight: FONTWEIGHT.bold,
-                                  color: COLORS.grey,
-                                  marginBottom: 5,
-                                  fontSize: fontSizeResponsive("H2", device),
-                                  flexWrap: "wrap",
-                                  flex: 1,
-                                }}
-                              >
-                                {data?.officer?.nama}
-                              </Text>
+
+                              {data?.officer?.nama && (
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.medium,
+                                    color: COLORS.grey,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {data?.officer?.nama}
+                                </Text>
+                              )}
                             </View>
                           </View>
                         );
@@ -829,7 +923,7 @@ export const DetailDokumenSK = ({ route }) => {
                 </Text>
               </TouchableOpacity>
             )}
-            {variant.variant === "inprogress" ? (
+            {variant.variant === "sk-need-sign" ? (
               <>
                 <TouchableOpacity
                   style={{
@@ -854,6 +948,110 @@ export const DetailDokumenSK = ({ route }) => {
                     }}
                   >
                     Sign
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "signed" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.danger,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => handleBatalkan()}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Batalkan
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "signed" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => handleRevision()}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Revisi
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "sk-need-approval" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => handleReturn()}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Return
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "sk-need-approval" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.success,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => handleSetujui()}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Setujui
                   </Text>
                 </TouchableOpacity>
               </>
@@ -985,6 +1183,13 @@ export const DetailDokumenSK = ({ route }) => {
               </View>
             </BottomSheetView>
           </BottomSheetModal>
+
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            messageSuccess={"Data Ditambahkan"}
+            navigate={"MainDigitalSign"}
+          />
         </ScrollView>
       </BottomSheetModalProvider>
     </View>

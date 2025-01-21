@@ -2,7 +2,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { getDetailDigisign } from "../../service/api";
 import { Config } from "../../constants/config";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  Image,
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   COLORS,
   fontSizeResponsive,
@@ -20,6 +29,8 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
     dispatch(getDetailDigisign(params));
   };
   const BASE_URL = Config.base_url + "bridge";
+
+  const [modal, setModal] = useState(false);
   return (
     <View
       key={item.id}
@@ -117,33 +128,6 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                 </Text>
               )}
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H3", device),
-                  width: 120,
-                  textAlign: "auto",
-                  paddingRight: 12,
-                  fontWeight: FONTWEIGHT.bold,
-                  width: "25%",
-                }}
-              >
-                Approval
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
-                :{" "}
-              </Text>
-              {item?.approvers.slice(1).map((data) => (
-                <Image
-                  source={{ uri: data.avatar_url }}
-                  style={{
-                    width: device === "tablet" ? 40 : 20,
-                    height: device === "tablet" ? 40 : 20,
-                    borderRadius: 50,
-                  }}
-                />
-              ))}
-            </View>
             {variant === "signed" ? (
               <View style={{ flexDirection: "row" }}>
                 <Text
@@ -171,9 +155,289 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                 </Text>
               </View>
             ) : null}
+            {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 120,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.bold,
+                  width: "25%",
+                }}
+              >
+                Approval
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+                :{" "}
+              </Text>
+              {item?.approvers.slice(1).map((data) => (
+                <Image
+                  source={{ uri: data.avatar_url }}
+                  style={{
+                    width: device === "tablet" ? 40 : 20,
+                    height: device === "tablet" ? 40 : 20,
+                    borderRadius: 50,
+                  }}
+                />
+              ))}
+            </View> */}
+            <TouchableOpacity
+              style={{ gap: 5, width: "100%" }}
+              onPress={() => {
+                setModal(true);
+              }}
+            >
+              <View
+                style={{
+                  marginTop: 10,
+                  backgroundColor: COLORS.primary,
+                  padding: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 8,
+                  width: "100%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.normal,
+                    textAlign: "auto",
+                    fontSize: fontSizeResponsive("H4", device),
+                    color: COLORS.white,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Lihat Approval
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableOpacity>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => {
+          setModal(false);
+        }}
+      >
+        <TouchableOpacity
+          style={[
+            Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,
+            styles.backdrop,
+          ]}
+        />
+        <View
+          style={{
+            alignItems: "center",
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 10,
+            }}
+          >
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H2", device),
+                }}
+              >
+                {/* List Approval */}
+                Detail Penanggung Jawab
+              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  setModal(false);
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={device === "tablet" ? 30 : 24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
+            </View>
+            {item.approvers.map((data, index) => {
+              if (index > 0) {
+                return (
+                  <View style={{ marginHorizontal: 20, marginVertical: 5 }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 5,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        source={{ uri: data.avatar_url }}
+                        height={device === "tablet" ? 50 : 30}
+                        width={device === "tablet" ? 50 : 30}
+                        borderRadius={device === "tablet" ? 50 : 30}
+                      />
+                      <Text
+                        style={{
+                          width: "90%",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data.nama}
+                      </Text>
+                    </View>
+                    {item.sequence <= index ? (
+                      <>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            width: "60%",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                            gap: 5,
+                            marginTop: 5,
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: COLORS.infoDanger,
+                              borderRadius: 50,
+                              padding: 5,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Ionicons
+                              name="close"
+                              color={COLORS.white}
+                              size={device === "tablet" ? 25 : 15}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.infoDangerLight,
+                              paddingVertical: 5,
+                              borderRadius: 20,
+                              paddingHorizontal: 15,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: COLORS.infoDanger,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Belum Paraf
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            width: "100%",
+                            height: 2,
+                            backgroundColor: COLORS.ExtraDivinder,
+                            marginTop: 5,
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            width: "60%",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                            gap: 5,
+                            marginTop: 5,
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: COLORS.success,
+                              borderRadius: 50,
+                              padding: 5,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Ionicons
+                              name="checkmark-outline"
+                              color={COLORS.white}
+                              size={device === "tablet" ? 25 : 15}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              backgroundColor: COLORS.successLight,
+                              paddingVertical: 5,
+                              borderRadius: 20,
+                              paddingHorizontal: 15,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: COLORS.success,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Sudah Paraf
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            width: "100%",
+                            height: 2,
+                            backgroundColor: COLORS.ExtraDivinder,
+                            marginTop: 5,
+                          }}
+                        />
+                      </>
+                    )}
+                  </View>
+                );
+              }
+            })}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  iOSBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.5,
+  },
+  androidBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.7,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
