@@ -35,7 +35,10 @@ import {
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
-import { setDigitalSignLists } from "../../store/DigitalSign";
+import {
+  resetAttachmentDraft,
+  setDigitalSignLists,
+} from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
@@ -73,10 +76,6 @@ export const CardListPKRL = ({
         variant: variant,
         token: token,
       });
-    } else {
-      navigation.navigate("TambahDokumenPerizinan", {
-        itemId: item.id,
-      });
     }
   };
 
@@ -84,7 +83,10 @@ export const CardListPKRL = ({
     <View
       key={item.id}
       style={{
-        backgroundColor: "white",
+        backgroundColor:
+          item?.state === "revision" || item?.state === "ttde"
+            ? COLORS.ExtraDivinder
+            : COLORS.white,
         borderRadius: 16,
         flex: 1,
         marginTop: 10,
@@ -106,6 +108,9 @@ export const CardListPKRL = ({
           gap: 16,
         }}
         onPress={() => handleNavigate(item)}
+        disabled={
+          item?.state === "revision" || item?.state === "ttde" ? true : false
+        }
       >
         <View
           style={{
@@ -170,7 +175,7 @@ export const CardListPKRL = ({
                 fontSize: fontSizeResponsive("H3", device),
               }}
             >
-              {item?.extra_attributes.no_perizinan !== undefined
+              {item?.extra_attributes.no_perizinan !== ""
                 ? item?.extra_attributes.no_perizinan
                 : "-"}
             </Text>
@@ -183,6 +188,7 @@ export const CardListPKRL = ({
                 flex: 1,
                 gap: 5,
                 marginTop: 5,
+                alignItems: "center",
               }}
             >
               <Text
@@ -215,6 +221,8 @@ export const CardListPKRL = ({
                       ? COLORS.warningLight
                       : item.state === "revision"
                       ? COLORS.infoDangerLight
+                      : item.state === "ttde"
+                      ? COLORS.infoLight
                       : COLORS.bgLightGrey,
                   padding: 10,
                   borderRadius: 15,
@@ -232,13 +240,17 @@ export const CardListPKRL = ({
                         ? COLORS.warning
                         : item.state === "revision"
                         ? COLORS.infoDanger
+                        : item.state === "ttde"
+                        ? COLORS.info
                         : COLORS.grey,
                   }}
                 >
                   {item.state === "done"
-                    ? "done"
+                    ? "Done"
                     : item.state === "in_progress"
-                    ? "in progress"
+                    ? "In Progress"
+                    : item.state === "ttde"
+                    ? "Pengambilan Nomor"
                     : item.state}
                 </Text>
               </View>

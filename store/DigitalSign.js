@@ -26,6 +26,7 @@ import {
   addAttachmentDigiSign,
   putDocumentPerizinan,
   getCounterPKRL,
+  parafBeforeTTDEPerizinan,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -88,6 +89,9 @@ const DigitalSignSlice = createSlice({
     },
     resetList: (state, action) => {
       state.dokumenlain.lists = action.payload;
+    },
+    resetDetail: (state, action) => {
+      state.digitalsign.detail = {};
     },
   },
   extraReducers(builder) {
@@ -381,6 +385,17 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
         state.status = "gagal";
       })
+      .addCase(parafBeforeTTDEPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(parafBeforeTTDEPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(parafBeforeTTDEPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
       .addCase(revisiPerizinan.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
@@ -435,6 +450,7 @@ export const {
   resetNomorDokPerizinan,
   resetAttachment,
   resetList,
+  resetDetail,
 } = DigitalSignSlice.actions;
 
 export default DigitalSignSlice.reducer;

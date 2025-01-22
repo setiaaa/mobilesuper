@@ -50,6 +50,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
 import {
+  resetDetail,
   resetList,
   setDigitalSignLists,
   setStatus,
@@ -485,9 +486,10 @@ export const PKRL = () => {
           </View>
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ position: "absolute", right: 10, top: "85%" }}
           onPress={() => {
+            dispatch(resetDetail());
             navigation.navigate("TambahDokumenPerizinan", {
               itemId: "",
             });
@@ -508,7 +510,7 @@ export const PKRL = () => {
               color={COLORS.white}
             />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );

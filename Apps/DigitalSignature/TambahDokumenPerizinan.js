@@ -36,6 +36,7 @@ import {
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
 import {
   jenisPerizinan,
+  jenisPermohonan,
   kategoriPerizinan,
   listParaf,
 } from "./dataDokPerizinan";
@@ -47,6 +48,7 @@ import {
   resetAttachment,
   setAttachmentDokPerizinan,
   setAttachmentLampiran,
+  resetDetail,
 } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 
@@ -90,6 +92,7 @@ export default TambahDokumenPerizinan = ({ route }) => {
     dokumenPerizinan: [],
     lampiran: [],
   });
+  const [uploadedFilesDraft, setUploadedFilesDraft] = useState([]);
 
   const handleSetData = (name, value) => {
     if (name === "jenisPerizinan") {
@@ -157,14 +160,27 @@ export default TambahDokumenPerizinan = ({ route }) => {
       dataForm.jenisPerizinan.key === "" ||
       dataForm.kategoriPerizinan.key === "" ||
       dataForm.jenisPermohonan.key === "" ||
-      dataForm.nomorPerizinan === "" ||
+      // dataForm.nomorPerizinan === "" ||
       dataForm.perihal === "" ||
       dataForm.paraf.length == 0 ||
       attachmentDokPerizinan.length == 0 ||
       attachmentLampiran.length == 0
     ) {
       return true;
-    } else return false;
+      // } else if (
+      //   dataForm.jenisPerizinan.key === "" ||
+      //   dataForm.kategoriPerizinan.key === "" ||
+      //   dataForm.jenisPermohonan.key === "" ||
+      //   dataForm.nomorPerizinan === "" ||
+      //   dataForm.perihal === "" ||
+      //   dataForm.paraf.length == 0 ||
+      //   attachmentDokPerizinan.length == 0 ||
+      //   (attachmentLampiran.length == 0 && itemId)
+      // ) {
+      //   return true;
+    } else {
+      return false;
+    }
   };
 
   const pickDocument = async () => {
@@ -213,9 +229,9 @@ export default TambahDokumenPerizinan = ({ route }) => {
   };
 
   const handleGetKategoriPerizinan = () => {
-    if (dataForm.jenisPerizinan.key !== "") {
-      return kategoriPerizinan.filter(
-        (x) => x.group === dataForm.jenisPerizinan?.group
+    if (dataForm?.jenisPerizinan?.key !== "") {
+      return kategoriPerizinan?.filter(
+        (x) => x?.group === dataForm?.jenisPerizinan?.group
       );
     }
     return [];
@@ -238,7 +254,7 @@ export default TambahDokumenPerizinan = ({ route }) => {
     const payload = {
       subject: dataForm.perihal,
       senders: [profile.nip],
-      approvers: [...approvers, "99999", "88888"],
+      approvers: [...approvers, "88888"],
       action: "submit",
       id_attachments: idAtt,
       extra_attributes: {
@@ -303,10 +319,22 @@ export default TambahDokumenPerizinan = ({ route }) => {
       detail?.attachments?.map((item) => {
         if (item.name.startsWith("lampiran")) {
           dispatch(setAttachmentLampiran(item));
-        } else if (item.name.startsWith("perizinan")) {
+        } else if (
+          item.name.startsWith("perizinan") &&
+          detail?.state !== "ttde"
+        ) {
           dispatch(setAttachmentDokPerizinan(item));
         }
       });
+
+      if (detail?.state === "ttde") {
+        index = detail.attachments.findIndex(
+          (x) => x.name.split("_")[0] === "draft-perizinan"
+        );
+        if (index > -1) {
+          setUploadedFilesDraft([detail?.attachments[index]]);
+        }
+      }
 
       detail?.approvers?.map((item, index) => {
         if (index > 0 && index < detail.approvers.length - 2) {
@@ -321,19 +349,35 @@ export default TambahDokumenPerizinan = ({ route }) => {
         }
       });
 
+      let jenis = { key: "", value: "" };
+      const checkJenis = jenisPerizinan?.filter(
+        (x) => x.value === detail?.extra_attributes?.jenis_perizinan
+      );
+      if (checkJenis) {
+        jenis = checkJenis[0];
+      }
+
+      let kategori = { key: "", value: "" };
+      const checkKategori = kategoriPerizinan.filter(
+        (x) => x.value === detail?.extra_attributes?.kategori_perizinan
+      );
+      if (checkKategori) {
+        kategori = checkKategori[0];
+        setJenisPermohonanOption(kategori?.jenisPermohonan);
+      }
+
+      let jenisp = { key: "", value: "" };
+      const checkJenisp = jenisPermohonan?.filter(
+        (x) => x.value === detail?.extra_attributes?.jenis_permohonan
+      );
+      if (checkJenisp) {
+        jenisp = checkJenisp[0];
+      }
+
       setDataForm({
-        jenisPerizinan: {
-          key: detail.extra_attributes?.jenis_perizinan,
-          value: detail.extra_attributes?.jenis_perizinan,
-        },
-        kategoriPerizinan: {
-          key: detail.extra_attributes?.kategori_perizinan,
-          value: detail.extra_attributes?.kategori_perizinan,
-        },
-        jenisPermohonan: {
-          key: detail?.extra_attributes?.jenis_permohonan,
-          value: detail?.extra_attributes?.jenis_permohonan,
-        },
+        jenisPerizinan: jenis,
+        kategoriPerizinan: kategori,
+        jenisPermohonan: jenisp,
         perihal: detail?.subject,
         nomorPerizinan: detail?.extra_attributes?.no_perizinan,
         paraf: approvers,
@@ -358,7 +402,15 @@ export default TambahDokumenPerizinan = ({ route }) => {
     }
   }, [addressbook]);
 
-  console.log(attachmentDokPerizinan);
+  const handleBeforeTTDE = () => {
+    if (Object.keys(detail).length !== 0 && detail?.state === "ttde") {
+      return true;
+    }
+    return false;
+  };
+
+  console.log(Object.keys(detail).length);
+  console.log(detail);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -513,79 +565,85 @@ export default TambahDokumenPerizinan = ({ route }) => {
             </View>
 
             {/* Nomor Perizinan */}
-            <View
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                marginLeft: 17,
-                flexDirection: "row",
-              }}
-            >
-              <Text
-                style={{
-                  fontWeight: FONTWEIGHT.bold,
-                  fontSize: fontSizeResponsive("H3", device),
-                }}
-              >
-                Nomor Perizinan
-              </Text>
-              <Text style={{ color: COLORS.danger }}>*</Text>
-            </View>
-            {/* Button Ambil Nomor */}
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                borderRadius: 8,
-                justifyContent: "center",
-                alignItems: "center",
-                marginHorizontal: 18,
-                marginBottom: 10,
-                backgroundColor: handleCheckButtonAmbilNomor()
-                  ? COLORS.grey
-                  : COLORS.infoDanger,
-              }}
-              disabled={handleCheckButtonAmbilNomor()}
-              onPress={() =>
-                AlertConfirm(
-                  "Ambil Nomor",
-                  "Mohon Cek Kembali Kelengkapan Dokumen Perizinan, Apakah Anda Yakin Akan Mengambil Penomoran?",
-                  handleGetNomorDokumen,
-                  "Ya"
-                )
-              }
-            >
-              <Text
-                style={{
-                  color: COLORS.white,
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                Ambil Nomor
-              </Text>
-            </TouchableOpacity>
-            <View
-              style={{
-                borderWidth: 1,
-                borderRadius: 4,
-                marginHorizontal: 17,
-                borderColor: COLORS.ExtraDivinder,
-              }}
-            >
-              <TextInput
-                multiline
-                maxLength={40}
-                editable={false}
-                numberOfLines={4}
-                style={{
-                  padding: 10,
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-                allowFontScaling={false}
-                value={dataForm.nomorPerizinan}
-                placeholder="Masukan Nomor Perizinan"
-                onChangeText={(value) => handleSetData("nomorPerizinan", value)}
-              />
-            </View>
+            {handleBeforeTTDE() ? (
+              <>
+                <View
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    marginLeft: 17,
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Nomor Perizinan
+                  </Text>
+                  <Text style={{ color: COLORS.danger }}>*</Text>
+                </View>
+                {/* Button Ambil Nomor */}
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 18,
+                    marginBottom: 10,
+                    backgroundColor: handleCheckButtonAmbilNomor()
+                      ? COLORS.grey
+                      : COLORS.infoDanger,
+                  }}
+                  disabled={handleCheckButtonAmbilNomor()}
+                  onPress={() =>
+                    AlertConfirm(
+                      "Ambil Nomor",
+                      "Mohon Cek Kembali Kelengkapan Dokumen Perizinan, Apakah Anda Yakin Akan Mengambil Penomoran?",
+                      handleGetNomorDokumen,
+                      "Ya"
+                    )
+                  }
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ambil Nomor
+                  </Text>
+                </TouchableOpacity>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    marginHorizontal: 17,
+                    borderColor: COLORS.ExtraDivinder,
+                  }}
+                >
+                  <TextInput
+                    multiline
+                    maxLength={40}
+                    editable={false}
+                    numberOfLines={4}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                    allowFontScaling={false}
+                    value={dataForm.nomorPerizinan}
+                    placeholder="Masukan Nomor Perizinan"
+                    onChangeText={(value) =>
+                      handleSetData("nomorPerizinan", value)
+                    }
+                  />
+                </View>
+              </>
+            ) : null}
 
             {/* Perihal Perizinan */}
             <View
@@ -718,6 +776,85 @@ export default TambahDokumenPerizinan = ({ route }) => {
               scrollEnabled={false}
               keyExtractor={(index) => index}
             />
+
+            {/* Dokumen Perizinan */}
+            {handleBeforeTTDE() && (
+              <>
+                <View
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    marginLeft: 17,
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dokumen Draft Perizinan
+                  </Text>
+                </View>
+                {uploadedFilesDraft.length < 1 ? null : (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginHorizontal: 20,
+                      marginVertical: 10,
+                      flexWrap: "wrap",
+                      gap: 10,
+                    }}
+                  >
+                    {uploadedFilesDraft?.map((doc, i) => (
+                      <TouchableOpacity
+                        key={i}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          borderWidth: 1,
+                          borderRadius: 8,
+                          paddingVertical: 20,
+                          paddingHorizontal: 10,
+                          borderColor: COLORS.ExtraDivinder,
+                        }}
+                        onPress={() => {
+                          navigation.navigate("PdfViewer", {
+                            data: doc?.file,
+                            type: "DokumenLain",
+                          });
+                        }}
+                      >
+                        <Image
+                          style={{ marginRight: 5 }}
+                          source={require("../../assets/superApp/pdf.png")}
+                        />
+                        <View style={{ width: "85%" }}>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {doc?.name}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {(doc?.file_size / 1024).toFixed(2)} KB
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
+              </>
+            )}
 
             {/* Dokumen Perizinan */}
             <View

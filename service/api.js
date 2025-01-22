@@ -2143,6 +2143,18 @@ export const parafPerizinan = createAsyncThunk(
   }
 );
 
+export const parafBeforeTTDEPerizinan = createAsyncThunk(
+  "digitalsign/parafBeforeTTDEPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/prepare-ttde/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
 export const revisiPerizinan = createAsyncThunk(
   "digitalsign/revisiPerizinan",
   async (data) => {

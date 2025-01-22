@@ -46,6 +46,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/DigitalSign";
 import {
+  parafBeforeTTDEPerizinan,
   parafPerizinan,
   revisiPerizinan,
   tandaTanganMentri,
@@ -105,6 +106,16 @@ export const DetailPKRL = ({ route }) => {
     // console.log(data.payload);
   };
 
+  const handleBeforeTTDE = () => {
+    const approver = item?.approvers;
+
+    if (approver[approver.length - 2]?.nip === profile.nip) {
+      return true;
+    }
+
+    return false;
+  };
+
   const { profile } = useSelector((state) => state.superApps);
 
   const handleShowAttachment = (type) => {
@@ -154,7 +165,11 @@ export const DetailPKRL = ({ route }) => {
       payload: payload,
     };
 
-    dispatch(parafPerizinan(data));
+    if (handleBeforeTTDE()) {
+      dispatch(parafBeforeTTDEPerizinan(data));
+    } else {
+      dispatch(parafPerizinan(data));
+    }
   };
 
   const handleRevisi = () => {
@@ -208,10 +223,12 @@ export const DetailPKRL = ({ route }) => {
 
   const handleGetFileLampiran = (tipe) => {
     const data = [...item?.attachments];
-    // console.log("masuk else");
     let temp = "";
+
     if (tipe === "perizinan") {
       if (isMenkp() || variant.variant === "signed") {
+        temp = "perizinan";
+      } else if (item?.authors[0] === "88888") {
         temp = "perizinan";
       } else {
         temp = "draft-perizinan";
@@ -220,11 +237,20 @@ export const DetailPKRL = ({ route }) => {
       temp = tipe;
     }
 
-    const index = data.findIndex((x) => x.name.split("_")[0] === temp);
-    // console.log(index, "file index");
+    let index = -1;
+
+    if (item?.authors[0] === "88888") {
+      index = 1;
+    } else {
+      index = data.findIndex((x) => x.name.split("_")[0] === temp);
+    }
+
+    console.log(index);
+
     if (index > -1) {
       return index;
     }
+
     return -1;
   };
 
@@ -300,7 +326,7 @@ export const DetailPKRL = ({ route }) => {
   let orientation = getOrientation(screenWidth, screenHeight);
 
   const handleGetTimeParaf = (user) => {
-    const data = [...item.logs];
+    const data = item.logs.filter((x) => x.action === "paraf");
     let logs = null;
 
     const check = data?.findIndex((x) => x.user === user);
@@ -412,7 +438,9 @@ export const DetailPKRL = ({ route }) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {item.extra_attributes?.no_perizinan}
+                        {item?.extra_attributes.no_perizinan !== ""
+                          ? item?.extra_attributes.no_perizinan
+                          : "-"}
                       </Text>
                     )}
                   </View>
