@@ -199,89 +199,46 @@ $("#submit").click(function () {
           </Text>
         </View>
       </View>
-      {tipe === undefined ? (
-        <WebView
-          ref={webViewRef}
-          source={{
-            uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
-          }}
-          style={{ flex: 1 }}
-          injectedJavaScript={inject}
-          onMessage={(event) => {
-            const data = JSON.parse(event.nativeEvent.data);
-            if (data.state === "berhasil") {
-              Alert.alert(
-                "Peringatan!",
-                data.value,
-                [
-                  {
-                    text: "Ok",
-                    onPress: () => navigation.navigate(data.key),
-                  },
-                ],
+      <WebView
+        ref={webViewRef}
+        source={{
+          uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
+        }}
+        style={{ flex: 1 }}
+        injectedJavaScript={inject}
+        onMessage={(event) => {
+          const data = JSON.parse(event.nativeEvent.data);
+          if (data.state === "berhasil") {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
                 {
-                  cancelable: true,
-                }
-              );
-            } else {
-              Alert.alert(
-                "Peringatan!",
-                data.value,
-                [
-                  {
-                    text: "Ok",
-                    onPress: () => navigation.navigate(data.key),
-                  },
-                ],
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          } else {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
                 {
-                  cancelable: true,
-                }
-              );
-            }
-          }}
-        />
-      ) : (
-        <WebView
-          ref={webViewRef}
-          source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/pdfViewerSK.html",
-          }}
-          style={{ flex: 1 }}
-          injectedJavaScript={inject}
-          onMessage={(event) => {
-            const data = JSON.parse(event.nativeEvent.data);
-            if (data.state === "berhasil") {
-              Alert.alert(
-                "Peringatan!",
-                data.value,
-                [
-                  {
-                    text: "Ok",
-                    onPress: () => navigation.navigate(data.key),
-                  },
-                ],
-                {
-                  cancelable: true,
-                }
-              );
-            } else {
-              Alert.alert(
-                "Peringatan!",
-                data.value,
-                [
-                  {
-                    text: "Ok",
-                    onPress: () => navigation.navigate(data.key),
-                  },
-                ],
-                {
-                  cancelable: true,
-                }
-              );
-            }
-          }}
-        />
-      )}
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          }
+        }}
+      />
     </>
   );
 };

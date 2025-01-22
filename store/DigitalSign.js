@@ -32,6 +32,7 @@ import {
   putReturnSK,
   putRevisionSK,
   putBatalkanSK,
+  putTandaTanganSK,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -354,6 +355,20 @@ const DigitalSignSlice = createSlice({
         state.loading = true;
       })
       .addCase(putSetujiSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putTandaTanganSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putTandaTanganSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putTandaTanganSK.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
         console.log(action.error);

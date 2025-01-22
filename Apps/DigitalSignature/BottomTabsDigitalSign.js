@@ -289,7 +289,7 @@ function MyTabDigitalSign({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 120,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <View
@@ -330,7 +330,7 @@ function MyTabDigitalSign({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <FontAwesome6

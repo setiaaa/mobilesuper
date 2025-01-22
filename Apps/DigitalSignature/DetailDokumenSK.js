@@ -35,9 +35,12 @@ import {
   putReturnSK,
   putRevisionSK,
   putSetujiSK,
+  putTandaTanganSK,
 } from "../../service/api";
 import { setStatus } from "../../store/DigitalSign";
 import { ModalSubmit } from "../../components/ModalSubmit";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export const DetailDokumenSK = ({ route }) => {
   const variant = route.params;
@@ -51,6 +54,8 @@ export const DetailDokumenSK = ({ route }) => {
   const dispatch = useDispatch();
 
   const [token, setToken] = useState("");
+  const [passphrase, setPassphrase] = useState("");
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -104,6 +109,22 @@ export const DetailDokumenSK = ({ route }) => {
     console.log(data);
   };
 
+  const handleTandaTangan = () => {
+    let payload = {
+      passphrase: passphrase,
+      id_documents: [item.id],
+      sign_date: moment(currentDate, "YYYY-MM-DD HH:mm:ss").format(
+        DATETIME.LONG_DATE
+      ),
+    };
+    const data = {
+      payload: payload,
+      token: token,
+    };
+    dispatch(putTandaTanganSK(data));
+    // console.log(data);
+  };
+
   const handleReturn = () => {
     let payload = {
       id_documents: [item.id],
@@ -140,8 +161,42 @@ export const DetailDokumenSK = ({ route }) => {
     console.log(data);
   };
 
+  const handleBiometricAuth = async () => {
+    // Check if hardware supports biometrics
+    const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
+
+    // Fallback to default authentication method (password) if Fingerprint is not available
+    if (!isBiometricAvailable) {
+      handleTandaTangan();
+    }
+
+    // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
+    let supportedBiometrics;
+    if (isBiometricAvailable)
+      supportedBiometrics =
+        await LocalAuthentication.supportedAuthenticationTypesAsync();
+
+    // Check Biometrics are saved locally in user's device
+    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+    if (!savedBiometrics) {
+      handleTandaTangan();
+    }
+
+    // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
+
+    const biometricAuth = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Login with Biometrics",
+      cancelLabel: "Cancel",
+      disableDeviceFallback: false,
+    });
+    // Log the user in on success
+    if (biometricAuth.success) {
+      handleTandaTangan();
+    }
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         {loading ? <Loading /> : null}
         <ScrollView>
@@ -353,7 +408,13 @@ export const DetailDokumenSK = ({ route }) => {
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
                   <Text
                     style={{
                       width: "35%",
@@ -366,23 +427,21 @@ export const DetailDokumenSK = ({ route }) => {
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
                   </Text>
-                  <View>
-                    {loading ? (
-                      <ShimmerPlaceHolder
-                        style={{ borderRadius: 4, width: "100%" }}
-                        height={20}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: fontSizeResponsive("H2", device),
-                          width: "98%",
-                        }}
-                      >
-                        {item.extra_attributes?.jenisDokumen}
-                      </Text>
-                    )}
-                  </View>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{ borderRadius: 4, width: "100%" }}
+                      height={20}
+                    />
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        width: device === "tablet" ? "70%" : "60%",
+                      }}
+                    >
+                      {item.extra_attributes?.jenisDokumen}
+                    </Text>
+                  )}
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
@@ -936,10 +995,11 @@ export const DetailDokumenSK = ({ route }) => {
                     marginHorizontal: "5%",
                   }}
                   onPress={() =>
-                    navigation.navigate("PdfPerisai", {
-                      item: item,
-                      tipe: "sk",
-                    })
+                    // navigation.navigate("PdfPerisai", {
+                    //   item: item,
+                    //   tipe: "sk",
+                    // })
+                    bottomSheetAttach()
                   }
                 >
                   <Text
@@ -949,7 +1009,7 @@ export const DetailDokumenSK = ({ route }) => {
                       fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
-                    Sign
+                    Proses Tanda Tangan
                   </Text>
                 </TouchableOpacity>
               </>
@@ -1108,59 +1168,44 @@ export const DetailDokumenSK = ({ route }) => {
                     alignItems: "center",
                     flex: 1,
                     marginTop: 20,
+                    flexDirection: "row",
+                    borderRadius: 6,
+                    borderColor: "#D0D5DD",
+                    borderWidth: 1,
+                    marginHorizontal: 20,
+                    padding: 10,
                   }}
                 >
-                  <TextInput
-                    editable
-                    multiline
-                    numberOfLines={4}
-                    maxLength={40}
+                  <BottomSheetTextInput
                     placeholder="Masukan Passphrase"
                     style={{
-                      borderWidth: 1,
-                      width: "90%",
-                      height: 40,
-                      paddingHorizontal: 10,
-                      paddingTop: 10,
-                      borderRadius: 6,
-                      borderColor: "#D0D5DD",
+                      width: "80%",
                     }}
                     allowFontScaling={false}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    marginBottom: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flex: 1,
-                    marginTop: 20,
-                  }}
-                >
-                  <TextInput
-                    editable
-                    multiline
-                    numberOfLines={4}
-                    maxLength={40}
-                    placeholder="Masukan Passphrase"
-                    style={{
-                      borderWidth: 1,
-                      width: "90%",
-                      height: 40,
-                      paddingHorizontal: 10,
-                      paddingTop: 10,
-                      borderRadius: 6,
-                      borderColor: "#D0D5DD",
+                    onChangeText={(text) => {
+                      setPassphrase(text);
                     }}
-                    allowFontScaling={false}
+                    // secureTextEntry={true} // Toggle secureTextEntry based on 'show'
+                    secureTextEntry={!show}
                   />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setShow(!show); // Toggle the show state
+                    }}
+                  >
+                    <Ionicons
+                      name={show ? "eye-sharp" : "eye-off-sharp"} // Toggle icon based on 'show'
+                      size={device === "tablet" ? 30 : 24}
+                      color={COLORS.grey}
+                    />
+                  </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity
                   style={{
                     width: "90%",
-                    backgroundColor: COLORS.danger,
+                    backgroundColor:
+                      passphrase === "" ? COLORS.ExtraDivinder : COLORS.danger,
                     height: 50,
                     marginVertical: 40,
                     borderRadius: 6,
@@ -1170,7 +1215,9 @@ export const DetailDokumenSK = ({ route }) => {
                   }}
                   onPress={() => {
                     bottomSheetAttachClose();
+                    handleBiometricAuth();
                   }}
+                  disabled={passphrase === "" ? true : false}
                 >
                   <Text
                     style={{
@@ -1194,6 +1241,6 @@ export const DetailDokumenSK = ({ route }) => {
           />
         </ScrollView>
       </BottomSheetModalProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 };

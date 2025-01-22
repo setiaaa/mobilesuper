@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { Text, Image } from "react-native";
@@ -12,6 +13,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
@@ -289,6 +291,10 @@ export const DokumenSK = () => {
   }, [page, token, tipe, search, currentTab]);
   const { device } = useSelector((state) => state.apps);
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -361,21 +367,26 @@ export const DokumenSK = () => {
         <ScrollView
           horizontal={true}
           style={{
-            maxHeight: 50,
+            maxHeight: device === "tablet" ? 100 : 50,
           }}
         >
           <View
             style={{
               flexDirection: "row",
-              gap: 5,
+              gap: 10,
               display: "flex",
               alignItems: "center",
-              marginHorizontal: 20,
+              marginHorizontal:
+                device == "tablet" && orientation === "potrait"
+                  ? 50
+                  : device == "tablet" && orientation === "landscape"
+                  ? 70
+                  : 20,
             }}
           >
             <TouchableOpacity
               style={{
-                padding: 5,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "composer" ? COLORS.primary : COLORS.input,
@@ -400,7 +411,7 @@ export const DokumenSK = () => {
 
             <TouchableOpacity
               style={{
-                padding: 5,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "sk-completed" ? COLORS.primary : COLORS.input,
@@ -452,7 +463,7 @@ export const DokumenSK = () => {
                   </TouchableOpacity> */}
             <TouchableOpacity
               style={{
-                padding: 8,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "sk-need-sign" ? COLORS.primary : COLORS.input,
@@ -479,7 +490,7 @@ export const DokumenSK = () => {
 
             <TouchableOpacity
               style={{
-                padding: 8,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "sk-need-approval"
@@ -507,7 +518,7 @@ export const DokumenSK = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                padding: 5,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "rejected" ? COLORS.primary : COLORS.input,
@@ -531,7 +542,7 @@ export const DokumenSK = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                padding: 5,
+                padding: device === "tablet" ? 10 : 5,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "signed" ? COLORS.primary : COLORS.input,

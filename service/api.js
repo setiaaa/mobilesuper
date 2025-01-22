@@ -2450,6 +2450,20 @@ export const putSetujiSK = createAsyncThunk(
   }
 );
 
+export const putTandaTanganSK = createAsyncThunk(
+  "digitalsign/putTandaTanganSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve2/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
 export const putTandaTangan = createAsyncThunk(
   "digitalsign/putTandaTangan",
   async (data) => {
