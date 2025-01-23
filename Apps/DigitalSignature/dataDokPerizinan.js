@@ -10,8 +10,8 @@ export const jenisPerizinan = [
     group: 2,
   },
   {
-    key: "Direktorat Pendayagunaan Pesisir dan Pulau Pulau Kecil",
-    value: "Direktorat Pendayagunaan Pesisir dan Pulau Pulau Kecil",
+    key: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
+    value: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
     group: 3,
   },
 ];
@@ -231,9 +231,9 @@ export const listParafDev = [
   {
     key: "197303241998031002",
     code: "14840205000000",
-    text: "DIREKTUR KONSERVASI EKOSISTEM DAN BIODATA PERAIRAN",
+    text: "DIREKTUR KONSERVASI EKOSISTEM DAN BIOTA PERAIRAN",
     nip: "197303241998031002",
-    title: "DIREKTUR KONSERVASI EKOSISTEM DAN BIODATA PERAIRAN",
+    title: "DIREKTUR KONSERVASI EKOSISTEM DAN BIOTA PERAIRAN",
     name: "MUH. FIRDAUS AGUNG KUNTO KURNIAWAN",
     group: [2, 1],
   },

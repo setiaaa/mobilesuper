@@ -15,10 +15,32 @@ import {
   CollapseHeader,
 } from "accordion-collapse-react-native";
 import { useSelector } from "react-redux";
+import {
+  kategoriPerizinan,
+  listParaf,
+} from "../../Apps/DigitalSignature/dataDokPerizinan";
 
 export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("Need Sign");
+
+  const jenisPerizinan = [
+    {
+      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+      alias: "Direktorat KEBP",
+      group: 1,
+    },
+    {
+      label: "Direktorat Jaskel - Jasa Kelautan",
+      alias: "Direktorat Jaskel",
+      group: 2,
+    },
+    {
+      label: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
+      alias: "Direktorat P4K",
+      group: 3,
+    },
+  ];
 
   const getCountDashboard = (type) => {
     let count = 0;
@@ -34,20 +56,44 @@ export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
     return count;
   };
 
-  const jenisPerizinan = [
-    {
-      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
-      alias: "Direktorat KEBP",
-    },
-    {
-      label: "Direktorat Jaskel - Jasa Kelautan",
-      alias: "Direktorat Jaskel",
-    },
-    {
-      label: "Direktorat Pendayagunaan Pesisir dan Pulau Pulau Kecil",
-      alias: "Direktorat P4K",
-    },
-  ];
+  const handleGetDataByDirektorat = (type) => {
+    let dataDashboard = {};
+    jenisPerizinan.map((x) => (dataDashboard[x.label] = 0));
+
+    if (counter?.data !== undefined) {
+      const listDirektorat = [];
+      const jabatanUser = counter?.data?.direktorat_user.toLowerCase();
+      const kp = listParaf.filter(
+        (x) => x.title.toLowerCase() === jabatanUser
+      )[0];
+
+      if (kp) {
+        kp.group.map((x) => {
+          const group = kategoriPerizinan.filter((y) => y.key === x)[0][
+            "group"
+          ];
+          const jp = jenisPerizinan.filter((z) => z.group === group)[0];
+
+          if (!listDirektorat.some((x) => x === jp.label)) {
+            listDirektorat.push(jp.label);
+          }
+        });
+      } else if (jabatanUser === "menteri kelautan dan perikanan") {
+        jenisPerizinan.map((x) => listDirektorat.push(x.label));
+      }
+
+      Object.keys(dataDashboard).forEach((element) => {
+        if (
+          counter?.data[element][type] !== undefined &&
+          listDirektorat.some((x) => x === element)
+        ) {
+          dataDashboard[element] = counter?.data[element][type];
+        }
+      });
+    }
+
+    return dataDashboard;
+  };
 
   return (
     <Collapse isExpanded={isOpen}>
@@ -132,7 +178,8 @@ export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
                       fontSize: 40,
                     }}
                   >
-                    {getCountDashboard("need_sign")}
+                    {/* {getCountDashboard("need_sign")} */}
+                    {counter?.data?.need_sign ?? 0}
                   </Text>
                   <Text
                     style={{
@@ -219,13 +266,14 @@ export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {counter?.data !== undefined
+                    {/* {counter?.data !== undefined
                       ? counter?.data[item?.label] === undefined
                         ? 0
                         : counter?.data[item?.label][
                             title === "Need Sign" ? "need_sign" : "done"
                           ]
-                      : 0}
+                      : 0} */}
+                    {handleGetDataByDirektorat("need_sign")[item.label] ?? 0}
                   </Text>
                 </View>
               </View>
