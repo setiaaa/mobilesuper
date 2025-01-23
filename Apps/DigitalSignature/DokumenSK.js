@@ -17,7 +17,11 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useNavigationState,
+} from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +58,13 @@ export const DokumenSK = () => {
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(10);
   const [refreshing, setRefreshing] = useState(false);
+  const isFocus = useIsFocused();
+
+  const { profile } = useSelector((state) => state.superApps);
+
+  const roleSK = ["DIGISIGN.SK"];
+
+  const isRoleSK = profile.roles_access?.some((item) => roleSK.includes(item));
 
   const currentTab = useNavigationState(
     (state) => state.routes[state.index].name
@@ -66,7 +77,7 @@ export const DokumenSK = () => {
   }, []);
 
   useEffect(() => {
-    if (currentTab === "DokumenSK") {
+    if (currentTab === "DokumenSK" && isRoleSK) {
       dispatch(
         getListComposer({
           token: token,
@@ -75,8 +86,16 @@ export const DokumenSK = () => {
           search: search,
         })
       );
+    } else {
+      SetVariant("sk-completed");
+      getListInbox({
+        token: token,
+        tipe: tipe,
+        page: page,
+        search: search,
+      });
     }
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, search]);
 
   const filterHandlerComposer = () => {
     SetVariant("composer");
@@ -288,7 +307,7 @@ export const DokumenSK = () => {
         })
       );
     }
-  }, [page, token, tipe, search, currentTab]);
+  }, [page, token, tipe, search, currentTab, isFocus]);
   const { device } = useSelector((state) => state.apps);
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
@@ -364,207 +383,211 @@ export const DokumenSK = () => {
           </View>
         </View>
 
-        <ScrollView
-          horizontal={true}
-          style={{
-            maxHeight: device === "tablet" ? 100 : 50,
-          }}
-        >
-          <View
+        {isRoleSK ? (
+          <ScrollView
+            horizontal={true}
             style={{
-              flexDirection: "row",
-              gap: 10,
-              display: "flex",
-              alignItems: "center",
-              marginHorizontal:
-                device == "tablet" && orientation === "potrait"
-                  ? 50
-                  : device == "tablet" && orientation === "landscape"
-                  ? 70
-                  : 20,
+              maxHeight: device === "tablet" ? 100 : 50,
             }}
           >
-            <TouchableOpacity
+            <View
               style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "composer" ? COLORS.primary : COLORS.input,
-                borderRadius: 30,
-                borderColor:
-                  variant === "composer" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
+                flexDirection: "row",
+                gap: 10,
+                display: "flex",
                 alignItems: "center",
+                marginHorizontal:
+                  device == "tablet" && orientation === "potrait"
+                    ? 50
+                    : device == "tablet" && orientation === "landscape"
+                    ? 70
+                    : 20,
               }}
-              onPress={() => filterHandlerComposer()}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  color:
-                    variant === "composer" ? COLORS.white : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "composer" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "composer" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerComposer()}
               >
-                List Saya
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    color:
+                      variant === "composer" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  List Saya
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "sk-completed" ? COLORS.primary : COLORS.input,
-                borderRadius: 30,
-                borderColor:
-                  variant === "sk-completed" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => filterHandlerInbox()}
-            >
-              <Text
+              <TouchableOpacity
                 style={{
-                  color:
-                    variant === "sk-completed"
-                      ? COLORS.white
-                      : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "sk-completed" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "sk-completed" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerInbox()}
               >
-                Inbox
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    color:
+                      variant === "sk-completed"
+                        ? COLORS.white
+                        : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Inbox
+                </Text>
+              </TouchableOpacity>
 
-            {/* <TouchableOpacity
-                    style={{
-                      width: device === "tablet" ? "19%" : null,
-        
-                      paddingHorizontal: 6,
-                      paddingVertical: 6,
-                      borderWidth: 1,
-                      backgroundColor:
-                        variant === "draft" ? COLORS.primary : COLORS.input,
-                      borderRadius: 30,
-                      borderColor: variant === "draft" ? null : COLORS.ExtraDivinder,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onPress={() => filterHandlerDraft()}
-                  >
-                    <Text
-                      style={{
-                        color: variant === "draft" ? COLORS.white : COLORS.foundation,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      Draft
-                    </Text>
-                  </TouchableOpacity> */}
-            <TouchableOpacity
-              style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "sk-need-sign" ? COLORS.primary : COLORS.input,
-                borderRadius: 30,
-                borderColor:
-                  variant === "sk-need-sign" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => filterHandlerNeedSign()}
-            >
-              <Text
+              <TouchableOpacity
                 style={{
-                  color:
-                    variant === "sk-need-sign"
-                      ? COLORS.white
-                      : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "draft" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "draft" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerDraft()}
               >
-                Need Sign
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "sk-need-approval"
-                    ? COLORS.primary
-                    : COLORS.input,
-                borderRadius: 30,
-                borderColor:
-                  variant === "sk-need-approval" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => filterHandlerNeedApprove()}
-            >
-              <Text
+                <Text
+                  style={{
+                    color:
+                      variant === "draft" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Draft
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  color:
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "sk-need-sign" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "sk-need-sign" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerNeedSign()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "sk-need-sign"
+                        ? COLORS.white
+                        : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Need Sign
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
                     variant === "sk-need-approval"
-                      ? COLORS.white
-                      : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                      ? COLORS.primary
+                      : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "sk-need-approval"
+                      ? null
+                      : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerNeedApprove()}
               >
-                Need Approval
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "rejected" ? COLORS.primary : COLORS.input,
-                borderRadius: 30,
-                borderColor:
-                  variant === "rejected" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => filterHandlerRejected()}
-            >
-              <Text
+                <Text
+                  style={{
+                    color:
+                      variant === "sk-need-approval"
+                        ? COLORS.white
+                        : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Need Approval
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  color:
-                    variant === "rejected" ? COLORS.white : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "rejected" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "rejected" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerRejected()}
               >
-                Rejected
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: device === "tablet" ? 10 : 5,
-                borderWidth: 1,
-                backgroundColor:
-                  variant === "signed" ? COLORS.primary : COLORS.input,
-                borderRadius: 30,
-                borderColor: variant === "signed" ? null : COLORS.ExtraDivinder,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => filterHandlerSigned()}
-            >
-              <Text
+                <Text
+                  style={{
+                    color:
+                      variant === "rejected" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Rejected
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  color:
-                    variant === "signed" ? COLORS.white : COLORS.foundation,
-                  fontSize: fontSizeResponsive("H4", device),
+                  padding: device === "tablet" ? 10 : 5,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "signed" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "signed" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
+                onPress={() => filterHandlerSigned()}
               >
-                Signed
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+                <Text
+                  style={{
+                    color:
+                      variant === "signed" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Signed
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        ) : null}
 
         <View style={{ flex: 1 }}>
           <FlatList

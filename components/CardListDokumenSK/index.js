@@ -35,7 +35,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
     <View
       key={item.id}
       style={{
-        backgroundColor: "white",
+        backgroundColor: variant === "draft" ? COLORS.ExtraDivinder : "white",
         borderRadius: 16,
         width: "90%",
         flex: 1,
@@ -57,6 +57,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
           getDetail(item.id);
           navigation.navigate("DetailDokumenSK", { variant: variant });
         }}
+        disabled={variant === "draft" ? true : false}
       >
         {/* {variant === "inprogress" ? (
           <Checkbox
@@ -151,7 +152,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                     width: "55%",
                   }}
                 >
-                  :{item.state === "in_progress" ? "In Progress" : "Done"}
+                  : {item.state === "in_progress" ? "In Progress" : "Done"}
                 </Text>
               </View>
             ) : null}

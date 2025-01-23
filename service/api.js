@@ -2161,9 +2161,9 @@ export const getListTrack = createAsyncThunk(
 );
 export const getListDraft = createAsyncThunk(
   "digitalsign/getListDraft",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}document/draft/?tipe_dokumen=${tipe}`,
+      `${digitalSign}document/draft/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
       { headers: { Authorization: token } }
     );
     return {
