@@ -2102,6 +2102,21 @@ export const getListRejected = createAsyncThunk(
     };
   }
 );
+
+export const getListTrack = createAsyncThunk(
+  "digitalsign/getListTrack",
+  async ({ token, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/track/?limit=${page}&general=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.results,
+    };
+  }
+);
 export const getListDraft = createAsyncThunk(
   "digitalsign/getListDraft",
   async ({ token, tipe }) => {
@@ -2116,11 +2131,69 @@ export const getListDraft = createAsyncThunk(
   }
 );
 
+export const parafPerizinan = createAsyncThunk(
+  "digitalsign/parafPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/paraf/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const parafBeforeTTDEPerizinan = createAsyncThunk(
+  "digitalsign/parafBeforeTTDEPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/prepare-ttde/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const revisiPerizinan = createAsyncThunk(
+  "digitalsign/revisiPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/reject/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+export const getNomorPerizinanMenteri = createAsyncThunk(
+  "digitalsign/getNomorPerizinanMenteri",
+  async ({ token, param }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}perizinan-penomoran/?jenis_dokumen=${param.jenisDokumen}&tanggal=${param.tanggal}`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data;
+  }
+);
+
 export const addDocumentDigiSign = createAsyncThunk(
   "digitalsign/addDocumentDigiSign",
   async (data) => {
     const respon = await axiosInstance.post(
       `${digitalSign}document/create/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const putDocumentPerizinan = createAsyncThunk(
+  "digitalsign/putDocumentPerizinan",
+  async (data) => {
+    const respon = await axiosInstance.put(
+      `${digitalSign}document/${data.id}`,
       data.payload,
       { headers: { Authorization: data.token } }
     );
@@ -2157,12 +2230,28 @@ export const putDocumentDigiSign = createAsyncThunk(
 export const addAttachmentDigiSign = createAsyncThunk(
   "digitalsign/addAttachmentDigiSign",
   async (data) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: data.file.uri, // Path ke file
+      type: data.file.mimeType, // MIME type dari file
+      name: data.file.name, // Nama file (dengan ekstensi)
+    });
+    formData.append("name", data.name);
+
     const respon = await axiosInstance.post(
       `${digitalSign}attachment/create/`,
-      data.payload,
-      { headers: { Authorization: data.token } }
+      formData,
+      {
+        headers: {
+          Authorization: data.token,
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    return respon?.data;
+    return {
+      data: respon?.data,
+      tipe: data.name.startsWith("perizinan") ? "perizinan" : "lampiran",
+    };
   }
 );
 
@@ -2309,6 +2398,21 @@ export const getCounterPerizinanMenteri = createAsyncThunk(
     const respon = await axiosInstance.get(`${digitalSign}perizinan-count/`, {
       headers: { Authorization: token },
     });
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
+export const getCounterPKRL = createAsyncThunk(
+  "digitalsign/getCounterPKRL",
+  async ({ token, dashboard }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}pkrl-count/?type=${dashboard}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return {
       data: respon?.data.result,
     };

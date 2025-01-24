@@ -19,6 +19,14 @@ import {
   tandaTanganMentri,
   getSubjectList,
   getCounterPerizinanMenteri,
+  getListTrack,
+  parafPerizinan,
+  revisiPerizinan,
+  getNomorPerizinanMenteri,
+  addAttachmentDigiSign,
+  putDocumentPerizinan,
+  getCounterPKRL,
+  parafBeforeTTDEPerizinan,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -46,6 +54,10 @@ const DigitalSignSlice = createSlice({
     },
     subjectLists: [],
     counter: {},
+    counterPKRL: {},
+    attachmentDokPerizinan: [],
+    attachmentLampiran: [],
+    nomorDokPerizinan: "",
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -60,6 +72,27 @@ const DigitalSignSlice = createSlice({
     setLaporanList: (state, action) => {
       state.summary.lists = action.payload;
     },
+    setAttachmentDokPerizinan: (state, action) => {
+      console.log("setDokPerizinan", action.payload);
+      state.attachmentDokPerizinan = [action.payload];
+    },
+    setAttachmentLampiran: (state, action) => {
+      console.log("lampiran", action.payload);
+      state.attachmentLampiran = [action.payload];
+    },
+    resetNomorDokPerizinan: (state, action) => {
+      state.nomorDokPerizinan = action.payload;
+    },
+    resetAttachment: (state) => {
+      state.attachmentLampiran = [];
+      state.attachmentDokPerizinan = [];
+    },
+    resetList: (state, action) => {
+      state.dokumenlain.lists = action.payload;
+    },
+    resetDetail: (state, action) => {
+      state.digitalsign.detail = {};
+    },
   },
   extraReducers(builder) {
     builder
@@ -69,6 +102,7 @@ const DigitalSignSlice = createSlice({
           state.digitalsign.lists = action.payload.data;
         } else {
           state.dokumenlain.lists = action.payload.data;
+          console.log("masuk");
         }
       })
       .addCase(getListComposer.pending, (state, action) => {
@@ -76,6 +110,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListComposer.rejected, (state, action) => {
         state.loading = false;
+        console.log(action.error);
       })
       .addCase(getListInProgress.fulfilled, (state, action) => {
         state.loading = false;
@@ -104,6 +139,21 @@ const DigitalSignSlice = createSlice({
         state.loading = true;
       })
       .addCase(getListReady.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
+      .addCase(getListTrack.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListTrack.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListTrack.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.error);
       })
@@ -187,6 +237,7 @@ const DigitalSignSlice = createSlice({
       .addCase(addDocumentDigiSign.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        console.log(action.error);
         Sentry.captureException(action.error);
       })
       .addCase(addDocumentDigiSign.fulfilled, (state, action) => {
@@ -194,8 +245,20 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
       })
       .addCase(addDocumentDigiSign.pending, (state, action) => {
-        state.status = "berhasil";
         state.loading = true;
+      })
+      .addCase(putDocumentPerizinan.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(putDocumentPerizinan.rejected, (state, action) => {
+        state.status = "gagal";
+        state.loading = false;
+        console.log(action.payload);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putDocumentPerizinan.fulfilled, (state) => {
+        state.loading = false;
+        state.status = "berhasil";
       })
       .addCase(getSummaryCount.fulfilled, (state, action) => {
         state.summary.count = action.payload;
@@ -298,7 +361,80 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getCounterPerizinanMenteri.rejected, (state, action) => {
         state.loading = false;
-        // console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(getCounterPKRL.fulfilled, (state, action) => {
+        state.loading = false;
+        state.counterPKRL = action.payload;
+      })
+      .addCase(getCounterPKRL.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getCounterPKRL.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
+      .addCase(parafPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(parafPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(parafPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
+      .addCase(parafBeforeTTDEPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(parafBeforeTTDEPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(parafBeforeTTDEPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
+      .addCase(revisiPerizinan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(revisiPerizinan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(revisiPerizinan.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
+      })
+      .addCase(getNomorPerizinanMenteri.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getNomorPerizinanMenteri.fulfilled, (state, action) => {
+        console.log("action nomor", action.payload);
+        state.loading = false;
+        state.nomorDokPerizinan = action.payload?.result?.nomor;
+      })
+      .addCase(getNomorPerizinanMenteri.rejected, (state, action) => {
+        console.log("error nomor", action);
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
+      .addCase(addAttachmentDigiSign.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addAttachmentDigiSign.fulfilled, (state, action) => {
+        state.loading = false;
+        let tipe = action.payload.tipe;
+        if (tipe === "perizinan") {
+          state.attachmentDokPerizinan = [action.payload.data.result];
+        } else if (tipe === "lampiran") {
+          state.attachmentLampiran = [action.payload.data.result];
+        }
+      })
+      .addCase(addAttachmentDigiSign.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
         Sentry.captureException(action.error);
       });
   },
@@ -308,7 +444,13 @@ export const {
   setDigitalSignLists,
   setDigitalSignCourseList,
   setStatus,
+  setAttachmentDokPerizinan,
+  setAttachmentLampiran,
   setLaporanList,
+  resetNomorDokPerizinan,
+  resetAttachment,
+  resetList,
+  resetDetail,
 } = DigitalSignSlice.actions;
 
 export default DigitalSignSlice.reducer;
