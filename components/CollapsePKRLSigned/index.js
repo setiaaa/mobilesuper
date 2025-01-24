@@ -20,7 +20,13 @@ import {
   listParaf,
 } from "../../Apps/DigitalSignature/dataDokPerizinan";
 
-export const CollapsePKRLSigned = ({ profile, device, counter }) => {
+export const CollapsePKRLSigned = ({
+  profile,
+  device,
+  counter,
+  filterHandlerSigned,
+  filterDirektoratSigned,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("done");
 
@@ -58,40 +64,41 @@ export const CollapsePKRLSigned = ({ profile, device, counter }) => {
 
   const handleGetDataByDirektorat = (type) => {
     let dataDashboard = {};
-    jenisPerizinan.map((x) => (dataDashboard[x.label] = 0));
+    jenisPerizinan?.map((x) => (dataDashboard[x.label] = 0));
 
     if (counter?.data !== undefined) {
       const listDirektorat = [];
       const jabatanUser =
         counter?.data !== undefined
-          ? counter?.data?.direktorat_user.toLowerCase()
+          ? counter?.data?.direktorat_user?.toLowerCase()
           : "";
-      const kp = listParaf.filter(
+      const kp = listParaf?.filter(
         (x) => x.title.toLowerCase() === jabatanUser
       )[0];
 
       if (kp) {
-        kp.group.map((x) => {
-          const group = kategoriPerizinan.filter((y) => y.key === x)[0][
+        kp?.group?.map((x) => {
+          const group = kategoriPerizinan?.filter((y) => y.key === x)[0][
             "group"
           ];
-          const jp = jenisPerizinan.filter((z) => z.group === group)[0];
+          const jp = jenisPerizinan?.filter((z) => z.group === group)[0];
 
-          if (!listDirektorat.some((x) => x === jp.label)) {
-            listDirektorat.push(jp.label);
+          if (!listDirektorat?.some((x) => x === jp.label)) {
+            listDirektorat?.push(jp.label);
           }
         });
       } else if (
         jabatanUser === "menteri kelautan dan perikanan" ||
         jabatanUser !== undefined
       ) {
-        jenisPerizinan.map((x) => listDirektorat.push(x.label));
+        jenisPerizinan?.map((x) => listDirektorat?.push(x.label));
       }
 
-      Object.keys(dataDashboard).forEach((element) => {
+      Object.keys(dataDashboard)?.forEach((element) => {
         if (
+          counter?.data[element] !== undefined &&
           counter?.data[element][type] !== undefined &&
-          listDirektorat.some((x) => x === element)
+          listDirektorat?.some((x) => x === element)
         ) {
           dataDashboard[element] = counter?.data[element][type];
         }
@@ -234,10 +241,19 @@ export const CollapsePKRLSigned = ({ profile, device, counter }) => {
         >
           {jenisPerizinan?.map((item) => {
             return (
-              <View
+              <TouchableOpacity
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
+                  backgroundColor:
+                    filterDirektoratSigned === item.label
+                      ? COLORS.ExtraDivinder
+                      : null,
+                  padding: 5,
+                  borderRadius: 5,
+                }}
+                onPress={() => {
+                  filterHandlerSigned(item.label);
                 }}
               >
                 <Text
@@ -282,7 +298,7 @@ export const CollapsePKRLSigned = ({ profile, device, counter }) => {
                     {handleGetDataByDirektorat("done")[item.label] ?? 0}
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>

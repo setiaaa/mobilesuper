@@ -22,7 +22,7 @@ export const LPMUKP = () => {
   let webviewRef = null;
 
   async function createAuthToken() {
-    const baseServerUrl = "https://app.daviz.id";
+    const baseServerUrl = "https://portal-dss.kkp.go.id";
     const libraryName = "MicroStrategyLibrary";
 
     // Make a call to REST API to log the user in, if there is not a valid authToken
@@ -232,7 +232,7 @@ export const LPMUKP = () => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
+              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP2/index.html",
               headers: {
                 Cookie: first,
               },
@@ -252,7 +252,7 @@ export const LPMUKP = () => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP/index.html",
+              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP2/index.html",
             }}
             style={{ flex: 1 }}
             allowFileAccess={true}

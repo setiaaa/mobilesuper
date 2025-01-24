@@ -2036,9 +2036,9 @@ export const getListComposer = createAsyncThunk(
 );
 export const getListInProgress = createAsyncThunk(
   "digitalsign/getListInProgress",
-  async ({ token, tipe, page, search }) => {
+  async ({ token, tipe, page, search, filter = "" }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+      `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}&limit=${page}&general=${search}&direktorat=${filter}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -2245,9 +2245,9 @@ export const putDocumentPerizinan = createAsyncThunk(
 
 export const getListSignedDigiSign = createAsyncThunk(
   "digitalsign/getListSignedDigiSign",
-  async ({ token, tipe, page, search }) => {
+  async ({ token, tipe, page, search, filter = "" }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}document/signed/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+      `${digitalSign}document/signed/?tipe_dokumen=${tipe}&limit=${page}&general=${search}&direktorat=${filter}`,
       { headers: { Authorization: token } }
     );
     return {

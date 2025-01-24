@@ -86,6 +86,8 @@ export const PKRL = () => {
   const [dashboard, setDashboard] = useState("dashboard");
   const [variant, SetVariant] = useState("composer");
   const [isSelected, setSelection] = useState([]);
+  const [filterDirektorat, setFilterDirektorat] = useState("");
+  const [filterDirektoratSigned, setFilterDirektoratSigned] = useState("");
   const [page, setPage] = useState(10);
   const isFocus = useIsFocused();
 
@@ -115,11 +117,21 @@ export const PKRL = () => {
         dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
         if (variant === "inprogress") {
           dispatch(
-            getListInProgress({ token: token, tipe: tipe, search: search })
+            getListInProgress({
+              token: token,
+              tipe: tipe,
+              search: search,
+              filter: filterDirektorat,
+            })
           );
         } else if (variant === "signed") {
           dispatch(
-            getListSignedDigiSign({ token: token, tipe: tipe, search: search })
+            getListSignedDigiSign({
+              token: token,
+              tipe: tipe,
+              search: search,
+              filter: filterDirektoratSigned,
+            })
           );
         } else if (variant === "composer") {
           dispatch(
@@ -162,15 +174,39 @@ export const PKRL = () => {
     bottomSheetModalRef.current?.present();
   };
 
-  const filterHandlerInProgress = () => {
+  const filterHandlerInProgress = (filterDashboard) => {
+    if (filterDashboard !== undefined) {
+      setFilterDirektorat(filterDashboard);
+    } else {
+      setFilterDirektorat("");
+    }
+    setFilterDirektoratSigned("");
     SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
+    dispatch(
+      getListInProgress({
+        token: token,
+        tipe: tipe,
+        search: search,
+        filter: filterDashboard == undefined ? "" : filterDashboard,
+      })
+    );
   };
 
-  const filterHandlerSigned = () => {
+  const filterHandlerSigned = (filterDashboard) => {
+    if (filterDashboard !== undefined) {
+      setFilterDirektoratSigned(filterDashboard);
+    } else {
+      setFilterDirektoratSigned("");
+    }
+    setFilterDirektorat("");
     SetVariant("signed");
     dispatch(
-      getListSignedDigiSign({ token: token, tipe: tipe, search: search })
+      getListSignedDigiSign({
+        token: token,
+        tipe: tipe,
+        search: search,
+        filter: filterDashboard == undefined ? "" : filterDashboard,
+      })
     );
   };
 
@@ -206,6 +242,7 @@ export const PKRL = () => {
           tipe: tipe,
           page: page,
           search: search,
+          filter: filterDirektorat,
         })
       );
     } else if (variant === "signed" && currentTab === "PKRL") {
@@ -215,6 +252,7 @@ export const PKRL = () => {
           tipe: tipe,
           page: page,
           search: search,
+          filter: filterDirektoratSigned,
         })
       );
     } else if (variant === "composer" && currentTab === "PKRL") {
@@ -329,11 +367,21 @@ export const PKRL = () => {
           </View>
 
           <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSignIn device={device} counter={counterPKRL} />
+            <CollapsePKRLSignIn
+              device={device}
+              counter={counterPKRL}
+              filterHandlerInProgress={filterHandlerInProgress}
+              filterDirektorat={filterDirektorat}
+            />
           </View>
 
           <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSigned device={device} counter={counterPKRL} />
+            <CollapsePKRLSigned
+              device={device}
+              counter={counterPKRL}
+              filterHandlerSigned={filterHandlerSigned}
+              filterDirektoratSigned={filterDirektoratSigned}
+            />
           </View>
 
           <View

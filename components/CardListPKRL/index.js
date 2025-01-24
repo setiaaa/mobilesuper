@@ -62,8 +62,6 @@ export const CardListPKRL = ({
   };
   const [modal, setModal] = useState(false);
 
-  console.log(variant);
-
   const handleNavigate = (item) => {
     console.log(item.state);
     getDetail(item.id);
