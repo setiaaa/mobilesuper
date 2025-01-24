@@ -62,7 +62,10 @@ export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
 
     if (counter?.data !== undefined) {
       const listDirektorat = [];
-      const jabatanUser = counter?.data?.direktorat_user.toLowerCase();
+      const jabatanUser =
+        counter?.data !== undefined
+          ? counter?.data?.direktorat_user.toLowerCase()
+          : "";
       const kp = listParaf.filter(
         (x) => x.title.toLowerCase() === jabatanUser
       )[0];
@@ -78,7 +81,10 @@ export const CollapsePKRLSignIn = ({ profile, device, counter }) => {
             listDirektorat.push(jp.label);
           }
         });
-      } else if (jabatanUser === "menteri kelautan dan perikanan") {
+      } else if (
+        jabatanUser === "menteri kelautan dan perikanan" ||
+        jabatanUser !== undefined
+      ) {
         jenisPerizinan.map((x) => listDirektorat.push(x.label));
       }
 
