@@ -131,6 +131,7 @@ import { Tinjauan } from "../Apps/Repository/Tinjauan";
 import { PerizinanMenteri } from "../Apps/DigitalSignature/PerizinanMenteri";
 import { MyTabPerizinanMenteri } from "../Apps/DigitalSignature/BottomTabsPerizinanMenteri";
 import { PKRL } from "../Apps/DigitalSignature/PKRL";
+import { DokumenSK } from "../Apps/DigitalSignature/DokumenSK";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -469,6 +470,11 @@ export const BottomTabsDigitalSign = () => {
           <Tab.Screen
             name="Verifikasi"
             component={Verifikasi}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DokumenSK"
+            component={DokumenSK}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

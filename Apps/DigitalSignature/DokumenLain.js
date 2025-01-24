@@ -15,7 +15,7 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -217,6 +217,10 @@ export const DokumenLain = () => {
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(10);
 
+  const currentTab = useNavigationState(
+    (state) => state.routes[state.index].name
+  );
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -224,10 +228,17 @@ export const DokumenLain = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(
-      getListComposer({ token: token, tipe: tipe, page: page, search: search })
-    );
-  }, [token, tipe]);
+    if (currentTab === "DokumenLain") {
+      dispatch(
+        getListComposer({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    }
+  }, [token, tipe, currentTab]);
 
   const filterHandlerComposer = () => {
     SetVariant("composer");
@@ -279,7 +290,7 @@ export const DokumenLain = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        if (variant === " composer") {
+        if (variant === " composer" && currentTab === "DokumenLain") {
           dispatch(
             getListComposer({
               token: token,
@@ -289,7 +300,7 @@ export const DokumenLain = () => {
             })
           );
         }
-        if (variant === "inprogress") {
+        if (variant === "inprogress" && currentTab === "DokumenLain") {
           dispatch(
             getListInProgress({
               token: token,
@@ -299,7 +310,7 @@ export const DokumenLain = () => {
             })
           );
         }
-        if (variant === "rejected") {
+        if (variant === "rejected" && currentTab === "DokumenLain") {
           dispatch(
             getListRejected({
               token: token,
@@ -309,7 +320,7 @@ export const DokumenLain = () => {
             })
           );
         }
-        if (variant === "draft") {
+        if (variant === "draft" && currentTab === "DokumenLain") {
           dispatch(
             getListDraft({
               token: token,
@@ -319,7 +330,7 @@ export const DokumenLain = () => {
             })
           );
         }
-        if (variant === "signed") {
+        if (variant === "signed" && currentTab === "DokumenLain") {
           dispatch(
             getListSignedDigiSign({
               token: token,
@@ -336,7 +347,7 @@ export const DokumenLain = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe]);
+  }, [token, tipe, currentTab]);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -349,7 +360,7 @@ export const DokumenLain = () => {
   };
 
   useEffect(() => {
-    if (variant === "composer") {
+    if (variant === "composer" && currentTab === "DokumenLain") {
       dispatch(
         getListComposer({
           token: token,
@@ -358,11 +369,11 @@ export const DokumenLain = () => {
           search: search,
         })
       );
-    } else if (variant === "ready") {
+    } else if (variant === "ready" && currentTab === "DokumenLain") {
       dispatch(
         getListReady({ token: token, tipe: tipe, page: page, search: search })
       );
-    } else if (variant === "completed") {
+    } else if (variant === "completed" && currentTab === "DokumenLain") {
       dispatch(
         getListCompleted({
           token: token,
@@ -371,7 +382,7 @@ export const DokumenLain = () => {
           search: search,
         })
       );
-    } else if (variant === "inprogress") {
+    } else if (variant === "inprogress" && currentTab === "DokumenLain") {
       dispatch(
         getListInProgress({
           token: token,
@@ -380,7 +391,7 @@ export const DokumenLain = () => {
           search: search,
         })
       );
-    } else if (variant === "rejected") {
+    } else if (variant === "rejected" && currentTab === "DokumenLain") {
       dispatch(
         getListRejected({
           token: token,
@@ -389,7 +400,7 @@ export const DokumenLain = () => {
           search: search,
         })
       );
-    } else if (variant === "signed") {
+    } else if (variant === "signed" && currentTab === "DokumenLain") {
       dispatch(
         getListSignedDigiSign({
           token: token,
@@ -399,7 +410,7 @@ export const DokumenLain = () => {
         })
       );
     }
-  }, [page, token, tipe, search]);
+  }, [page, token, tipe, search, currentTab]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -440,7 +451,7 @@ export const DokumenLain = () => {
                 color: COLORS.white,
               }}
             >
-              Digital Signature
+              Dokumen Lain
             </Text>
           </View>
         </View>

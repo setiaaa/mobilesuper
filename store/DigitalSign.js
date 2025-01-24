@@ -27,6 +27,14 @@ import {
   putDocumentPerizinan,
   getCounterPKRL,
   parafBeforeTTDEPerizinan,
+  getListInbox,
+  getListNeedSignSK,
+  getListNeedApproveSK,
+  putSetujiSK,
+  putReturnSK,
+  putRevisionSK,
+  putBatalkanSK,
+  putTandaTanganSK,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -186,6 +194,54 @@ const DigitalSignSlice = createSlice({
       .addCase(getListCompleted.rejected, (state, action) => {
         state.loading = false;
       })
+      .addCase(getListInbox.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListInbox.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListInbox.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
+      })
+      .addCase(getListNeedSignSK.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListNeedSignSK.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListNeedSignSK.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
+      })
+      .addCase(getListNeedApproveSK.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+        console.log("berhasil");
+      })
+      .addCase(getListNeedApproveSK.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListNeedApproveSK.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action.error);
+      })
       .addCase(getListDraft.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.tipe === "bankom") {
@@ -296,6 +352,76 @@ const DigitalSignSlice = createSlice({
         console.log(action.error);
         Sentry.captureException(action.error);
       })
+      .addCase(putSetujiSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putSetujiSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putSetujiSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putTandaTanganSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putTandaTanganSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putTandaTanganSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putReturnSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putReturnSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putReturnSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putRevisionSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putRevisionSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putRevisionSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(putBatalkanSK.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(putBatalkanSK.pending, (state, action) => {
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(putBatalkanSK.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+        console.log(action.error);
+        Sentry.captureException(action.error);
+      })
       .addCase(getListRejected.fulfilled, (state, action) => {
         state.loading = false;
         state.dokumenlain.lists = action.payload.data;
@@ -305,6 +431,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListRejected.rejected, (state, action) => {
         state.loading = false;
+        console.log(action.error);
       })
       .addCase(getListSertifikatEksternal.fulfilled, (state, action) => {
         state.loading = false;
