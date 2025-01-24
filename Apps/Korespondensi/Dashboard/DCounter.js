@@ -139,6 +139,71 @@ function DCounter() {
       navName: "SubmittedList",
     },
   ]);
+  let [isCounterMenuSespri, setIsCounterMenuSespri] = useState([
+    {
+      count: 1,
+      type: "agenda_in",
+      value: "-",
+      icon: "inbox-arrow-down",
+      navName: "IncomingList",
+    },
+    {
+      count: 2,
+      type: "agenda_in_forward",
+      value: "-",
+      icon: "file-send-outline",
+      navName: "IncomingList",
+    },
+    {
+      count: 3,
+      type: "agenda_in_dispo",
+      value: "-",
+      icon: "inbox-arrow-down-outline",
+      navName: "IncomingList",
+    },
+    {
+      count: 4,
+      type: "internal",
+      value: "-",
+      icon: "inbox",
+      navName: "InternalSatkerList",
+    },
+    {
+      count: 5,
+      type: "agenda_disposition",
+      value: "-",
+      icon: "email-send-outline",
+      navName: "DispositionList",
+    },
+    {
+      count: 6,
+      type: "onprogress",
+      value: "-",
+      icon: "email-edit-outline",
+      navName: "NeedFollowUpList",
+    },
+    {
+      count: 7,
+      type: "sign",
+      value: "-",
+      icon: "email-edit",
+      navName: "NeedSignList",
+    },
+    {
+      count: 8,
+      type: "tracking",
+      value: "-",
+      icon: "email-search-outline",
+      navName: "TrackingList",
+    },
+    {
+      count: 9,
+      type: "submitted",
+      value: "-",
+      icon: "email-check-outline",
+      navName: "SubmittedList",
+    },
+  ]);
   let [isCounterMenu, setIsCounterMenu] = useState([
     {
       count: 1,
@@ -512,7 +577,18 @@ function DCounter() {
               <View style={styles.container}>
                 <Text style={styles.title}>MENU</Text>
                 {!role_menu.includes(profile?.nik) &&
+                  profile?.is_secretary != "true" &&
                   isCounterMenuDefault?.map((item, index) => (
+                    <CardDMenu
+                      key={index}
+                      data={item}
+                      navigation={navigation}
+                      divisionList={divisionList}
+                    />
+                  ))}
+                {!role_menu.includes(profile?.nik) &&
+                  profile?.is_secretary == "true" &&
+                  isCounterMenuSespri?.map((item, index) => (
                     <CardDMenu
                       key={index}
                       data={item}

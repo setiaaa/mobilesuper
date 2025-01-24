@@ -13,6 +13,12 @@ import { Ionicons } from "@expo/vector-icons";
 function CardDMenu({ data, divisionList, navigation }) {
   const { device } = useSelector((state) => state.apps);
   const [collapse, setCollapse] = useState(false);
+  const toggleCollapse = (index) => {
+    setCollapse((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
   return (
     <View>
       {data?.type !== "agenda_in_eselon1" && (
@@ -34,6 +40,8 @@ function CardDMenu({ data, divisionList, navigation }) {
                   ? "Perlu TTD Elektronik"
                   : data?.type == "agenda_in"
                   ? "Surat Masuk Belum Disposisi"
+                  : data?.type == "agenda_in_forward"
+                  ? "Surat Masuk Sudah Diteruskan"
                   : data?.type == "agenda_in_dispo"
                   ? "Surat Masuk Sudah Disposisi"
                   : data?.type == "agenda_disposition"
@@ -65,6 +73,8 @@ function CardDMenu({ data, divisionList, navigation }) {
                 ? "Perlu TTD Elektronik"
                 : data?.type == "agenda_in"
                 ? "Surat Masuk Belum Disposisi"
+                : data?.type == "agenda_in_forward"
+                ? "Surat Masuk Sudah Diteruskan"
                 : data?.type == "agenda_in_dispo"
                 ? "Surat Masuk Sudah Disposisi"
                 : data?.type == "agenda_disposition"
@@ -98,9 +108,9 @@ function CardDMenu({ data, divisionList, navigation }) {
         </TouchableOpacity>
       )}
       {data?.type == "agenda_in_eselon1" && (
-        <Collapse isExpanded={collapse}>
+        <Collapse isExpanded={!!collapse[data?.type]}>
           <CollapseHeader>
-            <TouchableOpacity onPress={() => setCollapse(!collapse)}>
+            <TouchableOpacity onPress={() => toggleCollapse(data?.type)}>
               <View style={styles.card}>
                 <View
                   style={[
@@ -142,7 +152,7 @@ function CardDMenu({ data, divisionList, navigation }) {
                       marginRight: 26,
                     }}
                   >
-                    {collapse === true ? (
+                    {collapse[data?.type] === true ? (
                       <Ionicons name="chevron-up-outline" size={18} />
                     ) : (
                       <Ionicons name="chevron-down-outline" size={18} />
