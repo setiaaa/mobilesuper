@@ -366,22 +366,30 @@ export const PKRL = () => {
             />
           </View>
 
-          <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSignIn
-              device={device}
-              counter={counterPKRL}
-              filterHandlerInProgress={filterHandlerInProgress}
-              filterDirektorat={filterDirektorat}
-            />
-          </View>
-
-          <View style={{ marginTop: 10, marginHorizontal: "5%" }}>
-            <CollapsePKRLSigned
-              device={device}
-              counter={counterPKRL}
-              filterHandlerSigned={filterHandlerSigned}
-              filterDirektoratSigned={filterDirektoratSigned}
-            />
+          <View
+            style={{
+              marginTop: 10,
+              marginHorizontal: "5%",
+              flexDirection: "row",
+              gap: 10,
+            }}
+          >
+            <View style={{ width: "49.5%" }}>
+              <CollapsePKRLSignIn
+                device={device}
+                counter={counterPKRL}
+                filterHandlerInProgress={filterHandlerInProgress}
+                filterDirektorat={filterDirektorat}
+              />
+            </View>
+            <View style={{ width: "49.5%" }}>
+              <CollapsePKRLSigned
+                device={device}
+                counter={counterPKRL}
+                filterHandlerSigned={filterHandlerSigned}
+                filterDirektoratSigned={filterDirektoratSigned}
+              />
+            </View>
           </View>
 
           <View
@@ -390,7 +398,6 @@ export const PKRL = () => {
               justifyContent: "space-between",
               backgroundColor: "white",
               marginHorizontal: "5%",
-              width: "90%",
               padding: 16,
               marginTop: 10,
               alignItems: "center",
@@ -575,7 +582,6 @@ const styles = StyleSheet.create({
     borderColor: COLORS.ExtraDivinder,
     borderRadius: 8,
     backgroundColor: COLORS.white,
-    width: "90%",
     marginHorizontal: "5%",
     marginTop: 10,
   },

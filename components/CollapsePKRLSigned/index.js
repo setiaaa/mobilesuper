@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   COLORS,
   fontSizeResponsive,
   FONTWEIGHT,
+  getOrientation,
   shadow,
   spacing,
 } from "../../config/SuperAppps";
@@ -29,6 +37,7 @@ export const CollapsePKRLSigned = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("done");
+  const [modal, setModal] = useState(false);
 
   const getCountDashboard = (type) => {
     let count = 0;
@@ -108,11 +117,15 @@ export const CollapsePKRLSigned = ({
     return dataDashboard;
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
-    <Collapse isExpanded={isOpen}>
-      <CollapseHeader>
-        <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
-          <View style={styles.card}>
+    <>
+      <TouchableOpacity onPress={() => setModal(true)}>
+        <View style={styles.card}>
+          {device === "tablet" && orientation === "landscape" ? (
             <View
               style={[
                 {
@@ -123,9 +136,7 @@ export const CollapsePKRLSigned = ({
                   borderTopRightRadius: 8,
                   borderBottomLeftRadius: isOpen === true ? 0 : 8,
                   borderBottomRightRadius: isOpen === true ? 0 : 8,
-                  //   flexDirection: "row",
                   alignItems: "center",
-                  //   justifyContent: "space-between",
                 },
                 shadow.cardShadow,
               ]}
@@ -170,9 +181,10 @@ export const CollapsePKRLSigned = ({
                   <Text
                     style={{
                       marginTop: 5,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       color: COLORS.grey,
                       fontWeight: FONTWEIGHT.bold,
+                      letterSpacing: -1, // Sesuaikan nilai
                     }}
                   >
                     Dokumen Sudah Ditandatangani
@@ -205,6 +217,79 @@ export const CollapsePKRLSigned = ({
                   </Text>
                 </View>
               </View>
+            </View>
+          ) : (
+            <View
+              style={{
+                backgroundColor: isOpen
+                  ? COLORS.secondaryLighter
+                  : COLORS.bgLightGrey,
+                borderRadius: 8,
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+                justifyContent: "center",
+                padding: 5,
+              }}
+            >
+              <Text
+                style={{
+                  // marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  width: "100%",
+                  textAlign: "left",
+                }}
+              >
+                Signed
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  alignItems: "center",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    padding: 5,
+                    backgroundColor: COLORS.successLight,
+                    borderRadius: 50,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name={"file-check-outline"}
+                    size={device === "tablet" ? 40 : 30}
+                    color={COLORS.success}
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      // fontSize: fontSizeResponsive("H1", device),
+                      fontSize: 40,
+                    }}
+                  >
+                    {counter?.data?.done ?? 0}
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={{
+                  marginTop: 5,
+                  fontSize: fontSizeResponsive("H5", device),
+                  color: COLORS.grey,
+                  fontWeight: FONTWEIGHT.bold,
+                  letterSpacing: -1, // Sesuaikan nilai
+                }}
+              >
+                Dokumen Sudah Ditandatangani
+              </Text>
 
               {/* <View
                 style={{
@@ -224,86 +309,134 @@ export const CollapsePKRLSigned = ({
                 )}
               </View> */}
             </View>
-          </View>
-        </TouchableOpacity>
-      </CollapseHeader>
-      {}
-      <CollapseBody>
-        <View
+          )}
+        </View>
+      </TouchableOpacity>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => {
+          setModal(false);
+        }}
+      >
+        <TouchableOpacity
           style={[
-            shadow.cardShadow,
-            styles.cardCollapse,
-            {
-              flexDirection: "column",
-              gap: 8,
-            },
+            Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,
+            styles.backdrop,
           ]}
+        />
+        <View
+          style={{
+            alignItems: "center",
+            flex: 1,
+            justifyContent: "center",
+          }}
         >
-          {jenisPerizinan?.map((item) => {
-            return (
-              <TouchableOpacity
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 10,
+            }}
+          >
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 10,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+                alignItems: "center",
+              }}
+            >
+              <Text
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor:
-                    filterDirektoratSigned === item.label
-                      ? COLORS.ExtraDivinder
-                      : null,
-                  padding: 5,
-                  borderRadius: 5,
-                }}
-                onPress={() => {
-                  filterHandlerSigned(item.label);
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H5", device),
-                    width: "85%",
-                  }}
-                >
-                  {item?.label}
-                </Text>
-                {/* Niai dan Badge */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 5,
-                    flex: 1,
-                  }}
-                >
-                  <View
+                Filter Counter
+              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  setModal(false);
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ marginVertical: 10 }}>
+              {jenisPerizinan?.map((item) => {
+                return (
+                  <TouchableOpacity
                     style={{
-                      height: device === "tablet" ? 20 : 10,
-                      width: device === "tablet" ? 20 : 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.success,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      backgroundColor:
+                        filterDirektoratSigned === item.label
+                          ? COLORS.ExtraDivinder
+                          : null,
+                      padding: 5,
+                      borderRadius: 5,
+                      marginHorizontal: device === "tablet" ? "2%" : "5%",
                     }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: device === "tablet" ? 30 : 15,
-                      fontWeight: FONTWEIGHT.bold,
+                    onPress={() => {
+                      setModal(false);
+                      filterHandlerSigned(item.label);
                     }}
                   >
-                    {/* {counter?.data !== undefined
-                      ? counter?.data[item.label] === undefined
-                        ? 0
-                        : counter?.data[item.label][
-                            title === "Need Sign" ? "need_sign" : "done"
-                          ]
-                      : 0} */}
-                    {handleGetDataByDirektorat("done")[item.label] ?? 0}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H5", device),
+                        width: "85%",
+                      }}
+                    >
+                      {item?.label}
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: 5,
+                        flex: 1,
+                      }}
+                    >
+                      <View
+                        style={{
+                          height: device === "tablet" ? 20 : 10,
+                          width: device === "tablet" ? 20 : 10,
+                          borderRadius: 10,
+                          backgroundColor: COLORS.success,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: device === "tablet" ? 30 : 15,
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        {handleGetDataByDirektorat("done")[item.label] ?? 0}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
         </View>
-      </CollapseBody>
-    </Collapse>
+      </Modal>
+    </>
   );
 };
 
@@ -317,5 +450,22 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+  },
+  iOSBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.5,
+  },
+  androidBackdrop: {
+    backgroundColor: "#000",
+    opacity: 0.7,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -47,12 +47,12 @@ export const ModalSubmit = ({
           style={{
             backgroundColor: COLORS.white,
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-evenly",
             width: device === "tablet" ? "70%" : "80%",
             height:
               device === "tablet" && orientation === "landscape"
-                ? "70%"
-                : "50%",
+                ? "80%"
+                : "60%",
           }}
         >
           <TouchableOpacity

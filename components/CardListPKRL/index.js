@@ -361,6 +361,7 @@ export const CardListPKRL = ({
                 style={{
                   backgroundColor: COLORS.white,
                   width: "90%",
+                  height: device === "tablet" ? "80%" : "50%",
                   borderRadius: 10,
                 }}
               >
@@ -396,145 +397,158 @@ export const CardListPKRL = ({
                     />
                   </TouchableOpacity>
                 </View>
-                {item.approvers.map((data, index) => {
-                  if (index > 0 && index < item?.approvers.length - 1) {
-                    return (
-                      <View style={{ marginHorizontal: 20, marginVertical: 5 }}>
+                <ScrollView>
+                  {item.approvers.map((data, index) => {
+                    if (index > 0 && index < item?.approvers.length - 1) {
+                      return (
                         <View
                           style={{
-                            flexDirection: "row",
-                            gap: 5,
-                            alignItems: "center",
+                            marginHorizontal: 20,
+                            marginVertical: 5,
                           }}
                         >
-                          <Image
-                            source={{ uri: data.avatar_url }}
-                            height={device === "tablet" ? 50 : 30}
-                            width={device === "tablet" ? 50 : 30}
-                            borderRadius={device === "tablet" ? 50 : 30}
-                          />
-                          <Text
+                          <View
                             style={{
-                              width: "90%",
-                              fontSize: fontSizeResponsive("H4", device),
+                              flexDirection: "row",
+                              gap: 5,
+                              alignItems: "center",
                             }}
                           >
-                            {data.nama}
-                          </Text>
+                            <Image
+                              source={{ uri: data.avatar_url }}
+                              height={device === "tablet" ? 50 : 30}
+                              width={device === "tablet" ? 50 : 30}
+                              borderRadius={device === "tablet" ? 50 : 30}
+                            />
+                            <Text
+                              style={{
+                                width: "90%",
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {data.nama}
+                            </Text>
+                          </View>
+                          {item.sequence <= index ? (
+                            <>
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: 5,
+                                  marginTop: 5,
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 50,
+                                    padding: 5,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons
+                                    name="close"
+                                    color={COLORS.white}
+                                    size={device === "tablet" ? 25 : 15}
+                                  />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDangerLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: COLORS.infoDanger,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    Belum Paraf
+                                  </Text>
+                                </View>
+                              </View>
+                              <View
+                                style={{
+                                  width: "100%",
+                                  height: 2,
+                                  backgroundColor: COLORS.ExtraDivinder,
+                                  marginTop: 5,
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: 5,
+                                  marginTop: 5,
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 50,
+                                    padding: 5,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons
+                                    name="checkmark-outline"
+                                    color={COLORS.white}
+                                    size={device === "tablet" ? 25 : 15}
+                                  />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.successLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: COLORS.success,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    Sudah Paraf
+                                  </Text>
+                                </View>
+                              </View>
+                              <View
+                                style={{
+                                  width: "100%",
+                                  height: 2,
+                                  backgroundColor: COLORS.ExtraDivinder,
+                                  marginTop: 5,
+                                }}
+                              />
+                            </>
+                          )}
                         </View>
-                        {item.sequence <= index ? (
-                          <>
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                width: "60%",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                                gap: 5,
-                                marginTop: 5,
-                              }}
-                            >
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.infoDanger,
-                                  borderRadius: 50,
-                                  padding: 5,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Ionicons
-                                  name="close"
-                                  color={COLORS.white}
-                                  size={device === "tablet" ? 25 : 15}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.infoDangerLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    color: COLORS.infoDanger,
-                                    fontSize: fontSizeResponsive("H4", device),
-                                  }}
-                                >
-                                  Belum Paraf
-                                </Text>
-                              </View>
-                            </View>
-                            <View
-                              style={{
-                                width: "100%",
-                                height: 2,
-                                backgroundColor: COLORS.ExtraDivinder,
-                                marginTop: 5,
-                              }}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                width: "60%",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                                gap: 5,
-                                marginTop: 5,
-                              }}
-                            >
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.success,
-                                  borderRadius: 50,
-                                  padding: 5,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Ionicons
-                                  name="checkmark-outline"
-                                  color={COLORS.white}
-                                  size={device === "tablet" ? 25 : 15}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.successLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    color: COLORS.success,
-                                    fontSize: fontSizeResponsive("H4", device),
-                                  }}
-                                >
-                                  Sudah Paraf
-                                </Text>
-                              </View>
-                            </View>
-                            <View
-                              style={{
-                                width: "100%",
-                                height: 2,
-                                backgroundColor: COLORS.ExtraDivinder,
-                                marginTop: 5,
-                              }}
-                            />
-                          </>
-                        )}
-                      </View>
-                    );
-                  }
-                })}
+                      );
+                    }
+                  })}
+                </ScrollView>
               </View>
             </View>
           </Modal>
