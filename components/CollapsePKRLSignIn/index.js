@@ -389,7 +389,7 @@ export const CollapsePKRLSignIn = ({
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H5", device),
-                        width: "85%",
+                        width: "84%",
                       }}
                     >
                       {item?.label}
