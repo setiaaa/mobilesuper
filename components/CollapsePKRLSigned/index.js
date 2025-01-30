@@ -70,8 +70,8 @@ export const CollapsePKRLSigned = ({
       group: 3,
     },
     {
-      label: "Direktorat PKKPRL",
-      alias: "Direktorat PKKPRL",
+      label: "Direktorat PRL",
+      alias: "Direktorat PRL",
       group: 4,
     },
   ];

@@ -15,8 +15,8 @@ export const jenisPerizinan = [
     group: 3,
   },
   {
-    key: "Direktorat PKKPRL",
-    value: "Direktorat PKKPRL",
+    key: "Direktorat PRL",
+    value: "Direktorat PRL",
     group: 4,
   },
 ];
@@ -121,7 +121,7 @@ export const kategoriPerizinan = [
       { key: "berusaha", value: "Berusaha" },
       { key: "pemerintah", value: "Pemerintah" },
     ],
-    alias: "PKKPRL",
+    alias: "PRL",
   },
 ];
 

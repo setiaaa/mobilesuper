@@ -33,6 +33,7 @@ import { getTokenValue } from "../../service/session";
 import { Loading } from "../../components/Loading";
 import {
   putBatalkanSK,
+  putReleaseSK,
   putReturnSK,
   putRevisionSK,
   putSetujiSK,
@@ -162,6 +163,44 @@ export const DetailDokumenSK = ({ route }) => {
     console.log(data);
   };
 
+  const handleRelease = () => {
+    let id_receivers = [];
+    item?.receivers.map((datas) => {
+      if (datas.is_title === false) {
+        id_receivers.push(datas.nip);
+      } else {
+        id_receivers.push(datas.officer.nip);
+      }
+    });
+
+    let id_approvers = [];
+    item?.approvers.map((datas) => {
+      if (datas.is_title === false) {
+        id_approvers.push(datas.nip);
+      } else {
+        id_approvers.push(datas.officer.nip);
+      }
+    });
+
+    let payload = {
+      action: "release",
+      approvers: id_approvers,
+      comment: "di release",
+      extra_attributes: item?.extra_attributes,
+      id_course: "",
+      receivers: id_receivers,
+      subject: item?.subject,
+      tipe_dokumen: item?.tipe_dokumen,
+    };
+    const data = {
+      payload: payload,
+      token: token,
+      id: item?.id,
+    };
+    dispatch(putReleaseSK(data));
+    console.log(data);
+  };
+
   const handleBiometricAuth = async () => {
     // Check if hardware supports biometrics
     const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
@@ -195,6 +234,12 @@ export const DetailDokumenSK = ({ route }) => {
       handleTandaTangan();
     }
   };
+  const { profile } = useSelector((state) => state.superApps);
+  const roleReleaseSK = ["RELEASE.DIGISIGN.SK"];
+
+  const isRoleReleaseSK = profile.roles_access?.some((item) =>
+    roleReleaseSK.includes(item)
+  );
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
@@ -1095,6 +1140,34 @@ export const DetailDokumenSK = ({ route }) => {
                     }}
                   >
                     Revisi
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "signed" && isRoleReleaseSK === true ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.success,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => {
+                    handleRelease();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Release SK
                   </Text>
                 </TouchableOpacity>
               </>
