@@ -15,7 +15,7 @@
   },
   "assetBundlePatterns": ["/*"],
   "ios": {
-    "buildNumber": "7.7.4",
+    "buildNumber": "7.7.5",
     "supportsTablet": true,
     "bundleIdentifier": "go.id.kkp.portal",
     "infoPlist": {
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 774,
+    "versionCode": 775,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
