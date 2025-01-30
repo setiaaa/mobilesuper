@@ -55,6 +55,11 @@ export const CollapsePKRLSignIn = ({
       alias: "Direktorat P4K",
       group: 3,
     },
+    {
+      label: "Direktorat PKKPRL",
+      alias: "Direktorat PKKPRL",
+      group: 4,
+    },
   ];
 
   const getCountDashboard = (type) => {
@@ -343,7 +348,7 @@ export const CollapsePKRLSignIn = ({
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                Filter Counter
+                Filter Direkorat
               </Text>
               <TouchableOpacity
                 style={{}}
@@ -376,7 +381,9 @@ export const CollapsePKRLSignIn = ({
                     }}
                     onPress={() => {
                       setModal(false);
-                      filterHandlerInProgress(item.label);
+                      setTimeout(() => {
+                        filterHandlerInProgress(item.label);
+                      }, 500);
                     }}
                   >
                     <Text

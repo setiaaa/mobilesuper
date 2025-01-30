@@ -103,7 +103,6 @@ export const DetailPKRL = ({ route }) => {
       payload: payload,
     };
     dispatch(tandaTanganMentri(data));
-    // console.log(data.payload);
   };
 
   const handleBeforeTTDE = () => {
@@ -226,7 +225,7 @@ export const DetailPKRL = ({ route }) => {
     let temp = "";
 
     if (tipe === "perizinan") {
-      if (isMenkp() || variant.variant === "signed") {
+      if (isMenkp()) {
         temp = "perizinan";
       } else if (item?.authors[0] === "88888") {
         temp = "perizinan";
@@ -239,13 +238,13 @@ export const DetailPKRL = ({ route }) => {
 
     let index = -1;
 
-    if (item?.authors[0] === "88888") {
+    if (item?.authors[0] === "88888" && tipe === "perizinan") {
       index = 1;
+    } else if (variant.variant === "signed" && tipe === "perizinan") {
+      index = 0;
     } else {
       index = data.findIndex((x) => x.name.split("_")[0] === temp);
     }
-
-    console.log(index);
 
     if (index > -1) {
       return index;
@@ -253,6 +252,39 @@ export const DetailPKRL = ({ route }) => {
 
     return -1;
   };
+
+  //   const handleGetFileLampiran = (tipe) => {
+  //     const data = [...item?.attachments]
+  //     let temp = ''
+
+  //     if (tipe === 'perizinan') {
+  //         if (isMenkp()) {
+  //             temp = 'perizinan'
+  //         } else if (item?.authors[0] === '88888') {
+  //             temp = 'perizinan'
+  //         } else {
+  //             temp = 'draft-perizinan'
+  //         }
+  //     } else {
+  //         temp = tipe
+  //     }
+
+  //     let index = -1
+
+  //     if (item?.authors[0] === '88888') {
+  //         index = 1
+  //     } else if(variant.variant === "signed"){
+  //         index = 0
+  //     }else{
+  //         index = data.findIndex(x => x.name.split('_')[0] === temp)
+  //     }
+
+  //     if (index > -1) {
+  //         return index
+  //     }
+
+  //     return -1
+  // }
 
   const timelineData = item?.logs?.map((log) => ({
     time: moment(log.created_at, "YYYY-MM-DD HH:mm:ss").format(

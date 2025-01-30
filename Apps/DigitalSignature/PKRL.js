@@ -1,11 +1,13 @@
 import React, { useMemo, useRef } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { Text, Image } from "react-native";
@@ -15,6 +17,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import {
   FontAwesome6,
@@ -55,7 +58,6 @@ import {
   setDigitalSignLists,
   setStatus,
 } from "../../store/DigitalSign";
-import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
 import { CardListPerizinanMenteri } from "../../components/CardlistPerizinanMenteri";
@@ -73,6 +75,7 @@ import * as LocalAuthentication from "expo-local-authentication";
 import { CardListPKRL } from "../../components/CardListPKRL";
 import { CollapsePKRLSigned } from "../../components/CollapsePKRLSigned";
 import { CollapsePKRLSignIn } from "../../components/CollapsePKRLSignIn";
+import { Loading } from "../../components/Loading";
 
 export const PKRL = () => {
   const navigation = useNavigation();
@@ -90,18 +93,47 @@ export const PKRL = () => {
   const [filterDirektoratSigned, setFilterDirektoratSigned] = useState("");
   const [page, setPage] = useState(10);
   const isFocus = useIsFocused();
+  const { profile } = useSelector((state) => state.superApps);
+
+  const rolePerizinanOperator = ["OPERATOR_PERIZINAN_MENTERI"];
+
+  const isRolePerizinanOperator = profile.roles_access?.some((item) =>
+    rolePerizinanOperator.includes(item)
+  );
 
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
+    if (isRolePerizinanOperator) {
+      SetVariant("composer");
+    } else {
+      SetVariant("track");
+    }
   }, []);
 
   useEffect(() => {
     if (currentTab === "PKRL") {
-      SetVariant("composer");
       dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
-      dispatch(getListComposer({ token: token, tipe: tipe, search: search }));
+      // if (variant === "composer") {
+      //   dispatch(
+      //     getListComposer({
+      //       token: token,
+      //       tipe: tipe,
+      //       page: page,
+      //       search: search,
+      //     })
+      //   );
+      // } else {
+      //   dispatch(
+      //     getListInProgress({
+      //       token: token,
+      //       tipe: tipe,
+      //       search: search,
+      //       filter: filterDirektorat,
+      //     })
+      //   );
+      // }
     }
   }, [token, tipe, currentTab]);
 
@@ -182,12 +214,13 @@ export const PKRL = () => {
     }
     setFilterDirektoratSigned("");
     SetVariant("inprogress");
+    console.log(filterDirektorat, "fungsi");
     dispatch(
       getListInProgress({
         token: token,
         tipe: tipe,
         search: search,
-        filter: filterDashboard == undefined ? "" : filterDashboard,
+        filter: filterDashboard === undefined ? "" : filterDashboard,
       })
     );
   };
@@ -212,17 +245,19 @@ export const PKRL = () => {
 
   const filterHandlerTrack = () => {
     SetVariant("track");
+    setFilterDirektorat("");
+    setFilterDirektoratSigned("");
     dispatch(getListTrack({ token: token, tipe: tipe, search: search }));
   };
 
   const filterHandlerRetry = () => {
     SetVariant("composer");
+    setFilterDirektorat("");
+    setFilterDirektoratSigned("");
     dispatch(
       getListComposer({ token: token, tipe: tipe, page: page, search: search })
     );
   };
-
-  const { profile } = useSelector((state) => state.superApps);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -276,10 +311,15 @@ export const PKRL = () => {
     }
   }, [page, token, tipe, search, currentTab, isFocus]);
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         {loading ? <Loading /> : null}
+
         <View style={{ position: "relative", flex: 1 }}>
           <View
             style={{
@@ -371,7 +411,12 @@ export const PKRL = () => {
               marginTop: 10,
               marginHorizontal: "5%",
               flexDirection: "row",
-              gap: 10,
+              gap:
+                device === "tablet" && orientation === "potrait"
+                  ? 5
+                  : device === "tablet" && orientation === "landscape"
+                  ? 10
+                  : 3,
             }}
           >
             <View style={{ width: "49.5%" }}>
@@ -410,30 +455,34 @@ export const PKRL = () => {
                 gap: 5,
               }}
             >
-              <TouchableOpacity
-                style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "composer" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "composer" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerRetry()}
-              >
-                <Text
+              {isRolePerizinanOperator ? (
+                <TouchableOpacity
                   style={{
-                    color:
-                      variant === "composer" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
+                    padding: 5,
+                    borderWidth: 1,
+                    backgroundColor:
+                      variant === "composer" ? COLORS.primary : COLORS.input,
+                    borderRadius: 30,
+                    borderColor:
+                      variant === "composer" ? null : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => filterHandlerRetry()}
                 >
-                  List saya
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color:
+                        variant === "composer"
+                          ? COLORS.white
+                          : COLORS.foundation,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    List saya
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
 
               <TouchableOpacity
                 style={{
@@ -519,17 +568,15 @@ export const PKRL = () => {
               data={dokumenlain?.lists}
               keyExtractor={(item) => item?.id}
               renderItem={({ item }) => (
-                <View key={item.id}>
-                  <CardListPKRL
-                    item={item}
-                    token={token}
-                    variant={variant}
-                    device={device}
-                    isSelected={isSelected}
-                    setSelection={setSelection}
-                    nip={profile.nip}
-                  />
-                </View>
+                <CardListPKRL
+                  item={item}
+                  token={token}
+                  variant={variant}
+                  device={device}
+                  isSelected={isSelected}
+                  setSelection={setSelection}
+                  nip={profile.nip}
+                />
               )}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={loadMore}

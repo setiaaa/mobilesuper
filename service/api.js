@@ -2023,15 +2023,17 @@ export const getListPegawaiExport = createAsyncThunk(
 //Digital Signature
 export const getListComposer = createAsyncThunk(
   "digitalsign/getListComposer",
-  async ({ token, tipe, page, search }) => {
-    const respon = await axiosInstance.get(
-      `${digitalSign}document/composer/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
-      { headers: { Authorization: token } }
-    );
-    return {
-      data: respon?.data.results,
-      tipe: tipe,
-    };
+  async ({ token, tipe, page, search = "" }) => {
+    if (token !== "" && tipe !== undefined) {
+      const respon = await axiosInstance.get(
+        `${digitalSign}document/composer/?tipe_dokumen=${tipe}&limit=${page}&general=${search}`,
+        { headers: { Authorization: token } }
+      );
+      return {
+        data: respon?.data.results,
+        tipe: tipe,
+      };
+    }
   }
 );
 export const getListInProgress = createAsyncThunk(
@@ -2147,9 +2149,9 @@ export const getListRejected = createAsyncThunk(
 
 export const getListTrack = createAsyncThunk(
   "digitalsign/getListTrack",
-  async ({ token, page, search }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}document/track/?limit=${page}&general=${search}`,
+      `${digitalSign}document/track/?limit=${page}&general=${search}&tipe_dokumen=${tipe}`,
       {
         headers: { Authorization: token },
       }

@@ -14,6 +14,11 @@ export const jenisPerizinan = [
     value: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
     group: 3,
   },
+  {
+    key: "Direktorat PKKPRL",
+    value: "Direktorat PKKPRL",
+    group: 4,
+  },
 ];
 
 export const kategoriPerizinan = [
@@ -107,6 +112,16 @@ export const kategoriPerizinan = [
     group: 3,
     jenisPermohonan: [{ key: "berusaha", value: "Berusaha" }],
     alias: "PPKPMA",
+  },
+  {
+    key: 12,
+    value: "Perubahan KKPRL",
+    group: 3,
+    jenisPermohonan: [
+      { key: "berusaha", value: "Berusaha" },
+      { key: "pemerintah", value: "Pemerintah" },
+    ],
+    alias: "PKKPRL",
   },
 ];
 

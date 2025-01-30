@@ -69,6 +69,11 @@ export const CollapsePKRLSigned = ({
       alias: "Direktorat P4K",
       group: 3,
     },
+    {
+      label: "Direktorat PKKPRL",
+      alias: "Direktorat PKKPRL",
+      group: 4,
+    },
   ];
 
   const handleGetDataByDirektorat = (type) => {
@@ -359,7 +364,7 @@ export const CollapsePKRLSigned = ({
                   fontSize: fontSizeResponsive("H4", device),
                 }}
               >
-                Filter Counter
+                Filter Direkorat
               </Text>
               <TouchableOpacity
                 style={{}}
@@ -392,7 +397,9 @@ export const CollapsePKRLSigned = ({
                     }}
                     onPress={() => {
                       setModal(false);
-                      filterHandlerSigned(item.label);
+                      setTimeout(() => {
+                        filterHandlerSigned(item.label);
+                      }, 500);
                     }}
                   >
                     <Text

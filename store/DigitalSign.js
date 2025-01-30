@@ -118,18 +118,20 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListComposer.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.error);
+        console.log(action.error, "error composer");
       })
       .addCase(getListInProgress.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.tipe === "bankom") {
           state.digitalsign.lists = action.payload.data;
         } else {
+          console.log("berhasil");
           state.dokumenlain.lists = action.payload.data;
         }
       })
       .addCase(getListInProgress.pending, (state, action) => {
         state.loading = true;
+        console.log("pending");
       })
       .addCase(getListInProgress.rejected, (state, action) => {
         state.loading = false;
@@ -499,7 +501,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getCounterPKRL.rejected, (state, action) => {
         state.loading = false;
-        Sentry.captureException(action.error);
+        Sentry.captureException(action.error, "counter pkrl");
       })
       .addCase(parafPerizinan.fulfilled, (state, action) => {
         state.loading = false;

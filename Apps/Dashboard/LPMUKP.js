@@ -232,7 +232,7 @@ export const LPMUKP = () => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP2/index.html",
+              uri: "https://portal.kkp.go.id/assets/dashboardExt/DLPMUKP2/index.html",
               headers: {
                 Cookie: first,
               },
@@ -252,7 +252,7 @@ export const LPMUKP = () => {
           <WebView
             originWhitelist={["*"]}
             source={{
-              uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DLPMUKP2/index.html",
+              uri: "https://portal.kkp.go.id/assets/dashboardExt/DLPMUKP2/index.html",
             }}
             style={{ flex: 1 }}
             allowFileAccess={true}
