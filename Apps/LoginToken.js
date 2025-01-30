@@ -470,7 +470,7 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan alamat disposisi
+                      Penambahan menu korespondensi
                     </Text>
                   </View>
 
@@ -497,7 +497,86 @@ export const LoginToken = () => {
                         marginLeft: 10,
                       }}
                     >
-                      Penambahan log disposisi
+                      Perubahan icon forward
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Perubahan icon disposisi di surat masuk
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan digital sign sk
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 10,
+                      alignItems: "center",
+                      marginHorizontal: 40,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.primary,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Penambahan ⁠⁠perizinan PKRL
                     </Text>
                   </View>
 

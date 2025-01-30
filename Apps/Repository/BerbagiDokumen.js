@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -400,7 +401,7 @@ export const BerbagiDokumen = ({ route }) => {
         result: result.assets[0],
       };
       dispatch(postAttachmentRepo(data));
-    } else alert("File terlalu besar, maksimal 100MB");
+    } else Alert.alert("Peringatan!", "File terlalu besar, maksimal 50MB");
   };
 
   const { attachment, loading, status } = useSelector(

@@ -876,7 +876,11 @@ export const Home = () => {
                 padding: 20,
               }}
             >
-              <View style={{ width: 300 }}>
+              <View
+                style={{
+                  width: "84%",
+                }}
+              >
                 <Text
                   style={{
                     color: COLORS.white,

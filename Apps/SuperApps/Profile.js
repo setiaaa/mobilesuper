@@ -594,10 +594,19 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Penambahan alamat disposisi",
+        description: "Penambahan menu korespondensi",
       },
       {
-        description: "Penambahan log disposisi",
+        description: "Perubahan icon forward",
+      },
+      {
+        description: "Perubahan icon disposisi di surat masuk",
+      },
+      {
+        description: "Penambahan digital sign sk",
+      },
+      {
+        description: "Penambahan ⁠⁠perizinan PKRL",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));

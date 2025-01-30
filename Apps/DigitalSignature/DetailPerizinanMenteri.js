@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Alert, TextInput, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -10,10 +16,11 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  getOrientation,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -32,6 +39,7 @@ import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/DigitalSign";
 import { tandaTanganMentri } from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const DetailPerizinanMenteri = ({ route }) => {
   const variant = route.params;
@@ -166,8 +174,12 @@ export const DetailPerizinanMenteri = ({ route }) => {
     }
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
-    <View style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <ScrollView>
           <View
@@ -349,7 +361,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       flexDirection: "row",
                       alignItems: "center",
                       gap: 10,
-                      width: "45%",
+                      width: "49%",
                     }}
                   >
                     <View style={{ width: "100%" }}>
@@ -406,7 +418,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                {/* <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
                       width: "45%",
@@ -433,7 +445,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       </Text>
                     )}
                   </View>
-                </View>
+                </View> */}
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
@@ -467,6 +479,93 @@ export const DetailPerizinanMenteri = ({ route }) => {
                     )}
                   </View>
                 </View>
+
+                <View style={styles.container}>
+                  {(profile?.nip === "196212301990031006" ||
+                    profile?.nip === "69030175" ||
+                    profile?.nip === "88888") && (
+                    <TouchableOpacity
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: COLORS.info,
+                          width: device === "tablet" ? "35%" : 100,
+                        },
+                        styles.selectedCard,
+                      ]}
+                      onPress={() => handleShowAttachment("undangan")}
+                    >
+                      <MaterialIcons
+                        name="insert-drive-file"
+                        size={32}
+                        color={COLORS.white}
+                      />
+                      <Text
+                        style={[
+                          styles.selectedText,
+                          { fontSize: fontSizeResponsive("H4", device) },
+                        ]}
+                      >
+                        Dokumen Undangan
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {(profile?.nip === "69030175" ||
+                    profile?.nip === "88888") && (
+                    <TouchableOpacity
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: COLORS.warning,
+                          width: device === "tablet" ? "35%" : 100,
+                        },
+                        styles.selectedCard,
+                      ]}
+                      onPress={() => handleShowAttachment("memo")}
+                    >
+                      <MaterialIcons
+                        name="insert-drive-file"
+                        size={32}
+                        color={COLORS.white}
+                      />
+                      <Text
+                        style={[
+                          styles.selectedText,
+                          { fontSize: fontSizeResponsive("H4", device) },
+                        ]}
+                      >
+                        Dokumen Memo
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {profile?.nip === "88888" && (
+                    <TouchableOpacity
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: "#33CCCC",
+                          width: device === "tablet" ? "35%" : 100,
+                        },
+                        styles.selectedCard,
+                      ]}
+                      onPress={() => handleShowAttachment("persetujuan")}
+                    >
+                      <MaterialIcons
+                        name="insert-drive-file"
+                        size={32}
+                        color={COLORS.white}
+                      />
+                      <Text
+                        style={[
+                          styles.selectedText,
+                          { fontSize: fontSizeResponsive("H4", device) },
+                        ]}
+                      >
+                        Dokumen Perizinan
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
               {item.approvers.map((data, index) => {
                 if (index > 0) {
@@ -476,7 +575,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                         borderWidth: 1,
                         borderRadius: 4,
                         width: "95%",
-                        marginHorizontal: 10,
+                        marginHorizontal: device === "tablet" ? 18 : 10,
                         marginBottom: 20,
                         borderColor: "#DBDADE",
                         paddingBottom: 10,
@@ -497,7 +596,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                             fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          Approval
+                          Penandatangan
                         </Text>
                       </View>
                       <View
@@ -687,7 +786,13 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                   )}
                                 </View>
                               ) : (
-                                <View style={{ width: "95%" }}>
+                                <View
+                                  style={{
+                                    width: device === "tablet" ? 500 : 240,
+                                    flex: 1,
+                                    justifyContent: "center",
+                                  }}
+                                >
                                   {loading ? (
                                     <View style={{ width: "45%" }}>
                                       <ShimmerPlaceHolder
@@ -701,7 +806,6 @@ export const DetailPerizinanMenteri = ({ route }) => {
                                   ) : (
                                     <Text
                                       style={{
-                                        marginTop: 10,
                                         color: COLORS.lighter,
                                         fontWeight: FONTWEIGHT.bold,
                                         fontSize: fontSizeResponsive(
@@ -735,7 +839,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                 ) : null}
                  */}
           <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
-            {(profile?.nip === "196212301990031006" ||
+            {/* {(profile?.nip === "196212301990031006" ||
               profile?.nip === "69030175" ||
               profile?.nip === "88888") && (
               <TouchableOpacity
@@ -807,7 +911,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                   Lihat Dokumen Perizinan
                 </Text>
               </TouchableOpacity>
-            )}
+            )} */}
 
             {variant.variant === "inprogress" &&
             profile.nip !== "197208122001121002" ? (
@@ -833,7 +937,7 @@ export const DetailPerizinanMenteri = ({ route }) => {
                       fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
-                    Sign
+                    Proses Tanda Tangan
                   </Text>
                 </TouchableOpacity>
               </>
@@ -973,6 +1077,28 @@ export const DetailPerizinanMenteri = ({ route }) => {
           />
         </ScrollView>
       </BottomSheetModalProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    gap: 5,
+    marginTop: 10,
+    justifyContent: "flex-start",
+  },
+  card: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    padding: 10,
+    elevation: 2,
+  },
+
+  selectedText: {
+    marginTop: 8,
+    textAlign: "center",
+    color: COLORS.white,
+  },
+});

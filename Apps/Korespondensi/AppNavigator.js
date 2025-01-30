@@ -229,6 +229,10 @@ import { TambahDokumenTamplate } from "../Repository/TambahDokumenTemplate";
 import ViewerAnnotation from "../Repository/ViewerAnnotation";
 import { DetailTinjauan } from "../Repository/DetailTinjauan";
 import DispositionLembar from "./Form/DispositionLembar";
+import { MainPerizinanMenteri } from "../DigitalSignature/MainPerizinanMenteri";
+import TambahDokumenPerizinan from "../DigitalSignature/TambahDokumenPerizinan";
+import { DetailPKRL } from "../DigitalSignature/DetailPKRL";
+import { DetailDokumenSK } from "../DigitalSignature/DetailDokumenSK";
 
 const Stack = createNativeStackNavigator();
 
@@ -1601,16 +1605,44 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="PerizinanMenteri"
             component={PerizinanMenteri}
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="DetailPerizinanMenteri"
             component={DetailPerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPKRL"
+            component={DetailPKRL}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailDokumenSK"
+            component={DetailDokumenSK}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainPerizinanMenteri"
+            component={MainPerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahDokumenPerizinan"
+            component={TambahDokumenPerizinan}
             options={{
               headerShown: false,
             }}

@@ -128,6 +128,10 @@ import { KalenderSatker } from "../Apps/KalenderSatker/KalenderSatker";
 import MyTabBarKalSatker from "../Apps/KalenderSatker/BottomTabsKalSatker";
 import MyTabBarGrupKal from "../Apps/Kalender/BottomTabsKalGrupPersonal";
 import { Tinjauan } from "../Apps/Repository/Tinjauan";
+import { PerizinanMenteri } from "../Apps/DigitalSignature/PerizinanMenteri";
+import { MyTabPerizinanMenteri } from "../Apps/DigitalSignature/BottomTabsPerizinanMenteri";
+import { PKRL } from "../Apps/DigitalSignature/PKRL";
+import { DokumenSK } from "../Apps/DigitalSignature/DokumenSK";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -468,6 +472,11 @@ export const BottomTabsDigitalSign = () => {
             component={Verifikasi}
             options={{ headerShown: false }}
           />
+          <Tab.Screen
+            name="DokumenSK"
+            component={DokumenSK}
+            options={{ headerShown: false }}
+          />
         </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
@@ -500,6 +509,35 @@ export const BottomTabsSertifikat = () => {
           <Tab.Screen
             name="SertifikatEksternal"
             component={SertifikatEksternal}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsPerizinanMenteri = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View
+        style={{
+          height:
+            Platform.OS === "ios" ? "100%" : useWindowDimensions().height - 10,
+        }}
+      >
+        <Tab.Navigator
+          tabBar={(props) => <MyTabPerizinanMenteri {...props} />}
+          initialRouteName="PerizinanMenteri"
+        >
+          <Tab.Screen
+            name="PerizinanMenteri"
+            component={PerizinanMenteri}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="PKRL"
+            component={PKRL}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

@@ -1,11 +1,15 @@
 import React from "react";
-import { Modal, Platform } from "react-native";
+import { Modal, Platform, useWindowDimensions } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
@@ -19,6 +23,10 @@ export const ModalSubmit = ({
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
   return (
     <Modal
       animationType="fade"
@@ -39,22 +47,35 @@ export const ModalSubmit = ({
           style={{
             backgroundColor: COLORS.white,
             alignItems: "center",
-            justifyContent: "center",
-            width: 325,
-            height: 350,
+            justifyContent: "space-evenly",
+            width: device === "tablet" ? "70%" : "80%",
+            height:
+              device === "tablet" && orientation === "landscape"
+                ? "80%"
+                : "60%",
           }}
         >
           <TouchableOpacity
             onPress={() => dispatch(setStatus(""))}
-            style={{ marginTop: 5, paddingRight: "80%" }}
+            style={{
+              marginTop: 20,
+              paddingRight: device === "tablet" ? "87%" : "80%",
+            }}
           >
-            <Ionicons name="close-outline" size={24} />
+            <Ionicons
+              name="close-outline"
+              size={device === "tablet" ? 40 : 24}
+            />
           </TouchableOpacity>
           {status === "berhasil" ? (
             <>
               <View style={{ marginBottom: 40 }}>
                 <Image
                   source={require("../../assets/superApp/alertBerhasil.png")}
+                  style={{
+                    width: device === "tablet" ? 450 : 300,
+                    height: device === "tablet" ? 350 : 200,
+                  }}
                 />
                 <View
                   style={{
@@ -63,8 +84,17 @@ export const ModalSubmit = ({
                     marginTop: 20,
                   }}
                 >
-                  <Text>Berhasil!</Text>
-                  <Text style={{ marginTop: 5 }}>{messageSuccess}</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Berhasil!
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {messageSuccess}
+                  </Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
@@ -94,7 +124,13 @@ export const ModalSubmit = ({
             </>
           ) : (
             <View style={{ marginBottom: 40 }}>
-              <Image source={require("../../assets/superApp/alertGagal.png")} />
+              <Image
+                source={require("../../assets/superApp/alertGagal.png")}
+                style={{
+                  width: device === "tablet" ? 450 : 300,
+                  height: device === "tablet" ? 350 : 200,
+                }}
+              />
               <View
                 style={{
                   justifyContent: "center",
@@ -102,8 +138,12 @@ export const ModalSubmit = ({
                   marginTop: 20,
                 }}
               >
-                <Text>Terjadi Kesalahan!</Text>
-                <Text>{message}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Terjadi Kesalahan!
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {message}
+                </Text>
               </View>
               <TouchableOpacity
                 onPress={() => dispatch(setStatus(""))}
@@ -123,7 +163,14 @@ export const ModalSubmit = ({
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ok</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ok
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

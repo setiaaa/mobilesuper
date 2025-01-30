@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import { useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
@@ -15,7 +15,7 @@ import { Config } from "../../constants/config";
 import moment from "moment";
 
 export const PdfPerisai = ({ route }) => {
-  const { item } = route.params;
+  const { item, tipe } = route.params;
   const webViewRef = useRef(null);
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -29,12 +29,9 @@ export const PdfPerisai = ({ route }) => {
     });
   }, []);
 
-  console.log(item.attachments[0]?.file);
-
   const currentDate = moment(new Date(), "YYYY-MM-DD HH:mm:ss").format(
     DATETIME.LONG_DATE
   );
-  console.log(currentDate);
 
   let myInjectedJs = `(function(){ 
     let attach = window.localStorage.getItem('attachment');
@@ -89,6 +86,7 @@ export const PdfPerisai = ({ route }) => {
   })
   `;
 
+  console.log(item);
   let inject = `
   (function(){ 
     let attach = window.localStorage.getItem('attachment');
@@ -135,9 +133,9 @@ $("#submit").click(function () {
       "passphrase": paraphrase,
       "id_documents": ["${item.id}"],
       "sign_date": "${currentDate}",
-  }
+    }
   $.ajax({
-    url: " ${Config.base_url}digitalsign/document/approve2/",
+    url: "${Config.base_url}digitalsign/document/approve2/",
     type: 'PUT',
     contentType: 'application/json; charset=utf-8',
     headers: {
@@ -146,10 +144,9 @@ $("#submit").click(function () {
     data: JSON.stringify(data),
     success: function (data, textStatus, xhr) {
       if (data.success) {
-        alert("berhasil")
-        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign"}));
+        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Berhasil Ditandatangani", state: "berhasil"}));
       } else {
-        alert("gagal")
+        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Gagal Ditandatangani", state: "gagal"}));
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -211,7 +208,35 @@ $("#submit").click(function () {
         injectedJavaScript={inject}
         onMessage={(event) => {
           const data = JSON.parse(event.nativeEvent.data);
-          navigation.navigate(data.key);
+          if (data.state === "berhasil") {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          } else {
+            Alert.alert(
+              "Peringatan!",
+              data.value,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => navigation.navigate(data.key),
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          }
         }}
       />
     </>
