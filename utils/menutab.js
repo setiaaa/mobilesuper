@@ -132,6 +132,7 @@ import { PerizinanMenteri } from "../Apps/DigitalSignature/PerizinanMenteri";
 import { MyTabPerizinanMenteri } from "../Apps/DigitalSignature/BottomTabsPerizinanMenteri";
 import { PKRL } from "../Apps/DigitalSignature/PKRL";
 import { DokumenSK } from "../Apps/DigitalSignature/DokumenSK";
+import { DashboardPKRL } from "../Apps/DigitalSignature/DashboardPKRL";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -538,6 +539,11 @@ export const BottomTabsPerizinanMenteri = () => {
           <Tab.Screen
             name="PKRL"
             component={PKRL}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DashboardPKRL"
+            component={DashboardPKRL}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

@@ -36,6 +36,7 @@ import {
   putBatalkanSK,
   putTandaTanganSK,
   putReleaseSK,
+  getDasboardListPKRL,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -67,6 +68,7 @@ const DigitalSignSlice = createSlice({
     attachmentDokPerizinan: [],
     attachmentLampiran: [],
     nomorDokPerizinan: "",
+    listDashboard: {},
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -517,6 +519,18 @@ const DigitalSignSlice = createSlice({
       .addCase(getCounterPKRL.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.error, "counter pkrl");
+      })
+      .addCase(getDasboardListPKRL.fulfilled, (state, action) => {
+        state.loading = false;
+        state.listDashboard = action.payload;
+        console.log("berhasil");
+      })
+      .addCase(getDasboardListPKRL.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDasboardListPKRL.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error, "list dashboard pkrl");
       })
       .addCase(parafPerizinan.fulfilled, (state, action) => {
         state.loading = false;
