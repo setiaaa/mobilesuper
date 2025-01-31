@@ -383,7 +383,7 @@ export const CollapsePKRLSignIn = ({
                       setModal(false);
                       setTimeout(() => {
                         filterHandlerInProgress(item.label);
-                      }, 500);
+                      }, 1000);
                     }}
                   >
                     <Text

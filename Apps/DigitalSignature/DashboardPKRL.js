@@ -29,6 +29,7 @@ import { BarChart } from "react-native-gifted-charts";
 import { CardListPKRL } from "../../components/CardListPKRL";
 import { CardListDashboardPKRL } from "../../components/CardListDashboardPKRL";
 import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
 
 export const DashboardPKRL = () => {
   const { device } = useSelector((state) => state.apps);
@@ -58,7 +59,7 @@ export const DashboardPKRL = () => {
     }
   }, [token, dashboard, currentTab]);
 
-  const { counterPKRL, listDashboard } = useSelector(
+  const { counterPKRL, listDashboard, loading } = useSelector(
     (state) => state.digitalsign
   );
 
@@ -227,6 +228,7 @@ export const DashboardPKRL = () => {
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
+      {loading ? <Loading /> : null}
       <ScrollView>
         <View
           style={{
@@ -427,8 +429,9 @@ export const DashboardPKRL = () => {
                   search: search,
                   kategori: e.alias,
                 })
-              );
-              setModal(true);
+              ).then(() => {
+                setModal(true); // Tampilkan modal setelah dispatch selesai
+              });
               setListTitle(e.alias);
             }}
             maxValue={handleMaxValue(
@@ -500,8 +503,9 @@ export const DashboardPKRL = () => {
                   search: search,
                   kategori: e.alias,
                 })
-              );
-              setModal(true);
+              ).then(() => {
+                setModal(true); // Tampilkan modal setelah dispatch selesai
+              });
               setListTitle(e.alias);
             }}
           />
@@ -572,8 +576,9 @@ export const DashboardPKRL = () => {
                   search: search,
                   kategori: e.alias,
                 })
-              );
-              setModal(true);
+              ).then(() => {
+                setModal(true); // Tampilkan modal setelah dispatch selesai
+              });
               setListTitle(e.alias);
             }}
           />
@@ -638,8 +643,9 @@ export const DashboardPKRL = () => {
                   search: search,
                   kategori: e.alias,
                 })
-              );
-              setModal(true);
+              ).then(() => {
+                setModal(true); // Tampilkan modal setelah dispatch selesai
+              });
               setListTitle(e.alias);
             }}
           />

@@ -53,6 +53,15 @@ export const CollapsePKRLSigned = ({
     return count;
   };
 
+  const filteredApiData = Object.keys(counter?.data ?? {})
+    .filter((key) => typeof counter?.data?.[key] === "object") // Hanya ambil yang objek
+    .map((key) => ({
+      label: key,
+      done: counter?.data?.[key]?.done,
+    }));
+
+  console.log(filteredApiData);
+
   const jenisPerizinan = [
     {
       label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
@@ -399,7 +408,7 @@ export const CollapsePKRLSigned = ({
                       setModal(false);
                       setTimeout(() => {
                         filterHandlerSigned(item.label);
-                      }, 500);
+                      }, 1000);
                     }}
                   >
                     <Text
