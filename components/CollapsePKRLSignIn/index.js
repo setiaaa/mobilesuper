@@ -39,6 +39,30 @@ export const CollapsePKRLSignIn = ({
   const [title, setTitle] = useState("Need Sign");
   const [modal, setModal] = useState(false);
 
+  // Data default yang ingin ditampilkan jika counter.data kosong
+  const defaultData = [
+    { done: 0, label: "Direktorat Jaskel - Jasa Kelautan" },
+    {
+      done: 0,
+      label: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
+    },
+    {
+      done: 0,
+      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+    },
+    { done: 0, label: "Direktorat PRL" },
+  ];
+
+  const filteredApiData =
+    Object.keys(counter?.data ?? {}).length > 0
+      ? Object.keys(counter?.data)
+          .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
+          .map((key) => ({
+            label: key,
+            need_sign: counter?.data[key]?.need_sign ?? 0, // Gunakan 0 jika done tidak ada
+          }))
+      : defaultData; // Jika counter.data kosong, kembalikan data default
+
   const jenisPerizinan = [
     {
       label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
@@ -364,7 +388,7 @@ export const CollapsePKRLSignIn = ({
               </TouchableOpacity>
             </View>
 
-            <View style={{ marginVertical: 10 }}>
+            {/* <View style={{ marginVertical: 10 }}>
               {jenisPerizinan?.map((item) => {
                 return (
                   <TouchableOpacity
@@ -424,7 +448,72 @@ export const CollapsePKRLSignIn = ({
                   </TouchableOpacity>
                 );
               })}
-            </View>
+            </View> */}
+
+            {filteredApiData.length !== 0 ? (
+              <View style={{ marginVertical: 10 }}>
+                {filteredApiData?.map((item) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        backgroundColor:
+                          filterDirektorat === item.label
+                            ? COLORS.ExtraDivinder
+                            : null,
+                        padding: 5,
+                        borderRadius: 5,
+                        marginHorizontal: device === "tablet" ? "2%" : "5%",
+                      }}
+                      onPress={() => {
+                        setModal(false);
+                        setTimeout(() => {
+                          filterHandlerInProgress(item.label);
+                        }, 1000);
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H5", device),
+                          width: "84%",
+                        }}
+                      >
+                        {item?.label}
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          gap: 5,
+                          flex: 1,
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: device === "tablet" ? 20 : 10,
+                            width: device === "tablet" ? 20 : 10,
+                            borderRadius: 10,
+                            backgroundColor: COLORS.infoDanger,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: device === "tablet" ? 30 : 15,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          {item.need_sign}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ) : (
+              <ListEmpty />
+            )}
           </View>
         </View>
       </Modal>

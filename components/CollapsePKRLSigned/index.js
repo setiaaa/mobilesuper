@@ -53,14 +53,30 @@ export const CollapsePKRLSigned = ({
     return count;
   };
 
-  const filteredApiData = Object.keys(counter?.data ?? {})
-    .filter((key) => typeof counter?.data?.[key] === "object") // Hanya ambil yang objek
-    .map((key) => ({
-      label: key,
-      done: counter?.data?.[key]?.done,
-    }));
+  // Data default yang ingin ditampilkan jika counter.data kosong
+  const defaultData = [
+    { done: 0, label: "Direktorat Jaskel - Jasa Kelautan" },
+    {
+      done: 0,
+      label: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
+    },
+    {
+      done: 0,
+      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+    },
+    { done: 0, label: "Direktorat PRL" },
+  ];
 
-  console.log(filteredApiData);
+  // Fungsi untuk memproses data
+  const filteredApiData =
+    Object.keys(counter?.data ?? {}).length > 0
+      ? Object.keys(counter?.data)
+          .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
+          .map((key) => ({
+            label: key,
+            done: counter?.data[key]?.done ?? 0, // Gunakan 0 jika done tidak ada
+          }))
+      : defaultData; // Jika counter.data kosong, kembalikan data default
 
   const jenisPerizinan = [
     {
@@ -389,8 +405,8 @@ export const CollapsePKRLSigned = ({
               </TouchableOpacity>
             </View>
 
-            <View style={{ marginVertical: 10 }}>
-              {jenisPerizinan?.map((item) => {
+            {/* <View style={{ marginVertical: 10 }}>
+              {filteredApiData?.map((item) => {
                 return (
                   <TouchableOpacity
                     style={{
@@ -448,7 +464,72 @@ export const CollapsePKRLSigned = ({
                   </TouchableOpacity>
                 );
               })}
-            </View>
+            </View> */}
+
+            {filteredApiData.length !== 0 ? (
+              <View style={{ marginVertical: 10 }}>
+                {filteredApiData?.map((item) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        backgroundColor:
+                          filterDirektoratSigned === item.label
+                            ? COLORS.ExtraDivinder
+                            : null,
+                        padding: 5,
+                        borderRadius: 5,
+                        marginHorizontal: device === "tablet" ? "2%" : "5%",
+                      }}
+                      onPress={() => {
+                        setModal(false);
+                        setTimeout(() => {
+                          filterHandlerSigned(item.label);
+                        }, 1000);
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H5", device),
+                          width: "84%",
+                        }}
+                      >
+                        {item?.label}
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          gap: 5,
+                          flex: 1,
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: device === "tablet" ? 20 : 10,
+                            width: device === "tablet" ? 20 : 10,
+                            borderRadius: 10,
+                            backgroundColor: COLORS.success,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: device === "tablet" ? 30 : 15,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          {item.done}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ) : (
+              <ListEmpty />
+            )}
           </View>
         </View>
       </Modal>
