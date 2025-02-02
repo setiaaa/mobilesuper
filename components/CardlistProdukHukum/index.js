@@ -34,7 +34,8 @@ export const CardListProdukHukum = ({
     <View
       key={item.id}
       style={{
-        backgroundColor: "white",
+        backgroundColor:
+          item?.state == "revision" ? COLORS.ExtraDivinder : "white",
         borderRadius: 16,
         flex: 1,
         marginTop: 10,
@@ -58,6 +59,7 @@ export const CardListProdukHukum = ({
           getDetail(item.id);
           navigation.navigate("DetailProdukHukum");
         }}
+        disabled={item.state == "revision"}
       >
         {variant === "inprogress" && nip !== "197208122001121002" ? (
           <Checkbox
