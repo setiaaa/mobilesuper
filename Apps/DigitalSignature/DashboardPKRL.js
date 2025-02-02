@@ -1,5 +1,5 @@
 import { useNavigation, useNavigationState } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -23,13 +23,19 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTokenValue } from "../../service/session";
-import { getCounterPKRL, getDasboardListPKRL } from "../../service/api";
+import {
+  getCounterPKRL,
+  getDasboardListPKRL,
+  getExportPKRL,
+} from "../../service/api";
 import { jenisPerizinan, kategoriPerizinan } from "./dataDokPerizinan";
 import { BarChart } from "react-native-gifted-charts";
 import { CardListPKRL } from "../../components/CardListPKRL";
 import { CardListDashboardPKRL } from "../../components/CardListDashboardPKRL";
 import ListEmpty from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 
 export const DashboardPKRL = () => {
   const { device } = useSelector((state) => state.apps);
@@ -56,10 +62,11 @@ export const DashboardPKRL = () => {
   useEffect(() => {
     if (currentTab === "DashboardPKRL") {
       dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
+      dispatch(getExportPKRL({ token }));
     }
   }, [token, dashboard, currentTab]);
 
-  const { counterPKRL, listDashboard, loading } = useSelector(
+  const { counterPKRL, listDashboard, loading, fileExport } = useSelector(
     (state) => state.digitalsign
   );
 
@@ -226,6 +233,37 @@ export const DashboardPKRL = () => {
     );
   };
 
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
+
+  const shareReport = async (fileUrl) => {
+    const namafile = fileUrl.split("/");
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + namafile[namafile.length - 1],
+        { headers: { Authorization: token } }
+      );
+      try {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveFile(uri);
+      } catch (e) {
+        console.error("download error:", e);
+      }
+    } catch (e) {}
+  };
+
+  const saveFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/vnd.ms-excel",
+        dialogTitle: "Share xls",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
+
   return (
     <View style={{ position: "relative", flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -267,6 +305,34 @@ export const DashboardPKRL = () => {
             >
               Perizinan Menteri
             </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: 20,
+              padding: 5,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                shareReport(
+                  fileExport.file,
+                  "application/vnd.ms-excel",
+                  "sample.xls"
+                );
+              }}
+            >
+              <Ionicons
+                name="share-outline"
+                size={device === "tablet" ? 30 : 18}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 

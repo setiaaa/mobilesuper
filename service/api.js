@@ -2564,6 +2564,21 @@ export const getDasboardListPKRL = createAsyncThunk(
   }
 );
 
+export const getExportPKRL = createAsyncThunk(
+  "digitalsign/getExportPKRL",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}export-pkrl/?&direktorat=&kategori=`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",
