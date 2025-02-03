@@ -51,6 +51,7 @@ import moment from "moment";
 import * as LocalAuthentication from "expo-local-authentication";
 import { CardListProdukHukum } from "../../components/CardlistProdukHukum";
 import { Dropdown } from "../../components/DropDown";
+import { setCounterCat } from "../../store/ProdukHukum";
 
 export const ProdukHukum = () => {
   const [token, setToken] = useState("");
@@ -58,8 +59,8 @@ export const ProdukHukum = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [variant, setVariant] = useState({
-    key: "list-saya",
-    value: "List Saya",
+    key: "",
+    value: "",
   });
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
@@ -72,7 +73,7 @@ export const ProdukHukum = () => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getCounterProdukHukum({ token: token }));
+      dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
       dispatch(
         getListProdukHukum({ token: token, tipe: variant?.key, search: search })
       );
@@ -80,29 +81,48 @@ export const ProdukHukum = () => {
   );
 
   useEffect(() => {
-    dispatch(getCounterProdukHukum({ token: token }));
+    if (profile?.roles_access?.includes("UPLOAD.PRODUK.HUKUM")) {
+      setIsConseptor(true);
+      dispatch(setCounterCat(1));
+      dispatch(getCounterProdukHukum({ token: token, category: 1 }));
+      setVariant({ key: "revision", value: "Revisi" });
+    } else {
+      setIsConseptor(false);
+      dispatch(setCounterCat(0));
+      dispatch(getCounterProdukHukum({ token: token, category: 0 }));
+
+      setVariant({ key: "paraf", value: "Paraf" });
+    }
     dispatch(
       getListProdukHukum({ token: token, tipe: variant?.key, search: search })
     );
   }, [token]);
-
-  const { lists, loading, status, counter } = useSelector(
+  const [isConceptor, setIsConseptor] = useState(false);
+  const { lists, loading, status, counter, counterCat } = useSelector(
     (state) => state.produkHukum
   );
-
   const [refreshing, setRefreshing] = useState(false);
-  const dropdownList = [
-    { key: "list-saya", value: "List Saya" },
+  const dropdownConceptor = [
     { key: "revision", value: "Revisi" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
+  ];
+  const dropdownMenKP = [
     { key: "paraf", value: "Paraf" },
-    { key: "need-sign", value: "Belum Ditandatangan" },
-    { key: "signed", value: "Sudah Ditandatangan" },
+    { key: "need-sign", value: "Perlu TTDE" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
+  ];
+  const dropdownDefault = [
+    { key: "paraf", value: "Paraf" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
   ];
 
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getCounterProdukHukum({ token: token }));
+        dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
         dispatch(
           getListProdukHukum({
             token: token,
@@ -204,19 +224,6 @@ export const ProdukHukum = () => {
     setVariant(item);
     dispatch(
       getListProdukHukum({ token: token, tipe: item?.key, search: search })
-    );
-  };
-  const filterHandlerInProgress = () => {
-    setVariant({ key: "need-sign", value: "Belum Tandatangan" });
-    dispatch(
-      getListProdukHukum({ token: token, tipe: "need-sign", search: search })
-    );
-  };
-
-  const filterHandlerSigned = () => {
-    setVariant({ key: "signed", value: "Sudah Ditandatangani" });
-    dispatch(
-      getListProdukHukum({ token: token, tipe: "signed", search: search })
     );
   };
 
@@ -351,15 +358,166 @@ export const ProdukHukum = () => {
               alignSelf: "center",
             }}
           >
-            <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
+            <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
+              {counterCat != 1 && (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      variant?.key === "paraf"
+                        ? COLORS.secondaryLighter
+                        : COLORS.bgLightGrey,
+                    borderRadius: 8,
+                    width:
+                      profile?.nip == "88888"
+                        ? "23%"
+                        : counterCat == 0
+                        ? "31%"
+                        : "48%",
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                    justifyContent: "center",
+                    padding: 5,
+                  }}
+                  onPress={() =>
+                    filterHandler({ key: "paraf", value: "Paraf" })
+                  }
+                >
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Perlu Paraf
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        padding: 5,
+                        backgroundColor: COLORS.warningLight,
+                        borderRadius: 50,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={"file-alert-outline"}
+                        size={device === "tablet" ? 40 : 30}
+                        color={COLORS.warning}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          // fontSize: fontSizeResponsive("H1", device),
+                          fontSize: 40,
+                        }}
+                      >
+                        {counter?.data?.paraf}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+              {profile?.nip == "88888" && (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      variant?.key === "need-sign"
+                        ? COLORS.secondaryLighter
+                        : COLORS.bgLightGrey,
+                    borderRadius: 8,
+                    width:
+                      profile?.nip == "88888"
+                        ? "23%"
+                        : counterCat == 0
+                        ? "31%"
+                        : "48%",
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                    justifyContent: "center",
+                    padding: 5,
+                  }}
+                  onPress={() =>
+                    filterHandler({ key: "need-sign", value: "Perlu TTDE" })
+                  }
+                >
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Perlu TTDE
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        padding: 5,
+                        backgroundColor: COLORS.infoDangerLight,
+                        borderRadius: 50,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={"file-alert-outline"}
+                        size={device === "tablet" ? 40 : 30}
+                        color={COLORS.infoDanger}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          // fontSize: fontSizeResponsive("H1", device),
+                          fontSize: 40,
+                        }}
+                      >
+                        {counter?.data?.need_sign}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 style={{
                   backgroundColor:
-                    variant?.key === "need-sign"
+                    variant?.key === "monitoring"
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "49%",
+                  width:
+                    profile?.nip == "88888"
+                      ? "23%"
+                      : counterCat == 0
+                      ? "31%"
+                      : "48%",
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -369,7 +527,9 @@ export const ProdukHukum = () => {
                   justifyContent: "center",
                   padding: 5,
                 }}
-                onPress={() => filterHandlerInProgress()}
+                onPress={() =>
+                  filterHandler({ key: "monitoring", value: "Monitoring" })
+                }
               >
                 <Text
                   style={{
@@ -380,7 +540,7 @@ export const ProdukHukum = () => {
                     textAlign: "left",
                   }}
                 >
-                  Need Sign
+                  Dalam Proses
                 </Text>
                 <View
                   style={{
@@ -393,14 +553,14 @@ export const ProdukHukum = () => {
                   <View
                     style={{
                       padding: 5,
-                      backgroundColor: COLORS.infoDangerLight,
+                      backgroundColor: COLORS.infoLight,
                       borderRadius: 50,
                     }}
                   >
                     <MaterialCommunityIcons
                       name={"file-alert-outline"}
                       size={device === "tablet" ? 40 : 30}
-                      color={COLORS.infoDanger}
+                      color={COLORS.info}
                     />
                   </View>
                   <View>
@@ -411,23 +571,11 @@ export const ProdukHukum = () => {
                         fontSize: 40,
                       }}
                     >
-                      {counter?.data?.need_sign}
+                      {counter?.data?.monitoring}
                     </Text>
                   </View>
                 </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.grey,
-                    fontWeight: FONTWEIGHT.bold,
-                    letterSpacing: -1, // Sesuaikan nilai
-                  }}
-                >
-                  Dokumen Belum Ditandatangani
-                </Text>
               </TouchableOpacity>
-
               <TouchableOpacity
                 style={{
                   backgroundColor:
@@ -435,7 +583,12 @@ export const ProdukHukum = () => {
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "49%",
+                  width:
+                    profile?.nip == "88888"
+                      ? "23%"
+                      : counterCat == 0
+                      ? "31%"
+                      : "48%",
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -445,7 +598,9 @@ export const ProdukHukum = () => {
                   justifyContent: "center",
                   padding: 5,
                 }}
-                onPress={() => filterHandlerSigned()}
+                onPress={() =>
+                  filterHandler({ key: "signed", value: "Selesai" })
+                }
               >
                 <Text
                   style={{
@@ -456,7 +611,7 @@ export const ProdukHukum = () => {
                     textAlign: "left",
                   }}
                 >
-                  Signed
+                  Telah Selesai
                 </Text>
                 <View
                   style={{
@@ -491,17 +646,6 @@ export const ProdukHukum = () => {
                     </Text>
                   </View>
                 </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.grey,
-                    fontWeight: FONTWEIGHT.bold,
-                    letterSpacing: -1, // Sesuaikan nilai
-                  }}
-                >
-                  Dokumen Sudah Ditandatangani
-                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -537,7 +681,13 @@ export const ProdukHukum = () => {
             )} */}
             <View style={styles.dropdown}>
               <Dropdown
-                data={dropdownList}
+                data={
+                  counterCat == 1
+                    ? dropdownConceptor
+                    : profile?.nip == "88888"
+                    ? dropdownMenKP
+                    : dropdownDefault
+                }
                 placeHolder={"Filter"}
                 backgroundColor={COLORS.white}
                 selected={variant}
@@ -561,6 +711,7 @@ export const ProdukHukum = () => {
                     isSelected={isSelected}
                     setSelection={setSelection}
                     nip={profile.nip}
+                    disabled={counterCat == 1}
                   />
                 </View>
               )}

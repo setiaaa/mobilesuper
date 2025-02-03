@@ -1,9 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Alert,
-  TextInput,
-  View,
-} from "react-native";
+import { Alert, TextInput, View } from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -28,10 +24,7 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/ProdukHukum";
-import {
-  parafProdukHukum,
-  revisionProdukHukum,
-} from "../../service/api";
+import { parafProdukHukum, revisionProdukHukum } from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";
@@ -203,7 +196,7 @@ export const DetailProdukHukum = ({ route }) => {
     const isApproved = tmp_approved_by.find((data) => data == profile?.nip);
     setIsAuthors(found && !isApproved);
   };
-  const listParaf = (data) => {
+  const listParaf = (data, index) => {
     return (
       <View
         key={data?.id}
@@ -314,7 +307,7 @@ export const DetailProdukHukum = ({ route }) => {
                 </View>
               )}
 
-              {/* {detail?.sequence > index ? (
+              {detail?.sequence >= index && detail.state != "uplooad_doc" ? (
                 <View
                   style={{
                     flexDirection: "row",
@@ -349,11 +342,11 @@ export const DetailProdukHukum = ({ route }) => {
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Sudah Diparaf
+                      Sudah Paraf
                     </Text>
                   </View>
                 </View>
-              ) : detail?.sequence <= index ? (
+              ) : detail?.sequence <= index && detail.state != "upload_doc" ? (
                 <View
                   style={{
                     flexDirection: "row",
@@ -388,11 +381,11 @@ export const DetailProdukHukum = ({ route }) => {
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
-                      Belum Diparaf
+                      Belum Paraf
                     </Text>
                   </View>
                 </View>
-              ) : null} */}
+              ) : null}
             </View>
           </View>
         </View>

@@ -19,10 +19,14 @@ const ProdukHukumSlice = createSlice({
     status: "",
     loading: false,
     counter: {},
+    counterCat: 0,
     message: "",
     error: "",
   },
   reducers: {
+    setCounterCat: (state, action) => {
+      state.counterCat = action.payload;
+    },
     setListProdukHukum: (state, action) => {
       state.lists = action.payload;
     },
@@ -89,7 +93,6 @@ const ProdukHukumSlice = createSlice({
       .addCase(revisionProdukHukum.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
-        console.log(action.payload);
         state.message = action.payload?.data?.result;
       })
       .addCase(revisionProdukHukum.pending, (state, action) => {
@@ -116,6 +119,7 @@ const ProdukHukumSlice = createSlice({
   },
 });
 
-export const { setStatus, resetList, resetDetail } = ProdukHukumSlice.actions;
+export const { setCounterCat, setStatus, resetList, resetDetail } =
+  ProdukHukumSlice.actions;
 
 export default ProdukHukumSlice.reducer;
