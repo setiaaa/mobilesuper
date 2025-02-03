@@ -25,7 +25,6 @@ export const CardListProdukHukum = ({
   nip,
   disabled,
 }) => {
-  console.log(variant);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [modal, setModal] = useState(false);
@@ -106,7 +105,7 @@ export const CardListProdukHukum = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Belum Paraf
+                  {data?.nip == "88888" ? "Perlu Disetujui" : "Belum Paraf"}
                 </Text>
               </View>
             </View>
@@ -162,7 +161,7 @@ export const CardListProdukHukum = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Sudah Paraf
+                  Sudah {data?.nip == "88888" ? "Disetujui" : "Paraf"}
                 </Text>
               </View>
             </View>

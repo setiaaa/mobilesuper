@@ -91,7 +91,10 @@ export const ProdukHukum = () => {
       dispatch(setCounterCat(0));
       dispatch(getCounterProdukHukum({ token: token, category: 0 }));
 
-      setVariant({ key: "paraf", value: "Paraf" });
+      setVariant({
+        key: "paraf",
+        value: profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
+      });
     }
     dispatch(
       getListProdukHukum({ token: token, tipe: variant?.key, search: search })
@@ -108,7 +111,7 @@ export const ProdukHukum = () => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Paraf" },
+    { key: "paraf", value: "Perlu Disetujui" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -383,7 +386,11 @@ export const ProdukHukum = () => {
                     padding: 5,
                   }}
                   onPress={() =>
-                    filterHandler({ key: "paraf", value: "Paraf" })
+                    filterHandler({
+                      key: "paraf",
+                      value:
+                        profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
+                    })
                   }
                 >
                   <Text
@@ -395,7 +402,7 @@ export const ProdukHukum = () => {
                       textAlign: "left",
                     }}
                   >
-                    Perlu Paraf
+                    Perlu {profile?.nip == "88888" ? "Disetujui" : "Paraf"}
                   </Text>
                   <View
                     style={{
