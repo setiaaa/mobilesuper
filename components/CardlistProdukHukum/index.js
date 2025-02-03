@@ -259,6 +259,40 @@ export const CardListProdukHukum = ({
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
+                width: "25%",
+              }}
+            >
+              No Dokumen
+            </Text>
+            <Text> :</Text>
+            <View>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {item?.extra_attributes?.no_produk_hukum
+                  ? item?.extra_attributes.no_produk_hukum
+                  : "-"}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              gap: 5,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                textAlign: "justify",
+                fontWeight: FONTWEIGHT.bold,
+                flexWrap: "wrap",
+                width: "25%",
               }}
             >
               Status
@@ -294,38 +328,40 @@ export const CardListProdukHukum = ({
             </View>
           </View>
 
-          {item.state != "done" && variant?.key != "revision" && (
-            <TouchableOpacity
-              style={{ gap: 5, width: "100%" }}
-              onPress={() => {
-                setModal(true);
-              }}
-            >
-              <View
-                style={{
-                  marginTop: 15,
-                  backgroundColor: COLORS.primary,
-                  padding: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 8,
-                  width: "100%",
+          {item.state != "done" &&
+            variant?.key != "revision" &&
+            variant?.key != "paraf" && (
+              <TouchableOpacity
+                style={{ gap: 5, width: "100%" }}
+                onPress={() => {
+                  setModal(true);
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontWeight: FONTWEIGHT.normal,
-                    textAlign: "auto",
-                    fontSize: fontSizeResponsive("H4", device),
-                    color: COLORS.white,
-                    fontWeight: FONTWEIGHT.bold,
+                    marginTop: 15,
+                    backgroundColor: COLORS.primary,
+                    padding: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 8,
+                    width: "100%",
                   }}
                 >
-                  Lihat Paraf
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.normal,
+                      textAlign: "auto",
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.white,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Lihat Paraf
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
 
           <Modal
             animationType="fade"
