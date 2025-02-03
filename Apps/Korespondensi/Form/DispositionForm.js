@@ -49,6 +49,9 @@ import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import SignatureScreen from "react-native-signature-canvas";
+import { formEselonI } from "../../../components/FormDispo/formEselon1";
+import { formEselonII } from "../../../components/FormDispo/formEselon2";
+import { Ionicons } from "@expo/vector-icons";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
@@ -92,6 +95,18 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const snapPoint = useMemo(() => [50, "100%"], []);
 
   const [pilihanKepada, setPilihanKepada] = useState([]);
+  const [headerDispo, setHeaderDispo] = useState({});
+
+  const [collapse, setCollapse] = useState({
+    petunjuk: true,
+  });
+  const toggleCollapse = (index) => {
+    setCollapse((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   useEffect(() => {
     if (stateConfig.title === "Addressbook\nDisposition") {
       setPilihanKepada(addressbook.selected);
@@ -136,17 +151,19 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   async function getHeader() {
     header = await headerToken();
   }
-  const renderItem = ({ item, index }) => (
+  const renderItemTindakan = ({ item, index }) => (
     <View style={{ alignItems: "flex-start" }} key={index}>
       <Checkbox.Item
         mode="android"
-        label={item.name}
+        position="leading"
+        color={COLORS.primary}
         status={
           selectedTindakan?.findIndex((data) => data == item.name) != -1
             ? "checked"
             : "unchecked"
         }
-        color={COLORS.primary}
+        label={item.name}
+        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
         onPress={() => {
           dispatch(
             setNotaTindakan({
@@ -164,9 +181,11 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                 )
               );
         }}
-        position="trailing"
-        labelStyle={styles.labelCheckbox}
-        style={{ color: GlobalStyles.colors.primary }}
+        style={{
+          color: GlobalStyles.colors.primary,
+          width: "100%",
+          paddingLeft: -10,
+        }}
       />
     </View>
   );
@@ -175,6 +194,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     try {
       const response = await getHTTP(nde_api.dispoaction);
       setTindakanList(response.data.action);
+      setHeaderDispo(response.data);
       dispatch(
         setUnker({
           key: response?.data?.unker_id,
@@ -380,9 +400,14 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         <ScrollView scrollEnabled={scrollEnabled}>
           {loadingOverlay}
           <View style={styles.screen}>
-            <View style={styles.containerLabel}>
-              <Text style={styles.title}>Disposisi</Text>
-            </View>
+            {(headerDispo?.type == "1" || headerDispo?.type == "a") &&
+              formEselonI(detail, headerDispo)}
+            {(headerDispo?.type == "b" ||
+              headerDispo?.type == "c" ||
+              headerDispo?.type == "2" ||
+              headerDispo?.type == "3" ||
+              headerDispo?.type == "4") &&
+              formEselonII(detail, headerDispo)}
             {dispoMulti.map((item, index) => (
               <Card key={index} style={styles.containerCard}>
                 {item.btnDel && (
@@ -393,16 +418,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                 <View style={styles.containerTitle}>
                   <Text style={styles.title}>Disposisi Kepada</Text>
                   {pilihanKepada != undefined && pilihanKepada.length != 0 && (
-                    <IconButton
-                      icon="plus"
-                      // onPress={() => {
-                      //   navigation.navigate("Addressbook", {
-                      //     title: "Addressbook\nDisposition",
-                      //     multiple: true,
-                      //     indexDispo: index,
-                      //     tipe: "receivers",
-                      //   });
-                      // }}
+                    <Ionicons
+                      name="add"
+                      size={24}
                       onPress={() => {
                         const config = {
                           title: "Addressbook\nDisposition",
@@ -484,55 +502,31 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   )}
                 </View>
                 <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Aksi Disposisi</Text>
-                  {selectedTindakan.length != 0 && (
-                    <IconButton
-                      icon="plus"
-                      onPress={() => {
-                        dispatch(switchTindakan(index));
-                        bottomSheetRefNotaTindakan?.current?.present();
-                      }}
-                    />
-                  )}
-                </View>
-                <View>
-                  <View style={styles.titleLabel}>
-                    {selectedTindakan.length == 0 && (
-                      <TextInput
-                        mode="outlined"
-                        theme={{ roundness: 6 }}
-                        placeholder="Pilih Aksi"
-                        right={
-                          <TextInput.Icon
-                            size={24}
-                            icon="menu-down"
-                            onPress={() => {
-                              if (senderAttr.code.length == 0) {
-                                Alert.alert(
-                                  "Peringatan!",
-                                  "Silakan pilih jabatan pada Disposisi Sebagai"
-                                );
-                              } else {
-                                dispatch(switchTindakan(index));
-                                bottomSheetRefNotaTindakan?.current?.present();
-                              }
-                            }}
-                          />
-                        }
-                        editable={false}
-                        style={styles.titleLabel}
-                        allowFontScaling={false}
+                  <Text style={styles.title}>Petunjuk</Text>
+                  <Text onPress={() => toggleCollapse("petunjuk")}>
+                    {collapse["petunjuk"] ? (
+                      <Ionicons
+                        name="remove-circle-outline"
+                        size={24}
+                        onPress={toggleCollapse[item.header]}
                       />
+                    ) : (
+                      <Ionicons name="add-circle-outline" size={24} />
                     )}
-                    {selectedTindakan.length != 0 &&
-                      selectedTindakan.map((item, index) => (
-                        <Text key={index}>- {item}</Text>
-                      ))}
-                  </View>
+                  </Text>
                 </View>
-
+                {collapse["petunjuk"] && (
+                  <View>
+                    <FlatList
+                      data={tindakanList}
+                      renderItem={renderItemTindakan}
+                      keyExtractor={(item) => item.code}
+                      nestedScrollEnabled
+                    />
+                  </View>
+                )}
                 <View style={styles.containerTitle}>
-                  <Text style={styles.title}>Catatan Disposisi</Text>
+                  <Text style={styles.title}>Catatan</Text>
                 </View>
                 <TextInput
                   value={item.nota_tindakan_free1}
@@ -615,9 +609,15 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             <Text style={styles.titleLabelTodo}>Tanggal</Text>
                             <Button
                               style={{
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignItems: "center",
                                 height: 55,
                                 borderColor: GlobalStyles.colors.black,
                                 borderRadius: 6,
+                              }}
+                              labelStyle={{
+                                fontSize: GlobalStyles.font.sm,
                               }}
                               mode="outlined"
                               textColor="black"
@@ -662,6 +662,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                                   borderColor: GlobalStyles.colors.tertiery50,
                                 },
                               ]}
+                              itemTextStyle={{
+                                fontSize: GlobalStyles.font.sm,
+                              }}
                               placeholderStyle={styles.placeholderStyle}
                               selectedTextStyle={styles.selectedTextStyle}
                               // inputSearchStyle={styles.inputSearchStyle}
@@ -736,7 +739,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                 )}
               </Card>
             ))}
-            {btnAdd && (
+            {/* {btnAdd && (
               <Button
                 onPress={addDispo}
                 mode="contained"
@@ -747,25 +750,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
               >
                 Add Disposition
               </Button>
-            )}
-            <View style={styles.containerLabel}>
-              <Text style={styles.title}>Informasi Surat</Text>
-            </View>
-            <View style={{ marginBottom: 16 }}>
-              <DetailAgenda
-                style={{
-                  borderRadius: 6,
-                  borderWidth: 1,
-                  borderColor: GlobalStyles.colors.tertiery50,
-                  backgroundColor: GlobalStyles.colors.tertiery20,
-                }}
-                showBody={false}
-                noAgenda={noAgenda ? noAgenda : detail?.agenda_number}
-                data={detail}
-                tipe={tipe ? tipe : route?.params?.tipe}
-                title={title ? title : route?.params?.title}
-              />
-            </View>
+            )}*/}
             <Button
               mode="contained"
               style={{ backgroundColor: GlobalStyles.colors.tertiery }}
@@ -775,67 +760,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
             </Button>
           </View>
         </ScrollView>
-
-        <BottomSheetModalProvider>
-          <SafeAreaView>
-            <View>
-              <BottomSheetModal
-                name="download"
-                ref={bottomSheetRefNotaTindakan}
-                index={1}
-                snapPoints={snapPoint}
-                keyboardBehavior={
-                  Platform?.OS == "android" ? "fillParent" : "interactive"
-                }
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backgroundStyle={{
-                  backgroundColor: COLORS.primary,
-                }}
-                handleIndicatorStyle={{
-                  backgroundColor: COLORS.white,
-                }}
-              >
-                <View style={styles.containerRow}>
-                  <Text
-                    style={[
-                      styles.titleLabel,
-                      { color: GlobalStyles.colors.textWhite },
-                    ]}
-                  >
-                    Catatan
-                  </Text>
-                  <TouchableOpacity onPress={confirmRemoveAll}>
-                    <Text style={{ color: GlobalStyles.colors.textWhite }}>
-                      Hapus Semua
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.containerTindakanChecked}>
-                  <FlatList
-                    data={tindakanList}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => index}
-                  />
-                  <Button
-                    mode="contained"
-                    style={[
-                      {
-                        backgroundColor: COLORS.primary,
-                        marginBottom: 16,
-                      },
-                    ]}
-                    onPress={() =>
-                      bottomSheetRefNotaTindakan?.current?.dismiss()
-                    }
-                  >
-                    Simpan
-                  </Button>
-                </View>
-              </BottomSheetModal>
-            </View>
-          </SafeAreaView>
-        </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </>
   );
@@ -849,9 +773,9 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.tertiery20,
   },
   containerCard: {
-    paddingHorizontal: 12,
+    padding: 20,
+    borderRadius: 16,
     marginBottom: 16,
-    borderRadius: 6,
     backgroundColor: GlobalStyles.colors.tertiery10,
   },
   containerTitle: {
@@ -930,7 +854,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   placeholderStyle: {
-    fontSize: GlobalStyles.font.md,
+    fontSize: GlobalStyles.font.sm,
   },
   selectedTextStyle: {
     fontSize: GlobalStyles.font.md,

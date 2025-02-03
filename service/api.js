@@ -2368,6 +2368,73 @@ export const getDetailSertifikatEksternal = createAsyncThunk(
   }
 );
 
+export const getListProdukHukum = createAsyncThunk(
+  "digitalsign/getListProdukHukum",
+  async ({ token, tipe }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}permen/?category=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      next: respon?.data?.next,
+      previous: respon?.data?.previous,
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getDetailProdukHukum = createAsyncThunk(
+  "digitalsign/getDetailProdukHukum",
+  async ({ token, id }) => {
+    const respon = await axiosInstance.get(`${digitalSign}permen/${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const parafProdukHukum = createAsyncThunk(
+  "digitalsign/parafProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/paraf/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const revisionProdukHukum = createAsyncThunk(
+  "digitalsign/revisionProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/${data.id}/revision/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const ttdeProdukHukum = createAsyncThunk(
+  "digitalsign/ttdeProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/${data.id}/ttde/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
 export const getSummaryCount = createAsyncThunk(
   "document/summary/",
   async (token) => {
@@ -2539,6 +2606,20 @@ export const getCounterPKRL = createAsyncThunk(
   async ({ token, dashboard }) => {
     const respon = await axiosInstance.get(
       `${digitalSign}pkrl-count/?type=${dashboard}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+export const getCounterProdukHukum = createAsyncThunk(
+  "digitalsign/getCounterProdukHukum",
+  async ({ token, category }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}permen/count-dashboard/?category=${category}`,
       {
         headers: { Authorization: token },
       }

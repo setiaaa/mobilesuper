@@ -16,6 +16,7 @@ import KebijakanReducer from "./Kebijakan";
 import DashboardReducer from "./Dashboard";
 import PengetahuanReducer from "./Pengetahuan";
 import DigitalSignReducer from "./DigitalSign";
+import ProdukHukumReducer from "./ProdukHukum";
 import PegawaiReducer from "./Pegawai";
 import EventReducer from "./Event";
 import AddressbookKKP from "./AddressbookKKP";
@@ -51,6 +52,7 @@ export const store = configureStore({
     dashboard: DashboardReducer,
     pengetahuan: PengetahuanReducer,
     digitalsign: DigitalSignReducer,
+    produkHukum: ProdukHukumReducer,
     Pegawai: PegawaiReducer,
     event: EventReducer,
     addressBookKKP: AddressbookKKP,
