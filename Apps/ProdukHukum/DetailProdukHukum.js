@@ -40,6 +40,8 @@ export const DetailProdukHukum = ({ route }) => {
   const [isAuthors, setIsAuthors] = useState();
   const [passphrase, setPassphrase] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [comment, setComment] = useState("");
+  const [bottomInput, setBottomInput] = useState("");
   useEffect(() => {
     //set posisi author dan view pdf
     if (Object.keys(detail)?.length != 0) {
@@ -80,7 +82,8 @@ export const DetailProdukHukum = ({ route }) => {
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-  const bottomSheetAttach = () => {
+  const bottomSheetAttach = (tipe) => {
+    setBottomInput(tipe);
     bottomSheetModalRef.current?.present();
   };
 
@@ -104,7 +107,7 @@ export const DetailProdukHukum = ({ route }) => {
 
   const handleRevision = () => {
     const payload = {
-      comment: "Harap Diperbaiki",
+      comment: comment,
     };
     const data = {
       id: detail?.id,
@@ -493,8 +496,8 @@ export const DetailProdukHukum = ({ route }) => {
                         <Text
                           style={{ fontSize: fontSizeResponsive("H2", device) }}
                         >
-                          {detail?.extra_attributes?.no_permen
-                            ? detail?.extra_attributes?.no_permen
+                          {detail?.extra_attributes?.no_produk_hukum
+                            ? detail?.extra_attributes?.no_produk_hukum
                             : "-"}
                         </Text>
                       )}
@@ -698,54 +701,40 @@ export const DetailProdukHukum = ({ route }) => {
                   </View>
                 </View>
               </View>
-              {detail?.attachments?.findIndex(
-                (item) => item.description === "footer"
-              ) != -1 &&
-                detail?.attachments?.findIndex(
-                  (item) => item.description === "archived"
-                ) != -1 && (
+              {detail?.attachments?.length != 0 && (
+                <View
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.white,
+                    marginHorizontal: "5%",
+                    borderRadius: 8,
+                    marginTop: 20,
+                  }}
+                >
                   <View
                     style={{
-                      width: "90%",
-                      backgroundColor: COLORS.white,
-                      marginHorizontal: "5%",
-                      borderRadius: 8,
-                      marginTop: 20,
+                      borderRadius: 4,
+                      margin: 20,
+                      borderColor: "#DBDADE",
                     }}
                   >
-                    <View
-                      style={{
-                        borderRadius: 4,
-                        margin: 20,
-                        borderColor: "#DBDADE",
-                      }}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H1", device),
-                          }}
-                        >
-                          {profile?.nip != detail?.senders?.nip &&
-                          profile?.nip !=
-                            detail?.approvers[detail?.approvers?.length - 1]
-                              ?.nip &&
-                          detail?.state != "done"
-                            ? "Draft"
-                            : profile?.nip != detail?.senders?.nip &&
-                              profile?.nip !=
-                                detail?.approvers[detail?.approvers?.length - 1]
-                                  ?.nip &&
-                              detail?.state == "done"
-                            ? "Arsip Draft"
-                            : detail?.state == "ttde"
-                            ? "Updated Draft"
-                            : "Dokumen"}{" "}
-                          Produk Hukum
-                        </Text>
-                      </View>
-                      {dataViewPdf && (
+                    <View>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H1", device),
+                        }}
+                      >
+                        {detail?.state == "done"
+                          ? "Dokumen"
+                          : detail?.state == "ttde"
+                          ? "Updated Draft"
+                          : "Draft"}{" "}
+                        Produk Hukum
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                      {detail?.state == "done" && (
                         <TouchableOpacity
                           style={{
                             marginTop: 10,
@@ -754,15 +743,24 @@ export const DetailProdukHukum = ({ route }) => {
                             borderRadius: 8,
                             justifyContent: "center",
                             alignItems: "center",
-                            width: device === "tablet" ? "49%" : "48%", // Kontrol lebar agar responsif
+                            width: "49%", // Kontrol lebar agar responsif
                           }}
                           onPress={() => {
                             navigation.navigate("PdfViewer", {
-                              data: dataViewPdf?.file,
+                              data: detail?.attachments[0]?.file,
                               type: "DokumenLain",
                             });
                           }}
                         >
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H1", device),
+                              marginBottom: 10,
+                            }}
+                          >
+                            Final Dokumen
+                          </Text>
                           <Image
                             source={require("../../assets/superApp/pdf.png")}
                             style={{ height: 50, width: 50 }} // Ukuran gambar
@@ -774,7 +772,7 @@ export const DetailProdukHukum = ({ route }) => {
                               marginTop: 5,
                             }}
                           >
-                            {dataViewPdf?.name}
+                            {detail?.attachments[0]?.name}
                           </Text>
                           <Text
                             style={{
@@ -783,13 +781,82 @@ export const DetailProdukHukum = ({ route }) => {
                               marginTop: 5,
                             }}
                           >
-                            {(dataViewPdf?.file_size / 1024).toFixed(2)} KB
+                            {(detail?.attachments[0]?.file_size / 1024).toFixed(
+                              2
+                            )}{" "}
+                            KB
                           </Text>
                         </TouchableOpacity>
                       )}
+                      {
+                        <TouchableOpacity
+                          style={{
+                            marginTop: 10,
+                            padding: 10,
+                            backgroundColor: COLORS.bgLightGrey,
+                            borderRadius: 8,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "49%", // Kontrol lebar agar responsif
+                          }}
+                          onPress={() => {
+                            navigation.navigate("PdfViewer", {
+                              data:
+                                detail?.state != "done"
+                                  ? detail?.attachments[0]?.file
+                                  : detail?.attachments[1]?.file,
+                              type: "DokumenLain",
+                            });
+                          }}
+                        >
+                          {detail?.state == "done" && (
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H1", device),
+                                marginBottom: 10,
+                              }}
+                            >
+                              Arsip Draft
+                            </Text>
+                          )}
+                          <Image
+                            source={require("../../assets/superApp/pdf.png")}
+                            style={{ height: 50, width: 50 }} // Ukuran gambar
+                          />
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                              textAlign: "center",
+                              marginTop: 5,
+                            }}
+                          >
+                            {detail?.state != "done"
+                              ? detail?.attachments[0]?.name
+                              : detail?.attachments[1]?.name}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                              textAlign: "center",
+                              marginTop: 5,
+                            }}
+                          >
+                            {detail?.state != "done"
+                              ? (
+                                  detail?.attachments[0]?.file_size / 1024
+                                ).toFixed(2)
+                              : (
+                                  detail?.attachments[1]?.file_size / 1024
+                                ).toFixed(2)}{" "}
+                            KB
+                          </Text>
+                        </TouchableOpacity>
+                      }
                     </View>
                   </View>
-                )}
+                </View>
+              )}
               <View
                 style={{
                   width: "90%",
@@ -1011,7 +1078,9 @@ export const DetailProdukHukum = ({ route }) => {
                   }}
                   onPress={() => {
                     // handleBiometricAuth();
-                    handleRevision();
+                    // handleRevision();
+
+                    bottomSheetAttach("revisi");
                   }}
                 >
                   <Text
@@ -1021,7 +1090,7 @@ export const DetailProdukHukum = ({ route }) => {
                       fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
-                    Revisi Dokumen
+                    Revisi
                   </Text>
                 </TouchableOpacity>
               </>
@@ -1064,7 +1133,9 @@ export const DetailProdukHukum = ({ route }) => {
                     }}
                   >
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
-                      Tanda Tangan Produk Hukum
+                      {bottomInput == "revisi"
+                        ? "Kembalikan Produk Hukum"
+                        : "Tanda Tangan Produk Hukum"}
                     </Text>
                   </View>
                 </View>
@@ -1081,61 +1152,81 @@ export const DetailProdukHukum = ({ route }) => {
                     margin: 20,
                   }}
                 >
-                  <TextInput
-                    style={{
-                      width: "90%",
-                      height: 40,
-                      borderRadius: 6,
-                      borderColor: "#D0D5DD",
-                    }}
-                    onChangeText={(e) => {
-                      setPassphrase(e);
-                    }}
-                    placeholder="Masukkan Passphrase"
-                    defaultValue={passphrase}
-                    secureTextEntry={showPass}
-                    autoFocus
-                  />
-                  <View
-                    style={{
-                      alignItems: "flex-end",
-                      flex: 1,
-                      marginRight: 10,
-                      justifyContent: "center",
-                    }}
-                  >
-                    {showPass == false ? (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setShowPass(true);
+                  {bottomInput == "revisi" ? (
+                    <TextInput
+                      style={{
+                        width: "100%",
+                        height: 40,
+                        borderRadius: 6,
+                        borderColor: "#D0D5DD",
+                      }}
+                      onChangeText={(e) => {
+                        setComment(e);
+                      }}
+                      placeholder="Masukkan Komentar"
+                      defaultValue={comment}
+                      autoFocus
+                    />
+                  ) : (
+                    <>
+                      <TextInput
+                        style={{
+                          width: "90%",
+                          height: 40,
+                          borderRadius: 6,
+                          borderColor: "#D0D5DD",
+                        }}
+                        onChangeText={(e) => {
+                          setPassphrase(e);
+                        }}
+                        placeholder="Masukkan Passphrase"
+                        defaultValue={passphrase}
+                        secureTextEntry={showPass}
+                        autoFocus
+                      />
+                      <View
+                        style={{
+                          alignItems: "flex-end",
+                          flex: 1,
+                          marginRight: 10,
+                          justifyContent: "center",
                         }}
                       >
-                        <Ionicons
-                          name="eye-off-sharp"
-                          size={device === "tablet" ? 30 : 24}
-                          color={COLORS.grey}
-                        />
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setShowPass(false);
-                        }}
-                      >
-                        <Ionicons
-                          name="eye-sharp"
-                          size={device === "tablet" ? 30 : 24}
-                          color={COLORS.grey}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  </View>
+                        {showPass == false ? (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setShowPass(true);
+                            }}
+                          >
+                            <Ionicons
+                              name="eye-off-sharp"
+                              size={device === "tablet" ? 30 : 24}
+                              color={COLORS.grey}
+                            />
+                          </TouchableOpacity>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setShowPass(false);
+                            }}
+                          >
+                            <Ionicons
+                              name="eye-sharp"
+                              size={device === "tablet" ? 30 : 24}
+                              color={COLORS.grey}
+                            />
+                          </TouchableOpacity>
+                        )}
+                      </View>
+                    </>
+                  )}
                 </View>
 
                 <TouchableOpacity
                   style={{
                     width: "90%",
-                    backgroundColor: COLORS.danger,
+                    backgroundColor:
+                      bottomInput == "revisi" ? COLORS.orange : COLORS.danger,
                     height: 50,
                     marginBottom: 40,
                     borderRadius: 6,
@@ -1145,7 +1236,11 @@ export const DetailProdukHukum = ({ route }) => {
                   }}
                   onPress={() => {
                     bottomSheetAttachClose();
-                    handleTTDE();
+                    if (bottomInput == "revisi") {
+                      handleRevision();
+                    } else {
+                      handleTTDE();
+                    }
                   }}
                 >
                   <Text
@@ -1155,7 +1250,7 @@ export const DetailProdukHukum = ({ route }) => {
                       fontWeight: 500,
                     }}
                   >
-                    Tanda Tangan
+                    {bottomInput == "revisi" ? "Kirim Revisi" : "Tanda Tangan"}
                   </Text>
                 </TouchableOpacity>
               </View>

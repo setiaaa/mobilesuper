@@ -259,6 +259,38 @@ export const CardListProdukHukum = ({
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
+                width:"25%"
+              }}
+            >
+              No Dokumen
+            </Text>
+            <Text> :</Text>
+            <View
+            >
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {item?.extra_attributes?.no_produk_hukum?item?.extra_attributes.no_produk_hukum:'-'}
+              </Text>
+            </View>
+          </View><View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              gap: 5,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                textAlign: "justify",
+                fontWeight: FONTWEIGHT.bold,
+                flexWrap: "wrap",
+                width:"25%"
               }}
             >
               Status
