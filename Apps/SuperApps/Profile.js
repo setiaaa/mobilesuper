@@ -465,6 +465,24 @@ export const Profile = () => {
       //   },
       // },
       {
+        title: "Produk Hukum",
+        navigation: "ProdukHukum",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      },
+      {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
         image: require("../../assets/superApp/surveylayanan.png"),

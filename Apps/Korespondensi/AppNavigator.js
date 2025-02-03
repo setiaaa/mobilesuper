@@ -233,6 +233,8 @@ import { MainPerizinanMenteri } from "../DigitalSignature/MainPerizinanMenteri";
 import TambahDokumenPerizinan from "../DigitalSignature/TambahDokumenPerizinan";
 import { DetailPKRL } from "../DigitalSignature/DetailPKRL";
 import { DetailDokumenSK } from "../DigitalSignature/DetailDokumenSK";
+import { ProdukHukum } from "../ProdukHukum/ProdukHukum";
+import { DetailProdukHukum } from "../ProdukHukum/DetailProdukHukum";
 
 const Stack = createNativeStackNavigator();
 
@@ -1671,6 +1673,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="TambahDokumenTamplate"
             component={TambahDokumenTamplate}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ProdukHukum"
+            component={ProdukHukum}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailProdukHukum"
+            component={DetailProdukHukum}
             options={{
               headerShown: false,
             }}

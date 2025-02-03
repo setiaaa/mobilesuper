@@ -35,7 +35,6 @@ export const Dropdown = ({
     } else if (press == 1 && editable) {
       setPress(0);
     }
-
   };
   const [pressData, setPressData] = useState("");
   const [displayData, setDisplayData] = useState("");
@@ -105,7 +104,7 @@ export const Dropdown = ({
                   style={{
                     width: "70%",
                     fontSize: fontSizeResponsive("H4", device),
-                    color: displayData !== '' ? textColor : COLORS.grey,
+                    color: displayData !== "" ? textColor : COLORS.grey,
                   }}
                 >
                   {displayData !== "" ? displayData : placeHolder}
@@ -186,9 +185,10 @@ export const Dropdown = ({
               nestedScrollEnabled={true}
             >
               {filterData.length > 0 ? (
-                filterData.map((kategori) => {
+                filterData.map((kategori, i) => {
                   return (
                     <TouchableOpacity
+                      key={i}
                       onPress={() => handlePressData(kategori)}
                       style={{
                         alignItems: "center",

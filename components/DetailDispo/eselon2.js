@@ -5,7 +5,7 @@ import { Card, Text } from "react-native-paper";
 import { getTemplateHeaderDispo } from "../../utils/templateDispo";
 import moment from "moment";
 
-export const detailEselonII = (data, checked) => {
+export const detailEselonII = (data, checked, device) => {
   return (
     <ScrollView nestedScrollEnabled>
       <View style={styles.screen}>
@@ -22,6 +22,95 @@ export const detailEselonII = (data, checked) => {
               borderRadius: 16,
             }}
           >
+            <View
+              style={{
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingBottom: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Dari
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.obj && data?.obj?.senders[0].title
+                  ? data?.obj?.senders[0].title
+                  : data?.obj?.senders[0].name}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                paddingVertical: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Hal
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.obj?.subject}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingVertical: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                No Agenda
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.agenda_number}
+              </Text>
+            </View>
             <View
               style={{
                 flexDirection: "row",
@@ -145,7 +234,7 @@ export const detailEselonII = (data, checked) => {
                 flexDirection: "row",
                 borderBottomWidth: 2,
                 borderBottomColor: "#DBDADE",
-                paddingBottom: 10,
+                paddingVertical: 10,
               }}
             >
               <Text
@@ -172,9 +261,7 @@ export const detailEselonII = (data, checked) => {
             <View
               style={{
                 flexDirection: "row",
-                borderBottomWidth: 2,
-                borderBottomColor: "#DBDADE",
-                paddingVertical: 10,
+                paddingTop: 10,
               }}
             >
               <Text
@@ -198,93 +285,6 @@ export const detailEselonII = (data, checked) => {
                 {data?.obj?.attachmment?.length == 0
                   ? "-"
                   : data?.obj?.attachment}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                borderBottomWidth: 2,
-                borderBottomColor: "#DBDADE",
-                paddingVertical: 10,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  width: "40%",
-                  paddingRight: 20,
-                }}
-              >
-                Dari
-              </Text>
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 400,
-                  width: "60%",
-                  paddingRight: 20,
-                }}
-              >
-                {data?.obj && data?.obj?.senders[0].title
-                  ? data?.obj?.senders[0].title
-                  : data?.obj?.senders[0].name}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                paddingVertical: 10,
-                borderBottomWidth: 2,
-                borderBottomColor: "#DBDADE",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  width: "40%",
-                  paddingRight: 20,
-                }}
-              >
-                Hal
-              </Text>
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 400,
-                  width: "60%",
-                  paddingRight: 20,
-                }}
-              >
-                {data?.obj?.subject}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                paddingVertical: 10,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  width: "40%",
-                  paddingRight: 20,
-                }}
-              >
-                No Agenda
-              </Text>
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: 400,
-                  width: "60%",
-                  paddingRight: 20,
-                }}
-              >
-                {data?.agenda_number}
               </Text>
             </View>
           </View>

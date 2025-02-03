@@ -69,8 +69,6 @@ function DispositionLembar({ route, id, data, tipe }) {
   const [scrollEnabled, setScrollEnabled] = useState();
   const [stylusFile, setStylusFile] = useState("");
 
-  let urlNote = nde_api.baseurl + "crsbe" + data?.attachments[0]?.file;
-  let newUrlNote = urlNote.replace("/api/", "/");
   const [receiversDispo, setReceiversDispo] = useState({});
   const [collapse, setCollapse] = useState({
     addressbook: true,
@@ -641,6 +639,7 @@ function DispositionLembar({ route, id, data, tipe }) {
           detailMenteriDef(data, {
             receiverDispo: receiverDispo,
             actionDispo: actionDispo,
+            device,
           })}
         {tipes == "detail" &&
           data?.sender?.type == "m" &&
@@ -648,23 +647,32 @@ function DispositionLembar({ route, id, data, tipe }) {
           detailMenteri(data, {
             receiverDispo: receiverDispo,
             actionDispo: actionDispo,
+            device,
           })}
         {tipes == "detail" &&
           (data?.sender?.type == "1" || data?.sender?.type == "a") &&
-          detailEselonI(data, {
-            receiverDispo: receiverDispo,
-            actionDispo: actionDispo,
-          })}
+          detailEselonI(
+            data,
+            {
+              receiverDispo: receiverDispo,
+              actionDispo: actionDispo,
+            },
+            device
+          )}
         {tipes == "detail" &&
           (data?.sender?.type == "b" ||
             data?.sender?.type == "c" ||
             data?.sender?.type == "2" ||
             data?.sender?.type == "3" ||
             data?.sender?.type == "4") &&
-          detailEselonII(data, {
-            receiverDispo: receiverDispo,
-            actionDispo: actionDispo,
-          })}
+          detailEselonII(
+            data,
+            {
+              receiverDispo: receiverDispo,
+              actionDispo: actionDispo,
+            },
+            device
+          )}
         {tipes != "detail" && (
           <ScrollView scrollEnabled={scrollEnabled} nestedScrollEnabled={true}>
             {loadingOverlay}
@@ -1171,9 +1179,9 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.tertiery20,
   },
   containerCard: {
-    padding: 12,
+    padding: 20,
+    borderRadius: 16,
     marginBottom: 16,
-    borderRadius: 6,
     backgroundColor: GlobalStyles.colors.tertiery10,
   },
   containerTitle: {
