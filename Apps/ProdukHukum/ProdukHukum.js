@@ -93,7 +93,7 @@ export const ProdukHukum = () => {
 
       setVariant({
         key: "paraf",
-        value: profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
+        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
       });
     }
     dispatch(
@@ -111,7 +111,7 @@ export const ProdukHukum = () => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Perlu Disetujui" },
+    { key: "paraf", value: "Perlu Persetujuan" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -389,7 +389,7 @@ export const ProdukHukum = () => {
                     filterHandler({
                       key: "paraf",
                       value:
-                        profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
+                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
                     })
                   }
                 >
@@ -402,7 +402,7 @@ export const ProdukHukum = () => {
                       textAlign: "left",
                     }}
                   >
-                    Perlu {profile?.nip == "88888" ? "Disetujui" : "Paraf"}
+                    Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
                   </Text>
                   <View
                     style={{
@@ -664,7 +664,7 @@ export const ProdukHukum = () => {
               backgroundColor: "white",
               marginHorizontal: "5%",
               width: "90%",
-              marginTop: 10,
+              marginVertical: 10,
               borderRadius: 8,
             }}
           >
@@ -718,7 +718,7 @@ export const ProdukHukum = () => {
                     isSelected={isSelected}
                     setSelection={setSelection}
                     nip={profile.nip}
-                    disabled={counterCat == 1}
+                    disabled={counterCat == 1 && variant.key == "revision"}
                   />
                 </View>
               )}
