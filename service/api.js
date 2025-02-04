@@ -2370,9 +2370,9 @@ export const getDetailSertifikatEksternal = createAsyncThunk(
 
 export const getListProdukHukum = createAsyncThunk(
   "digitalsign/getListProdukHukum",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}permen/?category=${tipe}`,
+      `${digitalSign}permen/?category=${tipe}&limit=${page}&search=${search}`,
       { headers: { Authorization: token } }
     );
     return {

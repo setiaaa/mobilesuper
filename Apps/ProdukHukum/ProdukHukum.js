@@ -75,7 +75,12 @@ export const ProdukHukum = () => {
     useCallback(() => {
       dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
       dispatch(
-        getListProdukHukum({ token: token, tipe: variant?.key, search: search })
+        getListProdukHukum({
+          token: token,
+          tipe: variant?.key,
+          page: page,
+          search: search,
+        })
       );
     }, [variant])
   );
@@ -97,7 +102,12 @@ export const ProdukHukum = () => {
       });
     }
     dispatch(
-      getListProdukHukum({ token: token, tipe: variant?.key, search: search })
+      getListProdukHukum({
+        token: token,
+        tipe: variant?.key,
+        page: page,
+        search: search,
+      })
     );
   }, [token]);
   const [isConceptor, setIsConseptor] = useState(false);
@@ -126,17 +136,9 @@ export const ProdukHukum = () => {
     try {
       if (token !== "") {
         dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
-        dispatch(
-          getListProdukHukum({
-            token: token,
-            tipe: variant?.key,
-            page: page,
-            search: search,
-          })
-        );
       }
     } catch (error) {}
-
+    setSearch("");
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -226,7 +228,12 @@ export const ProdukHukum = () => {
   const filterHandler = (item) => {
     setVariant(item);
     dispatch(
-      getListProdukHukum({ token: token, tipe: item?.key, search: search })
+      getListProdukHukum({
+        token: token,
+        tipe: item?.key,
+        page: page,
+        search: search,
+      })
     );
   };
 
@@ -337,6 +344,7 @@ export const ProdukHukum = () => {
               color={COLORS.primary}
             />
             <TextInput
+              defaultValue={search}
               placeholder={"Cari"}
               placeholderTextColor={COLORS.tertiary}
               style={{
