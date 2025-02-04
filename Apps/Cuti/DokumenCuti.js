@@ -31,6 +31,7 @@ export const DokumenCuti = () => {
   const navigation = useNavigation();
   const [variant, SetVariant] = useState("Draft");
   const dispatch = useDispatch();
+  const [page, setPage] = useState(10);
   const { profile } = useSelector((state) => state.superApps);
 
   const [token, setToken] = useState("");
@@ -43,9 +44,9 @@ export const DokumenCuti = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getArsipCuti(token));
+      dispatch(getArsipCuti({ token: token, variant: variant, page: page }));
     }
-  }, [token]);
+  }, [token, variant, page]);
   const { arsip, loading } = useSelector((state) => state.cuti);
   const arsipLists = arsip.lists.data;
 
@@ -76,7 +77,7 @@ export const DokumenCuti = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getArsipCuti(token));
+        dispatch(getArsipCuti({ token: token, variant: variant, page: page }));
       }
     } catch (error) {}
 
@@ -84,7 +85,7 @@ export const DokumenCuti = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token]);
+  }, [token, variant, page]);
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -105,6 +106,14 @@ export const DokumenCuti = () => {
     setFilterData(sortedDescending);
     setAscending(false);
     setIsFiltered(true);
+  };
+
+  const loadMore = () => {
+    if (filterData.length !== 0) {
+      if (filterData.length % 5 === 0) {
+        setPage(page + 10);
+      }
+    }
   };
 
   const { device } = useSelector((state) => state.apps);
@@ -214,216 +223,40 @@ export const DokumenCuti = () => {
           <View style={{ gap: 10, flex: 1 }}>
             <View
               style={{
-                backgroundColor: "white",
+                paddingVertical: 10,
                 marginTop: 10,
                 borderRadius: 8,
+                paddingHorizontal: 10,
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                backgroundColor: COLORS.white,
+                gap: 5,
               }}
             >
-              <View
+              {/* On Progress */}
+              <TouchableOpacity
                 style={{
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  gap: 30,
+                  width: "48%",
+                  borderColor:
+                    variant === "Draft" ? COLORS.info : COLORS.ExtraDivinder,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                  marginBottom: 10,
                 }}
+                onPress={() => SetVariant("Draft")}
               >
-                {/* <TouchableOpacity
+                <View
                   style={{
-                    maxWidth: 80,
-                    borderColor:
-                      variant === "Draft"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    flexDirection: "row",
                     gap: 10,
+                    alignItems: "center",
                   }}
-                  onPress={() => SetVariant("Draft")}
                 >
                   <View
                     style={{
-                      backgroundColor: COLORS.grey,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="calendar-outline"
-                      size={18}
-                      color={COLORS.white}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color:
-                        variant === "Draft"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      marginTop: 40,
-                    }}
-                  >
-                    Draft
-                  </Text>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity
-                  style={{
-                    maxWidth: 60,
-                    borderColor:
-                      variant === "Onprogress"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                  onPress={() => SetVariant("Onprogress")}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.orange,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="calendar-outline"
-                      size={18}
-                      color={COLORS.white}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color:
-                        variant === "Onprogress"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      marginTop: 40,
-                    }}
-                  >
-                    Sedang Proses
-                  </Text>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity
-                  style={{
-                    maxWidth: 120,
-                    borderColor:
-                      variant === "Completed"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                  onPress={() => SetVariant("Completed")}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.success,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="calendar-outline"
-                      size={18}
-                      color={COLORS.white}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color:
-                        variant === "Completed"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      marginTop: 40,
-                    }}
-                  >
-                    Disetujui
-                  </Text>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity
-                  style={{
-                    maxWidth: 60,
-                    borderColor:
-                      variant === "Rejected"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                  onPress={() => SetVariant("Rejected")}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.danger,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      top: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="calendar-outline"
-                      size={18}
-                      color={COLORS.white}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color:
-                        variant === "Rejected"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      marginTop: 40,
-                    }}
-                  >
-                    Tidak Disetujui
-                  </Text>
-                </TouchableOpacity> */}
-
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    borderColor:
-                      variant === "Draft"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                  onPress={() => SetVariant("Draft")}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.grey,
+                      backgroundColor: COLORS.info,
                       borderRadius: device === "tablet" ? 40 : 20,
                       width: device === "tablet" ? 42 : 28,
                       height: device === "tablet" ? 42 : 28,
@@ -439,73 +272,46 @@ export const DokumenCuti = () => {
                   </View>
                   <Text
                     style={{
-                      color:
-                        variant === "Draft"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    Draft
+                    {/* {persetujuan?.lists?.badge?.on_progress} */}
                   </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
+                </View>
+                <Text
                   style={{
-                    flex: 1,
-                    borderColor:
-                      variant === "Onprogress"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
+                    color: variant === "Draft" ? COLORS.info : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
-                  onPress={() => SetVariant("Onprogress")}
                 >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.orange,
-                      borderRadius: device === "tablet" ? 40 : 20,
-                      width: device === "tablet" ? 42 : 28,
-                      height: device === "tablet" ? 42 : 28,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Ionicons
-                      name="calendar-outline"
-                      size={device === "tablet" ? 27 : 18}
-                      color={COLORS.white}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color:
-                        variant === "Onprogress"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Proses
-                  </Text>
-                </TouchableOpacity>
+                  Dokumen Draft
+                </Text>
+              </TouchableOpacity>
 
-                <TouchableOpacity
+              {/* Completed */}
+              <TouchableOpacity
+                style={{
+                  width: "48%",
+                  borderColor:
+                    variant === "Completed"
+                      ? COLORS.success
+                      : COLORS.ExtraDivinder,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                  marginBottom: 10,
+                }}
+                onPress={() => SetVariant("Completed")}
+              >
+                <View
                   style={{
-                    flex: 1,
-                    borderColor:
-                      variant === "Completed"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    flexDirection: "row",
                     gap: 10,
+                    alignItems: "center",
                   }}
-                  onPress={() => SetVariant("Completed")}
                 >
                   <View
                     style={{
@@ -525,30 +331,46 @@ export const DokumenCuti = () => {
                   </View>
                   <Text
                     style={{
-                      color:
-                        variant === "Completed"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    Disetujui
+                    {/* {persetujuan?.lists?.badge?.completed} */}
                   </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
+                </View>
+                <Text
                   style={{
-                    flex: 1,
-                    borderColor:
-                      variant === "Rejected"
-                        ? COLORS.infoDangerLight
-                        : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
+                    color:
+                      variant === "Completed" ? COLORS.success : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
-                  onPress={() => SetVariant("Rejected")}
+                >
+                  Dokumen Disetujui
+                </Text>
+              </TouchableOpacity>
+
+              {/* Rejected */}
+              <TouchableOpacity
+                style={{
+                  width: "48%",
+                  borderColor:
+                    variant === "Rejected"
+                      ? COLORS.infoDangerLight
+                      : COLORS.ExtraDivinder,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                }}
+                onPress={() => SetVariant("Rejected")}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
                 >
                   <View
                     style={{
@@ -568,18 +390,85 @@ export const DokumenCuti = () => {
                   </View>
                   <Text
                     style={{
-                      color:
-                        variant === "Rejected"
-                          ? COLORS.infoDanger
-                          : COLORS.foundation,
-                      textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    Ditolak
+                    {/* {persetujuan?.lists?.badge?.rejected} */}
                   </Text>
-                </TouchableOpacity>
-              </View>
+                </View>
+                <Text
+                  style={{
+                    color:
+                      variant === "Rejected" ? COLORS.infoDanger : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Dokumen Ditolak
+                </Text>
+              </TouchableOpacity>
+
+              {/* On Progress */}
+              <TouchableOpacity
+                style={{
+                  width: "48%",
+                  borderColor:
+                    variant === "On Progress"
+                      ? COLORS.orange
+                      : COLORS.ExtraDivinder,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                }}
+                onPress={() => SetVariant("On Progress")}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.orange,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={device === "tablet" ? 27 : 18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 5,
+                    }}
+                  >
+                    {/* {persetujuan?.lists?.badge?.returned} */}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    color:
+                      variant === "On Progress" ? COLORS.orange : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Dokumen Diproses
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={{ flex: 1 }}>
               {variant === "Postponed" || variant === "Rejected" ? (
@@ -619,6 +508,7 @@ export const DokumenCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
@@ -630,7 +520,7 @@ export const DokumenCuti = () => {
                     height: device === "tablet" ? "79%" : "70%",
                   }}
                 />
-              ) : variant === "Onprogress" ? (
+              ) : variant === "On Progress" ? (
                 <FlatList
                   data={filterData}
                   renderItem={({ item }) => (
@@ -644,6 +534,7 @@ export const DokumenCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
@@ -668,6 +559,7 @@ export const DokumenCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
