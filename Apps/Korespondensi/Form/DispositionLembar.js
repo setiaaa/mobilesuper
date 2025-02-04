@@ -67,6 +67,7 @@ function DispositionLembar({ route, id, data, tipe }) {
   const [btnAdd, setbtnAdd] = useState(false);
   const [isLoading, setIsLoading] = useState();
   const [scrollEnabled, setScrollEnabled] = useState();
+  const [stylusEnabled, setStylusEnabled] = useState(false);
   const [stylusFile, setStylusFile] = useState("");
 
   const [receiversDispo, setReceiversDispo] = useState({});
@@ -987,25 +988,46 @@ function DispositionLembar({ route, id, data, tipe }) {
                     style={[styles.titleLabel, { paddingVertical: 12 }]}
                     allowFontScaling={false}
                   />
-                  <View
-                    style={{
-                      height: 600,
-                      width: "100%",
-                      marginTop: 10,
-                    }}
-                  >
-                    <SignatureScreen
-                      ref={ref}
-                      onBegin={() => setScrollEnabled(false)}
-                      onEnd={handleEnd}
-                      onOK={handleOK}
-                      onEmpty={handleEmpty}
-                      onClear={handleClear}
-                      onGetData={handleData}
-                      autoClear={false}
-                      imageType="image/svg+xml"
-                      descriptionText=" "
-                      webStyle={`
+                  <View style={styles.containerTitleLeft}>
+                    <Button
+                      labelStyle={{
+                        fontSize: GlobalStyles.font.sm,
+                      }}
+                      mode="outlined"
+                      textColor="white"
+                      onPress={() => {
+                        if (stylusEnabled == true) {
+                          handleClear();
+                        }
+                        setStylusEnabled(!stylusEnabled);
+                      }}
+                      style={{ width: "100%", backgroundColor: COLORS.info }}
+                    >
+                      <Ionicons name="pencil" size={16} />
+                      Catatan
+                    </Button>
+                  </View>
+                  {stylusEnabled && (
+                    <View
+                      style={{
+                        height: 600,
+                        width: "90%",
+                        marginLeft: "5%",
+                        marginTop: 10,
+                      }}
+                    >
+                      <SignatureScreen
+                        ref={ref}
+                        onBegin={() => setScrollEnabled(false)}
+                        onEnd={handleEnd}
+                        onOK={handleOK}
+                        onEmpty={handleEmpty}
+                        onClear={handleClear}
+                        onGetData={handleData}
+                        autoClear={false}
+                        imageType="image/svg+xml"
+                        descriptionText=" "
+                        webStyle={`
                       .m-signature-pad {
                         position: absolute;
                         width: 100%;
@@ -1025,12 +1047,13 @@ function DispositionLembar({ route, id, data, tipe }) {
                         display: inline-block; /* Memastikan button tidak terpotong */
                         text-size-adjust: none !important;
                       }
-
+                        
                     `}
-                      clearText="Hapus"
-                      confirmText="Simpan"
-                    />
-                  </View>
+                        clearText="Hapus"
+                        confirmText="Simpan"
+                      />
+                    </View>
+                  )}
                   {Config.todo && (
                     <>
                       <View style={styles.containerTitleLeft}>
