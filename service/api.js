@@ -2619,7 +2619,7 @@ export const getCounterProdukHukum = createAsyncThunk(
   "digitalsign/getCounterProdukHukum",
   async ({ token, category }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}permen/count-dashboard/?category=${category}`,
+      `${digitalSign}permen/count-dashboard/?isRoleCreator=${category}`,
       {
         headers: { Authorization: token },
       }

@@ -91,7 +91,10 @@ export const ProdukHukum = () => {
       dispatch(setCounterCat(0));
       dispatch(getCounterProdukHukum({ token: token, category: 0 }));
 
-      setVariant({ key: "paraf", value: "Paraf" });
+      setVariant({
+        key: "paraf",
+        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+      });
     }
     dispatch(
       getListProdukHukum({ token: token, tipe: variant?.key, search: search })
@@ -108,7 +111,7 @@ export const ProdukHukum = () => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Paraf" },
+    { key: "paraf", value: "Perlu Persetujuan" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -407,7 +410,11 @@ export const ProdukHukum = () => {
                     padding: 8,
                   }}
                   onPress={() =>
-                    filterHandler({ key: "paraf", value: "Paraf" })
+                    filterHandler({
+                      key: "paraf",
+                      value:
+                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+                    })
                   }
                 >
                   <Text
@@ -419,7 +426,7 @@ export const ProdukHukum = () => {
                       textAlign: "left",
                     }}
                   >
-                    Perlu Paraf
+                    Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
                   </Text>
                   <View
                     style={{
@@ -714,7 +721,9 @@ export const ProdukHukum = () => {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: "white",
-              marginTop: 10,
+              marginHorizontal: "5%",
+              width: "90%",
+              marginVertical: 10,
               borderRadius: 8,
               marginHorizontal: 16,
             }}
@@ -769,7 +778,7 @@ export const ProdukHukum = () => {
                     isSelected={isSelected}
                     setSelection={setSelection}
                     nip={profile.nip}
-                    disabled={counterCat == 1}
+                    disabled={counterCat == 1 && variant.key == "revision"}
                   />
                 </View>
               )}
