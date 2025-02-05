@@ -118,7 +118,7 @@ export const DokumenCuti = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(arsip.lists);
+  console.log(arsip.lists.badge);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -278,7 +278,7 @@ export const DokumenCuti = () => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {/* {persetujuan?.lists?.badge?.on_progress} */}
+                    {arsip?.lists?.badge?.draft}
                   </Text>
                 </View>
                 <Text
@@ -337,7 +337,7 @@ export const DokumenCuti = () => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {/* {persetujuan?.lists?.badge?.completed} */}
+                    {arsip?.lists?.badge?.completed}
                   </Text>
                 </View>
                 <Text
@@ -396,7 +396,7 @@ export const DokumenCuti = () => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {/* {persetujuan?.lists?.badge?.rejected} */}
+                    {arsip?.lists?.badge?.rejected}
                   </Text>
                 </View>
                 <Text
@@ -456,7 +456,7 @@ export const DokumenCuti = () => {
                       marginTop: 5,
                     }}
                   >
-                    {/* {persetujuan?.lists?.badge?.returned} */}
+                    {arsip?.lists?.badge?.on_progress}
                   </Text>
                 </View>
                 <Text
@@ -486,6 +486,7 @@ export const DokumenCuti = () => {
                       />
                     </View>
                   )}
+                  onEndReached={loadMore}
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={

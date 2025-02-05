@@ -537,7 +537,6 @@ export const DetailDokumenSK = ({ route }) => {
                 }}
               >
                 {item.approvers.map((data, index) => {
-                  console.log(data);
                   if (index > 0) {
                     return (
                       <View
