@@ -537,6 +537,7 @@ export const DetailDokumenSK = ({ route }) => {
                 }}
               >
                 {item.approvers.map((data, index) => {
+                  console.log(data);
                   if (index > 0) {
                     return (
                       <View
@@ -552,6 +553,7 @@ export const DetailDokumenSK = ({ route }) => {
                             device === "tablet" && orientation === "landscape"
                               ? 15
                               : 10,
+                          minHeight: 150,
                         }}
                       >
                         <View
@@ -580,7 +582,7 @@ export const DetailDokumenSK = ({ route }) => {
                             justifyContent: "center",
                           }}
                         >
-                          <View>
+                          <View style={{ width: "95%" }}>
                             <View
                               style={{
                                 flexDirection: "row",
@@ -599,6 +601,7 @@ export const DetailDokumenSK = ({ route }) => {
                                   ? "Penandatangan"
                                   : "Persetujuan " + index}
                               </Text>
+
                               {item.sequence > index ? (
                                 <View
                                   style={{
@@ -733,7 +736,18 @@ export const DetailDokumenSK = ({ route }) => {
                               />
                               <View>
                                 {data?.officer ? (
-                                  <View style={{}}>
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "potrait"
+                                          ? 500
+                                          : device === "tablet" &&
+                                            orientation === "landscape"
+                                          ? 350
+                                          : 250,
+                                    }}
+                                  >
                                     {loading ? (
                                       <ShimmerPlaceHolder
                                         style={{
@@ -773,7 +787,7 @@ export const DetailDokumenSK = ({ route }) => {
                                           color: COLORS.lighter,
                                           fontWeight: FONTWEIGHT.bold,
                                           fontSize: fontSizeResponsive(
-                                            "H2",
+                                            "H4",
                                             device
                                           ),
                                         }}
@@ -787,7 +801,18 @@ export const DetailDokumenSK = ({ route }) => {
                                     )}
                                   </View>
                                 ) : (
-                                  <View style={{}}>
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "potrait"
+                                          ? 500
+                                          : device === "tablet" &&
+                                            orientation === "landscape"
+                                          ? 350
+                                          : 250,
+                                    }}
+                                  >
                                     {loading ? (
                                       <ShimmerPlaceHolder
                                         style={{
@@ -803,7 +828,7 @@ export const DetailDokumenSK = ({ route }) => {
                                           color: COLORS.lighter,
                                           fontWeight: FONTWEIGHT.bold,
                                           fontSize: fontSizeResponsive(
-                                            "H2",
+                                            "H4",
                                             device
                                           ),
                                         }}
@@ -811,6 +836,7 @@ export const DetailDokumenSK = ({ route }) => {
                                         {data?.nama !== undefined
                                           ? data?.nama
                                           : "-"}
+                                        {/* qweqweqwewqeewewqeqwewqeqweeqewqewqeqeqeqweeqeqqwe */}
                                       </Text>
                                     )}
                                   </View>
@@ -825,7 +851,7 @@ export const DetailDokumenSK = ({ route }) => {
                 })}
               </View>
 
-              <View style={{ marginHorizontal: 20 }}>
+              {/* <View style={{ marginHorizontal: 20 }}>
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
@@ -1019,7 +1045,7 @@ export const DetailDokumenSK = ({ route }) => {
                     )}
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
           ) : (
             ""
@@ -1072,13 +1098,17 @@ export const DetailDokumenSK = ({ route }) => {
                     alignItems: "center",
                     marginHorizontal: "5%",
                   }}
-                  onPress={() =>
+                  onPress={() => {
                     // navigation.navigate("PdfPerisai", {
                     //   item: item,
                     //   tipe: "sk",
                     // })
-                    bottomSheetAttach()
-                  }
+                    if (profile.nip === "88888") {
+                      handleBiometricAuth();
+                    } else {
+                      bottomSheetAttach();
+                    }
+                  }}
                 >
                   <Text
                     style={{

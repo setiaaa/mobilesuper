@@ -118,6 +118,8 @@ export const DokumenCuti = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(arsip.lists);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
