@@ -80,6 +80,14 @@ function DCounter() {
       color: "rgba(244, 32, 32, 0.6)",
       navName: "DispositionUnread",
     },
+    {
+      count: 6,
+      type: "not_dispo",
+      value: "-",
+      icon: "inbox-arrow-down",
+      color: "rgba(24, 104, 171, 0.6)",
+      navName: "IncomingList",
+    },
   ]);
   let [isCounterMenuDefault, setIsCounterMenuDefault] = useState([
     {
@@ -378,6 +386,14 @@ function DCounter() {
             icon: "email-send-outline",
             color: "rgba(244, 32, 32, 0.6)",
             navName: "DispositionUnread",
+          },
+          {
+            count: 6,
+            type: "not_dispo",
+            value: "-",
+            icon: "inbox-arrow-down",
+            color: "rgba(24, 104, 171, 0.6)",
+            navName: "IncomingList",
           },
         ]);
         setIsCounterMenu([
