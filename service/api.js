@@ -2370,9 +2370,9 @@ export const getDetailSertifikatEksternal = createAsyncThunk(
 
 export const getListProdukHukum = createAsyncThunk(
   "digitalsign/getListProdukHukum",
-  async ({ token, tipe }) => {
+  async ({ token, tipe, page, search }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}permen/?category=${tipe}`,
+      `${digitalSign}permen/?category=${tipe}&limit=${page}&search=${search}`,
       { headers: { Authorization: token } }
     );
     return {
@@ -2619,7 +2619,7 @@ export const getCounterProdukHukum = createAsyncThunk(
   "digitalsign/getCounterProdukHukum",
   async ({ token, category }) => {
     const respon = await axiosInstance.get(
-      `${digitalSign}permen/count-dashboard/?category=${category}`,
+      `${digitalSign}permen/count-dashboard/?isRoleCreator=${category}`,
       {
         headers: { Authorization: token },
       }
@@ -2709,9 +2709,10 @@ export const getLiburKhusus = createAsyncThunk(
 
 export const getArsipCuti = createAsyncThunk(
   "cuti/getArsipCuti",
-  async (token) => {
+  async ({ token, variant, page }) => {
+    console.log(page);
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-cutiku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`,
+      `${Cuti}dokumen-cutiku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }
@@ -2774,9 +2775,9 @@ export const getPilihApprovalPejabat = createAsyncThunk(
 
 export const getDokumenPersetujuan = createAsyncThunk(
   "cuti/getDokumenPersetujuan",
-  async (token) => {
+  async ({ token, variant, page }) => {
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-persetujuanku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
+      `${Cuti}dokumen-persetujuanku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }

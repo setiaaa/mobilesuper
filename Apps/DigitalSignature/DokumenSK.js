@@ -74,8 +74,6 @@ export const DokumenSK = () => {
     (state) => state.routes[state.index].name
   );
 
-  console.log(isRoleSK);
-
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);

@@ -25,7 +25,6 @@ export const CardListProdukHukum = ({
   nip,
   disabled,
 }) => {
-  console.log(variant);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [modal, setModal] = useState(false);
@@ -39,6 +38,7 @@ export const CardListProdukHukum = ({
       <View
         key={data.id}
         style={{
+          marginBottom: index == item.approvers?.length - 1 ? 20 : 10,
           marginHorizontal: 20,
           marginVertical: 5,
         }}
@@ -65,63 +65,7 @@ export const CardListProdukHukum = ({
             {data.nama}
           </Text>
         </View>
-        {item.sequence <= index && item.state != "upload_doc" ? (
-          <>
-            <View
-              style={{
-                flexDirection: "row",
-                width: "60%",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                gap: 5,
-                marginTop: 5,
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: COLORS.infoDanger,
-                  borderRadius: 50,
-                  padding: 5,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="close"
-                  color={COLORS.white}
-                  size={device === "tablet" ? 25 : 15}
-                />
-              </View>
-              <View
-                style={{
-                  backgroundColor: COLORS.infoDangerLight,
-                  paddingVertical: 5,
-                  borderRadius: 20,
-                  paddingHorizontal: 15,
-                }}
-              >
-                <Text
-                  style={{
-                    color: COLORS.infoDanger,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Belum Paraf
-                </Text>
-              </View>
-            </View>
-            {index < item.approvers?.length - 1 && (
-              <View
-                style={{
-                  width: "100%",
-                  height: 2,
-                  backgroundColor: COLORS.ExtraDivinder,
-                  marginTop: 5,
-                }}
-              />
-            )}
-          </>
-        ) : (
+        {item?.approved_by?.includes(data?.nip) ? (
           <>
             <View
               style={{
@@ -162,7 +106,63 @@ export const CardListProdukHukum = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Sudah Paraf
+                  Sudah {data?.nip == "88888" ? "Disetujui" : "Paraf"}
+                </Text>
+              </View>
+            </View>
+            {index < item.approvers?.length - 1 && (
+              <View
+                style={{
+                  width: "100%",
+                  height: 2,
+                  backgroundColor: COLORS.ExtraDivinder,
+                  marginTop: 5,
+                }}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "60%",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: 5,
+                marginTop: 5,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.infoDanger,
+                  borderRadius: 50,
+                  padding: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons
+                  name="close"
+                  color={COLORS.white}
+                  size={device === "tablet" ? 25 : 15}
+                />
+              </View>
+              <View
+                style={{
+                  backgroundColor: COLORS.infoDangerLight,
+                  paddingVertical: 5,
+                  borderRadius: 20,
+                  paddingHorizontal: 15,
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.infoDanger,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {data?.nip == "88888" ? "Perlu Persetujuan" : "Belum Paraf"}
                 </Text>
               </View>
             </View>
@@ -188,7 +188,7 @@ export const CardListProdukHukum = ({
         backgroundColor: disabled ? COLORS.ExtraDivinder : "white",
         borderRadius: 16,
         flex: 1,
-        marginTop: 10,
+        marginBottom: 10,
         marginHorizontal: 16,
         padding: 20,
         //shadow ios
@@ -256,10 +256,9 @@ export const CardListProdukHukum = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
-                width: "25%",
+                width: "30%",
               }}
             >
               No Dokumen
@@ -289,10 +288,9 @@ export const CardListProdukHukum = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
-                width: "25%",
+                width: "30%",
               }}
             >
               Status

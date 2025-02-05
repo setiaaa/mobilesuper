@@ -112,6 +112,7 @@ import CryptoJS from "react-native-crypto-js";
 import { OneSignal } from "react-native-onesignal";
 import { ScrollView } from "react-native-gesture-handler";
 import { CardCounterApps } from "../../components/CardCounterApps";
+import { CardCounterAppsTTDE } from "../../components/CardCounterAppsTTDE";
 const numColumns = 3;
 
 const _color = "#6E01EF";
@@ -937,6 +938,10 @@ export const Home = () => {
           </View>
 
           <View style={{ paddingHorizontal: 20 }}>
+            <View style={{ alignItems: "center", display: "flex" }}>
+              <CardCounterAppsTTDE />
+            </View>
+
             <CardApps
               handlePressModal={handlePressModal}
               setModalBankom={setModalBankom}

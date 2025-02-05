@@ -730,7 +730,7 @@ export const BottomTabsCuti = () => {
       >
         <Tab.Navigator
           tabBar={(props) => <MyTabCuti {...props} />}
-          initialRouteName="PersonalCuti"
+          initialRouteName="PersetujuanCuti"
         >
           <Tab.Screen
             name="PersonalCuti"

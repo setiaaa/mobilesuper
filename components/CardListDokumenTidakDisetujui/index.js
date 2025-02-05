@@ -17,115 +17,115 @@ export const CardListDokumenTidakDisetujui = ({ item, token, device }) => {
 
   return (
     <>
-      {item.status === "Postponed" || item.status === "Rejected" ? (
-        <TouchableOpacity
-          onPress={
-            (onPress = () => {
-              getDetail(item.id);
-              navigation.navigate("DetailDokumenCuti", { id: "view" });
-            })
-          }
+      {/* {item.status === "Postponed" || item.status === "Rejected" ? ( */}
+      <TouchableOpacity
+        onPress={
+          (onPress = () => {
+            getDetail(item.id);
+            navigation.navigate("DetailDokumenCuti", { id: "view" });
+          })
+        }
+      >
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            padding: 10,
+            borderRadius: 8,
+            gap: 15,
+            marginTop: 10,
+          }}
         >
-          <View
+          <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+            Tanggal Pengajuan:{" "}
+            {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss")
+              .locale("id")
+              .format(DATETIME.LONG_DATETIME)}
+          </Text>
+          <Text
             style={{
-              backgroundColor: COLORS.white,
-              padding: 10,
-              borderRadius: 8,
-              gap: 15,
-              marginTop: 10,
+              fontSize: fontSizeResponsive("H3", device),
+              color: COLORS.lighter,
             }}
           >
-            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
-              Tanggal Pengajuan:{" "}
-              {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss")
-                .locale("id")
-                .format(DATETIME.LONG_DATETIME)}
-            </Text>
+            Jenis: {item.jenis_cuti}
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
                 color: COLORS.lighter,
               }}
             >
-              Jenis: {item.jenis_cuti}
+              Tipe Dokumen:{" "}
             </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{ backgroundColor: "red", borderRadius: 10, padding: 5 }}
+            >
               <Text
                 style={{
                   fontSize: fontSizeResponsive("H3", device),
+                  color: COLORS.white,
+                }}
+              >
+                {item.tipe_dokumen}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
+            >
+              <Ionicons
+                name="calendar-outline"
+                size={18}
+                color={COLORS.primary}
+              />
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H5", device),
                   color: COLORS.lighter,
                 }}
               >
-                Tipe Dokumen:{" "}
+                Mulai:{" "}
+                {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
               </Text>
-              <View
-                style={{ backgroundColor: "red", borderRadius: 10, padding: 5 }}
-              >
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    color: COLORS.white,
-                  }}
-                >
-                  {item.tipe_dokumen}
-                </Text>
-              </View>
             </View>
             <View
               style={{
                 flexDirection: "row",
+                gap: 4,
                 alignItems: "center",
-                gap: 10,
               }}
             >
-              <View
-                style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
-              >
-                <Ionicons
-                  name="calendar-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.lighter,
-                  }}
-                >
-                  Mulai:{" "}
-                  {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
-                    .locale("id")
-                    .format(DATETIME.LONG_DATE)}
-                </Text>
-              </View>
-              <View
+              <Ionicons
+                name="calendar-outline"
+                size={18}
+                color={COLORS.primary}
+              />
+              <Text
                 style={{
-                  flexDirection: "row",
-                  gap: 4,
-                  alignItems: "center",
+                  fontSize: fontSizeResponsive("H5", device),
+                  color: COLORS.lighter,
                 }}
               >
-                <Ionicons
-                  name="calendar-outline"
-                  size={18}
-                  color={COLORS.primary}
-                />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.lighter,
-                  }}
-                >
-                  Akhir:{" "}
-                  {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
-                    .locale("id")
-                    .format(DATETIME.LONG_DATE)}
-                </Text>
-              </View>
+                Akhir:{" "}
+                {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
+              </Text>
             </View>
           </View>
-        </TouchableOpacity>
-      ) : null}
+        </View>
+      </TouchableOpacity>
+      {/* ) : null} */}
     </>
   );
 };

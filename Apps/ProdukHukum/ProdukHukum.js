@@ -75,7 +75,12 @@ export const ProdukHukum = () => {
     useCallback(() => {
       dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
       dispatch(
-        getListProdukHukum({ token: token, tipe: variant?.key, search: search })
+        getListProdukHukum({
+          token: token,
+          tipe: variant?.key,
+          page: page,
+          search: search,
+        })
       );
     }, [variant])
   );
@@ -91,10 +96,18 @@ export const ProdukHukum = () => {
       dispatch(setCounterCat(0));
       dispatch(getCounterProdukHukum({ token: token, category: 0 }));
 
-      setVariant({ key: "paraf", value: "Paraf" });
+      setVariant({
+        key: "paraf",
+        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+      });
     }
     dispatch(
-      getListProdukHukum({ token: token, tipe: variant?.key, search: search })
+      getListProdukHukum({
+        token: token,
+        tipe: variant?.key,
+        page: page,
+        search: search,
+      })
     );
   }, [token]);
   const [isConceptor, setIsConseptor] = useState(false);
@@ -108,7 +121,7 @@ export const ProdukHukum = () => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Paraf" },
+    { key: "paraf", value: "Perlu Persetujuan" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -123,17 +136,9 @@ export const ProdukHukum = () => {
     try {
       if (token !== "") {
         dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
-        dispatch(
-          getListProdukHukum({
-            token: token,
-            tipe: variant?.key,
-            page: page,
-            search: search,
-          })
-        );
       }
     } catch (error) {}
-
+    setSearch("");
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -223,7 +228,12 @@ export const ProdukHukum = () => {
   const filterHandler = (item) => {
     setVariant(item);
     dispatch(
-      getListProdukHukum({ token: token, tipe: item?.key, search: search })
+      getListProdukHukum({
+        token: token,
+        tipe: item?.key,
+        page: page,
+        search: search,
+      })
     );
   };
 
@@ -336,6 +346,7 @@ export const ProdukHukum = () => {
               color={COLORS.primary}
             />
             <TextInput
+              defaultValue={search}
               placeholder={"Cari"}
               placeholderTextColor={COLORS.tertiary}
               style={{
@@ -407,7 +418,11 @@ export const ProdukHukum = () => {
                     padding: 8,
                   }}
                   onPress={() =>
-                    filterHandler({ key: "paraf", value: "Paraf" })
+                    filterHandler({
+                      key: "paraf",
+                      value:
+                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+                    })
                   }
                 >
                   <Text
@@ -419,7 +434,7 @@ export const ProdukHukum = () => {
                       textAlign: "left",
                     }}
                   >
-                    Perlu Paraf
+                    Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
                   </Text>
                   <View
                     style={{
@@ -714,7 +729,7 @@ export const ProdukHukum = () => {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: "white",
-              marginTop: 10,
+              marginVertical: 10,
               borderRadius: 8,
               marginHorizontal: 16,
             }}
@@ -769,7 +784,7 @@ export const ProdukHukum = () => {
                     isSelected={isSelected}
                     setSelection={setSelection}
                     nip={profile.nip}
-                    disabled={counterCat == 1}
+                    disabled={counterCat == 1 && variant.key == "revision"}
                   />
                 </View>
               )}
