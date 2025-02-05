@@ -310,85 +310,121 @@ export const DetailProdukHukum = ({ route }) => {
                 </View>
               )}
 
-              {detail?.sequence >= index && detail.state != "uplooad_doc" ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: "60%",
-                    alignItems: "center",
-                    gap: 5,
-                  }}
-                >
+              {detail?.approved_by?.includes(data?.nip) ? (
+                <>
                   <View
                     style={{
-                      backgroundColor: COLORS.success,
-                      borderRadius: 50,
-                      height: 20,
-                      width: 20,
-                      justifyContent: "center",
+                      flexDirection: "row",
+                      width: "60%",
+                      justifyContent: "flex-start",
                       alignItems: "center",
+                      gap: 5,
+                      marginTop: 5,
                     }}
                   >
-                    <Ionicons name="checkmark-outline" color={COLORS.white} />
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: COLORS.successLight,
-                      paddingVertical: 5,
-                      borderRadius: 20,
-                      paddingHorizontal: 15,
-                    }}
-                  >
-                    <Text
+                    <View
                       style={{
-                        color: COLORS.success,
-                        fontSize: fontSizeResponsive("H4", device),
+                        backgroundColor: COLORS.success,
+                        borderRadius: 50,
+                        padding: 5,
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
-                      Sudah Paraf
-                    </Text>
-                  </View>
-                </View>
-              ) : detail?.sequence <= index && detail.state != "upload_doc" ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: "60%",
-                    alignItems: "center",
-                    gap: 5,
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.infoDanger,
-                      borderRadius: 50,
-                      height: 20,
-                      width: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons name="close" color={COLORS.white} />
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: COLORS.infoDangerLight,
-                      paddingVertical: 5,
-                      borderRadius: 20,
-                      paddingHorizontal: 15,
-                    }}
-                  >
-                    <Text
+                      <Ionicons
+                        name="checkmark-outline"
+                        color={COLORS.white}
+                        size={device === "tablet" ? 25 : 15}
+                      />
+                    </View>
+                    <View
                       style={{
-                        color: COLORS.infoDanger,
-                        fontSize: fontSizeResponsive("H4", device),
+                        backgroundColor: COLORS.successLight,
+                        paddingVertical: 5,
+                        borderRadius: 20,
+                        paddingHorizontal: 15,
                       }}
                     >
-                      Belum Paraf
-                    </Text>
+                      <Text
+                        style={{
+                          color: COLORS.success,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Sudah {data?.nip === "88888" ? "Disetujui" : "Paraf"}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              ) : null}
+                  {index < detail.approvers?.length - 1 && (
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 2,
+                        backgroundColor: COLORS.ExtraDivinder,
+                        marginTop: 5,
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      width: "60%",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 5,
+                      marginTop: 5,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoDanger,
+                        borderRadius: 50,
+                        padding: 5,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="close"
+                        color={COLORS.white}
+                        size={device === "tablet" ? 25 : 15}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoDangerLight,
+                        paddingVertical: 5,
+                        borderRadius: 20,
+                        paddingHorizontal: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.infoDanger,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data?.nip == "88888"
+                          ? "Perlu Persetujuan"
+                          : "Belum Paraf"}
+                      </Text>
+                    </View>
+                  </View>
+                  {index < detail.approvers?.length - 1 && (
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 2,
+                        backgroundColor: COLORS.ExtraDivinder,
+                        marginTop: 5,
+                      }}
+                    />
+                  )}
+                </>
+              )}
             </View>
           </View>
         </View>
@@ -444,9 +480,8 @@ export const DetailProdukHukum = ({ route }) => {
             <>
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -704,9 +739,8 @@ export const DetailProdukHukum = ({ route }) => {
               {detail?.attachments?.length != 0 && (
                 <View
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.white,
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                     borderRadius: 8,
                     marginTop: 20,
                   }}
@@ -859,9 +893,8 @@ export const DetailProdukHukum = ({ route }) => {
               )}
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -900,9 +933,8 @@ export const DetailProdukHukum = ({ route }) => {
               </View>
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -1011,12 +1043,11 @@ export const DetailProdukHukum = ({ route }) => {
             {profile?.nip == "88888" && detail?.state == "ttde" && (
               <TouchableOpacity
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.infoDanger,
                   borderRadius: 6,
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                 }}
                 onPress={() => {
                   // handleBiometricAuth();
@@ -1039,12 +1070,11 @@ export const DetailProdukHukum = ({ route }) => {
               <>
                 <TouchableOpacity
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 6,
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                   }}
                   onPress={() => {
                     // handleBiometricAuth();
@@ -1069,12 +1099,11 @@ export const DetailProdukHukum = ({ route }) => {
 
                 <TouchableOpacity
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.orange,
                     borderRadius: 6,
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                   }}
                   onPress={() => {
                     // handleBiometricAuth();

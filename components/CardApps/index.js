@@ -15,6 +15,7 @@ import {
   Entypo,
   MaterialCommunityIcons,
   FontAwesome6,
+  Octicons,
 } from "@expo/vector-icons";
 import {
   COLORS,
@@ -639,6 +640,12 @@ export const CardApps = ({
                           ) : item.title === "Kepegawaian" ? (
                             <FontAwesome6
                               name="people-line"
+                              size={device === "tablet" ? 60 : 30}
+                              color={COLORS.iconMenu}
+                            />
+                          ) : item.title === "Produk Hukum" ? (
+                            <Octicons
+                              name="file-badge"
                               size={device === "tablet" ? 60 : 30}
                               color={COLORS.iconMenu}
                             />

@@ -981,7 +981,7 @@ export const DetailPKRL = ({ route }) => {
                           borderColor: "#DBDADE",
                           marginHorizontal:
                             device === "tablet" && orientation === "landscape"
-                              ? 15
+                              ? 14
                               : device === "tablet" && orientation === "potrait"
                               ? 10
                               : 10,
@@ -1158,7 +1158,15 @@ export const DetailPKRL = ({ route }) => {
                               />
                               <View>
                                 {data?.officer ? (
-                                  <View style={{ width: 240 }}>
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "landscape"
+                                          ? 400
+                                          : 230,
+                                    }}
+                                  >
                                     {loading ? (
                                       <View style={{ width: "45%" }}>
                                         <ShimmerPlaceHolder
@@ -1224,7 +1232,7 @@ export const DetailPKRL = ({ route }) => {
                                         device === "tablet" &&
                                         orientation === "landscape"
                                           ? 400
-                                          : 240,
+                                          : 230,
                                     }}
                                   >
                                     {loading ? (
