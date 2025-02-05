@@ -189,7 +189,7 @@ export const CardListProdukHukum = ({
         borderRadius: 16,
         flex: 1,
         marginBottom: 10,
-        marginHorizontal: "5%",
+        marginHorizontal: 16,
         padding: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
@@ -256,10 +256,9 @@ export const CardListProdukHukum = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
-                width: "25%",
+                width: "30%",
               }}
             >
               No Dokumen
@@ -289,10 +288,9 @@ export const CardListProdukHukum = ({
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
-                textAlign: "justify",
                 fontWeight: FONTWEIGHT.bold,
                 flexWrap: "wrap",
-                width: "25%",
+                width: "30%",
               }}
             >
               Status

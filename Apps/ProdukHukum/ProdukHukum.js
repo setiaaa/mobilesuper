@@ -729,8 +729,6 @@ export const ProdukHukum = () => {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: "white",
-              marginHorizontal: "5%",
-              width: "90%",
               marginVertical: 10,
               borderRadius: 8,
               marginHorizontal: 16,
