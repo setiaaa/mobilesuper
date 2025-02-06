@@ -91,6 +91,8 @@ export const ModalSubmit = ({
                     style={{
                       marginTop: 5,
                       fontSize: fontSizeResponsive("H4", device),
+                      width: device === "tablet" ? 450 : 300,
+                      textAlign: "center",
                     }}
                   >
                     {messageSuccess}
@@ -141,7 +143,13 @@ export const ModalSubmit = ({
                 <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                   Terjadi Kesalahan!
                 </Text>
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? 450 : 300,
+                    textAlign: "center",
+                  }}
+                >
                   {message}
                 </Text>
               </View>

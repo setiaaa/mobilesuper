@@ -310,8 +310,8 @@ export const PerizinanMenteri = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginRight: 20,
@@ -324,7 +324,7 @@ export const PerizinanMenteri = () => {
                 >
                   <Ionicons
                     name="checkmark-outline"
-                    size={18}
+                    size={device === "tablet" ? 30 : 18}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>

@@ -623,9 +623,11 @@ export const DetailDokumenCuti = ({ route }) => {
   const approval = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
-  const { arsip, status, message, loading } = useSelector(
+  const { arsip, message, loading, status } = useSelector(
     (state) => state.cuti
   );
+
+  // const [status, setStatus] = useState("berhasi");
   const arsipDetail = arsip.detail;
 
   const [collapse, setCollapse] = useState({
@@ -1829,7 +1831,7 @@ export const DetailDokumenCuti = ({ route }) => {
 
                     <TouchableOpacity
                       onPress={() =>
-                        handleSubmit({ status_approval: "returned" })
+                        handleSubmit({ status_approval: "return" })
                       }
                       style={{
                         backgroundColor: COLORS.info,
@@ -1891,7 +1893,7 @@ export const DetailDokumenCuti = ({ route }) => {
 
                     <TouchableOpacity
                       onPress={() =>
-                        handleSubmit({ status_approval: "rejected" })
+                        handleSubmit({ status_approval: "reject" })
                       }
                       style={{
                         backgroundColor: COLORS.infoDanger,

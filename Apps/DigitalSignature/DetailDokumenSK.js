@@ -33,6 +33,7 @@ import { getTokenValue } from "../../service/session";
 import { Loading } from "../../components/Loading";
 import {
   putBatalkanSK,
+  putReleaseSK,
   putReturnSK,
   putRevisionSK,
   putSetujiSK,
@@ -162,6 +163,44 @@ export const DetailDokumenSK = ({ route }) => {
     console.log(data);
   };
 
+  const handleRelease = () => {
+    let id_receivers = [];
+    item?.receivers.map((datas) => {
+      if (datas.is_title === false) {
+        id_receivers.push(datas.nip);
+      } else {
+        id_receivers.push(datas.officer.nip);
+      }
+    });
+
+    let id_approvers = [];
+    item?.approvers.map((datas) => {
+      if (datas.is_title === false) {
+        id_approvers.push(datas.nip);
+      } else {
+        id_approvers.push(datas.officer.nip);
+      }
+    });
+
+    let payload = {
+      action: "release",
+      approvers: id_approvers,
+      comment: "di release",
+      extra_attributes: item?.extra_attributes,
+      id_course: "",
+      receivers: id_receivers,
+      subject: item?.subject,
+      tipe_dokumen: item?.tipe_dokumen,
+    };
+    const data = {
+      payload: payload,
+      token: token,
+      id: item?.id,
+    };
+    dispatch(putReleaseSK(data));
+    console.log(data);
+  };
+
   const handleBiometricAuth = async () => {
     // Check if hardware supports biometrics
     const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
@@ -195,6 +234,12 @@ export const DetailDokumenSK = ({ route }) => {
       handleTandaTangan();
     }
   };
+  const { profile } = useSelector((state) => state.superApps);
+  const roleReleaseSK = ["RELEASE.DIGISIGN.SK"];
+
+  const isRoleReleaseSK = profile.roles_access?.some((item) =>
+    roleReleaseSK.includes(item)
+  );
 
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
@@ -507,6 +552,7 @@ export const DetailDokumenSK = ({ route }) => {
                             device === "tablet" && orientation === "landscape"
                               ? 15
                               : 10,
+                          minHeight: 150,
                         }}
                       >
                         <View
@@ -535,7 +581,7 @@ export const DetailDokumenSK = ({ route }) => {
                             justifyContent: "center",
                           }}
                         >
-                          <View>
+                          <View style={{ width: "95%" }}>
                             <View
                               style={{
                                 flexDirection: "row",
@@ -554,6 +600,7 @@ export const DetailDokumenSK = ({ route }) => {
                                   ? "Penandatangan"
                                   : "Persetujuan " + index}
                               </Text>
+
                               {item.sequence > index ? (
                                 <View
                                   style={{
@@ -688,7 +735,18 @@ export const DetailDokumenSK = ({ route }) => {
                               />
                               <View>
                                 {data?.officer ? (
-                                  <View style={{}}>
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "potrait"
+                                          ? 500
+                                          : device === "tablet" &&
+                                            orientation === "landscape"
+                                          ? 350
+                                          : 250,
+                                    }}
+                                  >
                                     {loading ? (
                                       <ShimmerPlaceHolder
                                         style={{
@@ -728,7 +786,7 @@ export const DetailDokumenSK = ({ route }) => {
                                           color: COLORS.lighter,
                                           fontWeight: FONTWEIGHT.bold,
                                           fontSize: fontSizeResponsive(
-                                            "H2",
+                                            "H4",
                                             device
                                           ),
                                         }}
@@ -742,7 +800,18 @@ export const DetailDokumenSK = ({ route }) => {
                                     )}
                                   </View>
                                 ) : (
-                                  <View style={{}}>
+                                  <View
+                                    style={{
+                                      width:
+                                        device === "tablet" &&
+                                        orientation === "potrait"
+                                          ? 500
+                                          : device === "tablet" &&
+                                            orientation === "landscape"
+                                          ? 350
+                                          : 250,
+                                    }}
+                                  >
                                     {loading ? (
                                       <ShimmerPlaceHolder
                                         style={{
@@ -758,7 +827,7 @@ export const DetailDokumenSK = ({ route }) => {
                                           color: COLORS.lighter,
                                           fontWeight: FONTWEIGHT.bold,
                                           fontSize: fontSizeResponsive(
-                                            "H2",
+                                            "H4",
                                             device
                                           ),
                                         }}
@@ -766,6 +835,7 @@ export const DetailDokumenSK = ({ route }) => {
                                         {data?.nama !== undefined
                                           ? data?.nama
                                           : "-"}
+                                        {/* qweqweqwewqeewewqeqwewqeqweeqewqewqeqeqeqweeqeqqwe */}
                                       </Text>
                                     )}
                                   </View>
@@ -780,7 +850,7 @@ export const DetailDokumenSK = ({ route }) => {
                 })}
               </View>
 
-              <View style={{ marginHorizontal: 20 }}>
+              {/* <View style={{ marginHorizontal: 20 }}>
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
@@ -974,7 +1044,7 @@ export const DetailDokumenSK = ({ route }) => {
                     )}
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
           ) : (
             ""
@@ -1027,13 +1097,17 @@ export const DetailDokumenSK = ({ route }) => {
                     alignItems: "center",
                     marginHorizontal: "5%",
                   }}
-                  onPress={() =>
+                  onPress={() => {
                     // navigation.navigate("PdfPerisai", {
                     //   item: item,
                     //   tipe: "sk",
                     // })
-                    bottomSheetAttach()
-                  }
+                    if (profile.nip === "88888") {
+                      handleBiometricAuth();
+                    } else {
+                      bottomSheetAttach();
+                    }
+                  }}
                 >
                   <Text
                     style={{
@@ -1095,6 +1169,34 @@ export const DetailDokumenSK = ({ route }) => {
                     }}
                   >
                     Revisi
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {variant.variant === "signed" && isRoleReleaseSK === true ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.success,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() => {
+                    handleRelease();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Release SK
                   </Text>
                 </TouchableOpacity>
               </>

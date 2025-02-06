@@ -2517,6 +2517,22 @@ export const putBatalkanSK = createAsyncThunk(
   }
 );
 
+export const putReleaseSK = createAsyncThunk(
+  "digitalsign/putReleaseSK",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/${data.id}/release/`,
+      data.payload,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
 export const putSetujiSK = createAsyncThunk(
   "digitalsign/putSetujiSK",
   async (data) => {
@@ -2614,6 +2630,36 @@ export const getCounterProdukHukum = createAsyncThunk(
   }
 );
 
+export const getDasboardListPKRL = createAsyncThunk(
+  "digitalsign/getDasboardListPKRL",
+  async ({ token, tipe, page, search, kategori }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/laporan-pkrl/?tipe_dokumen=${tipe}&limit=${page}&general=${search}&direktorat=&kategori=${kategori}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.results,
+    };
+  }
+);
+
+export const getExportPKRL = createAsyncThunk(
+  "digitalsign/getExportPKRL",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}export-pkrl/?&direktorat=&kategori=`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",
@@ -2663,9 +2709,10 @@ export const getLiburKhusus = createAsyncThunk(
 
 export const getArsipCuti = createAsyncThunk(
   "cuti/getArsipCuti",
-  async (token) => {
+  async ({ token, variant, page }) => {
+    console.log(page);
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-cutiku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`,
+      `${Cuti}dokumen-cutiku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }
@@ -2728,9 +2775,9 @@ export const getPilihApprovalPejabat = createAsyncThunk(
 
 export const getDokumenPersetujuan = createAsyncThunk(
   "cuti/getDokumenPersetujuan",
-  async (token) => {
+  async ({ token, variant, page }) => {
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-persetujuanku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
+      `${Cuti}dokumen-persetujuanku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }

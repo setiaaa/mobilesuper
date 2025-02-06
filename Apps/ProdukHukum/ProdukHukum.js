@@ -258,6 +258,8 @@ export const ProdukHukum = () => {
       })
     );
   }, [page, variant, token, search]);
+
+  console.log(counterCat);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -360,17 +362,44 @@ export const ProdukHukum = () => {
 
           <View
             style={{
-              padding: 10,
               borderRadius: 8,
-              backgroundColor: COLORS.white,
               marginTop: 10,
-              width: "90%",
-              justifyContent: "center",
-              alignSelf: "center",
+              padding: 10,
+              marginHorizontal: 16,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              minHeight: device === "tablet" ? 120 : 100,
+              backgroundColor: COLORS.white,
+              rowGap: 10,
             }}
           >
-            <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
-              {counterCat != 1 && (
+            {/* <View
+              style={{
+                flexDirection: "row",
+                gap: 5,
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                minHeight: 100,
+                backgroundColor: COLORS.info,
+              }}
+            > */}
+            {counterCat != 1 && (
+              <View
+                style={{
+                  flexDirection: "column",
+                  width:
+                    device === "tablet" &&
+                    counterCat != 1 &&
+                    profile?.nip !== "88888"
+                      ? "30%"
+                      : device === "tablet" &&
+                        profile?.nip === "88888" &&
+                        counterCat != 1
+                      ? "24%"
+                      : "48%",
+                }}
+              >
                 <TouchableOpacity
                   style={{
                     backgroundColor:
@@ -378,12 +407,7 @@ export const ProdukHukum = () => {
                         ? COLORS.secondaryLighter
                         : COLORS.bgLightGrey,
                     borderRadius: 8,
-                    width:
-                      profile?.nip == "88888"
-                        ? "23%"
-                        : counterCat == 0
-                        ? "31%"
-                        : "48%",
+                    flex: 1,
                     //shadow ios
                     shadowOffset: { width: -2, height: 4 },
                     shadowColor: "#171717",
@@ -391,7 +415,7 @@ export const ProdukHukum = () => {
                     //shadow android
                     elevation: 2,
                     justifyContent: "center",
-                    padding: 5,
+                    padding: 8,
                   }}
                   onPress={() =>
                     filterHandler({
@@ -404,7 +428,7 @@ export const ProdukHukum = () => {
                   <Text
                     style={{
                       // marginTop: 10,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H5", device),
                       fontWeight: FONTWEIGHT.bold,
                       width: "100%",
                       textAlign: "left",
@@ -446,8 +470,24 @@ export const ProdukHukum = () => {
                     </View>
                   </View>
                 </TouchableOpacity>
-              )}
-              {profile?.nip == "88888" && (
+              </View>
+            )}
+            {profile?.nip == "88888" && (
+              <View
+                style={{
+                  flexDirection: "column",
+                  width:
+                    device === "tablet" &&
+                    counterCat != 1 &&
+                    profile?.nip !== "88888"
+                      ? "30%"
+                      : device === "tablet" &&
+                        profile?.nip === "88888" &&
+                        counterCat != 1
+                      ? "24%"
+                      : "48%",
+                }}
+              >
                 <TouchableOpacity
                   style={{
                     backgroundColor:
@@ -455,12 +495,7 @@ export const ProdukHukum = () => {
                         ? COLORS.secondaryLighter
                         : COLORS.bgLightGrey,
                     borderRadius: 8,
-                    width:
-                      profile?.nip == "88888"
-                        ? "23%"
-                        : counterCat == 0
-                        ? "31%"
-                        : "48%",
+                    flex: 1,
                     //shadow ios
                     shadowOffset: { width: -2, height: 4 },
                     shadowColor: "#171717",
@@ -468,7 +503,7 @@ export const ProdukHukum = () => {
                     //shadow android
                     elevation: 2,
                     justifyContent: "center",
-                    padding: 5,
+                    padding: 8,
                   }}
                   onPress={() =>
                     filterHandler({ key: "need-sign", value: "Perlu TTDE" })
@@ -519,7 +554,23 @@ export const ProdukHukum = () => {
                     </View>
                   </View>
                 </TouchableOpacity>
-              )}
+              </View>
+            )}
+            <View
+              style={{
+                flexDirection: "column",
+                width:
+                  device === "tablet" &&
+                  counterCat != 1 &&
+                  profile?.nip !== "88888"
+                    ? "30%"
+                    : device === "tablet" &&
+                      profile?.nip === "88888" &&
+                      counterCat != 1
+                    ? "24%"
+                    : "48%",
+              }}
+            >
               <TouchableOpacity
                 style={{
                   backgroundColor:
@@ -527,12 +578,7 @@ export const ProdukHukum = () => {
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width:
-                    profile?.nip == "88888"
-                      ? "23%"
-                      : counterCat == 0
-                      ? "31%"
-                      : "48%",
+                  flex: 1,
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -540,7 +586,7 @@ export const ProdukHukum = () => {
                   //shadow android
                   elevation: 2,
                   justifyContent: "center",
-                  padding: 5,
+                  padding: 8,
                 }}
                 onPress={() =>
                   filterHandler({ key: "monitoring", value: "Monitoring" })
@@ -591,6 +637,23 @@ export const ProdukHukum = () => {
                   </View>
                 </View>
               </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "column",
+                width:
+                  device === "tablet" &&
+                  counterCat != 1 &&
+                  profile?.nip !== "88888"
+                    ? "30%"
+                    : device === "tablet" &&
+                      profile?.nip === "88888" &&
+                      counterCat != 1
+                    ? "24%"
+                    : "48%",
+              }}
+            >
               <TouchableOpacity
                 style={{
                   backgroundColor:
@@ -598,12 +661,7 @@ export const ProdukHukum = () => {
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width:
-                    profile?.nip == "88888"
-                      ? "23%"
-                      : counterCat == 0
-                      ? "31%"
-                      : "48%",
+                  flex: 1,
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -663,6 +721,7 @@ export const ProdukHukum = () => {
                 </View>
               </TouchableOpacity>
             </View>
+            {/* </View> */}
           </View>
 
           <View
@@ -670,10 +729,9 @@ export const ProdukHukum = () => {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: "white",
-              marginHorizontal: "5%",
-              width: "90%",
               marginVertical: 10,
               borderRadius: 8,
+              marginHorizontal: 16,
             }}
           >
             {/* {variant?.key === "need-sign" && profile.nip == "197208122001121002" && (
@@ -850,8 +908,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.ExtraDivinder,
     borderRadius: 8,
     backgroundColor: COLORS.white,
-    width: "90%",
-    marginHorizontal: "5%",
+    marginHorizontal: 16,
     marginTop: 10,
   },
   dropdown: {

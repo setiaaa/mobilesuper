@@ -480,9 +480,8 @@ export const DetailProdukHukum = ({ route }) => {
             <>
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -740,9 +739,8 @@ export const DetailProdukHukum = ({ route }) => {
               {detail?.attachments?.length != 0 && (
                 <View
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.white,
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                     borderRadius: 8,
                     marginTop: 20,
                   }}
@@ -899,9 +897,8 @@ export const DetailProdukHukum = ({ route }) => {
               )}
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -940,9 +937,8 @@ export const DetailProdukHukum = ({ route }) => {
               </View>
               <View
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.white,
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                   borderRadius: 8,
                   marginTop: 20,
                 }}
@@ -1051,12 +1047,11 @@ export const DetailProdukHukum = ({ route }) => {
             {profile?.nip == "88888" && detail?.state == "ttde" && (
               <TouchableOpacity
                 style={{
-                  width: "90%",
                   backgroundColor: COLORS.infoDanger,
                   borderRadius: 6,
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  marginHorizontal: "5%",
+                  marginHorizontal: 16,
                 }}
                 onPress={() => {
                   // handleBiometricAuth();
@@ -1079,12 +1074,11 @@ export const DetailProdukHukum = ({ route }) => {
               <>
                 <TouchableOpacity
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 6,
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                   }}
                   onPress={() => {
                     // handleBiometricAuth();
@@ -1109,12 +1103,11 @@ export const DetailProdukHukum = ({ route }) => {
 
                 <TouchableOpacity
                   style={{
-                    width: "90%",
                     backgroundColor: COLORS.orange,
                     borderRadius: 6,
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    marginHorizontal: "5%",
+                    marginHorizontal: 16,
                   }}
                   onPress={() => {
                     // handleBiometricAuth();

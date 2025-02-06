@@ -15,8 +15,8 @@ export const jenisPerizinan = [
     group: 3,
   },
   {
-    key: "Direktorat PKKPRL",
-    value: "Direktorat PKKPRL",
+    key: "Direktorat PRL",
+    value: "Direktorat PRL",
     group: 4,
   },
 ];
@@ -116,7 +116,7 @@ export const kategoriPerizinan = [
   {
     key: 12,
     value: "Perubahan KKPRL",
-    group: 3,
+    group: 4,
     jenisPermohonan: [
       { key: "berusaha", value: "Berusaha" },
       { key: "pemerintah", value: "Pemerintah" },
@@ -184,7 +184,7 @@ export const listParafProd = [
     nip: "69030175",
     title: "DIREKTUR JENDERAL PENGELOLAAN KELAUTAN DAN RUANG LAUT",
     name: "VICTOR GUSTAAF MANOPPO",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   {
     key: "196902062001122003",
@@ -202,7 +202,7 @@ export const listParafProd = [
     nip: "68030557",
     title: "SEKRETARIS JENDERAL",
     name: "RUDY HERIYANTO ADI NUGROHO",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   {
     key: "197202021996031003",
@@ -220,7 +220,7 @@ export const listParafProd = [
     nip: "99999",
     title: "WAKIL MENTERI KELAUTAN DAN PERIKANAN",
     name: "DkeyIT HERDIAWAN ASHAF",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   {
     key: "88888",
@@ -277,7 +277,7 @@ export const listParafDev = [
     nip: "69030175",
     title: "DIREKTUR JENDERAL PENGELOLAAN KELAUTAN DAN RUANG LAUT",
     name: "VICTOR GUSTAAF MANOPPO",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   {
     key: "196902062001122003",
@@ -295,7 +295,7 @@ export const listParafDev = [
     nip: "68030557",
     title: "SEKRETARIS JENDERAL",
     name: "RUDY HERIYANTO ADI NUGROHO",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   {
     key: "197202021996031003",
@@ -313,7 +313,7 @@ export const listParafDev = [
     nip: "99999",
     title: "WAKIL MENTERI KELAUTAN DAN PERIKANAN",
     name: "Didit HERDIAWAN ASHAF",
-    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    group: [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   // {
   //     key: '88888',

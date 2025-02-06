@@ -132,6 +132,7 @@ import { PerizinanMenteri } from "../Apps/DigitalSignature/PerizinanMenteri";
 import { MyTabPerizinanMenteri } from "../Apps/DigitalSignature/BottomTabsPerizinanMenteri";
 import { PKRL } from "../Apps/DigitalSignature/PKRL";
 import { DokumenSK } from "../Apps/DigitalSignature/DokumenSK";
+import { DashboardPKRL } from "../Apps/DigitalSignature/DashboardPKRL";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -540,6 +541,11 @@ export const BottomTabsPerizinanMenteri = () => {
             component={PKRL}
             options={{ headerShown: false }}
           />
+          <Tab.Screen
+            name="DashboardPKRL"
+            component={DashboardPKRL}
+            options={{ headerShown: false }}
+          />
         </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
@@ -724,7 +730,7 @@ export const BottomTabsCuti = () => {
       >
         <Tab.Navigator
           tabBar={(props) => <MyTabCuti {...props} />}
-          initialRouteName="PersonalCuti"
+          initialRouteName="PersetujuanCuti"
         >
           <Tab.Screen
             name="PersonalCuti"
