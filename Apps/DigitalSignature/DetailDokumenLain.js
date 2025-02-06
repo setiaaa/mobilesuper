@@ -27,6 +27,7 @@ import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { Config } from "../../constants/config";
 
 export const DetailDokumenLain = ({ route }) => {
   const variant = route.params;
@@ -61,6 +62,30 @@ export const DetailDokumenLain = ({ route }) => {
   // }, [file, item]);
 
   // console.log(file);
+
+  const handleGetFile = (tipe) => {
+    const data = item?.attachments;
+    let tmpIndex = -1;
+
+    let split = "";
+    if (tipe === "draft") {
+      split = "-";
+    } else if (tipe === "signed") {
+      split = "_";
+    }
+
+    let check = data.findIndex((x) => x.name.split(split)[0] === tipe);
+    if (check >= 0) {
+      tmpIndex = check;
+    } else {
+      tmpIndex = 0;
+    }
+
+    return data[tmpIndex].file;
+  };
+
+  const isProd = Config.base_url.includes("apigw") ? "0" : "1";
+
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
   return (
@@ -615,12 +640,14 @@ export const DetailDokumenLain = ({ route }) => {
             {loading ? null : (
               <TouchableOpacity
                 onPress={() => {
-                  if (
-                    item.attachments.length !== 0 &&
-                    item.attachments[0].file !== undefined
-                  ) {
+                  if (item.attachments.length !== 0) {
                     navigation.navigate("PdfViewer", {
-                      data: item?.attachments[0]?.file,
+                      data:
+                        isProd === "0"
+                          ? handleGetFile("draft")
+                          : handleGetFile(
+                              variant?.variant === "signed" ? "signed" : "draft"
+                            ),
                       type: "DokumenLain",
                     });
                   } else {
