@@ -836,12 +836,12 @@ export const Home = () => {
               minHeight:
                 device === "phone"
                   ? menuLiteLength?.length !== 0
-                    ? 350
+                    ? 280
                     : 200
                   : device === "tablet"
                   ? menuLiteLength?.length !== 0
-                    ? 530
-                    : 380
+                    ? 500
+                    : 300
                   : 200,
               position: "relative",
             }}
@@ -1372,7 +1372,6 @@ export const Home = () => {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: 20,
               }}
             ></View>
 
@@ -2073,7 +2072,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: "5%" }]}>
+          <View style={styles.containerr}>
             <Carousel
               ref={carouselRefCombine}
               sliderWidth={screenWidth}
