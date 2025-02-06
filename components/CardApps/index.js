@@ -97,7 +97,7 @@ export const CardApps = ({
       if (orientation === "landscape") {
         tempLimit = 15;
       } else if (orientation === "potrait") {
-        tempLimit = width >= 834 ? 11 : 9;
+        tempLimit = width >= 810 ? 11 : 9;
       }
     } else {
       tempLimit = 7;
@@ -519,7 +519,7 @@ export const CardApps = ({
           style={[
             styles.card,
             {
-              minHeight: device === "tablet" ? 330 : 230,
+              minHeight: "auto",
             },
           ]}
         >
@@ -528,10 +528,9 @@ export const CardApps = ({
               flexDirection: "row",
               gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "flex-start",
+              alignItems: "center",
+              justifyContent: "center",
               flex: 1,
-              paddingHorizontal: 16,
-              paddingVertical: 8,
               flexWrap: "wrap",
             }}
           >
@@ -546,7 +545,7 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                         width:
-                          device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                          device === "tablet" ? 100 : width <= 375 ? "25%" : 73,
                         marginTop: 5,
                       }}
                       key={index}
@@ -688,7 +687,7 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  width: device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                  width: device === "tablet" ? 100 : width <= 375 ? "25%" : 73,
                   marginTop: 5,
                 }}
               >
