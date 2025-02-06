@@ -770,60 +770,64 @@ export const DetailProdukHukum = ({ route }) => {
                       </Text>
                     </View>
                     <View style={{ flexDirection: "row", gap: 10 }}>
-                      {detail?.state == "done" && (
-                        <TouchableOpacity
-                          style={{
-                            marginTop: 10,
-                            padding: 10,
-                            backgroundColor: COLORS.bgLightGrey,
-                            borderRadius: 8,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "49%", // Kontrol lebar agar responsif
-                          }}
-                          onPress={() => {
-                            navigation.navigate("PdfViewer", {
-                              data: detail?.attachments[0]?.file,
-                              type: "DokumenLain",
-                            });
-                          }}
-                        >
-                          <Text
+                      {detail?.state == "done" &&
+                        (profile?.nip == "88888" ||
+                          detail.approvers[1]?.nip == profile?.nip ||
+                          detail.approvers[0]?.nip == profile?.nip ||
+                          detail.senders.nip == profile?.nip) && (
+                          <TouchableOpacity
                             style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H1", device),
-                              marginBottom: 10,
+                              marginTop: 10,
+                              padding: 10,
+                              backgroundColor: COLORS.bgLightGrey,
+                              borderRadius: 8,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "49%", // Kontrol lebar agar responsif
+                            }}
+                            onPress={() => {
+                              navigation.navigate("PdfViewer", {
+                                data: detail?.attachments[0]?.file,
+                                type: "DokumenLain",
+                              });
                             }}
                           >
-                            Final Dokumen
-                          </Text>
-                          <Image
-                            source={require("../../assets/superApp/pdf.png")}
-                            style={{ height: 50, width: 50 }} // Ukuran gambar
-                          />
-                          <Text
-                            style={{
-                              fontSize: fontSizeResponsive("H4", device),
-                              textAlign: "center",
-                              marginTop: 5,
-                            }}
-                          >
-                            {detail?.attachments[0]?.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: fontSizeResponsive("H4", device),
-                              textAlign: "center",
-                              marginTop: 5,
-                            }}
-                          >
-                            {(detail?.attachments[0]?.file_size / 1024).toFixed(
-                              2
-                            )}{" "}
-                            KB
-                          </Text>
-                        </TouchableOpacity>
-                      )}
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H1", device),
+                                marginBottom: 10,
+                              }}
+                            >
+                              Final Dokumen
+                            </Text>
+                            <Image
+                              source={require("../../assets/superApp/pdf.png")}
+                              style={{ height: 50, width: 50 }} // Ukuran gambar
+                            />
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {detail?.attachments[0]?.name}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                                textAlign: "center",
+                                marginTop: 5,
+                              }}
+                            >
+                              {(
+                                detail?.attachments[0]?.file_size / 1024
+                              ).toFixed(2)}{" "}
+                              KB
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       {
                         <TouchableOpacity
                           style={{

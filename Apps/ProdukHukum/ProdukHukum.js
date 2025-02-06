@@ -90,7 +90,7 @@ export const ProdukHukum = () => {
       setIsConseptor(true);
       dispatch(setCounterCat(1));
       dispatch(getCounterProdukHukum({ token: token, category: 1 }));
-      setVariant({ key: "revision", value: "Revisi" });
+      setVariant({ key: "revision", value: "Perlu Revisi" });
     } else {
       setIsConseptor(false);
       dispatch(setCounterCat(0));
@@ -116,7 +116,7 @@ export const ProdukHukum = () => {
   );
   const [refreshing, setRefreshing] = useState(false);
   const dropdownConceptor = [
-    { key: "revision", value: "Revisi" },
+    { key: "revision", value: "Perlu Revisi" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
   ];
