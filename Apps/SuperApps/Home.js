@@ -824,6 +824,8 @@ export const Home = () => {
 
   // console.log(combineBanner);
 
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -838,12 +840,12 @@ export const Home = () => {
               minHeight:
                 device === "phone"
                   ? menuLiteLength?.length !== 0
-                    ? 280
+                    ? 220
                     : 200
                   : device === "tablet"
                   ? menuLiteLength?.length !== 0
-                    ? 330
-                    : 330
+                    ? 360
+                    : 360
                   : 200,
               position: "relative",
             }}
@@ -924,7 +926,10 @@ export const Home = () => {
                 width: "100%",
                 position: "absolute",
                 zIndex: 9,
-                top: device === "tablet" ? "43%" : "30%",
+                top:
+                  device === "tablet" && orientation === "landscape"
+                    ? "50%"
+                    : "40%",
                 paddingHorizontal: 20,
               }}
             >
@@ -938,7 +943,13 @@ export const Home = () => {
           </View>
 
           <View style={{ paddingHorizontal: 20 }}>
-            <View style={{ alignItems: "center", display: "flex" }}>
+            <View
+              style={{
+                alignItems: "center",
+                display: "flex",
+                marginBottom: 5,
+              }}
+            >
               <CardCounterAppsTTDE />
             </View>
 
