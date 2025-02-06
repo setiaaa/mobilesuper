@@ -25,6 +25,8 @@ const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
+const produkHukum = BASE_URL + "bridge/admintools/nde/produkhukum/";
+
 const attachmentExport = BASE_URL + "attachment/";
 const TaskKorespondensi = BASE_URL + "bridge/";
 
@@ -2368,6 +2370,16 @@ export const getDetailSertifikatEksternal = createAsyncThunk(
   }
 );
 
+export const getCheckProdHuk = createAsyncThunk(
+  "digitalsign/getCheckProdHuk",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(
+      `${produkHukum}check-akses-produk-hukum/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
+);
 export const getListProdukHukum = createAsyncThunk(
   "digitalsign/getListProdukHukum",
   async ({ token, tipe, page, search }) => {

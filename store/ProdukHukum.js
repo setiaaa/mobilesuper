@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getCheckProdHuk,
   getCounterProdukHukum,
   getDetailProdukHukum,
   getListProdukHukum,
@@ -12,6 +13,7 @@ import * as Sentry from "@sentry/react-native";
 const ProdukHukumSlice = createSlice({
   name: "ProdukHukum",
   initialState: {
+    checkProdukHukum: false,
     next: null,
     previous: null,
     lists: [],
@@ -40,6 +42,17 @@ const ProdukHukumSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getCheckProdHuk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.checkProdukHukum = action.payload.result.is_permitted;
+      })
+      .addCase(getCheckProdHuk.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getCheckProdHuk.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+      })
       .addCase(getCounterProdukHukum.fulfilled, (state, action) => {
         state.loading = false;
         state.counter = action.payload;
@@ -119,7 +132,11 @@ const ProdukHukumSlice = createSlice({
   },
 });
 
-export const { setCounterCat, setStatus, resetList, resetDetail } =
-  ProdukHukumSlice.actions;
+export const {
+  setCounterCat,
+  setStatus,
+  resetList,
+  resetDetail,
+} = ProdukHukumSlice.actions;
 
 export default ProdukHukumSlice.reducer;

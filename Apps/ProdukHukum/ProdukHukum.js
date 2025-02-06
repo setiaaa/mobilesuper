@@ -259,7 +259,6 @@ export const ProdukHukum = () => {
     );
   }, [page, variant, token, search]);
 
-  console.log(counterCat);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
