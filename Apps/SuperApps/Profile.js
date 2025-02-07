@@ -626,7 +626,7 @@ export const Profile = () => {
         },
       });
     } else {
-      if (checkProdukHukum) {
+      if (checkProdukHukum || profile.nip == "88888") {
         tmpMenu.splice(12, 0, {
           title: "Produk Hukum",
           navigation: "ProdukHukum",
