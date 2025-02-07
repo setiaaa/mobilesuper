@@ -820,8 +820,6 @@ export const Home = () => {
     ]);
   }, [berita.lists, galeri.lists]);
 
-  console.log(screenWidth, "width kan");
-
   const handleGetHeight = () => {
     let height = 0;
     let top = "30%";

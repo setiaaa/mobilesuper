@@ -651,19 +651,22 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Penambahan menu korespondensi",
+        description: "Perbaikan Perizinan Menteri PKRL",
       },
       {
-        description: "Perubahan icon forward",
+        description: "Penambahan dashboard pada Perizinan Menteri PKRL",
       },
       {
-        description: "Perubahan icon disposisi di surat masuk",
+        description: "Perbaikan Dokumen SK",
       },
       {
-        description: "Penambahan digital sign sk",
+        description: "Penambahan hapus list Dokumen Lain",
       },
       {
-        description: "Penambahan ⁠⁠perizinan PKRL",
+        description: "Perbaikan dan penambahan counter Cuti",
+      },
+      {
+        description: "Perbaikan stylus disposisi",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
