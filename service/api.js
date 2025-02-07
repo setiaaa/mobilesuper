@@ -2311,6 +2311,16 @@ export const getDetailDigisign = createAsyncThunk(
   }
 );
 
+export const deleteDokumenLain = createAsyncThunk(
+  "digitalsign/deleteDokumenLain",
+  async ({ token, id }) => {
+    const respon = await axiosInstance.delete(`${digitalSign}document/${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
 export const updateDocumentDigiSign = createAsyncThunk(
   "digitalsign/updateDocumentDigiSign",
   async (data) => {
@@ -2359,7 +2369,6 @@ export const getListSertifikatEksternal = createAsyncThunk(
 export const getDetailSertifikatEksternal = createAsyncThunk(
   "digitalsign/getDetailSertifikatEksternal",
   async ({ token, id }) => {
-    console.log(token, id);
     const respon = await axiosInstance.get(
       `${digitalSign}external-certificate/${id}/`,
       {
