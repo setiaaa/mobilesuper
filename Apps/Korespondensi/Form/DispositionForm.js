@@ -57,6 +57,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { profile, selectedAttr } = useSelector((state) => state.profile);
+  const { device } = useSelector((state) => state.apps);
   const [senderAttr, setSenderAttr] = useState(selectedAttr);
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
   // const addressbook = useSelector((state) => state.addressbook.selected);
@@ -153,43 +154,46 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     header = await headerToken();
   }
   const renderItemTindakan = ({ item, index }) => (
-    <View style={{ alignItems: "flex-start" }} key={index}>
+    <View
+      key={index}
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
       <Checkbox.Item
         mode="android"
         position="leading"
         color={COLORS.primary}
-        status={
-          selectedTindakan?.findIndex((data) => data == item.name) != -1
-            ? "checked"
-            : "unchecked"
-        }
+        status={selectedTindakan.includes(item.name) ? "checked" : "unchecked"}
         label={item.name}
-        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
+        labelStyle={[
+          styles.labelCheckbox,
+          {
+            fontSize: GlobalStyles.font.sm,
+            textAlignVertical: "center",
+            marginTop: -7,
+          },
+        ]}
         onPress={() => {
-          dispatch(
-            setNotaTindakan({
-              index: 0,
-              nota_tindakan1: item,
-            })
+          dispatch(setNotaTindakan({ index: 0, nota_tindakan1: item }));
+          setSelectedTindakan((prev) =>
+            prev.includes(item.name)
+              ? prev.filter((tind) => tind !== item.name)
+              : [...prev, item.name]
           );
-          selectedTindakan?.findIndex((data) => data == item.name) == -1
-            ? setSelectedTindakan([...selectedTindakan, item.name])
-            : setSelectedTindakan(
-                selectedTindakan.filter(
-                  (tind, i) =>
-                    i !==
-                    selectedTindakan?.findIndex((data) => data == item.name)
-                )
-              );
         }}
         style={{
-          color: GlobalStyles.colors.primary,
-          width: "100%",
-          paddingLeft: -10,
+          height: 27,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingLeft: 0,
         }}
       />
     </View>
   );
+
   async function getTindakan() {
     setIsLoading(true);
     try {
@@ -521,8 +525,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     <FlatList
                       data={tindakanList}
                       renderItem={renderItemTindakan}
-                      keyExtractor={(item) => item.code}
+                      keyExtractor={(item, index) =>
+                        item?.code ? item.code.toString() : `fallback-${index}`
+                      }
                       nestedScrollEnabled
+                      numColumns={device === "tablet" ? 2 : 1}
+                      columnWrapperStyle={
+                        device === "tablet"
+                          ? { justifyContent: "space-between" }
+                          : null
+                      } // Agar grid lebih rapi di tablet
                     />
                   </View>
                 )}
@@ -547,8 +559,20 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   allowFontScaling={false}
                 />
 
-                <View style={styles.containerTitleLeft}>
-                  <Button
+                <View
+                  style={[
+                    styles.containerTitleLeft,
+                    {
+                      borderWidth: 1,
+                      borderRadius: 8,
+                      padding: 10,
+                      justifyContent: "space-between",
+                      marginTop: 10,
+                      borderColor: GlobalStyles.colors.tertiery70,
+                    },
+                  ]}
+                >
+                  {/* <Button
                     labelStyle={{
                       fontSize: GlobalStyles.font.sm,
                     }}
@@ -564,7 +588,34 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   >
                     <Ionicons name="pencil" size={16} />
                     Catatan
-                  </Button>
+                  </Button> */}
+                  <View
+                    style={{
+                      width: device === "tablet" ? 300 : 230,
+                    }}
+                  >
+                    <Text style={[styles.titleTodo, { paddingRight: 8 }]}>
+                      Stylus Pen
+                    </Text>
+                    <Text
+                      style={{
+                        paddingRight: 8,
+                        color: GlobalStyles.colors.grey,
+                        marginTop: 5,
+                      }}
+                    >
+                      Tambah catatan dengan stylus
+                    </Text>
+                  </View>
+                  <Switch
+                    value={stylusEnabled}
+                    onValueChange={() => {
+                      if (stylusEnabled == true) {
+                        handleClear();
+                      }
+                      setStylusEnabled(!stylusEnabled);
+                    }}
+                  />
                 </View>
                 {stylusEnabled && (
                   <View
@@ -835,7 +886,7 @@ const styles = StyleSheet.create({
   containerTitleLeft: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 16,
+    paddingVertical: 10,
   },
   titleTodo: {
     fontSize: GlobalStyles.font.md,
