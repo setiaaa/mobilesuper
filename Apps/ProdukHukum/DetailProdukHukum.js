@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -479,6 +485,20 @@ export const DetailProdukHukum = ({ route }) => {
       </View>
     );
   };
+
+  const { width } = useWindowDimensions();
+
+  let responsive = 0;
+  let widthFile = 0;
+
+  if (device === "phone") {
+    responsive = 2;
+    widthFile = width / responsive - 48;
+  } else if (device === "tablet") {
+    responsive = 3;
+    widthFile = width / responsive - 32;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -797,6 +817,7 @@ export const DetailProdukHukum = ({ route }) => {
                     borderRadius: 4,
                     margin: 20,
                     borderColor: "#DBDADE",
+                    gap: 10,
                   }}
                 >
                   <Text
@@ -816,8 +837,8 @@ export const DetailProdukHukum = ({ route }) => {
                   <View
                     style={{
                       flexDirection: "row",
-                      flexWrap: "nowrap",
-                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                      justifyContent: "flex-start",
                       gap: 10,
                     }}
                   >
@@ -829,7 +850,9 @@ export const DetailProdukHukum = ({ route }) => {
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
-                          flex: 1, // Membuat lebar fleksibel dalam satu baris
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
                         }}
                         onPress={() =>
                           navigation.navigate("PdfViewer", {
@@ -842,8 +865,7 @@ export const DetailProdukHukum = ({ route }) => {
                           style={{
                             textAlign: "center",
                             fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H1", device),
-                            marginBottom: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           Final Dokumen
@@ -854,9 +876,9 @@ export const DetailProdukHukum = ({ route }) => {
                         />
                         <Text
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
                             textAlign: "center",
                             marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {(detail?.attachments[0]?.file_size / 1024).toFixed(
@@ -875,7 +897,9 @@ export const DetailProdukHukum = ({ route }) => {
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
-                          flex: 1,
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
                         }}
                         onPress={() =>
                           navigation.navigate("PdfViewer", {
@@ -888,8 +912,7 @@ export const DetailProdukHukum = ({ route }) => {
                           style={{
                             textAlign: "center",
                             fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H1", device),
-                            marginBottom: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           Arsip Draft
@@ -900,9 +923,9 @@ export const DetailProdukHukum = ({ route }) => {
                         />
                         <Text
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
                             textAlign: "center",
                             marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {(
@@ -921,7 +944,9 @@ export const DetailProdukHukum = ({ route }) => {
                           borderRadius: 8,
                           justifyContent: "center",
                           alignItems: "center",
-                          flex: 1,
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
                         }}
                         onPress={() =>
                           navigation.navigate("PdfViewer", {
@@ -934,8 +959,7 @@ export const DetailProdukHukum = ({ route }) => {
                           style={{
                             textAlign: "center",
                             fontWeight: FONTWEIGHT.bold,
-                            fontSize: fontSizeResponsive("H1", device),
-                            marginBottom: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           Arsip Lampiran
@@ -946,9 +970,9 @@ export const DetailProdukHukum = ({ route }) => {
                         />
                         <Text
                           style={{
-                            fontSize: fontSizeResponsive("H4", device),
                             textAlign: "center",
                             marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {(
