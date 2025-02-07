@@ -5,7 +5,7 @@ import { Card, Text } from "react-native-paper";
 import moment from "moment";
 import { getTemplateHeaderDispo } from "../../utils/templateDispo";
 
-export const detailEselonI = (data, checked) => {
+export const detailEselonI = (data, checked, device) => {
   return (
     <ScrollView nestedScrollEnabled>
       <View style={styles.screen}>
@@ -51,7 +51,35 @@ export const detailEselonI = (data, checked) => {
                 {data?.obj?.priority ? data?.obj?.priority : data?.obj?.prio}
               </Text>
             </View>
-
+            <View
+              style={{
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingVertical: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Nomor Agenda
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.obj?.agenda_number}
+              </Text>
+            </View>
             <View
               style={{
                 flexDirection: "row",
@@ -97,7 +125,36 @@ export const detailEselonI = (data, checked) => {
                   paddingRight: 20,
                 }}
               >
-                Tanggal Diterima
+                Tingkat Keamanan
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.obj?.type}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingVertical: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Diterima Tanggal
               </Text>
               <Text
                 style={{
@@ -139,7 +196,6 @@ export const detailEselonI = (data, checked) => {
                 {data?.obj?.letter_date}
               </Text>
             </View>
-
             <View
               style={{
                 flexDirection: "row",
@@ -171,7 +227,7 @@ export const detailEselonI = (data, checked) => {
                   : data?.obj?.senders[0].name}
               </Text>
             </View>
-            <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+            <View style={{ flexDirection: "row", paddingTop: 10 }}>
               <Text
                 style={{
                   fontSize: 13,

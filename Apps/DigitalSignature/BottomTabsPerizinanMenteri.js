@@ -5,7 +5,11 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import { FontAwesome6, Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
@@ -17,6 +21,12 @@ export const MyTabPerizinanMenteri = () => {
   const [tabItemIndex, setTabItemIndex] = useState(1);
   const { profile } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
+
+  const rolePerizinanDashboard = ["DASHBOARD_PERIZINAN_MENTERI"];
+
+  const isRolePerizinanDashboard = profile.roles_access?.some((item) =>
+    rolePerizinanDashboard.includes(item)
+  );
 
   const navigation = useNavigation();
 
@@ -46,7 +56,7 @@ export const MyTabPerizinanMenteri = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <View
@@ -88,7 +98,7 @@ export const MyTabPerizinanMenteri = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <FontAwesome6
@@ -127,7 +137,7 @@ export const MyTabPerizinanMenteri = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <View
@@ -168,7 +178,7 @@ export const MyTabPerizinanMenteri = () => {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <FontAwesome6
@@ -190,6 +200,86 @@ export const MyTabPerizinanMenteri = () => {
               </View>
             )}
           </TouchableOpacity>
+
+          {isRolePerizinanDashboard === true ? (
+            <TouchableOpacity
+              key={4}
+              onPress={() => {
+                setTabItemIndex(4);
+                navigation.navigate("DashboardPKRL");
+                // props.navigation.navigate('Home', { unread: false })
+              }}
+            >
+              {tabItemIndex === 4 ? (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 120 : 95,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 200 : 120,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 3,
+                      backgroundColor: COLORS.primary,
+                      position: "absolute",
+                      top: 0,
+                      //shadow ios
+                      shadowOffset: { width: -2, height: 5 },
+                      shadowColor: COLORS.primary,
+                      shadowOpacity: 0.4,
+                      //shadow android
+                      elevation: 2,
+                    }}
+                  />
+                  <MaterialCommunityIcons
+                    name="desktop-mac-dashboard"
+                    color={COLORS.primary}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      position: "absolute",
+                      bottom: device === "tablet" ? 40 : 40,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Dashboard PKRL
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 120 : 95,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 200 : 120,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="desktop-mac-dashboard"
+                    color={COLORS.primary}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.tertiary,
+                      position: "absolute",
+                      bottom: device === "tablet" ? 40 : 40,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Dashboard PKRL
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : null}
         </View>
       </BottomSheetModalProvider>
     </>

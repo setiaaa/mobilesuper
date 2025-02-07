@@ -62,9 +62,13 @@ export const DokumenSK = () => {
 
   const { profile } = useSelector((state) => state.superApps);
 
-  const roleSK = ["DIGISIGN.SK"];
+  const roleSK = ["APPROVER.DIGISIGN.SK"];
+  const roleIsCreateSK = ["DIGISIGN.SK"];
 
   const isRoleSK = profile.roles_access?.some((item) => roleSK.includes(item));
+  const isRoleCreateSK = profile.roles_access?.some((item) =>
+    roleIsCreateSK.includes(item)
+  );
 
   const currentTab = useNavigationState(
     (state) => state.routes[state.index].name
@@ -383,7 +387,7 @@ export const DokumenSK = () => {
           </View>
         </View>
 
-        {isRoleSK ? (
+        {isRoleSK === true || isRoleCreateSK === true ? (
           <ScrollView
             horizontal={true}
             style={{

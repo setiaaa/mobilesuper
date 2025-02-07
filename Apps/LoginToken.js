@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
   Image,
   KeyboardAvoidingView,
   Modal,
@@ -19,6 +20,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
+  spacing,
 } from "../config/SuperAppps";
 import Checkbox from "expo-checkbox";
 import { setTokenValue } from "../service/session";
@@ -31,6 +33,7 @@ import * as Linking from "expo-linking";
 import { Config } from "../constants/config";
 import { getHTTP, handleUpgradeLink } from "../utils/http";
 import { Loading } from "../components/Loading";
+import { Divider } from "react-native-paper";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
@@ -96,6 +99,27 @@ export const LoginToken = () => {
     }
   };
   const { device } = useSelector((state) => state.apps);
+
+  const [listLog, setListLog] = useState([
+    {
+      description: "Perbaikan Perizinan Menteri PKRL",
+    },
+    {
+      description: "Penambahan dashboard pada Perizinan Menteri PKRL",
+    },
+    {
+      description: "Perbaikan Dokumen SK",
+    },
+    {
+      description: "Penambahan hapus list Dokumen Lain",
+    },
+    {
+      description: "Perbaikan dan penambahan counter Cuti",
+    },
+    {
+      description: "Perbaikan stylus disposisi",
+    },
+  ]);
 
   // console.log(loginAuth);
 
@@ -412,24 +436,24 @@ export const LoginToken = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   width: "90%",
-                  borderRadius: 10,
+                  borderRadius: 8,
                 }}
               >
                 <View
                   style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    padding: 10,
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.grey,
+                    padding: spacing.default,
+                    alignItems: "center",
                   }}
                 >
                   <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                    }}
+                    style={[
+                      {
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      },
+                    ]}
                   >
                     Log Perbaikan Aplikasi Version {Config.app_version}
                   </Text>
@@ -441,144 +465,46 @@ export const LoginToken = () => {
                   >
                     <Ionicons
                       name="close-outline"
-                      size={24}
-                      color={COLORS.lighter}
+                      size={device === "tablet" ? 40 : 24}
+                      color={COLORS.primary}
                     />
                   </TouchableOpacity>
                 </View>
-
-                <View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginTop: 10,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Penambahan menu korespondensi
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginTop: 10,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Perubahan icon forward
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Perubahan icon disposisi di surat masuk
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Penambahan digital sign sk
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginBottom: 10,
-                      alignItems: "center",
-                      marginHorizontal: 40,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: COLORS.primary,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontWeight: FONTWEIGHT.bold,
-                        marginLeft: 10,
-                      }}
-                    >
-                      Penambahan ⁠⁠perizinan PKRL
-                    </Text>
-                  </View>
+                <Divider />
+                <View
+                  style={{
+                    flexDirection: "column",
+                    rowGap: spacing.medium,
+                    padding: spacing.default,
+                  }}
+                >
+                  {listLog?.map((item) => {
+                    return (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: device === "tablet" ? 10 : 5,
+                            height: device === "tablet" ? 10 : 5,
+                            borderRadius: 10,
+                            backgroundColor: COLORS.primary,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {item.description}
+                        </Text>
+                      </View>
+                    );
+                  })}
 
                   {/* 
               <Text

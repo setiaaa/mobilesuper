@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import {
   COLORS,
   FONTSIZE,
@@ -177,6 +177,12 @@ export const CardAppsB = ({
               ) : item.title === "Kepegawaian" ? (
                 <FontAwesome6
                   name="people-line"
+                  size={device === "tablet" ? 60 : 30}
+                  color={COLORS.iconMenu}
+                />
+              ) : item.title === "Produk Hukum" ? (
+                <Octicons
+                  name="file-badge"
                   size={device === "tablet" ? 60 : 30}
                   color={COLORS.iconMenu}
                 />

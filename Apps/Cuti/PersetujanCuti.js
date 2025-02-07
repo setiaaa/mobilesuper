@@ -35,7 +35,8 @@ import { getTokenValue } from "../../service/session";
 
 export const PersetujanCuti = () => {
   const navigation = useNavigation();
-  const [variant, SetVariant] = useState("Completed");
+  const [variant, SetVariant] = useState("On Progress");
+  const [page, setPage] = useState(10);
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
 
@@ -49,9 +50,11 @@ export const PersetujanCuti = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDokumenPersetujuan(token));
+      dispatch(
+        getDokumenPersetujuan({ token: token, variant: variant, page: page })
+      );
     }
-  }, [token]);
+  }, [token, variant, page]);
 
   const { persetujuan, loading } = useSelector((state) => state.cuti);
 
@@ -103,7 +106,9 @@ export const PersetujanCuti = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getDokumenPersetujuan(token));
+        dispatch(
+          getDokumenPersetujuan({ token: token, variant: variant, page: page })
+        );
       }
     } catch (error) {}
 
@@ -111,9 +116,17 @@ export const PersetujanCuti = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token]);
+  }, [token, variant, page]);
 
   const { device } = useSelector((state) => state.apps);
+
+  const loadMore = () => {
+    if (filterData.length !== 0) {
+      if (filterData.length % 5 === 0) {
+        setPage(page + 10);
+      }
+    }
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -228,185 +241,253 @@ export const PersetujanCuti = () => {
                 paddingVertical: 10,
                 marginTop: 10,
                 borderRadius: 8,
-                paddingHorizontal: 20,
+                paddingHorizontal: 10,
                 flexDirection: "row",
-                justifyContent: "center",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
                 backgroundColor: COLORS.white,
-                gap: wp(3),
+                gap: 5,
               }}
             >
+              {/* On Progress */}
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  width: "48%",
                   borderColor:
                     variant === "On Progress"
-                      ? COLORS.infoDangerLight
+                      ? COLORS.info
                       : COLORS.ExtraDivinder,
-                  alignItems: "center",
-                  gap: 10,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                  marginBottom: 10,
                 }}
-                onPress={() => {
-                  SetVariant("On Progress");
-                }}
+                onPress={() => SetVariant("On Progress")}
               >
                 <View
                   style={{
-                    backgroundColor: COLORS.info,
-                    borderRadius: device === "tablet" ? 40 : 20,
-                    width: device === "tablet" ? 42 : 28,
-                    height: device === "tablet" ? 42 : 28,
+                    flexDirection: "row",
+                    gap: 10,
                     alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Ionicons
-                    name="calendar-outline"
-                    size={device === "tablet" ? 27 : 18}
-                    color={COLORS.white}
-                  />
+                  <View
+                    style={{
+                      backgroundColor: COLORS.info,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={device === "tablet" ? 27 : 18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {persetujuan?.lists?.badge?.on_progress}
+                  </Text>
                 </View>
                 <Text
                   style={{
                     color:
-                      variant === "On Progress"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
-                    textAlign: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+                      variant === "On Progress" ? COLORS.info : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
                 >
                   Butuh Persetujuan
                 </Text>
               </TouchableOpacity>
 
+              {/* Completed */}
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  width: "48%",
                   borderColor:
                     variant === "Completed"
-                      ? COLORS.infoDangerLight
+                      ? COLORS.success
                       : COLORS.ExtraDivinder,
-                  alignItems: "center",
-                  gap: 10,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
+                  marginBottom: 10,
                 }}
-                onPress={() => {
-                  SetVariant("Completed");
-                }}
+                onPress={() => SetVariant("Completed")}
               >
                 <View
                   style={{
-                    backgroundColor: COLORS.success,
-                    borderRadius: device === "tablet" ? 40 : 20,
-                    width: device === "tablet" ? 42 : 28,
-                    height: device === "tablet" ? 42 : 28,
+                    flexDirection: "row",
+                    gap: 10,
                     alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Ionicons
-                    name="calendar-outline"
-                    size={device === "tablet" ? 27 : 18}
-                    color={COLORS.white}
-                  />
+                  <View
+                    style={{
+                      backgroundColor: COLORS.success,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={device === "tablet" ? 27 : 18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {persetujuan?.lists?.badge?.completed}
+                  </Text>
                 </View>
                 <Text
                   style={{
                     color:
-                      variant === "Completed"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
-                    textAlign: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+                      variant === "Completed" ? COLORS.success : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
                 >
                   Disetujui Anda
                 </Text>
               </TouchableOpacity>
 
+              {/* Rejected */}
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  width: "48%",
                   borderColor:
                     variant === "Rejected"
                       ? COLORS.infoDangerLight
                       : COLORS.ExtraDivinder,
-                  alignItems: "center",
-                  gap: 10,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
                 }}
                 onPress={() => SetVariant("Rejected")}
               >
                 <View
                   style={{
-                    backgroundColor: COLORS.danger,
-                    borderRadius: device === "tablet" ? 40 : 20,
-                    width: device === "tablet" ? 42 : 28,
-                    height: device === "tablet" ? 42 : 28,
+                    flexDirection: "row",
+                    gap: 10,
                     alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Ionicons
-                    name="calendar-outline"
-                    size={device === "tablet" ? 27 : 18}
-                    color={COLORS.white}
-                  />
+                  <View
+                    style={{
+                      backgroundColor: COLORS.danger,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={device === "tablet" ? 27 : 18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {persetujuan?.lists?.badge?.rejected}
+                  </Text>
                 </View>
                 <Text
                   style={{
                     color:
-                      variant === "Rejected"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
-                    textAlign: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+                      variant === "Rejected" ? COLORS.infoDanger : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
                 >
                   Tidak Disetujui Anda
                 </Text>
               </TouchableOpacity>
 
+              {/* Returned */}
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  width: "48%",
                   borderColor:
                     variant === "Returned"
-                      ? COLORS.infoDangerLight
+                      ? COLORS.orange
                       : COLORS.ExtraDivinder,
-                  alignItems: "center",
-                  gap: 10,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  padding: 10,
                 }}
                 onPress={() => SetVariant("Returned")}
               >
                 <View
                   style={{
-                    backgroundColor: COLORS.orange,
-                    borderRadius: device === "tablet" ? 40 : 20,
-                    width: device === "tablet" ? 42 : 28,
-                    height: device === "tablet" ? 42 : 28,
+                    flexDirection: "row",
+                    gap: 10,
                     alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Ionicons
-                    name="calendar-outline"
-                    size={device === "tablet" ? 27 : 18}
-                    color={COLORS.white}
-                  />
+                  <View
+                    style={{
+                      backgroundColor: COLORS.orange,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={device === "tablet" ? 27 : 18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      marginTop: 5,
+                    }}
+                  >
+                    {persetujuan?.lists?.badge?.returned}
+                  </Text>
                 </View>
                 <Text
                   style={{
-                    color:
-                      variant === "Returned"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
-                    textAlign: "center",
-                    fontSize: fontSizeResponsive("H4", device),
+                    color: variant === "Returned" ? COLORS.orange : COLORS.grey,
+                    fontSize: device === "tablet" ? 20 : 12,
+                    marginTop: 5,
+                    fontWeight: FONTWEIGHT.bold,
                   }}
                 >
                   Dikembalikan Anda
                 </Text>
               </TouchableOpacity>
             </View>
+
             {/* </View> */}
             <View style={{ flex: 1 }}>
               {variant === "Completed" ? (
@@ -423,6 +504,7 @@ export const PersetujanCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
@@ -445,6 +527,7 @@ export const PersetujanCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
@@ -456,7 +539,7 @@ export const PersetujanCuti = () => {
                 />
               ) : variant === "Returned" ? (
                 <FlatList
-                  data={persetujuan.lists?.data}
+                  data={filterData}
                   renderItem={({ item }) => (
                     <View key={item.id}>
                       <CardListDokumenDikembalikan
@@ -468,6 +551,7 @@ export const PersetujanCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl
@@ -479,7 +563,7 @@ export const PersetujanCuti = () => {
                 />
               ) : variant === "On Progress" ? (
                 <FlatList
-                  data={persetujuan.lists?.data}
+                  data={filterData}
                   renderItem={({ item }) => (
                     <View key={item.id}>
                       <CardListDokumenPerluDisetujui
@@ -491,6 +575,7 @@ export const PersetujanCuti = () => {
                     </View>
                   )}
                   keyExtractor={(item) => item.id}
+                  onEndReached={loadMore}
                   ListEmptyComponent={() => <ListEmpty />}
                   refreshControl={
                     <RefreshControl

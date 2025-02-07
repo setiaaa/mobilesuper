@@ -150,6 +150,7 @@ const CutiSlice = createSlice({
       .addCase(getDokumenPersetujuan.rejected, (state, action) => {
         state.loading = false;
         Sentry.captureException(action.error);
+        console.log(action.error);
       })
       .addCase(postPengajuanCuti.fulfilled, (state, action) => {
         if (action.payload.success === false) {

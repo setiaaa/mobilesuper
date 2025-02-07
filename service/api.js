@@ -25,6 +25,8 @@ const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
+const produkHukum = BASE_URL + "bridge/admintools/nde/produkhukum/";
+
 const attachmentExport = BASE_URL + "attachment/";
 const TaskKorespondensi = BASE_URL + "bridge/";
 
@@ -2309,6 +2311,16 @@ export const getDetailDigisign = createAsyncThunk(
   }
 );
 
+export const deleteDokumenLain = createAsyncThunk(
+  "digitalsign/deleteDokumenLain",
+  async ({ token, id }) => {
+    const respon = await axiosInstance.delete(`${digitalSign}document/${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
 export const updateDocumentDigiSign = createAsyncThunk(
   "digitalsign/updateDocumentDigiSign",
   async (data) => {
@@ -2357,7 +2369,6 @@ export const getListSertifikatEksternal = createAsyncThunk(
 export const getDetailSertifikatEksternal = createAsyncThunk(
   "digitalsign/getDetailSertifikatEksternal",
   async ({ token, id }) => {
-    console.log(token, id);
     const respon = await axiosInstance.get(
       `${digitalSign}external-certificate/${id}/`,
       {
@@ -2365,6 +2376,83 @@ export const getDetailSertifikatEksternal = createAsyncThunk(
       }
     );
     return respon?.data.result;
+  }
+);
+
+export const getCheckProdHuk = createAsyncThunk(
+  "digitalsign/getCheckProdHuk",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(
+      `${produkHukum}check-akses-produk-hukum/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListProdukHukum = createAsyncThunk(
+  "digitalsign/getListProdukHukum",
+  async ({ token, tipe, page, search }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}permen/?category=${tipe}&limit=${page}&search=${search}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      next: respon?.data?.next,
+      previous: respon?.data?.previous,
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getDetailProdukHukum = createAsyncThunk(
+  "digitalsign/getDetailProdukHukum",
+  async ({ token, id }) => {
+    const respon = await axiosInstance.get(`${digitalSign}permen/${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const parafProdukHukum = createAsyncThunk(
+  "digitalsign/parafProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/paraf/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const revisionProdukHukum = createAsyncThunk(
+  "digitalsign/revisionProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/${data.id}/revision/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
+export const ttdeProdukHukum = createAsyncThunk(
+  "digitalsign/ttdeProdukHukum",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}permen/${data.id}/ttde/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
   }
 );
 
@@ -2548,6 +2636,50 @@ export const getCounterPKRL = createAsyncThunk(
     };
   }
 );
+export const getCounterProdukHukum = createAsyncThunk(
+  "digitalsign/getCounterProdukHukum",
+  async ({ token, category }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}permen/count-dashboard/?isRoleCreator=${category}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
+export const getDasboardListPKRL = createAsyncThunk(
+  "digitalsign/getDasboardListPKRL",
+  async ({ token, tipe, page, search, kategori }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document/laporan-pkrl/?tipe_dokumen=${tipe}&limit=${page}&general=${search}&direktorat=&kategori=${kategori}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.results,
+    };
+  }
+);
+
+export const getExportPKRL = createAsyncThunk(
+  "digitalsign/getExportPKRL",
+  async ({ token }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}export-pkrl/?&direktorat=&kategori=`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
 
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
@@ -2598,9 +2730,10 @@ export const getLiburKhusus = createAsyncThunk(
 
 export const getArsipCuti = createAsyncThunk(
   "cuti/getArsipCuti",
-  async (token) => {
+  async ({ token, variant, page }) => {
+    console.log(page);
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-cutiku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`,
+      `${Cuti}dokumen-cutiku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }
@@ -2663,9 +2796,9 @@ export const getPilihApprovalPejabat = createAsyncThunk(
 
 export const getDokumenPersetujuan = createAsyncThunk(
   "cuti/getDokumenPersetujuan",
-  async (token) => {
+  async ({ token, variant, page }) => {
     const respon = await axiosInstance.get(
-      `${Cuti}dokumen-persetujuanku/?status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=100`,
+      `${Cuti}dokumen-persetujuanku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
       {
         headers: { Authorization: token },
       }

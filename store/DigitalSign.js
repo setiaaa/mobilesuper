@@ -36,6 +36,9 @@ import {
   putBatalkanSK,
   putTandaTanganSK,
   putReleaseSK,
+  getDasboardListPKRL,
+  getExportPKRL,
+  deleteDokumenLain,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -67,6 +70,8 @@ const DigitalSignSlice = createSlice({
     attachmentDokPerizinan: [],
     attachmentLampiran: [],
     nomorDokPerizinan: "",
+    listDashboard: {},
+    fileExport: {},
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -518,6 +523,31 @@ const DigitalSignSlice = createSlice({
         state.loading = false;
         Sentry.captureException(action.error, "counter pkrl");
       })
+      .addCase(getDasboardListPKRL.fulfilled, (state, action) => {
+        state.loading = false;
+        state.listDashboard = action.payload;
+        console.log("berhasil");
+      })
+      .addCase(getDasboardListPKRL.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDasboardListPKRL.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error, "list dashboard pkrl");
+      })
+      .addCase(getExportPKRL.fulfilled, (state, action) => {
+        state.loading = false;
+        state.fileExport = action.payload.data;
+        console.log("berhasil");
+      })
+      .addCase(getExportPKRL.pending, (state, action) => {
+        // state.loading = true;
+        console.log("pending");
+      })
+      .addCase(getExportPKRL.rejected, (state, action) => {
+        // state.loading = false;
+        console.log("gagal");
+      })
       .addCase(parafPerizinan.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
@@ -579,6 +609,18 @@ const DigitalSignSlice = createSlice({
       .addCase(addAttachmentDigiSign.rejected, (state, action) => {
         state.loading = false;
         console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(deleteDokumenLain.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(deleteDokumenLain.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteDokumenLain.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
         Sentry.captureException(action.error);
       });
   },

@@ -4,8 +4,11 @@ import { COLORS } from "../../config/SuperAppps";
 import { Card, Text } from "react-native-paper";
 import { getTemplateHeaderDispo } from "../../utils/templateDispo";
 import moment from "moment";
+import { nde_api } from "../../utils/api.config";
 
-export const detailMenteriDef = (data, checked) => {
+export const detailMenteriDef = (data, checked, device) => {
+  let urlNote = nde_api.baseurl + "crsbe" + data?.attachments[0]?.file;
+  let newUrlNote = urlNote.replace("/api/", "/");
   return (
     <ScrollView nestedScrollEnabled>
       <View style={styles.screen}>
@@ -240,7 +243,7 @@ export const detailMenteriDef = (data, checked) => {
                   : data?.obj?.senders[0].name}
               </Text>
             </View>
-            <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+            <View style={{ flexDirection: "row", paddingTop: 10 }}>
               <Text
                 style={{
                   fontSize: 13,

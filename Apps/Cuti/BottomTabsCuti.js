@@ -7,7 +7,7 @@ import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
 function MyTabCuti({ props, navigation }) {
-  const [tabItemIndex, setTabItemIndex] = useState(1);
+  const [tabItemIndex, setTabItemIndex] = useState(2);
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -34,9 +34,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <View
@@ -63,9 +63,10 @@ function MyTabCuti({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.primary,
+                    textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position: "absolute",
-                    bottom: device === "tablet" ? 52 : 40,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Personal
@@ -75,9 +76,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <Ionicons
@@ -89,9 +90,10 @@ function MyTabCuti({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.tertiary,
+                    textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position: "absolute",
-                    bottom: device === "tablet" ? 52 : 40,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Personal
@@ -112,9 +114,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 90,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <View
@@ -154,9 +156,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 90,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <Ionicons
@@ -191,9 +193,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 90,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <View
@@ -233,9 +235,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 140 : 95,
+                  height: device === "tablet" ? 110 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 90,
+                  width: device === "tablet" ? 300 : 90,
                 }}
               >
                 <Ionicons

@@ -11,7 +11,7 @@ function CardDCounter({ data, navigation }) {
   const { device } = useSelector((state) => state.apps);
   return (
     <Card
-    style={[styles.card, {paddingVertical: device === 'tablet'?10: 0}]}
+      style={[styles.card, { paddingVertical: device === "tablet" ? 10 : 8 }]}
       onPress={() => {
         navigation.navigate(data?.navName, {
           unread:
@@ -29,6 +29,8 @@ function CardDCounter({ data, navigation }) {
               ? "Perlu TTD Elektronik"
               : data?.type == "agenda_in"
               ? "Surat Masuk"
+              : data?.type == "not_dispo"
+              ? "Surat Masuk Belum Disposisi"
               : data?.type == "agenda_disposition"
               ? "Disposisi"
               : data?.type == "incoming"
@@ -49,9 +51,16 @@ function CardDCounter({ data, navigation }) {
     >
       <Card.Title
         title={
-          <View style={{ flexDirection: "row", gap: 8, justifyContent: 'center', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 8,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Avatar.Icon
-              size={device === 'tablet'? 50: 25}
+              size={device === "tablet" ? 50 : 25}
               icon={data?.icon}
               color={COLORS.white}
               style={avatarIcon}
@@ -76,6 +85,8 @@ function CardDCounter({ data, navigation }) {
             ? "Perlu TTD Elektronik"
             : data?.type == "agenda_in"
             ? "Surat Masuk"
+            : data?.type == "not_dispo"
+            ? "Surat Masuk Belum Disposisi"
             : data?.type == "agenda_disposition"
             ? "Disposisi"
             : data?.type == "incoming"
@@ -93,7 +104,10 @@ function CardDCounter({ data, navigation }) {
             : ""
         }
         subtitleNumberOfLines={5}
-        subtitleStyle={{ fontSize: fontSizeResponsive("H6", device), paddingTop: device === 'tablet' ? 10:0 }}
+        subtitleStyle={{
+          fontSize: fontSizeResponsive("H6", device),
+          paddingTop: device === "tablet" ? 10 : 0,
+        }}
       />
     </Card>
   );

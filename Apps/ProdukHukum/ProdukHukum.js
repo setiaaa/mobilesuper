@@ -1,9 +1,8 @@
-import React, { useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   StyleSheet,
   TextInput,
   View,
@@ -12,7 +11,6 @@ import { Text, Image } from "react-native";
 import {
   COLORS,
   DATETIME,
-  FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
@@ -22,7 +20,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useNavigationState,
+} from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,46 +33,35 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ListEmpty from "../../components/ListEmpty";
 import {
-  getDetailDigisign,
-  getListRejected,
-  getListComposer,
-  getListDraft,
-  getListInProgress,
-  getListSignedDigiSign,
   tandaTanganMentri,
-  getListRetry,
-  getCounterPerizinanMenteri,
+  getCounterProdukHukum,
+  getListProdukHukum,
 } from "../../service/api";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
-import { setDigitalSignLists, setStatus } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { Config } from "../../constants/config";
-import { CardListPerizinanMenteri } from "../../components/CardlistPerizinanMenteri";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
-  BottomSheetBackdrop,
   BottomSheetView,
-  BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import moment from "moment";
 import * as LocalAuthentication from "expo-local-authentication";
+import { CardListProdukHukum } from "../../components/CardlistProdukHukum";
+import { Dropdown } from "../../components/DropDown";
+import { setCounterCat } from "../../store/ProdukHukum";
 
-export const PerizinanMenteri = () => {
+export const ProdukHukum = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const currentTab = useNavigationState(
-    (state) => state.routes[state.index].name
-  );
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
-  const [tipe, setTipe] = useState("perizinan-mentri");
-  const [variant, SetVariant] = useState("inprogress");
-  const [filterData, setFilterData] = useState([]);
+  const [variant, setVariant] = useState({
+    key: "",
+    value: "",
+  });
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
 
@@ -80,50 +71,79 @@ export const PerizinanMenteri = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (currentTab === "PerizinanMenteri") {
-      SetVariant("inprogress");
-      dispatch(getCounterPerizinanMenteri({ token: token }));
-      dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
-    }
-  }, [token, tipe]);
-
-  const { dokumenlain, loading, status, counter } = useSelector(
-    (state) => state.digitalsign
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
+      dispatch(
+        getListProdukHukum({
+          token: token,
+          tipe: variant?.key,
+          page: page,
+          search: search,
+        })
+      );
+    }, [variant])
   );
 
+  useEffect(() => {
+    if (profile?.roles_access?.includes("UPLOAD.PRODUK.HUKUM")) {
+      setIsConseptor(true);
+      dispatch(setCounterCat(1));
+      dispatch(getCounterProdukHukum({ token: token, category: 1 }));
+      setVariant({ key: "revision", value: "Perlu Revisi" });
+    } else {
+      setIsConseptor(false);
+      dispatch(setCounterCat(0));
+      dispatch(getCounterProdukHukum({ token: token, category: 0 }));
+
+      setVariant({
+        key: "paraf",
+        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+      });
+    }
+    dispatch(
+      getListProdukHukum({
+        token: token,
+        tipe: variant?.key,
+        page: page,
+        search: search,
+      })
+    );
+  }, [token]);
+  const [isConceptor, setIsConseptor] = useState(false);
+  const { lists, loading, status, counter, counterCat } = useSelector(
+    (state) => state.produkHukum
+  );
   const [refreshing, setRefreshing] = useState(false);
+  const dropdownConceptor = [
+    { key: "revision", value: "Perlu Revisi" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
+  ];
+  const dropdownMenKP = [
+    { key: "paraf", value: "Perlu Persetujuan" },
+    { key: "need-sign", value: "Perlu TTDE" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
+  ];
+  const dropdownDefault = [
+    { key: "paraf", value: "Paraf" },
+    { key: "monitoring", value: "Monitoring" },
+    { key: "signed", value: "Selesai" },
+  ];
 
   const onRefresh = React.useCallback(() => {
     try {
-      if (token !== "" && currentTab === "PerizinanMenteri") {
-        dispatch(getCounterPerizinanMenteri({ token: token }));
-        if (variant === "inprogress") {
-          dispatch(
-            getListInProgress({ token: token, tipe: tipe, search: search })
-          );
-        } else if (variant === "signed") {
-          dispatch(
-            getListSignedDigiSign({ token: token, tipe: tipe, search: search })
-          );
-        } else if (variant === "retry") {
-          dispatch(
-            getListRetry({
-              token: token,
-              tipe: tipe,
-              page: page,
-              search: search,
-            })
-          );
-        }
+      if (token !== "") {
+        dispatch(getCounterProdukHukum({ token: token, category: counterCat }));
       }
     } catch (error) {}
-
+    setSearch("");
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe, currentTab, variant]);
+  }, [token, variant]);
 
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["25%"], []);
@@ -192,35 +212,28 @@ export const PerizinanMenteri = () => {
 
   const checkAll = () => {
     // Check If isSelected already exists (length !== 0)
-    if (isSelected.length === dokumenlain.lists.length) {
+    if (isSelected.length === lists.length) {
       setSelection([]);
     }
     // If isSelected still empty or all data hasn't checked
     else {
       let tmp = [];
-      dokumenlain.lists.map((item) => {
+      lists.map((item) => {
         tmp.push(item?.id);
       });
       setSelection(tmp);
     }
   };
 
-  const filterHandlerInProgress = () => {
-    SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe, search: search }));
-  };
-
-  const filterHandlerSigned = () => {
-    SetVariant("signed");
+  const filterHandler = (item) => {
+    setVariant(item);
     dispatch(
-      getListSignedDigiSign({ token: token, tipe: tipe, search: search })
-    );
-  };
-
-  const filterHandlerRetry = () => {
-    SetVariant("retry");
-    dispatch(
-      getListRetry({ token: token, tipe: tipe, page: page, search: search })
+      getListProdukHukum({
+        token: token,
+        tipe: item?.key,
+        page: page,
+        search: search,
+      })
     );
   };
 
@@ -229,38 +242,23 @@ export const PerizinanMenteri = () => {
   const { device } = useSelector((state) => state.apps);
 
   const loadMore = () => {
-    if (dokumenlain?.lists?.length !== 0) {
-      if (dokumenlain.lists.length % 5 === 0) {
+    if (lists?.length !== 0) {
+      if (lists.length % 5 === 0) {
         setPage((prevPage) => prevPage + 10);
       }
     }
   };
-
   useEffect(() => {
-    if (variant === "inprogress" && currentTab === "PerizinanMenteri") {
-      dispatch(
-        getListInProgress({
-          token: token,
-          tipe: tipe,
-          page: page,
-          search: search,
-        })
-      );
-    } else if (variant === "signed" && currentTab === "PerizinanMenteri") {
-      dispatch(
-        getListSignedDigiSign({
-          token: token,
-          tipe: tipe,
-          page: page,
-          search: search,
-        })
-      );
-    } else if (variant === "retry" && currentTab === "PerizinanMenteri") {
-      dispatch(
-        getListRetry({ token: token, tipe: tipe, page: page, search: search })
-      );
-    }
-  }, [page, token, tipe, search, currentTab]);
+    dispatch(
+      getListProdukHukum({
+        token: token,
+        tipe: variant?.key,
+        page: page,
+        search: search,
+      })
+    );
+  }, [page, variant, token, search]);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -302,7 +300,7 @@ export const PerizinanMenteri = () => {
                   marginLeft: isSelected.length === 0 ? null : 50,
                 }}
               >
-                Perizinan Menteri
+                Produk Hukum
               </Text>
             </View>
             {isSelected.length !== 0 ? (
@@ -310,8 +308,8 @@ export const PerizinanMenteri = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: device === "tablet" ? 40 : 28,
-                  height: device === "tablet" ? 40 : 28,
+                  width: 28,
+                  height: 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginRight: 20,
@@ -324,7 +322,7 @@ export const PerizinanMenteri = () => {
                 >
                   <Ionicons
                     name="checkmark-outline"
-                    size={device === "tablet" ? 30 : 18}
+                    size={18}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
@@ -347,6 +345,7 @@ export const PerizinanMenteri = () => {
               color={COLORS.primary}
             />
             <TextInput
+              defaultValue={search}
               placeholder={"Cari"}
               placeholderTextColor={COLORS.tertiary}
               style={{
@@ -362,32 +361,223 @@ export const PerizinanMenteri = () => {
 
           <View
             style={{
-              padding: 10,
               borderRadius: 8,
-              backgroundColor: COLORS.white,
               marginTop: 10,
-              width: "90%",
-              justifyContent: "center",
-              alignSelf: "center",
+              padding: 10,
+              marginHorizontal: 16,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              minHeight: device === "tablet" ? 120 : 100,
+              backgroundColor: COLORS.white,
+              rowGap: 10,
             }}
           >
-            <Text
+            {/* <View
               style={{
-                fontWeight: FONTWEIGHT.bold,
-                fontSize: fontSizeResponsive("H4", device),
+                flexDirection: "row",
+                gap: 5,
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                minHeight: 100,
+                backgroundColor: COLORS.info,
+              }}
+            > */}
+            {counterCat != 1 && (
+              <View
+                style={{
+                  flexDirection: "column",
+                  width:
+                    device === "tablet" &&
+                    counterCat != 1 &&
+                    profile?.nip !== "88888"
+                      ? "30%"
+                      : device === "tablet" &&
+                        profile?.nip === "88888" &&
+                        counterCat != 1
+                      ? "24%"
+                      : "48%",
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      variant?.key === "paraf"
+                        ? COLORS.secondaryLighter
+                        : COLORS.bgLightGrey,
+                    borderRadius: 8,
+                    flex: 1,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                    justifyContent: "center",
+                    padding: 8,
+                  }}
+                  onPress={() =>
+                    filterHandler({
+                      key: "paraf",
+                      value:
+                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+                    })
+                  }
+                >
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H5", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        padding: 5,
+                        backgroundColor: COLORS.warningLight,
+                        borderRadius: 50,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={"file-alert-outline"}
+                        size={device === "tablet" ? 40 : 30}
+                        color={COLORS.warning}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          // fontSize: fontSizeResponsive("H1", device),
+                          fontSize: 40,
+                        }}
+                      >
+                        {counter?.data?.paraf}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+            {profile?.nip == "88888" && (
+              <View
+                style={{
+                  flexDirection: "column",
+                  width:
+                    device === "tablet" &&
+                    counterCat != 1 &&
+                    profile?.nip !== "88888"
+                      ? "30%"
+                      : device === "tablet" &&
+                        profile?.nip === "88888" &&
+                        counterCat != 1
+                      ? "24%"
+                      : "48%",
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      variant?.key === "need-sign"
+                        ? COLORS.secondaryLighter
+                        : COLORS.bgLightGrey,
+                    borderRadius: 8,
+                    flex: 1,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                    justifyContent: "center",
+                    padding: 8,
+                  }}
+                  onPress={() =>
+                    filterHandler({ key: "need-sign", value: "Perlu TTDE" })
+                  }
+                >
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Perlu TTDE
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        padding: 5,
+                        backgroundColor: COLORS.infoDangerLight,
+                        borderRadius: 50,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={"file-alert-outline"}
+                        size={device === "tablet" ? 40 : 30}
+                        color={COLORS.infoDanger}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          // fontSize: fontSizeResponsive("H1", device),
+                          fontSize: 40,
+                        }}
+                      >
+                        {counter?.data?.need_sign}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+            <View
+              style={{
+                flexDirection: "column",
+                width:
+                  device === "tablet" &&
+                  counterCat != 1 &&
+                  profile?.nip !== "88888"
+                    ? "30%"
+                    : device === "tablet" &&
+                      profile?.nip === "88888" &&
+                      counterCat != 1
+                    ? "24%"
+                    : "48%",
               }}
             >
-              Dokumen Perizinan Menteri
-            </Text>
-            <View style={{ flexDirection: "row", gap: 5, marginTop: 10 }}>
               <TouchableOpacity
                 style={{
                   backgroundColor:
-                    variant === "inprogress"
+                    variant?.key === "monitoring"
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "49%",
+                  flex: 1,
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -395,9 +585,11 @@ export const PerizinanMenteri = () => {
                   //shadow android
                   elevation: 2,
                   justifyContent: "center",
-                  padding: 5,
+                  padding: 8,
                 }}
-                onPress={() => filterHandlerInProgress()}
+                onPress={() =>
+                  filterHandler({ key: "monitoring", value: "Monitoring" })
+                }
               >
                 <Text
                   style={{
@@ -408,7 +600,7 @@ export const PerizinanMenteri = () => {
                     textAlign: "left",
                   }}
                 >
-                  Need Sign
+                  Dalam Proses
                 </Text>
                 <View
                   style={{
@@ -421,14 +613,14 @@ export const PerizinanMenteri = () => {
                   <View
                     style={{
                       padding: 5,
-                      backgroundColor: COLORS.infoDangerLight,
+                      backgroundColor: COLORS.infoLight,
                       borderRadius: 50,
                     }}
                   >
                     <MaterialCommunityIcons
                       name={"file-alert-outline"}
                       size={device === "tablet" ? 40 : 30}
-                      color={COLORS.infoDanger}
+                      color={COLORS.info}
                     />
                   </View>
                   <View>
@@ -439,31 +631,36 @@ export const PerizinanMenteri = () => {
                         fontSize: 40,
                       }}
                     >
-                      {counter?.data?.need_sign}
+                      {counter?.data?.monitoring}
                     </Text>
                   </View>
                 </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.grey,
-                    fontWeight: FONTWEIGHT.bold,
-                    letterSpacing: -1, // Sesuaikan nilai
-                  }}
-                >
-                  Dokumen Belum Ditandatangani
-                </Text>
               </TouchableOpacity>
+            </View>
 
+            <View
+              style={{
+                flexDirection: "column",
+                width:
+                  device === "tablet" &&
+                  counterCat != 1 &&
+                  profile?.nip !== "88888"
+                    ? "30%"
+                    : device === "tablet" &&
+                      profile?.nip === "88888" &&
+                      counterCat != 1
+                    ? "24%"
+                    : "48%",
+              }}
+            >
               <TouchableOpacity
                 style={{
                   backgroundColor:
-                    variant === "signed"
+                    variant?.key === "signed"
                       ? COLORS.secondaryLighter
                       : COLORS.bgLightGrey,
                   borderRadius: 8,
-                  width: "49%",
+                  flex: 1,
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
@@ -473,7 +670,9 @@ export const PerizinanMenteri = () => {
                   justifyContent: "center",
                   padding: 5,
                 }}
-                onPress={() => filterHandlerSigned()}
+                onPress={() =>
+                  filterHandler({ key: "signed", value: "Selesai" })
+                }
               >
                 <Text
                   style={{
@@ -484,7 +683,7 @@ export const PerizinanMenteri = () => {
                     textAlign: "left",
                   }}
                 >
-                  Signed
+                  Telah Selesai
                 </Text>
                 <View
                   style={{
@@ -519,147 +718,64 @@ export const PerizinanMenteri = () => {
                     </Text>
                   </View>
                 </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    fontSize: fontSizeResponsive("H5", device),
-                    color: COLORS.grey,
-                    fontWeight: FONTWEIGHT.bold,
-                    letterSpacing: -1, // Sesuaikan nilai
-                  }}
-                >
-                  Dokumen Sudah Ditandatangani
-                </Text>
               </TouchableOpacity>
             </View>
+            {/* </View> */}
           </View>
 
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "center",
               backgroundColor: "white",
-              marginHorizontal: "5%",
-              width: "90%",
-              padding: 16,
-              marginTop: 10,
-              alignItems: "center",
+              marginVertical: 10,
               borderRadius: 8,
+              marginHorizontal: 16,
             }}
           >
-            {variant === "inprogress" &&
-              profile.nip !== "197208122001121002" && (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 10,
-                    alignItems: "center",
-                  }}
-                >
-                  {/* Checkbox All */}
-                  <Checkbox
-                    value={dokumenlain.lists.length === isSelected.length}
-                    onValueChange={() => checkAll()}
-                    color={isSelected === true ? COLORS.lighter : null}
-                  />
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    Pilih Semua
-                  </Text>
-                </View>
-              )}
-
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 5,
-              }}
-            >
-              <TouchableOpacity
+            {/* {variant?.key === "need-sign" && profile.nip == "197208122001121002" && (
+              <View
                 style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "inprogress" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "inprogress" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
+                  flexDirection: "row",
+                  gap: 10,
                   alignItems: "center",
                 }}
-                onPress={() => filterHandlerInProgress()}
               >
-                <Text
-                  style={{
-                    color:
-                      variant === "inprogress"
-                        ? COLORS.white
-                        : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Need Sign
+                <Checkbox
+                  value={lists.length === isSelected.length}
+                  onValueChange={() => checkAll()}
+                  color={isSelected === true ? COLORS.lighter : null}
+                />
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Pilih Semua
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "retry" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "retry" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerRetry()}
-              >
-                <Text
-                  style={{
-                    color:
-                      variant === "retry" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Retry
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "signed" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "signed" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerSigned()}
-              >
-                <Text
-                  style={{
-                    color:
-                      variant === "signed" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Signed
-                </Text>
-              </TouchableOpacity>
+              </View>
+            )} */}
+            <View style={styles.dropdown}>
+              <Dropdown
+                data={
+                  counterCat == 1
+                    ? dropdownConceptor
+                    : profile?.nip == "88888"
+                    ? dropdownMenKP
+                    : dropdownDefault
+                }
+                placeHolder={"Filter"}
+                backgroundColor={COLORS.white}
+                selected={variant}
+                setSelected={filterHandler}
+              />
             </View>
           </View>
-          {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
 
           {/* </ScrollView> */}
           <View style={{ flex: 1 }}>
             <FlatList
-              data={dokumenlain?.lists}
+              data={lists}
               keyExtractor={(item) => item?.id}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <CardListPerizinanMenteri
+                  <CardListProdukHukum
                     item={item}
                     token={token}
                     variant={variant}
@@ -667,6 +783,7 @@ export const PerizinanMenteri = () => {
                     isSelected={isSelected}
                     setSelection={setSelection}
                     nip={profile.nip}
+                    disabled={counterCat == 1 && variant.key == "revision"}
                   />
                 </View>
               )}
@@ -679,7 +796,7 @@ export const PerizinanMenteri = () => {
             />
           </View>
 
-          <BottomSheetModal
+          {/* <BottomSheetModal
             ref={bottomSheetModalRef}
             snapPoints={animatedSnapPoints}
             handleHeight={animatedHandleHeight}
@@ -748,7 +865,7 @@ export const PerizinanMenteri = () => {
                         }, 2000);
                       }
                       setSelection([]);
-                      // SetVariant("signed");
+                      // setVariant("signed");
                       // setParaphrase("");
                     }}
                   >
@@ -765,24 +882,14 @@ export const PerizinanMenteri = () => {
                 </View>
               </KeyboardAvoidingView>
             </BottomSheetView>
-          </BottomSheetModal>
+          </BottomSheetModal> */}
 
-          {/* <TouchableOpacity onPress={() => {
-                      navigation.navigate('TambahDokumenLain')
-                  }}
-                      style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
-                  >
-                      <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                          <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                      </View>
-                  </TouchableOpacity> */}
-
-          <ModalSubmit
+          {/* <ModalSubmit
             status={status}
             setStatus={setStatus}
-            messageSuccess={"Data Ditambahkan"}
-            navigate={"PerizinanMenteri"}
-          />
+            messageSuccess={"Dokumen telah diparaf"}
+            navigate={"ProdukHukum"}
+          /> */}
         </View>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
@@ -800,8 +907,16 @@ const styles = StyleSheet.create({
     borderColor: COLORS.ExtraDivinder,
     borderRadius: 8,
     backgroundColor: COLORS.white,
-    width: "90%",
-    marginHorizontal: "5%",
+    marginHorizontal: 16,
     marginTop: 10,
+  },
+  dropdown: {
+    flex: 1,
+    //shadow ios
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    //shadow android
+    elevation: 2,
   },
 });

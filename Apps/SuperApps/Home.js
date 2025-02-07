@@ -820,7 +820,91 @@ export const Home = () => {
     ]);
   }, [berita.lists, galeri.lists]);
 
-  // console.log(combineBanner);
+  const handleGetHeight = () => {
+    let height = 0;
+    let top = "30%";
+    let orientation = getOrientation(screenWidth, screenHeight);
+
+    if (device === "phone") {
+      //IPHONE XS KEBAWAH
+      if (screenWidth >= 375 && screenWidth < 390) {
+        if (menuLiteLength?.length === 0) {
+          height = 0;
+        } else {
+          if (menuLiteLength?.length <= 4) {
+            top = "50%";
+            height = 230;
+          } else {
+            height = 280;
+          }
+        }
+      } else {
+        //IPHONE XR KEATAS
+        if (menuLiteLength?.length === 0) {
+          height = 0;
+        } else {
+          if (menuLiteLength?.length <= 4) {
+            height = 220;
+            top = "45%";
+          } else {
+            height = 300;
+          }
+        }
+      }
+    } else if (device === "tablet") {
+      if (menuLiteLength?.length === 0) {
+        height = 0;
+      } else {
+        if (orientation === "landscape") {
+          if (screenWidth >= 1024 && screenWidth < 1210) {
+            if (menuLiteLength?.length <= 8) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          } else {
+            if (menuLiteLength?.length <= 10) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          }
+        } else if (orientation === "potrait") {
+          if (screenWidth >= 744 && screenWidth < 810) {
+            if (menuLiteLength?.length <= 5) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          } else if (screenWidth >= 744 && screenWidth <= 834) {
+            if (menuLiteLength?.length <= 6) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          } else {
+            if (menuLiteLength?.length <= 8) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          }
+        }
+      }
+    } else {
+      height = 200;
+    }
+
+    return {
+      height: height,
+      top: top,
+    };
+  };
 
   return (
     <GestureHandlerRootView>
@@ -833,16 +917,7 @@ export const Home = () => {
         >
           <View
             style={{
-              minHeight:
-                device === "phone"
-                  ? menuLiteLength?.length !== 0
-                    ? 350
-                    : 200
-                  : device === "tablet"
-                  ? menuLiteLength?.length !== 0
-                    ? 530
-                    : 380
-                  : 200,
+              minHeight: handleGetHeight().height,
               position: "relative",
             }}
           >
@@ -922,7 +997,7 @@ export const Home = () => {
                 width: "100%",
                 position: "absolute",
                 zIndex: 9,
-                top: "30%",
+                top: handleGetHeight().top,
                 paddingHorizontal: 20,
               }}
             >
@@ -1372,7 +1447,6 @@ export const Home = () => {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: 20,
               }}
             ></View>
 
@@ -2073,7 +2147,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: "5%" }]}>
+          <View style={styles.containerr}>
             <Carousel
               ref={carouselRefCombine}
               sliderWidth={screenWidth}
