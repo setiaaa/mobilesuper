@@ -85,7 +85,7 @@ function DCounter() {
       type: "not_dispo",
       value: "-",
       icon: "inbox-arrow-down",
-      color: "rgba(24, 104, 171, 0.6)",
+      color: "#fdd7c7",
       navName: "IncomingList",
     },
   ]);
