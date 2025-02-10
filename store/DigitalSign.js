@@ -39,6 +39,7 @@ import {
   getDasboardListPKRL,
   getExportPKRL,
   getCounterMain,
+  deleteDokumenLain,
 } from "../service/api";
 import * as Sentry from "@sentry/react-native";
 
@@ -622,6 +623,18 @@ const DigitalSignSlice = createSlice({
       .addCase(addAttachmentDigiSign.rejected, (state, action) => {
         state.loading = false;
         console.log(action.error);
+        Sentry.captureException(action.error);
+      })
+      .addCase(deleteDokumenLain.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "berhasil";
+      })
+      .addCase(deleteDokumenLain.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteDokumenLain.rejected, (state, action) => {
+        state.loading = false;
+        state.status = "gagal";
         Sentry.captureException(action.error);
       });
   },

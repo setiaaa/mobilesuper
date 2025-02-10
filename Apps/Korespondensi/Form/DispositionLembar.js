@@ -1,7 +1,14 @@
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import {
   Button,
@@ -76,6 +83,8 @@ function DispositionLembar({ route, id, data, tipe }) {
     petunjuk: true,
   });
   const [expandedItems, setExpandedItems] = useState({});
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  console.log(screenWidth);
   const toggleCollapse = (index) => {
     setExpandedItems({});
     setCollapse((prev) => ({
@@ -205,7 +214,10 @@ function DispositionLembar({ route, id, data, tipe }) {
     header = await headerToken();
   }
   const renderItemTindakan = ({ item, index }) => (
-    <View style={{ alignItems: "flex-start" }} key={index}>
+    <View
+      style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
+      key={index}
+    >
       <Checkbox.Item
         mode="android"
         position="leading"
@@ -216,7 +228,14 @@ function DispositionLembar({ route, id, data, tipe }) {
             : "unchecked"
         }
         label={item.name}
-        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
+        labelStyle={[
+          styles.labelCheckbox,
+          {
+            fontSize: GlobalStyles.font.sm,
+            textAlignVertical: "center",
+            marginTop: -7,
+          },
+        ]}
         onPress={() => {
           dispatch(
             setNotaTindakan({
@@ -235,9 +254,10 @@ function DispositionLembar({ route, id, data, tipe }) {
               );
         }}
         style={{
-          color: GlobalStyles.colors.primary,
-          width: "100%",
-          paddingLeft: -10,
+          height: 27,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingLeft: 0,
         }}
       />
     </View>
@@ -254,7 +274,14 @@ function DispositionLembar({ route, id, data, tipe }) {
             ? item.display_label + " (" + item?.name + ")"
             : item.display_label
         }
-        labelStyle={[styles.labelCheckbox, { fontSize: GlobalStyles.font.sm }]}
+        labelStyle={[
+          styles.labelCheckbox,
+          {
+            fontSize: GlobalStyles.font.sm,
+            textAlignVertical: "center",
+            marginTop: screenWidth <= 375 ? null : -7,
+          },
+        ]}
         onPress={() => {
           const checkNode = addressbook.selected.filter(
             (data) => data.code === item.code
@@ -268,9 +295,10 @@ function DispositionLembar({ route, id, data, tipe }) {
           }
         }}
         style={{
-          color: GlobalStyles.colors.primary,
-          width: "100%",
-          paddingLeft: -10,
+          height: screenWidth <= 375 ? null : 27,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingLeft: 0,
         }}
         disabled={item?.code?.length == 0}
       />
@@ -520,7 +548,11 @@ function DispositionLembar({ route, id, data, tipe }) {
           }
           labelStyle={[
             styles.labelCheckbox,
-            { fontSize: GlobalStyles.font.sm },
+            {
+              fontSize: GlobalStyles.font.sm,
+              textAlignVertical: "center",
+              marginTop: screenWidth <= 375 ? null : -7,
+            },
           ]}
           onPress={() => {
             const checkNode = addressbook.selected.filter(
@@ -537,9 +569,10 @@ function DispositionLembar({ route, id, data, tipe }) {
             }
           }}
           style={{
-            color: GlobalStyles.colors.primary,
-            width: "100%",
-            paddingLeft: -10,
+            height: screenWidth <= 375 ? null : 27,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingLeft: 0,
           }}
           disabled={child?.code?.length == 0}
         />
@@ -963,8 +996,18 @@ function DispositionLembar({ route, id, data, tipe }) {
                       <FlatList
                         data={tindakanList}
                         renderItem={renderItemTindakan}
-                        keyExtractor={(item) => item.code}
+                        keyExtractor={(item, index) =>
+                          item?.code
+                            ? item.code.toString()
+                            : `fallback-${index}`
+                        }
                         nestedScrollEnabled
+                        numColumns={device === "tablet" ? 2 : 1}
+                        columnWrapperStyle={
+                          device === "tablet"
+                            ? { justifyContent: "space-between" }
+                            : null
+                        } // Agar grid lebih rapi di tablet
                       />
                     </View>
                   )}
@@ -988,24 +1031,63 @@ function DispositionLembar({ route, id, data, tipe }) {
                     style={[styles.titleLabel, { paddingVertical: 12 }]}
                     allowFontScaling={false}
                   />
-                  <View style={styles.containerTitleLeft}>
-                    <Button
-                      labelStyle={{
-                        fontSize: GlobalStyles.font.sm,
+                  <View
+                    style={[
+                      styles.containerTitleLeft,
+                      {
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        padding: 10,
+                        justifyContent: "space-between",
+                        marginTop: 10,
+                        borderColor: GlobalStyles.colors.tertiery70,
+                      },
+                    ]}
+                  >
+                    {/* <Button
+                                      labelStyle={{
+                                        fontSize: GlobalStyles.font.sm,
+                                      }}
+                                      mode="outlined"
+                                      textColor="white"
+                                      onPress={() => {
+                                        if (stylusEnabled == true) {
+                                          handleClear();
+                                        }
+                                        setStylusEnabled(!stylusEnabled);
+                                      }}
+                                      style={{ width: "100%", backgroundColor: COLORS.info }}
+                                    >
+                                      <Ionicons name="pencil" size={16} />
+                                      Catatan
+                                    </Button> */}
+                    <View
+                      style={{
+                        width: device === "tablet" ? 300 : 230,
                       }}
-                      mode="outlined"
-                      textColor="white"
-                      onPress={() => {
+                    >
+                      <Text style={[styles.titleTodo, { paddingRight: 8 }]}>
+                        Stylus Pen
+                      </Text>
+                      <Text
+                        style={{
+                          paddingRight: 8,
+                          color: GlobalStyles.colors.grey,
+                          marginTop: 5,
+                        }}
+                      >
+                        Tambah catatan dengan stylus
+                      </Text>
+                    </View>
+                    <Switch
+                      value={stylusEnabled}
+                      onValueChange={() => {
                         if (stylusEnabled == true) {
                           handleClear();
                         }
                         setStylusEnabled(!stylusEnabled);
                       }}
-                      style={{ width: "100%", backgroundColor: COLORS.info }}
-                    >
-                      <Ionicons name="pencil" size={16} />
-                      Catatan
-                    </Button>
+                    />
                   </View>
                   {stylusEnabled && (
                     <View

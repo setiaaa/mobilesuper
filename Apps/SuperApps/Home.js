@@ -822,7 +822,50 @@ export const Home = () => {
     ]);
   }, [berita.lists, galeri.lists]);
 
-  // console.log(combineBanner);
+  const handleGetHeight = () => {
+    let height = 0;
+    let top = "30%";
+    let orientation = getOrientation(screenWidth, screenHeight);
+
+    if (device === "phone") {
+      //IPHONE XS KEBAWAH
+      if (screenWidth >= 375 && screenWidth < 390) {
+        top = "38%";
+        height = 250;
+      } else {
+        //IPHONE XR KEATAS
+        top = "40%";
+        height = 230;
+      }
+    } else if (device === "tablet") {
+      if (menuLiteLength?.length === 0) {
+        height = 0;
+      } else {
+        if (orientation === "landscape") {
+          if (screenWidth >= 1024 && screenWidth < 1210) {
+            (height = 320), (top = "45%");
+          } else {
+            (height = 320), (top = "45%");
+          }
+        } else if (orientation === "potrait") {
+          if (screenWidth >= 744 && screenWidth < 810) {
+            (height = 320), (top = "45%");
+          } else if (screenWidth >= 744 && screenWidth <= 834) {
+            (height = 320), (top = "45%");
+          } else {
+            (height = 320), (top = "45%");
+          }
+        }
+      }
+    } else {
+      height = 200;
+    }
+
+    return {
+      height: height,
+      top: top,
+    };
+  };
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
@@ -837,16 +880,7 @@ export const Home = () => {
         >
           <View
             style={{
-              minHeight:
-                device === "phone"
-                  ? menuLiteLength?.length !== 0
-                    ? 220
-                    : 200
-                  : device === "tablet"
-                  ? menuLiteLength?.length !== 0
-                    ? 360
-                    : 360
-                  : 200,
+              minHeight: handleGetHeight().height,
               position: "relative",
             }}
           >
@@ -926,10 +960,7 @@ export const Home = () => {
                 width: "100%",
                 position: "absolute",
                 zIndex: 9,
-                top:
-                  device === "tablet" && orientation === "landscape"
-                    ? "50%"
-                    : "40%",
+                top: handleGetHeight().top,
                 paddingHorizontal: 20,
               }}
             >
@@ -1385,12 +1416,11 @@ export const Home = () => {
             </View>
           </Modal>
 
-          <View style={[styles.containerr]}>
+          <View style={[styles.containerr, { marginTop: 16 }]}>
             <View
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: 20,
               }}
             ></View>
 
@@ -2091,7 +2121,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: "5%" }]}>
+          <View style={styles.containerr}>
             <Carousel
               ref={carouselRefCombine}
               sliderWidth={screenWidth}

@@ -86,7 +86,7 @@ import { CollapseCardOrangTua } from "../../components/CollapseCardOrangTua";
 import { CollapseCardMasaKerja } from "../../components/CollapseCardMasaKerja";
 import { CollapseCardHukumanDisiplin } from "../../components/CollapseCardHukumanDisiplin";
 import { CollapseCardSIASNRwKursusDiklat } from "../../components/CollapseCardSIASNRwKursusDiklat";
-import { putResetPassword } from "../../service/api";
+import { getCheckProdHuk, putResetPassword } from "../../service/api";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -103,6 +103,7 @@ export const Profile = () => {
   const { profile, linimasa, loading, responReset } = useSelector(
     (state) => state.superApps
   );
+  const { checkProdukHukum } = useSelector((state) => state.produkHukum);
   const { device } = useSelector((state) => state.apps);
   const BASE_URL = Config.base_url + "bridge";
   const [isEnabled, setIsEnabled] = useState(false);
@@ -167,6 +168,10 @@ export const Profile = () => {
   const pejabatTinggi = ["CUSTOM_MENU"];
   const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
   const roleSIASN = ["BUKA_SIASN_DATA"];
+  const dataRoleDashboardProdukHukum = [
+    "UPLOAD.PRODUK.HUKUM",
+    "OPERATOR.NOMOR.PRODUK.HUKUM",
+  ];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -196,7 +201,17 @@ export const Profile = () => {
   const isRoleSIASN = profile.roles_access?.some((item) =>
     roleSIASN.includes(item)
   );
-
+  const [isRoleProdukHukum, setIsRoleProdukHukum] = useState(false);
+  const tempRoleProdukHukum = profile.roles_access?.some((item) =>
+    dataRoleDashboardProdukHukum.includes(item)
+  );
+  useEffect(() => {
+    if (tempRoleProdukHukum || profile?.nip == "88888") {
+      setIsRoleProdukHukum(true);
+    } else {
+      dispatch(getCheckProdHuk({ token: token }));
+    }
+  }, [profile]);
   useEffect(() => {
     let tmpMenu = [];
     let tmpLog = [];
@@ -380,24 +395,7 @@ export const Profile = () => {
       //     width: null,
       //   },
       // },
-      {
-        title: "Produk Hukum",
-        navigation: "ProdukHukum",
-        image: require("../../assets/superApp/Bankomicon.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 28,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-      },
+
       {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
@@ -524,29 +522,73 @@ export const Profile = () => {
         },
       });
     }
+    if (isRoleProdukHukum) {
+      tmpMenu.splice(12, 0, {
+        title: "Produk Hukum",
+        navigation: "ProdukHukum",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      });
+    } else {
+      if (checkProdukHukum || profile.nip == "88888") {
+        tmpMenu.splice(12, 0, {
+          title: "Produk Hukum",
+          navigation: "ProdukHukum",
+          image: require("../../assets/superApp/Bankomicon.png"),
+          imagestyle: {
+            width: {
+              tablet: 50,
+              hp: 28,
+            },
+            height: {
+              tablet: 50,
+              hp: 28,
+            },
+          },
+          titleStyle: {
+            width: null,
+          },
+        });
+      }
+    }
 
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Penambahan menu korespondensi",
+        description: "Perbaikan Perizinan Menteri PKRL",
       },
       {
-        description: "Perubahan icon forward",
+        description: "Penambahan dashboard pada Perizinan Menteri PKRL",
       },
       {
-        description: "Perubahan icon disposisi di surat masuk",
+        description: "Perbaikan Dokumen SK",
       },
       {
-        description: "Penambahan digital sign sk",
+        description: "Penambahan hapus list Dokumen Lain",
       },
       {
-        description: "Penambahan ⁠⁠perizinan PKRL",
+        description: "Perbaikan dan penambahan counter Cuti",
+      },
+      {
+        description: "Perbaikan stylus disposisi",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
     setListMenu(tmpMenu);
     setListLog(tmpLog);
-  }, [profile]);
+  }, [profile, checkProdukHukum]);
 
   const [appsIsChecked, setAppsIsChecked] = useState([]);
 

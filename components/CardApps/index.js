@@ -34,10 +34,12 @@ import {
   getMenu,
   getMenuLite,
   getMenuType,
+  getTokenValue,
   setMenu,
 } from "../../service/session";
 import { setTypeMenu } from "../../store/SuperApps";
 import { setSelectedAttr } from "../../store/profile";
+import { getCheckProdHuk } from "../../service/api";
 
 export const CardApps = ({
   handlePressModal,
@@ -50,9 +52,16 @@ export const CardApps = ({
   const isFocused = useIsFocused();
   const { profile, typeMenu } = useSelector((state) => state.superApps);
   const { profile: profileKores = {} } = useSelector((state) => state.profile);
+  const { checkProdukHukum } = useSelector((state) => state.produkHukum);
   const { device } = useSelector((state) => state.apps);
   const [limitCard, setLimitCard] = useState(0);
   const { width, height } = useWindowDimensions();
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
 
   const roleEvent = ["EVENT.USER"];
   const roleKalender = ["CALENDAR.USER"];
@@ -61,6 +70,10 @@ export const CardApps = ({
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
   const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
+  const dataRoleDashboardProdukHukum = [
+    "UPLOAD.PRODUK.HUKUM",
+    "OPERATOR.NOMOR.PRODUK.HUKUM",
+  ];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -87,7 +100,10 @@ export const CardApps = ({
   const isRoleMenteri = profile.roles_access?.some((item) =>
     rolePerizinanMenteri.includes(item)
   );
-
+  const [isRoleProdukHukum, setIsRoleProdukHukum] = useState(false);
+  const tempRoleProdukHukum = profile.roles_access?.some((item) =>
+    dataRoleDashboardProdukHukum.includes(item)
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -97,14 +113,20 @@ export const CardApps = ({
       if (orientation === "landscape") {
         tempLimit = 7;
       } else if (orientation === "potrait") {
-        tempLimit = width >= 834 ? 7 : 7;
+        tempLimit = width >= 834 ? 7 : 5;
       }
     } else {
       tempLimit = 7;
     }
     setLimitCard(tempLimit);
   }, [width]);
-
+  useEffect(() => {
+    if (tempRoleProdukHukum || profile?.nip == "88888") {
+      setIsRoleProdukHukum(true);
+    } else {
+      dispatch(getCheckProdHuk({ token: token }));
+    }
+  }, [profile]);
   useEffect(() => {
     let tmpMenu = [];
     tmpMenu.push(
@@ -469,6 +491,47 @@ export const CardApps = ({
         },
       });
     }
+    if (isRoleProdukHukum) {
+      tmpMenu.splice(12, 0, {
+        title: "Produk Hukum",
+        navigation: "ProdukHukum",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      });
+    } else {
+      if (checkProdukHukum || profile.nip == "88888") {
+        tmpMenu.splice(12, 0, {
+          title: "Produk Hukum",
+          navigation: "ProdukHukum",
+          image: require("../../assets/superApp/Bankomicon.png"),
+          imagestyle: {
+            width: {
+              tablet: 50,
+              hp: 28,
+            },
+            height: {
+              tablet: 50,
+              hp: 28,
+            },
+          },
+          titleStyle: {
+            width: null,
+          },
+        });
+      }
+    }
     setMenu(JSON.stringify(tmpMenu));
     getMenuType().then((val) => {
       try {
@@ -478,7 +541,7 @@ export const CardApps = ({
         console.error("JSON Parse error:", e);
       }
     });
-  }, [profile]);
+  }, [profile, checkProdukHukum]);
 
   useEffect(() => {
     if (typeMenu !== null) {
@@ -519,7 +582,7 @@ export const CardApps = ({
           style={[
             styles.card,
             {
-              minHeight: device === "tablet" ? 180 : 230,
+              minHeight: "auto",
             },
           ]}
         >
@@ -528,10 +591,9 @@ export const CardApps = ({
               flexDirection: "row",
               gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "flex-start",
+              alignItems: "center",
+              justifyContent: "center",
               flex: 1,
-              paddingHorizontal: 16,
-              paddingVertical: 8,
               flexWrap: "wrap",
             }}
           >
@@ -546,7 +608,7 @@ export const CardApps = ({
                         alignItems: "center",
                         display: "flex",
                         width:
-                          device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                          device === "tablet" ? 100 : width <= 375 ? "25%" : 73,
                         marginTop: 5,
                       }}
                       key={index}
@@ -688,7 +750,7 @@ export const CardApps = ({
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  width: device === "tablet" ? 100 : width <= 375 ? 67 : 73,
+                  width: device === "tablet" ? 100 : width <= 375 ? "25%" : 73,
                   marginTop: 5,
                 }}
               >

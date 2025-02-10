@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import {
+  Alert,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -15,7 +16,11 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useNavigationState,
+} from "@react-navigation/native";
 import { Search } from "../../components/Search";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,13 +35,15 @@ import {
   getListDraft,
   getListInProgress,
   getListSignedDigiSign,
+  deleteDokumenLain,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
-import { setDigitalSignLists } from "../../store/DigitalSign";
+import { setDigitalSignLists, setStatus } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
+import { ModalSubmit } from "../../components/ModalSubmit";
 
 const ListDokumenLain = ({ item, variant, token, device }) => {
   const dispatch = useDispatch();
@@ -200,6 +207,53 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
                 </Text>
               </View>
             ) : null}
+
+            {variant === "composer" ? (
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  backgroundColor: COLORS.infoDanger,
+                  borderRadius: 8,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 10,
+                }}
+                onPress={() => {
+                  Alert.alert(
+                    "Peringatan!",
+                    "Apakah anda yakin akan menghapus dokumen ini?",
+                    [
+                      {
+                        text: "Ya",
+                        onPress: () => {
+                          dispatch(
+                            deleteDokumenLain({ token: token, id: item.id })
+                          );
+                        },
+                        style: "cencel",
+                      },
+                      {
+                        text: "Batal",
+                        style: "cancel",
+                      },
+                    ],
+                    {
+                      cancelable: false,
+                      onDismiss: () => {},
+                    }
+                  );
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Hapus Dokumen
+                </Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -217,6 +271,7 @@ export const DokumenLain = ({ route }) => {
   const [variant, SetVariant] = useState("composer");
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(10);
+  const isFocus = useIsFocused();
 
   const currentTab = useNavigationState(
     (state) => state.routes[state.index].name
@@ -293,7 +348,9 @@ export const DokumenLain = ({ route }) => {
     );
   };
 
-  const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
+  const { dokumenlain, loading, status } = useSelector(
+    (state) => state.digitalsign
+  );
 
   useEffect(() => {
     setFilterData(dokumenlain.lists);
@@ -304,7 +361,7 @@ export const DokumenLain = ({ route }) => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        if (variant === " composer" && currentTab === "DokumenLain") {
+        if (variant === "composer" && currentTab === "DokumenLain") {
           dispatch(
             getListComposer({
               token: token,
@@ -361,7 +418,7 @@ export const DokumenLain = ({ route }) => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, page, search, variant]);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -424,7 +481,50 @@ export const DokumenLain = ({ route }) => {
         })
       );
     }
-  }, [page, token, tipe, search, currentTab]);
+  }, [page, token, tipe, search, currentTab, isFocus]);
+
+  useEffect(() => {
+    if (status !== "") {
+      if (status === "berhasil") {
+        Alert.alert(
+          "Peringatan!",
+          "Dokumen berhasil dihapus",
+          [
+            {
+              text: "Ya",
+              onPress: () => {
+                setStatus("");
+                onRefresh();
+              },
+              style: "cencel",
+            },
+          ],
+          {
+            cancelable: false,
+            onDismiss: () => {},
+          }
+        );
+      } else {
+        Alert.alert(
+          "Peringatan!",
+          "Dokumen gagal dihapus",
+          [
+            {
+              text: "Ya",
+              onPress: () => {
+                setStatus("");
+              },
+              style: "cencel",
+            },
+          ],
+          {
+            cancelable: false,
+            onDismiss: () => {},
+          }
+        );
+      }
+    }
+  }, [status]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -632,6 +732,12 @@ export const DokumenLain = ({ route }) => {
           </TouchableOpacity>
         </View>
         {/* </ScrollView> */}
+        {/* <ModalSubmit
+          status={status}
+          setStatus={setStatus}
+          messageSuccess={"Data berhasil dihapus"}
+          navigate={"MainDigitalSign"}
+        /> */}
         <View style={{ flex: 1 }}>
           <FlatList
             data={dokumenlain.lists}

@@ -91,7 +91,7 @@ export const ProdukHukum = ({ route }) => {
       setIsConseptor(true);
       dispatch(setCounterCat(1));
       dispatch(getCounterProdukHukum({ token: token, category: 1 }));
-      setVariant({ key: "revision", value: "Revisi" });
+      setVariant({ key: "revision", value: "Perlu Revisi" });
     } else {
       setIsConseptor(false);
       dispatch(setCounterCat(0));
@@ -125,7 +125,7 @@ export const ProdukHukum = ({ route }) => {
   );
   const [refreshing, setRefreshing] = useState(false);
   const dropdownConceptor = [
-    { key: "revision", value: "Revisi" },
+    { key: "revision", value: "Perlu Revisi" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
   ];
@@ -406,6 +406,7 @@ export const ProdukHukum = ({ route }) => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
+                  height: device === "tablet" ? 130 : 90,
                 }}
               >
                 <TouchableOpacity
@@ -422,8 +423,8 @@ export const ProdukHukum = ({ route }) => {
                     shadowOpacity: 0.2,
                     //shadow android
                     elevation: 2,
-                    justifyContent: "center",
                     padding: 8,
+                    display: "flex",
                   }}
                   onPress={() =>
                     filterHandler({
@@ -433,17 +434,25 @@ export const ProdukHukum = ({ route }) => {
                     })
                   }
                 >
-                  <Text
+                  <View
                     style={{
-                      // marginTop: 10,
-                      fontSize: fontSizeResponsive("H5", device),
-                      fontWeight: FONTWEIGHT.bold,
-                      width: "100%",
-                      textAlign: "left",
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
-                    Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
-                  </Text>
+                    <Text
+                      style={{
+                        // marginTop: 10,
+                        fontSize: fontSizeResponsive("H5", device),
+                        fontWeight: FONTWEIGHT.bold,
+                        width: "100%",
+                        textAlign: "left",
+                      }}
+                    >
+                      Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
+                    </Text>
+                  </View>
                   <View
                     style={{
                       flexDirection: "row",
@@ -494,6 +503,7 @@ export const ProdukHukum = ({ route }) => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
+                  height: device === "tablet" ? 130 : 90,
                 }}
               >
                 <TouchableOpacity
@@ -510,24 +520,32 @@ export const ProdukHukum = ({ route }) => {
                     shadowOpacity: 0.2,
                     //shadow android
                     elevation: 2,
-                    justifyContent: "center",
                     padding: 8,
+                    display: "flex",
                   }}
                   onPress={() =>
                     filterHandler({ key: "need-sign", value: "Perlu TTDE" })
                   }
                 >
-                  <Text
+                  <View
                     style={{
-                      // marginTop: 10,
-                      fontSize: fontSizeResponsive("H4", device),
-                      fontWeight: FONTWEIGHT.bold,
-                      width: "100%",
-                      textAlign: "left",
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
-                    Perlu TTDE
-                  </Text>
+                    <Text
+                      style={{
+                        // marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                        fontWeight: FONTWEIGHT.bold,
+                        width: "100%",
+                        textAlign: "left",
+                      }}
+                    >
+                      Perlu TTDE
+                    </Text>
+                  </View>
                   <View
                     style={{
                       flexDirection: "row",
@@ -577,6 +595,7 @@ export const ProdukHukum = ({ route }) => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
+                height: device === "tablet" ? 130 : 90,
               }}
             >
               <TouchableOpacity
@@ -593,24 +612,32 @@ export const ProdukHukum = ({ route }) => {
                   shadowOpacity: 0.2,
                   //shadow android
                   elevation: 2,
-                  justifyContent: "center",
                   padding: 8,
+                  display: "flex",
                 }}
                 onPress={() =>
                   filterHandler({ key: "monitoring", value: "Monitoring" })
                 }
               >
-                <Text
+                <View
                   style={{
-                    // marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                    fontWeight: FONTWEIGHT.bold,
-                    width: "100%",
-                    textAlign: "left",
+                    flex: 1,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  Dalam Proses
-                </Text>
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Dalam Proses
+                  </Text>
+                </View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -660,6 +687,7 @@ export const ProdukHukum = ({ route }) => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
+                height: device === "tablet" ? 130 : 90,
               }}
             >
               <TouchableOpacity
@@ -676,24 +704,32 @@ export const ProdukHukum = ({ route }) => {
                   shadowOpacity: 0.2,
                   //shadow android
                   elevation: 2,
-                  justifyContent: "center",
                   padding: 5,
+                  display: "flex",
                 }}
                 onPress={() =>
                   filterHandler({ key: "signed", value: "Selesai" })
                 }
               >
-                <Text
+                <View
                   style={{
-                    // marginTop: 10,
-                    fontSize: fontSizeResponsive("H4", device),
-                    fontWeight: FONTWEIGHT.bold,
-                    width: "100%",
-                    textAlign: "left",
+                    flex: 1,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  Telah Selesai
-                </Text>
+                  <Text
+                    style={{
+                      // marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    Telah Selesai
+                  </Text>
+                </View>
                 <View
                   style={{
                     flexDirection: "row",

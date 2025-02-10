@@ -20,6 +20,7 @@ import {
 } from "../../config/SuperAppps";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import {
+  FontAwesome5,
   Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
@@ -65,6 +66,20 @@ export const CardCounterAppsTTDE = () => {
   const { mainCounter, loading } = useSelector((state) => state.digitalsign);
   const { persetujuan } = useSelector((state) => state.cuti);
 
+  const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
+  const roleSK = ["APPROVER.DIGISIGN.SK"];
+  const roleIsCreateSK = ["DIGISIGN.SK"];
+
+  const isRoleMenteri = profile.roles_access?.some((item) =>
+    rolePerizinanMenteri.includes(item)
+  );
+  const isRoleSK = profile.roles_access?.some((item) => roleSK.includes(item));
+  const isRoleCreateSK = profile.roles_access?.some((item) =>
+    roleIsCreateSK.includes(item)
+  );
+  const isRoleSKFull = isRoleCreateSK || isRoleSK ? true : false;
+  const isRolePH = profile.nip === "88888";
+
   return (
     <View style={styles.container}>
       <Text
@@ -73,30 +88,179 @@ export const CardCounterAppsTTDE = () => {
         Need Sign
       </Text>
 
-      <View style={styles.rowContainer}>
-        <View style={styles.smallSectionContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("MainPerizinanMenteri", {
-                screen: "BottomTabsPerizinanMenteri",
-                params: { screen: "PerizinanMenteri" },
-              });
-            }}
-          >
-            <Card
-              style={[
-                styles.section,
-                { backgroundColor: COLORS.infoDangerLight },
-              ]}
+      {/* <Text>Role Perzinan Menteri {isRoleMenteri ? "true" : "false"}</Text>
+      <Text>Role SK Create {isRoleSK ? "true" : "false"}</Text>
+      <Text>Role SK {isRoleSK ? "true" : "false"}</Text>
+      <Text>Role SK Full {isRoleSKFull ? "true" : "false"}</Text>
+      <Text>Role PH {isRolePH ? "true" : "false"}</Text> */}
+
+      {/* PERIZINAN MENTERI & SK */}
+      <View
+        style={[
+          styles.rowContainer,
+          { flexDirection: isRoleMenteri && !isRoleSKFull ? "column" : "row" },
+        ]}
+      >
+        <View
+          style={[
+            styles.smallSectionContainer,
+            {
+              flex:
+                isRoleSKFull && !isRoleMenteri && device === "phone" ? 1 : 0.4,
+            },
+          ]}
+        >
+          {isRoleMenteri && (
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              onPress={() => {
+                navigation.navigate("MainPerizinanMenteri", {
+                  screen: "BottomTabsPerizinanMenteri",
+                  params: { screen: "PerizinanMenteri" },
+                });
+              }}
             >
-              <Text
+              <Card
                 style={[
-                  styles.sectionTitle,
-                  { fontSize: fontSizeResponsive("H2", device) },
+                  styles.section,
+                  { backgroundColor: COLORS.infoDangerLight },
                 ]}
               >
-                E-SEA
-              </Text>
+                <Text
+                  style={[
+                    styles.sectionTitle,
+                    { fontSize: fontSizeResponsive("H2", device) },
+                  ]}
+                >
+                  E-SEA
+                </Text>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text style={styles.sectionCount}>
+                    {mainCounter?.data?.esea_count}
+                  </Text>
+                )}
+                <Text
+                  style={[
+                    styles.sectionSubtitle,
+                    { fontSize: fontSizeResponsive("H4", device) },
+                  ]}
+                >
+                  Dokumen
+                </Text>
+              </Card>
+            </TouchableOpacity>
+          )}
+
+          {isRoleSKFull && isRoleMenteri ? (
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              onPress={() => {
+                navigation.navigate("MainDigitalSign", { screen: "DokumenSK" });
+              }}
+            >
+              <Card style={styles.section}>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text style={styles.sectionCount}>
+                    {mainCounter?.data?.sk_count}
+                  </Text>
+                )}
+                <Text
+                  style={[
+                    styles.sectionSubtitle,
+                    { fontSize: fontSizeResponsive("H4", device) },
+                  ]}
+                >
+                  Surat Keputusan
+                </Text>
+              </Card>
+            </TouchableOpacity>
+          ) : isRoleSKFull && !isRoleMenteri && device === "phone" ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("MainDigitalSign", { screen: "DokumenSK" });
+              }}
+              style={styles.sectionContainerIcon}
+            >
+              <Card
+                style={{
+                  padding: 10,
+                  backgroundColor: COLORS.white,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  height: device === "phone" ? 80 : 120,
+                  display: "flex",
+                  flex: 1,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={[
+                        styles.sectionTitleIcon,
+                        { fontSize: fontSizeResponsive("H2", device) },
+                      ]}
+                    >
+                      Surat Keputusan
+                    </Text>
+                    <Text
+                      style={[
+                        styles.sectionSubtitle,
+                        { fontSize: fontSizeResponsive("H4", device) },
+                      ]}
+                    >
+                      Butuh Persetujuan
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.sectionIconBagde,
+                      { backgroundColor: COLORS.warningLight },
+                    ]}
+                  >
+                    <FontAwesome5
+                      name="file-signature"
+                      size={18}
+                      color={COLORS.warning}
+                    />
+                  </View>
+                </View>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text style={styles.sectionCount}>
+                    {mainCounter?.data?.sk_count}
+                  </Text>
+                )}
+              </Card>
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {isRoleMenteri && (
+          <Card style={styles.sectionContainer}>
+            <View style={styles.sectionHeader}>
               {loading ? (
                 <ActivityIndicator
                   size="small"
@@ -104,26 +268,229 @@ export const CardCounterAppsTTDE = () => {
                   style={{ marginTop: 10 }}
                 />
               ) : (
-                <Text style={styles.sectionCount}>
-                  {mainCounter?.data?.esea_count}
+                <Text
+                  style={[
+                    styles.sectionHeaderTitle,
+                    { fontSize: fontSizeResponsive("H2", device) },
+                  ]}
+                >
+                  {mainCounter?.data?.pkrl_count} Dokumen
                 </Text>
               )}
-              <Text
-                style={[
-                  styles.sectionSubtitle,
-                  { fontSize: fontSizeResponsive("H4", device) },
-                ]}
+              <View style={styles.sectionHeaderBagde}>
+                <MaterialIcons
+                  name="assignment-late"
+                  size={24}
+                  color={COLORS.danger}
+                />
+                <Text
+                  style={[
+                    styles.value,
+                    { fontSize: fontSizeResponsive("H6", device) },
+                  ]}
+                >
+                  PKRL
+                </Text>
+              </View>
+            </View>
+            <View style={styles.docRow}>
+              <TouchableOpacity
+                style={styles.docBox}
+                onPress={() => {
+                  navigation.navigate("MainPerizinanMenteri", {
+                    screen: "PKRL",
+                    direktorat:
+                      "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+                  });
+                }}
               >
-                Dokumen
-              </Text>
-            </Card>
-          </TouchableOpacity>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Direktorat KEBP
+                </Text>
+                <View style={styles.docCount}>
+                  {loading ? (
+                    <ActivityIndicator
+                      size="small"
+                      color={COLORS.primary}
+                      style={{ marginTop: 10 }}
+                    />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.value,
+                        { fontSize: fontSizeResponsive("H4", device) },
+                      ]}
+                    >
+                      {mainCounter?.data?.[
+                        "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan"
+                      ]?.need_sign ?? 0}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.docBox}
+                onPress={() => {
+                  navigation.navigate("MainPerizinanMenteri", {
+                    screen: "PKRL",
+                    direktorat: "Direktorat Jaskel - Jasa Kelautan",
+                  });
+                }}
+              >
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Direktorat Jaskel
+                </Text>
+                <View style={styles.docCount}>
+                  {loading ? (
+                    <ActivityIndicator
+                      size="small"
+                      color={COLORS.primary}
+                      style={{ marginTop: 10 }}
+                    />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.value,
+                        { fontSize: fontSizeResponsive("H4", device) },
+                      ]}
+                    >
+                      {mainCounter?.data?.["Direktorat Jaskel - Jasa Kelautan"]
+                        ?.need_sign ?? 0}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.docRow}>
+              <TouchableOpacity
+                style={styles.docBox}
+                onPress={() => {
+                  navigation.navigate("MainPerizinanMenteri", {
+                    screen: "PKRL",
+                    direktorat:
+                      "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
+                  });
+                }}
+              >
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Direktorat P4K
+                </Text>
+                <View style={styles.docCount}>
+                  {loading ? (
+                    <ActivityIndicator
+                      size="small"
+                      color={COLORS.primary}
+                      style={{ marginTop: 10 }}
+                    />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.value,
+                        { fontSize: fontSizeResponsive("H4", device) },
+                      ]}
+                    >
+                      {mainCounter?.data?.[
+                        "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil"
+                      ]?.need_sign ?? 0}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.docBox}
+                onPress={() => {
+                  navigation.navigate("MainPerizinanMenteri", {
+                    screen: "PKRL",
+                    direktorat: "Direktorat PRL",
+                  });
+                }}
+              >
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Direktorat PRL
+                </Text>
+                <View style={styles.docCount}>
+                  {loading ? (
+                    <ActivityIndicator
+                      size="small"
+                      color={COLORS.primary}
+                      style={{ marginTop: 10 }}
+                    />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.value,
+                        { fontSize: fontSizeResponsive("H4", device) },
+                      ]}
+                    >
+                      {mainCounter?.data?.["Direktorat PRL"]?.need_sign ?? 0}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+          </Card>
+        )}
+      </View>
+
+      {/* DOKUMEN LAIN & CUTI */}
+      <View style={[styles.rowContainer, { flexDirection: "row" }]}>
+        {isRoleSKFull && !isRoleMenteri && device === "tablet" && (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("MainDigitalSign", { screen: "DokumenSK" });
             }}
+            style={styles.sectionContainerIcon}
           >
-            <Card style={styles.section}>
+            <Card
+              style={{
+                padding: 10,
+                backgroundColor: COLORS.white,
+                flexDirection: "row",
+                alignItems: "center",
+                height: device === "phone" ? 80 : 120,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    width: device === "tablet" ? "90%" : "75%",
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.sectionTitleIcon,
+                      { fontSize: fontSizeResponsive("H2", device) },
+                    ]}
+                  >
+                    Surat Keputusan
+                  </Text>
+                  <Text
+                    style={[
+                      styles.sectionSubtitle,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Butuh Persetujuan
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.sectionIconBagde,
+                    { backgroundColor: COLORS.warningLight },
+                  ]}
+                >
+                  <FontAwesome5
+                    name="file-signature"
+                    size={18}
+                    color={COLORS.warning}
+                  />
+                </View>
+              </View>
               {loading ? (
                 <ActivityIndicator
                   size="small"
@@ -135,257 +502,30 @@ export const CardCounterAppsTTDE = () => {
                   {mainCounter?.data?.sk_count}
                 </Text>
               )}
-              <Text
-                style={[
-                  styles.sectionSubtitle,
-                  { fontSize: fontSizeResponsive("H4", device) },
-                ]}
-              >
-                Surat Keputusan
-              </Text>
             </Card>
           </TouchableOpacity>
-        </View>
+        )}
 
-        <Card style={styles.sectionContainer}>
-          <View style={styles.sectionHeader}>
-            {loading ? (
-              <ActivityIndicator
-                size="small"
-                color={COLORS.primary}
-                style={{ marginTop: 10 }}
-              />
-            ) : (
-              <Text
-                style={[
-                  styles.sectionHeaderTitle,
-                  { fontSize: fontSizeResponsive("H2", device) },
-                ]}
-              >
-                {mainCounter?.data?.pkrl_count} Dokumen
-              </Text>
-            )}
-            <View style={styles.sectionHeaderBagde}>
-              <MaterialIcons
-                name="assignment-late"
-                size={24}
-                color={COLORS.danger}
-              />
-              <Text
-                style={[
-                  styles.value,
-                  { fontSize: fontSizeResponsive("H6", device) },
-                ]}
-              >
-                PKRL
-              </Text>
-            </View>
-          </View>
-          <View style={styles.docRow}>
-            <TouchableOpacity
-              style={styles.docBox}
-              onPress={() => {
-                navigation.navigate("MainPerizinanMenteri", {
-                  screen: "PKRL",
-                  direktorat:
-                    "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
-                });
-              }}
-            >
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                Direktorat KEBP
-              </Text>
-              <View style={styles.docCount}>
-                {loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color={COLORS.primary}
-                    style={{ marginTop: 10 }}
-                  />
-                ) : (
-                  <Text
-                    style={[
-                      styles.value,
-                      { fontSize: fontSizeResponsive("H4", device) },
-                    ]}
-                  >
-                    {mainCounter?.data?.[
-                      "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan"
-                    ]?.need_sign ?? 0}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.docBox}
-              onPress={() => {
-                navigation.navigate("MainPerizinanMenteri", {
-                  screen: "PKRL",
-                  direktorat: "Direktorat Jaskel - Jasa Kelautan",
-                });
-              }}
-            >
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                Direktorat Jaskel
-              </Text>
-              <View style={styles.docCount}>
-                {loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color={COLORS.primary}
-                    style={{ marginTop: 10 }}
-                  />
-                ) : (
-                  <Text
-                    style={[
-                      styles.value,
-                      { fontSize: fontSizeResponsive("H4", device) },
-                    ]}
-                  >
-                    {mainCounter?.data?.["Direktorat Jaskel - Jasa Kelautan"]
-                      ?.need_sign ?? 0}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.docRow}>
-            <TouchableOpacity
-              style={styles.docBox}
-              onPress={() => {
-                navigation.navigate("MainPerizinanMenteri", {
-                  screen: "PKRL",
-                  direktorat:
-                    "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
-                });
-              }}
-            >
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                Direktorat P4K
-              </Text>
-              <View style={styles.docCount}>
-                {loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color={COLORS.primary}
-                    style={{ marginTop: 10 }}
-                  />
-                ) : (
-                  <Text
-                    style={[
-                      styles.value,
-                      { fontSize: fontSizeResponsive("H4", device) },
-                    ]}
-                  >
-                    {mainCounter?.data?.[
-                      "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil"
-                    ]?.need_sign ?? 0}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.docBox}
-              onPress={() => {
-                navigation.navigate("MainPerizinanMenteri", {
-                  screen: "PKRL",
-                  direktorat: "Direktorat PRL",
-                });
-              }}
-            >
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                Direktorat PRL
-              </Text>
-              <View style={styles.docCount}>
-                {loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color={COLORS.primary}
-                    style={{ marginTop: 10 }}
-                  />
-                ) : (
-                  <Text
-                    style={[
-                      styles.value,
-                      { fontSize: fontSizeResponsive("H4", device) },
-                    ]}
-                  >
-                    {mainCounter?.data?.["Direktorat PRL"]?.need_sign ?? 0}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-          </View>
-        </Card>
-      </View>
-      <View style={styles.rowContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("ProdukHukum", { route: "ProdukHukum" });
-          }}
-          style={styles.sectionContainerIcon}
-        >
-          <Card style={{ padding: 10, backgroundColor: COLORS.white }}>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <View
-                style={{
-                  width: device === "tablet" ? "90%" : "75%",
-                }}
-              >
-                <Text
-                  style={[
-                    styles.sectionTitleIcon,
-                    { fontSize: fontSizeResponsive("H2", device) },
-                  ]}
-                >
-                  Produk Hukum
-                </Text>
-                <Text
-                  style={[
-                    styles.sectionSubtitle,
-                    { fontSize: fontSizeResponsive("H4", device) },
-                  ]}
-                >
-                  Perlu TTDE
-                </Text>
-              </View>
-              <View
-                style={[
-                  styles.sectionIconBagde,
-                  { backgroundColor: COLORS.successLight },
-                ]}
-              >
-                <MaterialIcons
-                  name="gesture"
-                  size={24}
-                  color={COLORS.success}
-                />
-              </View>
-            </View>
-            {loading ? (
-              <ActivityIndicator
-                size="small"
-                color={COLORS.primary}
-                style={{ marginTop: 10 }}
-              />
-            ) : (
-              <Text style={styles.sectionCount}>
-                {mainCounter?.data?.produk_hukum}
-              </Text>
-            )}
-          </Card>
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("MainCuti");
           }}
           style={styles.sectionContainerIcon}
         >
-          <Card style={{ padding: 10, backgroundColor: COLORS.white }}>
+          <Card
+            style={{
+              padding: 10,
+              backgroundColor: COLORS.white,
+              flexDirection: "row",
+              alignItems: "center",
+              height: device === "phone" ? 80 : 120,
+            }}
+          >
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
             >
               <View
                 style={{
@@ -431,15 +571,23 @@ export const CardCounterAppsTTDE = () => {
             )}
           </Card>
         </TouchableOpacity>
-      </View>
-      <View style={styles.rowContainer}>
+
+        {/* DOKUMEN LAIN */}
         <TouchableOpacity
           style={styles.sectionContainerIcon}
           onPress={() => {
             navigation.navigate("MainDigitalSign", { screen: "DokumenLain" });
           }}
         >
-          <Card style={{ padding: 10, backgroundColor: COLORS.white }}>
+          <Card
+            style={{
+              padding: 10,
+              backgroundColor: COLORS.white,
+              height: device === "phone" ? 80 : 120,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -488,6 +636,73 @@ export const CardCounterAppsTTDE = () => {
           </Card>
         </TouchableOpacity>
       </View>
+
+      {/* PRODUK HUKUM */}
+      <View style={styles.rowContainer}>
+        {isRolePH && (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ProdukHukum", { route: "ProdukHukum" });
+            }}
+            style={styles.sectionContainerIcon}
+          >
+            <Card style={{ padding: 10, backgroundColor: COLORS.white }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    width: device === "tablet" ? "90%" : "75%",
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.sectionTitleIcon,
+                      { fontSize: fontSizeResponsive("H2", device) },
+                    ]}
+                  >
+                    Produk Hukum
+                  </Text>
+                  <Text
+                    style={[
+                      styles.sectionSubtitle,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Perlu TTDE
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.sectionIconBagde,
+                    { backgroundColor: COLORS.successLight },
+                  ]}
+                >
+                  <MaterialIcons
+                    name="gesture"
+                    size={24}
+                    color={COLORS.success}
+                  />
+                </View>
+              </View>
+              {loading ? (
+                <ActivityIndicator
+                  size="small"
+                  color={COLORS.primary}
+                  style={{ marginTop: 10 }}
+                />
+              ) : (
+                <Text style={styles.sectionCount}>
+                  {mainCounter?.data?.produk_hukum}
+                </Text>
+              )}
+            </Card>
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -502,12 +717,12 @@ const styles = StyleSheet.create({
     shadowColor: "#ccc",
     shadowOpacity: 0.2,
     elevation: 1,
+    gap: 10,
     marginBottom: 10,
   },
   title: {
     fontWeight: "bold",
     color: COLORS.grey,
-    marginBottom: 10,
   },
   rowContainer: {
     flexDirection: "row",
@@ -524,20 +739,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     flex: 1,
-    marginTop: 10,
   },
   smallSectionContainer: {
     borderRadius: 10,
-    flex: 0.4,
+    display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
     rowGap: 10,
   },
   section: {
     flexDirection: "column",
     justifyContent: "center",
     padding: 8,
-    height: 100,
+    height: "100%",
     backgroundColor: COLORS.white,
   },
   sectionTitle: {
