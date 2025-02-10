@@ -2090,6 +2090,19 @@ export const getListCompleted = createAsyncThunk(
   }
 );
 
+export const getCounterMain = createAsyncThunk(
+  "digitalsign/getCounterMain",
+  async ({ token, tipe, page, search }) => {
+    const respon = await axiosInstance.get(`${digitalSign}main-counter/`, {
+      headers: { Authorization: token },
+    });
+    return {
+      data: respon?.data.result,
+      tipe: tipe,
+    };
+  }
+);
+
 export const getListInbox = createAsyncThunk(
   "digitalsign/getListInbox",
   async ({ token, tipe, page, search }) => {
@@ -2306,6 +2319,22 @@ export const getDetailDigisign = createAsyncThunk(
       headers: { Authorization: token },
     });
     return respon?.data.result;
+  }
+);
+
+export const getCounterDigitalSign = createAsyncThunk(
+  "digitalsign/getCounterDigitalSign",
+  async ({ token, tipe }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document-counter/?type=${tipe}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log("finish", respon?.data);
+    return {
+      data: respon?.data.result,
+    };
   }
 );
 

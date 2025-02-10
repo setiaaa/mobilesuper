@@ -1,0 +1,545 @@
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  useWindowDimensions,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  COLORS,
+  fontSizeResponsive,
+  FONTWEIGHT,
+  getOrientation,
+} from "../../config/SuperAppps";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { nde_api } from "../../utils/api.config";
+import { getHTTP } from "../../utils/http";
+import { getTokenValue } from "../../service/session";
+import { getCounterMain, getDokumenPersetujuan } from "../../service/api";
+import { Card } from "react-native-paper";
+
+export const CardCounterAppsTTDE = () => {
+  const navigation = useNavigation();
+  const [activeSlide, setActiveSlide] = useState(0); // State untuk paginasi
+  const { profile, typeMenu } = useSelector((state) => state.superApps);
+  const { profile: profileKores = {} } = useSelector((state) => state.profile);
+  const { device } = useSelector((state) => state.apps);
+  const [counter, setCounter] = useState([
+    { count: 1, type: "onprogress", value: 0 },
+    { count: 2, type: "agenda_in", value: 0 },
+    { count: 6, type: "sign", value: 0 },
+  ]);
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
+  const { width } = useWindowDimensions(); // Ambil lebar layar
+
+  const CARD_MARGIN = 16;
+  const numColumns = 3; // Tetap 3 kolom
+  const CARD_WIDTH = (width - CARD_MARGIN * (numColumns * 2)) / numColumns;
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getCounterMain({ token: token }));
+    dispatch(
+      getDokumenPersetujuan({ token: token, variant: "On Progress", page: 1 })
+    );
+  }, [token]);
+
+  const { mainCounter, loading } = useSelector((state) => state.digitalsign);
+  const { persetujuan } = useSelector((state) => state.cuti);
+
+  console.log(persetujuan.lists);
+
+  return (
+    <View style={styles.container}>
+      <Text
+        style={[styles.title, { fontSize: fontSizeResponsive("H4", device) }]}
+      >
+        Need Sign
+      </Text>
+
+      <View style={styles.rowContainer}>
+        <View style={styles.smallSectionContainer}>
+          <Card
+            style={[
+              styles.section,
+              { backgroundColor: COLORS.infoDangerLight },
+            ]}
+          >
+            <Text
+              style={[
+                styles.sectionTitle,
+                { fontSize: fontSizeResponsive("H2", device) },
+              ]}
+            >
+              E-SEA
+            </Text>
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                color={COLORS.primary}
+                style={{ marginTop: 10 }}
+              />
+            ) : (
+              <Text style={styles.sectionCount}>
+                {mainCounter?.data?.esea_count}
+              </Text>
+            )}
+            <Text
+              style={[
+                styles.sectionSubtitle,
+                { fontSize: fontSizeResponsive("H4", device) },
+              ]}
+            >
+              Dokumen
+            </Text>
+          </Card>
+          <Card style={styles.section}>
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                color={COLORS.primary}
+                style={{ marginTop: 10 }}
+              />
+            ) : (
+              <Text style={styles.sectionCount}>
+                {mainCounter?.data?.sk_count}
+              </Text>
+            )}
+            <Text
+              style={[
+                styles.sectionSubtitle,
+                { fontSize: fontSizeResponsive("H4", device) },
+              ]}
+            >
+              Surat Keputusan
+            </Text>
+          </Card>
+        </View>
+
+        <Card style={styles.sectionContainer}>
+          <View style={styles.sectionHeader}>
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                color={COLORS.primary}
+                style={{ marginTop: 10 }}
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.sectionHeaderTitle,
+                  { fontSize: fontSizeResponsive("H2", device) },
+                ]}
+              >
+                {mainCounter?.data?.pkrl_count} Dokumen
+              </Text>
+            )}
+            <View style={styles.sectionHeaderBagde}>
+              <MaterialIcons
+                name="assignment-late"
+                size={24}
+                color={COLORS.danger}
+              />
+              <Text
+                style={[
+                  styles.value,
+                  { fontSize: fontSizeResponsive("H6", device) },
+                ]}
+              >
+                PKRL
+              </Text>
+            </View>
+          </View>
+          <View style={styles.docRow}>
+            <View style={styles.docBox}>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Direktorat KEBP
+              </Text>
+              <View style={styles.docCount}>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text
+                    style={[
+                      styles.value,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {mainCounter?.data?.[
+                      "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan"
+                    ]?.need_sign ?? 0}
+                  </Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.docBox}>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Direktorat Jaskel
+              </Text>
+              <View style={styles.docCount}>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text
+                    style={[
+                      styles.value,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {mainCounter?.data?.["Direktorat Jaskel - Jasa Kelautan"]
+                      ?.need_sign ?? 0}
+                  </Text>
+                )}
+              </View>
+            </View>
+          </View>
+          <View style={styles.docRow}>
+            <View style={styles.docBox}>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Direktorat P4K
+              </Text>
+              <View style={styles.docCount}>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text
+                    style={[
+                      styles.value,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {mainCounter?.data?.[
+                      "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil"
+                    ]?.need_sign ?? 0}
+                  </Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.docBox}>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Direktorat PRL
+              </Text>
+              <View style={styles.docCount}>
+                {loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={COLORS.primary}
+                    style={{ marginTop: 10 }}
+                  />
+                ) : (
+                  <Text
+                    style={[
+                      styles.value,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {mainCounter?.data?.["Direktorat PRL"]?.need_sign ?? 0}
+                  </Text>
+                )}
+              </View>
+            </View>
+          </View>
+        </Card>
+      </View>
+      <View style={styles.rowContainer}>
+        <Card style={styles.sectionContainerIcon}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
+              style={{
+                width: device === "tablet" ? "90%" : "75%",
+              }}
+            >
+              <Text
+                style={[
+                  styles.sectionTitleIcon,
+                  { fontSize: fontSizeResponsive("H2", device) },
+                ]}
+              >
+                Produk Hukum
+              </Text>
+              <Text
+                style={[
+                  styles.sectionSubtitle,
+                  { fontSize: fontSizeResponsive("H4", device) },
+                ]}
+              >
+                Perlu TTDE
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.sectionIconBagde,
+                { backgroundColor: COLORS.successLight },
+              ]}
+            >
+              <MaterialIcons name="gesture" size={24} color={COLORS.success} />
+            </View>
+          </View>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color={COLORS.primary}
+              style={{ marginTop: 10 }}
+            />
+          ) : (
+            <Text style={styles.sectionCount}>
+              {mainCounter?.data?.produk_hukum}
+            </Text>
+          )}
+        </Card>
+        <Card style={styles.sectionContainerIcon}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
+              style={{
+                width: device === "tablet" ? "90%" : "75%",
+              }}
+            >
+              <Text
+                style={[
+                  styles.sectionTitleIcon,
+                  { fontSize: fontSizeResponsive("H2", device) },
+                ]}
+              >
+                Cuti
+              </Text>
+              <Text
+                style={[
+                  styles.sectionSubtitle,
+                  { fontSize: fontSizeResponsive("H4", device) },
+                ]}
+              >
+                Butuh Persetujuan
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.sectionIconBagde,
+                { backgroundColor: COLORS.infoLight },
+              ]}
+            >
+              <Ionicons name="calendar" size={24} color={COLORS.info} />
+            </View>
+          </View>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color={COLORS.primary}
+              style={{ marginTop: 10 }}
+            />
+          ) : (
+            <Text style={styles.sectionCount}>
+              {persetujuan?.lists?.badge?.on_progress}
+            </Text>
+          )}
+        </Card>
+      </View>
+      <View style={styles.rowContainer}>
+        <Card style={styles.sectionContainerIcon}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
+              style={{
+                width: device === "tablet" ? "90%" : "75%",
+              }}
+            >
+              <Text
+                style={[
+                  styles.sectionTitleIcon,
+                  { fontSize: fontSizeResponsive("H2", device) },
+                ]}
+              >
+                Dokumen Lain
+              </Text>
+              <Text
+                style={[
+                  styles.sectionSubtitle,
+                  { fontSize: fontSizeResponsive("H4", device) },
+                ]}
+              >
+                Dokumen
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.sectionIconBagde,
+                { backgroundColor: COLORS.bgLightGrey },
+              ]}
+            >
+              <Ionicons name="document" size={24} color={COLORS.grey} />
+            </View>
+          </View>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color={COLORS.primary}
+              style={{ marginTop: 10 }}
+            />
+          ) : (
+            <Text style={styles.sectionCount}>
+              {mainCounter?.data?.dokumen_lain_count}
+            </Text>
+          )}
+        </Card>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#FFFFFF",
+    width: "100%",
+    borderRadius: 10,
+    padding: 10,
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#ccc",
+    shadowOpacity: 0.2,
+    elevation: 1,
+    marginBottom: 10,
+  },
+  title: {
+    fontWeight: "bold",
+    color: COLORS.grey,
+    marginBottom: 10,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+  sectionContainer: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+  },
+  sectionContainerIcon: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+  },
+  smallSectionContainer: {
+    borderRadius: 10,
+    flex: 0.4,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    rowGap: 10,
+  },
+  section: {
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: 8,
+    height: 100,
+  },
+  sectionTitle: {
+    // fontSize: 14,
+    fontWeight: "bold",
+    color: "#D9534F",
+    flexWrap: "wrap",
+  },
+  sectionTitleIcon: {
+    // fontSize: 14,
+    fontWeight: "bold",
+    color: "#000",
+    flexWrap: "wrap",
+  },
+  sectionCount: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  sectionSubtitle: {
+    // fontSize: 12,
+    color: "#666",
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sectionHeaderTitle: {
+    // fontSize: 16,
+    fontWeight: "bold",
+  },
+  sectionHeaderBagde: {
+    borderRadius: 50,
+    backgroundColor: COLORS.infoDangerLight,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    gap: 4,
+  },
+  sectionIconBagde: {
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 40,
+  },
+  docRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 8,
+    marginTop: 8,
+  },
+  docBox: {
+    flex: 1,
+    backgroundColor: "#F8F8F8",
+    borderRadius: 10,
+    alignItems: "flex-start",
+    padding: 8,
+    height: "auto",
+  },
+  docCount: {
+    borderRadius: 50,
+    backgroundColor: COLORS.ExtraDivinder,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 8,
+  },
+});

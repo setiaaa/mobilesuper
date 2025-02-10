@@ -15,7 +15,7 @@ import {
   fontSizeResponsive,
   getOrientation,
 } from "../../config/SuperAppps";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import {
   useIsFocused,
@@ -39,6 +39,7 @@ import {
   getListInbox,
   getListNeedSignSK,
   getListNeedApproveSK,
+  getCounterDigitalSign,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -90,6 +91,7 @@ export const DokumenSK = () => {
           search: search,
         })
       );
+      dispatch(getCounterDigitalSign({ token: token, tipe: "dokumen_sk" }));
     } else {
       SetVariant("sk-completed");
       getListInbox({
@@ -156,7 +158,9 @@ export const DokumenSK = () => {
       })
     );
   };
-  const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
+  const { dokumenlain, loading, counterDS } = useSelector(
+    (state) => state.digitalsign
+  );
   useEffect(() => {
     setFilterData(dokumenlain.lists);
   }, [dokumenlain]);
@@ -173,6 +177,7 @@ export const DokumenSK = () => {
               search: search,
             })
           );
+          dispatch(getCounterDigitalSign({ token: token, tipe: "dokumen_sk" }));
         }
         if (variant === "sk-need-sign" && currentTab === "DokumenSK") {
           dispatch(
@@ -361,6 +366,174 @@ export const DokumenSK = () => {
             </Text>
           </View>
         </View>
+
+        {isRoleSK === true || isRoleCreateSK === true ? (
+          <View
+            style={{
+              padding: 10,
+              borderRadius: 8,
+              backgroundColor: COLORS.white,
+              marginTop: 16,
+              width: "90%",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor:
+                    variant === "sk-need-sign"
+                      ? COLORS.secondaryLighter
+                      : COLORS.bgLightGrey,
+                  borderRadius: 8,
+                  width: "49%",
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  justifyContent: "center",
+                  padding: 5,
+                }}
+                onPress={() => filterHandlerNeedSign()}
+              >
+                <Text
+                  style={{
+                    // marginTop: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    width: "100%",
+                    textAlign: "left",
+                  }}
+                >
+                  Need Sign
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 5,
+                      backgroundColor: COLORS.infoDangerLight,
+                      borderRadius: 50,
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={"file-alert-outline"}
+                      size={device === "tablet" ? 40 : 30}
+                      color={COLORS.infoDanger}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: 40,
+                      }}
+                    >
+                      {counterDS?.data?.sk_count?.need_sign}
+                    </Text>
+                  </View>
+                </View>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontSize: fontSizeResponsive("H5", device),
+                    color: COLORS.grey,
+                    fontWeight: FONTWEIGHT.bold,
+                    letterSpacing: -1, // Sesuaikan nilai
+                  }}
+                >
+                  Dokumen Belum Ditandatangani
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor:
+                    variant === "signed"
+                      ? COLORS.secondaryLighter
+                      : COLORS.bgLightGrey,
+                  borderRadius: 8,
+                  width: "49%",
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  justifyContent: "center",
+                  padding: 5,
+                }}
+                onPress={() => filterHandlerSigned()}
+              >
+                <Text
+                  style={{
+                    // marginTop: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    width: "100%",
+                    textAlign: "left",
+                  }}
+                >
+                  Signed
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 5,
+                      backgroundColor: COLORS.successLight,
+                      borderRadius: 50,
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={"file-check-outline"}
+                      size={device === "tablet" ? 40 : 30}
+                      color={COLORS.success}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        // fontSize: fontSizeResponsive("H1", device),
+                        fontSize: 40,
+                      }}
+                    >
+                      {counterDS?.data?.sk_count?.done}
+                    </Text>
+                  </View>
+                </View>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontSize: fontSizeResponsive("H5", device),
+                    color: COLORS.grey,
+                    fontWeight: FONTWEIGHT.bold,
+                    letterSpacing: -1, // Sesuaikan nilai
+                  }}
+                >
+                  Dokumen Sudah Ditandatangani
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null}
 
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}>

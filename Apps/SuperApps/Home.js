@@ -111,6 +111,8 @@ import LottieView from "lottie-react-native";
 import CryptoJS from "react-native-crypto-js";
 import { OneSignal } from "react-native-onesignal";
 import { ScrollView } from "react-native-gesture-handler";
+import { CardCounterApps } from "../../components/CardCounterApps";
+import { CardCounterAppsTTDE } from "../../components/CardCounterAppsTTDE";
 const numColumns = 3;
 
 const _color = "#6E01EF";
@@ -822,6 +824,8 @@ export const Home = () => {
 
   // console.log(combineBanner);
 
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -836,12 +840,12 @@ export const Home = () => {
               minHeight:
                 device === "phone"
                   ? menuLiteLength?.length !== 0
-                    ? 280
+                    ? 220
                     : 200
                   : device === "tablet"
                   ? menuLiteLength?.length !== 0
-                    ? 500
-                    : 300
+                    ? 360
+                    : 360
                   : 200,
               position: "relative",
             }}
@@ -922,95 +926,109 @@ export const Home = () => {
                 width: "100%",
                 position: "absolute",
                 zIndex: 9,
-                top: "30%",
+                top:
+                  device === "tablet" && orientation === "landscape"
+                    ? "50%"
+                    : "40%",
                 paddingHorizontal: 20,
               }}
             >
               <View style={{ alignItems: "center", display: "flex" }}>
-                <CardApps
-                  handlePressModal={handlePressModal}
-                  setModalBankom={setModalBankom}
-                  setModalKepegawaian={setModalKepegawaian}
-                  closeBottomSheet={closeBottomSheet}
-                />
-                <Portal>
-                  <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                      <View
-                        style={[
-                          style,
-                          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-                        ]}
-                      />
-                    )}
-                  >
-                    <View onLayout={handleContentLayout} style={{ flex: 1 }}>
-                      <ScrollView
-                        nestedScrollEnabled={true}
-                        style={{
-                          height: useWindowDimensions().height - 80,
-                        }}
-                      >
-                        <View
-                          style={{
-                            marginTop: device === "tablet" ? 50 : 30,
-                            flex: 1,
-                          }}
-                        >
-                          <View
-                            style={{
-                              marginHorizontal: 20,
-                              flexDirection: "row",
-                              justifyContent: "space-between",
-                              padding: 14,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontWeight: FONTWEIGHT.bold,
-                                fontSize: fontSizeResponsive("H1", device),
-                              }}
-                            >
-                              Aplikasi
-                            </Text>
-                            <TouchableOpacity
-                              onPress={() => {
-                                closeBottomSheet();
-                              }}
-                            >
-                              <Ionicons
-                                name="close-outline"
-                                size={device === "tablet" ? 40 : 24}
-                                color={COLORS.lighter}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                          <View>
-                            <CardAppsB
-                              setModalBankom={setModalBankom}
-                              setModalKepegawaian={setModalKepegawaian}
-                              closeBottomSheet={closeBottomSheet}
-                            />
-                          </View>
-                        </View>
-                      </ScrollView>
-                    </View>
-                  </BottomSheetModal>
-                </Portal>
+                <CardCounterApps />
               </View>
 
               {/* {profile.nip === "100062" ? null : (
               )} */}
             </View>
           </View>
+
+          <View style={{ paddingHorizontal: 20 }}>
+            <View
+              style={{
+                alignItems: "center",
+                display: "flex",
+                marginBottom: 5,
+              }}
+            >
+              <CardCounterAppsTTDE />
+            </View>
+
+            <CardApps
+              handlePressModal={handlePressModal}
+              setModalBankom={setModalBankom}
+              setModalKepegawaian={setModalKepegawaian}
+              closeBottomSheet={closeBottomSheet}
+            />
+          </View>
+          <Portal>
+            <BottomSheetModal
+              ref={bottomSheetModalRef}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              index={0}
+              style={{ borderRadius: 50 }}
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjust"
+              backdropComponent={({ style }) => (
+                <View
+                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                />
+              )}
+            >
+              <View onLayout={handleContentLayout} style={{ flex: 1 }}>
+                <ScrollView
+                  nestedScrollEnabled={true}
+                  style={{
+                    height: useWindowDimensions().height - 80,
+                  }}
+                >
+                  <View
+                    style={{
+                      marginTop: device === "tablet" ? 50 : 30,
+                      flex: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: 14,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H1", device),
+                        }}
+                      >
+                        Aplikasi
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          closeBottomSheet();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={device === "tablet" ? 40 : 24}
+                          color={COLORS.lighter}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <CardAppsB
+                        setModalBankom={setModalBankom}
+                        setModalKepegawaian={setModalKepegawaian}
+                        closeBottomSheet={closeBottomSheet}
+                      />
+                    </View>
+                  </View>
+                </ScrollView>
+              </View>
+            </BottomSheetModal>
+          </Portal>
 
           <Modal
             animationType="fade"
