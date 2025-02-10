@@ -4,11 +4,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
@@ -24,6 +29,10 @@ function MyTabDigitalSign({ props, navigation }) {
     return appRoles.some((role) => userRoles?.includes(role));
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <>
       <BottomSheetModalProvider>
@@ -34,7 +43,10 @@ function MyTabDigitalSign({ props, navigation }) {
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            height: "15",
+            height:
+              device === "tablet" && orientation === "landscape"
+                ? "15%"
+                : "10%",
           }}
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
