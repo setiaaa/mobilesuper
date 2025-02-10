@@ -4,11 +4,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
@@ -34,6 +39,10 @@ function MyTabDigitalSign({ props, navigation, route }) {
     return appRoles.some((role) => userRoles?.includes(role));
   };
 
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
+
   return (
     <>
       <BottomSheetModalProvider>
@@ -44,6 +53,10 @@ function MyTabDigitalSign({ props, navigation, route }) {
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
+            height:
+              device === "tablet" && orientation === "landscape"
+                ? "15%"
+                : "10%",
           }}
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
@@ -161,15 +174,19 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="attach-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
-                    position: "absolute",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -188,15 +205,19 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="attach-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     textAlign: "center",
-                    position: "absolute",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -299,7 +320,7 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 200 : 120,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <View
@@ -321,13 +342,18 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="file-signature"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    textAlign: "center",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -340,20 +366,25 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 200 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <FontAwesome6
                   name="file-signature"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    textAlign: "center",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -378,7 +409,7 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <View
@@ -400,13 +431,18 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="pencil-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    textAlign: "center",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -419,20 +455,25 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <Ionicons
                   name="pencil-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{
+                    // position: "absolute",
+                    // top: 5,
+                    justifyContent: "center",
+                  }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    textAlign: "center",
+                    // position: "absolute",
+                    // bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >

@@ -2334,6 +2334,21 @@ export const deleteDokumenLain = createAsyncThunk(
   }
 );
 
+export const getCounterDigitalSign = createAsyncThunk(
+  "digitalsign/getCounterDigitalSign",
+  async ({ token, tipe }) => {
+    const respon = await axiosInstance.get(
+      `${digitalSign}document-counter/?type=${tipe}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return {
+      data: respon?.data.result,
+    };
+  }
+);
+
 export const updateDocumentDigiSign = createAsyncThunk(
   "digitalsign/updateDocumentDigiSign",
   async (data) => {

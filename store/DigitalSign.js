@@ -6,6 +6,7 @@ import {
   getListCompleted,
   getListInProgress,
   getDetailDigisign,
+  getCounterDigitalSign,
   getListDraft,
   addDocumentDigiSign,
   getSummaryCount,
@@ -67,6 +68,7 @@ const DigitalSignSlice = createSlice({
     },
     subjectLists: [],
     counter: {},
+    counterDS: {},
     counterPKRL: {},
     attachmentDokPerizinan: [],
     attachmentLampiran: [],
@@ -89,11 +91,11 @@ const DigitalSignSlice = createSlice({
       state.summary.lists = action.payload;
     },
     setAttachmentDokPerizinan: (state, action) => {
-      console.log("setDokPerizinan", action.payload);
+      // console.log("setDokPerizinan", action.payload);
       state.attachmentDokPerizinan = [action.payload];
     },
     setAttachmentLampiran: (state, action) => {
-      console.log("lampiran", action.payload);
+      // console.log("lampiran", action.payload);
       state.attachmentLampiran = [action.payload];
     },
     resetNomorDokPerizinan: (state, action) => {
@@ -118,7 +120,7 @@ const DigitalSignSlice = createSlice({
           state.digitalsign.lists = action.payload.data;
         } else {
           state.dokumenlain.lists = action.payload.data;
-          console.log("masuk");
+          // console.log("masuk");
         }
       })
       .addCase(getListComposer.pending, (state, action) => {
@@ -133,13 +135,13 @@ const DigitalSignSlice = createSlice({
         if (action.payload.tipe === "bankom") {
           state.digitalsign.lists = action.payload.data;
         } else {
-          console.log("berhasil");
+          // console.log("berhasil");
           state.dokumenlain.lists = action.payload.data;
         }
       })
       .addCase(getListInProgress.pending, (state, action) => {
         state.loading = true;
-        console.log("pending");
+        // console.log("pending");
       })
       .addCase(getListInProgress.rejected, (state, action) => {
         state.loading = false;
@@ -211,7 +213,7 @@ const DigitalSignSlice = createSlice({
         } else {
           state.dokumenlain.lists = action.payload.data;
         }
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getListInbox.pending, (state, action) => {
         state.loading = true;
@@ -227,7 +229,7 @@ const DigitalSignSlice = createSlice({
         } else {
           state.dokumenlain.lists = action.payload.data;
         }
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getListNeedSignSK.pending, (state, action) => {
         state.loading = true;
@@ -243,7 +245,7 @@ const DigitalSignSlice = createSlice({
         } else {
           state.dokumenlain.lists = action.payload.data;
         }
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getListNeedApproveSK.pending, (state, action) => {
         state.loading = true;
@@ -290,6 +292,20 @@ const DigitalSignSlice = createSlice({
       .addCase(getDetailDigisign.rejected, (state, action) => {
         state.loading = false;
       })
+
+      .addCase(getCounterDigitalSign.fulfilled, (state, action) => {
+        state.loading = false;
+        state.counterDS = action.payload;
+      })
+      .addCase(getCounterDigitalSign.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getCounterDigitalSign.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.error);
+        console.log(action.error);
+      })
+
       .addCase(getCourseDigiSign.fulfilled, (state, action) => {
         state.loading = false;
         state.courseList = action.payload;
@@ -319,7 +335,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putDocumentPerizinan.rejected, (state, action) => {
         state.status = "gagal";
         state.loading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         Sentry.captureException(action.error);
       })
       .addCase(putDocumentPerizinan.fulfilled, (state) => {
@@ -528,7 +544,7 @@ const DigitalSignSlice = createSlice({
       .addCase(getDasboardListPKRL.fulfilled, (state, action) => {
         state.loading = false;
         state.listDashboard = action.payload;
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getDasboardListPKRL.pending, (state, action) => {
         state.loading = true;
@@ -540,27 +556,27 @@ const DigitalSignSlice = createSlice({
       .addCase(getCounterMain.fulfilled, (state, action) => {
         state.loading = false;
         state.mainCounter = action.payload;
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getCounterMain.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(getCounterMain.rejected, (state, action) => {
         state.loading = false;
-        console.log("gagal");
+        // console.log("gagal");
       })
       .addCase(getExportPKRL.fulfilled, (state, action) => {
         state.loading = false;
         state.fileExport = action.payload.data;
-        console.log("berhasil");
+        // console.log("berhasil");
       })
       .addCase(getExportPKRL.pending, (state, action) => {
         // state.loading = true;
-        console.log("pending");
+        // console.log("pending");
       })
       .addCase(getExportPKRL.rejected, (state, action) => {
         // state.loading = false;
-        console.log("gagal");
+        // console.log("gagal");
       })
       .addCase(parafPerizinan.fulfilled, (state, action) => {
         state.loading = false;
@@ -599,12 +615,12 @@ const DigitalSignSlice = createSlice({
         state.loading = true;
       })
       .addCase(getNomorPerizinanMenteri.fulfilled, (state, action) => {
-        console.log("action nomor", action.payload);
+        // console.log("action nomor", action.payload);
         state.loading = false;
         state.nomorDokPerizinan = action.payload?.result?.nomor;
       })
       .addCase(getNomorPerizinanMenteri.rejected, (state, action) => {
-        console.log("error nomor", action);
+        // console.log("error nomor", action);
         state.loading = false;
         Sentry.captureException(action.error);
       })

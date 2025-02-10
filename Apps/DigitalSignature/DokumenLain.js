@@ -14,7 +14,7 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import {
   useIsFocused,
@@ -36,6 +36,7 @@ import {
   getListInProgress,
   getListSignedDigiSign,
   deleteDokumenLain,
+  getCounterDigitalSign,
 } from "../../service/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
@@ -60,19 +61,18 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
       key={item.id}
       style={{
         backgroundColor: "white",
-        borderRadius: 16,
+        borderRadius: 8,
         width: "90%",
         flex: 1,
-        marginTop: 10,
         marginHorizontal: "5%",
-        padding: 20,
+        padding: 16,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
         // //shadow android
         elevation: 2,
-        marginVertical: 10,
+        marginVertical: 8,
       }}
     >
       <TouchableOpacity
@@ -104,7 +104,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
             style={{
               backgroundColor: COLORS.lighter,
               height: 1,
-              marginVertical: 5,
+              marginVertical: 8,
               width: "100%",
             }}
           />
@@ -297,6 +297,7 @@ export const DokumenLain = ({ route }) => {
           search: search,
         })
       );
+      dispatch(getCounterDigitalSign({ token: token, tipe: "dokumen_lain" }));
     } else if (currentTab === "DokumenLain") {
       dispatch(
         getListComposer({
@@ -306,6 +307,7 @@ export const DokumenLain = ({ route }) => {
           search: search,
         })
       );
+      dispatch(getCounterDigitalSign({ token: token, tipe: "dokumen_lain" }));
     }
   }, [token, tipe, currentTab]);
 
@@ -348,7 +350,7 @@ export const DokumenLain = ({ route }) => {
     );
   };
 
-  const { dokumenlain, loading, status } = useSelector(
+  const { dokumenlain, loading, counterDS, status } = useSelector(
     (state) => state.digitalsign
   );
 
@@ -526,6 +528,8 @@ export const DokumenLain = ({ route }) => {
     }
   }, [status]);
 
+  console.log(counterDS);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -569,8 +573,183 @@ export const DokumenLain = ({ route }) => {
             </Text>
           </View>
         </View>
+
+        <View
+          style={{
+            padding: 10,
+            borderRadius: 8,
+            backgroundColor: COLORS.white,
+            marginTop: 16,
+            width: "90%",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          {/* <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Dokumen Lain
+          </Text> */}
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor:
+                  variant === "inprogress"
+                    ? COLORS.secondaryLighter
+                    : COLORS.bgLightGrey,
+                borderRadius: 8,
+                width: "49%",
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+                justifyContent: "center",
+                padding: 5,
+              }}
+              onPress={() => filterHandlerInProgress()}
+            >
+              <Text
+                style={{
+                  // marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  width: "100%",
+                  textAlign: "left",
+                }}
+              >
+                Need Sign
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  alignItems: "center",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    padding: 5,
+                    backgroundColor: COLORS.infoDangerLight,
+                    borderRadius: 50,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name={"file-alert-outline"}
+                    size={device === "tablet" ? 40 : 30}
+                    color={COLORS.infoDanger}
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      // fontSize: fontSizeResponsive("H1", device),
+                      fontSize: 40,
+                    }}
+                  >
+                    {counterDS?.data?.dokumen_lain_count?.need_sign}
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={{
+                  marginTop: 5,
+                  fontSize: fontSizeResponsive("H5", device),
+                  color: COLORS.grey,
+                  fontWeight: FONTWEIGHT.bold,
+                  letterSpacing: -1, // Sesuaikan nilai
+                }}
+              >
+                Dokumen Belum Ditandatangani
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor:
+                  variant === "signed"
+                    ? COLORS.secondaryLighter
+                    : COLORS.bgLightGrey,
+                borderRadius: 8,
+                width: "49%",
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+                justifyContent: "center",
+                padding: 5,
+              }}
+              onPress={() => filterHandlerSigned()}
+            >
+              <Text
+                style={{
+                  // marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: FONTWEIGHT.bold,
+                  width: "100%",
+                  textAlign: "left",
+                }}
+              >
+                Signed
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  alignItems: "center",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    padding: 5,
+                    backgroundColor: COLORS.successLight,
+                    borderRadius: 50,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name={"file-check-outline"}
+                    size={device === "tablet" ? 40 : 30}
+                    color={COLORS.success}
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      // fontSize: fontSizeResponsive("H1", device),
+                      fontSize: 40,
+                    }}
+                  >
+                    {counterDS?.data?.dokumen_lain_count?.done}
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={{
+                  marginTop: 5,
+                  fontSize: fontSizeResponsive("H5", device),
+                  color: COLORS.grey,
+                  fontWeight: FONTWEIGHT.bold,
+                  letterSpacing: -1, // Sesuaikan nilai
+                }}
+              >
+                Dokumen Sudah Ditandatangani
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}>
+          <View style={{ width: "90%", marginHorizontal: "5%", marginTop: 10 }}>
             {/* <Search placeholder={"Cari"} onSearch={filter} /> */}
             <View style={styles.input}>
               <Ionicons
@@ -599,14 +778,13 @@ export const DokumenLain = ({ route }) => {
             paddingVertical: 10,
             flexDirection: "row",
             justifyContent: "space-between",
-            marginHorizontal: "10%",
+            marginHorizontal: "5%",
           }}
         >
           <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,
-              paddingHorizontal: 6,
-              paddingVertical: 6,
+              padding: 6,
               borderWidth: 1,
               backgroundColor:
                 variant === "composer" ? COLORS.primary : COLORS.input,
@@ -655,9 +833,7 @@ export const DokumenLain = ({ route }) => {
           <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,
-
-              paddingHorizontal: 6,
-              paddingVertical: 6,
+              padding: 6,
               borderWidth: 1,
               backgroundColor:
                 variant === "inprogress" ? COLORS.primary : COLORS.input,
@@ -682,9 +858,7 @@ export const DokumenLain = ({ route }) => {
           <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,
-
-              paddingHorizontal: 6,
-              paddingVertical: 6,
+              padding: 6,
               borderWidth: 1,
               backgroundColor:
                 variant === "rejected" ? COLORS.primary : COLORS.input,
@@ -708,9 +882,7 @@ export const DokumenLain = ({ route }) => {
           <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,
-
-              paddingHorizontal: 6,
-              paddingVertical: 6,
+              padding: 6,
               borderWidth: 1,
               backgroundColor:
                 variant === "signed" ? COLORS.primary : COLORS.input,
