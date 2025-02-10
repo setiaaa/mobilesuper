@@ -820,8 +820,6 @@ export const Home = () => {
     ]);
   }, [berita.lists, galeri.lists]);
 
-  console.log(screenWidth);
-
   const handleGetHeight = () => {
     let height = 0;
     let top = "30%";
@@ -858,11 +856,20 @@ export const Home = () => {
         height = 0;
       } else {
         if (orientation === "landscape") {
-          if (menuLiteLength?.length <= 8) {
-            height = 350;
-            top = "50%";
+          if (screenWidth >= 1024 && screenWidth < 1210) {
+            if (menuLiteLength?.length <= 8) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
           } else {
-            height = 500;
+            if (menuLiteLength?.length <= 10) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
           }
         } else if (orientation === "potrait") {
           if (screenWidth >= 744 && screenWidth < 810) {
@@ -872,8 +879,15 @@ export const Home = () => {
             } else {
               height = 500;
             }
-          } else {
+          } else if (screenWidth >= 744 && screenWidth <= 834) {
             if (menuLiteLength?.length <= 6) {
+              height = 350;
+              top = "50%";
+            } else {
+              height = 500;
+            }
+          } else {
+            if (menuLiteLength?.length <= 8) {
               height = 350;
               top = "50%";
             } else {

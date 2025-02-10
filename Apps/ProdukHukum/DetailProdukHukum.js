@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Alert, TextInput, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -479,6 +485,20 @@ export const DetailProdukHukum = ({ route }) => {
       </View>
     );
   };
+
+  const { width } = useWindowDimensions();
+
+  let responsive = 0;
+  let widthFile = 0;
+
+  if (device === "phone") {
+    responsive = 2;
+    widthFile = width / responsive - 48;
+  } else if (device === "tablet") {
+    responsive = 3;
+    widthFile = width / responsive - 32;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -784,217 +804,188 @@ export const DetailProdukHukum = ({ route }) => {
                   </View>
                 </View>
               </View>
-              {detail?.attachments?.length != 0 && (
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  marginHorizontal: 16,
+                  borderRadius: 8,
+                  marginTop: 20,
+                }}
+              >
                 <View
                   style={{
-                    backgroundColor: COLORS.white,
-                    marginHorizontal: 16,
-                    borderRadius: 8,
-                    marginTop: 20,
+                    borderRadius: 4,
+                    margin: 20,
+                    borderColor: "#DBDADE",
+                    gap: 10,
                   }}
                 >
-                  <View
+                  <Text
                     style={{
-                      borderRadius: 4,
-                      margin: 20,
-                      borderColor: "#DBDADE",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H1", device),
                     }}
                   >
-                    <View>
-                      <Text
+                    {detail?.state === "done"
+                      ? "Dokumen"
+                      : detail?.state === "ttde"
+                      ? "Updated Draft"
+                      : "Draft"}{" "}
+                    Produk Hukum
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      justifyContent: "flex-start",
+                      gap: 10,
+                    }}
+                  >
+                    {detail?.state === "done" && hakViewDocFinal && (
+                      <TouchableOpacity
                         style={{
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H1", device),
+                          padding: 10,
+                          backgroundColor: COLORS.bgLightGrey,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
                         }}
+                        onPress={() =>
+                          navigation.navigate("PdfViewer", {
+                            data: detail?.attachments[0]?.file,
+                            type: "DokumenLain",
+                          })
+                        }
                       >
-                        {detail?.state == "done"
-                          ? "Dokumen"
-                          : detail?.state == "ttde"
-                          ? "Updated Draft"
-                          : "Draft"}{" "}
-                        Produk Hukum
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      {detail?.state == "done" && hakViewDocFinal && (
-                        <TouchableOpacity
+                        <Text
                           style={{
-                            marginTop: 10,
-                            padding: 10,
-                            backgroundColor: COLORS.bgLightGrey,
-                            borderRadius: 8,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width:
-                              device === "tablet" && indexLampiran >= 0
-                                ? "35%"
-                                : device != "tablet" && indexLampiran >= 0
-                                ? 100
-                                : "49%", // Kontrol lebar agar responsif
-                          }}
-                          onPress={() => {
-                            navigation.navigate("PdfViewer", {
-                              data: detail?.attachments[0]?.file,
-                              type: "DokumenLain",
-                            });
+                            textAlign: "center",
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          <Text
-                            style={{
-                              textAlign: "center",
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H1", device),
-                              marginBottom: 10,
-                            }}
-                          >
-                            Final Dokumen
-                          </Text>
+                          Final Dokumen
+                        </Text>
+                        <Image
+                          source={require("../../assets/superApp/pdf.png")}
+                          style={{ height: 50, width: 50 }}
+                        />
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {(detail?.attachments[0]?.file_size / 1024).toFixed(
+                            2
+                          )}{" "}
+                          KB
+                        </Text>
+                      </TouchableOpacity>
+                    )}
 
-                          <View style={{ alignItems: "center" }}>
-                            <Image
-                              source={require("../../assets/superApp/pdf.png")}
-                              style={{ height: 50, width: 50 }} // Ukuran gambar
-                            />
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                                textAlign: "center",
-                                marginTop: 5,
-                              }}
-                            >
-                              {(
-                                detail?.attachments[0]?.file_size / 1024
-                              ).toFixed(2)}{" "}
-                              KB
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
-                      {indexDraft >= 0 && (
-                        <TouchableOpacity
+                    {indexDraft >= 0 && (
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor: COLORS.bgLightGrey,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
+                        }}
+                        onPress={() =>
+                          navigation.navigate("PdfViewer", {
+                            data: detail?.attachments[indexDraft]?.file,
+                            type: "DokumenLain",
+                          })
+                        }
+                      >
+                        <Text
                           style={{
-                            marginTop: 10,
-                            padding: 10,
-                            backgroundColor: COLORS.bgLightGrey,
-                            borderRadius: 8,
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width:
-                              device === "tablet" && indexLampiran >= 0
-                                ? "35%"
-                                : device != "tablet" &&
-                                  detail.state == "done" &&
-                                  indexLampiran >= 0
-                                ? 100
-                                : "49%", // Kontrol lebar agar responsif
-                          }}
-                          onPress={() => {
-                            navigation.navigate("PdfViewer", {
-                              data: detail?.attachments[indexDraft]?.file,
-                              type: "DokumenLain",
-                            });
+                            textAlign: "center",
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          {(detail?.state == "done" || indexLampiran >= 0) && (
-                            <Text
-                              style={{
-                                textAlign: "center",
-                                fontWeight: FONTWEIGHT.bold,
-                                fontSize: fontSizeResponsive("H1", device),
-                                marginBottom: 10,
-                              }}
-                            >
-                              Arsip Draft
-                            </Text>
-                          )}
-                          <View style={{ alignItems: "center" }}>
-                            <Image
-                              source={require("../../assets/superApp/pdf.png")}
-                              style={{ height: 50, width: 50 }} // Ukuran gambar
-                            />
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                                textAlign: "center",
-                                marginTop: 5,
-                              }}
-                            >
-                              {(
-                                detail?.attachments[indexDraft]?.file_size /
-                                1024
-                              ).toFixed(2)}{" "}
-                              KB
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
+                          Arsip Draft
+                        </Text>
+                        <Image
+                          source={require("../../assets/superApp/pdf.png")}
+                          style={{ height: 50, width: 50 }}
+                        />
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {(
+                            detail?.attachments[indexDraft]?.file_size / 1024
+                          ).toFixed(2)}{" "}
+                          KB
+                        </Text>
+                      </TouchableOpacity>
+                    )}
 
-                      {indexLampiran >= 0 && (
-                        <TouchableOpacity
+                    {indexLampiran >= 0 && (
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor: COLORS.bgLightGrey,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: widthFile,
+                          flex: 0,
+                          gap: 10,
+                        }}
+                        onPress={() =>
+                          navigation.navigate("PdfViewer", {
+                            data: detail?.attachments[indexLampiran]?.file,
+                            type: "DokumenLain",
+                          })
+                        }
+                      >
+                        <Text
                           style={{
-                            marginTop: 10,
-                            padding: 10,
-                            backgroundColor: COLORS.bgLightGrey,
-                            borderRadius: 8,
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width:
-                              device === "tablet" && indexLampiran >= 0
-                                ? "35%"
-                                : device != "tablet" &&
-                                  detail.state == "done" &&
-                                  indexLampiran >= 0
-                                ? 100
-                                : "49%", // Kontrol lebar agar responsif
-                          }}
-                          onPress={() => {
-                            navigation.navigate("PdfViewer", {
-                              data: detail?.attachments[indexLampiran]?.file,
-                              type: "DokumenLain",
-                            });
+                            textAlign: "center",
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          <Text
-                            style={{
-                              textAlign: "center",
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H1", device),
-                              marginBottom: 10,
-                            }}
-                          >
-                            Arsip Lampiran
-                          </Text>
-                          <View style={{ alignItems: "center" }}>
-                            <Image
-                              source={require("../../assets/superApp/pdf.png")}
-                              style={{ height: 50, width: 50 }} // Ukuran gambar
-                            />
-                            <Text
-                              style={{
-                                fontSize: fontSizeResponsive("H4", device),
-                                textAlign: "center",
-                                marginTop: 5,
-                              }}
-                            >
-                              {(
-                                detail?.attachments[indexLampiran]?.file_size /
-                                1024
-                              ).toFixed(2)}{" "}
-                              KB
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
-                    </View>
+                          Arsip Lampiran
+                        </Text>
+                        <Image
+                          source={require("../../assets/superApp/pdf.png")}
+                          style={{ height: 50, width: 50 }}
+                        />
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            marginTop: 5,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          {(
+                            detail?.attachments[indexLampiran]?.file_size / 1024
+                          ).toFixed(2)}{" "}
+                          KB
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </View>
-              )}
+              </View>
+
               <View
                 style={{
                   backgroundColor: COLORS.white,

@@ -5,7 +5,11 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import { FontAwesome6, Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
@@ -230,8 +234,8 @@ export const MyTabPerizinanMenteri = () => {
                       elevation: 2,
                     }}
                   />
-                  <FontAwesome6
-                    name="file-signature"
+                  <MaterialCommunityIcons
+                    name="desktop-mac-dashboard"
                     color={COLORS.primary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
@@ -256,9 +260,9 @@ export const MyTabPerizinanMenteri = () => {
                     width: device === "tablet" ? 200 : 120,
                   }}
                 >
-                  <FontAwesome6
-                    name="file-signature"
-                    color={COLORS.tertiary}
+                  <MaterialCommunityIcons
+                    name="desktop-mac-dashboard"
+                    color={COLORS.primary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
                   />
