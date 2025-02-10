@@ -6,14 +6,14 @@ import {
   Platform,
 } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-export const MyTabPerizinanMenteri = () => {
+export const MyTabPerizinanMenteri = ({ route, navigation }) => {
   const [tabItemIndex, setTabItemIndex] = useState(1);
   const { profile } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
@@ -24,7 +24,12 @@ export const MyTabPerizinanMenteri = () => {
     rolePerizinanDashboard.includes(item)
   );
 
-  const navigation = useNavigation();
+  useEffect(() => {
+    if (route?.params?.screen === "PKRL") {
+      setTabItemIndex(3);
+      navigation.navigate("PKRL", { route: route });
+    }
+  }, []);
 
   return (
     <>

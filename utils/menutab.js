@@ -450,7 +450,7 @@ export const BottomTabsDetailKorespondensi = () => {
   );
 };
 
-export const BottomTabsDigitalSign = () => {
+export const BottomTabsDigitalSign = ({ route }) => {
   return (
     <BottomSheetModalProvider>
       <View
@@ -460,8 +460,8 @@ export const BottomTabsDigitalSign = () => {
         }}
       >
         <Tab.Navigator
-          tabBar={(props) => <MyTabDigitalSign {...props} />}
-          initialRouteName="Bankom"
+          tabBar={(props) => <MyTabDigitalSign {...props} route={route} />}
+          initialRouteName={route?.params?.screen || "DokumenLain"}
         >
           <Tab.Screen
             name="DokumenLain"
@@ -518,7 +518,7 @@ export const BottomTabsSertifikat = () => {
   );
 };
 
-export const BottomTabsPerizinanMenteri = () => {
+export const BottomTabsPerizinanMenteri = ({ route }) => {
   return (
     <BottomSheetModalProvider>
       <View
@@ -528,8 +528,8 @@ export const BottomTabsPerizinanMenteri = () => {
         }}
       >
         <Tab.Navigator
-          tabBar={(props) => <MyTabPerizinanMenteri {...props} />}
-          initialRouteName="PerizinanMenteri"
+          tabBar={(props) => <MyTabPerizinanMenteri {...props} route={route} />}
+          initialRouteName={route?.params?.screen || "PerizinanMenteri"}
         >
           <Tab.Screen
             name="PerizinanMenteri"

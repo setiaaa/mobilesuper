@@ -77,7 +77,8 @@ import { CollapsePKRLSigned } from "../../components/CollapsePKRLSigned";
 import { CollapsePKRLSignIn } from "../../components/CollapsePKRLSignIn";
 import { Loading } from "../../components/Loading";
 
-export const PKRL = () => {
+export const PKRL = ({ route }) => {
+  const routeCounter = route?.params;
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const currentTab = useNavigationState(
@@ -113,7 +114,13 @@ export const PKRL = () => {
   }, []);
 
   useEffect(() => {
-    if (currentTab === "PKRL") {
+    if (
+      currentTab === "PKRL" &&
+      routeCounter?.route?.params?.screen === "PKRL"
+    ) {
+      dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
+      filterHandlerInProgress(routeCounter?.route?.params?.direktorat);
+    } else if (currentTab === "PKRL") {
       dispatch(getCounterPKRL({ token: token, dashboard: dashboard }));
       // if (variant === "composer") {
       //   dispatch(
@@ -135,7 +142,7 @@ export const PKRL = () => {
       //   );
       // }
     }
-  }, [token, tipe, currentTab]);
+  }, [token, tipe, currentTab, routeCounter]);
 
   const { dokumenlain, loading, counterPKRL } = useSelector(
     (state) => state.digitalsign
@@ -214,7 +221,6 @@ export const PKRL = () => {
     }
     setFilterDirektoratSigned("");
     SetVariant("inprogress");
-    console.log(filterDirektorat, "fungsi");
     dispatch(
       getListInProgress({
         token: token,

@@ -207,7 +207,8 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
   );
 };
 
-export const DokumenLain = () => {
+export const DokumenLain = ({ route }) => {
+  const routeCounter = route?.params;
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -228,7 +229,20 @@ export const DokumenLain = () => {
   }, []);
 
   useEffect(() => {
-    if (currentTab === "DokumenLain") {
+    if (
+      currentTab === "DokumenLain" &&
+      routeCounter?.route?.params.screen === "DokumenLain"
+    ) {
+      SetVariant("inprogress");
+      dispatch(
+        getListInProgress({
+          token: token,
+          tipe: tipe,
+          page: page,
+          search: search,
+        })
+      );
+    } else if (currentTab === "DokumenLain") {
       dispatch(
         getListComposer({
           token: token,

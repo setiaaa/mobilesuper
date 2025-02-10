@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { useSelector } from "react-redux";
@@ -22,120 +23,151 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { nde_api } from "../../utils/api.config";
 import { getHTTP } from "../../utils/http";
 
-const Cardlist = ({ item, loading, CARD_WIDTH, device, orientation }) => (
-  <View
-    style={[
-      styles.card,
-      {
-        width: CARD_WIDTH,
-        backgroundColor:
+const Cardlist = ({ item, loading, CARD_WIDTH, device, orientation }) => {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate(
           item.type === "agenda_in"
-            ? COLORS.infoLight
+            ? "IncomingUnread"
             : item.type === "sign"
-            ? "#d2e9e8"
-            : item.type === "onprogress"
-            ? COLORS.successLight
+            ? "NeedSignList"
+            : item.type == "onprogress"
+            ? "NeedFollowUpList"
             : null,
-      },
-    ]}
-  >
-    <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-      <Text
-        style={[
-          styles.title,
           {
-            fontSize: device === "tablet" ? 20 : 10,
-            width:
-              device === "tablet" && orientation === "landscape"
-                ? "85%"
-                : device === "tablet" && orientation === "potrait"
-                ? "80%"
-                : "70%",
-          },
-        ]}
-      >
-        {item.type === "agenda_in"
-          ? "Surat Masuk"
-          : item.type === "sign"
-          ? "Perlu TTDE"
-          : item.type === "onprogress"
-          ? "Perlu Diperoses"
-          : null}
-      </Text>
-
-      {item.type === "agenda_in" ? (
-        <MaterialIcons
-          name="move-to-inbox"
-          size={device === "tablet" ? 40 : 24}
-          color={COLORS.info}
-          style={{ opacity: 0.2 }}
-        />
-      ) : item.type === "sign" ? (
-        <MaterialCommunityIcons
-          name="email-edit-outline"
-          size={device === "tablet" ? 40 : 24}
-          color={COLORS.info}
-          style={{ opacity: 0.2 }}
-        />
-      ) : item.type === "onprogress" ? (
-        <MaterialCommunityIcons
-          name="email-edit"
-          size={device === "tablet" ? 40 : 24}
-          color={COLORS.info}
-          style={{ opacity: 0.2 }}
-        />
-      ) : null}
-    </View>
-    {loading ? (
-      <ActivityIndicator
-        size="small"
-        color={COLORS.primary}
-        style={{ marginTop: 10 }}
-      />
-    ) : (
-      <View
-        style={{
-          borderRadius: 10,
+            unread: true,
+            title:
+              item.type === "agenda_in"
+                ? "Surat Masuk"
+                : item.type === "sign"
+                ? "Perlu TTD Elektronik"
+                : item.type == "onprogress"
+                ? "Perlu Diproses"
+                : null,
+          }
+        );
+      }}
+      style={[
+        styles.card,
+        {
+          width: CARD_WIDTH,
           backgroundColor:
             item.type === "agenda_in"
-              ? COLORS.info
+              ? COLORS.infoLight
               : item.type === "sign"
-              ? "#4CB9B4"
+              ? "#d2e9e8"
               : item.type === "onprogress"
-              ? COLORS.success
+              ? COLORS.successLight
               : null,
-          width: device === "tablet" ? "50%" : "90%",
-          padding: 5,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 5,
-          flexDirection: "row",
-          gap: device == "tablet" ? 8 : 5,
-          flexWrap: "wrap",
-        }}
-      >
+        },
+      ]}
+    >
+      <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+        <Text
+          style={[
+            styles.title,
+            {
+              fontSize: device === "tablet" ? 20 : 10,
+              width:
+                device === "tablet" && orientation === "landscape"
+                  ? "85%"
+                  : device === "tablet" && orientation === "potrait"
+                  ? "80%"
+                  : "70%",
+            },
+          ]}
+        >
+          {item.type === "agenda_in"
+            ? "Surat Masuk"
+            : item.type === "sign"
+            ? "Perlu TTDE"
+            : item.type === "onprogress"
+            ? "Perlu Diperoses"
+            : null}
+        </Text>
+
+        {item.type === "agenda_in" ? (
+          <MaterialIcons
+            name="move-to-inbox"
+            size={device === "tablet" ? 40 : 24}
+            color={COLORS.info}
+            style={{ opacity: 0.2 }}
+          />
+        ) : item.type === "sign" ? (
+          <MaterialCommunityIcons
+            name="email-edit-outline"
+            size={device === "tablet" ? 40 : 24}
+            color={COLORS.info}
+            style={{ opacity: 0.2 }}
+          />
+        ) : item.type === "onprogress" ? (
+          <MaterialCommunityIcons
+            name="email-edit"
+            size={device === "tablet" ? 40 : 24}
+            color={COLORS.info}
+            style={{ opacity: 0.2 }}
+          />
+        ) : null}
+      </View>
+      {loading ? (
+        <ActivityIndicator
+          size="small"
+          color={COLORS.primary}
+          style={{ marginTop: 10 }}
+        />
+      ) : (
         <View
           style={{
-            width: device === "tablet" ? 10 : 5,
-            height: device === "tablet" ? 10 : 5,
-            borderRadius: 50,
-            backgroundColor: COLORS.white,
+            borderRadius: 10,
+            backgroundColor:
+              item.type === "agenda_in"
+                ? COLORS.info
+                : item.type === "sign"
+                ? "#4CB9B4"
+                : item.type === "onprogress"
+                ? COLORS.success
+                : null,
+            width: device === "tablet" ? "50%" : "90%",
+            padding: 5,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 5,
+            flexDirection: "row",
+            gap: device == "tablet" ? 8 : 5,
+            flexWrap: "wrap",
           }}
-        />
-        <Text
-          style={[styles.value, { fontSize: fontSizeResponsive("H4", device) }]}
         >
-          {item.value}
-        </Text>
-        <Text
-          style={[styles.value, { fontSize: fontSizeResponsive("H4", device) }]}
-        >
-          New
-        </Text>
-      </View>
-    )}
-  </View>
-);
+          <View
+            style={{
+              width: device === "tablet" ? 10 : 5,
+              height: device === "tablet" ? 10 : 5,
+              borderRadius: 50,
+              backgroundColor: COLORS.white,
+            }}
+          />
+          <Text
+            style={[
+              styles.value,
+              { fontSize: fontSizeResponsive("H4", device) },
+            ]}
+          >
+            {item.value}
+          </Text>
+          <Text
+            style={[
+              styles.value,
+              { fontSize: fontSizeResponsive("H4", device) },
+            ]}
+          >
+            New
+          </Text>
+        </View>
+      )}
+    </TouchableOpacity>
+  );
+};
 
 export const CardCounterApps = () => {
   const navigation = useNavigation();

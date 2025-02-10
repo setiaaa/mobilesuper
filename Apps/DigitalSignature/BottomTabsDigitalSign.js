@@ -6,16 +6,26 @@ import {
   Platform,
 } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
-function MyTabDigitalSign({ props, navigation }) {
+function MyTabDigitalSign({ props, navigation, route }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
   const { profile } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
+
+  useEffect(() => {
+    if (route?.params?.screen === "DokumenSK") {
+      setTabItemIndex(4);
+      navigation.navigate("DokumenSK", { route: route });
+    } else if (route?.params?.screen === "DokumenLain") {
+      setTabItemIndex(1);
+      navigation.navigate("DokumenLain", { route: route });
+    }
+  }, []);
 
   const roleBankom = ["USER_BSRE"];
   const roleLaporan = ["LAPORAN_BSRE"];

@@ -48,7 +48,8 @@ import { RefreshControl } from "react-native";
 import { Config } from "../../constants/config";
 import { CardListDokumenSK } from "../../components/CardListDokumenSK";
 
-export const DokumenSK = () => {
+export const DokumenSK = ({ route }) => {
+  const routeCounter = route?.params;
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -79,9 +80,16 @@ export const DokumenSK = () => {
       setToken(val);
     });
   }, []);
+  console.log(tipe);
 
   useEffect(() => {
-    if (currentTab === "DokumenSK" && isRoleSK) {
+    if (
+      currentTab === "DokumenSK" &&
+      isRoleSK &&
+      routeCounter?.route?.params?.screen === "DokumenSK"
+    ) {
+      filterHandlerNeedSign();
+    } else if (currentTab === "DokumenSK" && isRoleSK) {
       dispatch(
         getListComposer({
           token: token,
@@ -99,7 +107,7 @@ export const DokumenSK = () => {
         search: search,
       });
     }
-  }, [token, tipe, currentTab, search]);
+  }, [token, tipe, currentTab, search, routeCounter]);
 
   const filterHandlerComposer = () => {
     SetVariant("composer");

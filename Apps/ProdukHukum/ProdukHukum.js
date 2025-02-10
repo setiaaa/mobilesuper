@@ -53,7 +53,8 @@ import { CardListProdukHukum } from "../../components/CardlistProdukHukum";
 import { Dropdown } from "../../components/DropDown";
 import { setCounterCat } from "../../store/ProdukHukum";
 
-export const ProdukHukum = () => {
+export const ProdukHukum = ({ route }) => {
+  const routeCounter = route.params;
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -110,6 +111,14 @@ export const ProdukHukum = () => {
       })
     );
   }, [token]);
+
+  useEffect(() => {
+    if (routeCounter?.route === "ProdukHukum") {
+      filterHandler({ key: "need-sign", value: "Perlu TTDE" });
+      console.log("masuk");
+    }
+  }, [route, token, page, search]);
+
   const [isConceptor, setIsConseptor] = useState(false);
   const { lists, loading, status, counter, counterCat } = useSelector(
     (state) => state.produkHukum
@@ -259,7 +268,6 @@ export const ProdukHukum = () => {
     );
   }, [page, variant, token, search]);
 
-  console.log(counterCat);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
