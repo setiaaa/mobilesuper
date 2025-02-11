@@ -60,8 +60,8 @@ export const ProdukHukum = ({ route }) => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [variant, setVariant] = useState({
-    key: "",
-    value: "",
+    key: "monitoring",
+    value: "Monitoring",
   });
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
@@ -98,8 +98,8 @@ export const ProdukHukum = ({ route }) => {
       dispatch(getCounterProdukHukum({ token: token, category: 0 }));
 
       setVariant({
-        key: "paraf",
-        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+        key: "monitoring",
+        value: "Monitoring",
       });
     }
     dispatch(
@@ -130,7 +130,7 @@ export const ProdukHukum = ({ route }) => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Perlu Persetujuan" },
+    { key: "paraf", value: "Perlu Disetujui" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -430,7 +430,7 @@ export const ProdukHukum = ({ route }) => {
                     filterHandler({
                       key: "paraf",
                       value:
-                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+                        profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
                     })
                   }
                 >
@@ -450,7 +450,7 @@ export const ProdukHukum = ({ route }) => {
                         textAlign: "left",
                       }}
                     >
-                      Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
+                      Perlu {profile?.nip == "88888" ? "Disetujui" : "Paraf"}
                     </Text>
                   </View>
                   <View

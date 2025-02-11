@@ -253,10 +253,14 @@ export const DetailProdukHukum = ({ route }) => {
     });
   }, []);
   const cekAuthors = (data) => {
-    let tmp_approved_by = detail?.approved_by ? detail?.approved_by : [];
-    const found = data.find((data) => data == profile?.nip);
-    const isApproved = tmp_approved_by.find((data) => data == profile?.nip);
-    setIsAuthors(found && !isApproved);
+    // let tmp_approved_by = detail?.approved_by ? detail?.approved_by : [];
+    // const found = data.find((data) => data == profile?.nip);
+    // const isApproved = tmp_approved_by.find((data) => data == profile?.nip);
+    const found = data.find(
+      (dat) => dat.nip == profile?.nip && !dat.is_paraf
+    );
+    const konseptor = detail.authors.includes(profile?.nip);
+    setIsAuthors(found || konseptor);
   };
   const listParaf = (data, index) => {
     return (
@@ -369,7 +373,7 @@ export const DetailProdukHukum = ({ route }) => {
                 </View>
               )}
 
-              {detail?.approved_by?.includes(data?.nip) ? (
+              {data?.is_paraf ? (
                 <>
                   <View
                     style={{
@@ -410,7 +414,7 @@ export const DetailProdukHukum = ({ route }) => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        Sudah {data?.nip === "88888" ? "Disetujui" : "Paraf"}
+                        Sudah {data?.nip === "88888" ? "Menyetujui" : "Paraf"}
                       </Text>
                     </View>
                   </View>
@@ -467,7 +471,7 @@ export const DetailProdukHukum = ({ route }) => {
                         }}
                       >
                         {data?.nip == "88888"
-                          ? "Perlu Persetujuan"
+                          ? "Belum Menyetujui"
                           : "Belum Paraf"}
                       </Text>
                     </View>
