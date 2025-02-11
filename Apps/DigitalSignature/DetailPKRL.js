@@ -59,7 +59,7 @@ export const DetailPKRL = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, status, loading } = useSelector(
+  const { digitalsign, status, loading, message } = useSelector(
     (state) => state.digitalsign
   );
 
@@ -1493,7 +1493,7 @@ export const DetailPKRL = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
-            messageSuccess={"Data Ditambahkan"}
+            messageSuccess={messege}
             navigate={"MainPerizinanMenteri"}
           />
 

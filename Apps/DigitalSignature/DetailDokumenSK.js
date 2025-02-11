@@ -48,7 +48,7 @@ export const DetailDokumenSK = ({ route }) => {
   const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading, status } = useSelector(
+  const { digitalsign, loading, status, message } = useSelector(
     (state) => state.digitalsign
   );
   const item = digitalsign.detail;
@@ -1379,7 +1379,7 @@ export const DetailDokumenSK = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
-            messageSuccess={"Data Ditambahkan"}
+            messageSuccess={message}
             navigate={"MainDigitalSign"}
           />
         </ScrollView>

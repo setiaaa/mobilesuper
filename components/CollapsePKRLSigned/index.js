@@ -55,28 +55,45 @@ export const CollapsePKRLSigned = ({
 
   // Data default yang ingin ditampilkan jika counter.data kosong
   const defaultData = [
+    {
+      done: 0,
+      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
+    },
     { done: 0, label: "Direktorat Jaskel - Jasa Kelautan" },
     {
       done: 0,
       label: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
     },
-    {
-      done: 0,
-      label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
-    },
     { done: 0, label: "Direktorat PRL" },
   ];
 
-  // Fungsi untuk memproses data
   const filteredApiData =
     Object.keys(counter?.data ?? {}).length > 0
-      ? Object.keys(counter?.data)
-          .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
-          .map((key) => ({
-            label: key,
-            done: counter?.data[key]?.done ?? 0, // Gunakan 0 jika done tidak ada
-          }))
-      : defaultData; // Jika counter.data kosong, kembalikan data default
+      ? defaultData?.map((item, index) => {
+          if (item?.label === counter?.data[item?.label]) {
+            return {
+              label: item?.label,
+              done: counter?.data[item?.label]?.done ?? 0,
+            };
+          } else {
+            return {
+              label: item?.label,
+              done: 0,
+            };
+          }
+        })
+      : defaultData;
+
+  // Fungsi untuk memproses data
+  // const filteredApiData =
+  //   Object.keys(counter?.data ?? {}).length > 0
+  //     ? Object.keys(counter?.data)
+  //         .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
+  //         .map((key) => ({
+  //           label: key,
+  //           done: counter?.data[key]?.done ?? 0, // Gunakan 0 jika done tidak ada
+  //         }))
+  //     : defaultData; // Jika counter.data kosong, kembalikan data default
 
   const jenisPerizinan = [
     {

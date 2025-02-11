@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetTextInput,
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
@@ -30,7 +31,11 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/ProdukHukum";
-import { parafProdukHukum, revisionProdukHukum } from "../../service/api";
+import {
+  parafProdukHukum,
+  revisionProdukHukum,
+  ttdeProdukHukum,
+} from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";
@@ -172,7 +177,7 @@ export const DetailProdukHukum = ({ route }) => {
   };
   const handleTTDE = () => {
     const payload = {
-      passphrase: passphrase,
+      passphrase: profile?.nip == "88888" ? "" : passphrase,
     };
     const data = {
       id: detail?.id,
@@ -248,10 +253,14 @@ export const DetailProdukHukum = ({ route }) => {
     });
   }, []);
   const cekAuthors = (data) => {
-    let tmp_approved_by = detail?.approved_by ? detail?.approved_by : [];
-    const found = data.find((data) => data == profile?.nip);
-    const isApproved = tmp_approved_by.find((data) => data == profile?.nip);
-    setIsAuthors(found && !isApproved);
+    // let tmp_approved_by = detail?.approved_by ? detail?.approved_by : [];
+    // const found = data.find((data) => data == profile?.nip);
+    // const isApproved = tmp_approved_by.find((data) => data == profile?.nip);
+    const found = data.find(
+      (dat) => dat.nip == profile?.nip && !dat.is_paraf
+    );
+    const konseptor = detail.authors.includes(profile?.nip);
+    setIsAuthors(found || konseptor);
   };
   const listParaf = (data, index) => {
     return (
@@ -364,7 +373,7 @@ export const DetailProdukHukum = ({ route }) => {
                 </View>
               )}
 
-              {detail?.approved_by?.includes(data?.nip) ? (
+              {data?.is_paraf ? (
                 <>
                   <View
                     style={{
@@ -405,7 +414,7 @@ export const DetailProdukHukum = ({ route }) => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        Sudah {data?.nip === "88888" ? "Disetujui" : "Paraf"}
+                        Sudah {data?.nip === "88888" ? "Menyetujui" : "Paraf"}
                       </Text>
                     </View>
                   </View>
@@ -462,7 +471,7 @@ export const DetailProdukHukum = ({ route }) => {
                         }}
                       >
                         {data?.nip == "88888"
-                          ? "Perlu Persetujuan"
+                          ? "Belum Menyetujui"
                           : "Belum Paraf"}
                       </Text>
                     </View>
@@ -1145,9 +1154,11 @@ export const DetailProdukHukum = ({ route }) => {
                   marginHorizontal: 16,
                 }}
                 onPress={() => {
-                  // handleBiometricAuth();
-                  // handleTTDE();
-                  bottomSheetAttach();
+                  if (profile?.nip == "88888") {
+                    handleBiometricAuth();
+                  } else {
+                    bottomSheetAttach();
+                  }
                 }}
               >
                 <Text
@@ -1277,7 +1288,7 @@ export const DetailProdukHukum = ({ route }) => {
                   }}
                 >
                   {bottomInput == "revisi" ? (
-                    <TextInput
+                    <BottomSheetTextInput
                       style={{
                         width: "100%",
                         height: 40,
@@ -1289,11 +1300,11 @@ export const DetailProdukHukum = ({ route }) => {
                       }}
                       placeholder="Masukkan Komentar"
                       defaultValue={comment}
-                      autoFocus
+                      // autoFocus
                     />
                   ) : (
                     <>
-                      <TextInput
+                      <BottomSheetTextInput
                         style={{
                           width: "90%",
                           height: 40,

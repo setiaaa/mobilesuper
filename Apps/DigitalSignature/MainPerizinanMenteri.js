@@ -3,10 +3,10 @@ import { Text, View } from "react-native";
 import { BottomTabsPerizinanMenteri } from "../../utils/menutab";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-export const MainPerizinanMenteri = () => {
+export const MainPerizinanMenteri = ({ route }) => {
   return (
     <BottomSheetModalProvider>
-      <BottomTabsPerizinanMenteri />
+      <BottomTabsPerizinanMenteri route={route} />
     </BottomSheetModalProvider>
   );
 };

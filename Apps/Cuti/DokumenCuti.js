@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { BackHandler, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import {
@@ -118,7 +118,19 @@ export const DokumenCuti = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(arsip.lists.badge);
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Home"); // Navigasi langsung ke Home
+      return true; // Mencegah aksi back default Android
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

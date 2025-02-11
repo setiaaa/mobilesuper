@@ -53,14 +53,15 @@ import { CardListProdukHukum } from "../../components/CardlistProdukHukum";
 import { Dropdown } from "../../components/DropDown";
 import { setCounterCat } from "../../store/ProdukHukum";
 
-export const ProdukHukum = () => {
+export const ProdukHukum = ({ route }) => {
+  const routeCounter = route.params;
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [variant, setVariant] = useState({
-    key: "",
-    value: "",
+    key: "monitoring",
+    value: "Monitoring",
   });
   const [isSelected, setSelection] = useState([]);
   const [page, setPage] = useState(10);
@@ -97,8 +98,8 @@ export const ProdukHukum = () => {
       dispatch(getCounterProdukHukum({ token: token, category: 0 }));
 
       setVariant({
-        key: "paraf",
-        value: profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+        key: "monitoring",
+        value: "Monitoring",
       });
     }
     dispatch(
@@ -110,6 +111,14 @@ export const ProdukHukum = () => {
       })
     );
   }, [token]);
+
+  useEffect(() => {
+    if (routeCounter?.route === "ProdukHukum") {
+      filterHandler({ key: "need-sign", value: "Perlu TTDE" });
+      console.log("masuk");
+    }
+  }, [route, token, page, search]);
+
   const [isConceptor, setIsConseptor] = useState(false);
   const { lists, loading, status, counter, counterCat } = useSelector(
     (state) => state.produkHukum
@@ -121,7 +130,7 @@ export const ProdukHukum = () => {
     { key: "signed", value: "Selesai" },
   ];
   const dropdownMenKP = [
-    { key: "paraf", value: "Perlu Persetujuan" },
+    { key: "paraf", value: "Perlu Disetujui" },
     { key: "need-sign", value: "Perlu TTDE" },
     { key: "monitoring", value: "Monitoring" },
     { key: "signed", value: "Selesai" },
@@ -397,7 +406,7 @@ export const ProdukHukum = () => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
-                  height: device === "tablet" ? 130 : 90,
+                  height: device === "tablet" ? 130 : 100,
                 }}
               >
                 <TouchableOpacity
@@ -421,7 +430,7 @@ export const ProdukHukum = () => {
                     filterHandler({
                       key: "paraf",
                       value:
-                        profile?.nip == "88888" ? "Perlu Persetujuan" : "Paraf",
+                        profile?.nip == "88888" ? "Perlu Disetujui" : "Paraf",
                     })
                   }
                 >
@@ -441,7 +450,7 @@ export const ProdukHukum = () => {
                         textAlign: "left",
                       }}
                     >
-                      Perlu {profile?.nip == "88888" ? "Persetujuan" : "Paraf"}
+                      Perlu {profile?.nip == "88888" ? "Disetujui" : "Paraf"}
                     </Text>
                   </View>
                   <View
@@ -494,7 +503,7 @@ export const ProdukHukum = () => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
-                  height: device === "tablet" ? 130 : 90,
+                  height: device === "tablet" ? 130 : 100,
                 }}
               >
                 <TouchableOpacity
@@ -586,7 +595,7 @@ export const ProdukHukum = () => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
-                height: device === "tablet" ? 130 : 90,
+                height: device === "tablet" ? 130 : 100,
               }}
             >
               <TouchableOpacity
@@ -678,7 +687,7 @@ export const ProdukHukum = () => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
-                height: device === "tablet" ? 130 : 90,
+                height: device === "tablet" ? 130 : 100,
               }}
             >
               <TouchableOpacity
