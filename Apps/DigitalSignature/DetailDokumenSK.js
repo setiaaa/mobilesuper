@@ -1174,7 +1174,9 @@ export const DetailDokumenSK = ({ route }) => {
               </>
             ) : null}
 
-            {variant.variant === "signed" && isRoleReleaseSK === true ? (
+            {variant.variant === "signed" &&
+            !item?.is_release &&
+            isRoleReleaseSK === true ? (
               <>
                 <TouchableOpacity
                   style={{

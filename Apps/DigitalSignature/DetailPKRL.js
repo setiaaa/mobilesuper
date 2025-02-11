@@ -1493,7 +1493,7 @@ export const DetailPKRL = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
-            messageSuccess={messege}
+            messageSuccess={message}
             navigate={"MainPerizinanMenteri"}
           />
 
