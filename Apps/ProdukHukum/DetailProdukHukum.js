@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetTextInput,
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
@@ -1283,7 +1284,7 @@ export const DetailProdukHukum = ({ route }) => {
                   }}
                 >
                   {bottomInput == "revisi" ? (
-                    <TextInput
+                    <BottomSheetTextInput
                       style={{
                         width: "100%",
                         height: 40,
@@ -1295,11 +1296,11 @@ export const DetailProdukHukum = ({ route }) => {
                       }}
                       placeholder="Masukkan Komentar"
                       defaultValue={comment}
-                      autoFocus
+                      // autoFocus
                     />
                   ) : (
                     <>
-                      <TextInput
+                      <BottomSheetTextInput
                         style={{
                           width: "90%",
                           height: 40,

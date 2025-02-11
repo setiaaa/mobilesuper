@@ -563,7 +563,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getCounterMain.rejected, (state, action) => {
         state.loading = false;
-        // console.log("gagal");
+        console.log(action.error, "gagal");
       })
       .addCase(getExportPKRL.fulfilled, (state, action) => {
         state.loading = false;
