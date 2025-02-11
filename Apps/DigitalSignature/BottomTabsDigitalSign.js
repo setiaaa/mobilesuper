@@ -4,18 +4,33 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  fontSizeResponsive,
+  getOrientation,
+} from "../../config/SuperAppps";
 import {} from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
-function MyTabDigitalSign({ props, navigation }) {
+function MyTabDigitalSign({ props, navigation, route }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
   const { profile } = useSelector((state) => state.superApps);
   const { device } = useSelector((state) => state.apps);
+
+  useEffect(() => {
+    if (route?.params?.screen === "DokumenSK") {
+      setTabItemIndex(4);
+      navigation.navigate("DokumenSK", { route: route });
+    } else if (route?.params?.screen === "DokumenLain") {
+      setTabItemIndex(1);
+      navigation.navigate("DokumenLain", { route: route });
+    }
+  }, []);
 
   const roleBankom = ["USER_BSRE"];
   const roleLaporan = ["LAPORAN_BSRE"];
@@ -23,6 +38,10 @@ function MyTabDigitalSign({ props, navigation }) {
   const hasRequiredRoles = (userRoles, appRoles) => {
     return appRoles.some((role) => userRoles?.includes(role));
   };
+
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <>
@@ -38,81 +57,81 @@ function MyTabDigitalSign({ props, navigation }) {
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
           {/* <TouchableOpacity
-            key={1}
-            onPress={() => {
-              setTabItemIndex(1);
-              navigation.navigate("Bankom", { unread: false });
-            }}
-          >
-            {tabItemIndex === 1 ? (
+          key={1}
+          onPress={() => {
+            setTabItemIndex(1);
+            navigation.navigate("Bankom", { unread: false });
+          }}
+        >
+          {tabItemIndex === 1 ? (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
+            >
               <View
                 style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: "100%",
+                  height: 3,
+                  backgroundColor: COLORS.primary,
+                  position: "absolute",
+                  top: 0,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 5 },
+                  shadowColor: COLORS.primary,
+                  shadowOpacity: 0.4,
+                  //shadow android
+                  elevation: 2,
                 }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons
-                  name="briefcase-outline"
-                  color={COLORS.primary}
-                  size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
-                />
-                <Text
-                  style={{
-                    color: COLORS.primary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
-                    fontSize: fontSizeResponsive("H3", device),
-                  }}
-                >
-                  Bankom
-                </Text>
-              </View>
-            ) : (
-              <View
+              />
+              <Ionicons
+                name="briefcase-outline"
+                color={COLORS.primary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
                 style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  color: COLORS.primary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 40,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
-                <Ionicons
-                  name="briefcase-outline"
-                  color={COLORS.tertiary}
-                  size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
-                />
-                <Text
-                  style={{
-                    color: COLORS.tertiary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
-                    fontSize: fontSizeResponsive("H3", device),
-                  }}
-                >
-                  Bankom
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity> */}
+                Bankom
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
+            >
+              <Ionicons
+                name="briefcase-outline"
+                color={COLORS.tertiary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.tertiary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 40,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Bankom
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity> */}
           {/* ) : null} */}
 
           <TouchableOpacity
@@ -196,84 +215,84 @@ function MyTabDigitalSign({ props, navigation }) {
           </TouchableOpacity>
 
           {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
-            <TouchableOpacity
-              key={3}
-              onPress={() => {
-                setTabItemIndex(3);
-                navigation.navigate("LaporanDigitalSign", { unread: false });
-                // props.navigation.navigate('Home', { unread: false })
-              }}
-            >
-              {tabItemIndex === 3 ? (
+          <TouchableOpacity
+            key={3}
+            onPress={() => {
+              setTabItemIndex(3);
+              navigation.navigate("LaporanDigitalSign", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 3 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
                 <View
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
                   }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 3,
-                      backgroundColor: COLORS.primary,
-                      position: "absolute",
-                      top: 0,
-                      //shadow ios
-                      shadowOffset: { width: -2, height: 5 },
-                      shadowColor: COLORS.primary,
-                      shadowOpacity: 0.4,
-                      //shadow android
-                      elevation: 2,
-                    }}
-                  />
-                  <Ionicons
-                    name="chatbubbles-outline"
-                    color={COLORS.primary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Laporan
-                  </Text>
-                </View>
-              ) : (
-                <View
+                />
+                <Ionicons
+                  name="chatbubbles-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  <Ionicons
-                    name="chatbubbles-outline"
-                    color={COLORS.tertiary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.tertiary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Laporan
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          ) : null} */}
+                  Laporan
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <Ionicons
+                  name="chatbubbles-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Laporan
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        ) : null} */}
 
           <TouchableOpacity
             key={4}

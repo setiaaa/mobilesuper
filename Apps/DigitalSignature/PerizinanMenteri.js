@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import {
+  BackHandler,
   FlatList,
   KeyboardAvoidingView,
   Platform,
@@ -261,6 +262,20 @@ export const PerizinanMenteri = () => {
       );
     }
   }, [page, token, tipe, search, currentTab]);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Home"); // Navigasi langsung ke Home
+      return true; // Mencegah aksi back default Android
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>

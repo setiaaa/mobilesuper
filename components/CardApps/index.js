@@ -111,9 +111,9 @@ export const CardApps = ({
     let tempLimit = 0;
     if (device === "tablet") {
       if (orientation === "landscape") {
-        tempLimit = 15;
+        tempLimit = 7;
       } else if (orientation === "potrait") {
-        tempLimit = width >= 810 ? 11 : 9;
+        tempLimit = width >= 834 ? 7 : 5;
       }
     } else {
       tempLimit = 7;
@@ -200,6 +200,24 @@ export const CardApps = ({
           width: {
             tablet: 70,
             hp: 40,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+      },
+      {
+        title: "Produk Hukum",
+        navigation: "ProdukHukum",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
           },
           height: {
             tablet: 50,
@@ -329,7 +347,7 @@ export const CardApps = ({
       }
     );
     if (isRolePreShare) {
-      tmpMenu.splice(2, 0, {
+      tmpMenu.splice(7, 0, {
         title: "KKP Drive",
         navigation: "MainRepo",
         image: require("../../assets/superApp/repositori.png"),
@@ -349,7 +367,7 @@ export const CardApps = ({
       });
     }
     if (isRoleKalender && isRoleKalenderSatker) {
-      tmpMenu.splice(6, 0, {
+      tmpMenu.splice(4, 0, {
         title: "Kalender",
         navigation: "MainKalender",
         image: require("../../assets/superApp/kalender.png"),
@@ -376,7 +394,7 @@ export const CardApps = ({
         // ],
       });
     } else if (isRoleKalender) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(4, 0, {
         title: "Kalender",
         navigation: "MainGrupKalender",
         image: require("../../assets/superApp/kalender.png"),
@@ -395,7 +413,7 @@ export const CardApps = ({
         },
       });
     } else if (isRoleKalenderSatker) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(4, 0, {
         title: "Kalender",
         navigation: "MainKalenderSatker",
         image: require("../../assets/superApp/kalender.png"),
@@ -414,7 +432,7 @@ export const CardApps = ({
         },
       });
     } else {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(4, 0, {
         title: "Kalender",
         navigation: "KalenderPersonal",
         image: require("../../assets/superApp/kalender.png"),
@@ -454,7 +472,7 @@ export const CardApps = ({
       });
     }
     if (isRoleMenteri) {
-      tmpMenu.splice(11, 0, {
+      tmpMenu.splice(5, 0, {
         title: "Perizinan Menteri",
         navigation: "MainPerizinanMenteri",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -474,7 +492,7 @@ export const CardApps = ({
       });
     }
     if (isRoleProdukHukum) {
-      tmpMenu.splice(12, 0, {
+      tmpMenu.splice(7, 0, {
         title: "Produk Hukum",
         navigation: "ProdukHukum",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -573,10 +591,11 @@ export const CardApps = ({
               flexDirection: "row",
               gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "center",
               flex: 1,
               flexWrap: "wrap",
+              marginVertical: 5,
             }}
           >
             {listMenu &&

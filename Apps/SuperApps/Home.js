@@ -111,6 +111,8 @@ import LottieView from "lottie-react-native";
 import CryptoJS from "react-native-crypto-js";
 import { OneSignal } from "react-native-onesignal";
 import { ScrollView } from "react-native-gesture-handler";
+import { CardCounterApps } from "../../components/CardCounterApps";
+import { CardCounterAppsTTDE } from "../../components/CardCounterAppsTTDE";
 const numColumns = 3;
 
 const _color = "#6E01EF";
@@ -434,7 +436,7 @@ export const Home = () => {
         },
       });
     } else {
-      console.log("masuk role else", isRoleLaporan);
+      // console.log("masuk role else", isRoleLaporan);
       null;
     }
 
@@ -828,28 +830,12 @@ export const Home = () => {
     if (device === "phone") {
       //IPHONE XS KEBAWAH
       if (screenWidth >= 375 && screenWidth < 390) {
-        if (menuLiteLength?.length === 0) {
-          height = 0;
-        } else {
-          if (menuLiteLength?.length <= 4) {
-            top = "50%";
-            height = 230;
-          } else {
-            height = 280;
-          }
-        }
+        top = "38%";
+        height = 250;
       } else {
         //IPHONE XR KEATAS
-        if (menuLiteLength?.length === 0) {
-          height = 0;
-        } else {
-          if (menuLiteLength?.length <= 4) {
-            height = 220;
-            top = "45%";
-          } else {
-            height = 300;
-          }
-        }
+        top = "40%";
+        height = 230;
       }
     } else if (device === "tablet") {
       if (menuLiteLength?.length === 0) {
@@ -857,42 +843,17 @@ export const Home = () => {
       } else {
         if (orientation === "landscape") {
           if (screenWidth >= 1024 && screenWidth < 1210) {
-            if (menuLiteLength?.length <= 8) {
-              height = 350;
-              top = "50%";
-            } else {
-              height = 500;
-            }
+            (height = 320), (top = "45%");
           } else {
-            if (menuLiteLength?.length <= 10) {
-              height = 350;
-              top = "50%";
-            } else {
-              height = 500;
-            }
+            (height = 320), (top = "45%");
           }
         } else if (orientation === "potrait") {
           if (screenWidth >= 744 && screenWidth < 810) {
-            if (menuLiteLength?.length <= 5) {
-              height = 350;
-              top = "50%";
-            } else {
-              height = 500;
-            }
+            (height = 320), (top = "45%");
           } else if (screenWidth >= 744 && screenWidth <= 834) {
-            if (menuLiteLength?.length <= 6) {
-              height = 350;
-              top = "50%";
-            } else {
-              height = 500;
-            }
+            (height = 320), (top = "45%");
           } else {
-            if (menuLiteLength?.length <= 8) {
-              height = 350;
-              top = "50%";
-            } else {
-              height = 500;
-            }
+            (height = 320), (top = "45%");
           }
         }
       }
@@ -905,6 +866,8 @@ export const Home = () => {
       top: top,
     };
   };
+
+  let orientation = getOrientation(screenWidth, screenHeight);
 
   return (
     <GestureHandlerRootView>
@@ -1002,90 +965,101 @@ export const Home = () => {
               }}
             >
               <View style={{ alignItems: "center", display: "flex" }}>
-                <CardApps
-                  handlePressModal={handlePressModal}
-                  setModalBankom={setModalBankom}
-                  setModalKepegawaian={setModalKepegawaian}
-                  closeBottomSheet={closeBottomSheet}
-                />
-                <Portal>
-                  <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                      <View
-                        style={[
-                          style,
-                          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-                        ]}
-                      />
-                    )}
-                  >
-                    <View onLayout={handleContentLayout} style={{ flex: 1 }}>
-                      <ScrollView
-                        nestedScrollEnabled={true}
-                        style={{
-                          height: useWindowDimensions().height - 80,
-                        }}
-                      >
-                        <View
-                          style={{
-                            marginTop: device === "tablet" ? 50 : 30,
-                            flex: 1,
-                          }}
-                        >
-                          <View
-                            style={{
-                              marginHorizontal: 20,
-                              flexDirection: "row",
-                              justifyContent: "space-between",
-                              padding: 14,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontWeight: FONTWEIGHT.bold,
-                                fontSize: fontSizeResponsive("H1", device),
-                              }}
-                            >
-                              Aplikasi
-                            </Text>
-                            <TouchableOpacity
-                              onPress={() => {
-                                closeBottomSheet();
-                              }}
-                            >
-                              <Ionicons
-                                name="close-outline"
-                                size={device === "tablet" ? 40 : 24}
-                                color={COLORS.lighter}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                          <View>
-                            <CardAppsB
-                              setModalBankom={setModalBankom}
-                              setModalKepegawaian={setModalKepegawaian}
-                              closeBottomSheet={closeBottomSheet}
-                            />
-                          </View>
-                        </View>
-                      </ScrollView>
-                    </View>
-                  </BottomSheetModal>
-                </Portal>
+                <CardCounterApps />
               </View>
 
               {/* {profile.nip === "100062" ? null : (
               )} */}
             </View>
           </View>
+
+          <View style={{ paddingHorizontal: 20 }}>
+            <View
+              style={{
+                alignItems: "center",
+                display: "flex",
+                marginBottom: 5,
+              }}
+            >
+              <CardCounterAppsTTDE />
+            </View>
+
+            <CardApps
+              handlePressModal={handlePressModal}
+              setModalBankom={setModalBankom}
+              setModalKepegawaian={setModalKepegawaian}
+              closeBottomSheet={closeBottomSheet}
+            />
+          </View>
+          <Portal>
+            <BottomSheetModal
+              ref={bottomSheetModalRef}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              index={0}
+              style={{ borderRadius: 50 }}
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjust"
+              backdropComponent={({ style }) => (
+                <View
+                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                />
+              )}
+            >
+              <View onLayout={handleContentLayout} style={{ flex: 1 }}>
+                <ScrollView
+                  nestedScrollEnabled={true}
+                  style={{
+                    height: useWindowDimensions().height - 80,
+                  }}
+                >
+                  <View
+                    style={{
+                      marginTop: device === "tablet" ? 50 : 30,
+                      flex: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: 14,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H1", device),
+                        }}
+                      >
+                        Aplikasi
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          closeBottomSheet();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={device === "tablet" ? 40 : 24}
+                          color={COLORS.lighter}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <CardAppsB
+                        setModalBankom={setModalBankom}
+                        setModalKepegawaian={setModalKepegawaian}
+                        closeBottomSheet={closeBottomSheet}
+                      />
+                    </View>
+                  </View>
+                </ScrollView>
+              </View>
+            </BottomSheetModal>
+          </Portal>
 
           <Modal
             animationType="fade"
@@ -1442,7 +1416,7 @@ export const Home = () => {
             </View>
           </Modal>
 
-          <View style={[styles.containerr]}>
+          <View style={[styles.containerr, { marginTop: 16 }]}>
             <View
               style={{
                 justifyContent: "center",

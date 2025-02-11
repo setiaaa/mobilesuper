@@ -37,19 +37,18 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
       key={item.id}
       style={{
         backgroundColor: variant === "draft" ? COLORS.ExtraDivinder : "white",
-        borderRadius: 16,
+        borderRadius: 8,
         width: "90%",
         flex: 1,
-        marginTop: 10,
         marginHorizontal: "5%",
-        padding: 20,
+        padding: 16,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
         // //shadow android
         elevation: 2,
-        marginVertical: 10,
+        marginVertical: 8,
       }}
     >
       <TouchableOpacity
@@ -82,7 +81,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
             style={{
               backgroundColor: COLORS.lighter,
               height: 1,
-              marginVertical: 5,
+              marginVertical: 8,
               width: "100%",
             }}
           />
@@ -243,18 +242,19 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
               backgroundColor: COLORS.white,
               width: "90%",
               height: device === "tablet" ? "80%" : "50%",
-              borderRadius: 10,
+              borderRadius: 8,
             }}
           >
             <View
               style={{
-                marginHorizontal: 20,
-                marginTop: 20,
+                margin: 16,
+                marginBottom: 8,
                 flexDirection: "row",
                 justifyContent: "space-between",
-                padding: 10,
+                padding: 8,
                 borderBottomWidth: 2,
                 borderBottomColor: COLORS.grey,
+                alignItems: "center",
               }}
             >
               <Text
@@ -283,7 +283,13 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
               {item.approvers.map((data, index) => {
                 if (index > 0) {
                   return (
-                    <View style={{ marginHorizontal: 20, marginVertical: 5 }}>
+                    <View
+                      style={{
+                        marginHorizontal: 16,
+                        marginBottom: 8,
+                        // backgroundColor: "red",
+                      }}
+                    >
                       <View
                         style={{
                           flexDirection: "row",
@@ -315,14 +321,15 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                               justifyContent: "flex-start",
                               alignItems: "center",
                               gap: 5,
-                              marginTop: 5,
+                              marginTop: 4,
+                              marginLeft: 4,
                             }}
                           >
                             <View
                               style={{
                                 backgroundColor: COLORS.infoDanger,
                                 borderRadius: 50,
-                                padding: 5,
+                                padding: 4,
                                 justifyContent: "center",
                                 alignItems: "center",
                               }}
@@ -336,9 +343,9 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                             <View
                               style={{
                                 backgroundColor: COLORS.infoDangerLight,
-                                paddingVertical: 5,
+                                paddingVertical: 4,
                                 borderRadius: 20,
-                                paddingHorizontal: 15,
+                                paddingHorizontal: 8,
                               }}
                             >
                               <Text
@@ -358,7 +365,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                               width: "100%",
                               height: 2,
                               backgroundColor: COLORS.ExtraDivinder,
-                              marginTop: 5,
+                              marginTop: 8,
                             }}
                           />
                         </>
@@ -371,14 +378,15 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                               justifyContent: "flex-start",
                               alignItems: "center",
                               gap: 5,
-                              marginTop: 5,
+                              marginTop: 4,
+                              marginLeft: 4,
                             }}
                           >
                             <View
                               style={{
                                 backgroundColor: COLORS.success,
                                 borderRadius: 50,
-                                padding: 5,
+                                padding: 4,
                                 justifyContent: "center",
                                 alignItems: "center",
                               }}
@@ -392,9 +400,9 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                             <View
                               style={{
                                 backgroundColor: COLORS.successLight,
-                                paddingVertical: 5,
+                                paddingVertical: 4,
                                 borderRadius: 20,
-                                paddingHorizontal: 15,
+                                paddingHorizontal: 8,
                               }}
                             >
                               <Text
@@ -414,7 +422,7 @@ export const CardListDokumenSK = ({ item, variant, token, device }) => {
                               width: "100%",
                               height: 2,
                               backgroundColor: COLORS.ExtraDivinder,
-                              marginTop: 5,
+                              marginTop: 8,
                             }}
                           />
                         </>

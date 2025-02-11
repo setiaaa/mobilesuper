@@ -12,12 +12,12 @@ import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { handleUpgradeLink } from "../../utils/http";
 
-export const Dialog = ({ title, content, buttonTitle }) => {
+export const Dialog = ({ title, content, buttonTitle, modal }) => {
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={true}
+      visible={modal}
       onRequestClose={() => {
         //   setVisibleModal(!visibleModal);
       }}

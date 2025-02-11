@@ -8,6 +8,7 @@ import {
   Alert,
   BackHandler,
   Platform,
+  Modal,
 } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -268,31 +269,31 @@ function AuthenticatedStack({ route }) {
         console.error("JSON Parse error:", e);
       }
     });
-    deviceRoot();
+    // deviceRoot();
     //cek version di sini
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
+    // const subscription = AppState.addEventListener("change", (nextAppState) => {
+    //   if (
+    //     appState.current.match(/inactive||background/) &&
+    //     nextAppState === "active"
+    //   ) {
+    //     // checkversion
+    //     if (Platform.OS === "android") {
+    //       checkVersionAndroid();
+    //     } else if (Platform.OS === "ios") {
+    //       checkVersionIos();
+    //     }
+    //     appState.current = nextAppState;
+    //   }
+    // });
     // checkversion
     if (Platform.OS === "android") {
       checkVersionAndroid();
     } else if (Platform.OS === "ios") {
       checkVersionIos();
     }
-    return () => {
-      subscription.remove();
-    };
+    // return () => {
+    //   subscription.remove();
+    // };
   }, []);
 
   const isEmulator = () => {
@@ -321,9 +322,9 @@ function AuthenticatedStack({ route }) {
   const deviceRoot = async () => {
     const isRooted = await Device.isRootedExperimentalAsync();
     if (isRooted) {
-      console.log("Perangkat telah di-root.");
+      // console.log("Perangkat telah di-root.");
     } else {
-      console.log("Perangkat belum di-root.");
+      // console.log("Perangkat belum di-root.");
     }
   };
 
@@ -331,9 +332,13 @@ function AuthenticatedStack({ route }) {
     // setIsLoading(true);
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response?.data?.results?.android);
+      // cekValidVersion(response?.data?.results?.android);
       // setIsLoading(false);
-      console.log(response.data?.results?.android);
+      if (response?.data?.results?.android > app_version) {
+        setTimeout(() => {
+          setModal(true);
+        }, 3000);
+      }
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -346,8 +351,13 @@ function AuthenticatedStack({ route }) {
   async function checkVersionIos() {
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response?.data?.results?.android);
+      // cekValidVersion(response?.data?.results?.android);
       // setIsLoading(false);
+      if (response?.data?.results?.android > app_version) {
+        setTimeout(() => {
+          setModal(true);
+        }, 3000);
+      }
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -472,6 +482,7 @@ function AuthenticatedStack({ route }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+
   return (
     <BottomSheetModalProvider>
       <SafeAreaView style={styles.rootScreen}>
@@ -479,6 +490,18 @@ function AuthenticatedStack({ route }) {
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
         />
+
+        <Dialog
+          title={"Peringatan !"}
+          content={
+            "Anda menggunakan versi lama " +
+            app_name +
+            ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
+          }
+          buttonTitle={"Perbaharui"}
+          modal={modal}
+        />
+
         <Stack.Navigator
           initialRouteName={route}
           screenOptions={{
@@ -1693,17 +1716,6 @@ function AuthenticatedStack({ route }) {
           />
         </Stack.Navigator>
 
-        {modal === true ? (
-          <Dialog
-            title={"Peringatan !"}
-            content={
-              "Anda menggunakan versi lama " +
-              app_name +
-              ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
-            }
-            buttonTitle={"Perbaharui"}
-          />
-        ) : null}
         {loadingOverlay}
       </SafeAreaView>
     </BottomSheetModalProvider>
@@ -1768,7 +1780,6 @@ function AppNavigator() {
     getDeviceTypeAsync()
       .then((device) => {
         dispatch(setDevice(deviceTypeMap[device]));
-        console.log(device);
       })
       .catch((error) => console.log(error));
   }, []);
