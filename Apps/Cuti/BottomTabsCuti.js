@@ -35,7 +35,7 @@ function MyTabCuti({ props, navigation }) {
                 style={{
                   alignItems: "center",
                   height: device === "tablet" ? 110 : 95,
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   width: device === "tablet" ? 300 : 90,
                 }}
               >
@@ -66,7 +66,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position: "absolute",
-                    bottom: device === "tablet" ? 32 : 24,
+                    bottom: device === "tablet" ? 32 : 40,
                   }}
                 >
                   Personal
@@ -93,7 +93,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position: "absolute",
-                    bottom: device === "tablet" ? 32 : 24,
+                    bottom: device === "tablet" ? 32 : 40,
                   }}
                 >
                   Personal
