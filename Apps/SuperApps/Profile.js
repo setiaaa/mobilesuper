@@ -570,19 +570,13 @@ export const Profile = () => {
         description: "Perbaikan Perizinan Menteri PKRL",
       },
       {
-        description: "Penambahan dashboard pada Perizinan Menteri PKRL",
+        description: "Penambahan widget",
       },
       {
         description: "Perbaikan Dokumen SK",
       },
       {
-        description: "Penambahan hapus list Dokumen Lain",
-      },
-      {
-        description: "Perbaikan dan penambahan counter Cuti",
-      },
-      {
-        description: "Perbaikan stylus disposisi",
+        description: "Perbaikan Produk Hukum",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));
