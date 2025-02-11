@@ -65,7 +65,7 @@ export const CardListProdukHukum = ({
             {data.nama}
           </Text>
         </View>
-        {item?.approved_by?.includes(data?.nip) ? (
+        {data?.is_paraf ? (
           <>
             <View
               style={{
@@ -162,7 +162,7 @@ export const CardListProdukHukum = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {data?.nip == "88888" ? "Perlu Persetujuan" : "Belum Paraf"}
+                  {data?.nip == "88888" ? "Belum Menyetujui" : "Belum Paraf"}
                 </Text>
               </View>
             </View>
