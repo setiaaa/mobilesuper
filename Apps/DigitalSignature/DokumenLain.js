@@ -485,9 +485,11 @@ export const DokumenLain = ({ route }) => {
     }
   }, [page, token, tipe, search, currentTab, isFocus]);
 
+  console.log(status);
+
   useEffect(() => {
-    if (status !== "") {
-      if (status === "berhasil") {
+    if (status !== "" && currentTab === "DokumenLain") {
+      if (status === "berhasil" && currentTab === "DokumenLain") {
         Alert.alert(
           "Peringatan!",
           "Dokumen berhasil dihapus",
@@ -495,8 +497,10 @@ export const DokumenLain = ({ route }) => {
             {
               text: "Ya",
               onPress: () => {
-                setStatus("");
-                onRefresh();
+                dispatch(setStatus(""));
+                setTimeout(() => {
+                  onRefresh();
+                }, 3000);
               },
               style: "cencel",
             },
@@ -514,7 +518,7 @@ export const DokumenLain = ({ route }) => {
             {
               text: "Ya",
               onPress: () => {
-                setStatus("");
+                dispatch(setStatus(""));
               },
               style: "cencel",
             },

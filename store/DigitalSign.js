@@ -76,6 +76,7 @@ const DigitalSignSlice = createSlice({
     listDashboard: {},
     fileExport: {},
     mainCounter: {},
+    message: "",
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -381,6 +382,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putSetujiSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen telah disetujui";
       })
       .addCase(putSetujiSK.pending, (state, action) => {
         state.status = "";
@@ -395,6 +397,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putTandaTanganSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen telah ditandatangani";
       })
       .addCase(putTandaTanganSK.pending, (state, action) => {
         state.status = "";
@@ -409,6 +412,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putReturnSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen telah dikembalikan";
       })
       .addCase(putReturnSK.pending, (state, action) => {
         state.status = "";
@@ -423,6 +427,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putRevisionSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen sudah dikembalikan untuk direvisi";
       })
       .addCase(putRevisionSK.pending, (state, action) => {
         state.status = "";
@@ -437,6 +442,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putBatalkanSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen telah dibatalkan";
       })
       .addCase(putBatalkanSK.pending, (state, action) => {
         state.status = "";
@@ -451,6 +457,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putReleaseSK.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
+        state.message = "Dokumen telah dirilis";
       })
       .addCase(putReleaseSK.pending, (state, action) => {
         state.status = "";
@@ -498,6 +505,7 @@ const DigitalSignSlice = createSlice({
       .addCase(tandaTanganMentri.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
+        state.message = "Dokumen telah ditandtangani";
       })
       .addCase(tandaTanganMentri.pending, (state, action) => {
         state.loading = true;
@@ -581,6 +589,7 @@ const DigitalSignSlice = createSlice({
       .addCase(parafPerizinan.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
+        state.message = "Dokumen telah diparaf";
       })
       .addCase(parafPerizinan.pending, (state, action) => {
         state.loading = true;
@@ -592,6 +601,7 @@ const DigitalSignSlice = createSlice({
       .addCase(parafBeforeTTDEPerizinan.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
+        state.message = "Dokumen telah diparaf";
       })
       .addCase(parafBeforeTTDEPerizinan.pending, (state, action) => {
         state.loading = true;
@@ -603,6 +613,7 @@ const DigitalSignSlice = createSlice({
       .addCase(revisiPerizinan.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "berhasil";
+        state.message = "Dokumen sudah dikembalikan untuk direvisi";
       })
       .addCase(revisiPerizinan.pending, (state, action) => {
         state.loading = true;
