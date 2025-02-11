@@ -176,7 +176,7 @@ export const DetailProdukHukum = ({ route }) => {
   };
   const handleTTDE = () => {
     const payload = {
-      passphrase: passphrase,
+      passphrase: profile?.nip == "88888" ? "" : passphrase,
     };
     const data = {
       id: detail?.id,
@@ -1149,9 +1149,11 @@ export const DetailProdukHukum = ({ route }) => {
                   marginHorizontal: 16,
                 }}
                 onPress={() => {
-                  // handleBiometricAuth();
-                  // handleTTDE();
-                  bottomSheetAttach();
+                  if (profile?.nip == "88888") {
+                    handleBiometricAuth();
+                  } else {
+                    bottomSheetAttach();
+                  }
                 }}
               >
                 <Text
