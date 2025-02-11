@@ -1,6 +1,7 @@
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
+  BackHandler,
   FlatList,
   Modal,
   Platform,
@@ -178,6 +179,20 @@ export const DashboardPKRL = () => {
       })
     );
   }, [page]);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Home"); // Navigasi langsung ke Home
+      return true; // Mencegah aksi back default Android
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   const renderTitle = () => {
     return (

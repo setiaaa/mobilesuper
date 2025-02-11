@@ -528,8 +528,6 @@ export const DokumenLain = ({ route }) => {
     }
   }, [status]);
 
-  console.log(counterDS);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}

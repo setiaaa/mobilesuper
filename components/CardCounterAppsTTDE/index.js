@@ -50,6 +50,8 @@ export const CardCounterAppsTTDE = () => {
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
+  const isFocus = useIsFocused();
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -61,7 +63,7 @@ export const CardCounterAppsTTDE = () => {
     dispatch(
       getDokumenPersetujuan({ token: token, variant: "On Progress", page: 1 })
     );
-  }, [token]);
+  }, [token, isFocus]);
 
   const { mainCounter, loading } = useSelector((state) => state.digitalsign);
   const { persetujuan } = useSelector((state) => state.cuti);

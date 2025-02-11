@@ -30,7 +30,11 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/ProdukHukum";
-import { parafProdukHukum, revisionProdukHukum } from "../../service/api";
+import {
+  parafProdukHukum,
+  revisionProdukHukum,
+  ttdeProdukHukum,
+} from "../../service/api";
 import * as LocalAuthentication from "expo-local-authentication";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";

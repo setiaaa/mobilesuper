@@ -192,6 +192,8 @@ export const CardCounterApps = () => {
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
+  const isFocus = useIsFocused();
+
   useEffect(() => {
     const getIsCounter = async () => {
       try {
@@ -216,7 +218,7 @@ export const CardCounterApps = () => {
     };
 
     getIsCounter();
-  }, []);
+  }, [isFocus]);
 
   const order = ["agenda_in", "sign", "onprogress"];
 

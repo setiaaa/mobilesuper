@@ -406,7 +406,7 @@ export const ProdukHukum = ({ route }) => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
-                  height: device === "tablet" ? 130 : 90,
+                  height: device === "tablet" ? 130 : 100,
                 }}
               >
                 <TouchableOpacity
@@ -503,7 +503,7 @@ export const ProdukHukum = ({ route }) => {
                         counterCat != 1
                       ? "24%"
                       : "48%",
-                  height: device === "tablet" ? 130 : 90,
+                  height: device === "tablet" ? 130 : 100,
                 }}
               >
                 <TouchableOpacity
@@ -595,7 +595,7 @@ export const ProdukHukum = ({ route }) => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
-                height: device === "tablet" ? 130 : 90,
+                height: device === "tablet" ? 130 : 100,
               }}
             >
               <TouchableOpacity
@@ -687,7 +687,7 @@ export const ProdukHukum = ({ route }) => {
                       counterCat != 1
                     ? "24%"
                     : "48%",
-                height: device === "tablet" ? 130 : 90,
+                height: device === "tablet" ? 130 : 100,
               }}
             >
               <TouchableOpacity

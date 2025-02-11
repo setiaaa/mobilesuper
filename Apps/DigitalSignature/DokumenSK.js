@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import {
+  BackHandler,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -342,7 +343,19 @@ export const DokumenSK = ({ route }) => {
 
   let orientation = getOrientation(screenWidth, screenHeight);
 
-  console.log(counterDS);
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Home"); // Navigasi langsung ke Home
+      return true; // Mencegah aksi back default Android
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

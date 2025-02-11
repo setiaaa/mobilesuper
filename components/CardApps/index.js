@@ -492,7 +492,7 @@ export const CardApps = ({
       });
     }
     if (isRoleProdukHukum) {
-      tmpMenu.splice(12, 0, {
+      tmpMenu.splice(7, 0, {
         title: "Produk Hukum",
         navigation: "ProdukHukum",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -591,10 +591,11 @@ export const CardApps = ({
               flexDirection: "row",
               gap: device === "tablet" ? 24 : width <= 384 ? 0 : 2,
               justifyContent: listMenu.length > 8 ? "center" : null,
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "center",
               flex: 1,
               flexWrap: "wrap",
+              marginVertical: 5,
             }}
           >
             {listMenu &&

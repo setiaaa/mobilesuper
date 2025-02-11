@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { BackHandler, Text, View } from "react-native";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -10,6 +10,19 @@ import WebView from "react-native-webview";
 export const Verifikasi = () => {
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Home"); // Navigasi langsung ke Home
+      return true; // Mencegah aksi back default Android
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
   return (
     <View>
       <View

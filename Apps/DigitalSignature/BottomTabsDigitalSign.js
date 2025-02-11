@@ -53,89 +53,85 @@ function MyTabDigitalSign({ props, navigation, route }) {
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            height:
-              device === "tablet" && orientation === "landscape"
-                ? "15%"
-                : "10%",
           }}
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
           {/* <TouchableOpacity
-            key={1}
-            onPress={() => {
-              setTabItemIndex(1);
-              navigation.navigate("Bankom", { unread: false });
-            }}
-          >
-            {tabItemIndex === 1 ? (
+          key={1}
+          onPress={() => {
+            setTabItemIndex(1);
+            navigation.navigate("Bankom", { unread: false });
+          }}
+        >
+          {tabItemIndex === 1 ? (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
+            >
               <View
                 style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: "100%",
+                  height: 3,
+                  backgroundColor: COLORS.primary,
+                  position: "absolute",
+                  top: 0,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 5 },
+                  shadowColor: COLORS.primary,
+                  shadowOpacity: 0.4,
+                  //shadow android
+                  elevation: 2,
                 }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons
-                  name="briefcase-outline"
-                  color={COLORS.primary}
-                  size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
-                />
-                <Text
-                  style={{
-                    color: COLORS.primary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
-                    fontSize: fontSizeResponsive("H3", device),
-                  }}
-                >
-                  Bankom
-                </Text>
-              </View>
-            ) : (
-              <View
+              />
+              <Ionicons
+                name="briefcase-outline"
+                color={COLORS.primary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
                 style={{
-                  alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
-                  justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  color: COLORS.primary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 40,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
-                <Ionicons
-                  name="briefcase-outline"
-                  color={COLORS.tertiary}
-                  size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
-                />
-                <Text
-                  style={{
-                    color: COLORS.tertiary,
-                    position: "absolute",
-                    bottom: device === "tablet" ? 40 : 40,
-                    fontSize: fontSizeResponsive("H3", device),
-                  }}
-                >
-                  Bankom
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity> */}
+                Bankom
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 95,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 80,
+              }}
+            >
+              <Ionicons
+                name="briefcase-outline"
+                color={COLORS.tertiary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.tertiary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 40,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Bankom
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity> */}
           {/* ) : null} */}
 
           <TouchableOpacity
@@ -174,19 +170,15 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="attach-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -205,19 +197,15 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="attach-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -227,84 +215,84 @@ function MyTabDigitalSign({ props, navigation, route }) {
           </TouchableOpacity>
 
           {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
-            <TouchableOpacity
-              key={3}
-              onPress={() => {
-                setTabItemIndex(3);
-                navigation.navigate("LaporanDigitalSign", { unread: false });
-                // props.navigation.navigate('Home', { unread: false })
-              }}
-            >
-              {tabItemIndex === 3 ? (
+          <TouchableOpacity
+            key={3}
+            onPress={() => {
+              setTabItemIndex(3);
+              navigation.navigate("LaporanDigitalSign", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 3 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
                 <View
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
                   }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 3,
-                      backgroundColor: COLORS.primary,
-                      position: "absolute",
-                      top: 0,
-                      //shadow ios
-                      shadowOffset: { width: -2, height: 5 },
-                      shadowColor: COLORS.primary,
-                      shadowOpacity: 0.4,
-                      //shadow android
-                      elevation: 2,
-                    }}
-                  />
-                  <Ionicons
-                    name="chatbubbles-outline"
-                    color={COLORS.primary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Laporan
-                  </Text>
-                </View>
-              ) : (
-                <View
+                />
+                <Ionicons
+                  name="chatbubbles-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  <Ionicons
-                    name="chatbubbles-outline"
-                    color={COLORS.tertiary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.tertiary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Laporan
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          ) : null} */}
+                  Laporan
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <Ionicons
+                  name="chatbubbles-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Laporan
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        ) : null} */}
 
           <TouchableOpacity
             key={4}
@@ -320,7 +308,7 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 120,
                 }}
               >
                 <View
@@ -342,18 +330,13 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="file-signature"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -366,25 +349,20 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 200 : 80,
                 }}
               >
                 <FontAwesome6
                   name="file-signature"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -409,7 +387,7 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -431,18 +409,13 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   name="pencil-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
-                    textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -455,25 +428,20 @@ function MyTabDigitalSign({ props, navigation, route }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 95,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons
                   name="pencil-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{
-                    // position: "absolute",
-                    // top: 5,
-                    justifyContent: "center",
-                  }}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
-                    textAlign: "center",
-                    // position: "absolute",
-                    // bottom: device === "tablet" ? 40 : 40,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
