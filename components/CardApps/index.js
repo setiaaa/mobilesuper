@@ -211,24 +211,6 @@ export const CardApps = ({
         },
       },
       {
-        title: "Produk Hukum",
-        navigation: "ProdukHukum",
-        image: require("../../assets/superApp/Bankomicon.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 28,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-      },
-      {
         title: "SPPD",
         navigation: "MainSPPD",
         image: require("../../assets/superApp/sppd.png"),
@@ -492,7 +474,7 @@ export const CardApps = ({
       });
     }
     if (isRoleProdukHukum) {
-      tmpMenu.splice(7, 0, {
+      tmpMenu.splice(6, 0, {
         title: "Produk Hukum",
         navigation: "ProdukHukum",
         image: require("../../assets/superApp/Bankomicon.png"),
@@ -510,27 +492,26 @@ export const CardApps = ({
           width: null,
         },
       });
-    } else {
-      if (checkProdukHukum || profile.nip == "88888") {
-        tmpMenu.splice(12, 0, {
-          title: "Produk Hukum",
-          navigation: "ProdukHukum",
-          image: require("../../assets/superApp/Bankomicon.png"),
-          imagestyle: {
-            width: {
-              tablet: 50,
-              hp: 28,
-            },
-            height: {
-              tablet: 50,
-              hp: 28,
-            },
+    }
+    if (checkProdukHukum || profile.nip == "88888") {
+      tmpMenu.splice(6, 0, {
+        title: "Produk Hukum",
+        navigation: "ProdukHukum",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
           },
-          titleStyle: {
-            width: null,
+          height: {
+            tablet: 50,
+            hp: 28,
           },
-        });
-      }
+        },
+        titleStyle: {
+          width: null,
+        },
+      });
     }
     setMenu(JSON.stringify(tmpMenu));
     getMenuType().then((val) => {
