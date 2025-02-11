@@ -109,9 +109,9 @@ export const PdfPerisai = ({ route }) => {
       }),
       success: function (data, textStatus, xhr) {
         if (data.success) {
-          alert("berhasil")
+          window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Berhasil Tolak", state: "berhasil"}));
         } else {
-          alert("gagal")
+          window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign", value: "Dokumen Gagal Tolak", state: "gagal"}));
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {

@@ -57,22 +57,6 @@ export const CollapsePKRLSignIn = ({
     need_sign: counter?.data?.[item.label]?.need_sign ?? item.need_sign,
   }));
 
-  // const filteredApiData =
-  //   Object.keys(counter?.data ?? {}).length > 0
-  //     ? (() => {
-  //         const mappedData = Object.keys(counter?.data)
-  //           .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
-  //           .map((key) => ({
-  //             label: key,
-  //             need_sign: counter?.data[key]?.need_sign ?? 0, // Gunakan 0 jika tidak ada need_sign
-  //           }));
-
-  //         return mappedData.length === 1
-  //           ? [...mappedData, ...defaultData]
-  //           : mappedData;
-  //       })()
-  //     : defaultData; // Jika counter.data kosong, kembalikan defaultData
-
   const jenisPerizinan = [
     {
       label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
