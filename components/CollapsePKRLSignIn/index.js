@@ -42,43 +42,36 @@ export const CollapsePKRLSignIn = ({
   // Data default yang ingin ditampilkan jika counter.data kosong
   const defaultData = [
     {
-      done: 0,
+      need_sign: 0,
       label: "Direktorat KEBP - Konservasi Ekosistem dan Biota Perairan",
     },
-    { done: 0, label: "Direktorat Jaskel - Jasa Kelautan" },
+    { need_sign: 0, label: "Direktorat Jaskel - Jasa Kelautan" },
     {
-      done: 0,
+      need_sign: 0,
       label: "Direktorat Pendayagunaan Pesisir dan Pulau-Pulau Kecil",
     },
-    { done: 0, label: "Direktorat PRL" },
+    { need_sign: 0, label: "Direktorat PRL" },
   ];
-
-  const filteredApiData =
-    Object.keys(counter?.data ?? {}).length > 0
-      ? defaultData?.map((item, index) => {
-          if (item?.label === counter?.data[item?.label]) {
-            return {
-              label: item?.label,
-              need_sign: counter?.data[item?.label]?.need_sign ?? 0,
-            };
-          } else {
-            return {
-              label: item?.label,
-              need_sign: 0,
-            };
-          }
-        })
-      : defaultData;
+  let filteredApiData = defaultData.map((item) => ({
+    ...item,
+    need_sign: counter?.data?.[item.label]?.need_sign ?? item.need_sign,
+  }));
 
   // const filteredApiData =
   //   Object.keys(counter?.data ?? {}).length > 0
-  //     ? Object.keys(counter?.data)
-  //         .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
-  //         .map((key) => ({
-  //           label: key,
-  //           need_sign: counter?.data[key]?.need_sign ?? 0, // Gunakan 0 jika done tidak ada
-  //         }))
-  //     : defaultData; // Jika counter.data kosong, kembalikan data default
+  //     ? (() => {
+  //         const mappedData = Object.keys(counter?.data)
+  //           .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
+  //           .map((key) => ({
+  //             label: key,
+  //             need_sign: counter?.data[key]?.need_sign ?? 0, // Gunakan 0 jika tidak ada need_sign
+  //           }));
+
+  //         return mappedData.length === 1
+  //           ? [...mappedData, ...defaultData]
+  //           : mappedData;
+  //       })()
+  //     : defaultData; // Jika counter.data kosong, kembalikan defaultData
 
   const jenisPerizinan = [
     {

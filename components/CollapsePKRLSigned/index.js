@@ -67,33 +67,10 @@ export const CollapsePKRLSigned = ({
     { done: 0, label: "Direktorat PRL" },
   ];
 
-  const filteredApiData =
-    Object.keys(counter?.data ?? {}).length > 0
-      ? defaultData?.map((item, index) => {
-          if (item?.label === counter?.data[item?.label]) {
-            return {
-              label: item?.label,
-              done: counter?.data[item?.label]?.done ?? 0,
-            };
-          } else {
-            return {
-              label: item?.label,
-              done: 0,
-            };
-          }
-        })
-      : defaultData;
-
-  // Fungsi untuk memproses data
-  // const filteredApiData =
-  //   Object.keys(counter?.data ?? {}).length > 0
-  //     ? Object.keys(counter?.data)
-  //         .filter((key) => typeof counter?.data[key] === "object") // Hanya ambil yang objek
-  //         .map((key) => ({
-  //           label: key,
-  //           done: counter?.data[key]?.done ?? 0, // Gunakan 0 jika done tidak ada
-  //         }))
-  //     : defaultData; // Jika counter.data kosong, kembalikan data default
+  let filteredApiData = defaultData.map((item) => ({
+    ...item,
+    done: counter?.data?.[item.label]?.done ?? item.done,
+  }));
 
   const jenisPerizinan = [
     {
