@@ -413,7 +413,7 @@ export const DetailProdukHukum = ({ route }) => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        Sudah {data?.nip === "88888" ? "Disetujui" : "Paraf"}
+                        Sudah {data?.nip === "88888" ? "Menyetujui" : "Paraf"}
                       </Text>
                     </View>
                   </View>
