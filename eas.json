@@ -52,7 +52,7 @@
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
-        "buildType": "app-bundle",
+        "buildType": "apk",
         "image": "latest",
         "gradleCommand": ":app:assembleRelease"
       },

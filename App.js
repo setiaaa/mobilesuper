@@ -9,15 +9,17 @@ import { GlobalStyles } from "./constants/styles";
 // import AppNavigator from "./screen/AppNavigator";
 import AppNavigator from "./Apps/Korespondensi/AppNavigator";
 import { Host } from "react-native-portalize";
-import { StatusBar, View, Text } from "react-native";
+import { StatusBar, View, Text, Button } from "react-native";
 import { COLORS } from "./config/SuperAppps";
 import { Platform } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "./store/Apps";
 import { LogLevel, OneSignal } from "react-native-onesignal";
 import Constants from "expo-constants";
 import { setDataNotif } from "./store/pushnotif";
+import * as Updates from 'expo-updates';
+
 
 // OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
 
@@ -33,6 +35,26 @@ OneSignal.Notifications.requestPermission(true);
 
 export default function App() {
   // const dispatch = useDispatch();
+  const [updateChecking, setUpdateChecking] = useState(false);
+
+  useEffect(() => {
+    triggerUpdate();
+  }, []);
+
+  const triggerUpdate = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if(update.isAvailable){
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      } else {
+        Alert.alert("No updates available");
+      }
+    } catch (error) {
+      console.log("error", error);
+      
+    }
+  }
 
   const theme = {
     ...DefaultTheme,
@@ -57,6 +79,16 @@ export default function App() {
           <PaperProvider theme={theme}>
             <Provider store={store}>
               {/* <Wrapper> */}
+              <Button
+                title="Check for Updates"
+                onPress={async () => {
+                  setUpdateChecking(true);
+                  await triggerUpdate();
+                  setUpdateChecking(false);
+                }}
+                >
+                
+              </Button>
               <AppNavigator />
               {/* </Wrapper> */}
             </Provider>

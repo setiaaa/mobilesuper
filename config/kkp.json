@@ -17,7 +17,7 @@
   "ios": {
     "buildNumber": "0.1.7",
     "supportsTablet": true,
-    "bundleIdentifier": "go.id.kkp.portal.dev",
+    "bundleIdentifier": "go.id.kkp.portal.devcoba",
     "infoPlist": {
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library",
       "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
@@ -43,7 +43,7 @@
       "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.kkp.portal.dev",
+    "package": "go.id.kkp.portal.devcoba",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -115,7 +115,7 @@
     "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
-      "projectId": "ee29c3ba-c4c6-402e-b2ce-f519736eb454"
+      "projectId": "96f1555f-e020-441f-b87b-a218c2e40df7"
     },
     "id": "kkp",
     "loginSSO": false,
