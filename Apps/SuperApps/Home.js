@@ -838,23 +838,19 @@ export const Home = () => {
         height = 230;
       }
     } else if (device === "tablet") {
-      if (menuLiteLength?.length === 0) {
-        height = 0;
-      } else {
-        if (orientation === "landscape") {
-          if (screenWidth >= 1024 && screenWidth < 1210) {
-            (height = 320), (top = "45%");
-          } else {
-            (height = 320), (top = "45%");
-          }
-        } else if (orientation === "potrait") {
-          if (screenWidth >= 744 && screenWidth < 810) {
-            (height = 320), (top = "45%");
-          } else if (screenWidth >= 744 && screenWidth <= 834) {
-            (height = 320), (top = "45%");
-          } else {
-            (height = 320), (top = "45%");
-          }
+      if (orientation === "landscape") {
+        if (screenWidth >= 1024 && screenWidth < 1210) {
+          (height = 320), (top = "45%");
+        } else {
+          (height = 320), (top = "45%");
+        }
+      } else if (orientation === "potrait") {
+        if (screenWidth >= 744 && screenWidth < 810) {
+          (height = 320), (top = "45%");
+        } else if (screenWidth >= 744 && screenWidth <= 834) {
+          (height = 320), (top = "45%");
+        } else {
+          (height = 320), (top = "45%");
         }
       }
     } else {
